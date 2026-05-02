@@ -1,0 +1,19 @@
+{
+    "name": "Nombre",
+    "description": "Descripción",
+    "minAge": "Edad mínima",
+    "maxAge": "Edad máxima",
+    "gender": "Género",
+    "isActive": "Estado",
+    "category": "Categoría",
+    "discipline": "Disciplina",
+    "person": "Persona",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "state": "Estado",
+    "zipCode": "Código postal",
+    "country": "País",
+    "birthDate": "Fecha de nacimiento"
+}
