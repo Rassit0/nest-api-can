@@ -20,156 +20,82 @@ export type ActivityModel = runtime.Types.Result.DefaultSelection<Prisma.$Activi
 
 export type AggregateActivity = {
   _count: ActivityCountAggregateOutputType | null
-  _avg: ActivityAvgAggregateOutputType | null
-  _sum: ActivitySumAggregateOutputType | null
   _min: ActivityMinAggregateOutputType | null
   _max: ActivityMaxAggregateOutputType | null
 }
 
-export type ActivityAvgAggregateOutputType = {
-  id: number | null
-  categoryId: number | null
-  totalPrice: runtime.Decimal | null
-  monthlyPrice: runtime.Decimal | null
-  installments: number | null
-  disciplineId: number | null
-}
-
-export type ActivitySumAggregateOutputType = {
-  id: number | null
-  categoryId: number | null
-  totalPrice: runtime.Decimal | null
-  monthlyPrice: runtime.Decimal | null
-  installments: number | null
-  disciplineId: number | null
-}
-
 export type ActivityMinAggregateOutputType = {
-  id: number | null
-  name: string | null
+  id: string | null
+  title: string | null
+  description: string | null
+  startsAt: Date | null
+  endsAt: Date | null
+  locationId: string | null
   type: $Enums.ActivityType | null
-  location: string | null
-  categoryId: number | null
-  startDate: Date | null
-  endDate: Date | null
-  totalPrice: runtime.Decimal | null
-  monthlyPrice: runtime.Decimal | null
-  installments: number | null
   createdAt: Date | null
   updatedAt: Date | null
-  isActive: boolean | null
-  deletedAt: Date | null
-  disciplineId: number | null
 }
 
 export type ActivityMaxAggregateOutputType = {
-  id: number | null
-  name: string | null
+  id: string | null
+  title: string | null
+  description: string | null
+  startsAt: Date | null
+  endsAt: Date | null
+  locationId: string | null
   type: $Enums.ActivityType | null
-  location: string | null
-  categoryId: number | null
-  startDate: Date | null
-  endDate: Date | null
-  totalPrice: runtime.Decimal | null
-  monthlyPrice: runtime.Decimal | null
-  installments: number | null
   createdAt: Date | null
   updatedAt: Date | null
-  isActive: boolean | null
-  deletedAt: Date | null
-  disciplineId: number | null
 }
 
 export type ActivityCountAggregateOutputType = {
   id: number
-  name: number
+  title: number
+  description: number
+  startsAt: number
+  endsAt: number
+  locationId: number
   type: number
-  location: number
-  categoryId: number
-  startDate: number
-  endDate: number
-  totalPrice: number
-  monthlyPrice: number
-  installments: number
   createdAt: number
   updatedAt: number
-  isActive: number
-  deletedAt: number
-  disciplineId: number
   _all: number
 }
 
 
-export type ActivityAvgAggregateInputType = {
-  id?: true
-  categoryId?: true
-  totalPrice?: true
-  monthlyPrice?: true
-  installments?: true
-  disciplineId?: true
-}
-
-export type ActivitySumAggregateInputType = {
-  id?: true
-  categoryId?: true
-  totalPrice?: true
-  monthlyPrice?: true
-  installments?: true
-  disciplineId?: true
-}
-
 export type ActivityMinAggregateInputType = {
   id?: true
-  name?: true
+  title?: true
+  description?: true
+  startsAt?: true
+  endsAt?: true
+  locationId?: true
   type?: true
-  location?: true
-  categoryId?: true
-  startDate?: true
-  endDate?: true
-  totalPrice?: true
-  monthlyPrice?: true
-  installments?: true
   createdAt?: true
   updatedAt?: true
-  isActive?: true
-  deletedAt?: true
-  disciplineId?: true
 }
 
 export type ActivityMaxAggregateInputType = {
   id?: true
-  name?: true
+  title?: true
+  description?: true
+  startsAt?: true
+  endsAt?: true
+  locationId?: true
   type?: true
-  location?: true
-  categoryId?: true
-  startDate?: true
-  endDate?: true
-  totalPrice?: true
-  monthlyPrice?: true
-  installments?: true
   createdAt?: true
   updatedAt?: true
-  isActive?: true
-  deletedAt?: true
-  disciplineId?: true
 }
 
 export type ActivityCountAggregateInputType = {
   id?: true
-  name?: true
+  title?: true
+  description?: true
+  startsAt?: true
+  endsAt?: true
+  locationId?: true
   type?: true
-  location?: true
-  categoryId?: true
-  startDate?: true
-  endDate?: true
-  totalPrice?: true
-  monthlyPrice?: true
-  installments?: true
   createdAt?: true
   updatedAt?: true
-  isActive?: true
-  deletedAt?: true
-  disciplineId?: true
   _all?: true
 }
 
@@ -211,18 +137,6 @@ export type ActivityAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ActivityAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ActivitySumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ActivityMinAggregateInputType
@@ -253,31 +167,21 @@ export type ActivityGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: ActivityCountAggregateInputType | true
-  _avg?: ActivityAvgAggregateInputType
-  _sum?: ActivitySumAggregateInputType
   _min?: ActivityMinAggregateInputType
   _max?: ActivityMaxAggregateInputType
 }
 
 export type ActivityGroupByOutputType = {
-  id: number
-  name: string
+  id: string
+  title: string
+  description: string
+  startsAt: Date
+  endsAt: Date
+  locationId: string
   type: $Enums.ActivityType
-  location: string | null
-  categoryId: number
-  startDate: Date
-  endDate: Date
-  totalPrice: runtime.Decimal
-  monthlyPrice: runtime.Decimal | null
-  installments: number | null
   createdAt: Date
   updatedAt: Date
-  isActive: boolean
-  deletedAt: Date | null
-  disciplineId: number | null
   _count: ActivityCountAggregateOutputType | null
-  _avg: ActivityAvgAggregateOutputType | null
-  _sum: ActivitySumAggregateOutputType | null
   _min: ActivityMinAggregateOutputType | null
   _max: ActivityMaxAggregateOutputType | null
 }
@@ -301,245 +205,172 @@ export type ActivityWhereInput = {
   AND?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[]
   OR?: Prisma.ActivityWhereInput[]
   NOT?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[]
-  id?: Prisma.IntFilter<"Activity"> | number
-  name?: Prisma.StringFilter<"Activity"> | string
+  id?: Prisma.StringFilter<"Activity"> | string
+  title?: Prisma.StringFilter<"Activity"> | string
+  description?: Prisma.StringFilter<"Activity"> | string
+  startsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  endsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  locationId?: Prisma.StringFilter<"Activity"> | string
   type?: Prisma.EnumActivityTypeFilter<"Activity"> | $Enums.ActivityType
-  location?: Prisma.StringNullableFilter<"Activity"> | string | null
-  categoryId?: Prisma.IntFilter<"Activity"> | number
-  startDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  endDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  totalPrice?: Prisma.DecimalFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.DecimalNullableFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.IntNullableFilter<"Activity"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  isActive?: Prisma.BoolFilter<"Activity"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Activity"> | Date | string | null
-  disciplineId?: Prisma.IntNullableFilter<"Activity"> | number | null
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
-  schedules?: Prisma.ScheduleListRelationFilter
-  enrollments?: Prisma.EnrollmentListRelationFilter
-  discipline?: Prisma.XOR<Prisma.DisciplineNullableScalarRelationFilter, Prisma.DisciplineWhereInput> | null
+  location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
+  teamOfferingActivities?: Prisma.TeamOfferingActivityListRelationFilter
+  courseOfferingActivities?: Prisma.CourseOfferingActivityListRelationFilter
 }
 
 export type ActivityOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  startsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrder
+  locationId?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  installments?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  disciplineId?: Prisma.SortOrderInput | Prisma.SortOrder
-  category?: Prisma.CategoryOrderByWithRelationInput
-  schedules?: Prisma.ScheduleOrderByRelationAggregateInput
-  enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput
-  discipline?: Prisma.DisciplineOrderByWithRelationInput
+  location?: Prisma.LocationOrderByWithRelationInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityOrderByRelationAggregateInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityOrderByRelationAggregateInput
 }
 
 export type ActivityWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[]
   OR?: Prisma.ActivityWhereInput[]
   NOT?: Prisma.ActivityWhereInput | Prisma.ActivityWhereInput[]
-  name?: Prisma.StringFilter<"Activity"> | string
+  title?: Prisma.StringFilter<"Activity"> | string
+  description?: Prisma.StringFilter<"Activity"> | string
+  startsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  endsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  locationId?: Prisma.StringFilter<"Activity"> | string
   type?: Prisma.EnumActivityTypeFilter<"Activity"> | $Enums.ActivityType
-  location?: Prisma.StringNullableFilter<"Activity"> | string | null
-  categoryId?: Prisma.IntFilter<"Activity"> | number
-  startDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  endDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  totalPrice?: Prisma.DecimalFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.DecimalNullableFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.IntNullableFilter<"Activity"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  isActive?: Prisma.BoolFilter<"Activity"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Activity"> | Date | string | null
-  disciplineId?: Prisma.IntNullableFilter<"Activity"> | number | null
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
-  schedules?: Prisma.ScheduleListRelationFilter
-  enrollments?: Prisma.EnrollmentListRelationFilter
-  discipline?: Prisma.XOR<Prisma.DisciplineNullableScalarRelationFilter, Prisma.DisciplineWhereInput> | null
+  location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
+  teamOfferingActivities?: Prisma.TeamOfferingActivityListRelationFilter
+  courseOfferingActivities?: Prisma.CourseOfferingActivityListRelationFilter
 }, "id">
 
 export type ActivityOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  startsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrder
+  locationId?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  installments?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  disciplineId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ActivityCountOrderByAggregateInput
-  _avg?: Prisma.ActivityAvgOrderByAggregateInput
   _max?: Prisma.ActivityMaxOrderByAggregateInput
   _min?: Prisma.ActivityMinOrderByAggregateInput
-  _sum?: Prisma.ActivitySumOrderByAggregateInput
 }
 
 export type ActivityScalarWhereWithAggregatesInput = {
   AND?: Prisma.ActivityScalarWhereWithAggregatesInput | Prisma.ActivityScalarWhereWithAggregatesInput[]
   OR?: Prisma.ActivityScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ActivityScalarWhereWithAggregatesInput | Prisma.ActivityScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Activity"> | number
-  name?: Prisma.StringWithAggregatesFilter<"Activity"> | string
+  id?: Prisma.StringWithAggregatesFilter<"Activity"> | string
+  title?: Prisma.StringWithAggregatesFilter<"Activity"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Activity"> | string
+  startsAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
+  endsAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
+  locationId?: Prisma.StringWithAggregatesFilter<"Activity"> | string
   type?: Prisma.EnumActivityTypeWithAggregatesFilter<"Activity"> | $Enums.ActivityType
-  location?: Prisma.StringNullableWithAggregatesFilter<"Activity"> | string | null
-  categoryId?: Prisma.IntWithAggregatesFilter<"Activity"> | number
-  startDate?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
-  endDate?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
-  totalPrice?: Prisma.DecimalWithAggregatesFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.IntNullableWithAggregatesFilter<"Activity"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
-  isActive?: Prisma.BoolWithAggregatesFilter<"Activity"> | boolean
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Activity"> | Date | string | null
-  disciplineId?: Prisma.IntNullableWithAggregatesFilter<"Activity"> | number | null
 }
 
 export type ActivityCreateInput = {
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  category: Prisma.CategoryCreateNestedOneWithoutActivitiesInput
-  schedules?: Prisma.ScheduleCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutActivityInput
-  discipline?: Prisma.DisciplineCreateNestedOneWithoutActivitiesInput
+  location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityUncheckedCreateInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  locationId: string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
-  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutActivityInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityUpdateInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category?: Prisma.CategoryUpdateOneRequiredWithoutActivitiesNestedInput
-  schedules?: Prisma.ScheduleUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUpdateManyWithoutActivityNestedInput
-  discipline?: Prisma.DisciplineUpdateOneWithoutActivitiesNestedInput
+  location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutActivityNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityCreateManyInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  locationId: string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
 }
 
 export type ActivityUpdateManyMutationInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ActivityUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type ActivityListRelationFilter = {
@@ -554,74 +385,38 @@ export type ActivityOrderByRelationAggregateInput = {
 
 export type ActivityCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  startsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrder
+  locationId?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrder
-  installments?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  disciplineId?: Prisma.SortOrder
-}
-
-export type ActivityAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrder
-  installments?: Prisma.SortOrder
-  disciplineId?: Prisma.SortOrder
 }
 
 export type ActivityMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  startsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrder
+  locationId?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrder
-  installments?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  disciplineId?: Prisma.SortOrder
 }
 
 export type ActivityMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  startsAt?: Prisma.SortOrder
+  endsAt?: Prisma.SortOrder
+  locationId?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrder
-  installments?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  disciplineId?: Prisma.SortOrder
-}
-
-export type ActivitySumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
-  totalPrice?: Prisma.SortOrder
-  monthlyPrice?: Prisma.SortOrder
-  installments?: Prisma.SortOrder
-  disciplineId?: Prisma.SortOrder
 }
 
 export type ActivityScalarRelationFilter = {
@@ -629,45 +424,45 @@ export type ActivityScalarRelationFilter = {
   isNot?: Prisma.ActivityWhereInput
 }
 
-export type ActivityCreateNestedManyWithoutDisciplineInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput> | Prisma.ActivityCreateWithoutDisciplineInput[] | Prisma.ActivityUncheckedCreateWithoutDisciplineInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutDisciplineInput | Prisma.ActivityCreateOrConnectWithoutDisciplineInput[]
-  createMany?: Prisma.ActivityCreateManyDisciplineInputEnvelope
+export type ActivityCreateNestedManyWithoutLocationInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput> | Prisma.ActivityCreateWithoutLocationInput[] | Prisma.ActivityUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutLocationInput | Prisma.ActivityCreateOrConnectWithoutLocationInput[]
+  createMany?: Prisma.ActivityCreateManyLocationInputEnvelope
   connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
 }
 
-export type ActivityUncheckedCreateNestedManyWithoutDisciplineInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput> | Prisma.ActivityCreateWithoutDisciplineInput[] | Prisma.ActivityUncheckedCreateWithoutDisciplineInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutDisciplineInput | Prisma.ActivityCreateOrConnectWithoutDisciplineInput[]
-  createMany?: Prisma.ActivityCreateManyDisciplineInputEnvelope
+export type ActivityUncheckedCreateNestedManyWithoutLocationInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput> | Prisma.ActivityCreateWithoutLocationInput[] | Prisma.ActivityUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutLocationInput | Prisma.ActivityCreateOrConnectWithoutLocationInput[]
+  createMany?: Prisma.ActivityCreateManyLocationInputEnvelope
   connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
 }
 
-export type ActivityUpdateManyWithoutDisciplineNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput> | Prisma.ActivityCreateWithoutDisciplineInput[] | Prisma.ActivityUncheckedCreateWithoutDisciplineInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutDisciplineInput | Prisma.ActivityCreateOrConnectWithoutDisciplineInput[]
-  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutDisciplineInput | Prisma.ActivityUpsertWithWhereUniqueWithoutDisciplineInput[]
-  createMany?: Prisma.ActivityCreateManyDisciplineInputEnvelope
+export type ActivityUpdateManyWithoutLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput> | Prisma.ActivityCreateWithoutLocationInput[] | Prisma.ActivityUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutLocationInput | Prisma.ActivityCreateOrConnectWithoutLocationInput[]
+  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutLocationInput | Prisma.ActivityUpsertWithWhereUniqueWithoutLocationInput[]
+  createMany?: Prisma.ActivityCreateManyLocationInputEnvelope
   set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutDisciplineInput | Prisma.ActivityUpdateWithWhereUniqueWithoutDisciplineInput[]
-  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutDisciplineInput | Prisma.ActivityUpdateManyWithWhereWithoutDisciplineInput[]
+  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutLocationInput | Prisma.ActivityUpdateWithWhereUniqueWithoutLocationInput[]
+  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutLocationInput | Prisma.ActivityUpdateManyWithWhereWithoutLocationInput[]
   deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
 }
 
-export type ActivityUncheckedUpdateManyWithoutDisciplineNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput> | Prisma.ActivityCreateWithoutDisciplineInput[] | Prisma.ActivityUncheckedCreateWithoutDisciplineInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutDisciplineInput | Prisma.ActivityCreateOrConnectWithoutDisciplineInput[]
-  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutDisciplineInput | Prisma.ActivityUpsertWithWhereUniqueWithoutDisciplineInput[]
-  createMany?: Prisma.ActivityCreateManyDisciplineInputEnvelope
+export type ActivityUncheckedUpdateManyWithoutLocationNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput> | Prisma.ActivityCreateWithoutLocationInput[] | Prisma.ActivityUncheckedCreateWithoutLocationInput[]
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutLocationInput | Prisma.ActivityCreateOrConnectWithoutLocationInput[]
+  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutLocationInput | Prisma.ActivityUpsertWithWhereUniqueWithoutLocationInput[]
+  createMany?: Prisma.ActivityCreateManyLocationInputEnvelope
   set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
   connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutDisciplineInput | Prisma.ActivityUpdateWithWhereUniqueWithoutDisciplineInput[]
-  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutDisciplineInput | Prisma.ActivityUpdateManyWithWhereWithoutDisciplineInput[]
+  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutLocationInput | Prisma.ActivityUpdateWithWhereUniqueWithoutLocationInput[]
+  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutLocationInput | Prisma.ActivityUpdateManyWithWhereWithoutLocationInput[]
   deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
 }
 
@@ -675,551 +470,283 @@ export type EnumActivityTypeFieldUpdateOperationsInput = {
   set?: $Enums.ActivityType
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type ActivityCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput> | Prisma.ActivityCreateWithoutCategoryInput[] | Prisma.ActivityUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCategoryInput | Prisma.ActivityCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.ActivityCreateManyCategoryInputEnvelope
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-}
-
-export type ActivityUncheckedCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput> | Prisma.ActivityCreateWithoutCategoryInput[] | Prisma.ActivityUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCategoryInput | Prisma.ActivityCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.ActivityCreateManyCategoryInputEnvelope
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-}
-
-export type ActivityUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput> | Prisma.ActivityCreateWithoutCategoryInput[] | Prisma.ActivityUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCategoryInput | Prisma.ActivityCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutCategoryInput | Prisma.ActivityUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.ActivityCreateManyCategoryInputEnvelope
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutCategoryInput | Prisma.ActivityUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutCategoryInput | Prisma.ActivityUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
-}
-
-export type ActivityUncheckedUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput> | Prisma.ActivityCreateWithoutCategoryInput[] | Prisma.ActivityUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCategoryInput | Prisma.ActivityCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.ActivityUpsertWithWhereUniqueWithoutCategoryInput | Prisma.ActivityUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.ActivityCreateManyCategoryInputEnvelope
-  set?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  disconnect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  delete?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  connect?: Prisma.ActivityWhereUniqueInput | Prisma.ActivityWhereUniqueInput[]
-  update?: Prisma.ActivityUpdateWithWhereUniqueWithoutCategoryInput | Prisma.ActivityUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.ActivityUpdateManyWithWhereWithoutCategoryInput | Prisma.ActivityUpdateManyWithWhereWithoutCategoryInput[]
-  deleteMany?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
-}
-
-export type ActivityCreateNestedOneWithoutSchedulesInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutSchedulesInput, Prisma.ActivityUncheckedCreateWithoutSchedulesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSchedulesInput
+export type ActivityCreateNestedOneWithoutTeamOfferingActivitiesInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
 }
 
-export type ActivityUpdateOneRequiredWithoutSchedulesNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutSchedulesInput, Prisma.ActivityUncheckedCreateWithoutSchedulesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutSchedulesInput
-  upsert?: Prisma.ActivityUpsertWithoutSchedulesInput
+export type ActivityUpdateOneRequiredWithoutTeamOfferingActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput
+  upsert?: Prisma.ActivityUpsertWithoutTeamOfferingActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutSchedulesInput, Prisma.ActivityUpdateWithoutSchedulesInput>, Prisma.ActivityUncheckedUpdateWithoutSchedulesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutTeamOfferingActivitiesInput, Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
 }
 
-export type ActivityCreateNestedOneWithoutEnrollmentsInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutEnrollmentsInput, Prisma.ActivityUncheckedCreateWithoutEnrollmentsInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutEnrollmentsInput
+export type ActivityCreateNestedOneWithoutCourseOfferingActivitiesInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
 }
 
-export type ActivityUpdateOneRequiredWithoutEnrollmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutEnrollmentsInput, Prisma.ActivityUncheckedCreateWithoutEnrollmentsInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutEnrollmentsInput
-  upsert?: Prisma.ActivityUpsertWithoutEnrollmentsInput
+export type ActivityUpdateOneRequiredWithoutCourseOfferingActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput
+  upsert?: Prisma.ActivityUpsertWithoutCourseOfferingActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutEnrollmentsInput, Prisma.ActivityUpdateWithoutEnrollmentsInput>, Prisma.ActivityUncheckedUpdateWithoutEnrollmentsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutCourseOfferingActivitiesInput, Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
 }
 
-export type ActivityCreateWithoutDisciplineInput = {
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityCreateWithoutLocationInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  category: Prisma.CategoryCreateNestedOneWithoutActivitiesInput
-  schedules?: Prisma.ScheduleCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutActivityInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityUncheckedCreateWithoutDisciplineInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityUncheckedCreateWithoutLocationInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutActivityInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityCreateOrConnectWithoutDisciplineInput = {
+export type ActivityCreateOrConnectWithoutLocationInput = {
   where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput>
 }
 
-export type ActivityCreateManyDisciplineInputEnvelope = {
-  data: Prisma.ActivityCreateManyDisciplineInput | Prisma.ActivityCreateManyDisciplineInput[]
+export type ActivityCreateManyLocationInputEnvelope = {
+  data: Prisma.ActivityCreateManyLocationInput | Prisma.ActivityCreateManyLocationInput[]
   skipDuplicates?: boolean
 }
 
-export type ActivityUpsertWithWhereUniqueWithoutDisciplineInput = {
+export type ActivityUpsertWithWhereUniqueWithoutLocationInput = {
   where: Prisma.ActivityWhereUniqueInput
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutDisciplineInput, Prisma.ActivityUncheckedUpdateWithoutDisciplineInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutDisciplineInput, Prisma.ActivityUncheckedCreateWithoutDisciplineInput>
+  update: Prisma.XOR<Prisma.ActivityUpdateWithoutLocationInput, Prisma.ActivityUncheckedUpdateWithoutLocationInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutLocationInput, Prisma.ActivityUncheckedCreateWithoutLocationInput>
 }
 
-export type ActivityUpdateWithWhereUniqueWithoutDisciplineInput = {
+export type ActivityUpdateWithWhereUniqueWithoutLocationInput = {
   where: Prisma.ActivityWhereUniqueInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutDisciplineInput, Prisma.ActivityUncheckedUpdateWithoutDisciplineInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateWithoutLocationInput, Prisma.ActivityUncheckedUpdateWithoutLocationInput>
 }
 
-export type ActivityUpdateManyWithWhereWithoutDisciplineInput = {
+export type ActivityUpdateManyWithWhereWithoutLocationInput = {
   where: Prisma.ActivityScalarWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutDisciplineInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutLocationInput>
 }
 
 export type ActivityScalarWhereInput = {
   AND?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
   OR?: Prisma.ActivityScalarWhereInput[]
   NOT?: Prisma.ActivityScalarWhereInput | Prisma.ActivityScalarWhereInput[]
-  id?: Prisma.IntFilter<"Activity"> | number
-  name?: Prisma.StringFilter<"Activity"> | string
+  id?: Prisma.StringFilter<"Activity"> | string
+  title?: Prisma.StringFilter<"Activity"> | string
+  description?: Prisma.StringFilter<"Activity"> | string
+  startsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  endsAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
+  locationId?: Prisma.StringFilter<"Activity"> | string
   type?: Prisma.EnumActivityTypeFilter<"Activity"> | $Enums.ActivityType
-  location?: Prisma.StringNullableFilter<"Activity"> | string | null
-  categoryId?: Prisma.IntFilter<"Activity"> | number
-  startDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  endDate?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  totalPrice?: Prisma.DecimalFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.DecimalNullableFilter<"Activity"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.IntNullableFilter<"Activity"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
-  isActive?: Prisma.BoolFilter<"Activity"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Activity"> | Date | string | null
-  disciplineId?: Prisma.IntNullableFilter<"Activity"> | number | null
 }
 
-export type ActivityCreateWithoutCategoryInput = {
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityCreateWithoutTeamOfferingActivitiesInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  schedules?: Prisma.ScheduleCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutActivityInput
-  discipline?: Prisma.DisciplineCreateNestedOneWithoutActivitiesInput
+  location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityUncheckedCreateWithoutCategoryInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  locationId: string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
-  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutActivityInput
-  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutActivityInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityCreateOrConnectWithoutCategoryInput = {
+export type ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput = {
   where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
 }
 
-export type ActivityCreateManyCategoryInputEnvelope = {
-  data: Prisma.ActivityCreateManyCategoryInput | Prisma.ActivityCreateManyCategoryInput[]
-  skipDuplicates?: boolean
-}
-
-export type ActivityUpsertWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.ActivityWhereUniqueInput
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutCategoryInput, Prisma.ActivityUncheckedUpdateWithoutCategoryInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutCategoryInput, Prisma.ActivityUncheckedCreateWithoutCategoryInput>
-}
-
-export type ActivityUpdateWithWhereUniqueWithoutCategoryInput = {
-  where: Prisma.ActivityWhereUniqueInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutCategoryInput, Prisma.ActivityUncheckedUpdateWithoutCategoryInput>
-}
-
-export type ActivityUpdateManyWithWhereWithoutCategoryInput = {
-  where: Prisma.ActivityScalarWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateManyMutationInput, Prisma.ActivityUncheckedUpdateManyWithoutCategoryInput>
-}
-
-export type ActivityCreateWithoutSchedulesInput = {
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  category: Prisma.CategoryCreateNestedOneWithoutActivitiesInput
-  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutActivityInput
-  discipline?: Prisma.DisciplineCreateNestedOneWithoutActivitiesInput
-}
-
-export type ActivityUncheckedCreateWithoutSchedulesInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
-  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutActivityInput
-}
-
-export type ActivityCreateOrConnectWithoutSchedulesInput = {
-  where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutSchedulesInput, Prisma.ActivityUncheckedCreateWithoutSchedulesInput>
-}
-
-export type ActivityUpsertWithoutSchedulesInput = {
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutSchedulesInput, Prisma.ActivityUncheckedUpdateWithoutSchedulesInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutSchedulesInput, Prisma.ActivityUncheckedCreateWithoutSchedulesInput>
+export type ActivityUpsertWithoutTeamOfferingActivitiesInput = {
+  update: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
   where?: Prisma.ActivityWhereInput
 }
 
-export type ActivityUpdateToOneWithWhereWithoutSchedulesInput = {
+export type ActivityUpdateToOneWithWhereWithoutTeamOfferingActivitiesInput = {
   where?: Prisma.ActivityWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutSchedulesInput, Prisma.ActivityUncheckedUpdateWithoutSchedulesInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
 }
 
-export type ActivityUpdateWithoutSchedulesInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUpdateWithoutTeamOfferingActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category?: Prisma.CategoryUpdateOneRequiredWithoutActivitiesNestedInput
-  enrollments?: Prisma.EnrollmentUpdateManyWithoutActivityNestedInput
-  discipline?: Prisma.DisciplineUpdateOneWithoutActivitiesNestedInput
+  location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateWithoutSchedulesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutActivityNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityCreateWithoutEnrollmentsInput = {
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityCreateWithoutCourseOfferingActivitiesInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  category: Prisma.CategoryCreateNestedOneWithoutActivitiesInput
-  schedules?: Prisma.ScheduleCreateNestedManyWithoutActivityInput
-  discipline?: Prisma.DisciplineCreateNestedOneWithoutActivitiesInput
+  location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityUncheckedCreateWithoutEnrollmentsInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  locationId: string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
-  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutActivityInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityCreateOrConnectWithoutEnrollmentsInput = {
+export type ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput = {
   where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutEnrollmentsInput, Prisma.ActivityUncheckedCreateWithoutEnrollmentsInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
 }
 
-export type ActivityUpsertWithoutEnrollmentsInput = {
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutEnrollmentsInput, Prisma.ActivityUncheckedUpdateWithoutEnrollmentsInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutEnrollmentsInput, Prisma.ActivityUncheckedCreateWithoutEnrollmentsInput>
+export type ActivityUpsertWithoutCourseOfferingActivitiesInput = {
+  update: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
   where?: Prisma.ActivityWhereInput
 }
 
-export type ActivityUpdateToOneWithWhereWithoutEnrollmentsInput = {
+export type ActivityUpdateToOneWithWhereWithoutCourseOfferingActivitiesInput = {
   where?: Prisma.ActivityWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutEnrollmentsInput, Prisma.ActivityUncheckedUpdateWithoutEnrollmentsInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
 }
 
-export type ActivityUpdateWithoutEnrollmentsInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUpdateWithoutCourseOfferingActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category?: Prisma.CategoryUpdateOneRequiredWithoutActivitiesNestedInput
-  schedules?: Prisma.ScheduleUpdateManyWithoutActivityNestedInput
-  discipline?: Prisma.DisciplineUpdateOneWithoutActivitiesNestedInput
+  location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateWithoutEnrollmentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  locationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutActivityNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityCreateManyDisciplineInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  categoryId: number
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
+export type ActivityCreateManyLocationInput = {
+  id?: string
+  title: string
+  description: string
+  startsAt: Date | string
+  endsAt: Date | string
+  type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
 }
 
-export type ActivityUpdateWithoutDisciplineInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category?: Prisma.CategoryUpdateOneRequiredWithoutActivitiesNestedInput
-  schedules?: Prisma.ScheduleUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUpdateManyWithoutActivityNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateWithoutDisciplineInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUncheckedUpdateWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutActivityNestedInput
+  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateManyWithoutDisciplineInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+export type ActivityUncheckedUpdateManyWithoutLocationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type ActivityCreateManyCategoryInput = {
-  id?: number
-  name: string
-  type: $Enums.ActivityType
-  location?: string | null
-  startDate: Date | string
-  endDate: Date | string
-  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isActive?: boolean
-  deletedAt?: Date | string | null
-  disciplineId?: number | null
-}
-
-export type ActivityUpdateWithoutCategoryInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  schedules?: Prisma.ScheduleUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUpdateManyWithoutActivityNestedInput
-  discipline?: Prisma.DisciplineUpdateOneWithoutActivitiesNestedInput
-}
-
-export type ActivityUncheckedUpdateWithoutCategoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutActivityNestedInput
-  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutActivityNestedInput
-}
-
-export type ActivityUncheckedUpdateManyWithoutCategoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  monthlyPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  installments?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  disciplineId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1228,13 +755,13 @@ export type ActivityUncheckedUpdateManyWithoutCategoryInput = {
  */
 
 export type ActivityCountOutputType = {
-  schedules: number
-  enrollments: number
+  teamOfferingActivities: number
+  courseOfferingActivities: number
 }
 
 export type ActivityCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  schedules?: boolean | ActivityCountOutputTypeCountSchedulesArgs
-  enrollments?: boolean | ActivityCountOutputTypeCountEnrollmentsArgs
+  teamOfferingActivities?: boolean | ActivityCountOutputTypeCountTeamOfferingActivitiesArgs
+  courseOfferingActivities?: boolean | ActivityCountOutputTypeCountCourseOfferingActivitiesArgs
 }
 
 /**
@@ -1250,140 +777,103 @@ export type ActivityCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * ActivityCountOutputType without action
  */
-export type ActivityCountOutputTypeCountSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ScheduleWhereInput
+export type ActivityCountOutputTypeCountTeamOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamOfferingActivityWhereInput
 }
 
 /**
  * ActivityCountOutputType without action
  */
-export type ActivityCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EnrollmentWhereInput
+export type ActivityCountOutputTypeCountCourseOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseOfferingActivityWhereInput
 }
 
 
 export type ActivitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
+  title?: boolean
+  description?: boolean
+  startsAt?: boolean
+  endsAt?: boolean
+  locationId?: boolean
   type?: boolean
-  location?: boolean
-  categoryId?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  totalPrice?: boolean
-  monthlyPrice?: boolean
-  installments?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isActive?: boolean
-  deletedAt?: boolean
-  disciplineId?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  schedules?: boolean | Prisma.Activity$schedulesArgs<ExtArgs>
-  enrollments?: boolean | Prisma.Activity$enrollmentsArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
+  teamOfferingActivities?: boolean | Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>
+  courseOfferingActivities?: boolean | Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>
   _count?: boolean | Prisma.ActivityCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
+  title?: boolean
+  description?: boolean
+  startsAt?: boolean
+  endsAt?: boolean
+  locationId?: boolean
   type?: boolean
-  location?: boolean
-  categoryId?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  totalPrice?: boolean
-  monthlyPrice?: boolean
-  installments?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isActive?: boolean
-  deletedAt?: boolean
-  disciplineId?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
+  title?: boolean
+  description?: boolean
+  startsAt?: boolean
+  endsAt?: boolean
+  locationId?: boolean
   type?: boolean
-  location?: boolean
-  categoryId?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  totalPrice?: boolean
-  monthlyPrice?: boolean
-  installments?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isActive?: boolean
-  deletedAt?: boolean
-  disciplineId?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
 export type ActivitySelectScalar = {
   id?: boolean
-  name?: boolean
+  title?: boolean
+  description?: boolean
+  startsAt?: boolean
+  endsAt?: boolean
+  locationId?: boolean
   type?: boolean
-  location?: boolean
-  categoryId?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  totalPrice?: boolean
-  monthlyPrice?: boolean
-  installments?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isActive?: boolean
-  deletedAt?: boolean
-  disciplineId?: boolean
 }
 
-export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "location" | "categoryId" | "startDate" | "endDate" | "totalPrice" | "monthlyPrice" | "installments" | "createdAt" | "updatedAt" | "isActive" | "deletedAt" | "disciplineId", ExtArgs["result"]["activity"]>
+export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startsAt" | "endsAt" | "locationId" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
 export type ActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  schedules?: boolean | Prisma.Activity$schedulesArgs<ExtArgs>
-  enrollments?: boolean | Prisma.Activity$enrollmentsArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
+  teamOfferingActivities?: boolean | Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>
+  courseOfferingActivities?: boolean | Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>
   _count?: boolean | Prisma.ActivityCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ActivityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }
 export type ActivityIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.Activity$disciplineArgs<ExtArgs>
+  location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }
 
 export type $ActivityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Activity"
   objects: {
-    category: Prisma.$CategoryPayload<ExtArgs>
-    schedules: Prisma.$SchedulePayload<ExtArgs>[]
-    enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
-    discipline: Prisma.$DisciplinePayload<ExtArgs> | null
+    location: Prisma.$LocationPayload<ExtArgs>
+    teamOfferingActivities: Prisma.$TeamOfferingActivityPayload<ExtArgs>[]
+    courseOfferingActivities: Prisma.$CourseOfferingActivityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    name: string
+    id: string
+    title: string
+    description: string
+    startsAt: Date
+    endsAt: Date
+    locationId: string
     type: $Enums.ActivityType
-    location: string | null
-    categoryId: number
-    startDate: Date
-    endDate: Date
-    totalPrice: runtime.Decimal
-    monthlyPrice: runtime.Decimal | null
-    installments: number | null
     createdAt: Date
     updatedAt: Date
-    isActive: boolean
-    deletedAt: Date | null
-    disciplineId: number | null
   }, ExtArgs["result"]["activity"]>
   composites: {}
 }
@@ -1778,10 +1268,9 @@ readonly fields: ActivityFieldRefs;
  */
 export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  schedules<T extends Prisma.Activity$schedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$schedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  enrollments<T extends Prisma.Activity$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  discipline<T extends Prisma.Activity$disciplineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$disciplineArgs<ExtArgs>>): Prisma.Prisma__DisciplineClient<runtime.Types.Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  location<T extends Prisma.LocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationDefaultArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  teamOfferingActivities<T extends Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamOfferingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  courseOfferingActivities<T extends Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseOfferingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1811,21 +1300,15 @@ export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Activity model
  */
 export interface ActivityFieldRefs {
-  readonly id: Prisma.FieldRef<"Activity", 'Int'>
-  readonly name: Prisma.FieldRef<"Activity", 'String'>
+  readonly id: Prisma.FieldRef<"Activity", 'String'>
+  readonly title: Prisma.FieldRef<"Activity", 'String'>
+  readonly description: Prisma.FieldRef<"Activity", 'String'>
+  readonly startsAt: Prisma.FieldRef<"Activity", 'DateTime'>
+  readonly endsAt: Prisma.FieldRef<"Activity", 'DateTime'>
+  readonly locationId: Prisma.FieldRef<"Activity", 'String'>
   readonly type: Prisma.FieldRef<"Activity", 'ActivityType'>
-  readonly location: Prisma.FieldRef<"Activity", 'String'>
-  readonly categoryId: Prisma.FieldRef<"Activity", 'Int'>
-  readonly startDate: Prisma.FieldRef<"Activity", 'DateTime'>
-  readonly endDate: Prisma.FieldRef<"Activity", 'DateTime'>
-  readonly totalPrice: Prisma.FieldRef<"Activity", 'Decimal'>
-  readonly monthlyPrice: Prisma.FieldRef<"Activity", 'Decimal'>
-  readonly installments: Prisma.FieldRef<"Activity", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Activity", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Activity", 'DateTime'>
-  readonly isActive: Prisma.FieldRef<"Activity", 'Boolean'>
-  readonly deletedAt: Prisma.FieldRef<"Activity", 'DateTime'>
-  readonly disciplineId: Prisma.FieldRef<"Activity", 'Int'>
 }
     
 
@@ -2227,70 +1710,51 @@ export type ActivityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Activity.schedules
+ * Activity.teamOfferingActivities
  */
-export type Activity$schedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Activity$teamOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Schedule
+   * Select specific fields to fetch from the TeamOfferingActivity
    */
-  select?: Prisma.ScheduleSelect<ExtArgs> | null
+  select?: Prisma.TeamOfferingActivitySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Schedule
+   * Omit specific fields from the TeamOfferingActivity
    */
-  omit?: Prisma.ScheduleOmit<ExtArgs> | null
+  omit?: Prisma.TeamOfferingActivityOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ScheduleInclude<ExtArgs> | null
-  where?: Prisma.ScheduleWhereInput
-  orderBy?: Prisma.ScheduleOrderByWithRelationInput | Prisma.ScheduleOrderByWithRelationInput[]
-  cursor?: Prisma.ScheduleWhereUniqueInput
+  include?: Prisma.TeamOfferingActivityInclude<ExtArgs> | null
+  where?: Prisma.TeamOfferingActivityWhereInput
+  orderBy?: Prisma.TeamOfferingActivityOrderByWithRelationInput | Prisma.TeamOfferingActivityOrderByWithRelationInput[]
+  cursor?: Prisma.TeamOfferingActivityWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ScheduleScalarFieldEnum | Prisma.ScheduleScalarFieldEnum[]
+  distinct?: Prisma.TeamOfferingActivityScalarFieldEnum | Prisma.TeamOfferingActivityScalarFieldEnum[]
 }
 
 /**
- * Activity.enrollments
+ * Activity.courseOfferingActivities
  */
-export type Activity$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Activity$courseOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Enrollment
+   * Select specific fields to fetch from the CourseOfferingActivity
    */
-  select?: Prisma.EnrollmentSelect<ExtArgs> | null
+  select?: Prisma.CourseOfferingActivitySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Enrollment
+   * Omit specific fields from the CourseOfferingActivity
    */
-  omit?: Prisma.EnrollmentOmit<ExtArgs> | null
+  omit?: Prisma.CourseOfferingActivityOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EnrollmentInclude<ExtArgs> | null
-  where?: Prisma.EnrollmentWhereInput
-  orderBy?: Prisma.EnrollmentOrderByWithRelationInput | Prisma.EnrollmentOrderByWithRelationInput[]
-  cursor?: Prisma.EnrollmentWhereUniqueInput
+  include?: Prisma.CourseOfferingActivityInclude<ExtArgs> | null
+  where?: Prisma.CourseOfferingActivityWhereInput
+  orderBy?: Prisma.CourseOfferingActivityOrderByWithRelationInput | Prisma.CourseOfferingActivityOrderByWithRelationInput[]
+  cursor?: Prisma.CourseOfferingActivityWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EnrollmentScalarFieldEnum | Prisma.EnrollmentScalarFieldEnum[]
-}
-
-/**
- * Activity.discipline
- */
-export type Activity$disciplineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Discipline
-   */
-  select?: Prisma.DisciplineSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Discipline
-   */
-  omit?: Prisma.DisciplineOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DisciplineInclude<ExtArgs> | null
-  where?: Prisma.DisciplineWhereInput
+  distinct?: Prisma.CourseOfferingActivityScalarFieldEnum | Prisma.CourseOfferingActivityScalarFieldEnum[]
 }
 
 /**

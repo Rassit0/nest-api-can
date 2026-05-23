@@ -12,6 +12,37 @@ import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { PersonPaginationDto } from './dto/pagination.dto';
 
+export const PersonSelect: Prisma.PersonSelect = {
+  id: true,
+  name: true,
+  imageUrl: true,
+  address: true,
+  phone: true,
+  email: true,
+  contacts: {
+    select: {
+      relationship: true,
+      isPrimaryContact: true,
+      isEmergencyContact: true,
+      isBillingContact: true,
+      contactPerson: {
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          documentType: true,
+          documentNumber: true,
+          phone: true,
+          email: true,
+        },
+      },
+    },
+  },
+  createdAt: true,
+  updatedAt: true,
+};
+
 @Injectable()
 export class PersonsService {
   private readonly logger = new Logger('PersonsService');
@@ -19,36 +50,16 @@ export class PersonsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createPersonDto: CreatePersonDto) {
-    try {
-      const newPerson = await this.prisma.person.create({
-        data: createPersonDto,
-        // Esto es lo que hace "la magia" de devolver los datos relacionados
-        include: {
-          tutors: {
-            select: {
-              tutor: {
-                select: {
-                  id: true,
-                  name: true,
-                  lastName: true,
-                  surName: true,
-                  ci: true,
-                  phone: true,
-                  imageUrl: true,
-                },
-              }, // Trae los datos de la persona que es tutor
-            },
-          },
-        },
-      });
+    const newPerson = await this.prisma.person.create({
+      data: createPersonDto,
+      // Esto es lo que hace "la magia" de devolver los datos relacionados
+      include: {},
+    });
 
-      return {
-        message: 'Persona y tutores agregados exitosamente',
-        data: newPerson,
-      };
-    } catch (error) {
-      this.handleExceptions(error);
-    }
+    return {
+      message: 'Persona y tutores agregados exitosamente',
+      data: newPerson,
+    };
   }
 
   async findAll(paginationDto: PersonPaginationDto) {
@@ -65,11 +76,11 @@ export class PersonsService {
     const where: Prisma.PersonWhereInput = search
       ? {
           OR: [
-            { id: { equals: Number(search) } },
+            // ({ id: { equals: Number(search) } }),
             { name: { contains: search, mode: 'insensitive' } },
             { lastName: { contains: search, mode: 'insensitive' } },
-            { surName: { contains: search, mode: 'insensitive' } },
-            { ci: { contains: search, mode: 'insensitive' } },
+            { secondLastName: { contains: search, mode: 'insensitive' } },
+            { documentNumber: { contains: search, mode: 'insensitive' } },
             { phone: { contains: search, mode: 'insensitive' } },
             { email: { contains: search, mode: 'insensitive' } },
           ],
@@ -83,23 +94,7 @@ export class PersonsService {
         take: per_page,
         skip,
         orderBy: { [sortField]: orderBy },
-        include: {
-          tutors: {
-            select: {
-              tutor: {
-                select: {
-                  id: true,
-                  name: true,
-                  lastName: true,
-                  surName: true,
-                  ci: true,
-                  phone: true,
-                  imageUrl: true,
-                },
-              }, // Trae los datos de la persona que es tutor
-            },
-          },
-        },
+        select: PersonSelect,
       }),
       this.prisma.person.count({ where }),
     ]);
@@ -118,33 +113,18 @@ export class PersonsService {
         itemsPerPage: per_page, // Ej: 10
         totalPages, // Ej: 3
         currentPage, // Ej: 10 (si el usuario pidió el page 90)
-        // ¡Estos 2 valores ahorran mucho trabajo en el front!
-        hasNextPage: page < Math.ceil(totalItems / per_page),
+        hasNextPage: page < totalPages,
         hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
       },
     };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const person = await this.prisma.person.findUnique({
       where: { id },
-      include: {
-        tutors: {
-          select: {
-            tutor: {
-              select: {
-                id: true,
-                name: true,
-                lastName: true,
-                surName: true,
-                ci: true,
-                phone: true,
-                imageUrl: true,
-              },
-            },
-          },
-        },
-      },
+      select: PersonSelect,
     });
 
     if (!person) {
@@ -153,89 +133,20 @@ export class PersonsService {
     return { data: person, message: 'Persona encontrada exitosamente' };
   }
 
-  async update(id: number, updatePersonDto: UpdatePersonDto) {
-    try {
-      const newPerson = await this.prisma.person.update({
-        where: { id },
-        data: updatePersonDto,
-        // Esto es lo que hace "la magia" de devolver los datos relacionados
-        include: {
-          tutors: {
-            select: {
-              tutor: {
-                select: {
-                  id: true,
-                  name: true,
-                  lastName: true,
-                  surName: true,
-                  ci: true,
-                  phone: true,
-                  imageUrl: true,
-                },
-              }, // Trae los datos de la persona que es tutor
-            },
-          },
-        },
-      });
+  async update(id: string, updatePersonDto: UpdatePersonDto) {
+    const newPerson = await this.prisma.person.update({
+      where: { id },
+      data: updatePersonDto,
+      select: PersonSelect,
+    });
 
-      return {
-        message: 'Persona y tutores agregados exitosamente',
-        data: newPerson,
-      };
-    } catch (error) {
-      this.handleExceptions(error);
-    }
+    return {
+      message: 'Persona y tutores agregados exitosamente',
+      data: newPerson,
+    };
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} person`;
-  }
-
-  private handleExceptions(error: any) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('El recurso solicitado no fue encontrado');
-      }
-      const driverError = error.meta?.driverAdapterError as any;
-      const fields = driverError.cause.constraint.fields;
-      // console.log(fields); // [ 'title' ] o [ 'slug' ]
-      if (error.code === 'P2003') {
-        throw new BadRequestException(
-          'Uno o más IDs de tutor proporcionados no existen en la base de datos.',
-        );
-      }
-      // P2002 es el código para "Unique constraint failed"
-      if (error.code === 'P2002') {
-        throw new ConflictException({
-          message: 'La Persona ya existe',
-          statusCode: 409,
-          errors: {
-            ...fields.reduce((acc, field) => {
-              acc[field] = `El CI está registrado`;
-              return acc;
-            }, {}),
-          },
-        });
-      }
-    }
-    // 2. ERROR DE VALIDACIÓN DE PRISMA
-    if (error instanceof Prisma.PrismaClientValidationError) {
-      this.logger.error(
-        'Error de validación de Prisma: Schema desactualizado o datos inválidos',
-      );
-      // Este error ocurre cuando la estructura del objeto no coincide con el schema
-      throw new BadRequestException(
-        'Error en la estructura de los datos enviados',
-      );
-    }
-
-    // 3. Errores de Nest (como BadRequestException lanzados manualmente)
-    if (error instanceof BadRequestException) {
-      throw error;
-    }
-
-    // 4. Fallo genérico (Error de conexión, etc.)
-    this.logger.error(error);
-    throw new InternalServerErrorException('Error interno del servidor');
   }
 }

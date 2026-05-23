@@ -26,5 +26,15 @@
   "IS_MOBILE_PHONE": "Debe ser un número de celular válido",
   "IS_JSON": "Debe ser un JSON válido",
   "CUSTOM": "Valor inválido",
-  "ALREADY_EXISTS": "{entity} ya se encuentra registrado"
+  "ALREADY_EXISTS": "{entity} ya se encuentra registrado",
+  "NOT_EXISTS": "{constraint1} no se encuentra registrado",
+  "NOT_MANY_EXISTS": "Uno o más registros no existen",
+  "IS_MILITARY_TIME": "Debe ser una hora válida en formato HH:mm (24h)",
+  "IS_AFTER": "Debe ser mayor o igual a {constraint1}",
+  "MIN_DAY": "Debe ser mayor o igual a {constraint1}",
+  "MAX_DAY": "Debe ser menor o igual a {constraint1}",
+  "IS_DEFINED": "Debe estar definido",
+  "NOT_FOUND_RELATION": "{entity} no se encuentra registrado",
+  "RELATION_ERROR": "{entity} no se encuentra registrado",
+  "IS_AFTER_START_DATE": "La fecha final debe ser mayor a la fecha inicial"
 }

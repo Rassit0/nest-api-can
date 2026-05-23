@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
   Query,
-  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -31,21 +31,21 @@ export class PersonsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.personsService.findOne(id);
   }
 
   @Patch(':id')
   @FormDataRequest()
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePersonDto: UpdatePersonDto,
   ) {
     return await this.personsService.update(id, updatePersonDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personsService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.personsService.remove(id);
   }
 }

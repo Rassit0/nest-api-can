@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
 import { PersonsModule } from './persons/persons.module';
 import { DisciplinesModule } from './disciplines/disciplines.module';
-import { CategoriesModule } from './categories/categories.module';
 import {
   AcceptLanguageResolver,
   HeaderResolver,
@@ -12,13 +11,19 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import path, { join } from 'path';
+import { ActivitiesModule } from './activities/activities.module';
+import { LocationsModule } from './locations/locations.module';
+import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
+import { MatchDetailModule } from './match-detail/match-detail.module';
+import { EventsModule } from './events/events.module';
+import { MatchesModule } from './matches/matches.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
     CommonModule,
     PersonsModule,
     DisciplinesModule,
-    CategoriesModule,
     I18nModule.forRootAsync({
       useFactory: () => ({
         fallbackLanguage: 'es',
@@ -30,8 +35,14 @@ import path, { join } from 'path';
       }),
       resolvers: [new HeaderResolver(['x-custom-lang'])],
     }),
+    ActivitiesModule,
+    LocationsModule,
+    MatchDetailModule,
+    EventsModule,
+    MatchesModule,
+    OrganizationsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaExceptionFilter],
 })
 export class AppModule {}

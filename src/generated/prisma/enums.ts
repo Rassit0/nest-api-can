@@ -9,87 +9,80 @@
 * 🟢 You can import this file directly.
 */
 
-export const UniformSize = {
-  XS: 'XS',
-  S: 'S',
-  M: 'M',
-  L: 'L',
-  XL: 'XL',
-  XXL: 'XXL',
-  XXXL: 'XXXL'
+export const DocumentType = {
+  CI: 'CI',
+  NIT: 'NIT'
 } as const
 
-export type UniformSize = (typeof UniformSize)[keyof typeof UniformSize]
+export type DocumentType = (typeof DocumentType)[keyof typeof DocumentType]
 
 
-export const GradeLevel = {
-  BEGINNER: 'BEGINNER',
-  INTERMEDIATE: 'INTERMEDIATE',
-  ADVANCED: 'ADVANCED'
+export const Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
 } as const
 
-export type GradeLevel = (typeof GradeLevel)[keyof typeof GradeLevel]
+export type Gender = (typeof Gender)[keyof typeof Gender]
 
 
-export const ContractType = {
-  SALARY: 'SALARY',
-  STIPEND: 'STIPEND',
-  BONUS: 'BONUS',
-  TOURNAMENT_PAY: 'TOURNAMENT_PAY'
-} as const
-
-export type ContractType = (typeof ContractType)[keyof typeof ContractType]
-
-
-export const TransactionType = {
-  INCOME: 'INCOME',
-  EXPENSE: 'EXPENSE'
-} as const
-
-export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
-
-
-export const PaymentMethod = {
-  CASH: 'CASH',
-  QR_TRANSFER: 'QR_TRANSFER',
-  BANK_TRANSFER: 'BANK_TRANSFER',
+export const ContactRelationship = {
+  FATHER: 'FATHER',
+  MOTHER: 'MOTHER',
+  BROTHER: 'BROTHER',
+  SISTER: 'SISTER',
+  SPOUSE: 'SPOUSE',
+  PARTNER: 'PARTNER',
+  UNCLE: 'UNCLE',
+  AUNT: 'AUNT',
+  GRANDPARENT: 'GRANDPARENT',
+  FRIEND: 'FRIEND',
+  TUTOR: 'TUTOR',
   OTHER: 'OTHER'
 } as const
 
-export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
-
-
-export const TransactionStatus = {
-  PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
-} as const
-
-export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
+export type ContactRelationship = (typeof ContactRelationship)[keyof typeof ContactRelationship]
 
 
 export const ActivityType = {
-  EDUCATIONAL: 'EDUCATIONAL',
-  SPORTS_TEAM: 'SPORTS_TEAM',
-  EVENT: 'EVENT'
+  TRAINING: 'TRAINING',
+  MATCH: 'MATCH',
+  CLASS: 'CLASS',
+  EVENT: 'EVENT',
+  RENTAL: 'RENTAL'
 } as const
 
 export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
 
 
-export const GenderCategory = {
+export const ProgramGender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
   MIXED: 'MIXED'
 } as const
 
-export type GenderCategory = (typeof GenderCategory)[keyof typeof GenderCategory]
+export type ProgramGender = (typeof ProgramGender)[keyof typeof ProgramGender]
 
 
-export const EnrollmentRole = {
-  PLAYER: 'PLAYER',
-  STUDENT: 'STUDENT',
-  TEACHER: 'TEACHER'
+export const ProgramStatus = {
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  WITHDRAWN: 'WITHDRAWN'
 } as const
 
-export type EnrollmentRole = (typeof EnrollmentRole)[keyof typeof EnrollmentRole]
+export type ProgramStatus = (typeof ProgramStatus)[keyof typeof ProgramStatus]
+
+
+export const PassType = {
+  INTERNAL: 'INTERNAL',
+  EXTERNAL: 'EXTERNAL'
+} as const
+
+export type PassType = (typeof PassType)[keyof typeof PassType]
+
+
+export const PlayerPassStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type PlayerPassStatus = (typeof PlayerPassStatus)[keyof typeof PlayerPassStatus]

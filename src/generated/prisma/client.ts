@@ -45,77 +45,122 @@ export { Prisma }
  */
 export type Person = Prisma.PersonModel
 /**
- * Model TutorRelation
+ * Model PersonContact
  * 
  */
-export type TutorRelation = Prisma.TutorRelationModel
+export type PersonContact = Prisma.PersonContactModel
 /**
- * Model User
+ * Model Player
  * 
  */
-export type User = Prisma.UserModel
+export type Player = Prisma.PlayerModel
 /**
- * Model EmployeeProfile
+ * Model Student
  * 
  */
-export type EmployeeProfile = Prisma.EmployeeProfileModel
+export type Student = Prisma.StudentModel
 /**
  * Model Discipline
  * 
  */
 export type Discipline = Prisma.DisciplineModel
 /**
- * Model TeacherProfile
+ * Model Season
  * 
  */
-export type TeacherProfile = Prisma.TeacherProfileModel
+export type Season = Prisma.SeasonModel
 /**
- * Model StudentProfile
+ * Model Organization
  * 
  */
-export type StudentProfile = Prisma.StudentProfileModel
+export type Organization = Prisma.OrganizationModel
 /**
- * Model PlayerProfile
+ * Model Clubs
  * 
  */
-export type PlayerProfile = Prisma.PlayerProfileModel
+export type Clubs = Prisma.ClubsModel
 /**
- * Model Contract
+ * Model ClubOfferings
  * 
  */
-export type Contract = Prisma.ContractModel
+export type ClubOfferings = Prisma.ClubOfferingsModel
 /**
- * Model Transaction
+ * Model Location
  * 
  */
-export type Transaction = Prisma.TransactionModel
+export type Location = Prisma.LocationModel
 /**
  * Model Activity
  * 
  */
 export type Activity = Prisma.ActivityModel
 /**
- * Model Category
+ * Model Teams
  * 
  */
-export type Category = Prisma.CategoryModel
+export type Teams = Prisma.TeamsModel
 /**
- * Model Schedule
+ * Model TeamOffering
  * 
  */
-export type Schedule = Prisma.ScheduleModel
+export type TeamOffering = Prisma.TeamOfferingModel
 /**
- * Model Enrollment
+ * Model TeamOfferingActivity
  * 
  */
-export type Enrollment = Prisma.EnrollmentModel
+export type TeamOfferingActivity = Prisma.TeamOfferingActivityModel
 /**
- * Model EnrollmentPlayerDetail
+ * Model TeamMembership
  * 
  */
-export type EnrollmentPlayerDetail = Prisma.EnrollmentPlayerDetailModel
+export type TeamMembership = Prisma.TeamMembershipModel
 /**
- * Model EnrollmentStudentDetail
+ * Model TeamMembershipDiscount
  * 
  */
-export type EnrollmentStudentDetail = Prisma.EnrollmentStudentDetailModel
+export type TeamMembershipDiscount = Prisma.TeamMembershipDiscountModel
+/**
+ * Model PlayerReinforcement
+ * 
+ */
+export type PlayerReinforcement = Prisma.PlayerReinforcementModel
+/**
+ * Model PlayerPassOffering
+ * 
+ */
+export type PlayerPassOffering = Prisma.PlayerPassOfferingModel
+/**
+ * Model PlayerPass
+ * 
+ */
+export type PlayerPass = Prisma.PlayerPassModel
+/**
+ * Model School
+ * 
+ */
+export type School = Prisma.SchoolModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model CourseOffering
+ * 
+ */
+export type CourseOffering = Prisma.CourseOfferingModel
+/**
+ * Model CourseOfferingActivity
+ * 
+ */
+export type CourseOfferingActivity = Prisma.CourseOfferingActivityModel
+/**
+ * Model CourseEnrollment
+ * 
+ */
+export type CourseEnrollment = Prisma.CourseEnrollmentModel
+/**
+ * Model CourseEnrollmentDiscount
+ * 
+ */
+export type CourseEnrollmentDiscount = Prisma.CourseEnrollmentDiscountModel

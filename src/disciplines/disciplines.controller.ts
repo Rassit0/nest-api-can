@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { DisciplinesService } from './disciplines.service';
 import { CreateDisciplineDto } from './dto/create-discipline.dto';
@@ -35,14 +36,14 @@ export class DisciplinesController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDisciplineDto: UpdateDisciplineDto,
   ) {
     return this.disciplinesService.update(id, updateDisciplineDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.disciplinesService.remove(id);
   }
 }

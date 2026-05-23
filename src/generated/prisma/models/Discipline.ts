@@ -20,64 +20,58 @@ export type DisciplineModel = runtime.Types.Result.DefaultSelection<Prisma.$Disc
 
 export type AggregateDiscipline = {
   _count: DisciplineCountAggregateOutputType | null
-  _avg: DisciplineAvgAggregateOutputType | null
-  _sum: DisciplineSumAggregateOutputType | null
   _min: DisciplineMinAggregateOutputType | null
   _max: DisciplineMaxAggregateOutputType | null
 }
 
-export type DisciplineAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type DisciplineSumAggregateOutputType = {
-  id: number | null
-}
-
 export type DisciplineMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   name: string | null
   icon: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DisciplineMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   name: string | null
   icon: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type DisciplineCountAggregateOutputType = {
   id: number
   name: number
   icon: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
-
-export type DisciplineAvgAggregateInputType = {
-  id?: true
-}
-
-export type DisciplineSumAggregateInputType = {
-  id?: true
-}
 
 export type DisciplineMinAggregateInputType = {
   id?: true
   name?: true
   icon?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type DisciplineMaxAggregateInputType = {
   id?: true
   name?: true
   icon?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type DisciplineCountAggregateInputType = {
   id?: true
   name?: true
   icon?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -119,18 +113,6 @@ export type DisciplineAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: DisciplineAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: DisciplineSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: DisciplineMinAggregateInputType
@@ -161,19 +143,17 @@ export type DisciplineGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: DisciplineCountAggregateInputType | true
-  _avg?: DisciplineAvgAggregateInputType
-  _sum?: DisciplineSumAggregateInputType
   _min?: DisciplineMinAggregateInputType
   _max?: DisciplineMaxAggregateInputType
 }
 
 export type DisciplineGroupByOutputType = {
-  id: number
+  id: string
   name: string
-  icon: string | null
+  icon: string
+  createdAt: Date
+  updatedAt: Date
   _count: DisciplineCountAggregateOutputType | null
-  _avg: DisciplineAvgAggregateOutputType | null
-  _sum: DisciplineSumAggregateOutputType | null
   _min: DisciplineMinAggregateOutputType | null
   _max: DisciplineMaxAggregateOutputType | null
 }
@@ -197,137 +177,146 @@ export type DisciplineWhereInput = {
   AND?: Prisma.DisciplineWhereInput | Prisma.DisciplineWhereInput[]
   OR?: Prisma.DisciplineWhereInput[]
   NOT?: Prisma.DisciplineWhereInput | Prisma.DisciplineWhereInput[]
-  id?: Prisma.IntFilter<"Discipline"> | number
+  id?: Prisma.StringFilter<"Discipline"> | string
   name?: Prisma.StringFilter<"Discipline"> | string
-  icon?: Prisma.StringNullableFilter<"Discipline"> | string | null
-  activities?: Prisma.ActivityListRelationFilter
-  studentProfiles?: Prisma.StudentProfileListRelationFilter
-  teacherProfiles?: Prisma.TeacherProfileListRelationFilter
-  playerProfiles?: Prisma.PlayerProfileListRelationFilter
+  icon?: Prisma.StringFilter<"Discipline"> | string
+  createdAt?: Prisma.DateTimeFilter<"Discipline"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Discipline"> | Date | string
+  clubs?: Prisma.ClubsListRelationFilter
+  schools?: Prisma.SchoolListRelationFilter
 }
 
 export type DisciplineOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
-  activities?: Prisma.ActivityOrderByRelationAggregateInput
-  studentProfiles?: Prisma.StudentProfileOrderByRelationAggregateInput
-  teacherProfiles?: Prisma.TeacherProfileOrderByRelationAggregateInput
-  playerProfiles?: Prisma.PlayerProfileOrderByRelationAggregateInput
+  icon?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  clubs?: Prisma.ClubsOrderByRelationAggregateInput
+  schools?: Prisma.SchoolOrderByRelationAggregateInput
 }
 
 export type DisciplineWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
-  name?: string
+  id?: string
   AND?: Prisma.DisciplineWhereInput | Prisma.DisciplineWhereInput[]
   OR?: Prisma.DisciplineWhereInput[]
   NOT?: Prisma.DisciplineWhereInput | Prisma.DisciplineWhereInput[]
-  icon?: Prisma.StringNullableFilter<"Discipline"> | string | null
-  activities?: Prisma.ActivityListRelationFilter
-  studentProfiles?: Prisma.StudentProfileListRelationFilter
-  teacherProfiles?: Prisma.TeacherProfileListRelationFilter
-  playerProfiles?: Prisma.PlayerProfileListRelationFilter
-}, "id" | "name">
+  name?: Prisma.StringFilter<"Discipline"> | string
+  icon?: Prisma.StringFilter<"Discipline"> | string
+  createdAt?: Prisma.DateTimeFilter<"Discipline"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Discipline"> | Date | string
+  clubs?: Prisma.ClubsListRelationFilter
+  schools?: Prisma.SchoolListRelationFilter
+}, "id">
 
 export type DisciplineOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
+  icon?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.DisciplineCountOrderByAggregateInput
-  _avg?: Prisma.DisciplineAvgOrderByAggregateInput
   _max?: Prisma.DisciplineMaxOrderByAggregateInput
   _min?: Prisma.DisciplineMinOrderByAggregateInput
-  _sum?: Prisma.DisciplineSumOrderByAggregateInput
 }
 
 export type DisciplineScalarWhereWithAggregatesInput = {
   AND?: Prisma.DisciplineScalarWhereWithAggregatesInput | Prisma.DisciplineScalarWhereWithAggregatesInput[]
   OR?: Prisma.DisciplineScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DisciplineScalarWhereWithAggregatesInput | Prisma.DisciplineScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Discipline"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Discipline"> | string
   name?: Prisma.StringWithAggregatesFilter<"Discipline"> | string
-  icon?: Prisma.StringNullableWithAggregatesFilter<"Discipline"> | string | null
+  icon?: Prisma.StringWithAggregatesFilter<"Discipline"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Discipline"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Discipline"> | Date | string
 }
 
 export type DisciplineCreateInput = {
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubsCreateNestedManyWithoutDisciplineInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDisciplineInput
 }
 
 export type DisciplineUncheckedCreateInput = {
-  id?: number
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubsUncheckedCreateNestedManyWithoutDisciplineInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDisciplineInput
 }
 
 export type DisciplineUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubsUpdateManyWithoutDisciplineNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDisciplineNestedInput
 }
 
 export type DisciplineUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubsUncheckedUpdateManyWithoutDisciplineNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDisciplineNestedInput
 }
 
 export type DisciplineCreateManyInput = {
-  id?: number
+  id?: string
   name: string
-  icon?: string | null
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type DisciplineUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DisciplineUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DisciplineCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-}
-
-export type DisciplineAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DisciplineMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DisciplineMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-}
-
-export type DisciplineSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type DisciplineScalarRelationFilter = {
@@ -335,267 +324,136 @@ export type DisciplineScalarRelationFilter = {
   isNot?: Prisma.DisciplineWhereInput
 }
 
-export type DisciplineNullableScalarRelationFilter = {
-  is?: Prisma.DisciplineWhereInput | null
-  isNot?: Prisma.DisciplineWhereInput | null
-}
-
-export type DisciplineCreateNestedOneWithoutTeacherProfilesInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedCreateWithoutTeacherProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutTeacherProfilesInput
+export type DisciplineCreateNestedOneWithoutClubsInput = {
+  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutClubsInput, Prisma.DisciplineUncheckedCreateWithoutClubsInput>
+  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutClubsInput
   connect?: Prisma.DisciplineWhereUniqueInput
 }
 
-export type DisciplineUpdateOneRequiredWithoutTeacherProfilesNestedInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedCreateWithoutTeacherProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutTeacherProfilesInput
-  upsert?: Prisma.DisciplineUpsertWithoutTeacherProfilesInput
+export type DisciplineUpdateOneRequiredWithoutClubsNestedInput = {
+  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutClubsInput, Prisma.DisciplineUncheckedCreateWithoutClubsInput>
+  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutClubsInput
+  upsert?: Prisma.DisciplineUpsertWithoutClubsInput
   connect?: Prisma.DisciplineWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutTeacherProfilesInput, Prisma.DisciplineUpdateWithoutTeacherProfilesInput>, Prisma.DisciplineUncheckedUpdateWithoutTeacherProfilesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutClubsInput, Prisma.DisciplineUpdateWithoutClubsInput>, Prisma.DisciplineUncheckedUpdateWithoutClubsInput>
 }
 
-export type DisciplineCreateNestedOneWithoutStudentProfilesInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedCreateWithoutStudentProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutStudentProfilesInput
-  connect?: Prisma.DisciplineWhereUniqueInput
-}
-
-export type DisciplineUpdateOneRequiredWithoutStudentProfilesNestedInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedCreateWithoutStudentProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutStudentProfilesInput
-  upsert?: Prisma.DisciplineUpsertWithoutStudentProfilesInput
-  connect?: Prisma.DisciplineWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutStudentProfilesInput, Prisma.DisciplineUpdateWithoutStudentProfilesInput>, Prisma.DisciplineUncheckedUpdateWithoutStudentProfilesInput>
-}
-
-export type DisciplineCreateNestedOneWithoutPlayerProfilesInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedCreateWithoutPlayerProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutPlayerProfilesInput
+export type DisciplineCreateNestedOneWithoutSchoolsInput = {
+  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutSchoolsInput, Prisma.DisciplineUncheckedCreateWithoutSchoolsInput>
+  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutSchoolsInput
   connect?: Prisma.DisciplineWhereUniqueInput
 }
 
-export type DisciplineUpdateOneRequiredWithoutPlayerProfilesNestedInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedCreateWithoutPlayerProfilesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutPlayerProfilesInput
-  upsert?: Prisma.DisciplineUpsertWithoutPlayerProfilesInput
+export type DisciplineUpdateOneRequiredWithoutSchoolsNestedInput = {
+  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutSchoolsInput, Prisma.DisciplineUncheckedCreateWithoutSchoolsInput>
+  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutSchoolsInput
+  upsert?: Prisma.DisciplineUpsertWithoutSchoolsInput
   connect?: Prisma.DisciplineWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutPlayerProfilesInput, Prisma.DisciplineUpdateWithoutPlayerProfilesInput>, Prisma.DisciplineUncheckedUpdateWithoutPlayerProfilesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutSchoolsInput, Prisma.DisciplineUpdateWithoutSchoolsInput>, Prisma.DisciplineUncheckedUpdateWithoutSchoolsInput>
 }
 
-export type DisciplineCreateNestedOneWithoutActivitiesInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutActivitiesInput, Prisma.DisciplineUncheckedCreateWithoutActivitiesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutActivitiesInput
-  connect?: Prisma.DisciplineWhereUniqueInput
-}
-
-export type DisciplineUpdateOneWithoutActivitiesNestedInput = {
-  create?: Prisma.XOR<Prisma.DisciplineCreateWithoutActivitiesInput, Prisma.DisciplineUncheckedCreateWithoutActivitiesInput>
-  connectOrCreate?: Prisma.DisciplineCreateOrConnectWithoutActivitiesInput
-  upsert?: Prisma.DisciplineUpsertWithoutActivitiesInput
-  disconnect?: Prisma.DisciplineWhereInput | boolean
-  delete?: Prisma.DisciplineWhereInput | boolean
-  connect?: Prisma.DisciplineWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DisciplineUpdateToOneWithWhereWithoutActivitiesInput, Prisma.DisciplineUpdateWithoutActivitiesInput>, Prisma.DisciplineUncheckedUpdateWithoutActivitiesInput>
-}
-
-export type DisciplineCreateWithoutTeacherProfilesInput = {
+export type DisciplineCreateWithoutClubsInput = {
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  schools?: Prisma.SchoolCreateNestedManyWithoutDisciplineInput
 }
 
-export type DisciplineUncheckedCreateWithoutTeacherProfilesInput = {
-  id?: number
+export type DisciplineUncheckedCreateWithoutClubsInput = {
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDisciplineInput
 }
 
-export type DisciplineCreateOrConnectWithoutTeacherProfilesInput = {
+export type DisciplineCreateOrConnectWithoutClubsInput = {
   where: Prisma.DisciplineWhereUniqueInput
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedCreateWithoutTeacherProfilesInput>
+  create: Prisma.XOR<Prisma.DisciplineCreateWithoutClubsInput, Prisma.DisciplineUncheckedCreateWithoutClubsInput>
 }
 
-export type DisciplineUpsertWithoutTeacherProfilesInput = {
-  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutTeacherProfilesInput>
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedCreateWithoutTeacherProfilesInput>
+export type DisciplineUpsertWithoutClubsInput = {
+  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutClubsInput, Prisma.DisciplineUncheckedUpdateWithoutClubsInput>
+  create: Prisma.XOR<Prisma.DisciplineCreateWithoutClubsInput, Prisma.DisciplineUncheckedCreateWithoutClubsInput>
   where?: Prisma.DisciplineWhereInput
 }
 
-export type DisciplineUpdateToOneWithWhereWithoutTeacherProfilesInput = {
+export type DisciplineUpdateToOneWithWhereWithoutClubsInput = {
   where?: Prisma.DisciplineWhereInput
-  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutTeacherProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutTeacherProfilesInput>
+  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutClubsInput, Prisma.DisciplineUncheckedUpdateWithoutClubsInput>
 }
 
-export type DisciplineUpdateWithoutTeacherProfilesInput = {
+export type DisciplineUpdateWithoutClubsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  schools?: Prisma.SchoolUpdateManyWithoutDisciplineNestedInput
 }
 
-export type DisciplineUncheckedUpdateWithoutTeacherProfilesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+export type DisciplineUncheckedUpdateWithoutClubsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDisciplineNestedInput
 }
 
-export type DisciplineCreateWithoutStudentProfilesInput = {
+export type DisciplineCreateWithoutSchoolsInput = {
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubsCreateNestedManyWithoutDisciplineInput
 }
 
-export type DisciplineUncheckedCreateWithoutStudentProfilesInput = {
-  id?: number
+export type DisciplineUncheckedCreateWithoutSchoolsInput = {
+  id?: string
   name: string
-  icon?: string | null
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedCreateNestedManyWithoutDisciplineInput
+  icon: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubsUncheckedCreateNestedManyWithoutDisciplineInput
 }
 
-export type DisciplineCreateOrConnectWithoutStudentProfilesInput = {
+export type DisciplineCreateOrConnectWithoutSchoolsInput = {
   where: Prisma.DisciplineWhereUniqueInput
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedCreateWithoutStudentProfilesInput>
+  create: Prisma.XOR<Prisma.DisciplineCreateWithoutSchoolsInput, Prisma.DisciplineUncheckedCreateWithoutSchoolsInput>
 }
 
-export type DisciplineUpsertWithoutStudentProfilesInput = {
-  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutStudentProfilesInput>
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedCreateWithoutStudentProfilesInput>
+export type DisciplineUpsertWithoutSchoolsInput = {
+  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutSchoolsInput, Prisma.DisciplineUncheckedUpdateWithoutSchoolsInput>
+  create: Prisma.XOR<Prisma.DisciplineCreateWithoutSchoolsInput, Prisma.DisciplineUncheckedCreateWithoutSchoolsInput>
   where?: Prisma.DisciplineWhereInput
 }
 
-export type DisciplineUpdateToOneWithWhereWithoutStudentProfilesInput = {
+export type DisciplineUpdateToOneWithWhereWithoutSchoolsInput = {
   where?: Prisma.DisciplineWhereInput
-  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutStudentProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutStudentProfilesInput>
+  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutSchoolsInput, Prisma.DisciplineUncheckedUpdateWithoutSchoolsInput>
 }
 
-export type DisciplineUpdateWithoutStudentProfilesInput = {
+export type DisciplineUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubsUpdateManyWithoutDisciplineNestedInput
 }
 
-export type DisciplineUncheckedUpdateWithoutStudentProfilesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+export type DisciplineUncheckedUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-}
-
-export type DisciplineCreateWithoutPlayerProfilesInput = {
-  name: string
-  icon?: string | null
-  activities?: Prisma.ActivityCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileCreateNestedManyWithoutDisciplineInput
-}
-
-export type DisciplineUncheckedCreateWithoutPlayerProfilesInput = {
-  id?: number
-  name: string
-  icon?: string | null
-  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutDisciplineInput
-  studentProfiles?: Prisma.StudentProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedCreateNestedManyWithoutDisciplineInput
-}
-
-export type DisciplineCreateOrConnectWithoutPlayerProfilesInput = {
-  where: Prisma.DisciplineWhereUniqueInput
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedCreateWithoutPlayerProfilesInput>
-}
-
-export type DisciplineUpsertWithoutPlayerProfilesInput = {
-  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutPlayerProfilesInput>
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedCreateWithoutPlayerProfilesInput>
-  where?: Prisma.DisciplineWhereInput
-}
-
-export type DisciplineUpdateToOneWithWhereWithoutPlayerProfilesInput = {
-  where?: Prisma.DisciplineWhereInput
-  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutPlayerProfilesInput, Prisma.DisciplineUncheckedUpdateWithoutPlayerProfilesInput>
-}
-
-export type DisciplineUpdateWithoutPlayerProfilesInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUpdateManyWithoutDisciplineNestedInput
-}
-
-export type DisciplineUncheckedUpdateWithoutPlayerProfilesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activities?: Prisma.ActivityUncheckedUpdateManyWithoutDisciplineNestedInput
-  studentProfiles?: Prisma.StudentProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-}
-
-export type DisciplineCreateWithoutActivitiesInput = {
-  name: string
-  icon?: string | null
-  studentProfiles?: Prisma.StudentProfileCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileCreateNestedManyWithoutDisciplineInput
-}
-
-export type DisciplineUncheckedCreateWithoutActivitiesInput = {
-  id?: number
-  name: string
-  icon?: string | null
-  studentProfiles?: Prisma.StudentProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedCreateNestedManyWithoutDisciplineInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedCreateNestedManyWithoutDisciplineInput
-}
-
-export type DisciplineCreateOrConnectWithoutActivitiesInput = {
-  where: Prisma.DisciplineWhereUniqueInput
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutActivitiesInput, Prisma.DisciplineUncheckedCreateWithoutActivitiesInput>
-}
-
-export type DisciplineUpsertWithoutActivitiesInput = {
-  update: Prisma.XOR<Prisma.DisciplineUpdateWithoutActivitiesInput, Prisma.DisciplineUncheckedUpdateWithoutActivitiesInput>
-  create: Prisma.XOR<Prisma.DisciplineCreateWithoutActivitiesInput, Prisma.DisciplineUncheckedCreateWithoutActivitiesInput>
-  where?: Prisma.DisciplineWhereInput
-}
-
-export type DisciplineUpdateToOneWithWhereWithoutActivitiesInput = {
-  where?: Prisma.DisciplineWhereInput
-  data: Prisma.XOR<Prisma.DisciplineUpdateWithoutActivitiesInput, Prisma.DisciplineUncheckedUpdateWithoutActivitiesInput>
-}
-
-export type DisciplineUpdateWithoutActivitiesInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  studentProfiles?: Prisma.StudentProfileUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUpdateManyWithoutDisciplineNestedInput
-}
-
-export type DisciplineUncheckedUpdateWithoutActivitiesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  studentProfiles?: Prisma.StudentProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  teacherProfiles?: Prisma.TeacherProfileUncheckedUpdateManyWithoutDisciplineNestedInput
-  playerProfiles?: Prisma.PlayerProfileUncheckedUpdateManyWithoutDisciplineNestedInput
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubsUncheckedUpdateManyWithoutDisciplineNestedInput
 }
 
 
@@ -604,17 +462,13 @@ export type DisciplineUncheckedUpdateWithoutActivitiesInput = {
  */
 
 export type DisciplineCountOutputType = {
-  activities: number
-  studentProfiles: number
-  teacherProfiles: number
-  playerProfiles: number
+  clubs: number
+  schools: number
 }
 
 export type DisciplineCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  activities?: boolean | DisciplineCountOutputTypeCountActivitiesArgs
-  studentProfiles?: boolean | DisciplineCountOutputTypeCountStudentProfilesArgs
-  teacherProfiles?: boolean | DisciplineCountOutputTypeCountTeacherProfilesArgs
-  playerProfiles?: boolean | DisciplineCountOutputTypeCountPlayerProfilesArgs
+  clubs?: boolean | DisciplineCountOutputTypeCountClubsArgs
+  schools?: boolean | DisciplineCountOutputTypeCountSchoolsArgs
 }
 
 /**
@@ -630,29 +484,15 @@ export type DisciplineCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * DisciplineCountOutputType without action
  */
-export type DisciplineCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ActivityWhereInput
+export type DisciplineCountOutputTypeCountClubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubsWhereInput
 }
 
 /**
  * DisciplineCountOutputType without action
  */
-export type DisciplineCountOutputTypeCountStudentProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StudentProfileWhereInput
-}
-
-/**
- * DisciplineCountOutputType without action
- */
-export type DisciplineCountOutputTypeCountTeacherProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeacherProfileWhereInput
-}
-
-/**
- * DisciplineCountOutputType without action
- */
-export type DisciplineCountOutputTypeCountPlayerProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PlayerProfileWhereInput
+export type DisciplineCountOutputTypeCountSchoolsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SchoolWhereInput
 }
 
 
@@ -660,10 +500,10 @@ export type DisciplineSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   name?: boolean
   icon?: boolean
-  activities?: boolean | Prisma.Discipline$activitiesArgs<ExtArgs>
-  studentProfiles?: boolean | Prisma.Discipline$studentProfilesArgs<ExtArgs>
-  teacherProfiles?: boolean | Prisma.Discipline$teacherProfilesArgs<ExtArgs>
-  playerProfiles?: boolean | Prisma.Discipline$playerProfilesArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
+  clubs?: boolean | Prisma.Discipline$clubsArgs<ExtArgs>
+  schools?: boolean | Prisma.Discipline$schoolsArgs<ExtArgs>
   _count?: boolean | Prisma.DisciplineCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discipline"]>
 
@@ -671,26 +511,30 @@ export type DisciplineSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   icon?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["discipline"]>
 
 export type DisciplineSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   icon?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["discipline"]>
 
 export type DisciplineSelectScalar = {
   id?: boolean
   name?: boolean
   icon?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type DisciplineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "icon", ExtArgs["result"]["discipline"]>
+export type DisciplineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "icon" | "createdAt" | "updatedAt", ExtArgs["result"]["discipline"]>
 export type DisciplineInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  activities?: boolean | Prisma.Discipline$activitiesArgs<ExtArgs>
-  studentProfiles?: boolean | Prisma.Discipline$studentProfilesArgs<ExtArgs>
-  teacherProfiles?: boolean | Prisma.Discipline$teacherProfilesArgs<ExtArgs>
-  playerProfiles?: boolean | Prisma.Discipline$playerProfilesArgs<ExtArgs>
+  clubs?: boolean | Prisma.Discipline$clubsArgs<ExtArgs>
+  schools?: boolean | Prisma.Discipline$schoolsArgs<ExtArgs>
   _count?: boolean | Prisma.DisciplineCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DisciplineIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -699,15 +543,15 @@ export type DisciplineIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $DisciplinePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Discipline"
   objects: {
-    activities: Prisma.$ActivityPayload<ExtArgs>[]
-    studentProfiles: Prisma.$StudentProfilePayload<ExtArgs>[]
-    teacherProfiles: Prisma.$TeacherProfilePayload<ExtArgs>[]
-    playerProfiles: Prisma.$PlayerProfilePayload<ExtArgs>[]
+    clubs: Prisma.$ClubsPayload<ExtArgs>[]
+    schools: Prisma.$SchoolPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     name: string
-    icon: string | null
+    icon: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["discipline"]>
   composites: {}
 }
@@ -1102,10 +946,8 @@ readonly fields: DisciplineFieldRefs;
  */
 export interface Prisma__DisciplineClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  activities<T extends Prisma.Discipline$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  studentProfiles<T extends Prisma.Discipline$studentProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$studentProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  teacherProfiles<T extends Prisma.Discipline$teacherProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$teacherProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  playerProfiles<T extends Prisma.Discipline$playerProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$playerProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubs<T extends Prisma.Discipline$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  schools<T extends Prisma.Discipline$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discipline$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1135,9 +977,11 @@ export interface Prisma__DisciplineClient<T, Null = never, ExtArgs extends runti
  * Fields of the Discipline model
  */
 export interface DisciplineFieldRefs {
-  readonly id: Prisma.FieldRef<"Discipline", 'Int'>
+  readonly id: Prisma.FieldRef<"Discipline", 'String'>
   readonly name: Prisma.FieldRef<"Discipline", 'String'>
   readonly icon: Prisma.FieldRef<"Discipline", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Discipline", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Discipline", 'DateTime'>
 }
     
 
@@ -1531,99 +1375,51 @@ export type DisciplineDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Discipline.activities
+ * Discipline.clubs
  */
-export type Discipline$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Discipline$clubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Activity
+   * Select specific fields to fetch from the Clubs
    */
-  select?: Prisma.ActivitySelect<ExtArgs> | null
+  select?: Prisma.ClubsSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Activity
+   * Omit specific fields from the Clubs
    */
-  omit?: Prisma.ActivityOmit<ExtArgs> | null
+  omit?: Prisma.ClubsOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ActivityInclude<ExtArgs> | null
-  where?: Prisma.ActivityWhereInput
-  orderBy?: Prisma.ActivityOrderByWithRelationInput | Prisma.ActivityOrderByWithRelationInput[]
-  cursor?: Prisma.ActivityWhereUniqueInput
+  include?: Prisma.ClubsInclude<ExtArgs> | null
+  where?: Prisma.ClubsWhereInput
+  orderBy?: Prisma.ClubsOrderByWithRelationInput | Prisma.ClubsOrderByWithRelationInput[]
+  cursor?: Prisma.ClubsWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ActivityScalarFieldEnum | Prisma.ActivityScalarFieldEnum[]
+  distinct?: Prisma.ClubsScalarFieldEnum | Prisma.ClubsScalarFieldEnum[]
 }
 
 /**
- * Discipline.studentProfiles
+ * Discipline.schools
  */
-export type Discipline$studentProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Discipline$schoolsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the StudentProfile
+   * Select specific fields to fetch from the School
    */
-  select?: Prisma.StudentProfileSelect<ExtArgs> | null
+  select?: Prisma.SchoolSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the StudentProfile
+   * Omit specific fields from the School
    */
-  omit?: Prisma.StudentProfileOmit<ExtArgs> | null
+  omit?: Prisma.SchoolOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.StudentProfileInclude<ExtArgs> | null
-  where?: Prisma.StudentProfileWhereInput
-  orderBy?: Prisma.StudentProfileOrderByWithRelationInput | Prisma.StudentProfileOrderByWithRelationInput[]
-  cursor?: Prisma.StudentProfileWhereUniqueInput
+  include?: Prisma.SchoolInclude<ExtArgs> | null
+  where?: Prisma.SchoolWhereInput
+  orderBy?: Prisma.SchoolOrderByWithRelationInput | Prisma.SchoolOrderByWithRelationInput[]
+  cursor?: Prisma.SchoolWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.StudentProfileScalarFieldEnum | Prisma.StudentProfileScalarFieldEnum[]
-}
-
-/**
- * Discipline.teacherProfiles
- */
-export type Discipline$teacherProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TeacherProfile
-   */
-  select?: Prisma.TeacherProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TeacherProfile
-   */
-  omit?: Prisma.TeacherProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeacherProfileInclude<ExtArgs> | null
-  where?: Prisma.TeacherProfileWhereInput
-  orderBy?: Prisma.TeacherProfileOrderByWithRelationInput | Prisma.TeacherProfileOrderByWithRelationInput[]
-  cursor?: Prisma.TeacherProfileWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TeacherProfileScalarFieldEnum | Prisma.TeacherProfileScalarFieldEnum[]
-}
-
-/**
- * Discipline.playerProfiles
- */
-export type Discipline$playerProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PlayerProfile
-   */
-  select?: Prisma.PlayerProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PlayerProfile
-   */
-  omit?: Prisma.PlayerProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PlayerProfileInclude<ExtArgs> | null
-  where?: Prisma.PlayerProfileWhereInput
-  orderBy?: Prisma.PlayerProfileOrderByWithRelationInput | Prisma.PlayerProfileOrderByWithRelationInput[]
-  cursor?: Prisma.PlayerProfileWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PlayerProfileScalarFieldEnum | Prisma.PlayerProfileScalarFieldEnum[]
+  distinct?: Prisma.SchoolScalarFieldEnum | Prisma.SchoolScalarFieldEnum[]
 }
 
 /**

@@ -12,20 +12,31 @@ export class I18nValidationFilter implements ExceptionFilter {
 
     const formattedErrors: Record<string, string[]> = {};
 
-    const formatErrors = (errs: any[]) => {
+    const flattenErrors = (errs: any[], parentPath = '') => {
       errs.forEach((err) => {
-        if (err.constraints) {
-          formattedErrors[err.property] = Object.values(err.constraints);
+        const currentPath = parentPath
+          ? `${parentPath}.${err.property}`
+          : err.property;
+
+        // ✅ SOLO si hay errores reales
+        if (err.constraints && Object.keys(err.constraints).length > 0) {
+          if (!formattedErrors[currentPath]) {
+            formattedErrors[currentPath] = [];
+          }
+
+          formattedErrors[currentPath].push(
+            ...(Object.values(err.constraints) as string[]),
+          );
         }
 
-        // 🔥 Manejo de errores anidados (muy importante)
+        // 🔁 seguir recorriendo hijos
         if (err.children && err.children.length > 0) {
-          formatErrors(err.children);
+          flattenErrors(err.children, currentPath);
         }
       });
     };
 
-    formatErrors(errors);
+    flattenErrors(errors);
 
     response.status(400).json({
       message: 'Error en la validación',

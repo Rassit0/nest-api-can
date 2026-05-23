@@ -15,5 +15,10 @@
     "state": "Estado",
     "zipCode": "Código postal",
     "country": "País",
-    "birthDate": "Fecha de nacimiento"
+    "birthDate": "Fecha de nacimiento",
+    "ActivityDiscipline_disciplineId_fkey": "Disciplina",
+    "ActivityDiscipline_activityId_fkey": "Actividad",
+    "Activity_categoryId_fkey": "Categoría",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin"
 }

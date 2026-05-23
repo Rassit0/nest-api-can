@@ -76,9 +76,10 @@ export class DisciplinesService {
         itemsPerPage: per_page, // Ej: 10
         totalPages, // Ej: 3
         currentPage, // Ej: 10 (si el usuario pidió el page 90)
-        // ¡Estos 2 valores ahorran mucho trabajo en el front!
-        hasNextPage: page < Math.ceil(totalItems / per_page),
+        hasNextPage: page < totalPages,
         hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
       },
     };
   }
@@ -87,7 +88,7 @@ export class DisciplinesService {
     return `This action returns a #${id} discipline`;
   }
 
-  async update(id: number, updateDisciplineDto: UpdateDisciplineDto) {
+  async update(id: string, updateDisciplineDto: UpdateDisciplineDto) {
     try {
       const updateDiscipline = await this.prisma.discipline.update({
         where: { id },
@@ -102,7 +103,7 @@ export class DisciplinesService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     try {
       const deleteDiscipline = await this.prisma.discipline.delete({
         where: { id },
