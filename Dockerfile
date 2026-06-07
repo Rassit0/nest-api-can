@@ -15,6 +15,7 @@ RUN npx nest build
 # 2. Fase de producción
 FROM node:24-alpine AS runner
 WORKDIR /app
+ENV DATABASE_URL=$DATABASE_URL
 ENV NODE_ENV=production
 COPY package*.json ./
 
@@ -35,6 +36,4 @@ COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 EXPOSE 3000
 
 # Cuando el contenedor se encienda en Coolify, migra, inserta el seed y arranca
-# CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/main.js"]
-# Forzamos a que el shell exporte la variable directamente al comando de Prisma
-CMD ["sh", "-c", "DATABASE_URL=$DATABASE_URL npx prisma migrate deploy && DATABASE_URL=$DATABASE_URL npx prisma db seed && node dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/main.js"]
