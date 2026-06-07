@@ -83,7 +83,7 @@ export class ActivitiesService {
       sortField = 'name',
       type,
       // organizationId,
-      teamOfferingId,
+      teamSeasonId,
     } = paginationDto;
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
@@ -105,8 +105,8 @@ export class ActivitiesService {
     //   where.organizationActivities = { some: { organizationId } };
     // }
 
-    if (teamOfferingId) {
-      where.teamOfferingActivities = { some: { teamOfferingId } };
+    if (teamSeasonId) {
+      where.teamSeasonActivities = { some: { teamSeasonId } };
     }
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
@@ -212,13 +212,13 @@ export class ActivitiesService {
 
   // obtener resumen de actividades
   async getSummary(paginationDto: ActivitiesSummaryPaginationDto) {
-    const { teamOfferingId } = paginationDto;
+    const { teamSeasonId } = paginationDto;
 
     // Construcción dinámica del objeto 'where'
     const where: Prisma.ActivityWhereInput = {};
 
-    if (teamOfferingId) {
-      where.teamOfferingActivities = { some: { teamOfferingId } };
+    if (teamSeasonId) {
+      where.teamSeasonActivities = { some: { teamSeasonId } };
     }
 
     const [

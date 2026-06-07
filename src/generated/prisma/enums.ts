@@ -43,6 +43,16 @@ export const ContactRelationship = {
 export type ContactRelationship = (typeof ContactRelationship)[keyof typeof ContactRelationship]
 
 
+export const SeasonStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  FINISHED: 'FINISHED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type SeasonStatus = (typeof SeasonStatus)[keyof typeof SeasonStatus]
+
+
 export const ActivityType = {
   TRAINING: 'TRAINING',
   MATCH: 'MATCH',
@@ -72,17 +82,29 @@ export const ProgramStatus = {
 export type ProgramStatus = (typeof ProgramStatus)[keyof typeof ProgramStatus]
 
 
-export const PassType = {
+export const PassOriginType = {
   INTERNAL: 'INTERNAL',
-  EXTERNAL: 'EXTERNAL'
+  EXTERNAL: 'EXTERNAL',
+  FREE_AGENT: 'FREE_AGENT'
 } as const
 
-export type PassType = (typeof PassType)[keyof typeof PassType]
+export type PassOriginType = (typeof PassOriginType)[keyof typeof PassOriginType]
 
 
 export const PlayerPassStatus = {
+  PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE'
+  INACTIVE: 'INACTIVE',
+  REJECTED: 'REJECTED'
 } as const
 
 export type PlayerPassStatus = (typeof PlayerPassStatus)[keyof typeof PlayerPassStatus]
+
+
+export const PreviousTeamSource = {
+  SYSTEM: 'SYSTEM',
+  EXTERNAL: 'EXTERNAL',
+  FREE_AGENT: 'FREE_AGENT'
+} as const
+
+export type PreviousTeamSource = (typeof PreviousTeamSource)[keyof typeof PreviousTeamSource]

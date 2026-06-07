@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -15,13 +16,14 @@ export class CreateLocationDto {
   })
   name: string;
 
+  @Transform(({ value }) => (value === '' ? null : value))
   @IsOptional()
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {
       constraint1: 'description',
     }),
   })
-  description?: string;
+  description?: string | null;
 
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
@@ -41,5 +43,13 @@ export class CreateLocationDto {
       constraint1: 'isActive',
     }),
   })
-  isActive?: boolean;
+  isInternal?: boolean;
+
+  @IsOptional()
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'isRentable',
+    }),
+  })
+  isRentable?: boolean;
 }

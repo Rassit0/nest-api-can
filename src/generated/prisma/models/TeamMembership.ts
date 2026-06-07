@@ -37,7 +37,7 @@ export type TeamMembershipSumAggregateOutputType = {
 export type TeamMembershipMinAggregateOutputType = {
   id: string | null
   playerId: string | null
-  teamOfferingId: string | null
+  teamSeasonId: string | null
   startedAt: Date | null
   endedAt: Date | null
   billingDayOfMonth: number | null
@@ -49,7 +49,7 @@ export type TeamMembershipMinAggregateOutputType = {
 export type TeamMembershipMaxAggregateOutputType = {
   id: string | null
   playerId: string | null
-  teamOfferingId: string | null
+  teamSeasonId: string | null
   startedAt: Date | null
   endedAt: Date | null
   billingDayOfMonth: number | null
@@ -61,7 +61,7 @@ export type TeamMembershipMaxAggregateOutputType = {
 export type TeamMembershipCountAggregateOutputType = {
   id: number
   playerId: number
-  teamOfferingId: number
+  teamSeasonId: number
   startedAt: number
   endedAt: number
   billingDayOfMonth: number
@@ -83,7 +83,7 @@ export type TeamMembershipSumAggregateInputType = {
 export type TeamMembershipMinAggregateInputType = {
   id?: true
   playerId?: true
-  teamOfferingId?: true
+  teamSeasonId?: true
   startedAt?: true
   endedAt?: true
   billingDayOfMonth?: true
@@ -95,7 +95,7 @@ export type TeamMembershipMinAggregateInputType = {
 export type TeamMembershipMaxAggregateInputType = {
   id?: true
   playerId?: true
-  teamOfferingId?: true
+  teamSeasonId?: true
   startedAt?: true
   endedAt?: true
   billingDayOfMonth?: true
@@ -107,7 +107,7 @@ export type TeamMembershipMaxAggregateInputType = {
 export type TeamMembershipCountAggregateInputType = {
   id?: true
   playerId?: true
-  teamOfferingId?: true
+  teamSeasonId?: true
   startedAt?: true
   endedAt?: true
   billingDayOfMonth?: true
@@ -206,7 +206,7 @@ export type TeamMembershipGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type TeamMembershipGroupByOutputType = {
   id: string
   playerId: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date
   endedAt: Date | null
   billingDayOfMonth: number
@@ -241,7 +241,7 @@ export type TeamMembershipWhereInput = {
   NOT?: Prisma.TeamMembershipWhereInput | Prisma.TeamMembershipWhereInput[]
   id?: Prisma.StringFilter<"TeamMembership"> | string
   playerId?: Prisma.StringFilter<"TeamMembership"> | string
-  teamOfferingId?: Prisma.StringFilter<"TeamMembership"> | string
+  teamSeasonId?: Prisma.StringFilter<"TeamMembership"> | string
   startedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"TeamMembership"> | Date | string | null
   billingDayOfMonth?: Prisma.IntFilter<"TeamMembership"> | number
@@ -249,14 +249,14 @@ export type TeamMembershipWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  teamOffering?: Prisma.XOR<Prisma.TeamOfferingScalarRelationFilter, Prisma.TeamOfferingWhereInput>
+  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountListRelationFilter
 }
 
 export type TeamMembershipOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  teamOfferingId?: Prisma.SortOrder
+  teamSeasonId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   billingDayOfMonth?: Prisma.SortOrder
@@ -264,7 +264,7 @@ export type TeamMembershipOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   player?: Prisma.PlayerOrderByWithRelationInput
-  teamOffering?: Prisma.TeamOfferingOrderByWithRelationInput
+  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountOrderByRelationAggregateInput
 }
 
@@ -274,7 +274,7 @@ export type TeamMembershipWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TeamMembershipWhereInput[]
   NOT?: Prisma.TeamMembershipWhereInput | Prisma.TeamMembershipWhereInput[]
   playerId?: Prisma.StringFilter<"TeamMembership"> | string
-  teamOfferingId?: Prisma.StringFilter<"TeamMembership"> | string
+  teamSeasonId?: Prisma.StringFilter<"TeamMembership"> | string
   startedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"TeamMembership"> | Date | string | null
   billingDayOfMonth?: Prisma.IntFilter<"TeamMembership"> | number
@@ -282,14 +282,14 @@ export type TeamMembershipWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  teamOffering?: Prisma.XOR<Prisma.TeamOfferingScalarRelationFilter, Prisma.TeamOfferingWhereInput>
+  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountListRelationFilter
 }, "id">
 
 export type TeamMembershipOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  teamOfferingId?: Prisma.SortOrder
+  teamSeasonId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   billingDayOfMonth?: Prisma.SortOrder
@@ -309,7 +309,7 @@ export type TeamMembershipScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TeamMembershipScalarWhereWithAggregatesInput | Prisma.TeamMembershipScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
   playerId?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
-  teamOfferingId?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
+  teamSeasonId?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"TeamMembership"> | Date | string
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TeamMembership"> | Date | string | null
   billingDayOfMonth?: Prisma.IntWithAggregatesFilter<"TeamMembership"> | number
@@ -327,14 +327,14 @@ export type TeamMembershipCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutTeamMembershipsInput
-  teamOffering: Prisma.TeamOfferingCreateNestedOneWithoutTeamMembershipsInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamMembershipsInput
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountCreateNestedManyWithoutTeamMembershipInput
 }
 
 export type TeamMembershipUncheckedCreateInput = {
   id?: string
   playerId: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date | string
   endedAt?: Date | string | null
   billingDayOfMonth: number
@@ -353,14 +353,14 @@ export type TeamMembershipUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   player?: Prisma.PlayerUpdateOneRequiredWithoutTeamMembershipsNestedInput
-  teamOffering?: Prisma.TeamOfferingUpdateOneRequiredWithoutTeamMembershipsNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamMembershipsNestedInput
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountUpdateManyWithoutTeamMembershipNestedInput
 }
 
 export type TeamMembershipUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamOfferingId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   billingDayOfMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -373,7 +373,7 @@ export type TeamMembershipUncheckedUpdateInput = {
 export type TeamMembershipCreateManyInput = {
   id?: string
   playerId: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date | string
   endedAt?: Date | string | null
   billingDayOfMonth: number
@@ -395,7 +395,7 @@ export type TeamMembershipUpdateManyMutationInput = {
 export type TeamMembershipUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamOfferingId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   billingDayOfMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -417,7 +417,7 @@ export type TeamMembershipOrderByRelationAggregateInput = {
 export type TeamMembershipCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  teamOfferingId?: Prisma.SortOrder
+  teamSeasonId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   billingDayOfMonth?: Prisma.SortOrder
@@ -433,7 +433,7 @@ export type TeamMembershipAvgOrderByAggregateInput = {
 export type TeamMembershipMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  teamOfferingId?: Prisma.SortOrder
+  teamSeasonId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   billingDayOfMonth?: Prisma.SortOrder
@@ -445,7 +445,7 @@ export type TeamMembershipMaxOrderByAggregateInput = {
 export type TeamMembershipMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  teamOfferingId?: Prisma.SortOrder
+  teamSeasonId?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   billingDayOfMonth?: Prisma.SortOrder
@@ -505,50 +505,46 @@ export type TeamMembershipUncheckedUpdateManyWithoutPlayerNestedInput = {
   deleteMany?: Prisma.TeamMembershipScalarWhereInput | Prisma.TeamMembershipScalarWhereInput[]
 }
 
-export type TeamMembershipCreateNestedManyWithoutTeamOfferingInput = {
-  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput> | Prisma.TeamMembershipCreateWithoutTeamOfferingInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput[]
-  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput[]
-  createMany?: Prisma.TeamMembershipCreateManyTeamOfferingInputEnvelope
+export type TeamMembershipCreateNestedManyWithoutTeamSeasonInput = {
+  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput> | Prisma.TeamMembershipCreateWithoutTeamSeasonInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput[]
+  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput[]
+  createMany?: Prisma.TeamMembershipCreateManyTeamSeasonInputEnvelope
   connect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
 }
 
-export type TeamMembershipUncheckedCreateNestedManyWithoutTeamOfferingInput = {
-  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput> | Prisma.TeamMembershipCreateWithoutTeamOfferingInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput[]
-  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput[]
-  createMany?: Prisma.TeamMembershipCreateManyTeamOfferingInputEnvelope
+export type TeamMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput = {
+  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput> | Prisma.TeamMembershipCreateWithoutTeamSeasonInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput[]
+  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput[]
+  createMany?: Prisma.TeamMembershipCreateManyTeamSeasonInputEnvelope
   connect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
 }
 
-export type TeamMembershipUpdateManyWithoutTeamOfferingNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput> | Prisma.TeamMembershipCreateWithoutTeamOfferingInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput[]
-  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput[]
-  upsert?: Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamOfferingInput | Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamOfferingInput[]
-  createMany?: Prisma.TeamMembershipCreateManyTeamOfferingInputEnvelope
+export type TeamMembershipUpdateManyWithoutTeamSeasonNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput> | Prisma.TeamMembershipCreateWithoutTeamSeasonInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput[]
+  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput[]
+  upsert?: Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamSeasonInput[]
+  createMany?: Prisma.TeamMembershipCreateManyTeamSeasonInputEnvelope
   set?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   disconnect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   delete?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   connect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
-  update?: Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamOfferingInput | Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamOfferingInput[]
-  updateMany?: Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamOfferingInput | Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamOfferingInput[]
+  update?: Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamSeasonInput[]
+  updateMany?: Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamSeasonInput[]
   deleteMany?: Prisma.TeamMembershipScalarWhereInput | Prisma.TeamMembershipScalarWhereInput[]
 }
 
-export type TeamMembershipUncheckedUpdateManyWithoutTeamOfferingNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput> | Prisma.TeamMembershipCreateWithoutTeamOfferingInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput[]
-  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamOfferingInput[]
-  upsert?: Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamOfferingInput | Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamOfferingInput[]
-  createMany?: Prisma.TeamMembershipCreateManyTeamOfferingInputEnvelope
+export type TeamMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput> | Prisma.TeamMembershipCreateWithoutTeamSeasonInput[] | Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput[]
+  connectOrCreate?: Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput | Prisma.TeamMembershipCreateOrConnectWithoutTeamSeasonInput[]
+  upsert?: Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.TeamMembershipUpsertWithWhereUniqueWithoutTeamSeasonInput[]
+  createMany?: Prisma.TeamMembershipCreateManyTeamSeasonInputEnvelope
   set?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   disconnect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   delete?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
   connect?: Prisma.TeamMembershipWhereUniqueInput | Prisma.TeamMembershipWhereUniqueInput[]
-  update?: Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamOfferingInput | Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamOfferingInput[]
-  updateMany?: Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamOfferingInput | Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamOfferingInput[]
+  update?: Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.TeamMembershipUpdateWithWhereUniqueWithoutTeamSeasonInput[]
+  updateMany?: Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.TeamMembershipUpdateManyWithWhereWithoutTeamSeasonInput[]
   deleteMany?: Prisma.TeamMembershipScalarWhereInput | Prisma.TeamMembershipScalarWhereInput[]
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type EnumProgramStatusFieldUpdateOperationsInput = {
@@ -577,13 +573,13 @@ export type TeamMembershipCreateWithoutPlayerInput = {
   status?: $Enums.ProgramStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  teamOffering: Prisma.TeamOfferingCreateNestedOneWithoutTeamMembershipsInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamMembershipsInput
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountCreateNestedManyWithoutTeamMembershipInput
 }
 
 export type TeamMembershipUncheckedCreateWithoutPlayerInput = {
   id?: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date | string
   endedAt?: Date | string | null
   billingDayOfMonth: number
@@ -625,7 +621,7 @@ export type TeamMembershipScalarWhereInput = {
   NOT?: Prisma.TeamMembershipScalarWhereInput | Prisma.TeamMembershipScalarWhereInput[]
   id?: Prisma.StringFilter<"TeamMembership"> | string
   playerId?: Prisma.StringFilter<"TeamMembership"> | string
-  teamOfferingId?: Prisma.StringFilter<"TeamMembership"> | string
+  teamSeasonId?: Prisma.StringFilter<"TeamMembership"> | string
   startedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   endedAt?: Prisma.DateTimeNullableFilter<"TeamMembership"> | Date | string | null
   billingDayOfMonth?: Prisma.IntFilter<"TeamMembership"> | number
@@ -634,7 +630,7 @@ export type TeamMembershipScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
 }
 
-export type TeamMembershipCreateWithoutTeamOfferingInput = {
+export type TeamMembershipCreateWithoutTeamSeasonInput = {
   id?: string
   startedAt: Date | string
   endedAt?: Date | string | null
@@ -646,7 +642,7 @@ export type TeamMembershipCreateWithoutTeamOfferingInput = {
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountCreateNestedManyWithoutTeamMembershipInput
 }
 
-export type TeamMembershipUncheckedCreateWithoutTeamOfferingInput = {
+export type TeamMembershipUncheckedCreateWithoutTeamSeasonInput = {
   id?: string
   playerId: string
   startedAt: Date | string
@@ -658,30 +654,30 @@ export type TeamMembershipUncheckedCreateWithoutTeamOfferingInput = {
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountUncheckedCreateNestedManyWithoutTeamMembershipInput
 }
 
-export type TeamMembershipCreateOrConnectWithoutTeamOfferingInput = {
+export type TeamMembershipCreateOrConnectWithoutTeamSeasonInput = {
   where: Prisma.TeamMembershipWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput>
+  create: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput>
 }
 
-export type TeamMembershipCreateManyTeamOfferingInputEnvelope = {
-  data: Prisma.TeamMembershipCreateManyTeamOfferingInput | Prisma.TeamMembershipCreateManyTeamOfferingInput[]
+export type TeamMembershipCreateManyTeamSeasonInputEnvelope = {
+  data: Prisma.TeamMembershipCreateManyTeamSeasonInput | Prisma.TeamMembershipCreateManyTeamSeasonInput[]
   skipDuplicates?: boolean
 }
 
-export type TeamMembershipUpsertWithWhereUniqueWithoutTeamOfferingInput = {
+export type TeamMembershipUpsertWithWhereUniqueWithoutTeamSeasonInput = {
   where: Prisma.TeamMembershipWhereUniqueInput
-  update: Prisma.XOR<Prisma.TeamMembershipUpdateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedUpdateWithoutTeamOfferingInput>
-  create: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamOfferingInput>
+  update: Prisma.XOR<Prisma.TeamMembershipUpdateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedUpdateWithoutTeamSeasonInput>
+  create: Prisma.XOR<Prisma.TeamMembershipCreateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedCreateWithoutTeamSeasonInput>
 }
 
-export type TeamMembershipUpdateWithWhereUniqueWithoutTeamOfferingInput = {
+export type TeamMembershipUpdateWithWhereUniqueWithoutTeamSeasonInput = {
   where: Prisma.TeamMembershipWhereUniqueInput
-  data: Prisma.XOR<Prisma.TeamMembershipUpdateWithoutTeamOfferingInput, Prisma.TeamMembershipUncheckedUpdateWithoutTeamOfferingInput>
+  data: Prisma.XOR<Prisma.TeamMembershipUpdateWithoutTeamSeasonInput, Prisma.TeamMembershipUncheckedUpdateWithoutTeamSeasonInput>
 }
 
-export type TeamMembershipUpdateManyWithWhereWithoutTeamOfferingInput = {
+export type TeamMembershipUpdateManyWithWhereWithoutTeamSeasonInput = {
   where: Prisma.TeamMembershipScalarWhereInput
-  data: Prisma.XOR<Prisma.TeamMembershipUpdateManyMutationInput, Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamOfferingInput>
+  data: Prisma.XOR<Prisma.TeamMembershipUpdateManyMutationInput, Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamSeasonInput>
 }
 
 export type TeamMembershipCreateWithoutTeamMembershipDiscountsInput = {
@@ -693,13 +689,13 @@ export type TeamMembershipCreateWithoutTeamMembershipDiscountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutTeamMembershipsInput
-  teamOffering: Prisma.TeamOfferingCreateNestedOneWithoutTeamMembershipsInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamMembershipsInput
 }
 
 export type TeamMembershipUncheckedCreateWithoutTeamMembershipDiscountsInput = {
   id?: string
   playerId: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date | string
   endedAt?: Date | string | null
   billingDayOfMonth: number
@@ -733,13 +729,13 @@ export type TeamMembershipUpdateWithoutTeamMembershipDiscountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   player?: Prisma.PlayerUpdateOneRequiredWithoutTeamMembershipsNestedInput
-  teamOffering?: Prisma.TeamOfferingUpdateOneRequiredWithoutTeamMembershipsNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamMembershipsNestedInput
 }
 
 export type TeamMembershipUncheckedUpdateWithoutTeamMembershipDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamOfferingId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   billingDayOfMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -750,7 +746,7 @@ export type TeamMembershipUncheckedUpdateWithoutTeamMembershipDiscountsInput = {
 
 export type TeamMembershipCreateManyPlayerInput = {
   id?: string
-  teamOfferingId: string
+  teamSeasonId: string
   startedAt: Date | string
   endedAt?: Date | string | null
   billingDayOfMonth: number
@@ -767,13 +763,13 @@ export type TeamMembershipUpdateWithoutPlayerInput = {
   status?: Prisma.EnumProgramStatusFieldUpdateOperationsInput | $Enums.ProgramStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamOffering?: Prisma.TeamOfferingUpdateOneRequiredWithoutTeamMembershipsNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamMembershipsNestedInput
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountUpdateManyWithoutTeamMembershipNestedInput
 }
 
 export type TeamMembershipUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamOfferingId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   billingDayOfMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -785,7 +781,7 @@ export type TeamMembershipUncheckedUpdateWithoutPlayerInput = {
 
 export type TeamMembershipUncheckedUpdateManyWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamOfferingId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   billingDayOfMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -794,7 +790,7 @@ export type TeamMembershipUncheckedUpdateManyWithoutPlayerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type TeamMembershipCreateManyTeamOfferingInput = {
+export type TeamMembershipCreateManyTeamSeasonInput = {
   id?: string
   playerId: string
   startedAt: Date | string
@@ -805,7 +801,7 @@ export type TeamMembershipCreateManyTeamOfferingInput = {
   updatedAt?: Date | string
 }
 
-export type TeamMembershipUpdateWithoutTeamOfferingInput = {
+export type TeamMembershipUpdateWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -817,7 +813,7 @@ export type TeamMembershipUpdateWithoutTeamOfferingInput = {
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountUpdateManyWithoutTeamMembershipNestedInput
 }
 
-export type TeamMembershipUncheckedUpdateWithoutTeamOfferingInput = {
+export type TeamMembershipUncheckedUpdateWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -829,7 +825,7 @@ export type TeamMembershipUncheckedUpdateWithoutTeamOfferingInput = {
   teamMembershipDiscounts?: Prisma.TeamMembershipDiscountUncheckedUpdateManyWithoutTeamMembershipNestedInput
 }
 
-export type TeamMembershipUncheckedUpdateManyWithoutTeamOfferingInput = {
+export type TeamMembershipUncheckedUpdateManyWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -874,7 +870,7 @@ export type TeamMembershipCountOutputTypeCountTeamMembershipDiscountsArgs<ExtArg
 export type TeamMembershipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  teamOfferingId?: boolean
+  teamSeasonId?: boolean
   startedAt?: boolean
   endedAt?: boolean
   billingDayOfMonth?: boolean
@@ -882,7 +878,7 @@ export type TeamMembershipSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   teamMembershipDiscounts?: boolean | Prisma.TeamMembership$teamMembershipDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.TeamMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamMembership"]>
@@ -890,7 +886,7 @@ export type TeamMembershipSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type TeamMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  teamOfferingId?: boolean
+  teamSeasonId?: boolean
   startedAt?: boolean
   endedAt?: boolean
   billingDayOfMonth?: boolean
@@ -898,13 +894,13 @@ export type TeamMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamMembership"]>
 
 export type TeamMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  teamOfferingId?: boolean
+  teamSeasonId?: boolean
   startedAt?: boolean
   endedAt?: boolean
   billingDayOfMonth?: boolean
@@ -912,13 +908,13 @@ export type TeamMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamMembership"]>
 
 export type TeamMembershipSelectScalar = {
   id?: boolean
   playerId?: boolean
-  teamOfferingId?: boolean
+  teamSeasonId?: boolean
   startedAt?: boolean
   endedAt?: boolean
   billingDayOfMonth?: boolean
@@ -927,33 +923,33 @@ export type TeamMembershipSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TeamMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamOfferingId" | "startedAt" | "endedAt" | "billingDayOfMonth" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMembership"]>
+export type TeamMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamSeasonId" | "startedAt" | "endedAt" | "billingDayOfMonth" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMembership"]>
 export type TeamMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   teamMembershipDiscounts?: boolean | Prisma.TeamMembership$teamMembershipDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.TeamMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TeamMembershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }
 export type TeamMembershipIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  teamOffering?: boolean | Prisma.TeamOfferingDefaultArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }
 
 export type $TeamMembershipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TeamMembership"
   objects: {
     player: Prisma.$PlayerPayload<ExtArgs>
-    teamOffering: Prisma.$TeamOfferingPayload<ExtArgs>
+    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>
     teamMembershipDiscounts: Prisma.$TeamMembershipDiscountPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     playerId: string
-    teamOfferingId: string
+    teamSeasonId: string
     startedAt: Date
     endedAt: Date | null
     billingDayOfMonth: number
@@ -1355,7 +1351,7 @@ readonly fields: TeamMembershipFieldRefs;
 export interface Prisma__TeamMembershipClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   player<T extends Prisma.PlayerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  teamOffering<T extends Prisma.TeamOfferingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamOfferingDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamOfferingClient<runtime.Types.Result.GetResult<Prisma.$TeamOfferingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teamMembershipDiscounts<T extends Prisma.TeamMembership$teamMembershipDiscountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamMembership$teamMembershipDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMembershipDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1388,7 +1384,7 @@ export interface Prisma__TeamMembershipClient<T, Null = never, ExtArgs extends r
 export interface TeamMembershipFieldRefs {
   readonly id: Prisma.FieldRef<"TeamMembership", 'String'>
   readonly playerId: Prisma.FieldRef<"TeamMembership", 'String'>
-  readonly teamOfferingId: Prisma.FieldRef<"TeamMembership", 'String'>
+  readonly teamSeasonId: Prisma.FieldRef<"TeamMembership", 'String'>
   readonly startedAt: Prisma.FieldRef<"TeamMembership", 'DateTime'>
   readonly endedAt: Prisma.FieldRef<"TeamMembership", 'DateTime'>
   readonly billingDayOfMonth: Prisma.FieldRef<"TeamMembership", 'Int'>

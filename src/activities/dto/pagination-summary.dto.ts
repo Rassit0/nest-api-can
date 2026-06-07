@@ -25,10 +25,10 @@ export class ActivitiesSummaryPaginationDto {
 
   @IsOptional()
   @IsUUID()
-  @Exists('teamOffering', 'id', {
+  @Exists('teamSeason', 'id', {
     message: i18nValidationMessage('validation.EXISTS', {
-      constraint1: 'teamOfferingId',
+      constraint1: 'teamSeasonId',
     }),
   })
-  teamOfferingId?: string;
+  teamSeasonId?: string;
 }

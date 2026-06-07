@@ -65,25 +65,15 @@ export type Student = Prisma.StudentModel
  */
 export type Discipline = Prisma.DisciplineModel
 /**
- * Model Season
- * 
- */
-export type Season = Prisma.SeasonModel
-/**
  * Model Organization
  * 
  */
 export type Organization = Prisma.OrganizationModel
 /**
- * Model Clubs
+ * Model Club
  * 
  */
-export type Clubs = Prisma.ClubsModel
-/**
- * Model ClubOfferings
- * 
- */
-export type ClubOfferings = Prisma.ClubOfferingsModel
+export type Club = Prisma.ClubModel
 /**
  * Model Location
  * 
@@ -95,20 +85,25 @@ export type Location = Prisma.LocationModel
  */
 export type Activity = Prisma.ActivityModel
 /**
- * Model Teams
+ * Model Team
  * 
  */
-export type Teams = Prisma.TeamsModel
+export type Team = Prisma.TeamModel
 /**
- * Model TeamOffering
+ * Model TeamSeason
  * 
  */
-export type TeamOffering = Prisma.TeamOfferingModel
+export type TeamSeason = Prisma.TeamSeasonModel
 /**
- * Model TeamOfferingActivity
+ * Model TeamSeasonExtension
  * 
  */
-export type TeamOfferingActivity = Prisma.TeamOfferingActivityModel
+export type TeamSeasonExtension = Prisma.TeamSeasonExtensionModel
+/**
+ * Model TeamSeasonActivity
+ * 
+ */
+export type TeamSeasonActivity = Prisma.TeamSeasonActivityModel
 /**
  * Model TeamMembership
  * 
@@ -119,16 +114,6 @@ export type TeamMembership = Prisma.TeamMembershipModel
  * 
  */
 export type TeamMembershipDiscount = Prisma.TeamMembershipDiscountModel
-/**
- * Model PlayerReinforcement
- * 
- */
-export type PlayerReinforcement = Prisma.PlayerReinforcementModel
-/**
- * Model PlayerPassOffering
- * 
- */
-export type PlayerPassOffering = Prisma.PlayerPassOfferingModel
 /**
  * Model PlayerPass
  * 
@@ -145,15 +130,15 @@ export type School = Prisma.SchoolModel
  */
 export type Course = Prisma.CourseModel
 /**
- * Model CourseOffering
+ * Model CourseSeason
  * 
  */
-export type CourseOffering = Prisma.CourseOfferingModel
+export type CourseSeason = Prisma.CourseSeasonModel
 /**
- * Model CourseOfferingActivity
+ * Model CourseSeasonActivity
  * 
  */
-export type CourseOfferingActivity = Prisma.CourseOfferingActivityModel
+export type CourseSeasonActivity = Prisma.CourseSeasonActivityModel
 /**
  * Model CourseEnrollment
  * 

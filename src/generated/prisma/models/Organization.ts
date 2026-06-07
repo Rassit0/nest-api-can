@@ -206,7 +206,7 @@ export type OrganizationWhereInput = {
   email?: Prisma.StringNullableFilter<"Organization"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
-  clubs?: Prisma.ClubsListRelationFilter
+  clubs?: Prisma.ClubListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
 }
 
@@ -219,7 +219,7 @@ export type OrganizationOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  clubs?: Prisma.ClubsOrderByRelationAggregateInput
+  clubs?: Prisma.ClubOrderByRelationAggregateInput
   schools?: Prisma.SchoolOrderByRelationAggregateInput
 }
 
@@ -235,7 +235,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
-  clubs?: Prisma.ClubsListRelationFilter
+  clubs?: Prisma.ClubListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
 }, "id" | "email">
 
@@ -276,7 +276,7 @@ export type OrganizationCreateInput = {
   email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clubs?: Prisma.ClubsCreateNestedManyWithoutOrganizationInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutOrganizationInput
   schools?: Prisma.SchoolCreateNestedManyWithoutOrganizationInput
 }
 
@@ -289,7 +289,7 @@ export type OrganizationUncheckedCreateInput = {
   email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clubs?: Prisma.ClubsUncheckedCreateNestedManyWithoutOrganizationInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutOrganizationInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
@@ -302,7 +302,7 @@ export type OrganizationUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clubs?: Prisma.ClubsUpdateManyWithoutOrganizationNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutOrganizationNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -315,7 +315,7 @@ export type OrganizationUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clubs?: Prisma.ClubsUncheckedUpdateManyWithoutOrganizationNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutOrganizationNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -491,7 +491,7 @@ export type OrganizationCreateWithoutSchoolsInput = {
   email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clubs?: Prisma.ClubsCreateNestedManyWithoutOrganizationInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSchoolsInput = {
@@ -503,7 +503,7 @@ export type OrganizationUncheckedCreateWithoutSchoolsInput = {
   email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  clubs?: Prisma.ClubsUncheckedCreateNestedManyWithoutOrganizationInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSchoolsInput = {
@@ -531,7 +531,7 @@ export type OrganizationUpdateWithoutSchoolsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clubs?: Prisma.ClubsUpdateManyWithoutOrganizationNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSchoolsInput = {
@@ -543,7 +543,7 @@ export type OrganizationUncheckedUpdateWithoutSchoolsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clubs?: Prisma.ClubsUncheckedUpdateManyWithoutOrganizationNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -575,7 +575,7 @@ export type OrganizationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
  * OrganizationCountOutputType without action
  */
 export type OrganizationCountOutputTypeCountClubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClubsWhereInput
+  where?: Prisma.ClubWhereInput
 }
 
 /**
@@ -645,7 +645,7 @@ export type OrganizationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Organization"
   objects: {
-    clubs: Prisma.$ClubsPayload<ExtArgs>[]
+    clubs: Prisma.$ClubPayload<ExtArgs>[]
     schools: Prisma.$SchoolPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1051,7 +1051,7 @@ readonly fields: OrganizationFieldRefs;
  */
 export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  clubs<T extends Prisma.Organization$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubs<T extends Prisma.Organization$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   schools<T extends Prisma.Organization$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1487,23 +1487,23 @@ export type OrganizationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
  */
 export type Organization$clubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Clubs
+   * Select specific fields to fetch from the Club
    */
-  select?: Prisma.ClubsSelect<ExtArgs> | null
+  select?: Prisma.ClubSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Clubs
+   * Omit specific fields from the Club
    */
-  omit?: Prisma.ClubsOmit<ExtArgs> | null
+  omit?: Prisma.ClubOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ClubsInclude<ExtArgs> | null
-  where?: Prisma.ClubsWhereInput
-  orderBy?: Prisma.ClubsOrderByWithRelationInput | Prisma.ClubsOrderByWithRelationInput[]
-  cursor?: Prisma.ClubsWhereUniqueInput
+  include?: Prisma.ClubInclude<ExtArgs> | null
+  where?: Prisma.ClubWhereInput
+  orderBy?: Prisma.ClubOrderByWithRelationInput | Prisma.ClubOrderByWithRelationInput[]
+  cursor?: Prisma.ClubWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ClubsScalarFieldEnum | Prisma.ClubsScalarFieldEnum[]
+  distinct?: Prisma.ClubScalarFieldEnum | Prisma.ClubScalarFieldEnum[]
 }
 
 /**

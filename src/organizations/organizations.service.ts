@@ -1,11 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Prisma } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { OrganizationsPaginationDto } from './dto/pagination.dto';
+import { NotFoundError } from 'rxjs';
 
-export const OrganizationSelect: Prisma.OrganizationSelect = {
+export const organizationSelect: Prisma.OrganizationSelect = {
   id: true,
   name: true,
   imageUrl: true,
@@ -38,7 +39,7 @@ export class OrganizationsService {
     const newOrganization = await this.prisma.$transaction(async (tx) => {
       const organization = await tx.organization.create({
         data: createOrganizationDto,
-        select: OrganizationSelect,
+        select: organizationSelect,
       });
 
       return organization;
@@ -72,7 +73,7 @@ export class OrganizationsService {
         take: per_page,
         skip,
         orderBy: { [sortField]: orderBy },
-        select: OrganizationSelect,
+        select: organizationSelect,
       }),
       this.prisma.organization.count({ where }),
     ]);
@@ -101,13 +102,17 @@ export class OrganizationsService {
   }
 
   async findOne(id: string) {
-    const Organization = await this.prisma.organization.findUnique({
+    const organization = await this.prisma.organization.findUnique({
       where: { id },
-      select: OrganizationSelect,
+      select: organizationSelect,
     });
+
+    if (!organization) {
+      throw new NotFoundException('Organizacion no encontrada');
+    }
     return {
       message: 'Organizacion obtenida exitosamente',
-      data: Organization,
+      data: organization,
     };
   }
 
@@ -116,7 +121,7 @@ export class OrganizationsService {
       const organization = await tx.organization.update({
         where: { id },
         data: updateOrganizationDto,
-        select: OrganizationSelect,
+        select: organizationSelect,
       });
 
       return organization;
@@ -130,7 +135,7 @@ export class OrganizationsService {
   async remove(id: string) {
     const deleteOrganization = await this.prisma.organization.delete({
       where: { id },
-      select: OrganizationSelect,
+      select: organizationSelect,
     });
     return {
       message: 'Organizacion eliminada exitosamente',

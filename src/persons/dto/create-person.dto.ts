@@ -7,13 +7,16 @@ import {
   IsOptional,
   IsEnum,
   IsDefined,
-  IsArray,
-  IsInt,
   IsISO8601,
   ValidateIf,
   IsBoolean,
 } from 'class-validator';
-import { HasMimeType, IsFile, MaxFileSize } from 'nestjs-form-data';
+import {
+  HasMimeType,
+  IsFile,
+  MaxFileSize,
+  MemoryStoredFile,
+} from 'nestjs-form-data';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { DocumentType, Gender } from 'src/generated/prisma/enums';
 
@@ -40,21 +43,23 @@ export class CreatePersonDto {
   })
   secondLastName?: string | null;
 
-  @IsISO8601(
-    { strict: true },
-    { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
-  )
-  birthDate: string;
-
   @IsOptional()
   // 1. Transformamos los valores problemáticos a null real
   @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
   // 2. Si el valor es null, saltamos la validación de Enum para que no falle
   @ValidateIf((object, value) => value !== null)
+  @IsISO8601(
+    { strict: true },
+    { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
+  )
+  birthDate?: string;
+
+  @IsOptional()
+  @ValidateIf((_, value) => value != null)
   @IsFile()
   @MaxFileSize(5e6)
   @HasMimeType(['image/jpeg', 'image/png'])
-  imageUrl?: string | null;
+  imageUrl?: MemoryStoredFile;
 
   @IsEnum(DocumentType, {
     message: 'Tipo de documento inválido, los tipos son: CI, PASAPORTE',
@@ -110,15 +115,6 @@ export class CreatePersonDto {
   //     'Talla de uniforme inválida, las tallas son: XS, S, M, L, XL, XXL, XXXL',
   // })
   // standardSize?: UniformSize | null;
-
-  @IsBoolean({
-    message: i18nValidationMessage('validation.IS_BOOLEAN', {
-      constraint1: 'isActive',
-    }),
-  })
-  @IsOptional()
-  isActive?: boolean;
-
   // @IsArray({ message: 'Los IDs de los tutores deben ser un arreglo' })
   // @IsInt({ each: true, message: 'Cada ID de tutor debe ser un número entero' })
   // @IsOptional()

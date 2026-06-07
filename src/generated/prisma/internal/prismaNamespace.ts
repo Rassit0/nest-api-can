@@ -389,24 +389,21 @@ export const ModelName = {
   Player: 'Player',
   Student: 'Student',
   Discipline: 'Discipline',
-  Season: 'Season',
   Organization: 'Organization',
-  Clubs: 'Clubs',
-  ClubOfferings: 'ClubOfferings',
+  Club: 'Club',
   Location: 'Location',
   Activity: 'Activity',
-  Teams: 'Teams',
-  TeamOffering: 'TeamOffering',
-  TeamOfferingActivity: 'TeamOfferingActivity',
+  Team: 'Team',
+  TeamSeason: 'TeamSeason',
+  TeamSeasonExtension: 'TeamSeasonExtension',
+  TeamSeasonActivity: 'TeamSeasonActivity',
   TeamMembership: 'TeamMembership',
   TeamMembershipDiscount: 'TeamMembershipDiscount',
-  PlayerReinforcement: 'PlayerReinforcement',
-  PlayerPassOffering: 'PlayerPassOffering',
   PlayerPass: 'PlayerPass',
   School: 'School',
   Course: 'Course',
-  CourseOffering: 'CourseOffering',
-  CourseOfferingActivity: 'CourseOfferingActivity',
+  CourseSeason: 'CourseSeason',
+  CourseSeasonActivity: 'CourseSeasonActivity',
   CourseEnrollment: 'CourseEnrollment',
   CourseEnrollmentDiscount: 'CourseEnrollmentDiscount'
 } as const
@@ -424,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "player" | "student" | "discipline" | "season" | "organization" | "clubs" | "clubOfferings" | "location" | "activity" | "teams" | "teamOffering" | "teamOfferingActivity" | "teamMembership" | "teamMembershipDiscount" | "playerReinforcement" | "playerPassOffering" | "playerPass" | "school" | "course" | "courseOffering" | "courseOfferingActivity" | "courseEnrollment" | "courseEnrollmentDiscount"
+    modelProps: "person" | "personContact" | "player" | "student" | "discipline" | "organization" | "club" | "location" | "activity" | "team" | "teamSeason" | "teamSeasonExtension" | "teamSeasonActivity" | "teamMembership" | "teamMembershipDiscount" | "playerPass" | "school" | "course" | "courseSeason" | "courseSeasonActivity" | "courseEnrollment" | "courseEnrollmentDiscount"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -798,80 +795,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Season: {
-      payload: Prisma.$SeasonPayload<ExtArgs>
-      fields: Prisma.SeasonFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SeasonFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SeasonFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        findFirst: {
-          args: Prisma.SeasonFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SeasonFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        findMany: {
-          args: Prisma.SeasonFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>[]
-        }
-        create: {
-          args: Prisma.SeasonCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        createMany: {
-          args: Prisma.SeasonCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SeasonCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>[]
-        }
-        delete: {
-          args: Prisma.SeasonDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        update: {
-          args: Prisma.SeasonUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        deleteMany: {
-          args: Prisma.SeasonDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SeasonUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SeasonUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>[]
-        }
-        upsert: {
-          args: Prisma.SeasonUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonPayload>
-        }
-        aggregate: {
-          args: Prisma.SeasonAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSeason>
-        }
-        groupBy: {
-          args: Prisma.SeasonGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SeasonGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SeasonCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SeasonCountAggregateOutputType> | number
-        }
-      }
-    }
     Organization: {
       payload: Prisma.$OrganizationPayload<ExtArgs>
       fields: Prisma.OrganizationFieldRefs
@@ -946,151 +869,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Clubs: {
-      payload: Prisma.$ClubsPayload<ExtArgs>
-      fields: Prisma.ClubsFieldRefs
+    Club: {
+      payload: Prisma.$ClubPayload<ExtArgs>
+      fields: Prisma.ClubFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ClubsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload> | null
+          args: Prisma.ClubFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ClubsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         findFirst: {
-          args: Prisma.ClubsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload> | null
+          args: Prisma.ClubFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ClubsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         findMany: {
-          args: Prisma.ClubsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>[]
+          args: Prisma.ClubFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>[]
         }
         create: {
-          args: Prisma.ClubsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         createMany: {
-          args: Prisma.ClubsCreateManyArgs<ExtArgs>
+          args: Prisma.ClubCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ClubsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>[]
+          args: Prisma.ClubCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>[]
         }
         delete: {
-          args: Prisma.ClubsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         update: {
-          args: Prisma.ClubsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         deleteMany: {
-          args: Prisma.ClubsDeleteManyArgs<ExtArgs>
+          args: Prisma.ClubDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ClubsUpdateManyArgs<ExtArgs>
+          args: Prisma.ClubUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ClubsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>[]
+          args: Prisma.ClubUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>[]
         }
         upsert: {
-          args: Prisma.ClubsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubsPayload>
+          args: Prisma.ClubUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPayload>
         }
         aggregate: {
-          args: Prisma.ClubsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateClubs>
+          args: Prisma.ClubAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClub>
         }
         groupBy: {
-          args: Prisma.ClubsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClubsGroupByOutputType>[]
+          args: Prisma.ClubGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ClubsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClubsCountAggregateOutputType> | number
-        }
-      }
-    }
-    ClubOfferings: {
-      payload: Prisma.$ClubOfferingsPayload<ExtArgs>
-      fields: Prisma.ClubOfferingsFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ClubOfferingsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ClubOfferingsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        findFirst: {
-          args: Prisma.ClubOfferingsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ClubOfferingsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        findMany: {
-          args: Prisma.ClubOfferingsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>[]
-        }
-        create: {
-          args: Prisma.ClubOfferingsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        createMany: {
-          args: Prisma.ClubOfferingsCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ClubOfferingsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>[]
-        }
-        delete: {
-          args: Prisma.ClubOfferingsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        update: {
-          args: Prisma.ClubOfferingsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        deleteMany: {
-          args: Prisma.ClubOfferingsDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ClubOfferingsUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ClubOfferingsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>[]
-        }
-        upsert: {
-          args: Prisma.ClubOfferingsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubOfferingsPayload>
-        }
-        aggregate: {
-          args: Prisma.ClubOfferingsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateClubOfferings>
-        }
-        groupBy: {
-          args: Prisma.ClubOfferingsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClubOfferingsGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ClubOfferingsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClubOfferingsCountAggregateOutputType> | number
+          args: Prisma.ClubCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubCountAggregateOutputType> | number
         }
       }
     }
@@ -1242,225 +1091,299 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Teams: {
-      payload: Prisma.$TeamsPayload<ExtArgs>
-      fields: Prisma.TeamsFieldRefs
+    Team: {
+      payload: Prisma.$TeamPayload<ExtArgs>
+      fields: Prisma.TeamFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TeamsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload> | null
+          args: Prisma.TeamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TeamsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         findFirst: {
-          args: Prisma.TeamsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload> | null
+          args: Prisma.TeamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TeamsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         findMany: {
-          args: Prisma.TeamsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+          args: Prisma.TeamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>[]
         }
         create: {
-          args: Prisma.TeamsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         createMany: {
-          args: Prisma.TeamsCreateManyArgs<ExtArgs>
+          args: Prisma.TeamCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TeamsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+          args: Prisma.TeamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>[]
         }
         delete: {
-          args: Prisma.TeamsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         update: {
-          args: Prisma.TeamsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         deleteMany: {
-          args: Prisma.TeamsDeleteManyArgs<ExtArgs>
+          args: Prisma.TeamDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TeamsUpdateManyArgs<ExtArgs>
+          args: Prisma.TeamUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TeamsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>[]
+          args: Prisma.TeamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>[]
         }
         upsert: {
-          args: Prisma.TeamsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamsPayload>
+          args: Prisma.TeamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>
         }
         aggregate: {
-          args: Prisma.TeamsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTeams>
+          args: Prisma.TeamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeam>
         }
         groupBy: {
-          args: Prisma.TeamsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamsGroupByOutputType>[]
+          args: Prisma.TeamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TeamsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamsCountAggregateOutputType> | number
+          args: Prisma.TeamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamCountAggregateOutputType> | number
         }
       }
     }
-    TeamOffering: {
-      payload: Prisma.$TeamOfferingPayload<ExtArgs>
-      fields: Prisma.TeamOfferingFieldRefs
+    TeamSeason: {
+      payload: Prisma.$TeamSeasonPayload<ExtArgs>
+      fields: Prisma.TeamSeasonFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TeamOfferingFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload> | null
+          args: Prisma.TeamSeasonFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TeamOfferingFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         findFirst: {
-          args: Prisma.TeamOfferingFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload> | null
+          args: Prisma.TeamSeasonFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TeamOfferingFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         findMany: {
-          args: Prisma.TeamOfferingFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>[]
+          args: Prisma.TeamSeasonFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>[]
         }
         create: {
-          args: Prisma.TeamOfferingCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         createMany: {
-          args: Prisma.TeamOfferingCreateManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TeamOfferingCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>[]
+          args: Prisma.TeamSeasonCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>[]
         }
         delete: {
-          args: Prisma.TeamOfferingDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         update: {
-          args: Prisma.TeamOfferingUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         deleteMany: {
-          args: Prisma.TeamOfferingDeleteManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TeamOfferingUpdateManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TeamOfferingUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>[]
+          args: Prisma.TeamSeasonUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>[]
         }
         upsert: {
-          args: Prisma.TeamOfferingUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingPayload>
+          args: Prisma.TeamSeasonUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPayload>
         }
         aggregate: {
-          args: Prisma.TeamOfferingAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamOffering>
+          args: Prisma.TeamSeasonAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeason>
         }
         groupBy: {
-          args: Prisma.TeamOfferingGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamOfferingGroupByOutputType>[]
+          args: Prisma.TeamSeasonGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TeamOfferingCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamOfferingCountAggregateOutputType> | number
+          args: Prisma.TeamSeasonCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonCountAggregateOutputType> | number
         }
       }
     }
-    TeamOfferingActivity: {
-      payload: Prisma.$TeamOfferingActivityPayload<ExtArgs>
-      fields: Prisma.TeamOfferingActivityFieldRefs
+    TeamSeasonExtension: {
+      payload: Prisma.$TeamSeasonExtensionPayload<ExtArgs>
+      fields: Prisma.TeamSeasonExtensionFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TeamOfferingActivityFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload> | null
+          args: Prisma.TeamSeasonExtensionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TeamOfferingActivityFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         findFirst: {
-          args: Prisma.TeamOfferingActivityFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload> | null
+          args: Prisma.TeamSeasonExtensionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TeamOfferingActivityFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         findMany: {
-          args: Prisma.TeamOfferingActivityFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>[]
+          args: Prisma.TeamSeasonExtensionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>[]
         }
         create: {
-          args: Prisma.TeamOfferingActivityCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         createMany: {
-          args: Prisma.TeamOfferingActivityCreateManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonExtensionCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TeamOfferingActivityCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>[]
+          args: Prisma.TeamSeasonExtensionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>[]
         }
         delete: {
-          args: Prisma.TeamOfferingActivityDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         update: {
-          args: Prisma.TeamOfferingActivityUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         deleteMany: {
-          args: Prisma.TeamOfferingActivityDeleteManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonExtensionDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TeamOfferingActivityUpdateManyArgs<ExtArgs>
+          args: Prisma.TeamSeasonExtensionUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TeamOfferingActivityUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>[]
+          args: Prisma.TeamSeasonExtensionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>[]
         }
         upsert: {
-          args: Prisma.TeamOfferingActivityUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamOfferingActivityPayload>
+          args: Prisma.TeamSeasonExtensionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonExtensionPayload>
         }
         aggregate: {
-          args: Prisma.TeamOfferingActivityAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamOfferingActivity>
+          args: Prisma.TeamSeasonExtensionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeasonExtension>
         }
         groupBy: {
-          args: Prisma.TeamOfferingActivityGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamOfferingActivityGroupByOutputType>[]
+          args: Prisma.TeamSeasonExtensionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonExtensionGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TeamOfferingActivityCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TeamOfferingActivityCountAggregateOutputType> | number
+          args: Prisma.TeamSeasonExtensionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonExtensionCountAggregateOutputType> | number
+        }
+      }
+    }
+    TeamSeasonActivity: {
+      payload: Prisma.$TeamSeasonActivityPayload<ExtArgs>
+      fields: Prisma.TeamSeasonActivityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamSeasonActivityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamSeasonActivityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        findFirst: {
+          args: Prisma.TeamSeasonActivityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamSeasonActivityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        findMany: {
+          args: Prisma.TeamSeasonActivityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>[]
+        }
+        create: {
+          args: Prisma.TeamSeasonActivityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        createMany: {
+          args: Prisma.TeamSeasonActivityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamSeasonActivityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>[]
+        }
+        delete: {
+          args: Prisma.TeamSeasonActivityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        update: {
+          args: Prisma.TeamSeasonActivityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamSeasonActivityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamSeasonActivityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamSeasonActivityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamSeasonActivityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonActivityPayload>
+        }
+        aggregate: {
+          args: Prisma.TeamSeasonActivityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeasonActivity>
+        }
+        groupBy: {
+          args: Prisma.TeamSeasonActivityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonActivityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamSeasonActivityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonActivityCountAggregateOutputType> | number
         }
       }
     }
@@ -1609,154 +1532,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TeamMembershipDiscountCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TeamMembershipDiscountCountAggregateOutputType> | number
-        }
-      }
-    }
-    PlayerReinforcement: {
-      payload: Prisma.$PlayerReinforcementPayload<ExtArgs>
-      fields: Prisma.PlayerReinforcementFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.PlayerReinforcementFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.PlayerReinforcementFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        findFirst: {
-          args: Prisma.PlayerReinforcementFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.PlayerReinforcementFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        findMany: {
-          args: Prisma.PlayerReinforcementFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>[]
-        }
-        create: {
-          args: Prisma.PlayerReinforcementCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        createMany: {
-          args: Prisma.PlayerReinforcementCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.PlayerReinforcementCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>[]
-        }
-        delete: {
-          args: Prisma.PlayerReinforcementDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        update: {
-          args: Prisma.PlayerReinforcementUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        deleteMany: {
-          args: Prisma.PlayerReinforcementDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.PlayerReinforcementUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.PlayerReinforcementUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>[]
-        }
-        upsert: {
-          args: Prisma.PlayerReinforcementUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerReinforcementPayload>
-        }
-        aggregate: {
-          args: Prisma.PlayerReinforcementAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayerReinforcement>
-        }
-        groupBy: {
-          args: Prisma.PlayerReinforcementGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayerReinforcementGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.PlayerReinforcementCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayerReinforcementCountAggregateOutputType> | number
-        }
-      }
-    }
-    PlayerPassOffering: {
-      payload: Prisma.$PlayerPassOfferingPayload<ExtArgs>
-      fields: Prisma.PlayerPassOfferingFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.PlayerPassOfferingFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.PlayerPassOfferingFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        findFirst: {
-          args: Prisma.PlayerPassOfferingFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.PlayerPassOfferingFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        findMany: {
-          args: Prisma.PlayerPassOfferingFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>[]
-        }
-        create: {
-          args: Prisma.PlayerPassOfferingCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        createMany: {
-          args: Prisma.PlayerPassOfferingCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.PlayerPassOfferingCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>[]
-        }
-        delete: {
-          args: Prisma.PlayerPassOfferingDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        update: {
-          args: Prisma.PlayerPassOfferingUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        deleteMany: {
-          args: Prisma.PlayerPassOfferingDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.PlayerPassOfferingUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.PlayerPassOfferingUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>[]
-        }
-        upsert: {
-          args: Prisma.PlayerPassOfferingUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerPassOfferingPayload>
-        }
-        aggregate: {
-          args: Prisma.PlayerPassOfferingAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayerPassOffering>
-        }
-        groupBy: {
-          args: Prisma.PlayerPassOfferingGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayerPassOfferingGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.PlayerPassOfferingCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PlayerPassOfferingCountAggregateOutputType> | number
         }
       }
     }
@@ -1982,151 +1757,151 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    CourseOffering: {
-      payload: Prisma.$CourseOfferingPayload<ExtArgs>
-      fields: Prisma.CourseOfferingFieldRefs
+    CourseSeason: {
+      payload: Prisma.$CourseSeasonPayload<ExtArgs>
+      fields: Prisma.CourseSeasonFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.CourseOfferingFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload> | null
+          args: Prisma.CourseSeasonFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.CourseOfferingFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         findFirst: {
-          args: Prisma.CourseOfferingFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload> | null
+          args: Prisma.CourseSeasonFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.CourseOfferingFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         findMany: {
-          args: Prisma.CourseOfferingFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>[]
+          args: Prisma.CourseSeasonFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>[]
         }
         create: {
-          args: Prisma.CourseOfferingCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         createMany: {
-          args: Prisma.CourseOfferingCreateManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.CourseOfferingCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>[]
+          args: Prisma.CourseSeasonCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>[]
         }
         delete: {
-          args: Prisma.CourseOfferingDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         update: {
-          args: Prisma.CourseOfferingUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         deleteMany: {
-          args: Prisma.CourseOfferingDeleteManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.CourseOfferingUpdateManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.CourseOfferingUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>[]
+          args: Prisma.CourseSeasonUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>[]
         }
         upsert: {
-          args: Prisma.CourseOfferingUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingPayload>
+          args: Prisma.CourseSeasonUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPayload>
         }
         aggregate: {
-          args: Prisma.CourseOfferingAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseOffering>
+          args: Prisma.CourseSeasonAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseSeason>
         }
         groupBy: {
-          args: Prisma.CourseOfferingGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CourseOfferingGroupByOutputType>[]
+          args: Prisma.CourseSeasonGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonGroupByOutputType>[]
         }
         count: {
-          args: Prisma.CourseOfferingCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CourseOfferingCountAggregateOutputType> | number
+          args: Prisma.CourseSeasonCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonCountAggregateOutputType> | number
         }
       }
     }
-    CourseOfferingActivity: {
-      payload: Prisma.$CourseOfferingActivityPayload<ExtArgs>
-      fields: Prisma.CourseOfferingActivityFieldRefs
+    CourseSeasonActivity: {
+      payload: Prisma.$CourseSeasonActivityPayload<ExtArgs>
+      fields: Prisma.CourseSeasonActivityFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.CourseOfferingActivityFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload> | null
+          args: Prisma.CourseSeasonActivityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.CourseOfferingActivityFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         findFirst: {
-          args: Prisma.CourseOfferingActivityFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload> | null
+          args: Prisma.CourseSeasonActivityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.CourseOfferingActivityFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         findMany: {
-          args: Prisma.CourseOfferingActivityFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>[]
+          args: Prisma.CourseSeasonActivityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>[]
         }
         create: {
-          args: Prisma.CourseOfferingActivityCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         createMany: {
-          args: Prisma.CourseOfferingActivityCreateManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonActivityCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.CourseOfferingActivityCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>[]
+          args: Prisma.CourseSeasonActivityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>[]
         }
         delete: {
-          args: Prisma.CourseOfferingActivityDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         update: {
-          args: Prisma.CourseOfferingActivityUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         deleteMany: {
-          args: Prisma.CourseOfferingActivityDeleteManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonActivityDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.CourseOfferingActivityUpdateManyArgs<ExtArgs>
+          args: Prisma.CourseSeasonActivityUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.CourseOfferingActivityUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>[]
+          args: Prisma.CourseSeasonActivityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>[]
         }
         upsert: {
-          args: Prisma.CourseOfferingActivityUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseOfferingActivityPayload>
+          args: Prisma.CourseSeasonActivityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonActivityPayload>
         }
         aggregate: {
-          args: Prisma.CourseOfferingActivityAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseOfferingActivity>
+          args: Prisma.CourseSeasonActivityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseSeasonActivity>
         }
         groupBy: {
-          args: Prisma.CourseOfferingActivityGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CourseOfferingActivityGroupByOutputType>[]
+          args: Prisma.CourseSeasonActivityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonActivityGroupByOutputType>[]
         }
         count: {
-          args: Prisma.CourseOfferingActivityCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CourseOfferingActivityCountAggregateOutputType> | number
+          args: Prisma.CourseSeasonActivityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonActivityCountAggregateOutputType> | number
         }
       }
     }
@@ -2330,7 +2105,6 @@ export const PersonScalarFieldEnum = {
   email: 'email',
   address: 'address',
   gender: 'gender',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2354,6 +2128,7 @@ export type PersonContactScalarFieldEnum = (typeof PersonContactScalarFieldEnum)
 export const PlayerScalarFieldEnum = {
   id: 'id',
   personId: 'personId',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2364,6 +2139,7 @@ export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof 
 export const StudentScalarFieldEnum = {
   id: 'id',
   personId: 'personId',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2382,18 +2158,6 @@ export const DisciplineScalarFieldEnum = {
 export type DisciplineScalarFieldEnum = (typeof DisciplineScalarFieldEnum)[keyof typeof DisciplineScalarFieldEnum]
 
 
-export const SeasonScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
-
-
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -2408,7 +2172,7 @@ export const OrganizationScalarFieldEnum = {
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
-export const ClubsScalarFieldEnum = {
+export const ClubScalarFieldEnum = {
   id: 'id',
   name: 'name',
   organizationId: 'organizationId',
@@ -2417,19 +2181,7 @@ export const ClubsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type ClubsScalarFieldEnum = (typeof ClubsScalarFieldEnum)[keyof typeof ClubsScalarFieldEnum]
-
-
-export const ClubOfferingsScalarFieldEnum = {
-  id: 'id',
-  seasonId: 'seasonId',
-  clubId: 'clubId',
-  registrationFee: 'registrationFee',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ClubOfferingsScalarFieldEnum = (typeof ClubOfferingsScalarFieldEnum)[keyof typeof ClubOfferingsScalarFieldEnum]
+export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
 
 
 export const LocationScalarFieldEnum = {
@@ -2465,51 +2217,69 @@ export const ActivityScalarFieldEnum = {
 export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
 
 
-export const TeamsScalarFieldEnum = {
+export const TeamScalarFieldEnum = {
   id: 'id',
+  imageUrl: 'imageUrl',
   name: 'name',
   clubId: 'clubId',
+  gender: 'gender',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type TeamsScalarFieldEnum = (typeof TeamsScalarFieldEnum)[keyof typeof TeamsScalarFieldEnum]
+export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
 
 
-export const TeamOfferingScalarFieldEnum = {
+export const TeamSeasonScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
   teamId: 'teamId',
-  clubOfferingId: 'clubOfferingId',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
+  maxYear: 'maxYear',
+  minYear: 'minYear',
   monthlyFee: 'monthlyFee',
   registrationFee: 'registrationFee',
   fullPaymentDiscountPercent: 'fullPaymentDiscountPercent',
-  maxYear: 'maxYear',
-  minYear: 'minYear',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
   suspensionAfterMonthsDue: 'suspensionAfterMonthsDue',
+  status: 'status',
+  statusNotes: 'statusNotes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type TeamOfferingScalarFieldEnum = (typeof TeamOfferingScalarFieldEnum)[keyof typeof TeamOfferingScalarFieldEnum]
+export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
 
 
-export const TeamOfferingActivityScalarFieldEnum = {
-  activityId: 'activityId',
-  teamOfferingId: 'teamOfferingId'
+export const TeamSeasonExtensionScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  previousEndDate: 'previousEndDate',
+  newEndDate: 'newEndDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
 } as const
 
-export type TeamOfferingActivityScalarFieldEnum = (typeof TeamOfferingActivityScalarFieldEnum)[keyof typeof TeamOfferingActivityScalarFieldEnum]
+export type TeamSeasonExtensionScalarFieldEnum = (typeof TeamSeasonExtensionScalarFieldEnum)[keyof typeof TeamSeasonExtensionScalarFieldEnum]
+
+
+export const TeamSeasonActivityScalarFieldEnum = {
+  activityId: 'activityId',
+  teamSeasonId: 'teamSeasonId'
+} as const
+
+export type TeamSeasonActivityScalarFieldEnum = (typeof TeamSeasonActivityScalarFieldEnum)[keyof typeof TeamSeasonActivityScalarFieldEnum]
 
 
 export const TeamMembershipScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
-  teamOfferingId: 'teamOfferingId',
+  teamSeasonId: 'teamSeasonId',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
   billingDayOfMonth: 'billingDayOfMonth',
@@ -2536,40 +2306,19 @@ export const TeamMembershipDiscountScalarFieldEnum = {
 export type TeamMembershipDiscountScalarFieldEnum = (typeof TeamMembershipDiscountScalarFieldEnum)[keyof typeof TeamMembershipDiscountScalarFieldEnum]
 
 
-export const PlayerReinforcementScalarFieldEnum = {
-  id: 'id',
-  playerId: 'playerId',
-  teamOfferingId: 'teamOfferingId',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PlayerReinforcementScalarFieldEnum = (typeof PlayerReinforcementScalarFieldEnum)[keyof typeof PlayerReinforcementScalarFieldEnum]
-
-
-export const PlayerPassOfferingScalarFieldEnum = {
-  id: 'id',
-  teamOfferingId: 'teamOfferingId',
-  passType: 'passType',
-  fee: 'fee',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PlayerPassOfferingScalarFieldEnum = (typeof PlayerPassOfferingScalarFieldEnum)[keyof typeof PlayerPassOfferingScalarFieldEnum]
-
-
 export const PlayerPassScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
-  playerPassOfferingId: 'playerPassOfferingId',
-  teamId: 'teamId',
+  currentTeamId: 'currentTeamId',
+  previousTeamId: 'previousTeamId',
+  externalPreviousTeamName: 'externalPreviousTeamName',
+  originType: 'originType',
+  previousTeamSource: 'previousTeamSource',
+  status: 'status',
+  externalNextTeamName: 'externalNextTeamName',
   startDate: 'startDate',
   endDate: 'endDate',
-  status: 'status',
+  notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2580,6 +2329,7 @@ export type PlayerPassScalarFieldEnum = (typeof PlayerPassScalarFieldEnum)[keyof
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  imageUrl: 'imageUrl',
   organizationId: 'organizationId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
@@ -2601,10 +2351,12 @@ export const CourseScalarFieldEnum = {
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
 
 
-export const CourseOfferingScalarFieldEnum = {
+export const CourseSeasonScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
   courseId: 'courseId',
-  seasonId: 'seasonId',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
   monthlyFee: 'monthlyFee',
@@ -2616,25 +2368,27 @@ export const CourseOfferingScalarFieldEnum = {
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
   suspensionAfterMonthsDue: 'suspensionAfterMonthsDue',
+  status: 'status',
+  statusNotes: 'statusNotes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type CourseOfferingScalarFieldEnum = (typeof CourseOfferingScalarFieldEnum)[keyof typeof CourseOfferingScalarFieldEnum]
+export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
 
 
-export const CourseOfferingActivityScalarFieldEnum = {
+export const CourseSeasonActivityScalarFieldEnum = {
   activityId: 'activityId',
-  courseOfferingId: 'courseOfferingId'
+  courseSeasonId: 'courseSeasonId'
 } as const
 
-export type CourseOfferingActivityScalarFieldEnum = (typeof CourseOfferingActivityScalarFieldEnum)[keyof typeof CourseOfferingActivityScalarFieldEnum]
+export type CourseSeasonActivityScalarFieldEnum = (typeof CourseSeasonActivityScalarFieldEnum)[keyof typeof CourseSeasonActivityScalarFieldEnum]
 
 
 export const CourseEnrollmentScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
-  courseOfferingId: 'courseOfferingId',
+  courseSeasonId: 'courseSeasonId',
   billingDayOfMonth: 'billingDayOfMonth',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -2748,13 +2502,6 @@ export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'ContactRelationship'
  */
 export type EnumContactRelationshipFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactRelationship'>
@@ -2769,16 +2516,9 @@ export type ListEnumContactRelationshipFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
- * Reference to a field of type 'Decimal'
+ * Reference to a field of type 'Boolean'
  */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2811,6 +2551,20 @@ export type ListEnumActivityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'ProgramGender'
+ */
+export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
+    
+
+
+/**
+ * Reference to a field of type 'ProgramGender[]'
+ */
+export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2821,6 +2575,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonStatus'
+ */
+export type EnumSeasonStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonStatus[]'
+ */
+export type ListEnumSeasonStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonStatus[]'>
     
 
 
@@ -2839,16 +2621,30 @@ export type ListEnumProgramStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
- * Reference to a field of type 'PassType'
+ * Reference to a field of type 'PassOriginType'
  */
-export type EnumPassTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassType'>
+export type EnumPassOriginTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassOriginType'>
     
 
 
 /**
- * Reference to a field of type 'PassType[]'
+ * Reference to a field of type 'PassOriginType[]'
  */
-export type ListEnumPassTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassType[]'>
+export type ListEnumPassOriginTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassOriginType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PreviousTeamSource'
+ */
+export type EnumPreviousTeamSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreviousTeamSource'>
+    
+
+
+/**
+ * Reference to a field of type 'PreviousTeamSource[]'
+ */
+export type ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreviousTeamSource[]'>
     
 
 
@@ -2863,20 +2659,6 @@ export type EnumPlayerPassStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'PlayerPassStatus[]'
  */
 export type ListEnumPlayerPassStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerPassStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'ProgramGender'
- */
-export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
-    
-
-
-/**
- * Reference to a field of type 'ProgramGender[]'
- */
-export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
     
 
 /**
@@ -2994,24 +2776,21 @@ export type GlobalOmitConfig = {
   player?: Prisma.PlayerOmit
   student?: Prisma.StudentOmit
   discipline?: Prisma.DisciplineOmit
-  season?: Prisma.SeasonOmit
   organization?: Prisma.OrganizationOmit
-  clubs?: Prisma.ClubsOmit
-  clubOfferings?: Prisma.ClubOfferingsOmit
+  club?: Prisma.ClubOmit
   location?: Prisma.LocationOmit
   activity?: Prisma.ActivityOmit
-  teams?: Prisma.TeamsOmit
-  teamOffering?: Prisma.TeamOfferingOmit
-  teamOfferingActivity?: Prisma.TeamOfferingActivityOmit
+  team?: Prisma.TeamOmit
+  teamSeason?: Prisma.TeamSeasonOmit
+  teamSeasonExtension?: Prisma.TeamSeasonExtensionOmit
+  teamSeasonActivity?: Prisma.TeamSeasonActivityOmit
   teamMembership?: Prisma.TeamMembershipOmit
   teamMembershipDiscount?: Prisma.TeamMembershipDiscountOmit
-  playerReinforcement?: Prisma.PlayerReinforcementOmit
-  playerPassOffering?: Prisma.PlayerPassOfferingOmit
   playerPass?: Prisma.PlayerPassOmit
   school?: Prisma.SchoolOmit
   course?: Prisma.CourseOmit
-  courseOffering?: Prisma.CourseOfferingOmit
-  courseOfferingActivity?: Prisma.CourseOfferingActivityOmit
+  courseSeason?: Prisma.CourseSeasonOmit
+  courseSeasonActivity?: Prisma.CourseSeasonActivityOmit
   courseEnrollment?: Prisma.CourseEnrollmentOmit
   courseEnrollmentDiscount?: Prisma.CourseEnrollmentDiscountOmit
 }

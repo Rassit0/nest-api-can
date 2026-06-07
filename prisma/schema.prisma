@@ -28,7 +28,7 @@ model Person {
   name           String
   lastName       String       @map("last_name")
   secondLastName String?      @map("second_last_name")
-  birthDate      DateTime     @map("birth_date")
+  birthDate      DateTime?    @map("birth_date")
   imageUrl       String?      @map("image_url")
   documentType   DocumentType @map("document_type")
   documentNumber String       @map("document_number")
@@ -36,7 +36,6 @@ model Person {
   email          String?      @unique
   address        String?
   gender         Gender
-  isActive       Boolean      @default(true)
   createdAt      DateTime     @default(now()) @map("created_at")
   updatedAt      DateTime     @updatedAt @map("updated_at")
 
@@ -86,14 +85,14 @@ model PersonContact {
 }
 
 model Player {
-  id                   String                @id @default(uuid())
-  personId             String                @unique
-  person               Person                @relation(fields: [personId], references: [id])
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
-  teamMemberships      TeamMembership[]
-  playerReinforcements PlayerReinforcement[]
-  playerPasses         PlayerPass[]
+  id              String           @id @default(uuid())
+  personId        String           @unique
+  person          Person           @relation(fields: [personId], references: [id])
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  teamMemberships TeamMembership[]
+  playerPasses    PlayerPass[]
 
   @@map("players")
 }
@@ -102,6 +101,7 @@ model Student {
   id                String             @id @default(uuid())
   personId          String             @unique
   person            Person             @relation(fields: [personId], references: [id])
+  isActive          Boolean            @default(true)
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   courseEnrollments CourseEnrollment[]
@@ -115,23 +115,17 @@ model Discipline {
   icon      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  clubs     Clubs[]
+  clubs     Club[]
   schools   School[]
 
   @@map("disciplines")
 }
 
-model Season {
-  id              String           @id @default(uuid())
-  name            String
-  startDate       DateTime         @map("start_date")
-  endDate         DateTime         @map("end_date")
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  clubOfferings   ClubOfferings[]
-  courseOfferings CourseOffering[]
-
-  @@map("seasons")
+enum SeasonStatus {
+  DRAFT
+  ACTIVE
+  FINISHED
+  CANCELLED
 }
 
 model Organization {
@@ -143,7 +137,7 @@ model Organization {
   email     String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  clubs     Clubs[]
+  clubs     Club[]
   schools   School[]
 
   @@map("organizations")
@@ -152,36 +146,19 @@ model Organization {
 // ============================
 // CLUBS
 // ============================
-model Clubs {
-  id             String          @id @default(uuid())
+model Club {
+  id             String       @id @default(uuid())
   name           String
-  organizationId String          @map("organization_id")
-  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  disciplineId   String          @map("discipline_id")
-  discipline     Discipline      @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  teams          Teams[]
-  clubOfferings  ClubOfferings[]
+  organizationId String       @map("organization_id")
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  disciplineId   String       @map("discipline_id")
+  discipline     Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  teams          Team[]
 
+  @@unique([organizationId, disciplineId, name])
   @@map("clubs")
-}
-
-model ClubOfferings {
-  id       String @id @default(uuid())
-  seasonId String @map("season_id")
-  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-  clubId   String @map("club_id")
-  club     Clubs  @relation(fields: [clubId], references: [id], onDelete: Restrict)
-
-  registrationFee Decimal  @map("registration_fee") @db.Decimal(10, 2)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  // Equipos que pertenecen a esta oferta
-  teamOfferings TeamOffering[]
-
-  @@map("club_offerings")
 }
 
 // ===================================
@@ -225,18 +202,18 @@ enum ActivityType {
 }
 
 model Activity {
-  id                       String                   @id @default(uuid())
-  title                    String
-  description              String
-  startsAt                 DateTime                 @map("starts_at")
-  endsAt                   DateTime                 @map("ends_at")
-  locationId               String                   @map("location_id")
-  location                 Location                 @relation(fields: [locationId], references: [id], onDelete: Restrict)
-  type                     ActivityType             @default(TRAINING)
-  createdAt                DateTime                 @default(now())
-  updatedAt                DateTime                 @updatedAt
-  teamOfferingActivities   TeamOfferingActivity[]
-  courseOfferingActivities CourseOfferingActivity[]
+  id                     String                 @id @default(uuid())
+  title                  String
+  description            String
+  startsAt               DateTime               @map("starts_at")
+  endsAt                 DateTime               @map("ends_at")
+  locationId             String                 @map("location_id")
+  location               Location               @relation(fields: [locationId], references: [id], onDelete: Restrict)
+  type                   ActivityType           @default(TRAINING)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  teamSeasonActivities   TeamSeasonActivity[]
+  courseSeasonActivities CourseSeasonActivity[]
 
   @@map("activities")
 }
@@ -260,68 +237,99 @@ enum ProgramStatus {
 // =================================
 // Equipos
 // =================================
-model Teams {
-  id            String         @id @default(uuid())
-  name          String
-  clubId        String         @map("club_id")
-  club          Clubs          @relation(fields: [clubId], references: [id], onDelete: Restrict)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  teamOfferings TeamOffering[]
-  playerPasses  PlayerPass[]
+model Team {
+  id          String        @id @default(uuid())
+  imageUrl    String?       @map("image_url")
+  name        String
+  clubId      String        @map("club_id")
+  club        Club          @relation(fields: [clubId], references: [id], onDelete: Restrict)
+  gender      ProgramGender
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  teamSeasons TeamSeason[]
+
+  // Pases donde este equipo es el actual
+  currentPlayerPasses PlayerPass[] @relation("CurrentTeamPasses")
+
+  // Pases donde este equipo era el anterior
+  previousPlayerPasses PlayerPass[] @relation("PreviousTeamPasses")
 
   @@map("teams")
 }
 
-model TeamOffering {
-  id                         String                 @id @default(uuid())
-  teamId                     String                 @map("team_id")
-  team                       Teams                  @relation(fields: [teamId], references: [id], onDelete: Restrict)
-  clubOfferingId             String                 @map("club_offering_id")
-  clubOffering               ClubOfferings          @relation(fields: [clubOfferingId], references: [id], onDelete: Restrict)
-  maxMembers                 Int                    @map("max_members")
-  minMembers                 Int                    @map("min_members")
-  monthlyFee                 Decimal                @map("monthly_fee") @db.Decimal(10, 2)
-  registrationFee            Decimal                @map("registration_fee") @db.Decimal(10, 2)
-  fullPaymentDiscountPercent Decimal                @map("full_payment_discount_percent") @db.Decimal(5, 2)
-  maxYear                    Int                    @map("max_year")
-  minYear                    Int                    @map("min_year")
-  // Recargos por mora habilitados
-  lateFeeEnabled             Boolean                @default(false) @map("late_fee_enabled")
-  // Recargo por dia de atraso
-  lateFeePerDay              Decimal                @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
-  // Días de gracia para el pago de la mensualidad. Osea días de tolerancia
-  graceDays                  Int                    @default(0) @map("grace_days")
-  // Meses de atraso para la suspensión del servicio
-  suspensionAfterMonthsDue   Int                    @default(2)
-  createdAt                  DateTime               @default(now())
-  updatedAt                  DateTime               @updatedAt
-  teamMemberships            TeamMembership[]
-  playerReinforcements       PlayerReinforcement[]
-  playerPassOfferings        PlayerPassOffering[]
-  teamOfferingActivities     TeamOfferingActivity[]
+model TeamSeason {
+  id String @id @default(uuid())
 
-  @@map("team_offerings")
+  // Datos del periodo de inscripcion
+  name      String
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+
+  // Datos del equipo
+  teamId                     String       @map("team_id")
+  team                       Team         @relation(fields: [teamId], references: [id], onDelete: Restrict)
+  maxMembers                 Int          @map("max_members")
+  minMembers                 Int          @map("min_members")
+  maxYear                    Int          @map("max_year")
+  minYear                    Int          @map("min_year")
+  monthlyFee                 Decimal      @map("monthly_fee") @db.Decimal(10, 2)
+  registrationFee            Decimal      @map("registration_fee") @db.Decimal(10, 2)
+  fullPaymentDiscountPercent Decimal      @map("full_payment_discount_percent") @db.Decimal(5, 2)
+  // Recargos por mora habilitados
+  lateFeeEnabled             Boolean      @default(false) @map("late_fee_enabled")
+  // Recargo por dia de atraso
+  lateFeePerDay              Decimal      @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
+  // Días de gracia para el pago de la mensualidad. Osea días de tolerancia
+  graceDays                  Int          @default(0) @map("grace_days")
+  // Meses de atraso para la suspensión del servicio
+  suspensionAfterMonthsDue   Int          @default(2) @map("suspension_after_months_due")
+  status                     SeasonStatus @default(DRAFT)
+  statusNotes                String?      @map("status_notes")
+
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  teamMemberships      TeamMembership[]
+  teamSeasonActivities TeamSeasonActivity[]
+  teamSeasonExtensions TeamSeasonExtension[]
+
+  @@map("team_seasons")
 }
 
-model TeamOfferingActivity {
-  activityId     String       @map("activity_id")
-  activity       Activity     @relation(fields: [activityId], references: [id], onDelete: Restrict)
-  teamOfferingId String       @map("team_offering_id")
-  teamOffering   TeamOffering @relation(fields: [teamOfferingId], references: [id], onDelete: Restrict)
+// Si se realiza una extension aqui se guarda el historial,y se edita la fecha final de la temporada
+model TeamSeasonExtension {
+  id String @id @default(uuid())
 
-  @@id([activityId, teamOfferingId])
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+
+  previousEndDate DateTime @map("previous_end_date")
+  newEndDate      DateTime @map("new_end_date")
+
+  reason String
+
+  createdAt DateTime @default(now())
+
+  @@map("team_season_extensions")
+}
+
+model TeamSeasonActivity {
+  activityId   String     @map("activity_id")
+  activity     Activity   @relation(fields: [activityId], references: [id], onDelete: Restrict)
+  teamSeasonId String     @map("team_offering_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+
+  @@id([activityId, teamSeasonId])
   @@map("team_offering_activities")
 }
 
 model TeamMembership {
-  id             String       @id @default(uuid())
-  playerId       String       @map("player_id")
-  player         Player       @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  teamOfferingId String       @map("team_offering_id")
-  teamOffering   TeamOffering @relation(fields: [teamOfferingId], references: [id], onDelete: Restrict)
-  startedAt      DateTime     @map("started_at")
-  endedAt        DateTime?    @map("ended_at")
+  id           String     @id @default(uuid())
+  playerId     String     @map("player_id")
+  player       Player     @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  teamSeasonId String     @map("team_offering_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  startedAt    DateTime   @map("started_at")
+  endedAt      DateTime?  @map("ended_at")
 
   // Dia del mes en que se genera la factura, para poder generar para el otro mes
   billingDayOfMonth Int @map("billing_day_of_month")
@@ -352,65 +360,54 @@ model TeamMembershipDiscount {
   @@map("team_membership_discounts")
 }
 
-// Son los jugadores que están reforzando a otro equipo donde no está su pase
-model PlayerReinforcement {
-  id             String       @id @default(uuid())
-  playerId       String       @map("player_id")
-  player         Player       @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  teamOfferingId String       @map("team_offering_id")
-  teamOffering   TeamOffering @relation(fields: [teamOfferingId], references: [id], onDelete: Restrict)
+enum PassOriginType {
+  INTERNAL
+  EXTERNAL
+  FREE_AGENT
+}
+
+enum PlayerPassStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  REJECTED
+}
+
+enum PreviousTeamSource {
+  SYSTEM
+  EXTERNAL
+  FREE_AGENT
+}
+
+model PlayerPass {
+  id String @id @default(uuid())
+
+  playerId String
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Restrict)
+
+  currentTeamId String @map("current_team_id")
+  currentTeam   Team   @relation("CurrentTeamPasses", fields: [currentTeamId], references: [id], onDelete: Restrict)
+
+  // Si es interno, se guarda el id del equipo anterior
+  previousTeamId           String? @map("previous_team_id")
+  previousTeam             Team?   @relation("PreviousTeamPasses", fields: [previousTeamId], references: [id], onDelete: Restrict)
+  // Nombre del equipo anterior si es externo
+  externalPreviousTeamName String? @map("external_previous_team_name")
+
+  originType         PassOriginType     @map("origin_type")
+  // Si el origen es libre, el equipo anterior es libre por defecto
+  // Ahora si origen es externo, se debe indicar si es SYSTEM o EXTERNAL para indicar si el equipo previo es fuera de la organizacion
+  // Si es Interno, por defecto indica en SYSTEM porque se supone que existe en el sistema,
+  previousTeamSource PreviousTeamSource @map("previous_team_source")
+  status             PlayerPassStatus   @default(PENDING) @map("status")
+
+  // Si se cierra el pase indicar a que equipo se va para mantener el historial
+  externalNextTeamName String? @map("external_next_team_name")
 
   startDate DateTime  @map("start_date")
   endDate   DateTime? @map("end_date")
 
   notes String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("player_reinforcements")
-}
-
-enum PassType {
-  INTERNAL
-  EXTERNAL
-}
-
-model PlayerPassOffering {
-  id             String       @id @default(uuid())
-  teamOfferingId String       @map("team_offering_id")
-  teamOffering   TeamOffering @relation(fields: [teamOfferingId], references: [id], onDelete: Restrict)
-  passType       PassType     @map("pass_type")
-  fee            Decimal      @db.Decimal(10, 2)
-
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  playerPasses PlayerPass[]
-
-  @@map("player_pass_offerings")
-}
-
-enum PlayerPassStatus {
-  ACTIVE
-  INACTIVE
-}
-
-model PlayerPass {
-  id                   String              @id @default(uuid())
-  playerId             String              @map("player_id")
-  player               Player              @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  // Oferta de pase, porque cada club puede tener diferentes precios de pases en diferentes temporadas
-  // Puede ser Null para ingrear datos al sistema y luego actualizarlo. Osea puedo ingrear pases ya comprados en una oferta hace años
-  playerPassOfferingId String?             @map("player_pass_offering_id")
-  playerPassOffering   PlayerPassOffering? @relation(fields: [playerPassOfferingId], references: [id], onDelete: Restrict)
-  // Equipo al que va pertenecer el jugador
-  teamId               String              @map("team_id")
-  team                 Teams               @relation(fields: [teamId], references: [id], onDelete: Restrict)
-
-  startDate DateTime  @map("start_date")
-  endDate   DateTime? @map("end_date")
-
-  status PlayerPassStatus @default(ACTIVE)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -429,6 +426,7 @@ model PlayerPass {
 model School {
   id             String       @id @default(uuid())
   name           String
+  imageUrl       String?      @map("image_url")
   organizationId String       @map("organization_id")
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   disciplineId   String       @map("discipline_id")
@@ -441,24 +439,29 @@ model School {
 }
 
 model Course {
-  id              String           @id @default(uuid())
-  schoolId        String           @map("school_id")
-  school          School           @relation(fields: [schoolId], references: [id], onDelete: Restrict)
-  name            String
-  gender          ProgramGender
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  courseOfferings CourseOffering[]
+  id           String         @id @default(uuid())
+  schoolId     String         @map("school_id")
+  school       School         @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  name         String
+  gender       ProgramGender
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  courseSeason CourseSeason[]
 
   @@map("courses")
 }
 
-model CourseOffering {
-  id                         String  @id @default(uuid())
+model CourseSeason {
+  id String @id @default(uuid())
+
+  // Datos del periodo de inscripcion
+  name      String
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+
+  // Datos del curso
   courseId                   String  @map("course_id")
   course                     Course  @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  seasonId                   String  @map("season_id")
-  season                     Season  @relation(fields: [seasonId], references: [id], onDelete: Restrict)
   maxMembers                 Int     @map("max_members")
   minMembers                 Int     @map("min_members")
   monthlyFee                 Decimal @map("monthly_fee") @db.Decimal(10, 2)
@@ -472,37 +475,40 @@ model CourseOffering {
   // Días de gracia para el pago de la mensualidad. Osea días de tolerancia
   graceDays                  Int     @default(0) @map("grace_days")
   // Meses de atraso para la suspensión del servicio
-  suspensionAfterMonthsDue   Int     @default(2)
+  suspensionAfterMonthsDue   Int     @default(2) @map("suspension_after_months_due")
 
-  createdAt                DateTime                 @default(now())
-  updatedAt                DateTime                 @updatedAt
-  courseEnrollments        CourseEnrollment[]
-  courseOfferingActivities CourseOfferingActivity[]
+  status      SeasonStatus @default(DRAFT)
+  statusNotes String?      @map("status_notes")
 
-  @@map("course_offerings")
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  courseEnrollments      CourseEnrollment[]
+  courseSeasonActivities CourseSeasonActivity[]
+
+  @@map("course_seasons")
 }
 
-model CourseOfferingActivity {
-  activityId       String         @map("activity_id")
-  activity         Activity       @relation(fields: [activityId], references: [id], onDelete: Restrict)
-  courseOfferingId String         @map("course_offering_id")
-  courseOffering   CourseOffering @relation(fields: [courseOfferingId], references: [id], onDelete: Restrict)
+model CourseSeasonActivity {
+  activityId     String       @map("activity_id")
+  activity       Activity     @relation(fields: [activityId], references: [id], onDelete: Restrict)
+  courseSeasonId String       @map("course_offering_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
 
-  @@id([activityId, courseOfferingId])
+  @@id([activityId, courseSeasonId])
   @@map("course_offering_activities")
 }
 
 model CourseEnrollment {
-  id                String         @id @default(uuid())
-  studentId         String         @map("student_id")
-  student           Student        @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  courseOfferingId  String         @map("course_offering_id")
-  courseOffering    CourseOffering @relation(fields: [courseOfferingId], references: [id], onDelete: Restrict)
+  id                String        @id @default(uuid())
+  studentId         String        @map("student_id")
+  student           Student       @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  courseSeasonId    String        @map("course_offering_id")
+  courseSeason      CourseSeason  @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   // Dia del mes en que se genera la factura, para poder generar para el otro mes
-  billingDayOfMonth Int            @map("billing_day_of_month")
-  startedAt         DateTime       @map("started_at")
-  endedAt           DateTime?      @map("ended_at")
-  status            ProgramStatus  @default(ACTIVE)
+  billingDayOfMonth Int           @map("billing_day_of_month")
+  startedAt         DateTime      @map("started_at")
+  endedAt           DateTime?     @map("ended_at")
+  status            ProgramStatus @default(ACTIVE)
 
   createdAt                 DateTime                   @default(now())
   updatedAt                 DateTime                   @updatedAt

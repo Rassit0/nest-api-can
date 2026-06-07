@@ -18,6 +18,12 @@ import { MatchDetailModule } from './match-detail/match-detail.module';
 import { EventsModule } from './events/events.module';
 import { MatchesModule } from './matches/matches.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { ClubsModule } from './clubs/clubs.module';
+import { TeamsModule } from './teams/teams.module';
+import { TeamSeasonsModule } from './team-seasons/team-seasons.module';
+import { PlayerPassesModule } from './player-passes/player-passes.module';
+import { PlayersModule } from './players/players.module';
+import { StudentsModule } from './students/students.module';
 
 @Module({
   imports: [
@@ -41,6 +47,12 @@ import { OrganizationsModule } from './organizations/organizations.module';
     EventsModule,
     MatchesModule,
     OrganizationsModule,
+    ClubsModule,
+    TeamsModule,
+    TeamSeasonsModule,
+    PlayerPassesModule,
+    PlayersModule,
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

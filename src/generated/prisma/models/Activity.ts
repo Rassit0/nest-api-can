@@ -215,8 +215,8 @@ export type ActivityWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
-  teamOfferingActivities?: Prisma.TeamOfferingActivityListRelationFilter
-  courseOfferingActivities?: Prisma.CourseOfferingActivityListRelationFilter
+  teamSeasonActivities?: Prisma.TeamSeasonActivityListRelationFilter
+  courseSeasonActivities?: Prisma.CourseSeasonActivityListRelationFilter
 }
 
 export type ActivityOrderByWithRelationInput = {
@@ -230,8 +230,8 @@ export type ActivityOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   location?: Prisma.LocationOrderByWithRelationInput
-  teamOfferingActivities?: Prisma.TeamOfferingActivityOrderByRelationAggregateInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityOrderByRelationAggregateInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityOrderByRelationAggregateInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityOrderByRelationAggregateInput
 }
 
 export type ActivityWhereUniqueInput = Prisma.AtLeast<{
@@ -248,8 +248,8 @@ export type ActivityWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
-  teamOfferingActivities?: Prisma.TeamOfferingActivityListRelationFilter
-  courseOfferingActivities?: Prisma.CourseOfferingActivityListRelationFilter
+  teamSeasonActivities?: Prisma.TeamSeasonActivityListRelationFilter
+  courseSeasonActivities?: Prisma.CourseSeasonActivityListRelationFilter
 }, "id">
 
 export type ActivityOrderByWithAggregationInput = {
@@ -292,8 +292,8 @@ export type ActivityCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
-  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityUncheckedCreateInput = {
@@ -306,8 +306,8 @@ export type ActivityUncheckedCreateInput = {
   type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityUpdateInput = {
@@ -320,8 +320,8 @@ export type ActivityUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityUncheckedUpdateInput = {
@@ -334,8 +334,8 @@ export type ActivityUncheckedUpdateInput = {
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityCreateManyInput = {
@@ -470,32 +470,32 @@ export type EnumActivityTypeFieldUpdateOperationsInput = {
   set?: $Enums.ActivityType
 }
 
-export type ActivityCreateNestedOneWithoutTeamOfferingActivitiesInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput
+export type ActivityCreateNestedOneWithoutTeamSeasonActivitiesInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamSeasonActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamSeasonActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
 }
 
-export type ActivityUpdateOneRequiredWithoutTeamOfferingActivitiesNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput
-  upsert?: Prisma.ActivityUpsertWithoutTeamOfferingActivitiesInput
+export type ActivityUpdateOneRequiredWithoutTeamSeasonActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamSeasonActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutTeamSeasonActivitiesInput
+  upsert?: Prisma.ActivityUpsertWithoutTeamSeasonActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutTeamOfferingActivitiesInput, Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutTeamSeasonActivitiesInput, Prisma.ActivityUpdateWithoutTeamSeasonActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutTeamSeasonActivitiesInput>
 }
 
-export type ActivityCreateNestedOneWithoutCourseOfferingActivitiesInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput
+export type ActivityCreateNestedOneWithoutCourseSeasonActivitiesInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseSeasonActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseSeasonActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
 }
 
-export type ActivityUpdateOneRequiredWithoutCourseOfferingActivitiesNestedInput = {
-  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
-  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput
-  upsert?: Prisma.ActivityUpsertWithoutCourseOfferingActivitiesInput
+export type ActivityUpdateOneRequiredWithoutCourseSeasonActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ActivityCreateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseSeasonActivitiesInput>
+  connectOrCreate?: Prisma.ActivityCreateOrConnectWithoutCourseSeasonActivitiesInput
+  upsert?: Prisma.ActivityUpsertWithoutCourseSeasonActivitiesInput
   connect?: Prisma.ActivityWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutCourseOfferingActivitiesInput, Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ActivityUpdateToOneWithWhereWithoutCourseSeasonActivitiesInput, Prisma.ActivityUpdateWithoutCourseSeasonActivitiesInput>, Prisma.ActivityUncheckedUpdateWithoutCourseSeasonActivitiesInput>
 }
 
 export type ActivityCreateWithoutLocationInput = {
@@ -507,8 +507,8 @@ export type ActivityCreateWithoutLocationInput = {
   type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityUncheckedCreateWithoutLocationInput = {
@@ -520,8 +520,8 @@ export type ActivityUncheckedCreateWithoutLocationInput = {
   type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
 export type ActivityCreateOrConnectWithoutLocationInput = {
@@ -565,7 +565,7 @@ export type ActivityScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
 }
 
-export type ActivityCreateWithoutTeamOfferingActivitiesInput = {
+export type ActivityCreateWithoutTeamSeasonActivitiesInput = {
   id?: string
   title: string
   description: string
@@ -575,10 +575,10 @@ export type ActivityCreateWithoutTeamOfferingActivitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput = {
+export type ActivityUncheckedCreateWithoutTeamSeasonActivitiesInput = {
   id?: string
   title: string
   description: string
@@ -588,26 +588,26 @@ export type ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput = {
   type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityCreateOrConnectWithoutTeamOfferingActivitiesInput = {
+export type ActivityCreateOrConnectWithoutTeamSeasonActivitiesInput = {
   where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamSeasonActivitiesInput>
 }
 
-export type ActivityUpsertWithoutTeamOfferingActivitiesInput = {
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamOfferingActivitiesInput>
+export type ActivityUpsertWithoutTeamSeasonActivitiesInput = {
+  update: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamSeasonActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutTeamSeasonActivitiesInput>
   where?: Prisma.ActivityWhereInput
 }
 
-export type ActivityUpdateToOneWithWhereWithoutTeamOfferingActivitiesInput = {
+export type ActivityUpdateToOneWithWhereWithoutTeamSeasonActivitiesInput = {
   where?: Prisma.ActivityWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateWithoutTeamSeasonActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutTeamSeasonActivitiesInput>
 }
 
-export type ActivityUpdateWithoutTeamOfferingActivitiesInput = {
+export type ActivityUpdateWithoutTeamSeasonActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -617,10 +617,10 @@ export type ActivityUpdateWithoutTeamOfferingActivitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput = {
+export type ActivityUncheckedUpdateWithoutTeamSeasonActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -630,10 +630,10 @@ export type ActivityUncheckedUpdateWithoutTeamOfferingActivitiesInput = {
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityCreateWithoutCourseOfferingActivitiesInput = {
+export type ActivityCreateWithoutCourseSeasonActivitiesInput = {
   id?: string
   title: string
   description: string
@@ -643,10 +643,10 @@ export type ActivityCreateWithoutCourseOfferingActivitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   location: Prisma.LocationCreateNestedOneWithoutActivitiesInput
-  teamOfferingActivities?: Prisma.TeamOfferingActivityCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput = {
+export type ActivityUncheckedCreateWithoutCourseSeasonActivitiesInput = {
   id?: string
   title: string
   description: string
@@ -656,26 +656,26 @@ export type ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput = {
   type?: $Enums.ActivityType
   createdAt?: Date | string
   updatedAt?: Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedCreateNestedManyWithoutActivityInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedCreateNestedManyWithoutActivityInput
 }
 
-export type ActivityCreateOrConnectWithoutCourseOfferingActivitiesInput = {
+export type ActivityCreateOrConnectWithoutCourseSeasonActivitiesInput = {
   where: Prisma.ActivityWhereUniqueInput
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseSeasonActivitiesInput>
 }
 
-export type ActivityUpsertWithoutCourseOfferingActivitiesInput = {
-  update: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
-  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseOfferingActivitiesInput>
+export type ActivityUpsertWithoutCourseSeasonActivitiesInput = {
+  update: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseSeasonActivitiesInput>
+  create: Prisma.XOR<Prisma.ActivityCreateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedCreateWithoutCourseSeasonActivitiesInput>
   where?: Prisma.ActivityWhereInput
 }
 
-export type ActivityUpdateToOneWithWhereWithoutCourseOfferingActivitiesInput = {
+export type ActivityUpdateToOneWithWhereWithoutCourseSeasonActivitiesInput = {
   where?: Prisma.ActivityWhereInput
-  data: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseOfferingActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput>
+  data: Prisma.XOR<Prisma.ActivityUpdateWithoutCourseSeasonActivitiesInput, Prisma.ActivityUncheckedUpdateWithoutCourseSeasonActivitiesInput>
 }
 
-export type ActivityUpdateWithoutCourseOfferingActivitiesInput = {
+export type ActivityUpdateWithoutCourseSeasonActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -685,10 +685,10 @@ export type ActivityUpdateWithoutCourseOfferingActivitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneRequiredWithoutActivitiesNestedInput
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUpdateManyWithoutActivityNestedInput
 }
 
-export type ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput = {
+export type ActivityUncheckedUpdateWithoutCourseSeasonActivitiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -698,7 +698,7 @@ export type ActivityUncheckedUpdateWithoutCourseOfferingActivitiesInput = {
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityCreateManyLocationInput = {
@@ -721,8 +721,8 @@ export type ActivityUpdateWithoutLocationInput = {
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUpdateManyWithoutActivityNestedInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityUncheckedUpdateWithoutLocationInput = {
@@ -734,8 +734,8 @@ export type ActivityUncheckedUpdateWithoutLocationInput = {
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamOfferingActivities?: Prisma.TeamOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
-  courseOfferingActivities?: Prisma.CourseOfferingActivityUncheckedUpdateManyWithoutActivityNestedInput
+  teamSeasonActivities?: Prisma.TeamSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
+  courseSeasonActivities?: Prisma.CourseSeasonActivityUncheckedUpdateManyWithoutActivityNestedInput
 }
 
 export type ActivityUncheckedUpdateManyWithoutLocationInput = {
@@ -755,13 +755,13 @@ export type ActivityUncheckedUpdateManyWithoutLocationInput = {
  */
 
 export type ActivityCountOutputType = {
-  teamOfferingActivities: number
-  courseOfferingActivities: number
+  teamSeasonActivities: number
+  courseSeasonActivities: number
 }
 
 export type ActivityCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  teamOfferingActivities?: boolean | ActivityCountOutputTypeCountTeamOfferingActivitiesArgs
-  courseOfferingActivities?: boolean | ActivityCountOutputTypeCountCourseOfferingActivitiesArgs
+  teamSeasonActivities?: boolean | ActivityCountOutputTypeCountTeamSeasonActivitiesArgs
+  courseSeasonActivities?: boolean | ActivityCountOutputTypeCountCourseSeasonActivitiesArgs
 }
 
 /**
@@ -777,15 +777,15 @@ export type ActivityCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * ActivityCountOutputType without action
  */
-export type ActivityCountOutputTypeCountTeamOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeamOfferingActivityWhereInput
+export type ActivityCountOutputTypeCountTeamSeasonActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamSeasonActivityWhereInput
 }
 
 /**
  * ActivityCountOutputType without action
  */
-export type ActivityCountOutputTypeCountCourseOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CourseOfferingActivityWhereInput
+export type ActivityCountOutputTypeCountCourseSeasonActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseSeasonActivityWhereInput
 }
 
 
@@ -800,8 +800,8 @@ export type ActivitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
-  teamOfferingActivities?: boolean | Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>
-  courseOfferingActivities?: boolean | Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>
+  teamSeasonActivities?: boolean | Prisma.Activity$teamSeasonActivitiesArgs<ExtArgs>
+  courseSeasonActivities?: boolean | Prisma.Activity$courseSeasonActivitiesArgs<ExtArgs>
   _count?: boolean | Prisma.ActivityCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["activity"]>
 
@@ -846,8 +846,8 @@ export type ActivitySelectScalar = {
 export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startsAt" | "endsAt" | "locationId" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
 export type ActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
-  teamOfferingActivities?: boolean | Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>
-  courseOfferingActivities?: boolean | Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>
+  teamSeasonActivities?: boolean | Prisma.Activity$teamSeasonActivitiesArgs<ExtArgs>
+  courseSeasonActivities?: boolean | Prisma.Activity$courseSeasonActivitiesArgs<ExtArgs>
   _count?: boolean | Prisma.ActivityCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ActivityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -861,8 +861,8 @@ export type $ActivityPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Activity"
   objects: {
     location: Prisma.$LocationPayload<ExtArgs>
-    teamOfferingActivities: Prisma.$TeamOfferingActivityPayload<ExtArgs>[]
-    courseOfferingActivities: Prisma.$CourseOfferingActivityPayload<ExtArgs>[]
+    teamSeasonActivities: Prisma.$TeamSeasonActivityPayload<ExtArgs>[]
+    courseSeasonActivities: Prisma.$CourseSeasonActivityPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1269,8 +1269,8 @@ readonly fields: ActivityFieldRefs;
 export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   location<T extends Prisma.LocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationDefaultArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  teamOfferingActivities<T extends Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$teamOfferingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamOfferingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  courseOfferingActivities<T extends Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$courseOfferingActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseOfferingActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teamSeasonActivities<T extends Prisma.Activity$teamSeasonActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$teamSeasonActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  courseSeasonActivities<T extends Prisma.Activity$courseSeasonActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Activity$courseSeasonActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1710,51 +1710,51 @@ export type ActivityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Activity.teamOfferingActivities
+ * Activity.teamSeasonActivities
  */
-export type Activity$teamOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Activity$teamSeasonActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the TeamOfferingActivity
+   * Select specific fields to fetch from the TeamSeasonActivity
    */
-  select?: Prisma.TeamOfferingActivitySelect<ExtArgs> | null
+  select?: Prisma.TeamSeasonActivitySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the TeamOfferingActivity
+   * Omit specific fields from the TeamSeasonActivity
    */
-  omit?: Prisma.TeamOfferingActivityOmit<ExtArgs> | null
+  omit?: Prisma.TeamSeasonActivityOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TeamOfferingActivityInclude<ExtArgs> | null
-  where?: Prisma.TeamOfferingActivityWhereInput
-  orderBy?: Prisma.TeamOfferingActivityOrderByWithRelationInput | Prisma.TeamOfferingActivityOrderByWithRelationInput[]
-  cursor?: Prisma.TeamOfferingActivityWhereUniqueInput
+  include?: Prisma.TeamSeasonActivityInclude<ExtArgs> | null
+  where?: Prisma.TeamSeasonActivityWhereInput
+  orderBy?: Prisma.TeamSeasonActivityOrderByWithRelationInput | Prisma.TeamSeasonActivityOrderByWithRelationInput[]
+  cursor?: Prisma.TeamSeasonActivityWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TeamOfferingActivityScalarFieldEnum | Prisma.TeamOfferingActivityScalarFieldEnum[]
+  distinct?: Prisma.TeamSeasonActivityScalarFieldEnum | Prisma.TeamSeasonActivityScalarFieldEnum[]
 }
 
 /**
- * Activity.courseOfferingActivities
+ * Activity.courseSeasonActivities
  */
-export type Activity$courseOfferingActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Activity$courseSeasonActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the CourseOfferingActivity
+   * Select specific fields to fetch from the CourseSeasonActivity
    */
-  select?: Prisma.CourseOfferingActivitySelect<ExtArgs> | null
+  select?: Prisma.CourseSeasonActivitySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the CourseOfferingActivity
+   * Omit specific fields from the CourseSeasonActivity
    */
-  omit?: Prisma.CourseOfferingActivityOmit<ExtArgs> | null
+  omit?: Prisma.CourseSeasonActivityOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CourseOfferingActivityInclude<ExtArgs> | null
-  where?: Prisma.CourseOfferingActivityWhereInput
-  orderBy?: Prisma.CourseOfferingActivityOrderByWithRelationInput | Prisma.CourseOfferingActivityOrderByWithRelationInput[]
-  cursor?: Prisma.CourseOfferingActivityWhereUniqueInput
+  include?: Prisma.CourseSeasonActivityInclude<ExtArgs> | null
+  where?: Prisma.CourseSeasonActivityWhereInput
+  orderBy?: Prisma.CourseSeasonActivityOrderByWithRelationInput | Prisma.CourseSeasonActivityOrderByWithRelationInput[]
+  cursor?: Prisma.CourseSeasonActivityWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CourseOfferingActivityScalarFieldEnum | Prisma.CourseOfferingActivityScalarFieldEnum[]
+  distinct?: Prisma.CourseSeasonActivityScalarFieldEnum | Prisma.CourseSeasonActivityScalarFieldEnum[]
 }
 
 /**

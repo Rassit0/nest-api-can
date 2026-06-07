@@ -457,6 +457,10 @@ export type EnumContactRelationshipFieldUpdateOperationsInput = {
   set?: $Enums.ContactRelationship
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type PersonContactCreateWithoutPersonInput = {
   relationship: $Enums.ContactRelationship
   isPrimaryContact?: boolean

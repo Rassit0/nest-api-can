@@ -35,7 +35,7 @@ export class ActivitiesPaginationDto extends PaginationDto {
 
   @IsOptional()
   @IsUUID()
-  teamOfferingId?: string;
+  teamSeasonId?: string;
 }
 
 export class DisciplinesPaginationDto extends PaginationDto {

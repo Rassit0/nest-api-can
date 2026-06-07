@@ -37,7 +37,6 @@ export type PersonMinAggregateOutputType = {
   email: string | null
   address: string | null
   gender: $Enums.Gender | null
-  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,7 +54,6 @@ export type PersonMaxAggregateOutputType = {
   email: string | null
   address: string | null
   gender: $Enums.Gender | null
-  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -73,7 +71,6 @@ export type PersonCountAggregateOutputType = {
   email: number
   address: number
   gender: number
-  isActive: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,7 +90,6 @@ export type PersonMinAggregateInputType = {
   email?: true
   address?: true
   gender?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,7 +107,6 @@ export type PersonMaxAggregateInputType = {
   email?: true
   address?: true
   gender?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -129,7 +124,6 @@ export type PersonCountAggregateInputType = {
   email?: true
   address?: true
   gender?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -212,7 +206,7 @@ export type PersonGroupByOutputType = {
   name: string
   lastName: string
   secondLastName: string | null
-  birthDate: Date
+  birthDate: Date | null
   imageUrl: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -220,7 +214,6 @@ export type PersonGroupByOutputType = {
   email: string | null
   address: string | null
   gender: $Enums.Gender
-  isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: PersonCountAggregateOutputType | null
@@ -251,7 +244,7 @@ export type PersonWhereInput = {
   name?: Prisma.StringFilter<"Person"> | string
   lastName?: Prisma.StringFilter<"Person"> | string
   secondLastName?: Prisma.StringNullableFilter<"Person"> | string | null
-  birthDate?: Prisma.DateTimeFilter<"Person"> | Date | string
+  birthDate?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Person"> | string | null
   documentType?: Prisma.EnumDocumentTypeFilter<"Person"> | $Enums.DocumentType
   documentNumber?: Prisma.StringFilter<"Person"> | string
@@ -259,7 +252,6 @@ export type PersonWhereInput = {
   email?: Prisma.StringNullableFilter<"Person"> | string | null
   address?: Prisma.StringNullableFilter<"Person"> | string | null
   gender?: Prisma.EnumGenderFilter<"Person"> | $Enums.Gender
-  isActive?: Prisma.BoolFilter<"Person"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   contacts?: Prisma.PersonContactListRelationFilter
@@ -273,7 +265,7 @@ export type PersonOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   secondLastName?: Prisma.SortOrderInput | Prisma.SortOrder
-  birthDate?: Prisma.SortOrder
+  birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentNumber?: Prisma.SortOrder
@@ -281,7 +273,6 @@ export type PersonOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   contacts?: Prisma.PersonContactOrderByRelationAggregateInput
@@ -299,14 +290,13 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Person"> | string
   lastName?: Prisma.StringFilter<"Person"> | string
   secondLastName?: Prisma.StringNullableFilter<"Person"> | string | null
-  birthDate?: Prisma.DateTimeFilter<"Person"> | Date | string
+  birthDate?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Person"> | string | null
   documentType?: Prisma.EnumDocumentTypeFilter<"Person"> | $Enums.DocumentType
   documentNumber?: Prisma.StringFilter<"Person"> | string
   phone?: Prisma.StringNullableFilter<"Person"> | string | null
   address?: Prisma.StringNullableFilter<"Person"> | string | null
   gender?: Prisma.EnumGenderFilter<"Person"> | $Enums.Gender
-  isActive?: Prisma.BoolFilter<"Person"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   contacts?: Prisma.PersonContactListRelationFilter
@@ -320,7 +310,7 @@ export type PersonOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   secondLastName?: Prisma.SortOrderInput | Prisma.SortOrder
-  birthDate?: Prisma.SortOrder
+  birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   documentType?: Prisma.SortOrder
   documentNumber?: Prisma.SortOrder
@@ -328,7 +318,6 @@ export type PersonOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
@@ -344,7 +333,7 @@ export type PersonScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Person"> | string
   lastName?: Prisma.StringWithAggregatesFilter<"Person"> | string
   secondLastName?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
-  birthDate?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
+  birthDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   documentType?: Prisma.EnumDocumentTypeWithAggregatesFilter<"Person"> | $Enums.DocumentType
   documentNumber?: Prisma.StringWithAggregatesFilter<"Person"> | string
@@ -352,7 +341,6 @@ export type PersonScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   gender?: Prisma.EnumGenderWithAggregatesFilter<"Person"> | $Enums.Gender
-  isActive?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
@@ -362,7 +350,7 @@ export type PersonCreateInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -370,7 +358,6 @@ export type PersonCreateInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactCreateNestedManyWithoutPersonInput
@@ -384,7 +371,7 @@ export type PersonUncheckedCreateInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -392,7 +379,6 @@ export type PersonUncheckedCreateInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactUncheckedCreateNestedManyWithoutPersonInput
@@ -406,7 +392,7 @@ export type PersonUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -414,7 +400,6 @@ export type PersonUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUpdateManyWithoutPersonNestedInput
@@ -428,7 +413,7 @@ export type PersonUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -436,7 +421,6 @@ export type PersonUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUncheckedUpdateManyWithoutPersonNestedInput
@@ -450,7 +434,7 @@ export type PersonCreateManyInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -458,7 +442,6 @@ export type PersonCreateManyInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -468,7 +451,7 @@ export type PersonUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -476,7 +459,6 @@ export type PersonUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -486,7 +468,7 @@ export type PersonUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -494,7 +476,6 @@ export type PersonUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -512,7 +493,6 @@ export type PersonCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -530,7 +510,6 @@ export type PersonMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -548,7 +527,6 @@ export type PersonMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -566,8 +544,8 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type EnumDocumentTypeFieldUpdateOperationsInput = {
@@ -578,8 +556,8 @@ export type EnumGenderFieldUpdateOperationsInput = {
   set?: $Enums.Gender
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type PersonCreateNestedOneWithoutContactsInput = {
@@ -643,7 +621,7 @@ export type PersonCreateWithoutContactsInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -651,7 +629,6 @@ export type PersonCreateWithoutContactsInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contactOf?: Prisma.PersonContactCreateNestedManyWithoutContactPersonInput
@@ -664,7 +641,7 @@ export type PersonUncheckedCreateWithoutContactsInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -672,7 +649,6 @@ export type PersonUncheckedCreateWithoutContactsInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contactOf?: Prisma.PersonContactUncheckedCreateNestedManyWithoutContactPersonInput
@@ -690,7 +666,7 @@ export type PersonCreateWithoutContactOfInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -698,7 +674,6 @@ export type PersonCreateWithoutContactOfInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactCreateNestedManyWithoutPersonInput
@@ -711,7 +686,7 @@ export type PersonUncheckedCreateWithoutContactOfInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -719,7 +694,6 @@ export type PersonUncheckedCreateWithoutContactOfInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactUncheckedCreateNestedManyWithoutPersonInput
@@ -748,7 +722,7 @@ export type PersonUpdateWithoutContactsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -756,7 +730,6 @@ export type PersonUpdateWithoutContactsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contactOf?: Prisma.PersonContactUpdateManyWithoutContactPersonNestedInput
@@ -769,7 +742,7 @@ export type PersonUncheckedUpdateWithoutContactsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -777,7 +750,6 @@ export type PersonUncheckedUpdateWithoutContactsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contactOf?: Prisma.PersonContactUncheckedUpdateManyWithoutContactPersonNestedInput
@@ -801,7 +773,7 @@ export type PersonUpdateWithoutContactOfInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -809,7 +781,6 @@ export type PersonUpdateWithoutContactOfInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUpdateManyWithoutPersonNestedInput
@@ -822,7 +793,7 @@ export type PersonUncheckedUpdateWithoutContactOfInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -830,7 +801,6 @@ export type PersonUncheckedUpdateWithoutContactOfInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUncheckedUpdateManyWithoutPersonNestedInput
@@ -843,7 +813,7 @@ export type PersonCreateWithoutPlayersInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -851,7 +821,6 @@ export type PersonCreateWithoutPlayersInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactCreateNestedManyWithoutPersonInput
@@ -864,7 +833,7 @@ export type PersonUncheckedCreateWithoutPlayersInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -872,7 +841,6 @@ export type PersonUncheckedCreateWithoutPlayersInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactUncheckedCreateNestedManyWithoutPersonInput
@@ -901,7 +869,7 @@ export type PersonUpdateWithoutPlayersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -909,7 +877,6 @@ export type PersonUpdateWithoutPlayersInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUpdateManyWithoutPersonNestedInput
@@ -922,7 +889,7 @@ export type PersonUncheckedUpdateWithoutPlayersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -930,7 +897,6 @@ export type PersonUncheckedUpdateWithoutPlayersInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUncheckedUpdateManyWithoutPersonNestedInput
@@ -943,7 +909,7 @@ export type PersonCreateWithoutStudentsInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -951,7 +917,6 @@ export type PersonCreateWithoutStudentsInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactCreateNestedManyWithoutPersonInput
@@ -964,7 +929,7 @@ export type PersonUncheckedCreateWithoutStudentsInput = {
   name: string
   lastName: string
   secondLastName?: string | null
-  birthDate: Date | string
+  birthDate?: Date | string | null
   imageUrl?: string | null
   documentType: $Enums.DocumentType
   documentNumber: string
@@ -972,7 +937,6 @@ export type PersonUncheckedCreateWithoutStudentsInput = {
   email?: string | null
   address?: string | null
   gender: $Enums.Gender
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.PersonContactUncheckedCreateNestedManyWithoutPersonInput
@@ -1001,7 +965,7 @@ export type PersonUpdateWithoutStudentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1009,7 +973,6 @@ export type PersonUpdateWithoutStudentsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUpdateManyWithoutPersonNestedInput
@@ -1022,7 +985,7 @@ export type PersonUncheckedUpdateWithoutStudentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1030,7 +993,6 @@ export type PersonUncheckedUpdateWithoutStudentsInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.PersonContactUncheckedUpdateManyWithoutPersonNestedInput
@@ -1109,7 +1071,6 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   email?: boolean
   address?: boolean
   gender?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   contacts?: boolean | Prisma.Person$contactsArgs<ExtArgs>
@@ -1132,7 +1093,6 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   address?: boolean
   gender?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1150,7 +1110,6 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   address?: boolean
   gender?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
@@ -1168,12 +1127,11 @@ export type PersonSelectScalar = {
   email?: boolean
   address?: boolean
   gender?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "lastName" | "secondLastName" | "birthDate" | "imageUrl" | "documentType" | "documentNumber" | "phone" | "email" | "address" | "gender" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "lastName" | "secondLastName" | "birthDate" | "imageUrl" | "documentType" | "documentNumber" | "phone" | "email" | "address" | "gender" | "createdAt" | "updatedAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contacts?: boolean | Prisma.Person$contactsArgs<ExtArgs>
   contactOf?: boolean | Prisma.Person$contactOfArgs<ExtArgs>
@@ -1197,7 +1155,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     name: string
     lastName: string
     secondLastName: string | null
-    birthDate: Date
+    birthDate: Date | null
     imageUrl: string | null
     documentType: $Enums.DocumentType
     documentNumber: string
@@ -1205,7 +1163,6 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     email: string | null
     address: string | null
     gender: $Enums.Gender
-    isActive: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["person"]>
@@ -1647,7 +1604,6 @@ export interface PersonFieldRefs {
   readonly email: Prisma.FieldRef<"Person", 'String'>
   readonly address: Prisma.FieldRef<"Person", 'String'>
   readonly gender: Prisma.FieldRef<"Person", 'Gender'>
-  readonly isActive: Prisma.FieldRef<"Person", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
 }

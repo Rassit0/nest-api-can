@@ -50,8 +50,9 @@ export class PersonsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createPersonDto: CreatePersonDto) {
+    const { imageUrl, ...personData } = createPersonDto;
     const newPerson = await this.prisma.person.create({
-      data: createPersonDto,
+      data: { ...personData },
       // Esto es lo que hace "la magia" de devolver los datos relacionados
       include: {},
     });
@@ -134,9 +135,10 @@ export class PersonsService {
   }
 
   async update(id: string, updatePersonDto: UpdatePersonDto) {
+    const { imageUrl, ...personData } = updatePersonDto;
     const newPerson = await this.prisma.person.update({
       where: { id },
-      data: updatePersonDto,
+      data: { ...personData },
       select: PersonSelect,
     });
 

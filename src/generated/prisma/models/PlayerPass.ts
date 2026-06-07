@@ -27,11 +27,16 @@ export type AggregatePlayerPass = {
 export type PlayerPassMinAggregateOutputType = {
   id: string | null
   playerId: string | null
-  playerPassOfferingId: string | null
-  teamId: string | null
+  currentTeamId: string | null
+  previousTeamId: string | null
+  externalPreviousTeamName: string | null
+  originType: $Enums.PassOriginType | null
+  previousTeamSource: $Enums.PreviousTeamSource | null
+  status: $Enums.PlayerPassStatus | null
+  externalNextTeamName: string | null
   startDate: Date | null
   endDate: Date | null
-  status: $Enums.PlayerPassStatus | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,11 +44,16 @@ export type PlayerPassMinAggregateOutputType = {
 export type PlayerPassMaxAggregateOutputType = {
   id: string | null
   playerId: string | null
-  playerPassOfferingId: string | null
-  teamId: string | null
+  currentTeamId: string | null
+  previousTeamId: string | null
+  externalPreviousTeamName: string | null
+  originType: $Enums.PassOriginType | null
+  previousTeamSource: $Enums.PreviousTeamSource | null
+  status: $Enums.PlayerPassStatus | null
+  externalNextTeamName: string | null
   startDate: Date | null
   endDate: Date | null
-  status: $Enums.PlayerPassStatus | null
+  notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,11 +61,16 @@ export type PlayerPassMaxAggregateOutputType = {
 export type PlayerPassCountAggregateOutputType = {
   id: number
   playerId: number
-  playerPassOfferingId: number
-  teamId: number
+  currentTeamId: number
+  previousTeamId: number
+  externalPreviousTeamName: number
+  originType: number
+  previousTeamSource: number
+  status: number
+  externalNextTeamName: number
   startDate: number
   endDate: number
-  status: number
+  notes: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,11 +80,16 @@ export type PlayerPassCountAggregateOutputType = {
 export type PlayerPassMinAggregateInputType = {
   id?: true
   playerId?: true
-  playerPassOfferingId?: true
-  teamId?: true
+  currentTeamId?: true
+  previousTeamId?: true
+  externalPreviousTeamName?: true
+  originType?: true
+  previousTeamSource?: true
+  status?: true
+  externalNextTeamName?: true
   startDate?: true
   endDate?: true
-  status?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,11 +97,16 @@ export type PlayerPassMinAggregateInputType = {
 export type PlayerPassMaxAggregateInputType = {
   id?: true
   playerId?: true
-  playerPassOfferingId?: true
-  teamId?: true
+  currentTeamId?: true
+  previousTeamId?: true
+  externalPreviousTeamName?: true
+  originType?: true
+  previousTeamSource?: true
+  status?: true
+  externalNextTeamName?: true
   startDate?: true
   endDate?: true
-  status?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -89,11 +114,16 @@ export type PlayerPassMaxAggregateInputType = {
 export type PlayerPassCountAggregateInputType = {
   id?: true
   playerId?: true
-  playerPassOfferingId?: true
-  teamId?: true
+  currentTeamId?: true
+  previousTeamId?: true
+  externalPreviousTeamName?: true
+  originType?: true
+  previousTeamSource?: true
+  status?: true
+  externalNextTeamName?: true
   startDate?: true
   endDate?: true
-  status?: true
+  notes?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -174,11 +204,16 @@ export type PlayerPassGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type PlayerPassGroupByOutputType = {
   id: string
   playerId: string
-  playerPassOfferingId: string | null
-  teamId: string
+  currentTeamId: string
+  previousTeamId: string | null
+  externalPreviousTeamName: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status: $Enums.PlayerPassStatus
+  externalNextTeamName: string | null
   startDate: Date
   endDate: Date | null
-  status: $Enums.PlayerPassStatus
+  notes: string | null
   createdAt: Date
   updatedAt: Date
   _count: PlayerPassCountAggregateOutputType | null
@@ -207,31 +242,41 @@ export type PlayerPassWhereInput = {
   NOT?: Prisma.PlayerPassWhereInput | Prisma.PlayerPassWhereInput[]
   id?: Prisma.StringFilter<"PlayerPass"> | string
   playerId?: Prisma.StringFilter<"PlayerPass"> | string
-  playerPassOfferingId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
-  teamId?: Prisma.StringFilter<"PlayerPass"> | string
+  currentTeamId?: Prisma.StringFilter<"PlayerPass"> | string
+  previousTeamId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  externalPreviousTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  originType?: Prisma.EnumPassOriginTypeFilter<"PlayerPass"> | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFilter<"PlayerPass"> | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   startDate?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"PlayerPass"> | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  notes?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  playerPassOffering?: Prisma.XOR<Prisma.PlayerPassOfferingNullableScalarRelationFilter, Prisma.PlayerPassOfferingWhereInput> | null
-  team?: Prisma.XOR<Prisma.TeamsScalarRelationFilter, Prisma.TeamsWhereInput>
+  currentTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
+  previousTeam?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
 }
 
 export type PlayerPassOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  playerPassOfferingId?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamId?: Prisma.SortOrder
+  currentTeamId?: Prisma.SortOrder
+  previousTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalPreviousTeamName?: Prisma.SortOrderInput | Prisma.SortOrder
+  originType?: Prisma.SortOrder
+  previousTeamSource?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  externalNextTeamName?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   player?: Prisma.PlayerOrderByWithRelationInput
-  playerPassOffering?: Prisma.PlayerPassOfferingOrderByWithRelationInput
-  team?: Prisma.TeamsOrderByWithRelationInput
+  currentTeam?: Prisma.TeamOrderByWithRelationInput
+  previousTeam?: Prisma.TeamOrderByWithRelationInput
 }
 
 export type PlayerPassWhereUniqueInput = Prisma.AtLeast<{
@@ -240,26 +285,36 @@ export type PlayerPassWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PlayerPassWhereInput[]
   NOT?: Prisma.PlayerPassWhereInput | Prisma.PlayerPassWhereInput[]
   playerId?: Prisma.StringFilter<"PlayerPass"> | string
-  playerPassOfferingId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
-  teamId?: Prisma.StringFilter<"PlayerPass"> | string
+  currentTeamId?: Prisma.StringFilter<"PlayerPass"> | string
+  previousTeamId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  externalPreviousTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  originType?: Prisma.EnumPassOriginTypeFilter<"PlayerPass"> | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFilter<"PlayerPass"> | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   startDate?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"PlayerPass"> | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  notes?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  playerPassOffering?: Prisma.XOR<Prisma.PlayerPassOfferingNullableScalarRelationFilter, Prisma.PlayerPassOfferingWhereInput> | null
-  team?: Prisma.XOR<Prisma.TeamsScalarRelationFilter, Prisma.TeamsWhereInput>
+  currentTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
+  previousTeam?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
 }, "id">
 
 export type PlayerPassOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  playerPassOfferingId?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamId?: Prisma.SortOrder
+  currentTeamId?: Prisma.SortOrder
+  previousTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalPreviousTeamName?: Prisma.SortOrderInput | Prisma.SortOrder
+  originType?: Prisma.SortOrder
+  previousTeamSource?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  externalNextTeamName?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlayerPassCountOrderByAggregateInput
@@ -273,59 +328,84 @@ export type PlayerPassScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PlayerPassScalarWhereWithAggregatesInput | Prisma.PlayerPassScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PlayerPass"> | string
   playerId?: Prisma.StringWithAggregatesFilter<"PlayerPass"> | string
-  playerPassOfferingId?: Prisma.StringNullableWithAggregatesFilter<"PlayerPass"> | string | null
-  teamId?: Prisma.StringWithAggregatesFilter<"PlayerPass"> | string
+  currentTeamId?: Prisma.StringWithAggregatesFilter<"PlayerPass"> | string
+  previousTeamId?: Prisma.StringNullableWithAggregatesFilter<"PlayerPass"> | string | null
+  externalPreviousTeamName?: Prisma.StringNullableWithAggregatesFilter<"PlayerPass"> | string | null
+  originType?: Prisma.EnumPassOriginTypeWithAggregatesFilter<"PlayerPass"> | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceWithAggregatesFilter<"PlayerPass"> | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusWithAggregatesFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.StringNullableWithAggregatesFilter<"PlayerPass"> | string | null
   startDate?: Prisma.DateTimeWithAggregatesFilter<"PlayerPass"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PlayerPass"> | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusWithAggregatesFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  notes?: Prisma.StringNullableWithAggregatesFilter<"PlayerPass"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerPass"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerPass"> | Date | string
 }
 
 export type PlayerPassCreateInput = {
   id?: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutPlayerPassesInput
-  playerPassOffering?: Prisma.PlayerPassOfferingCreateNestedOneWithoutPlayerPassesInput
-  team: Prisma.TeamsCreateNestedOneWithoutPlayerPassesInput
+  currentTeam: Prisma.TeamCreateNestedOneWithoutCurrentPlayerPassesInput
+  previousTeam?: Prisma.TeamCreateNestedOneWithoutPreviousPlayerPassesInput
 }
 
 export type PlayerPassUncheckedCreateInput = {
   id?: string
   playerId: string
-  playerPassOfferingId?: string | null
-  teamId: string
+  currentTeamId: string
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type PlayerPassUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerPassesNestedInput
-  playerPassOffering?: Prisma.PlayerPassOfferingUpdateOneWithoutPlayerPassesNestedInput
-  team?: Prisma.TeamsUpdateOneRequiredWithoutPlayerPassesNestedInput
+  currentTeam?: Prisma.TeamUpdateOneRequiredWithoutCurrentPlayerPassesNestedInput
+  previousTeam?: Prisma.TeamUpdateOneWithoutPreviousPlayerPassesNestedInput
 }
 
 export type PlayerPassUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -333,20 +413,30 @@ export type PlayerPassUncheckedUpdateInput = {
 export type PlayerPassCreateManyInput = {
   id?: string
   playerId: string
-  playerPassOfferingId?: string | null
-  teamId: string
+  currentTeamId: string
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type PlayerPassUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -354,11 +444,16 @@ export type PlayerPassUpdateManyMutationInput = {
 export type PlayerPassUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,11 +471,16 @@ export type PlayerPassOrderByRelationAggregateInput = {
 export type PlayerPassCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  playerPassOfferingId?: Prisma.SortOrder
-  teamId?: Prisma.SortOrder
+  currentTeamId?: Prisma.SortOrder
+  previousTeamId?: Prisma.SortOrder
+  externalPreviousTeamName?: Prisma.SortOrder
+  originType?: Prisma.SortOrder
+  previousTeamSource?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  externalNextTeamName?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -388,11 +488,16 @@ export type PlayerPassCountOrderByAggregateInput = {
 export type PlayerPassMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  playerPassOfferingId?: Prisma.SortOrder
-  teamId?: Prisma.SortOrder
+  currentTeamId?: Prisma.SortOrder
+  previousTeamId?: Prisma.SortOrder
+  externalPreviousTeamName?: Prisma.SortOrder
+  originType?: Prisma.SortOrder
+  previousTeamSource?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  externalNextTeamName?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -400,11 +505,16 @@ export type PlayerPassMaxOrderByAggregateInput = {
 export type PlayerPassMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
-  playerPassOfferingId?: Prisma.SortOrder
-  teamId?: Prisma.SortOrder
+  currentTeamId?: Prisma.SortOrder
+  previousTeamId?: Prisma.SortOrder
+  externalPreviousTeamName?: Prisma.SortOrder
+  originType?: Prisma.SortOrder
+  previousTeamSource?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  externalNextTeamName?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -451,88 +561,96 @@ export type PlayerPassUncheckedUpdateManyWithoutPlayerNestedInput = {
   deleteMany?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
 }
 
-export type PlayerPassCreateNestedManyWithoutTeamInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput> | Prisma.PlayerPassCreateWithoutTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutTeamInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutTeamInput | Prisma.PlayerPassCreateOrConnectWithoutTeamInput[]
-  createMany?: Prisma.PlayerPassCreateManyTeamInputEnvelope
+export type PlayerPassCreateNestedManyWithoutCurrentTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput> | Prisma.PlayerPassCreateWithoutCurrentTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput | Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyCurrentTeamInputEnvelope
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
 }
 
-export type PlayerPassUncheckedCreateNestedManyWithoutTeamInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput> | Prisma.PlayerPassCreateWithoutTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutTeamInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutTeamInput | Prisma.PlayerPassCreateOrConnectWithoutTeamInput[]
-  createMany?: Prisma.PlayerPassCreateManyTeamInputEnvelope
+export type PlayerPassCreateNestedManyWithoutPreviousTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput> | Prisma.PlayerPassCreateWithoutPreviousTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput | Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyPreviousTeamInputEnvelope
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
 }
 
-export type PlayerPassUpdateManyWithoutTeamNestedInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput> | Prisma.PlayerPassCreateWithoutTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutTeamInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutTeamInput | Prisma.PlayerPassCreateOrConnectWithoutTeamInput[]
-  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutTeamInput[]
-  createMany?: Prisma.PlayerPassCreateManyTeamInputEnvelope
+export type PlayerPassUncheckedCreateNestedManyWithoutCurrentTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput> | Prisma.PlayerPassCreateWithoutCurrentTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput | Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyCurrentTeamInputEnvelope
+  connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
+}
+
+export type PlayerPassUncheckedCreateNestedManyWithoutPreviousTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput> | Prisma.PlayerPassCreateWithoutPreviousTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput | Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyPreviousTeamInputEnvelope
+  connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
+}
+
+export type PlayerPassUpdateManyWithoutCurrentTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput> | Prisma.PlayerPassCreateWithoutCurrentTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput | Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput[]
+  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutCurrentTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutCurrentTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyCurrentTeamInputEnvelope
   set?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   disconnect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   delete?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutTeamInput[]
-  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutTeamInput[]
+  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutCurrentTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutCurrentTeamInput[]
+  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutCurrentTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutCurrentTeamInput[]
   deleteMany?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
 }
 
-export type PlayerPassUncheckedUpdateManyWithoutTeamNestedInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput> | Prisma.PlayerPassCreateWithoutTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutTeamInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutTeamInput | Prisma.PlayerPassCreateOrConnectWithoutTeamInput[]
-  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutTeamInput[]
-  createMany?: Prisma.PlayerPassCreateManyTeamInputEnvelope
+export type PlayerPassUpdateManyWithoutPreviousTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput> | Prisma.PlayerPassCreateWithoutPreviousTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput | Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput[]
+  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutPreviousTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutPreviousTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyPreviousTeamInputEnvelope
   set?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   disconnect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   delete?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutTeamInput[]
-  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutTeamInput[]
+  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutPreviousTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutPreviousTeamInput[]
+  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutPreviousTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutPreviousTeamInput[]
   deleteMany?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
 }
 
-export type PlayerPassCreateNestedManyWithoutPlayerPassOfferingInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput> | Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput[] | Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput | Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput[]
-  createMany?: Prisma.PlayerPassCreateManyPlayerPassOfferingInputEnvelope
-  connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-}
-
-export type PlayerPassUncheckedCreateNestedManyWithoutPlayerPassOfferingInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput> | Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput[] | Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput | Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput[]
-  createMany?: Prisma.PlayerPassCreateManyPlayerPassOfferingInputEnvelope
-  connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-}
-
-export type PlayerPassUpdateManyWithoutPlayerPassOfferingNestedInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput> | Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput[] | Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput | Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput[]
-  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutPlayerPassOfferingInput[]
-  createMany?: Prisma.PlayerPassCreateManyPlayerPassOfferingInputEnvelope
+export type PlayerPassUncheckedUpdateManyWithoutCurrentTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput> | Prisma.PlayerPassCreateWithoutCurrentTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput | Prisma.PlayerPassCreateOrConnectWithoutCurrentTeamInput[]
+  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutCurrentTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutCurrentTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyCurrentTeamInputEnvelope
   set?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   disconnect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   delete?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutPlayerPassOfferingInput[]
-  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpdateManyWithWhereWithoutPlayerPassOfferingInput[]
+  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutCurrentTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutCurrentTeamInput[]
+  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutCurrentTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutCurrentTeamInput[]
   deleteMany?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
 }
 
-export type PlayerPassUncheckedUpdateManyWithoutPlayerPassOfferingNestedInput = {
-  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput> | Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput[] | Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput[]
-  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput | Prisma.PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput[]
-  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutPlayerPassOfferingInput[]
-  createMany?: Prisma.PlayerPassCreateManyPlayerPassOfferingInputEnvelope
+export type PlayerPassUncheckedUpdateManyWithoutPreviousTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput> | Prisma.PlayerPassCreateWithoutPreviousTeamInput[] | Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput[]
+  connectOrCreate?: Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput | Prisma.PlayerPassCreateOrConnectWithoutPreviousTeamInput[]
+  upsert?: Prisma.PlayerPassUpsertWithWhereUniqueWithoutPreviousTeamInput | Prisma.PlayerPassUpsertWithWhereUniqueWithoutPreviousTeamInput[]
+  createMany?: Prisma.PlayerPassCreateManyPreviousTeamInputEnvelope
   set?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   disconnect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   delete?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
   connect?: Prisma.PlayerPassWhereUniqueInput | Prisma.PlayerPassWhereUniqueInput[]
-  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutPlayerPassOfferingInput[]
-  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutPlayerPassOfferingInput | Prisma.PlayerPassUpdateManyWithWhereWithoutPlayerPassOfferingInput[]
+  update?: Prisma.PlayerPassUpdateWithWhereUniqueWithoutPreviousTeamInput | Prisma.PlayerPassUpdateWithWhereUniqueWithoutPreviousTeamInput[]
+  updateMany?: Prisma.PlayerPassUpdateManyWithWhereWithoutPreviousTeamInput | Prisma.PlayerPassUpdateManyWithWhereWithoutPreviousTeamInput[]
   deleteMany?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
+}
+
+export type EnumPassOriginTypeFieldUpdateOperationsInput = {
+  set?: $Enums.PassOriginType
+}
+
+export type EnumPreviousTeamSourceFieldUpdateOperationsInput = {
+  set?: $Enums.PreviousTeamSource
 }
 
 export type EnumPlayerPassStatusFieldUpdateOperationsInput = {
@@ -541,22 +659,32 @@ export type EnumPlayerPassStatusFieldUpdateOperationsInput = {
 
 export type PlayerPassCreateWithoutPlayerInput = {
   id?: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  playerPassOffering?: Prisma.PlayerPassOfferingCreateNestedOneWithoutPlayerPassesInput
-  team: Prisma.TeamsCreateNestedOneWithoutPlayerPassesInput
+  currentTeam: Prisma.TeamCreateNestedOneWithoutCurrentPlayerPassesInput
+  previousTeam?: Prisma.TeamCreateNestedOneWithoutPreviousPlayerPassesInput
 }
 
 export type PlayerPassUncheckedCreateWithoutPlayerInput = {
   id?: string
-  playerPassOfferingId?: string | null
-  teamId: string
+  currentTeamId: string
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -593,239 +721,324 @@ export type PlayerPassScalarWhereInput = {
   NOT?: Prisma.PlayerPassScalarWhereInput | Prisma.PlayerPassScalarWhereInput[]
   id?: Prisma.StringFilter<"PlayerPass"> | string
   playerId?: Prisma.StringFilter<"PlayerPass"> | string
-  playerPassOfferingId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
-  teamId?: Prisma.StringFilter<"PlayerPass"> | string
+  currentTeamId?: Prisma.StringFilter<"PlayerPass"> | string
+  previousTeamId?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  externalPreviousTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
+  originType?: Prisma.EnumPassOriginTypeFilter<"PlayerPass"> | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFilter<"PlayerPass"> | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   startDate?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"PlayerPass"> | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFilter<"PlayerPass"> | $Enums.PlayerPassStatus
+  notes?: Prisma.StringNullableFilter<"PlayerPass"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerPass"> | Date | string
 }
 
-export type PlayerPassCreateWithoutTeamInput = {
+export type PlayerPassCreateWithoutCurrentTeamInput = {
   id?: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutPlayerPassesInput
-  playerPassOffering?: Prisma.PlayerPassOfferingCreateNestedOneWithoutPlayerPassesInput
+  previousTeam?: Prisma.TeamCreateNestedOneWithoutPreviousPlayerPassesInput
 }
 
-export type PlayerPassUncheckedCreateWithoutTeamInput = {
+export type PlayerPassUncheckedCreateWithoutCurrentTeamInput = {
   id?: string
   playerId: string
-  playerPassOfferingId?: string | null
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type PlayerPassCreateOrConnectWithoutTeamInput = {
+export type PlayerPassCreateOrConnectWithoutCurrentTeamInput = {
   where: Prisma.PlayerPassWhereUniqueInput
-  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput>
+  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput>
 }
 
-export type PlayerPassCreateManyTeamInputEnvelope = {
-  data: Prisma.PlayerPassCreateManyTeamInput | Prisma.PlayerPassCreateManyTeamInput[]
+export type PlayerPassCreateManyCurrentTeamInputEnvelope = {
+  data: Prisma.PlayerPassCreateManyCurrentTeamInput | Prisma.PlayerPassCreateManyCurrentTeamInput[]
   skipDuplicates?: boolean
 }
 
-export type PlayerPassUpsertWithWhereUniqueWithoutTeamInput = {
-  where: Prisma.PlayerPassWhereUniqueInput
-  update: Prisma.XOR<Prisma.PlayerPassUpdateWithoutTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutTeamInput>
-  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutTeamInput, Prisma.PlayerPassUncheckedCreateWithoutTeamInput>
-}
-
-export type PlayerPassUpdateWithWhereUniqueWithoutTeamInput = {
-  where: Prisma.PlayerPassWhereUniqueInput
-  data: Prisma.XOR<Prisma.PlayerPassUpdateWithoutTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutTeamInput>
-}
-
-export type PlayerPassUpdateManyWithWhereWithoutTeamInput = {
-  where: Prisma.PlayerPassScalarWhereInput
-  data: Prisma.XOR<Prisma.PlayerPassUpdateManyMutationInput, Prisma.PlayerPassUncheckedUpdateManyWithoutTeamInput>
-}
-
-export type PlayerPassCreateWithoutPlayerPassOfferingInput = {
+export type PlayerPassCreateWithoutPreviousTeamInput = {
   id?: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutPlayerPassesInput
-  team: Prisma.TeamsCreateNestedOneWithoutPlayerPassesInput
+  currentTeam: Prisma.TeamCreateNestedOneWithoutCurrentPlayerPassesInput
 }
 
-export type PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput = {
+export type PlayerPassUncheckedCreateWithoutPreviousTeamInput = {
   id?: string
   playerId: string
-  teamId: string
+  currentTeamId: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type PlayerPassCreateOrConnectWithoutPlayerPassOfferingInput = {
+export type PlayerPassCreateOrConnectWithoutPreviousTeamInput = {
   where: Prisma.PlayerPassWhereUniqueInput
-  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput>
+  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput>
 }
 
-export type PlayerPassCreateManyPlayerPassOfferingInputEnvelope = {
-  data: Prisma.PlayerPassCreateManyPlayerPassOfferingInput | Prisma.PlayerPassCreateManyPlayerPassOfferingInput[]
+export type PlayerPassCreateManyPreviousTeamInputEnvelope = {
+  data: Prisma.PlayerPassCreateManyPreviousTeamInput | Prisma.PlayerPassCreateManyPreviousTeamInput[]
   skipDuplicates?: boolean
 }
 
-export type PlayerPassUpsertWithWhereUniqueWithoutPlayerPassOfferingInput = {
+export type PlayerPassUpsertWithWhereUniqueWithoutCurrentTeamInput = {
   where: Prisma.PlayerPassWhereUniqueInput
-  update: Prisma.XOR<Prisma.PlayerPassUpdateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedUpdateWithoutPlayerPassOfferingInput>
-  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedCreateWithoutPlayerPassOfferingInput>
+  update: Prisma.XOR<Prisma.PlayerPassUpdateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutCurrentTeamInput>
+  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedCreateWithoutCurrentTeamInput>
 }
 
-export type PlayerPassUpdateWithWhereUniqueWithoutPlayerPassOfferingInput = {
+export type PlayerPassUpdateWithWhereUniqueWithoutCurrentTeamInput = {
   where: Prisma.PlayerPassWhereUniqueInput
-  data: Prisma.XOR<Prisma.PlayerPassUpdateWithoutPlayerPassOfferingInput, Prisma.PlayerPassUncheckedUpdateWithoutPlayerPassOfferingInput>
+  data: Prisma.XOR<Prisma.PlayerPassUpdateWithoutCurrentTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutCurrentTeamInput>
 }
 
-export type PlayerPassUpdateManyWithWhereWithoutPlayerPassOfferingInput = {
+export type PlayerPassUpdateManyWithWhereWithoutCurrentTeamInput = {
   where: Prisma.PlayerPassScalarWhereInput
-  data: Prisma.XOR<Prisma.PlayerPassUpdateManyMutationInput, Prisma.PlayerPassUncheckedUpdateManyWithoutPlayerPassOfferingInput>
+  data: Prisma.XOR<Prisma.PlayerPassUpdateManyMutationInput, Prisma.PlayerPassUncheckedUpdateManyWithoutCurrentTeamInput>
+}
+
+export type PlayerPassUpsertWithWhereUniqueWithoutPreviousTeamInput = {
+  where: Prisma.PlayerPassWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerPassUpdateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutPreviousTeamInput>
+  create: Prisma.XOR<Prisma.PlayerPassCreateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedCreateWithoutPreviousTeamInput>
+}
+
+export type PlayerPassUpdateWithWhereUniqueWithoutPreviousTeamInput = {
+  where: Prisma.PlayerPassWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerPassUpdateWithoutPreviousTeamInput, Prisma.PlayerPassUncheckedUpdateWithoutPreviousTeamInput>
+}
+
+export type PlayerPassUpdateManyWithWhereWithoutPreviousTeamInput = {
+  where: Prisma.PlayerPassScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerPassUpdateManyMutationInput, Prisma.PlayerPassUncheckedUpdateManyWithoutPreviousTeamInput>
 }
 
 export type PlayerPassCreateManyPlayerInput = {
   id?: string
-  playerPassOfferingId?: string | null
-  teamId: string
+  currentTeamId: string
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type PlayerPassUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  playerPassOffering?: Prisma.PlayerPassOfferingUpdateOneWithoutPlayerPassesNestedInput
-  team?: Prisma.TeamsUpdateOneRequiredWithoutPlayerPassesNestedInput
+  currentTeam?: Prisma.TeamUpdateOneRequiredWithoutCurrentPlayerPassesNestedInput
+  previousTeam?: Prisma.TeamUpdateOneWithoutPreviousPlayerPassesNestedInput
 }
 
 export type PlayerPassUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlayerPassUncheckedUpdateManyWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PlayerPassCreateManyTeamInput = {
+export type PlayerPassCreateManyCurrentTeamInput = {
   id?: string
   playerId: string
-  playerPassOfferingId?: string | null
+  previousTeamId?: string | null
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type PlayerPassUpdateWithoutTeamInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerPassesNestedInput
-  playerPassOffering?: Prisma.PlayerPassOfferingUpdateOneWithoutPlayerPassesNestedInput
-}
-
-export type PlayerPassUncheckedUpdateWithoutTeamInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PlayerPassUncheckedUpdateManyWithoutTeamInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  playerPassOfferingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PlayerPassCreateManyPlayerPassOfferingInput = {
+export type PlayerPassCreateManyPreviousTeamInput = {
   id?: string
   playerId: string
-  teamId: string
+  currentTeamId: string
+  externalPreviousTeamName?: string | null
+  originType: $Enums.PassOriginType
+  previousTeamSource: $Enums.PreviousTeamSource
+  status?: $Enums.PlayerPassStatus
+  externalNextTeamName?: string | null
   startDate: Date | string
   endDate?: Date | string | null
-  status?: $Enums.PlayerPassStatus
+  notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type PlayerPassUpdateWithoutPlayerPassOfferingInput = {
+export type PlayerPassUpdateWithoutCurrentTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerPassesNestedInput
-  team?: Prisma.TeamsUpdateOneRequiredWithoutPlayerPassesNestedInput
+  previousTeam?: Prisma.TeamUpdateOneWithoutPreviousPlayerPassesNestedInput
 }
 
-export type PlayerPassUncheckedUpdateWithoutPlayerPassOfferingInput = {
+export type PlayerPassUncheckedUpdateWithoutCurrentTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PlayerPassUncheckedUpdateManyWithoutPlayerPassOfferingInput = {
+export type PlayerPassUncheckedUpdateManyWithoutCurrentTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayerPassUpdateWithoutPreviousTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
   status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerPassesNestedInput
+  currentTeam?: Prisma.TeamUpdateOneRequiredWithoutCurrentPlayerPassesNestedInput
+}
+
+export type PlayerPassUncheckedUpdateWithoutPreviousTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayerPassUncheckedUpdateManyWithoutPreviousTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  externalPreviousTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originType?: Prisma.EnumPassOriginTypeFieldUpdateOperationsInput | $Enums.PassOriginType
+  previousTeamSource?: Prisma.EnumPreviousTeamSourceFieldUpdateOperationsInput | $Enums.PreviousTeamSource
+  status?: Prisma.EnumPlayerPassStatusFieldUpdateOperationsInput | $Enums.PlayerPassStatus
+  externalNextTeamName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -835,92 +1048,117 @@ export type PlayerPassUncheckedUpdateManyWithoutPlayerPassOfferingInput = {
 export type PlayerPassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  playerPassOfferingId?: boolean
-  teamId?: boolean
+  currentTeamId?: boolean
+  previousTeamId?: boolean
+  externalPreviousTeamName?: boolean
+  originType?: boolean
+  previousTeamSource?: boolean
+  status?: boolean
+  externalNextTeamName?: boolean
   startDate?: boolean
   endDate?: boolean
-  status?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }, ExtArgs["result"]["playerPass"]>
 
 export type PlayerPassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  playerPassOfferingId?: boolean
-  teamId?: boolean
+  currentTeamId?: boolean
+  previousTeamId?: boolean
+  externalPreviousTeamName?: boolean
+  originType?: boolean
+  previousTeamSource?: boolean
+  status?: boolean
+  externalNextTeamName?: boolean
   startDate?: boolean
   endDate?: boolean
-  status?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }, ExtArgs["result"]["playerPass"]>
 
 export type PlayerPassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
-  playerPassOfferingId?: boolean
-  teamId?: boolean
+  currentTeamId?: boolean
+  previousTeamId?: boolean
+  externalPreviousTeamName?: boolean
+  originType?: boolean
+  previousTeamSource?: boolean
+  status?: boolean
+  externalNextTeamName?: boolean
   startDate?: boolean
   endDate?: boolean
-  status?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }, ExtArgs["result"]["playerPass"]>
 
 export type PlayerPassSelectScalar = {
   id?: boolean
   playerId?: boolean
-  playerPassOfferingId?: boolean
-  teamId?: boolean
+  currentTeamId?: boolean
+  previousTeamId?: boolean
+  externalPreviousTeamName?: boolean
+  originType?: boolean
+  previousTeamSource?: boolean
+  status?: boolean
+  externalNextTeamName?: boolean
   startDate?: boolean
   endDate?: boolean
-  status?: boolean
+  notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerPassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "playerPassOfferingId" | "teamId" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["playerPass"]>
+export type PlayerPassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "currentTeamId" | "previousTeamId" | "externalPreviousTeamName" | "originType" | "previousTeamSource" | "status" | "externalNextTeamName" | "startDate" | "endDate" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["playerPass"]>
 export type PlayerPassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }
 export type PlayerPassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }
 export type PlayerPassIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  playerPassOffering?: boolean | Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>
-  team?: boolean | Prisma.TeamsDefaultArgs<ExtArgs>
+  currentTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  previousTeam?: boolean | Prisma.PlayerPass$previousTeamArgs<ExtArgs>
 }
 
 export type $PlayerPassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PlayerPass"
   objects: {
     player: Prisma.$PlayerPayload<ExtArgs>
-    playerPassOffering: Prisma.$PlayerPassOfferingPayload<ExtArgs> | null
-    team: Prisma.$TeamsPayload<ExtArgs>
+    currentTeam: Prisma.$TeamPayload<ExtArgs>
+    previousTeam: Prisma.$TeamPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     playerId: string
-    playerPassOfferingId: string | null
-    teamId: string
+    currentTeamId: string
+    previousTeamId: string | null
+    externalPreviousTeamName: string | null
+    originType: $Enums.PassOriginType
+    previousTeamSource: $Enums.PreviousTeamSource
+    status: $Enums.PlayerPassStatus
+    externalNextTeamName: string | null
     startDate: Date
     endDate: Date | null
-    status: $Enums.PlayerPassStatus
+    notes: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["playerPass"]>
@@ -1318,8 +1556,8 @@ readonly fields: PlayerPassFieldRefs;
 export interface Prisma__PlayerPassClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   player<T extends Prisma.PlayerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  playerPassOffering<T extends Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerPass$playerPassOfferingArgs<ExtArgs>>): Prisma.Prisma__PlayerPassOfferingClient<runtime.Types.Result.GetResult<Prisma.$PlayerPassOfferingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  team<T extends Prisma.TeamsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamsDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamsClient<runtime.Types.Result.GetResult<Prisma.$TeamsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  currentTeam<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  previousTeam<T extends Prisma.PlayerPass$previousTeamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerPass$previousTeamArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1351,11 +1589,16 @@ export interface Prisma__PlayerPassClient<T, Null = never, ExtArgs extends runti
 export interface PlayerPassFieldRefs {
   readonly id: Prisma.FieldRef<"PlayerPass", 'String'>
   readonly playerId: Prisma.FieldRef<"PlayerPass", 'String'>
-  readonly playerPassOfferingId: Prisma.FieldRef<"PlayerPass", 'String'>
-  readonly teamId: Prisma.FieldRef<"PlayerPass", 'String'>
+  readonly currentTeamId: Prisma.FieldRef<"PlayerPass", 'String'>
+  readonly previousTeamId: Prisma.FieldRef<"PlayerPass", 'String'>
+  readonly externalPreviousTeamName: Prisma.FieldRef<"PlayerPass", 'String'>
+  readonly originType: Prisma.FieldRef<"PlayerPass", 'PassOriginType'>
+  readonly previousTeamSource: Prisma.FieldRef<"PlayerPass", 'PreviousTeamSource'>
+  readonly status: Prisma.FieldRef<"PlayerPass", 'PlayerPassStatus'>
+  readonly externalNextTeamName: Prisma.FieldRef<"PlayerPass", 'String'>
   readonly startDate: Prisma.FieldRef<"PlayerPass", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"PlayerPass", 'DateTime'>
-  readonly status: Prisma.FieldRef<"PlayerPass", 'PlayerPassStatus'>
+  readonly notes: Prisma.FieldRef<"PlayerPass", 'String'>
   readonly createdAt: Prisma.FieldRef<"PlayerPass", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PlayerPass", 'DateTime'>
 }
@@ -1759,22 +2002,22 @@ export type PlayerPassDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * PlayerPass.playerPassOffering
+ * PlayerPass.previousTeam
  */
-export type PlayerPass$playerPassOfferingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type PlayerPass$previousTeamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the PlayerPassOffering
+   * Select specific fields to fetch from the Team
    */
-  select?: Prisma.PlayerPassOfferingSelect<ExtArgs> | null
+  select?: Prisma.TeamSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the PlayerPassOffering
+   * Omit specific fields from the Team
    */
-  omit?: Prisma.PlayerPassOfferingOmit<ExtArgs> | null
+  omit?: Prisma.TeamOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PlayerPassOfferingInclude<ExtArgs> | null
-  where?: Prisma.PlayerPassOfferingWhereInput
+  include?: Prisma.TeamInclude<ExtArgs> | null
+  where?: Prisma.TeamWhereInput
 }
 
 /**
