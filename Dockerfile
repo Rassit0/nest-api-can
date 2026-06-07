@@ -38,4 +38,4 @@ COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 EXPOSE 3000
 
 # Cuando el contenedor se encienda en Coolify, migra, inserta el seed y arranca
-CMD ["sh", "-c", "echo $DATABASE_URL && npx prisma migrate deploy && npx prisma db seed && node dist/main.js"]
+CMD ["sh", "-c", "npm run start:migrate:prod"]
