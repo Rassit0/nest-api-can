@@ -4,9 +4,13 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-# Generamos el cliente de Prisma local y compilamos con el comando nativo de Nest
+
+# Generamos el cliente en tu ruta personalizada e indicamos a Nest que compile
 RUN npx prisma generate
-RUN npm run build
+
+# Nota: Si tu script "npm run build" tiene metidos los comandos de migración/seed,
+# usamos directo "npx nest build" aquí para que no intente duplicar tareas en el builder.
+RUN npx nest build
 
 # 2. Fase de producción
 FROM node:24-alpine AS runner
@@ -17,16 +21,18 @@ COPY package*.json ./
 # Instalamos solo las dependencias de producción
 RUN npm ci --omit=dev
 
-# Copiamos lo compilado y todo lo necesario de Prisma
+# Copiamos lo compilado y el esquema de Prisma
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+# Copiamos tu cliente de Prisma personalizado generado en src/
+COPY --from=builder /app/src/generated ./src/generated
+
+# Copiamos las herramientas de ejecución de Prisma que sí existen en node_modules
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma 
 
 EXPOSE 3000
 
-# Cuando el contenedor se encienda en Coolify, ejecutará las migraciones,
-# el seed y finalmente arrancará tu API de NestJS en vivo.
+# Cuando el contenedor se encienda en Coolify, migra, inserta el seed y arranca
 CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/main.js"]
