@@ -4,11 +4,6 @@
 /* prettier-ignore */
 import type { Path } from "nestjs-i18n";
 /* prettier-ignore */
-export type I18nTranslations = {
-    "common": {
-        "Hola": string;
-        "\u00C9xito": string;
-    };
-};
+export type I18nTranslations = {};
 /* prettier-ignore */
 export type I18nPath = Path<I18nTranslations>;
