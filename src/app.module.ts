@@ -34,12 +34,9 @@ import { StudentsModule } from './students/students.module';
       useFactory: () => ({
         fallbackLanguage: 'es',
         loaderOptions: {
-          path: join(__dirname, 'i18n'),
-          watch: process.env.NODE_ENV !== 'production',
+          path: join(__dirname, '/i18n/'),
+          watch: true,
         },
-        ...(process.env.NODE_ENV !== 'production' && {
-          typesOutputPath: join(process.cwd(), 'src/i18n/i18n.generated.ts'),
-        }),
       }),
       resolvers: [new HeaderResolver(['x-custom-lang'])],
     }),

@@ -2222,6 +2222,8 @@ export const TeamScalarFieldEnum = {
   imageUrl: 'imageUrl',
   name: 'name',
   clubId: 'clubId',
+  maxAge: 'maxAge',
+  minAge: 'minAge',
   gender: 'gender',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2551,20 +2553,6 @@ export type ListEnumActivityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'ProgramGender'
- */
-export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
-    
-
-
-/**
- * Reference to a field of type 'ProgramGender[]'
- */
-export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2575,6 +2563,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProgramGender'
+ */
+export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
+    
+
+
+/**
+ * Reference to a field of type 'ProgramGender[]'
+ */
+export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
     
 
 

@@ -31,7 +31,7 @@ model Person {
   birthDate      DateTime?    @map("birth_date")
   imageUrl       String?      @map("image_url")
   documentType   DocumentType @map("document_type")
-  documentNumber String       @map("document_number")
+  documentNumber String       @unique @map("document_number")
   phone          String?
   email          String?      @unique
   address        String?
@@ -243,6 +243,8 @@ model Team {
   name        String
   clubId      String        @map("club_id")
   club        Club          @relation(fields: [clubId], references: [id], onDelete: Restrict)
+  maxAge      Int           @map("max_age")
+  minAge      Int           @map("min_age")
   gender      ProgramGender
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -369,6 +371,7 @@ enum PassOriginType {
 enum PlayerPassStatus {
   PENDING
   ACTIVE
+  CATEGORY_EXPIRED // cuando el jugador se pasa de la edad permitida en su equipo.
   INACTIVE
   REJECTED
 }
@@ -409,8 +412,8 @@ model PlayerPass {
 
   notes String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("player_passes")
 }

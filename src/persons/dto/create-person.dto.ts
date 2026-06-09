@@ -87,7 +87,14 @@ export class CreatePersonDto {
   @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
   // 2. Si el valor es null, saltamos la validación de Enum para que no falle
   @ValidateIf((object, value) => value !== null)
-  @IsEmail()
+  @IsEmail(
+    {},
+    {
+      message: i18nValidationMessage('validation.IS_EMAIL', {
+        constraint1: 'email',
+      }),
+    },
+  )
   email?: string | null;
 
   @IsOptional()

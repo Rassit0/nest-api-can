@@ -8,6 +8,8 @@ import { TeamsPaginationDto } from './dto/pagination.dto';
 export const teamSelect: Prisma.TeamSelect = {
   id: true,
   name: true,
+  maxAge: true,
+  minAge: true,
   gender: true,
   createdAt: true,
   updatedAt: true,

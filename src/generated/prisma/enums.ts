@@ -94,6 +94,7 @@ export type PassOriginType = (typeof PassOriginType)[keyof typeof PassOriginType
 export const PlayerPassStatus = {
   PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
+  CATEGORY_EXPIRED: 'CATEGORY_EXPIRED',
   INACTIVE: 'INACTIVE',
   REJECTED: 'REJECTED'
 } as const

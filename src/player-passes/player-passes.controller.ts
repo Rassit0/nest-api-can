@@ -14,6 +14,7 @@ import { CreatePlayerPassDto } from './dto/create-player-pass.dto';
 import { UpdatePlayerPassDto } from './dto/update-player-pass.dto';
 import { PlayerPassesPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { GetTeamsByClubOptionsDto } from './dto/get-teams-by-club-options.dto';
 
 @Controller('player-passes')
 export class PlayerPassesController {
@@ -77,8 +78,14 @@ export class PlayerPassesController {
   }
 
   @Get('teams/options/:clubId')
-  async getTeamsOptions(@Param('clubId', ParseUUIDPipe) clubId: string) {
-    return await this.playerPassesService.getTeamsByClubOptions(clubId);
+  async getTeamsOptions(
+    @Param('clubId', ParseUUIDPipe) clubId: string,
+    @Query() filter: GetTeamsByClubOptionsDto,
+  ) {
+    return await this.playerPassesService.getTeamsByClubByGenderOptions(
+      clubId,
+      filter.gender,
+    );
   }
 
   @Patch(':id')

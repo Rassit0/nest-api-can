@@ -221,6 +221,8 @@ export const TeamScalarFieldEnum = {
   imageUrl: 'imageUrl',
   name: 'name',
   clubId: 'clubId',
+  maxAge: 'maxAge',
+  minAge: 'minAge',
   gender: 'gender',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

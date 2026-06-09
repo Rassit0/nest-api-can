@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -43,8 +48,6 @@ export class PlayersService {
     const newPerson = await this.prisma.$transaction(async (tx) => {
       const person = await tx.person.create({
         data: personData,
-        // Esto es lo que hace "la magia" de devolver los datos relacionados
-        include: {},
       });
 
       const player = await tx.player.create({
@@ -146,11 +149,56 @@ export class PlayersService {
     };
   }
 
-  update(id: string, updatePlayerDto: UpdatePlayerDto) {
-    return `This action updates a #${id} player`;
+  async update(id: string, updatePlayerDto: UpdatePlayerDto) {
+    const { imageUrl, isActive, ...personData } = updatePlayerDto;
+    const player = await this.findOne(id);
+
+    const updatedPlayer = await this.prisma.$transaction(async (tx) => {
+      const [passesCount, membershipsCount] = await Promise.all([
+        tx.playerPass.count({
+          where: { playerId: id },
+        }),
+        tx.teamMembership.count({
+          where: { playerId: id },
+        }),
+      ]);
+
+      if (
+        updatePlayerDto.gender &&
+        updatePlayerDto.gender !== player.data.person.gender &&
+        (passesCount > 0 || membershipsCount > 0)
+      ) {
+        throw new BadRequestException(
+          'No es posible modificar el género porque el jugador ya posee pases o inscripciones registradas',
+        );
+      }
+
+      const person = await tx.person.update({
+        where: {
+          id: player.data.person.id,
+        },
+        data: personData,
+      });
+
+      return await tx.player.update({
+        where: {
+          id,
+        },
+        data: {
+          personId: person.id,
+          isActive,
+        },
+        select: PlayerSelect,
+      });
+    });
+
+    return {
+      message: 'Jugador actualizado exitosamente',
+      data: updatedPlayer,
+    };
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     return `This action removes a #${id} player`;
   }
 }

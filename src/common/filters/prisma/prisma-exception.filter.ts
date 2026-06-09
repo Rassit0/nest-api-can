@@ -11,6 +11,14 @@ import {
 import { I18nService } from 'nestjs-i18n';
 import { Prisma } from 'src/generated/prisma/client';
 
+function snakeToCamel(value: string): string {
+  return value.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+}
+
+function normalizeField(field: string): string {
+  return snakeToCamel(field);
+}
+
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaExceptionFilter implements ExceptionFilter {
   constructor(private readonly i18n: I18nService) {}
@@ -19,9 +27,12 @@ export class PrismaExceptionFilter implements ExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-
+    console.log(
+      this.i18n.translate('validation.ALREADY_EXISTS', {
+        lang: 'es',
+      }),
+    );
     let errorResponse;
-
     switch (exception.code) {
       case 'P2025':
         errorResponse = new NotFoundException(
@@ -32,15 +43,17 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       case 'P2002': {
         const driverError = exception.meta?.driverAdapterError as any;
         const fields = driverError.cause.constraint.fields;
+        // console.log({ fields });
         // 🔥 obtener campos únicos
         // const fields = (exception.meta?.target as string[]) || [];
 
         const errors = fields.reduce(
           (acc, field) => {
-            acc[field] = [
-              this.i18n.t('validation.ALREADY_EXISTS', {
+            const prismaField = normalizeField(field);
+            acc[prismaField] = [
+              this.i18n.translate('validation.ALREADY_EXISTS', {
                 args: {
-                  entity: this.i18n.t(`fields.${field}`),
+                  entity: this.i18n.t(`fields.${prismaField}`),
                 },
               }),
             ];
@@ -52,7 +65,7 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         errorResponse = new ConflictException({
           message: this.i18n.t('validation.ALREADY_EXISTS', {
             args: {
-              entity: this.i18n.t(`fields.${fields[0]}`),
+              entity: this.i18n.t(`fields.${normalizeField(fields[0])}`),
             },
           }),
           statusCode: 409,
@@ -75,7 +88,7 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         }
 
         // 3. Como 'field' es un string, lo metemos en un array para que el resto de tu lógica funcione
-        const fields = [field];
+        const fields = [normalizeField(field)];
 
         const errors = fields.reduce(
           (acc, f) => {

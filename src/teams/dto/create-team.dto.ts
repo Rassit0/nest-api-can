@@ -2,6 +2,7 @@ import { Transform } from 'class-transformer';
 import {
   IsDefined,
   IsEnum,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -20,6 +21,26 @@ export class CreateTeamDto {
     message: i18nValidationMessage('validation.MIN_LENGTH', { constraint1: 1 }),
   })
   name: string;
+
+  @IsNumber(
+    {},
+    {
+      message: i18nValidationMessage('validation.IS_NUMBER', {
+        constraint1: 'maxMembers',
+      }),
+    },
+  )
+  maxAge: number;
+
+  @IsNumber(
+    {},
+    {
+      message: i18nValidationMessage('validation.IS_NUMBER', {
+        constraint1: 'maxMembers',
+      }),
+    },
+  )
+  minAge: number;
 
   @IsOptional()
   @IsFile()

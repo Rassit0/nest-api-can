@@ -20,5 +20,6 @@
     "ActivityDiscipline_activityId_fkey": "Actividad",
     "Activity_categoryId_fkey": "Categoría",
     "startDate": "Fecha de inicio",
-    "endDate": "Fecha de fin"
+    "endDate": "Fecha de fin",
+    "documentNumber": "Número de documento"
 }

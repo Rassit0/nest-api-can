@@ -283,6 +283,7 @@ export type PersonOrderByWithRelationInput = {
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  documentNumber?: string
   email?: string
   AND?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   OR?: Prisma.PersonWhereInput[]
@@ -293,7 +294,6 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   birthDate?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Person"> | string | null
   documentType?: Prisma.EnumDocumentTypeFilter<"Person"> | $Enums.DocumentType
-  documentNumber?: Prisma.StringFilter<"Person"> | string
   phone?: Prisma.StringNullableFilter<"Person"> | string | null
   address?: Prisma.StringNullableFilter<"Person"> | string | null
   gender?: Prisma.EnumGenderFilter<"Person"> | $Enums.Gender
@@ -303,7 +303,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   contactOf?: Prisma.PersonContactListRelationFilter
   players?: Prisma.PlayerListRelationFilter
   students?: Prisma.StudentListRelationFilter
-}, "id" | "email">
+}, "id" | "documentNumber" | "email">
 
 export type PersonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

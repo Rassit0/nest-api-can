@@ -7,6 +7,7 @@ import {
 import { CreatePlayerPassDto } from './dto/create-player-pass.dto';
 import { UpdatePlayerPassDto } from './dto/update-player-pass.dto';
 import {
+  Gender,
   PassOriginType,
   PlayerPassStatus,
   PreviousTeamSource,
@@ -145,6 +146,52 @@ export class PlayerPassesService {
     }
 
     const newPlayerPass = await this.prisma.$transaction(async (tx) => {
+      const player = await tx.player.findUnique({
+        where: {
+          id: createPlayerPassDto.playerId,
+        },
+        include: {
+          person: true,
+        },
+      });
+
+      if (!player) {
+        throw new NotFoundException('Jugador no encontrado');
+      }
+
+      const currentTeam = await tx.team.findUnique({
+        where: {
+          id: createPlayerPassDto.currentTeamId,
+        },
+        include: {
+          club: true,
+        },
+      });
+
+      if (!currentTeam) {
+        throw new NotFoundException('Equipo actual no encontrado');
+      }
+
+      if (player.person.gender !== currentTeam.gender) {
+        throw new BadRequestException(
+          'El genero del jugador no coincide con el genero del equipo',
+        );
+      }
+
+      if (!player.person.birthDate) {
+        throw new BadRequestException(
+          'El jugador no tiene fecha de nacimiento',
+        );
+      }
+      // Validar que la edad del jugador este dentro del rango de edad del equipo
+      const age = calculateAge(player.person.birthDate);
+
+      if (age < currentTeam.minAge || age > currentTeam.maxAge) {
+        throw new BadRequestException(
+          'La edad del jugador no coincide con la edad del equipo',
+        );
+      }
+
       const prevPlayerPass = await tx.playerPass.findFirst({
         where: {
           playerId: createPlayerPassDto.playerId,
@@ -568,14 +615,16 @@ export class PlayerPassesService {
     };
   }
 
-  async getTeamsByClubOptions(clubId: string) {
+  async getTeamsByClubByGenderOptions(clubId: string, gender: Gender) {
     const teams = await this.prisma.team.findMany({
       where: {
         clubId,
+        gender,
       },
       select: {
         id: true,
         name: true,
+        gender: true,
       },
     });
 
@@ -584,4 +633,22 @@ export class PlayerPassesService {
       message: 'Equipos obtenidos exitosamente',
     };
   }
+}
+
+function calculateAge(birthDate: Date): number {
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  // Si el mes actual es menor al mes de nacimiento, o si es el mismo mes pero el día actual es menor al día de nacimiento, se resta 1 al año
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 }

@@ -31,20 +31,21 @@ export class PlayersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.playersService.findOne(id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.playersService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  @FormDataRequest()
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerDto: UpdatePlayerDto,
   ) {
-    return this.playersService.update(id, updatePlayerDto);
+    return await this.playersService.update(id, updatePlayerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.playersService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.playersService.remove(id);
   }
 }
