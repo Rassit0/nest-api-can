@@ -9,7 +9,7 @@
  * 🟢 You can import this file directly.
  */
 
-import type * as runtime from "@prisma/client/runtime/client"
+import type * as runtime from "@prisma/client/runtime/library"
 import * as $Enums from "./enums.js"
 import type * as Prisma from "./internal/prismaNamespace.js"
 
@@ -226,23 +226,6 @@ export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
 }
 
-export type EnumActivityTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
-}
-
-export type EnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
-}
-
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -252,13 +235,6 @@ export type IntFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntFilter<$PrismaModel> | number
-}
-
-export type EnumProgramGenderFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -277,14 +253,11 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
-export type EnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = {
+export type EnumProgramGenderFilter<$PrismaModel = never> = {
   equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
   in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
   notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel> | $Enums.ProgramGender
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+  not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
 }
 
 export type DecimalFilter<$PrismaModel = never> = {
@@ -298,11 +271,21 @@ export type DecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type EnumSeasonStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel> | $Enums.SeasonStatus
+export type EnumStatusTeamSeasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel> | $Enums.StatusTeamSeason
+}
+
+export type EnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
+  in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel> | $Enums.ProgramGender
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
 }
 
 export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -321,82 +304,65 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type EnumSeasonStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel> | $Enums.SeasonStatus
+export type EnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
 }
 
-export type EnumProgramStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramStatus | Prisma.EnumProgramStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel> | $Enums.ProgramStatus
+export type EnumPlayerMembershipStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel> | $Enums.PlayerMembershipStatus
 }
 
-export type EnumProgramStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramStatus | Prisma.EnumProgramStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProgramStatus
+export type EnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerMembershipStatus
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
 }
 
-export type EnumPassOriginTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.PassOriginType | Prisma.EnumPassOriginTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel> | $Enums.PassOriginType
+export type EnumMembershipDiscountTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MembershipDiscountType | Prisma.EnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel> | $Enums.MembershipDiscountType
 }
 
-export type EnumPreviousTeamSourceFilter<$PrismaModel = never> = {
-  equals?: $Enums.PreviousTeamSource | Prisma.EnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  in?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel> | $Enums.PreviousTeamSource
-}
-
-export type EnumPlayerPassStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.PlayerPassStatus | Prisma.EnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel> | $Enums.PlayerPassStatus
-}
-
-export type EnumPassOriginTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PassOriginType | Prisma.EnumPassOriginTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPassOriginTypeWithAggregatesFilter<$PrismaModel> | $Enums.PassOriginType
+export type EnumMembershipDiscountTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MembershipDiscountType | Prisma.EnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMembershipDiscountTypeWithAggregatesFilter<$PrismaModel> | $Enums.MembershipDiscountType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel>
 }
 
-export type EnumPreviousTeamSourceWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PreviousTeamSource | Prisma.EnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  in?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPreviousTeamSourceWithAggregatesFilter<$PrismaModel> | $Enums.PreviousTeamSource
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel>
+export type EnumTeamSeasonStaffRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonStaffRole | Prisma.EnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel> | $Enums.TeamSeasonStaffRole
 }
 
-export type EnumPlayerPassStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PlayerPassStatus | Prisma.EnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPlayerPassStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerPassStatus
+export type EnumTeamSeasonStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonStaffRole | Prisma.EnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.TeamSeasonStaffRole
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -624,30 +590,6 @@ export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
 }
 
-export type NestedEnumActivityTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
-}
-
-export type NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumProgramGenderFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
-}
-
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -675,14 +617,11 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
-export type NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = {
+export type NestedEnumProgramGenderFilter<$PrismaModel = never> = {
   equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
   in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
   notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel> | $Enums.ProgramGender
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+  not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
 }
 
 export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -696,11 +635,21 @@ export type NestedDecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type NestedEnumSeasonStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel> | $Enums.SeasonStatus
+export type NestedEnumStatusTeamSeasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel> | $Enums.StatusTeamSeason
+}
+
+export type NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
+  in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel> | $Enums.ProgramGender
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
 }
 
 export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -719,82 +668,65 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel> | $Enums.SeasonStatus
+export type NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
 }
 
-export type NestedEnumProgramStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramStatus | Prisma.EnumProgramStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel> | $Enums.ProgramStatus
+export type NestedEnumPlayerMembershipStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel> | $Enums.PlayerMembershipStatus
 }
 
-export type NestedEnumProgramStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ProgramStatus | Prisma.EnumProgramStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ProgramStatus[] | Prisma.ListEnumProgramStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumProgramStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProgramStatus
+export type NestedEnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerMembershipStatus
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumProgramStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumPassOriginTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.PassOriginType | Prisma.EnumPassOriginTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel> | $Enums.PassOriginType
+export type NestedEnumMembershipDiscountTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MembershipDiscountType | Prisma.EnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel> | $Enums.MembershipDiscountType
 }
 
-export type NestedEnumPreviousTeamSourceFilter<$PrismaModel = never> = {
-  equals?: $Enums.PreviousTeamSource | Prisma.EnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  in?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel> | $Enums.PreviousTeamSource
-}
-
-export type NestedEnumPlayerPassStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.PlayerPassStatus | Prisma.EnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel> | $Enums.PlayerPassStatus
-}
-
-export type NestedEnumPassOriginTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PassOriginType | Prisma.EnumPassOriginTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PassOriginType[] | Prisma.ListEnumPassOriginTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPassOriginTypeWithAggregatesFilter<$PrismaModel> | $Enums.PassOriginType
+export type NestedEnumMembershipDiscountTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MembershipDiscountType | Prisma.EnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MembershipDiscountType[] | Prisma.ListEnumMembershipDiscountTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMembershipDiscountTypeWithAggregatesFilter<$PrismaModel> | $Enums.MembershipDiscountType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPassOriginTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMembershipDiscountTypeFilter<$PrismaModel>
 }
 
-export type NestedEnumPreviousTeamSourceWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PreviousTeamSource | Prisma.EnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  in?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PreviousTeamSource[] | Prisma.ListEnumPreviousTeamSourceFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPreviousTeamSourceWithAggregatesFilter<$PrismaModel> | $Enums.PreviousTeamSource
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPreviousTeamSourceFilter<$PrismaModel>
+export type NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonStaffRole | Prisma.EnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel> | $Enums.TeamSeasonStaffRole
 }
 
-export type NestedEnumPlayerPassStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.PlayerPassStatus | Prisma.EnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.PlayerPassStatus[] | Prisma.ListEnumPlayerPassStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumPlayerPassStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerPassStatus
+export type NestedEnumTeamSeasonStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonStaffRole | Prisma.EnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonStaffRole[] | Prisma.ListEnumTeamSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.TeamSeasonStaffRole
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumPlayerPassStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamSeasonStaffRoleFilter<$PrismaModel>
 }
 
 

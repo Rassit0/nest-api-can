@@ -1,92 +1,148 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
   IsString,
   IsEmail,
-  IsDate,
-  IsNumber,
   IsOptional,
   IsEnum,
-  IsDefined,
   IsISO8601,
-  ValidateIf,
-  IsBoolean,
+  MinLength,
 } from 'class-validator';
 import {
   HasMimeType,
   IsFile,
   MaxFileSize,
-  MemoryStoredFile,
 } from 'nestjs-form-data';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { DocumentType, Gender } from 'src/generated/prisma/enums';
 
 export class CreatePersonDto {
-  @IsString({
-    message: 'El nombre debe ser una cadena de texto',
+  @ApiProperty({
+    example: 'Juan',
+    description: 'Nombre de la persona',
   })
-  @IsDefined({ message: 'El nombre es requerido' })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'name',
+    }),
+  })
+  @MinLength(3, {
+    message: i18nValidationMessage('validation.MIN_LENGTH', {
+      constraint1: '3',
+    }),
+  })
   name: string;
 
-  @IsString({
-    message: 'El apellido debe ser una cadena de texto',
+  @ApiProperty({
+    example: 'García',
+    description: 'Primer apellido de la persona',
   })
-  @IsDefined({ message: 'El apellido es requerido' })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'lastName',
+    }),
+  })
+  @MinLength(3, {
+    message: i18nValidationMessage('validation.MIN_LENGTH', {
+      constraint1: '3',
+    }),
+  })
   lastName: string;
 
-  @IsOptional()
-  // 1. Transformamos los valores problemáticos a null real
-  @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  @ValidateIf((object, value) => value !== null)
-  @IsString({
-    message: 'El segundo apellido debe ser una cadena de texto',
+  @ApiProperty({
+    example: 'López',
+    description: 'Segundo apellido de la persona',
+    required: false,
+    type: String,
   })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'secondLastName',
+    }),
+  })
+  @MinLength(3, {
+    message: i18nValidationMessage('validation.MIN_LENGTH', {
+      constraint1: '3',
+    }),
+  })
+  @Transform(({ value }) => value === '' ? null : value)
+  @IsOptional()
   secondLastName?: string | null;
 
   @IsOptional()
-  // 1. Transformamos los valores problemáticos a null real
-  @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  @ValidateIf((object, value) => value !== null)
+  @ApiProperty({
+    example: '2018-01-01T00:00:00.000Z',
+    description: 'Fecha de nacimiento de la persona (formato ISO 8601)',
+    required: false,
+  })
   @IsISO8601(
     { strict: true },
     { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
   )
   birthDate?: string;
 
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: false,
+    description: 'Imagen de la persona (JPEG o PNG, máximo 5MB)',
+  })
   @IsOptional()
-  @ValidateIf((_, value) => value != null)
   @IsFile()
-  @MaxFileSize(5e6)
-  @HasMimeType(['image/jpeg', 'image/png'])
-  imageUrl?: MemoryStoredFile;
+  @MaxFileSize(5e6, {
+    message: i18nValidationMessage('validation.MAX_FILE_SIZE', {
+      constraint1: '5MB',
+    }),
+  })
+  @HasMimeType(['image/jpeg', 'image/png'], {
+    message: i18nValidationMessage('validation.WRONG_FILE_TYPE', {
+      constraint1: 'JPEG o PNG',
+    }),
+  })
+  imageUrl?: File;
 
+  @ApiProperty({
+    example: DocumentType.CI,
+    enum: DocumentType,
+    description: 'Tipo de documento de la persona',
+  })
   @IsEnum(DocumentType, {
-    message: 'Tipo de documento inválido, los tipos son: CI, PASAPORTE',
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'documentType',
+    }),
   })
   documentType: DocumentType;
 
-  @IsString({
-    message: 'El número de documento debe ser una cadena de texto',
+  @ApiProperty({
+    example: '12345678',
+    description: 'Número de documento de la persona',
   })
-  @IsDefined({ message: 'El número de documento es requerido' })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'documentNumber',
+    }),
+  })
   documentNumber: string;
 
   @IsOptional()
-  // 1. Transformamos los valores problemáticos a null real
-  @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  @ValidateIf((object, value) => value !== null)
-  @IsString({
-    message: 'El teléfono debe ser una cadena de texto',
+  @ApiProperty({
+    example: '12345678',
+    description: 'Número de teléfono de la persona',
+    required: false,
   })
-  phone?: string | null;
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'phone',
+    }),
+  })
+  phone?: string;
 
   @IsOptional()
-  // 1. Transformamos los valores problemáticos a null real
-  @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  @ValidateIf((object, value) => value !== null)
+  @ApiProperty({
+    example: 'john.doe@example.com',
+    description: 'Correo electrónico de la persona',
+    required: false,
+  })
   @IsEmail(
     {},
     {
@@ -95,35 +151,31 @@ export class CreatePersonDto {
       }),
     },
   )
-  email?: string | null;
+  email?: string;
 
   @IsOptional()
-  // 1. Transformamos los valores problemáticos a null real
-  @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  @ValidateIf((object, value) => value !== null)
-  @IsString({
-    message: 'La dirección debe ser una cadena de texto',
+  @ApiProperty({
+    example: '123 Main St, Ciudad, País',
+    description: 'Dirección de la persona',
+    required: false,
   })
-  address?: string | null;
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'address',
+    }),
+  })
+  address?: string;
 
+  @ApiProperty({
+    // example: 'MALE',
+    enum: Gender,
+    description: 'Género de la persona',
+  })
   @IsEnum(Gender, {
-    message: 'Genero inválido, los generos son: MALE, FEMALE',
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'gender',
+    }),
   })
   gender: Gender;
 
-  // @IsOptional()
-  // // 1. Transformamos los valores problemáticos a null real
-  // @Transform(({ value }) => (value === 'null' || value === '' ? null : value))
-  // // 2. Si el valor es null, saltamos la validación de Enum para que no falle
-  // @ValidateIf((object, value) => value !== null)
-  // @IsEnum(UniformSize, {
-  //   message:
-  //     'Talla de uniforme inválida, las tallas son: XS, S, M, L, XL, XXL, XXXL',
-  // })
-  // standardSize?: UniformSize | null;
-  // @IsArray({ message: 'Los IDs de los tutores deben ser un arreglo' })
-  // @IsInt({ each: true, message: 'Cada ID de tutor debe ser un número entero' })
-  // @IsOptional()
-  // tutorIds?: number[]; // Cambiado de number a number[]
 }

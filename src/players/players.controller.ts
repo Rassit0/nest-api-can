@@ -14,13 +14,13 @@ import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayerPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersService) {}
+  constructor(private readonly playersService: PlayersService) { }
 
   @Post()
-  @FormDataRequest()
   async create(@Body() createPlayerDto: CreatePlayerDto) {
     return await this.playersService.create(createPlayerDto);
   }
@@ -36,6 +36,7 @@ export class PlayersController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdatePlayerDto })
   @FormDataRequest()
   async update(
     @Param('id', ParseUUIDPipe) id: string,

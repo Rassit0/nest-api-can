@@ -24,55 +24,47 @@ export const Decimal = runtime.Decimal
 
 
 export const NullTypes = {
-  DbNull: runtime.NullTypes.DbNull as (new (secret: never) => typeof runtime.DbNull),
-  JsonNull: runtime.NullTypes.JsonNull as (new (secret: never) => typeof runtime.JsonNull),
-  AnyNull: runtime.NullTypes.AnyNull as (new (secret: never) => typeof runtime.AnyNull),
+  DbNull: runtime.objectEnumValues.classes.DbNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.DbNull),
+  JsonNull: runtime.objectEnumValues.classes.JsonNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.JsonNull),
+  AnyNull: runtime.objectEnumValues.classes.AnyNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.AnyNull),
 }
 /**
  * Helper for filtering JSON entries that have `null` on the database (empty on the db)
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const DbNull = runtime.DbNull
-
+export const DbNull = runtime.objectEnumValues.instances.DbNull
 /**
  * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const JsonNull = runtime.JsonNull
-
+export const JsonNull = runtime.objectEnumValues.instances.JsonNull
 /**
  * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const AnyNull = runtime.AnyNull
+export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
   Person: 'Person',
   PersonContact: 'PersonContact',
-  Player: 'Player',
-  Student: 'Student',
   Discipline: 'Discipline',
-  Organization: 'Organization',
+  Institution: 'Institution',
   Club: 'Club',
   Location: 'Location',
-  Activity: 'Activity',
+  Category: 'Category',
+  Season: 'Season',
   Team: 'Team',
   TeamSeason: 'TeamSeason',
-  TeamSeasonExtension: 'TeamSeasonExtension',
-  TeamSeasonActivity: 'TeamSeasonActivity',
-  TeamMembership: 'TeamMembership',
-  TeamMembershipDiscount: 'TeamMembershipDiscount',
-  PlayerPass: 'PlayerPass',
-  School: 'School',
-  Course: 'Course',
-  CourseSeason: 'CourseSeason',
-  CourseSeasonActivity: 'CourseSeasonActivity',
-  CourseEnrollment: 'CourseEnrollment',
-  CourseEnrollmentDiscount: 'CourseEnrollmentDiscount'
+  Player: 'Player',
+  PlayerMembership: 'PlayerMembership',
+  PaymentPlan: 'PaymentPlan',
+  MembershipDiscount: 'MembershipDiscount',
+  Staff: 'Staff',
+  TeamSeasonStaff: 'TeamSeasonStaff'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -124,28 +116,6 @@ export const PersonContactScalarFieldEnum = {
 export type PersonContactScalarFieldEnum = (typeof PersonContactScalarFieldEnum)[keyof typeof PersonContactScalarFieldEnum]
 
 
-export const PlayerScalarFieldEnum = {
-  id: 'id',
-  personId: 'personId',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
-
-
-export const StudentScalarFieldEnum = {
-  id: 'id',
-  personId: 'personId',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
-
-
 export const DisciplineScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -157,7 +127,7 @@ export const DisciplineScalarFieldEnum = {
 export type DisciplineScalarFieldEnum = (typeof DisciplineScalarFieldEnum)[keyof typeof DisciplineScalarFieldEnum]
 
 
-export const OrganizationScalarFieldEnum = {
+export const InstitutionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   imageUrl: 'imageUrl',
@@ -168,13 +138,13 @@ export const OrganizationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
 
 
 export const ClubScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  organizationId: 'organizationId',
+  institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -201,29 +171,41 @@ export const LocationScalarFieldEnum = {
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
 
 
-export const ActivityScalarFieldEnum = {
+export const CategoryScalarFieldEnum = {
   id: 'id',
-  title: 'title',
+  name: 'name',
   description: 'description',
-  startsAt: 'startsAt',
-  endsAt: 'endsAt',
-  locationId: 'locationId',
-  type: 'type',
+  maxAge: 'maxAge',
+  minAge: 'minAge',
+  disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const SeasonScalarFieldEnum = {
+  id: 'id',
+  institutionId: 'institutionId',
+  disciplineId: 'disciplineId',
+  name: 'name',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  description: 'description',
   clubId: 'clubId',
-  maxAge: 'maxAge',
-  minAge: 'minAge',
-  gender: 'gender',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -233,23 +215,22 @@ export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof Team
 
 export const TeamSeasonScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  teamId: 'teamId',
+  imageUrl: 'imageUrl',
+  description: 'description',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
-  maxYear: 'maxYear',
-  minYear: 'minYear',
-  monthlyFee: 'monthlyFee',
+  teamId: 'teamId',
+  categoryId: 'categoryId',
+  seasonId: 'seasonId',
+  gender: 'gender',
+  billingDay: 'billingDay',
   registrationFee: 'registrationFee',
-  fullPaymentDiscountPercent: 'fullPaymentDiscountPercent',
+  monthlyFee: 'monthlyFee',
+  debtToleranceMonths: 'debtToleranceMonths',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
-  suspensionAfterMonthsDue: 'suspensionAfterMonthsDue',
   status: 'status',
-  statusNotes: 'statusNotes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -257,163 +238,89 @@ export const TeamSeasonScalarFieldEnum = {
 export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
 
 
-export const TeamSeasonExtensionScalarFieldEnum = {
+export const PlayerScalarFieldEnum = {
   id: 'id',
-  teamSeasonId: 'teamSeasonId',
-  previousEndDate: 'previousEndDate',
-  newEndDate: 'newEndDate',
-  reason: 'reason',
-  createdAt: 'createdAt'
+  personId: 'personId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TeamSeasonExtensionScalarFieldEnum = (typeof TeamSeasonExtensionScalarFieldEnum)[keyof typeof TeamSeasonExtensionScalarFieldEnum]
+export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
-export const TeamSeasonActivityScalarFieldEnum = {
-  activityId: 'activityId',
-  teamSeasonId: 'teamSeasonId'
-} as const
-
-export type TeamSeasonActivityScalarFieldEnum = (typeof TeamSeasonActivityScalarFieldEnum)[keyof typeof TeamSeasonActivityScalarFieldEnum]
-
-
-export const TeamMembershipScalarFieldEnum = {
+export const PlayerMembershipScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
   teamSeasonId: 'teamSeasonId',
+  paymentPlanId: 'paymentPlanId',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
-  billingDayOfMonth: 'billingDayOfMonth',
   status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TeamMembershipScalarFieldEnum = (typeof TeamMembershipScalarFieldEnum)[keyof typeof TeamMembershipScalarFieldEnum]
-
-
-export const TeamMembershipDiscountScalarFieldEnum = {
-  id: 'id',
-  teamMembershipId: 'teamMembershipId',
-  monthlyDiscountPercent: 'monthlyDiscountPercent',
-  registrationDiscountPercent: 'registrationDiscountPercent',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  reason: 'reason',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TeamMembershipDiscountScalarFieldEnum = (typeof TeamMembershipDiscountScalarFieldEnum)[keyof typeof TeamMembershipDiscountScalarFieldEnum]
-
-
-export const PlayerPassScalarFieldEnum = {
-  id: 'id',
-  playerId: 'playerId',
-  currentTeamId: 'currentTeamId',
-  previousTeamId: 'previousTeamId',
-  externalPreviousTeamName: 'externalPreviousTeamName',
-  originType: 'originType',
-  previousTeamSource: 'previousTeamSource',
-  status: 'status',
-  externalNextTeamName: 'externalNextTeamName',
-  startDate: 'startDate',
-  endDate: 'endDate',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type PlayerPassScalarFieldEnum = (typeof PlayerPassScalarFieldEnum)[keyof typeof PlayerPassScalarFieldEnum]
+export type PlayerMembershipScalarFieldEnum = (typeof PlayerMembershipScalarFieldEnum)[keyof typeof PlayerMembershipScalarFieldEnum]
 
 
-export const SchoolScalarFieldEnum = {
+export const PaymentPlanScalarFieldEnum = {
   id: 'id',
+  teamSeasonId: 'teamSeasonId',
   name: 'name',
-  imageUrl: 'imageUrl',
-  organizationId: 'organizationId',
-  disciplineId: 'disciplineId',
+  registrationDiscountPercent: 'registrationDiscountPercent',
+  monthlyDiscountPercent: 'monthlyDiscountPercent',
+  isDefault: 'isDefault',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
+export type PaymentPlanScalarFieldEnum = (typeof PaymentPlanScalarFieldEnum)[keyof typeof PaymentPlanScalarFieldEnum]
 
 
-export const CourseScalarFieldEnum = {
+export const MembershipDiscountScalarFieldEnum = {
   id: 'id',
-  schoolId: 'schoolId',
-  name: 'name',
-  gender: 'gender',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
-
-
-export const CourseSeasonScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  courseId: 'courseId',
-  maxMembers: 'maxMembers',
-  minMembers: 'minMembers',
-  monthlyFee: 'monthlyFee',
-  registrationFee: 'registrationFee',
-  fullPaymentDiscountPercent: 'fullPaymentDiscountPercent',
-  maxYear: 'maxYear',
-  minYear: 'minYear',
-  lateFeeEnabled: 'lateFeeEnabled',
-  lateFeePerDay: 'lateFeePerDay',
-  graceDays: 'graceDays',
-  suspensionAfterMonthsDue: 'suspensionAfterMonthsDue',
-  status: 'status',
-  statusNotes: 'statusNotes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
-
-
-export const CourseSeasonActivityScalarFieldEnum = {
-  activityId: 'activityId',
-  courseSeasonId: 'courseSeasonId'
-} as const
-
-export type CourseSeasonActivityScalarFieldEnum = (typeof CourseSeasonActivityScalarFieldEnum)[keyof typeof CourseSeasonActivityScalarFieldEnum]
-
-
-export const CourseEnrollmentScalarFieldEnum = {
-  id: 'id',
-  studentId: 'studentId',
-  courseSeasonId: 'courseSeasonId',
-  billingDayOfMonth: 'billingDayOfMonth',
-  startedAt: 'startedAt',
-  endedAt: 'endedAt',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CourseEnrollmentScalarFieldEnum = (typeof CourseEnrollmentScalarFieldEnum)[keyof typeof CourseEnrollmentScalarFieldEnum]
-
-
-export const CourseEnrollmentDiscountScalarFieldEnum = {
-  id: 'id',
-  courseEnrollmentId: 'courseEnrollmentId',
+  playerMembershipId: 'playerMembershipId',
   monthlyDiscountPercent: 'monthlyDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
+  type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type CourseEnrollmentDiscountScalarFieldEnum = (typeof CourseEnrollmentDiscountScalarFieldEnum)[keyof typeof CourseEnrollmentDiscountScalarFieldEnum]
+export type MembershipDiscountScalarFieldEnum = (typeof MembershipDiscountScalarFieldEnum)[keyof typeof MembershipDiscountScalarFieldEnum]
+
+
+export const StaffScalarFieldEnum = {
+  id: 'id',
+  personId: 'personId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffScalarFieldEnum = (typeof StaffScalarFieldEnum)[keyof typeof StaffScalarFieldEnum]
+
+
+export const TeamSeasonStaffScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  staffId: 'staffId',
+  role: 'role',
+  customRole: 'customRole',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  isPrimary: 'isPrimary',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeamSeasonStaffScalarFieldEnum = (typeof TeamSeasonStaffScalarFieldEnum)[keyof typeof TeamSeasonStaffScalarFieldEnum]
 
 
 export const SortOrder = {

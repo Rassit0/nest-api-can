@@ -10,7 +10,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('🌱 Seeding database...');
 
-  const defaultOrganization = await prisma.organization.upsert({
+  const defaultOrganization = await prisma.institution.upsert({
     where: {
       email: 'canoruro@gmail.com',
     },
@@ -23,7 +23,7 @@ async function main() {
     },
   });
 
-  console.log('✅ Organization seeded:', defaultOrganization.name);
+  console.log('✅ Institution seeded:', defaultOrganization.name);
 }
 main()
   .then(async () => {

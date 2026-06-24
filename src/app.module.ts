@@ -11,19 +11,20 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import path, { join } from 'path';
-import { ActivitiesModule } from './activities/activities.module';
 import { LocationsModule } from './locations/locations.module';
 import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
-import { MatchDetailModule } from './match-detail/match-detail.module';
-import { EventsModule } from './events/events.module';
-import { MatchesModule } from './matches/matches.module';
-import { OrganizationsModule } from './organizations/organizations.module';
+import { InstitutionsModule } from './institutions/institutions.module';
 import { ClubsModule } from './clubs/clubs.module';
 import { TeamsModule } from './teams/teams.module';
-import { TeamSeasonsModule } from './team-seasons/team-seasons.module';
-import { PlayerPassesModule } from './player-passes/player-passes.module';
 import { PlayersModule } from './players/players.module';
-import { StudentsModule } from './students/students.module';
+import { TeamSeasonModule } from './team-season/team-season.module';
+import { CategoriesModule } from './categories/categories.module';
+import { SeasonsModule } from './seasons/seasons.module';
+import { PaymentPlansModule } from './payment-plans/payment-plans.module';
+import { PlayerMembershipsModule } from './player-memberships/player-memberships.module';
+import { MembershipDiscountModule } from './membership-discount/membership-discount.module';
+import { StaffModule } from './staff/staff.module';
+import { TeamSeasonStaffModule } from './team-season-staff/team-season-staff.module';
 
 @Module({
   imports: [
@@ -40,18 +41,19 @@ import { StudentsModule } from './students/students.module';
       }),
       resolvers: [new HeaderResolver(['x-custom-lang'])],
     }),
-    ActivitiesModule,
     LocationsModule,
-    MatchDetailModule,
-    EventsModule,
-    MatchesModule,
-    OrganizationsModule,
+    InstitutionsModule,
     ClubsModule,
     TeamsModule,
-    TeamSeasonsModule,
-    PlayerPassesModule,
     PlayersModule,
-    StudentsModule,
+    TeamSeasonModule,
+    CategoriesModule,
+    SeasonsModule,
+    PaymentPlansModule,
+    PlayerMembershipsModule,
+    MembershipDiscountModule,
+    StaffModule,
+    TeamSeasonStaffModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

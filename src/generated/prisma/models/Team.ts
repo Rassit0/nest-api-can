@@ -8,7 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
-import type * as runtime from "@prisma/client/runtime/client"
+import type * as runtime from "@prisma/client/runtime/library"
 import type * as $Enums from "../enums.js"
 import type * as Prisma from "../internal/prismaNamespace.js"
 
@@ -20,30 +20,16 @@ export type TeamModel = runtime.Types.Result.DefaultSelection<Prisma.$TeamPayloa
 
 export type AggregateTeam = {
   _count: TeamCountAggregateOutputType | null
-  _avg: TeamAvgAggregateOutputType | null
-  _sum: TeamSumAggregateOutputType | null
   _min: TeamMinAggregateOutputType | null
   _max: TeamMaxAggregateOutputType | null
-}
-
-export type TeamAvgAggregateOutputType = {
-  maxAge: number | null
-  minAge: number | null
-}
-
-export type TeamSumAggregateOutputType = {
-  maxAge: number | null
-  minAge: number | null
 }
 
 export type TeamMinAggregateOutputType = {
   id: string | null
   imageUrl: string | null
   name: string | null
+  description: string | null
   clubId: string | null
-  maxAge: number | null
-  minAge: number | null
-  gender: $Enums.ProgramGender | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,10 +38,8 @@ export type TeamMaxAggregateOutputType = {
   id: string | null
   imageUrl: string | null
   name: string | null
+  description: string | null
   clubId: string | null
-  maxAge: number | null
-  minAge: number | null
-  gender: $Enums.ProgramGender | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,34 +48,20 @@ export type TeamCountAggregateOutputType = {
   id: number
   imageUrl: number
   name: number
+  description: number
   clubId: number
-  maxAge: number
-  minAge: number
-  gender: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
-export type TeamAvgAggregateInputType = {
-  maxAge?: true
-  minAge?: true
-}
-
-export type TeamSumAggregateInputType = {
-  maxAge?: true
-  minAge?: true
-}
-
 export type TeamMinAggregateInputType = {
   id?: true
   imageUrl?: true
   name?: true
+  description?: true
   clubId?: true
-  maxAge?: true
-  minAge?: true
-  gender?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,10 +70,8 @@ export type TeamMaxAggregateInputType = {
   id?: true
   imageUrl?: true
   name?: true
+  description?: true
   clubId?: true
-  maxAge?: true
-  minAge?: true
-  gender?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,10 +80,8 @@ export type TeamCountAggregateInputType = {
   id?: true
   imageUrl?: true
   name?: true
+  description?: true
   clubId?: true
-  maxAge?: true
-  minAge?: true
-  gender?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -159,18 +125,6 @@ export type TeamAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: TeamAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: TeamSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: TeamMinAggregateInputType
@@ -201,8 +155,6 @@ export type TeamGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: TeamCountAggregateInputType | true
-  _avg?: TeamAvgAggregateInputType
-  _sum?: TeamSumAggregateInputType
   _min?: TeamMinAggregateInputType
   _max?: TeamMaxAggregateInputType
 }
@@ -211,20 +163,16 @@ export type TeamGroupByOutputType = {
   id: string
   imageUrl: string | null
   name: string
+  description: string | null
   clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
   createdAt: Date
   updatedAt: Date
   _count: TeamCountAggregateOutputType | null
-  _avg: TeamAvgAggregateOutputType | null
-  _sum: TeamSumAggregateOutputType | null
   _min: TeamMinAggregateOutputType | null
   _max: TeamMaxAggregateOutputType | null
 }
 
-export type GetTeamGroupByPayload<T extends TeamGroupByArgs> = Prisma.PrismaPromise<
+type GetTeamGroupByPayload<T extends TeamGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<TeamGroupByOutputType, T['by']> &
       {
@@ -246,68 +194,53 @@ export type TeamWhereInput = {
   id?: Prisma.StringFilter<"Team"> | string
   imageUrl?: Prisma.StringNullableFilter<"Team"> | string | null
   name?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
   clubId?: Prisma.StringFilter<"Team"> | string
-  maxAge?: Prisma.IntFilter<"Team"> | number
-  minAge?: Prisma.IntFilter<"Team"> | number
-  gender?: Prisma.EnumProgramGenderFilter<"Team"> | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
-  currentPlayerPasses?: Prisma.PlayerPassListRelationFilter
-  previousPlayerPasses?: Prisma.PlayerPassListRelationFilter
 }
 
 export type TeamOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   clubId?: Prisma.SortOrder
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
-  gender?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   club?: Prisma.ClubOrderByWithRelationInput
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput
-  currentPlayerPasses?: Prisma.PlayerPassOrderByRelationAggregateInput
-  previousPlayerPasses?: Prisma.PlayerPassOrderByRelationAggregateInput
 }
 
 export type TeamWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  clubId_name?: Prisma.TeamClubIdNameCompoundUniqueInput
   AND?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
   OR?: Prisma.TeamWhereInput[]
   NOT?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
   imageUrl?: Prisma.StringNullableFilter<"Team"> | string | null
   name?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
   clubId?: Prisma.StringFilter<"Team"> | string
-  maxAge?: Prisma.IntFilter<"Team"> | number
-  minAge?: Prisma.IntFilter<"Team"> | number
-  gender?: Prisma.EnumProgramGenderFilter<"Team"> | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
-  currentPlayerPasses?: Prisma.PlayerPassListRelationFilter
-  previousPlayerPasses?: Prisma.PlayerPassListRelationFilter
-}, "id">
+}, "id" | "clubId_name">
 
 export type TeamOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   clubId?: Prisma.SortOrder
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
-  gender?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TeamCountOrderByAggregateInput
-  _avg?: Prisma.TeamAvgOrderByAggregateInput
   _max?: Prisma.TeamMaxOrderByAggregateInput
   _min?: Prisma.TeamMinOrderByAggregateInput
-  _sum?: Prisma.TeamSumOrderByAggregateInput
 }
 
 export type TeamScalarWhereWithAggregatesInput = {
@@ -317,10 +250,8 @@ export type TeamScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Team"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
   clubId?: Prisma.StringWithAggregatesFilter<"Team"> | string
-  maxAge?: Prisma.IntWithAggregatesFilter<"Team"> | number
-  minAge?: Prisma.IntWithAggregatesFilter<"Team"> | number
-  gender?: Prisma.EnumProgramGenderWithAggregatesFilter<"Team"> | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Team"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Team"> | Date | string
 }
@@ -329,70 +260,52 @@ export type TeamCreateInput = {
   id?: string
   imageUrl?: string | null
   name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
+  description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamUncheckedCreateInput = {
   id?: string
   imageUrl?: string | null
   name: string
+  description?: string | null
   clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutPreviousTeamNestedInput
 }
 
 export type TeamUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubId?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutPreviousTeamNestedInput
 }
 
 export type TeamCreateManyInput = {
   id?: string
   imageUrl?: string | null
   name: string
+  description?: string | null
   clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -401,9 +314,7 @@ export type TeamUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,10 +323,8 @@ export type TeamUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubId?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -430,31 +339,27 @@ export type TeamOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type TeamClubIdNameCompoundUniqueInput = {
+  clubId: string
+  name: string
+}
+
 export type TeamCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
-  gender?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type TeamAvgOrderByAggregateInput = {
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
 }
 
 export type TeamMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
-  gender?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -463,27 +368,15 @@ export type TeamMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
-  gender?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type TeamSumOrderByAggregateInput = {
-  maxAge?: Prisma.SortOrder
-  minAge?: Prisma.SortOrder
 }
 
 export type TeamScalarRelationFilter = {
   is?: Prisma.TeamWhereInput
   isNot?: Prisma.TeamWhereInput
-}
-
-export type TeamNullableScalarRelationFilter = {
-  is?: Prisma.TeamWhereInput | null
-  isNot?: Prisma.TeamWhereInput | null
 }
 
 export type TeamCreateNestedManyWithoutClubInput = {
@@ -528,18 +421,6 @@ export type TeamUncheckedUpdateManyWithoutClubNestedInput = {
   deleteMany?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type EnumProgramGenderFieldUpdateOperationsInput = {
-  set?: $Enums.ProgramGender
-}
-
 export type TeamCreateNestedOneWithoutTeamSeasonsInput = {
   create?: Prisma.XOR<Prisma.TeamCreateWithoutTeamSeasonsInput, Prisma.TeamUncheckedCreateWithoutTeamSeasonsInput>
   connectOrCreate?: Prisma.TeamCreateOrConnectWithoutTeamSeasonsInput
@@ -554,62 +435,24 @@ export type TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutTeamSeasonsInput, Prisma.TeamUpdateWithoutTeamSeasonsInput>, Prisma.TeamUncheckedUpdateWithoutTeamSeasonsInput>
 }
 
-export type TeamCreateNestedOneWithoutCurrentPlayerPassesInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutCurrentPlayerPassesInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCurrentPlayerPassesInput
-  connect?: Prisma.TeamWhereUniqueInput
-}
-
-export type TeamCreateNestedOneWithoutPreviousPlayerPassesInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutPreviousPlayerPassesInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutPreviousPlayerPassesInput
-  connect?: Prisma.TeamWhereUniqueInput
-}
-
-export type TeamUpdateOneRequiredWithoutCurrentPlayerPassesNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutCurrentPlayerPassesInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCurrentPlayerPassesInput
-  upsert?: Prisma.TeamUpsertWithoutCurrentPlayerPassesInput
-  connect?: Prisma.TeamWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutCurrentPlayerPassesInput, Prisma.TeamUpdateWithoutCurrentPlayerPassesInput>, Prisma.TeamUncheckedUpdateWithoutCurrentPlayerPassesInput>
-}
-
-export type TeamUpdateOneWithoutPreviousPlayerPassesNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutPreviousPlayerPassesInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutPreviousPlayerPassesInput
-  upsert?: Prisma.TeamUpsertWithoutPreviousPlayerPassesInput
-  disconnect?: Prisma.TeamWhereInput | boolean
-  delete?: Prisma.TeamWhereInput | boolean
-  connect?: Prisma.TeamWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutPreviousPlayerPassesInput, Prisma.TeamUpdateWithoutPreviousPlayerPassesInput>, Prisma.TeamUncheckedUpdateWithoutPreviousPlayerPassesInput>
-}
-
 export type TeamCreateWithoutClubInput = {
   id?: string
   imageUrl?: string | null
   name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
+  description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamUncheckedCreateWithoutClubInput = {
   id?: string
   imageUrl?: string | null
   name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
+  description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamCreateOrConnectWithoutClubInput = {
@@ -645,10 +488,8 @@ export type TeamScalarWhereInput = {
   id?: Prisma.StringFilter<"Team"> | string
   imageUrl?: Prisma.StringNullableFilter<"Team"> | string | null
   name?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
   clubId?: Prisma.StringFilter<"Team"> | string
-  maxAge?: Prisma.IntFilter<"Team"> | number
-  minAge?: Prisma.IntFilter<"Team"> | number
-  gender?: Prisma.EnumProgramGenderFilter<"Team"> | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Team"> | Date | string
 }
@@ -657,28 +498,20 @@ export type TeamCreateWithoutTeamSeasonsInput = {
   id?: string
   imageUrl?: string | null
   name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
+  description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
-  currentPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamUncheckedCreateWithoutTeamSeasonsInput = {
   id?: string
   imageUrl?: string | null
   name: string
+  description?: string | null
   clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
   createdAt?: Date | string
   updatedAt?: Date | string
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutCurrentTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutPreviousTeamInput
 }
 
 export type TeamCreateOrConnectWithoutTeamSeasonsInput = {
@@ -701,181 +534,27 @@ export type TeamUpdateWithoutTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutPreviousTeamNestedInput
 }
 
 export type TeamUncheckedUpdateWithoutTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubId?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutPreviousTeamNestedInput
-}
-
-export type TeamCreateWithoutCurrentPlayerPassesInput = {
-  id?: string
-  imageUrl?: string | null
-  name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
-  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutPreviousTeamInput
-}
-
-export type TeamUncheckedCreateWithoutCurrentPlayerPassesInput = {
-  id?: string
-  imageUrl?: string | null
-  name: string
-  clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutPreviousTeamInput
-}
-
-export type TeamCreateOrConnectWithoutCurrentPlayerPassesInput = {
-  where: Prisma.TeamWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamCreateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutCurrentPlayerPassesInput>
-}
-
-export type TeamCreateWithoutPreviousPlayerPassesInput = {
-  id?: string
-  imageUrl?: string | null
-  name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
-  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassCreateNestedManyWithoutCurrentTeamInput
-}
-
-export type TeamUncheckedCreateWithoutPreviousPlayerPassesInput = {
-  id?: string
-  imageUrl?: string | null
-  name: string
-  clubId: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedCreateNestedManyWithoutCurrentTeamInput
-}
-
-export type TeamCreateOrConnectWithoutPreviousPlayerPassesInput = {
-  where: Prisma.TeamWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamCreateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutPreviousPlayerPassesInput>
-}
-
-export type TeamUpsertWithoutCurrentPlayerPassesInput = {
-  update: Prisma.XOR<Prisma.TeamUpdateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedUpdateWithoutCurrentPlayerPassesInput>
-  create: Prisma.XOR<Prisma.TeamCreateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutCurrentPlayerPassesInput>
-  where?: Prisma.TeamWhereInput
-}
-
-export type TeamUpdateToOneWithWhereWithoutCurrentPlayerPassesInput = {
-  where?: Prisma.TeamWhereInput
-  data: Prisma.XOR<Prisma.TeamUpdateWithoutCurrentPlayerPassesInput, Prisma.TeamUncheckedUpdateWithoutCurrentPlayerPassesInput>
-}
-
-export type TeamUpdateWithoutCurrentPlayerPassesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
-  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutPreviousTeamNestedInput
-}
-
-export type TeamUncheckedUpdateWithoutCurrentPlayerPassesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  clubId?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutPreviousTeamNestedInput
-}
-
-export type TeamUpsertWithoutPreviousPlayerPassesInput = {
-  update: Prisma.XOR<Prisma.TeamUpdateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedUpdateWithoutPreviousPlayerPassesInput>
-  create: Prisma.XOR<Prisma.TeamCreateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedCreateWithoutPreviousPlayerPassesInput>
-  where?: Prisma.TeamWhereInput
-}
-
-export type TeamUpdateToOneWithWhereWithoutPreviousPlayerPassesInput = {
-  where?: Prisma.TeamWhereInput
-  data: Prisma.XOR<Prisma.TeamUpdateWithoutPreviousPlayerPassesInput, Prisma.TeamUncheckedUpdateWithoutPreviousPlayerPassesInput>
-}
-
-export type TeamUpdateWithoutPreviousPlayerPassesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
-  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutCurrentTeamNestedInput
-}
-
-export type TeamUncheckedUpdateWithoutPreviousPlayerPassesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  clubId?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutCurrentTeamNestedInput
 }
 
 export type TeamCreateManyClubInput = {
   id?: string
   imageUrl?: string | null
   name: string
-  maxAge: number
-  minAge: number
-  gender: $Enums.ProgramGender
+  description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -884,37 +563,27 @@ export type TeamUpdateWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUpdateManyWithoutPreviousTeamNestedInput
 }
 
 export type TeamUncheckedUpdateWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
-  currentPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutCurrentTeamNestedInput
-  previousPlayerPasses?: Prisma.PlayerPassUncheckedUpdateManyWithoutPreviousTeamNestedInput
 }
 
 export type TeamUncheckedUpdateManyWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
-  minAge?: Prisma.IntFieldUpdateOperationsInput | number
-  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -926,14 +595,10 @@ export type TeamUncheckedUpdateManyWithoutClubInput = {
 
 export type TeamCountOutputType = {
   teamSeasons: number
-  currentPlayerPasses: number
-  previousPlayerPasses: number
 }
 
 export type TeamCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamSeasons?: boolean | TeamCountOutputTypeCountTeamSeasonsArgs
-  currentPlayerPasses?: boolean | TeamCountOutputTypeCountCurrentPlayerPassesArgs
-  previousPlayerPasses?: boolean | TeamCountOutputTypeCountPreviousPlayerPassesArgs
 }
 
 /**
@@ -953,35 +618,17 @@ export type TeamCountOutputTypeCountTeamSeasonsArgs<ExtArgs extends runtime.Type
   where?: Prisma.TeamSeasonWhereInput
 }
 
-/**
- * TeamCountOutputType without action
- */
-export type TeamCountOutputTypeCountCurrentPlayerPassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PlayerPassWhereInput
-}
-
-/**
- * TeamCountOutputType without action
- */
-export type TeamCountOutputTypeCountPreviousPlayerPassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PlayerPassWhereInput
-}
-
 
 export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageUrl?: boolean
   name?: boolean
+  description?: boolean
   clubId?: boolean
-  maxAge?: boolean
-  minAge?: boolean
-  gender?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Team$teamSeasonsArgs<ExtArgs>
-  currentPlayerPasses?: boolean | Prisma.Team$currentPlayerPassesArgs<ExtArgs>
-  previousPlayerPasses?: boolean | Prisma.Team$previousPlayerPassesArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["team"]>
 
@@ -989,10 +636,8 @@ export type TeamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   imageUrl?: boolean
   name?: boolean
+  description?: boolean
   clubId?: boolean
-  maxAge?: boolean
-  minAge?: boolean
-  gender?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
@@ -1002,10 +647,8 @@ export type TeamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   imageUrl?: boolean
   name?: boolean
+  description?: boolean
   clubId?: boolean
-  maxAge?: boolean
-  minAge?: boolean
-  gender?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
@@ -1015,20 +658,16 @@ export type TeamSelectScalar = {
   id?: boolean
   imageUrl?: boolean
   name?: boolean
+  description?: boolean
   clubId?: boolean
-  maxAge?: boolean
-  minAge?: boolean
-  gender?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "name" | "clubId" | "maxAge" | "minAge" | "gender" | "createdAt" | "updatedAt", ExtArgs["result"]["team"]>
+export type TeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "name" | "description" | "clubId" | "createdAt" | "updatedAt", ExtArgs["result"]["team"]>
 export type TeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Team$teamSeasonsArgs<ExtArgs>
-  currentPlayerPasses?: boolean | Prisma.Team$currentPlayerPassesArgs<ExtArgs>
-  previousPlayerPasses?: boolean | Prisma.Team$previousPlayerPassesArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TeamIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1043,17 +682,13 @@ export type $TeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     club: Prisma.$ClubPayload<ExtArgs>
     teamSeasons: Prisma.$TeamSeasonPayload<ExtArgs>[]
-    currentPlayerPasses: Prisma.$PlayerPassPayload<ExtArgs>[]
-    previousPlayerPasses: Prisma.$PlayerPassPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     imageUrl: string | null
     name: string
+    description: string | null
     clubId: string
-    maxAge: number
-    minAge: number
-    gender: $Enums.ProgramGender
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["team"]>
@@ -1452,8 +1087,6 @@ export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   club<T extends Prisma.ClubDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubDefaultArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teamSeasons<T extends Prisma.Team$teamSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$teamSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  currentPlayerPasses<T extends Prisma.Team$currentPlayerPassesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$currentPlayerPassesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerPassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  previousPlayerPasses<T extends Prisma.Team$previousPlayerPassesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$previousPlayerPassesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerPassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1486,10 +1119,8 @@ export interface TeamFieldRefs {
   readonly id: Prisma.FieldRef<"Team", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Team", 'String'>
   readonly name: Prisma.FieldRef<"Team", 'String'>
+  readonly description: Prisma.FieldRef<"Team", 'String'>
   readonly clubId: Prisma.FieldRef<"Team", 'String'>
-  readonly maxAge: Prisma.FieldRef<"Team", 'Int'>
-  readonly minAge: Prisma.FieldRef<"Team", 'Int'>
-  readonly gender: Prisma.FieldRef<"Team", 'ProgramGender'>
   readonly createdAt: Prisma.FieldRef<"Team", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Team", 'DateTime'>
 }
@@ -1688,11 +1319,6 @@ export type TeamFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Teams.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Teams.
-   */
   distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
 }
 
@@ -1914,54 +1540,6 @@ export type Team$teamSeasonsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.TeamSeasonScalarFieldEnum | Prisma.TeamSeasonScalarFieldEnum[]
-}
-
-/**
- * Team.currentPlayerPasses
- */
-export type Team$currentPlayerPassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PlayerPass
-   */
-  select?: Prisma.PlayerPassSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PlayerPass
-   */
-  omit?: Prisma.PlayerPassOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PlayerPassInclude<ExtArgs> | null
-  where?: Prisma.PlayerPassWhereInput
-  orderBy?: Prisma.PlayerPassOrderByWithRelationInput | Prisma.PlayerPassOrderByWithRelationInput[]
-  cursor?: Prisma.PlayerPassWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PlayerPassScalarFieldEnum | Prisma.PlayerPassScalarFieldEnum[]
-}
-
-/**
- * Team.previousPlayerPasses
- */
-export type Team$previousPlayerPassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PlayerPass
-   */
-  select?: Prisma.PlayerPassSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PlayerPass
-   */
-  omit?: Prisma.PlayerPassOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PlayerPassInclude<ExtArgs> | null
-  where?: Prisma.PlayerPassWhereInput
-  orderBy?: Prisma.PlayerPassOrderByWithRelationInput | Prisma.PlayerPassOrderByWithRelationInput[]
-  cursor?: Prisma.PlayerPassWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PlayerPassScalarFieldEnum | Prisma.PlayerPassScalarFieldEnum[]
 }
 
 /**

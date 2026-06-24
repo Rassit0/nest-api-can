@@ -1,21 +1,34 @@
-import { CreatePersonDto } from 'src/persons/dto/create-person.dto';
-import { IsBoolean, IsOptional } from 'class-validator';
-import { Transform } from 'class-transformer';
-import { i18nValidationMessage } from 'nestjs-i18n';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsOptional, IsUUID } from "class-validator";
+import { i18nValidationMessage } from "nestjs-i18n";
+import { Exists } from "src/common/validators/decorators/exists.decorator";
 
-export class CreatePlayerDto extends CreatePersonDto {
-  @IsBoolean({
-    message: i18nValidationMessage('validation.IS_BOOLEAN', {
-      constraint1: 'isActive',
-    }),
-  })
-  @IsOptional()
-  @Transform(({ value }) =>
-    value === 'true' || value === 1 || value === true
-      ? true
-      : value === 'false' || value === 0 || value === false
-        ? false
-        : null,
-  )
-  isActive?: boolean;
+export class CreatePlayerDto {
+    @ApiProperty({
+        example: '550e8400-e29b-41d4-a716-446655440000',
+        description: 'ID de la persona',
+    })
+    @IsUUID('4', {
+        message: i18nValidationMessage('validation.IS_UUID', {
+            constraint1: 'personId',
+        }),
+    })
+    @Exists('person', 'id', {
+        message: i18nValidationMessage('validation.NOT_EXISTS', {
+            constraint1: 'personId',
+        }),
+    })
+    personId: string;
+
+    @ApiProperty({
+        example: true,
+        description: 'Está activo el jugador',
+    })
+    @IsBoolean({
+        message: i18nValidationMessage('validation.IS_BOOLEAN', {
+            constraint1: 'isActive',
+        }),
+    })
+    @IsOptional()
+    isActive?: boolean;
 }

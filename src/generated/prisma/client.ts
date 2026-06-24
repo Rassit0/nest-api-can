@@ -6,14 +6,14 @@
 /*
  * This file should be your main import to use Prisma. Through it you get access to all the models, enums, and input types.
  * If you're looking for something you can import in the client-side of your application, please refer to the `browser.ts` file instead.
- *
+ * 
  * 🟢 You can import this file directly.
  */
 
 import * as process from 'node:process'
 import * as path from 'node:path'
 
-import * as runtime from "@prisma/client/runtime/client"
+import * as runtime from "@prisma/client/runtime/library"
 import * as $Enums from "./enums.js"
 import * as $Class from "./internal/class.js"
 import * as Prisma from "./internal/prismaNamespace.js"
@@ -26,18 +26,21 @@ export * from "./enums.js"
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient({
- *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
- * })
+ * const prisma = new PrismaClient()
  * // Fetch zero or more People
  * const people = await prisma.person.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
-export const PrismaClient = $Class.getPrismaClientClass()
+export const PrismaClient = $Class.getPrismaClientClass(__dirname)
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
+
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "query_engine-windows.dll.node")
+path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
 
 /**
  * Model Person
@@ -50,25 +53,15 @@ export type Person = Prisma.PersonModel
  */
 export type PersonContact = Prisma.PersonContactModel
 /**
- * Model Player
- * 
- */
-export type Player = Prisma.PlayerModel
-/**
- * Model Student
- * 
- */
-export type Student = Prisma.StudentModel
-/**
  * Model Discipline
  * 
  */
 export type Discipline = Prisma.DisciplineModel
 /**
- * Model Organization
+ * Model Institution
  * 
  */
-export type Organization = Prisma.OrganizationModel
+export type Institution = Prisma.InstitutionModel
 /**
  * Model Club
  * 
@@ -80,10 +73,15 @@ export type Club = Prisma.ClubModel
  */
 export type Location = Prisma.LocationModel
 /**
- * Model Activity
+ * Model Category
  * 
  */
-export type Activity = Prisma.ActivityModel
+export type Category = Prisma.CategoryModel
+/**
+ * Model Season
+ * 
+ */
+export type Season = Prisma.SeasonModel
 /**
  * Model Team
  * 
@@ -95,57 +93,32 @@ export type Team = Prisma.TeamModel
  */
 export type TeamSeason = Prisma.TeamSeasonModel
 /**
- * Model TeamSeasonExtension
+ * Model Player
  * 
  */
-export type TeamSeasonExtension = Prisma.TeamSeasonExtensionModel
+export type Player = Prisma.PlayerModel
 /**
- * Model TeamSeasonActivity
+ * Model PlayerMembership
  * 
  */
-export type TeamSeasonActivity = Prisma.TeamSeasonActivityModel
+export type PlayerMembership = Prisma.PlayerMembershipModel
 /**
- * Model TeamMembership
+ * Model PaymentPlan
  * 
  */
-export type TeamMembership = Prisma.TeamMembershipModel
+export type PaymentPlan = Prisma.PaymentPlanModel
 /**
- * Model TeamMembershipDiscount
+ * Model MembershipDiscount
  * 
  */
-export type TeamMembershipDiscount = Prisma.TeamMembershipDiscountModel
+export type MembershipDiscount = Prisma.MembershipDiscountModel
 /**
- * Model PlayerPass
+ * Model Staff
  * 
  */
-export type PlayerPass = Prisma.PlayerPassModel
+export type Staff = Prisma.StaffModel
 /**
- * Model School
+ * Model TeamSeasonStaff
  * 
  */
-export type School = Prisma.SchoolModel
-/**
- * Model Course
- * 
- */
-export type Course = Prisma.CourseModel
-/**
- * Model CourseSeason
- * 
- */
-export type CourseSeason = Prisma.CourseSeasonModel
-/**
- * Model CourseSeasonActivity
- * 
- */
-export type CourseSeasonActivity = Prisma.CourseSeasonActivityModel
-/**
- * Model CourseEnrollment
- * 
- */
-export type CourseEnrollment = Prisma.CourseEnrollmentModel
-/**
- * Model CourseEnrollmentDiscount
- * 
- */
-export type CourseEnrollmentDiscount = Prisma.CourseEnrollmentDiscountModel
+export type TeamSeasonStaff = Prisma.TeamSeasonStaffModel

@@ -3,14 +3,15 @@
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
   moduleFormat = "cjs"
-}
-
-datasource db {
-  provider = "postgresql"
 }
 
 enum DocumentType {
@@ -44,7 +45,7 @@ model Person {
   // Personas que son contactos de la persona
   contactOf PersonContact[] @relation("ContactPerson")
   players   Player[]
-  students  Student[]
+  staff     Staff?
 
   @@map("persons")
 }
@@ -84,39 +85,15 @@ model PersonContact {
   @@map("person_contacts")
 }
 
-model Player {
-  id              String           @id @default(uuid())
-  personId        String           @unique
-  person          Person           @relation(fields: [personId], references: [id])
-  isActive        Boolean          @default(true)
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  teamMemberships TeamMembership[]
-  playerPasses    PlayerPass[]
-
-  @@map("players")
-}
-
-model Student {
-  id                String             @id @default(uuid())
-  personId          String             @unique
-  person            Person             @relation(fields: [personId], references: [id])
-  isActive          Boolean            @default(true)
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  courseEnrollments CourseEnrollment[]
-
-  @@map("students")
-}
-
 model Discipline {
-  id        String   @id @default(uuid())
-  name      String
-  icon      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  clubs     Club[]
-  schools   School[]
+  id         String     @id @default(uuid())
+  name       String
+  icon       String
+  clubs      Club[]
+  categories Category[]
+  seasons    Season[]
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
 
   @@map("disciplines")
 }
@@ -128,36 +105,36 @@ enum SeasonStatus {
   CANCELLED
 }
 
-model Organization {
+model Institution {
   id        String   @id @default(uuid())
   name      String
   imageUrl  String?  @map("image_url")
   address   String
   phone     String?
   email     String?  @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   clubs     Club[]
-  schools   School[]
+  seasons   Season[]
 
-  @@map("organizations")
+  @@map("institutions")
 }
 
 // ============================
 // CLUBS
 // ============================
 model Club {
-  id             String       @id @default(uuid())
-  name           String
-  organizationId String       @map("organization_id")
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  disciplineId   String       @map("discipline_id")
-  discipline     Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  teams          Team[]
+  id            String      @id @default(uuid())
+  name          String
+  institutionId String      @map("institution_id")
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+  disciplineId  String      @map("discipline_id")
+  discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  teams         Team[]
 
-  @@unique([organizationId, disciplineId, name])
+  @@unique([institutionId, disciplineId, name])
   @@map("clubs")
 }
 
@@ -180,47 +157,71 @@ model Location {
 
   // Si es true, es una instalación interna (club, escuela, etc.)
   // Si es false, es una instalación externa
-  isInternal Boolean    @default(false) @map("is_internal")
+  isInternal Boolean  @default(false) @map("is_internal")
   // Si es true, es una instalación que se puede rentar O ALQUILAR dependiendo si es interna o externa
-  isRentable Boolean    @default(false) @map("is_rentable")
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  activities Activity[]
+  isRentable Boolean  @default(false) @map("is_rentable")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@map("locations")
 }
 
+// ===================================
+// FINAL INSTALACIONES
+// ===================================
+
 // =================================
-// ACTIVIDADES
-// ==================================
-enum ActivityType {
-  TRAINING
-  MATCH
-  CLASS
-  EVENT
-  RENTAL
+// Categorias
+// =================================
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  maxAge      Int     @map("max_age")
+  minAge      Int     @map("min_age")
+
+  disciplineId String     @map("discipline_id")
+  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  teamSeasons TeamSeason[]
+
+  @@unique([disciplineId, name])
+  @@map("categories")
 }
 
-model Activity {
-  id                     String                 @id @default(uuid())
-  title                  String
-  description            String
-  startsAt               DateTime               @map("starts_at")
-  endsAt                 DateTime               @map("ends_at")
-  locationId             String                 @map("location_id")
-  location               Location               @relation(fields: [locationId], references: [id], onDelete: Restrict)
-  type                   ActivityType           @default(TRAINING)
-  createdAt              DateTime               @default(now())
-  updatedAt              DateTime               @updatedAt
-  teamSeasonActivities   TeamSeasonActivity[]
-  courseSeasonActivities CourseSeasonActivity[]
+// =================================
+// Fin Categorias
+// =================================
 
-  @@map("activities")
+// =================================
+// TEMPORADAS
+// =================================
+
+model Season {
+  id            String       @id @default(uuid())
+  institutionId String       @map("institution_id")
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+  disciplineId  String       @map("discipline_id")
+  discipline    Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  name          String
+  description   String?
+  startDate     DateTime     @map("start_date")
+  endDate       DateTime     @map("end_date")
+  teamSeasons   TeamSeason[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([institutionId, disciplineId, name])
+  @@map("seasons")
 }
 
-// ===================================
-// FINAL ACTIVITIES
-// ===================================
+// =================================
+// FIN TEMPORADAS
+// =================================
 
 enum ProgramGender {
   MALE
@@ -228,315 +229,224 @@ enum ProgramGender {
   MIXED
 }
 
-enum ProgramStatus {
-  ACTIVE // activo
-  SUSPENDED // suspendido
-  WITHDRAWN // retirado
-}
-
 // =================================
 // Equipos
 // =================================
 model Team {
-  id          String        @id @default(uuid())
-  imageUrl    String?       @map("image_url")
+  id          String       @id @default(uuid())
+  imageUrl    String?      @map("image_url")
   name        String
-  clubId      String        @map("club_id")
-  club        Club          @relation(fields: [clubId], references: [id], onDelete: Restrict)
-  maxAge      Int           @map("max_age")
-  minAge      Int           @map("min_age")
-  gender      ProgramGender
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  description String?
+  clubId      String       @map("club_id")
+  club        Club         @relation(fields: [clubId], references: [id], onDelete: Restrict)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
   teamSeasons TeamSeason[]
 
-  // Pases donde este equipo es el actual
-  currentPlayerPasses PlayerPass[] @relation("CurrentTeamPasses")
-
-  // Pases donde este equipo era el anterior
-  previousPlayerPasses PlayerPass[] @relation("PreviousTeamPasses")
-
+  @@unique([clubId, name])
   @@map("teams")
+}
+
+enum StatusTeamSeason {
+  DRAFT // por ejemplo para ofertas futuras
+  ACTIVE
+  FINISHED
+  CANCELLED
 }
 
 model TeamSeason {
   id String @id @default(uuid())
 
-  // Datos del periodo de inscripcion
-  name      String
-  startDate DateTime @map("start_date")
-  endDate   DateTime @map("end_date")
+  imageUrl    String? @map("image_url")
+  description String?
 
-  // Datos del equipo
-  teamId                     String       @map("team_id")
-  team                       Team         @relation(fields: [teamId], references: [id], onDelete: Restrict)
-  maxMembers                 Int          @map("max_members")
-  minMembers                 Int          @map("min_members")
-  maxYear                    Int          @map("max_year")
-  minYear                    Int          @map("min_year")
-  monthlyFee                 Decimal      @map("monthly_fee") @db.Decimal(10, 2)
-  registrationFee            Decimal      @map("registration_fee") @db.Decimal(10, 2)
-  fullPaymentDiscountPercent Decimal      @map("full_payment_discount_percent") @db.Decimal(5, 2)
-  // Recargos por mora habilitados
-  lateFeeEnabled             Boolean      @default(false) @map("late_fee_enabled")
-  // Recargo por dia de atraso
-  lateFeePerDay              Decimal      @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
-  // Días de gracia para el pago de la mensualidad. Osea días de tolerancia
-  graceDays                  Int          @default(0) @map("grace_days")
-  // Meses de atraso para la suspensión del servicio
-  suspensionAfterMonthsDue   Int          @default(2) @map("suspension_after_months_due")
-  status                     SeasonStatus @default(DRAFT)
-  statusNotes                String?      @map("status_notes")
+  maxMembers Int @map("max_members")
+  minMembers Int @map("min_members")
 
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
-  teamMemberships      TeamMembership[]
-  teamSeasonActivities TeamSeasonActivity[]
-  teamSeasonExtensions TeamSeasonExtension[]
+  teamId String @map("team_id")
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Restrict)
 
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  seasonId String @map("season_id")
+  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+
+  gender ProgramGender
+
+  billingDay          Int              @map("billing_day") // 1 - 28
+  registrationFee     Decimal          @map("registration_fee") @db.Decimal(10, 2)
+  monthlyFee          Decimal          @map("monthly_fee") @db.Decimal(10, 2)
+  debtToleranceMonths Int              @default(2) @map("debt_tolerance_months") // meses de tolerancia para no pagar
+  lateFeeEnabled      Boolean          @default(false) @map("late_fee_enabled")
+  lateFeePerDay       Decimal          @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
+  graceDays           Int              @default(0) @map("grace_days")
+  status              StatusTeamSeason @default(DRAFT)
+
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  teamSeasonStaffs  TeamSeasonStaff[]
+  paymentPlans      PaymentPlan[]
+  playerMemberships PlayerMembership[]
+
+  @@unique([teamId, categoryId, seasonId, gender])
   @@map("team_seasons")
 }
 
-// Si se realiza una extension aqui se guarda el historial,y se edita la fecha final de la temporada
-model TeamSeasonExtension {
-  id String @id @default(uuid())
+// =================================
+// FIN EQUIPOS
+// =================================
 
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+// =================================
+// JUGADORES Y MEMBRESIAS
+// =================================
 
-  previousEndDate DateTime @map("previous_end_date")
-  newEndDate      DateTime @map("new_end_date")
+model Player {
+  id                String             @id @default(uuid())
+  personId          String             @unique
+  person            Person             @relation(fields: [personId], references: [id])
+  isActive          Boolean            @default(true)
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  playerMemberships PlayerMembership[]
 
-  reason String
-
-  createdAt DateTime @default(now())
-
-  @@map("team_season_extensions")
+  @@map("players")
 }
 
-model TeamSeasonActivity {
-  activityId   String     @map("activity_id")
-  activity     Activity   @relation(fields: [activityId], references: [id], onDelete: Restrict)
-  teamSeasonId String     @map("team_offering_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-
-  @@id([activityId, teamSeasonId])
-  @@map("team_offering_activities")
+enum PlayerMembershipStatus {
+  ACTIVE // activo
+  SUSPENDED // suspendido
+  WITHDRAWN // retirado
+  FINISHED // finalizado (por ejemplo al finalizar la temporada)
 }
 
-model TeamMembership {
+model PlayerMembership {
   id           String     @id @default(uuid())
   playerId     String     @map("player_id")
   player       Player     @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  teamSeasonId String     @map("team_offering_id")
+  teamSeasonId String     @map("team_season_id")
   teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-  startedAt    DateTime   @map("started_at")
-  endedAt      DateTime?  @map("ended_at")
 
-  // Dia del mes en que se genera la factura, para poder generar para el otro mes
-  billingDayOfMonth Int @map("billing_day_of_month")
+  paymentPlanId String      @map("payment_plan_id")
+  paymentPlan   PaymentPlan @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
 
-  status ProgramStatus @default(ACTIVE)
+  startedAt DateTime  @map("started_at")
+  endedAt   DateTime? @map("ended_at")
 
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
-  teamMembershipDiscounts TeamMembershipDiscount[]
+  status PlayerMembershipStatus @default(ACTIVE)
 
-  @@map("team_memberships")
+  notes String?
+
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  membershipDiscounts MembershipDiscount[]
+
+  @@map("player_membership")
 }
 
-model TeamMembershipDiscount {
-  id                          String         @id @default(uuid())
-  teamMembershipId            String         @map("team_membership_id")
-  teamMembership              TeamMembership @relation(fields: [teamMembershipId], references: [id], onDelete: Restrict)
-  monthlyDiscountPercent      Decimal        @map("monthly_discount_percent") @db.Decimal(5, 2)
-  registrationDiscountPercent Decimal        @map("registration_discount_percent") @db.Decimal(5, 2)
-  startDate                   DateTime       @map("start_date")
-  endDate                     DateTime?      @map("end_date")
-
-  reason String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("team_membership_discounts")
+enum MembershipDiscountType {
+  SCHOLARSHIP // Beca
+  SPECIAL_DISCOUNT // Descuento especial
+  FINANCIAL_AID // Ayuda económica
+  AGREEMENT // Convenio
+  EXEMPTION // Exoneración
+  OTHER // Otro
 }
 
-enum PassOriginType {
-  INTERNAL
-  EXTERNAL
-  FREE_AGENT
+model PaymentPlan {
+  id                          String     @id @default(uuid())
+  teamSeasonId                String     @map("team_season_id")
+  teamSeasons                 TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  name                        String
+  registrationDiscountPercent Decimal    @map("registration_discount_percent") @db.Decimal(5, 2)
+  monthlyDiscountPercent      Decimal    @map("monthly_discount_percent") @db.Decimal(5, 2)
+
+  isDefault Boolean @default(false) // si es true, es el plan por defecto
+
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  playerMemberships PlayerMembership[]
+
+  @@map("payment_plans")
 }
 
-enum PlayerPassStatus {
-  PENDING
-  ACTIVE
-  CATEGORY_EXPIRED // cuando el jugador se pasa de la edad permitida en su equipo.
-  INACTIVE
-  REJECTED
-}
+model MembershipDiscount {
+  id                 String           @id @default(uuid())
+  playerMembershipId String           @map("player_membership_id")
+  playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
 
-enum PreviousTeamSource {
-  SYSTEM
-  EXTERNAL
-  FREE_AGENT
-}
-
-model PlayerPass {
-  id String @id @default(uuid())
-
-  playerId String
-  player   Player @relation(fields: [playerId], references: [id], onDelete: Restrict)
-
-  currentTeamId String @map("current_team_id")
-  currentTeam   Team   @relation("CurrentTeamPasses", fields: [currentTeamId], references: [id], onDelete: Restrict)
-
-  // Si es interno, se guarda el id del equipo anterior
-  previousTeamId           String? @map("previous_team_id")
-  previousTeam             Team?   @relation("PreviousTeamPasses", fields: [previousTeamId], references: [id], onDelete: Restrict)
-  // Nombre del equipo anterior si es externo
-  externalPreviousTeamName String? @map("external_previous_team_name")
-
-  originType         PassOriginType     @map("origin_type")
-  // Si el origen es libre, el equipo anterior es libre por defecto
-  // Ahora si origen es externo, se debe indicar si es SYSTEM o EXTERNAL para indicar si el equipo previo es fuera de la organizacion
-  // Si es Interno, por defecto indica en SYSTEM porque se supone que existe en el sistema,
-  previousTeamSource PreviousTeamSource @map("previous_team_source")
-  status             PlayerPassStatus   @default(PENDING) @map("status")
-
-  // Si se cierra el pase indicar a que equipo se va para mantener el historial
-  externalNextTeamName String? @map("external_next_team_name")
+  monthlyDiscountPercent      Decimal @map("monthly_discount_percent") @db.Decimal(5, 2)
+  registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
 
   startDate DateTime  @map("start_date")
   endDate   DateTime? @map("end_date")
 
-  notes String?
+  type MembershipDiscountType
+
+  reason String?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("player_passes")
+  @@map("membership_discounts")
 }
 
-// ================================================
-// FIN DE EQUIPOS
-// ================================================
+// =================================
+// FIN JUGADORES Y MEMBRESIAS
+// =================================
 
-// ===============================================
-// Escuelas
-// ===============================================
+// =================================
+// STAFF Y EQUIPOS
+// =================================
 
-model School {
-  id             String       @id @default(uuid())
-  name           String
-  imageUrl       String?      @map("image_url")
-  organizationId String       @map("organization_id")
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  disciplineId   String       @map("discipline_id")
-  discipline     Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  courses        Course[]
+model Staff {
+  id               String            @id @default(uuid())
+  personId         String            @unique @map("person_id")
+  person           Person            @relation(fields: [personId], references: [id])
+  isActive         Boolean           @default(true) @map("is_active")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  teamSeasonStaffs TeamSeasonStaff[]
 
-  @@map("schools")
+  @@map("staff")
 }
 
-model Course {
-  id           String         @id @default(uuid())
-  schoolId     String         @map("school_id")
-  school       School         @relation(fields: [schoolId], references: [id], onDelete: Restrict)
-  name         String
-  gender       ProgramGender
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  courseSeason CourseSeason[]
-
-  @@map("courses")
+enum TeamSeasonStaffRole {
+  HEAD_COACH
+  ASSISTANT_COACH
+  ASSISTANT
+  VOLUNTEER
+  DELEGATE
+  OTHER
 }
 
-model CourseSeason {
+model TeamSeasonStaff {
   id String @id @default(uuid())
 
-  // Datos del periodo de inscripcion
-  name      String
-  startDate DateTime @map("start_date")
-  endDate   DateTime @map("end_date")
+  teamSeasonId String @map("team_season_id")
+  staffId      String @map("staff_id")
 
-  // Datos del curso
-  courseId                   String  @map("course_id")
-  course                     Course  @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  maxMembers                 Int     @map("max_members")
-  minMembers                 Int     @map("min_members")
-  monthlyFee                 Decimal @map("monthly_fee") @db.Decimal(10, 2)
-  registrationFee            Decimal @map("registration_fee") @db.Decimal(10, 2)
-  fullPaymentDiscountPercent Decimal @map("full_payment_discount_percent") @db.Decimal(5, 2)
-  maxYear                    Int     @map("max_year")
-  minYear                    Int     @map("min_year")
-  lateFeeEnabled             Boolean @default(false) @map("late_fee_enabled")
-  // Recargo por dia de atraso
-  lateFeePerDay              Decimal @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
-  // Días de gracia para el pago de la mensualidad. Osea días de tolerancia
-  graceDays                  Int     @default(0) @map("grace_days")
-  // Meses de atraso para la suspensión del servicio
-  suspensionAfterMonthsDue   Int     @default(2) @map("suspension_after_months_due")
+  role       TeamSeasonStaffRole
+  // Si el rol es OTHER, se especifica en customRole
+  customRole String?             @map("custom_role")
 
-  status      SeasonStatus @default(DRAFT)
-  statusNotes String?      @map("status_notes")
+  startedAt DateTime  @map("started_at")
+  endedAt   DateTime? @map("ended_at")
 
-  createdAt              DateTime               @default(now())
-  updatedAt              DateTime               @updatedAt
-  courseEnrollments      CourseEnrollment[]
-  courseSeasonActivities CourseSeasonActivity[]
+  // Si es el encargado del equipo
+  isPrimary Boolean @default(false) @map("is_primary")
 
-  @@map("course_seasons")
+  notes String?
+
+  teamSeason TeamSeason @relation(fields: [teamSeasonId], references: [id])
+  staff      Staff      @relation(fields: [staffId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("team_season_staff")
 }
 
-model CourseSeasonActivity {
-  activityId     String       @map("activity_id")
-  activity       Activity     @relation(fields: [activityId], references: [id], onDelete: Restrict)
-  courseSeasonId String       @map("course_offering_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-
-  @@id([activityId, courseSeasonId])
-  @@map("course_offering_activities")
-}
-
-model CourseEnrollment {
-  id                String        @id @default(uuid())
-  studentId         String        @map("student_id")
-  student           Student       @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  courseSeasonId    String        @map("course_offering_id")
-  courseSeason      CourseSeason  @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-  // Dia del mes en que se genera la factura, para poder generar para el otro mes
-  billingDayOfMonth Int           @map("billing_day_of_month")
-  startedAt         DateTime      @map("started_at")
-  endedAt           DateTime?     @map("ended_at")
-  status            ProgramStatus @default(ACTIVE)
-
-  createdAt                 DateTime                   @default(now())
-  updatedAt                 DateTime                   @updatedAt
-  courseEnrollmentDiscounts CourseEnrollmentDiscount[]
-
-  @@map("course_enrollments")
-}
-
-model CourseEnrollmentDiscount {
-  id                          String           @id @default(uuid())
-  courseEnrollmentId          String           @map("course_enrollment_id")
-  courseEnrollment            CourseEnrollment @relation(fields: [courseEnrollmentId], references: [id], onDelete: Restrict)
-  monthlyDiscountPercent      Decimal          @map("monthly_discount_percent") @db.Decimal(5, 2)
-  registrationDiscountPercent Decimal          @map("registration_discount_percent") @db.Decimal(5, 2)
-  startDate                   DateTime         @map("start_date")
-  endDate                     DateTime?        @map("end_date")
-
-  reason String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("course_enrollment_discounts")
-}
-
-// ==========================================
-// FIN DE ESCUELAS
-// ==========================================
+// =================================
+// FIN STAFF Y EQUIPOS
+// =================================

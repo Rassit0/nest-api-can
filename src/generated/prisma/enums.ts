@@ -53,17 +53,6 @@ export const SeasonStatus = {
 export type SeasonStatus = (typeof SeasonStatus)[keyof typeof SeasonStatus]
 
 
-export const ActivityType = {
-  TRAINING: 'TRAINING',
-  MATCH: 'MATCH',
-  CLASS: 'CLASS',
-  EVENT: 'EVENT',
-  RENTAL: 'RENTAL'
-} as const
-
-export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
-
-
 export const ProgramGender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
@@ -73,39 +62,45 @@ export const ProgramGender = {
 export type ProgramGender = (typeof ProgramGender)[keyof typeof ProgramGender]
 
 
-export const ProgramStatus = {
+export const StatusTeamSeason = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  FINISHED: 'FINISHED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type StatusTeamSeason = (typeof StatusTeamSeason)[keyof typeof StatusTeamSeason]
+
+
+export const PlayerMembershipStatus = {
   ACTIVE: 'ACTIVE',
   SUSPENDED: 'SUSPENDED',
-  WITHDRAWN: 'WITHDRAWN'
+  WITHDRAWN: 'WITHDRAWN',
+  FINISHED: 'FINISHED'
 } as const
 
-export type ProgramStatus = (typeof ProgramStatus)[keyof typeof ProgramStatus]
+export type PlayerMembershipStatus = (typeof PlayerMembershipStatus)[keyof typeof PlayerMembershipStatus]
 
 
-export const PassOriginType = {
-  INTERNAL: 'INTERNAL',
-  EXTERNAL: 'EXTERNAL',
-  FREE_AGENT: 'FREE_AGENT'
+export const MembershipDiscountType = {
+  SCHOLARSHIP: 'SCHOLARSHIP',
+  SPECIAL_DISCOUNT: 'SPECIAL_DISCOUNT',
+  FINANCIAL_AID: 'FINANCIAL_AID',
+  AGREEMENT: 'AGREEMENT',
+  EXEMPTION: 'EXEMPTION',
+  OTHER: 'OTHER'
 } as const
 
-export type PassOriginType = (typeof PassOriginType)[keyof typeof PassOriginType]
+export type MembershipDiscountType = (typeof MembershipDiscountType)[keyof typeof MembershipDiscountType]
 
 
-export const PlayerPassStatus = {
-  PENDING: 'PENDING',
-  ACTIVE: 'ACTIVE',
-  CATEGORY_EXPIRED: 'CATEGORY_EXPIRED',
-  INACTIVE: 'INACTIVE',
-  REJECTED: 'REJECTED'
+export const TeamSeasonStaffRole = {
+  HEAD_COACH: 'HEAD_COACH',
+  ASSISTANT_COACH: 'ASSISTANT_COACH',
+  ASSISTANT: 'ASSISTANT',
+  VOLUNTEER: 'VOLUNTEER',
+  DELEGATE: 'DELEGATE',
+  OTHER: 'OTHER'
 } as const
 
-export type PlayerPassStatus = (typeof PlayerPassStatus)[keyof typeof PlayerPassStatus]
-
-
-export const PreviousTeamSource = {
-  SYSTEM: 'SYSTEM',
-  EXTERNAL: 'EXTERNAL',
-  FREE_AGENT: 'FREE_AGENT'
-} as const
-
-export type PreviousTeamSource = (typeof PreviousTeamSource)[keyof typeof PreviousTeamSource]
+export type TeamSeasonStaffRole = (typeof TeamSeasonStaffRole)[keyof typeof TeamSeasonStaffRole]

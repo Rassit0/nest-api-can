@@ -13,12 +13,16 @@ import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamsPaginationDto } from './dto/pagination.dto';
+import { ApiConsumes } from '@nestjs/swagger';
+import { FormDataRequest } from 'nestjs-form-data';
 
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @FormDataRequest()
   create(@Body() createTeamDto: CreateTeamDto) {
     return this.teamsService.create(createTeamDto);
   }
@@ -34,6 +38,8 @@ export class TeamsController {
   }
 
   @Patch(':id')
+  @ApiConsumes('multipart/form-data')
+  @FormDataRequest()
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamDto: UpdateTeamDto,
@@ -46,8 +52,15 @@ export class TeamsController {
     return this.teamsService.remove(id);
   }
 
-  @Get('clubs/options')
-  async getClubsOptions() {
-    return await this.teamsService.getClubsOptions();
+  @Get('clubs-by-discipline/options/:disciplineId')
+  async getClubsByDisciplineOptions(
+    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
+  ) {
+    return await this.teamsService.getClubsByDisciplineOptions(disciplineId);
+  }
+
+  @Get('disciplines/options')
+  async getDisciplinesOptions() {
+    return await this.teamsService.getDisciplinesOptions();
   }
 }

@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateClubDto } from './dto/create-club.dto';
 import { UpdateClubDto } from './dto/update-club.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -10,7 +15,7 @@ export const clubSelect: Prisma.ClubSelect = {
   name: true,
   createdAt: true,
   updatedAt: true,
-  organization: {
+  institution: {
     select: {
       id: true,
       name: true,
@@ -32,18 +37,18 @@ export class ClubsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createClubDto: CreateClubDto) {
-    const organization = await this.prisma.organization.findFirst({
+    const institution = await this.prisma.institution.findFirst({
       select: {
         id: true,
       },
     });
-    if (!organization) {
+    if (!institution) {
       throw new NotFoundException('La organización no fue encontrada');
     }
     const newClub = await this.prisma.club.create({
       data: {
         ...createClubDto,
-        organizationId: organization.id,
+        institutionId: institution.id,
       },
       select: clubSelect,
     });
@@ -61,6 +66,7 @@ export class ClubsService {
       search,
       orderBy = 'asc',
       sortField = 'name',
+      disciplineId,
     } = paginationDto;
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
@@ -68,6 +74,10 @@ export class ClubsService {
     const where: Prisma.ClubWhereInput = search
       ? { name: { contains: search, mode: 'insensitive' } }
       : {};
+
+    if (disciplineId) {
+      where.disciplineId = disciplineId;
+    }
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
     const [clubs, totalItems] = await Promise.all([
@@ -115,23 +125,47 @@ export class ClubsService {
   }
 
   async update(id: string, updateClubDto: UpdateClubDto) {
-    const club = await this.findOne(id);
+    const club = await this.prisma.club.findUnique({
+      where: { id },
+    });
     if (!club) {
       throw new NotFoundException('El club no fue encontrado');
     }
-    const organization = await this.prisma.organization.findFirst({
+    const institution = await this.prisma.institution.findFirst({
       select: {
         id: true,
       },
     });
-    if (!organization) {
+    if (!institution) {
       throw new NotFoundException('La organización no fue encontrada');
     }
+
+    const hasRelations = await this.prisma.teamSeason.findFirst({
+      where: {
+        team: {
+          clubId: id,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (
+      updateClubDto.disciplineId &&
+      updateClubDto.disciplineId !== club.disciplineId &&
+      hasRelations
+    ) {
+      throw new BadRequestException(
+        'No se puede cambiar la disciplina porque el club tiene equipos y categorías relacionadas.',
+      );
+    }
+
     const updatedClub = await this.prisma.club.update({
       where: { id },
       data: {
         ...updateClubDto,
-        organizationId: organization.id,
+        institutionId: institution.id,
       },
       select: clubSelect,
     });
@@ -194,7 +228,7 @@ export class ClubsService {
   }
 
   async getOrganizationsOptions() {
-    const organizations = await this.prisma.organization.findMany({
+    const institutions = await this.prisma.institution.findMany({
       select: {
         id: true,
         name: true,
@@ -202,7 +236,7 @@ export class ClubsService {
     });
 
     return {
-      data: organizations,
+      data: institutions,
       message: 'Organizaciones obtenidas exitosamente',
     };
   }

@@ -41,29 +41,16 @@ export const PlayerSelect: Prisma.PlayerSelect = {
 export class PlayersService {
   private readonly logger = new Logger('PersonsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createPlayerDto: CreatePlayerDto) {
-    const { imageUrl, isActive, ...personData } = createPlayerDto;
-    const newPerson = await this.prisma.$transaction(async (tx) => {
-      const person = await tx.person.create({
-        data: personData,
-      });
-
-      const player = await tx.player.create({
-        data: {
-          personId: person.id,
-          isActive,
-        },
-        select: PlayerSelect,
-      });
-
-      return player;
+    const newPlayer = await this.prisma.player.create({
+      data: createPlayerDto,
+      select: PlayerSelect,
     });
-
     return {
       message: 'Jugador creado exitosamente',
-      data: newPerson,
+      data: newPlayer,
     };
   }
 
@@ -78,26 +65,32 @@ export class PlayersService {
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
 
-    const where: Prisma.PersonWhereInput = search
+    const where: Prisma.PlayerWhereInput = search
       ? {
-          OR: [
-            // ({ id: { equals: Number(search) } }),
-            { name: { contains: search, mode: 'insensitive' } },
-            { lastName: { contains: search, mode: 'insensitive' } },
-            { secondLastName: { contains: search, mode: 'insensitive' } },
-            { documentNumber: { contains: search, mode: 'insensitive' } },
-            { phone: { contains: search, mode: 'insensitive' } },
-            { email: { contains: search, mode: 'insensitive' } },
-          ],
-        }
+        OR: [
+          { id: { equals: search } },
+          { person: { name: { contains: search, mode: 'insensitive' } } },
+          { person: { lastName: { contains: search, mode: 'insensitive' } } },
+          {
+            person: {
+              secondLastName: { contains: search, mode: 'insensitive' },
+            },
+          },
+          {
+            person: {
+              documentNumber: { contains: search, mode: 'insensitive' },
+            },
+          },
+          { person: { phone: { contains: search, mode: 'insensitive' } } },
+          { person: { email: { contains: search, mode: 'insensitive' } } },
+        ],
+      }
       : {};
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
     const [players, totalItems] = await Promise.all([
       this.prisma.player.findMany({
-        where: {
-          person: where,
-        },
+        where,
         take: per_page,
         skip,
         orderBy: {
@@ -107,7 +100,7 @@ export class PlayersService {
         },
         select: PlayerSelect,
       }),
-      this.prisma.player.count({ where: { person: where } }),
+      this.prisma.player.count({ where }),
     ]);
 
     // Lógica de metadatos
@@ -150,46 +143,21 @@ export class PlayersService {
   }
 
   async update(id: string, updatePlayerDto: UpdatePlayerDto) {
-    const { imageUrl, isActive, ...personData } = updatePlayerDto;
-    const player = await this.findOne(id);
-
-    const updatedPlayer = await this.prisma.$transaction(async (tx) => {
-      const [passesCount, membershipsCount] = await Promise.all([
-        tx.playerPass.count({
-          where: { playerId: id },
-        }),
-        tx.teamMembership.count({
-          where: { playerId: id },
-        }),
-      ]);
-
-      if (
-        updatePlayerDto.gender &&
-        updatePlayerDto.gender !== player.data.person.gender &&
-        (passesCount > 0 || membershipsCount > 0)
-      ) {
-        throw new BadRequestException(
-          'No es posible modificar el género porque el jugador ya posee pases o inscripciones registradas',
-        );
-      }
-
-      const person = await tx.person.update({
-        where: {
-          id: player.data.person.id,
-        },
-        data: personData,
-      });
-
-      return await tx.player.update({
-        where: {
-          id,
-        },
-        data: {
-          personId: person.id,
-          isActive,
-        },
-        select: PlayerSelect,
-      });
+    const player = await this.prisma.player.findUnique({
+      where: {
+        id,
+      },
+      select: PlayerSelect,
+    });
+    if (!player) {
+      throw new NotFoundException('Jugador no encontrado');
+    }
+    const updatedPlayer = await this.prisma.player.update({
+      where: {
+        id,
+      },
+      data: updatePlayerDto,
+      select: PlayerSelect,
     });
 
     return {
@@ -199,6 +167,19 @@ export class PlayersService {
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} player`;
+    const player = await this.prisma.player.findUnique({
+      where: { id },
+    });
+    if (!player) {
+      throw new NotFoundException('El jugador no fue encontrado');
+    }
+    const deletedCategory = await this.prisma.player.delete({
+      where: { id },
+      select: PlayerSelect,
+    });
+    return {
+      message: 'Jugador eliminado exitosamente',
+      data: deletedCategory,
+    };
   }
 }

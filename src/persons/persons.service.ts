@@ -58,7 +58,7 @@ export class PersonsService {
     });
 
     return {
-      message: 'Persona y tutores agregados exitosamente',
+      message: 'Persona agregada exitosamente',
       data: newPerson,
     };
   }

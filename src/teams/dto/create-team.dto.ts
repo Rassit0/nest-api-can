@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsDefined,
@@ -15,33 +16,48 @@ import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { ProgramGender } from 'src/generated/prisma/enums';
 
 export class CreateTeamDto {
-  @IsString({ message: i18nValidationMessage('validation.IS_STRING') })
-  @IsDefined({ message: i18nValidationMessage('validation.IS_DEFINED') })
-  @MinLength(1, {
-    message: i18nValidationMessage('validation.MIN_LENGTH', { constraint1: 1 }),
+  @ApiProperty({
+    example: 'Equipo A',
+    description: 'Nombre del equipo',
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'name',
+    }),
+  })
+  @MinLength(3, {
+    message: i18nValidationMessage('validation.MIN_LENGTH', {
+      constraint1: 'name',
+      constraint2: 3,
+    }),
   })
   name: string;
 
-  @IsNumber(
-    {},
-    {
-      message: i18nValidationMessage('validation.IS_NUMBER', {
-        constraint1: 'maxMembers',
-      }),
-    },
-  )
-  maxAge: number;
+  @ApiProperty({
+    example: 'Equipo 1 del club',
+    description: 'Descripción del equipo',
+    required: false,
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'name',
+    }),
+  })
+  @MinLength(3, {
+    message: i18nValidationMessage('validation.MIN_LENGTH', {
+      constraint1: 'name',
+      constraint2: 3,
+    }),
+  })
+  @IsOptional()
+  description: string;
 
-  @IsNumber(
-    {},
-    {
-      message: i18nValidationMessage('validation.IS_NUMBER', {
-        constraint1: 'maxMembers',
-      }),
-    },
-  )
-  minAge: number;
-
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: false,
+    description: 'Imagen del equipo (JPEG o PNG, máximo 5MB)',
+  })
   @IsOptional()
   @IsFile()
   @MaxFileSize(5e6, {
@@ -56,18 +72,19 @@ export class CreateTeamDto {
   })
   imageUrl?: File | null;
 
-  @IsUUID()
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del club al que pertenece el equipo',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'disciplineId',
+    }),
+  })
   @Exists('club', 'id', {
-    message: i18nValidationMessage('validation.EXISTS', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
       constraint1: 'clubId',
     }),
   })
   clubId: string;
-
-  @IsEnum(ProgramGender, {
-    message: i18nValidationMessage('validation.IS_ENUM', {
-      constraint1: 'ProgramGender',
-    }),
-  })
-  gender: ProgramGender;
 }

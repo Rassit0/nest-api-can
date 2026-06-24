@@ -8,9 +8,7 @@ import { TeamsPaginationDto } from './dto/pagination.dto';
 export const teamSelect: Prisma.TeamSelect = {
   id: true,
   name: true,
-  maxAge: true,
-  minAge: true,
-  gender: true,
+  description: true,
   createdAt: true,
   updatedAt: true,
   club: {
@@ -21,6 +19,7 @@ export const teamSelect: Prisma.TeamSelect = {
         select: {
           id: true,
           name: true,
+          icon: true,
         },
       },
     },
@@ -146,8 +145,9 @@ export class TeamsService {
     };
   }
 
-  async getClubsOptions() {
+  async getClubsByDisciplineOptions(disciplineId: string) {
     const clubs = await this.prisma.club.findMany({
+      where: { disciplineId },
       select: {
         id: true,
         name: true,
@@ -157,6 +157,20 @@ export class TeamsService {
     return {
       data: clubs,
       message: 'Clubs obtenidos exitosamente',
+    };
+  }
+
+  async getDisciplinesOptions() {
+    const disciplines = await this.prisma.discipline.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return {
+      data: disciplines,
+      message: 'Disciplinas obtenidas exitosamente',
     };
   }
 }

@@ -21,7 +21,7 @@ function normalizeField(field: string): string {
 
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaExceptionFilter implements ExceptionFilter {
-  constructor(private readonly i18n: I18nService) {}
+  constructor(private readonly i18n: I18nService) { }
   private readonly logger = new Logger(PrismaExceptionFilter.name);
 
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
@@ -41,11 +41,8 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         break;
 
       case 'P2002': {
-        const driverError = exception.meta?.driverAdapterError as any;
-        const fields = driverError.cause.constraint.fields;
-        // console.log({ fields });
-        // 🔥 obtener campos únicos
-        // const fields = (exception.meta?.target as string[]) || [];
+        const driverError = exception.meta;
+        const fields = driverError?.target as string[];
 
         const errors = fields.reduce(
           (acc, field) => {
@@ -63,11 +60,7 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         );
 
         errorResponse = new ConflictException({
-          message: this.i18n.t('validation.ALREADY_EXISTS', {
-            args: {
-              entity: this.i18n.t(`fields.${normalizeField(fields[0])}`),
-            },
-          }),
+          message: 'Ya existe un registro con los datos proporcionados',
           statusCode: 409,
           errors,
         });

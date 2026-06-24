@@ -5,9 +5,24 @@ import { I18nValidationPipe } from 'nestjs-i18n';
 import { I18nValidationFilter } from './common/filters/i18n-validation/i18n-validation.filter';
 import { useContainer } from 'class-validator';
 import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api');
+
+  const config = new DocumentBuilder()
+    .setTitle('API Gestión 360')
+    .setDescription('Documentación de la API')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('api/docs', app, document);
+
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   // Habilitar CORS
@@ -17,7 +32,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.setGlobalPrefix('api');
 
   // ✅ ÚNICO pipe (con i18n)
   app.useGlobalPipes(

@@ -4,8 +4,22 @@ import { PaginationDto } from 'src/common/dto/pagination';
 
 export class PlayerPaginationDto extends PaginationDto {
   @IsOptional()
-  @IsIn(['name', 'createdAt', 'id'], {
-    message: 'Columnas permitidas: name, createdAt, id',
-  })
+  @IsIn(
+    [
+      'name',
+      'lastName',
+      'secondLastName',
+      'documentNumber',
+      'birthDate',
+      'phone',
+      'gender',
+      'createdAt',
+      'id',
+    ],
+    {
+      message:
+        'Columnas permitidas: name, lastname, secondLastName, documentNumber, birthDate, phone, gender, createdAt, id',
+    },
+  )
   sortField?: string = 'name'; // Valor por defecto para este módulo
 }
