@@ -18,7 +18,7 @@ import { ApiConsumes } from '@nestjs/swagger';
 
 @Controller('persons')
 export class PersonsController {
-  constructor(private readonly personsService: PersonsService) { }
+  constructor(private readonly personsService: PersonsService) {}
 
   @Post()
   @ApiConsumes('multipart/form-data')

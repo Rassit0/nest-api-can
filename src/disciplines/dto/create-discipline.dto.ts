@@ -12,7 +12,8 @@ export class CreateDisciplineDto {
 
   @ApiProperty({
     example: 'voleibol',
-    description: 'Ícono representativo de la disciplina (nombre de la disciplina en minúsculas sin espacios)',
+    description:
+      'Ícono representativo de la disciplina (nombre de la disciplina en minúsculas sin espacios)',
   })
   @IsString()
   @IsNotEmpty()

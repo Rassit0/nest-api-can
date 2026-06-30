@@ -1,0 +1,28 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { MembershipChargesService } from './membership-charges.service';
+import { CreateMembershipChargeDto } from './dto/create-membership-charge.dto';
+import { UpdateMembershipChargeDto } from './dto/update-membership-charge.dto';
+
+@Controller('membership-charges')
+export class MembershipChargesController {
+  constructor(
+    private readonly membershipChargesService: MembershipChargesService,
+  ) {}
+
+  @Post('apply')
+  async applyCharges() {
+    await this.membershipChargesService.applyDailyMembershipCharges();
+
+    return {
+      message: 'Proceso de generación de cargos ejecutado correctamente.',
+    };
+  }
+}

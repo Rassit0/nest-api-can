@@ -36,10 +36,7 @@ export function IsAfter(
           const currentNumber = Number(value);
           const relatedNumber = Number(relatedValue);
 
-          if (
-            !Number.isNaN(currentNumber) &&
-            !Number.isNaN(relatedNumber)
-          ) {
+          if (!Number.isNaN(currentNumber) && !Number.isNaN(relatedNumber)) {
             return currentNumber > relatedNumber;
           }
 

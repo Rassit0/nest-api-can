@@ -35,7 +35,7 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-    @ApiBody({ type: UpdateCategoryDto })
+  @ApiBody({ type: UpdateCategoryDto })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,

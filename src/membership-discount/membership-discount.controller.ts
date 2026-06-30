@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { MembershipDiscountService } from './membership-discount.service';
 import { CreateMembershipDiscountDto } from './dto/create-membership-discount.dto';
 import { UpdateMembershipDiscountDto } from './dto/update-membership-discount.dto';
@@ -6,7 +16,9 @@ import { PlayerMembershipDiscountsPaginationDto } from './dto/pagination.dto';
 
 @Controller('membership-discount')
 export class MembershipDiscountController {
-  constructor(private readonly membershipDiscountService: MembershipDiscountService) { }
+  constructor(
+    private readonly membershipDiscountService: MembershipDiscountService,
+  ) {}
 
   @Post()
   create(@Body() createMembershipDiscountDto: CreateMembershipDiscountDto) {
@@ -14,7 +26,9 @@ export class MembershipDiscountController {
   }
 
   @Get()
-  async findAll(@Query() paginationDto: PlayerMembershipDiscountsPaginationDto) {
+  async findAll(
+    @Query() paginationDto: PlayerMembershipDiscountsPaginationDto,
+  ) {
     return await this.membershipDiscountService.findAll(paginationDto);
   }
 
@@ -24,8 +38,14 @@ export class MembershipDiscountController {
   }
 
   @Patch(':id')
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updateMembershipDiscountDto: UpdateMembershipDiscountDto) {
-    return await this.membershipDiscountService.update(id, updateMembershipDiscountDto);
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateMembershipDiscountDto: UpdateMembershipDiscountDto,
+  ) {
+    return await this.membershipDiscountService.update(
+      id,
+      updateMembershipDiscountDto,
+    );
   }
 
   @Delete(':id')

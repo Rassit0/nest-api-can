@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { StaffService } from './staff.service';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
@@ -7,7 +17,7 @@ import { StaffPaginationDto } from './dto/pagination.dto';
 
 @Controller('staff')
 export class StaffController {
-  constructor(private readonly staffService: StaffService) { }
+  constructor(private readonly staffService: StaffService) {}
 
   @Post()
   async create(@Body() createStaffDto: CreateStaffDto) {
@@ -26,7 +36,10 @@ export class StaffController {
 
   @Patch(':id')
   @ApiBody({ type: UpdateStaffDto })
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updateStaffDto: UpdateStaffDto) {
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateStaffDto: UpdateStaffDto,
+  ) {
     return await this.staffService.update(id, updateStaffDto);
   }
 

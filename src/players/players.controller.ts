@@ -18,7 +18,7 @@ import { ApiBody } from '@nestjs/swagger';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersService) { }
+  constructor(private readonly playersService: PlayersService) {}
 
   @Post()
   async create(@Body() createPlayerDto: CreatePlayerDto) {

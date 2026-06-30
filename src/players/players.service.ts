@@ -41,7 +41,7 @@ export const PlayerSelect: Prisma.PlayerSelect = {
 export class PlayersService {
   private readonly logger = new Logger('PersonsService');
 
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createPlayerDto: CreatePlayerDto) {
     const newPlayer = await this.prisma.player.create({
@@ -67,24 +67,24 @@ export class PlayersService {
 
     const where: Prisma.PlayerWhereInput = search
       ? {
-        OR: [
-          { id: { equals: search } },
-          { person: { name: { contains: search, mode: 'insensitive' } } },
-          { person: { lastName: { contains: search, mode: 'insensitive' } } },
-          {
-            person: {
-              secondLastName: { contains: search, mode: 'insensitive' },
+          OR: [
+            { id: { equals: search } },
+            { person: { name: { contains: search, mode: 'insensitive' } } },
+            { person: { lastName: { contains: search, mode: 'insensitive' } } },
+            {
+              person: {
+                secondLastName: { contains: search, mode: 'insensitive' },
+              },
             },
-          },
-          {
-            person: {
-              documentNumber: { contains: search, mode: 'insensitive' },
+            {
+              person: {
+                documentNumber: { contains: search, mode: 'insensitive' },
+              },
             },
-          },
-          { person: { phone: { contains: search, mode: 'insensitive' } } },
-          { person: { email: { contains: search, mode: 'insensitive' } } },
-        ],
-      }
+            { person: { phone: { contains: search, mode: 'insensitive' } } },
+            { person: { email: { contains: search, mode: 'insensitive' } } },
+          ],
+        }
       : {};
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad

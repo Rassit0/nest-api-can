@@ -1,6 +1,6 @@
 // modules/disciplines/dto/discipline-pagination.dto.ts
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import {  IsIn, IsOptional, IsUUID } from 'class-validator';
+import { IsIn, IsOptional, IsUUID } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -11,7 +11,7 @@ export class CategoriesPaginationDto extends PaginationDto {
     enum: ['createdAt', 'id'],
   })
   @IsOptional()
-  @IsIn(['createdAt', 'id'],{
+  @IsIn(['createdAt', 'id'], {
     message: i18nValidationMessage('validation.IS_IN', {
       validValues: 'createdAt, id',
     }),

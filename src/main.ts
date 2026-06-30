@@ -32,7 +32,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-
   // ✅ ÚNICO pipe (con i18n)
   app.useGlobalPipes(
     new I18nValidationPipe({

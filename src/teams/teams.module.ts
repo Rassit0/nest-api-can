@@ -9,4 +9,4 @@ import { NestjsFormDataModule } from 'nestjs-form-data';
   controllers: [TeamsController],
   providers: [TeamsService, PrismaService],
 })
-export class TeamsModule { }
+export class TeamsModule {}

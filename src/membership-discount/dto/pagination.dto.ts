@@ -4,15 +4,18 @@ import { IsIn, IsOptional, IsUUID, IsEnum } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { MembershipDiscountType, PlayerMembershipStatus } from '../../generated/prisma/enums';
+import {
+  MembershipDiscountType,
+  PlayerMembershipStatus,
+} from '../../generated/prisma/enums';
 
 export class PlayerMembershipDiscountsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     example: 'createdAt',
-    enum: ['startedAt', 'endedAt','createdAt', 'id'],
+    enum: ['startedAt', 'endedAt', 'createdAt', 'id'],
   })
   @IsOptional()
-  @IsIn(['startedAt', 'endedAt','createdAt', 'id'], {
+  @IsIn(['startedAt', 'endedAt', 'createdAt', 'id'], {
     message: i18nValidationMessage('validation.IS_IN', {
       validValues: 'createdAt, id',
     }),
@@ -24,8 +27,7 @@ export class PlayerMembershipDiscountsPaginationDto extends PaginationDto {
     description: 'Filtrar por membresia del jugador',
   })
   @IsUUID('4', {
-    message: i18nValidationMessage('validation.IS_UUID', {
-    })
+    message: i18nValidationMessage('validation.IS_UUID', {}),
   })
   @Exists('playerMembership', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
@@ -38,7 +40,8 @@ export class PlayerMembershipDiscountsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     // example: 'name',
     enum: MembershipDiscountType,
-    description: 'Filtrar por tipo de descuento de membresía del jugador (SCHOLARSHIP, SPECIAL_DISCOUNT, FINANCIAL_AID, AGREEMENT, EXEMPTION, OTHER)',
+    description:
+      'Filtrar por tipo de descuento de membresía del jugador (SCHOLARSHIP, SPECIAL_DISCOUNT, FINANCIAL_AID, AGREEMENT, EXEMPTION, OTHER)',
   })
   @IsEnum(MembershipDiscountType, {
     message: i18nValidationMessage('validation.IS_ENUM', {

@@ -8,11 +8,7 @@ import {
   IsISO8601,
   MinLength,
 } from 'class-validator';
-import {
-  HasMimeType,
-  IsFile,
-  MaxFileSize,
-} from 'nestjs-form-data';
+import { HasMimeType, IsFile, MaxFileSize } from 'nestjs-form-data';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { DocumentType, Gender } from 'src/generated/prisma/enums';
 
@@ -65,7 +61,7 @@ export class CreatePersonDto {
       constraint1: '3',
     }),
   })
-  @Transform(({ value }) => value === '' ? null : value)
+  @Transform(({ value }) => (value === '' ? null : value))
   @IsOptional()
   secondLastName?: string | null;
 
@@ -177,5 +173,4 @@ export class CreatePersonDto {
     }),
   })
   gender: Gender;
-
 }

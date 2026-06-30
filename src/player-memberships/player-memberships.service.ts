@@ -13,6 +13,20 @@ import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 export const playerMembershipSelect: Prisma.PlayerMembershipSelect = {
   id: true,
   playerId: true,
+  player: {
+    select: {
+      person: {
+        select: {
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          email: true,
+          phone: true,
+          birthDate: true,
+        },
+      },
+    },
+  },
   teamSeasonId: true,
   paymentPlanId: true,
   startedAt: true,

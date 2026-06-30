@@ -5,9 +5,9 @@ import { PaginationDto } from 'src/common/dto/pagination';
 
 export class DisciplinePaginationDto extends PaginationDto {
   @ApiPropertyOptional({
-      example: 'createdAt',
-      enum: ['name', 'createdAt'],
-    })
+    example: 'createdAt',
+    enum: ['name', 'createdAt'],
+  })
   @IsOptional()
   @IsIn(['name', 'createdAt'], {
     message: 'Columnas permitidas: name, createdAt, id',

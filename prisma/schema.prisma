@@ -41,11 +41,12 @@ model Person {
   updatedAt      DateTime     @updatedAt @map("updated_at")
 
   // Contactos de la persona
-  contacts  PersonContact[] @relation("PersonContacts")
+  contacts     PersonContact[] @relation("PersonContacts")
   // Personas que son contactos de la persona
-  contactOf PersonContact[] @relation("ContactPerson")
-  players   Player[]
-  staff     Staff?
+  contactOf    PersonContact[] @relation("ContactPerson")
+  players      Player[]
+  staff        Staff?
+  transactions Transaction[]
 
   @@map("persons")
 }
@@ -157,11 +158,14 @@ model Location {
 
   // Si es true, es una instalación interna (club, escuela, etc.)
   // Si es false, es una instalación externa
-  isInternal Boolean  @default(false) @map("is_internal")
+  isInternal Boolean    @default(false) @map("is_internal")
   // Si es true, es una instalación que se puede rentar O ALQUILAR dependiendo si es interna o externa
-  isRentable Boolean  @default(false) @map("is_rentable")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  isRentable Boolean    @default(false) @map("is_rentable")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+  sessions   Session[]
+  schedules  Schedule[]
+  matches    Match[]
 
   @@map("locations")
 }
@@ -283,14 +287,35 @@ model TeamSeason {
   graceDays           Int              @default(0) @map("grace_days")
   status              StatusTeamSeason @default(DRAFT)
 
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  teamSeasonStaffs  TeamSeasonStaff[]
-  paymentPlans      PaymentPlan[]
-  playerMemberships PlayerMembership[]
+  chargeGenerationDaysBefore Int                @default(7) @map("charge_generation_days_before") // Días antes de generar el cargo
+  createdAt                  DateTime           @default(now()) @map("created_at")
+  updatedAt                  DateTime           @updatedAt @map("updated_at")
+  teamSeasonStaffs           TeamSeasonStaff[]
+  paymentPlans               PaymentPlan[]
+  playerMemberships          PlayerMembership[]
+  sessions                   Session[]
+  schedules                  Schedule[]
+  matches                    Match[]
 
   @@unique([teamId, categoryId, seasonId, gender])
   @@map("team_seasons")
+}
+
+model PaymentPlan {
+  id                          String     @id @default(uuid())
+  teamSeasonId                String     @map("team_season_id")
+  teamSeasons                 TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  name                        String
+  registrationDiscountPercent Decimal    @map("registration_discount_percent") @db.Decimal(5, 2)
+  monthlyDiscountPercent      Decimal    @map("monthly_discount_percent") @db.Decimal(5, 2)
+
+  isDefault Boolean @default(false) // si es true, es el plan por defecto
+
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  playerMemberships PlayerMembership[]
+
+  @@map("payment_plans")
 }
 
 // =================================
@@ -309,15 +334,18 @@ model Player {
   createdAt         DateTime           @default(now()) @map("created_at")
   updatedAt         DateTime           @updatedAt @map("updated_at")
   playerMemberships PlayerMembership[]
+  sessionBookings   SessionBooking[]
+  matchLineups      MatchLineup[]
 
   @@map("players")
 }
 
 enum PlayerMembershipStatus {
-  ACTIVE // activo
-  SUSPENDED // suspendido
-  WITHDRAWN // retirado
-  FINISHED // finalizado (por ejemplo al finalizar la temporada)
+  PENDING // Inscripción creada, esperando pago inicial
+  ACTIVE // Habilitado para entrenar y competir
+  SUSPENDED // Suspendido por deuda o decisión administrativa
+  WITHDRAWN // Se retiró voluntariamente durante la temporada
+  FINISHED // Finalizó la temporada
 }
 
 model PlayerMembership {
@@ -333,14 +361,19 @@ model PlayerMembership {
   startedAt DateTime  @map("started_at")
   endedAt   DateTime? @map("ended_at")
 
-  status PlayerMembershipStatus @default(ACTIVE)
+  status PlayerMembershipStatus @default(PENDING)
 
   notes String?
+
+  // Campo para guardar cual es la siguiente fecha del cargo
+  nextMonthlyChargeGenerationDate DateTime?
 
   createdAt           DateTime             @default(now()) @map("created_at")
   updatedAt           DateTime             @updatedAt @map("updated_at")
   membershipDiscounts MembershipDiscount[]
+  membershipCharges   MembershipCharge[]
 
+  @@index([nextMonthlyChargeGenerationDate])
   @@map("player_membership")
 }
 
@@ -351,23 +384,6 @@ enum MembershipDiscountType {
   AGREEMENT // Convenio
   EXEMPTION // Exoneración
   OTHER // Otro
-}
-
-model PaymentPlan {
-  id                          String     @id @default(uuid())
-  teamSeasonId                String     @map("team_season_id")
-  teamSeasons                 TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-  name                        String
-  registrationDiscountPercent Decimal    @map("registration_discount_percent") @db.Decimal(5, 2)
-  monthlyDiscountPercent      Decimal    @map("monthly_discount_percent") @db.Decimal(5, 2)
-
-  isDefault Boolean @default(false) // si es true, es el plan por defecto
-
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  playerMemberships PlayerMembership[]
-
-  @@map("payment_plans")
 }
 
 model MembershipDiscount {
@@ -389,6 +405,33 @@ model MembershipDiscount {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("membership_discounts")
+}
+
+enum TypeMembershipCharge {
+  REGISTRATION
+  MONTHLY_FEE
+  LATE_FEE
+}
+
+model MembershipCharge {
+  id                 String               @id @default(uuid())
+  playerMembershipId String               @map("player_membership_id")
+  playerMembership   PlayerMembership     @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
+  chargeId           String               @map("charge_id")
+  charge             Charge               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  type               TypeMembershipCharge
+  // todo: crear un validador para que solo acepte un cargo de tipo matricula
+
+  createdByCron Boolean @default(false) @map("created_by_cron")
+
+  billingYear  Int?
+  billingMonth Int?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([playerMembershipId, type, billingMonth, billingYear])
+  @@map("membership_charges")
 }
 
 // =================================
@@ -450,3 +493,217 @@ model TeamSeasonStaff {
 // =================================
 // FIN STAFF Y EQUIPOS
 // =================================
+
+// =================================
+// CARGOS
+// =================================
+enum StatusCharge {
+  PENDING
+  PARTIAL
+  PAID
+  CANCELLED
+}
+
+model Charge {
+  id String @id @default(uuid())
+
+  // Relacion para saber si un cargo es hijo de otro(Ej. Un cargo de mensualidad puede tener recargos por retraso)
+  parentChargeId String?
+  parentCharge   Charge?  @relation("ChargeParent", fields: [parentChargeId], references: [id])
+  childCharges   Charge[] @relation("ChargeParent")
+
+  description   String?
+  amount        Decimal      @db.Decimal(10, 2)
+  pendingAmount Decimal      @map("pending_amount") @db.Decimal(10, 2)
+  dueDate       DateTime     @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
+  status        StatusCharge @default(PENDING)
+
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  membershipCharges  MembershipCharge[]
+  chargeTransactions ChargeTransaction[]
+  sessionBooking     SessionBooking?
+
+  @@map("charges")
+}
+
+model ChargeTransaction {
+  id            String      @id @default(uuid())
+  chargeId      String      @map("charge_id")
+  charge        Charge      @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  transactionId String      @map("transaction_id")
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Restrict)
+  amountApplied Decimal     @map("amount_applied") @db.Decimal(10, 2)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("charge_transactions")
+}
+
+// =================================
+// FIN CARGOS
+// =================================
+// =================================
+// TRANSACCIONES
+// =================================
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum PaymentMethod {
+  QR
+  TRANSFER
+  CASH
+}
+
+model Transaction {
+  id                 String              @id @default(uuid())
+  payerPersonId      String?             @map("payer_person_id")
+  payerPerson        Person?             @relation(fields: [payerPersonId], references: [id])
+  amount             Decimal             @db.Decimal(10, 2)
+  transactionDate    DateTime            @map("transaction_date")
+  description        String?
+  type               TransactionType
+  paymentMethod      PaymentMethod       @map("payment_method")
+  reference          String?             @map("reference_number")
+  notes              String?
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  chargeTransactions ChargeTransaction[]
+
+  @@map("transactions")
+}
+
+// =================================
+// ENTRENAMIENTOS Y SESIONES
+// =================================
+model Session {
+  id           String     @id @default(uuid())
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  locationId   String?    @map("location_id")
+  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
+
+  title       String?
+  dateTime    DateTime @map("date_time")
+  durationMin Int      @default(90) @map("duration_min")
+
+  bookings SessionBooking[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("sessions")
+}
+
+model SessionBooking {
+  id        String  @id @default(uuid())
+  sessionId String  @map("session_id")
+  session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  playerId  String  @map("player_id")
+  player    Player  @relation(fields: [playerId], references: [id], onDelete: Restrict)
+
+  isExternal Boolean @default(false) @map("is_external")
+  attended   Boolean @default(false)
+
+  chargeId String? @unique @map("charge_id")
+  charge   Charge? @relation(fields: [chargeId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([sessionId, playerId])
+  @@map("session_bookings")
+}
+
+// =================================
+// HORARIOS RECURRENTES
+// =================================
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model Schedule {
+  id           String     @id @default(uuid())
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  locationId   String?    @map("location_id")
+  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
+
+  dayOfWeek DayOfWeek @map("day_of_week")
+  startTime String    @map("start_time") // Ej: "18:00"
+  endTime   String    @map("end_time") // Ej: "19:30"
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("schedules")
+}
+
+// =================================
+// COMPETENCIAS Y PARTIDOS
+// =================================
+enum MatchType {
+  FRIENDLY
+  LEAGUE
+  TOURNAMENT
+  CUP
+}
+
+enum MatchResult {
+  WIN
+  LOSS
+  DRAW
+  PENDING
+}
+
+model Match {
+  id           String     @id @default(uuid())
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  locationId   String?    @map("location_id")
+  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
+
+  opponentName String    @map("opponent_name")
+  matchDate    DateTime  @map("match_date")
+  type         MatchType @default(LEAGUE)
+
+  ourScore   Int?        @map("our_score")
+  theirScore Int?        @map("their_score")
+  result     MatchResult @default(PENDING)
+
+  lineups MatchLineup[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("matches")
+}
+
+model MatchLineup {
+  id       String @id @default(uuid())
+  matchId  String @map("match_id")
+  match    Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String @map("player_id")
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Restrict)
+
+  minutesPlayed Int     @default(0) @map("minutes_played")
+  goals         Int     @default(0)
+  assists       Int     @default(0)
+  yellowCards   Int     @default(0) @map("yellow_cards")
+  redCards      Int     @default(0) @map("red_cards")
+  isStarter     Boolean @default(false) @map("is_starter")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([matchId, playerId])
+  @@map("match_lineups")
+}

@@ -4,6 +4,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { CategoriesPaginationDto } from './dto/pagination.dto';
+import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 
 export const categorySelect: Prisma.CategorySelect = {
   id: true,
@@ -81,27 +82,13 @@ export class CategoriesService {
       this.prisma.category.count({ where }),
     ]);
 
-    // Lógica de metadatos
-    const totalPages = Math.ceil(totalItems / per_page);
-
-    // Si el usuario pide un page que no existe, Prisma ya puso [] en 'disciplines'.
-    // Calculamos la página actual basándonos en el page solicitado.
-    const currentPage = totalItems === 0 ? 0 : Math.floor(page / per_page) + 1;
-
-    return {
-      message: 'Categorias obtenidas exitosamente',
-      data: categories, // Será [] si la página no existe o no hay registros
-      meta: {
-        totalItems, // Ej: 25
-        itemsPerPage: per_page, // Ej: 10
-        totalPages, // Ej: 3
-        currentPage, // Ej: 10 (si el usuario pidió el page 90)
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-        nextPage: page < totalPages ? page + 1 : null,
-        prevPage: page > 1 ? page - 1 : null,
-      },
-    };
+    return createPaginationResult(
+      categories,
+      totalItems,
+      page,
+      per_page,
+      'Categorias obtenidas exitosamente',
+    );
   }
 
   async findOne(id: string) {

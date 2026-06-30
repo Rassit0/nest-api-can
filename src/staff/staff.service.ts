@@ -22,7 +22,6 @@ export const PersonSelect: Prisma.PersonSelect = {
   updatedAt: true,
 };
 
-
 export const StaffSelect: Prisma.StaffSelect = {
   id: true,
   person: {
@@ -37,7 +36,7 @@ export const StaffSelect: Prisma.StaffSelect = {
 export class StaffService {
   private readonly logger = new Logger('CategoriesService');
 
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   async create(createStaffDto: CreateStaffDto) {
     const newStaff = await this.prisma.staff.create({
       data: createStaffDto,
@@ -63,24 +62,24 @@ export class StaffService {
 
     const where: Prisma.StaffWhereInput = search
       ? {
-        OR: [
-          { id: { equals: search } },
-          { person: { name: { contains: search, mode: 'insensitive' } } },
-          { person: { lastName: { contains: search, mode: 'insensitive' } } },
-          {
-            person: {
-              secondLastName: { contains: search, mode: 'insensitive' },
+          OR: [
+            { id: { equals: search } },
+            { person: { name: { contains: search, mode: 'insensitive' } } },
+            { person: { lastName: { contains: search, mode: 'insensitive' } } },
+            {
+              person: {
+                secondLastName: { contains: search, mode: 'insensitive' },
+              },
             },
-          },
-          {
-            person: {
-              documentNumber: { contains: search, mode: 'insensitive' },
+            {
+              person: {
+                documentNumber: { contains: search, mode: 'insensitive' },
+              },
             },
-          },
-          { person: { phone: { contains: search, mode: 'insensitive' } } },
-          { person: { email: { contains: search, mode: 'insensitive' } } },
-        ],
-      }
+            { person: { phone: { contains: search, mode: 'insensitive' } } },
+            { person: { email: { contains: search, mode: 'insensitive' } } },
+          ],
+        }
       : {};
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
@@ -162,20 +161,20 @@ export class StaffService {
     };
   }
 
-   async remove(id: string) {
-     const staff = await this.prisma.staff.findUnique({
-       where: { id },
-     });
-     if (!staff) {
-       throw new NotFoundException('El personal no fue encontrado');
-     }
-     const deletedStaff = await this.prisma.staff.delete({
-       where: { id },
-       select: StaffSelect,
-     });
-     return {
-       message: 'Personal eliminado exitosamente',
-       data: deletedStaff,
-     };
-   }
+  async remove(id: string) {
+    const staff = await this.prisma.staff.findUnique({
+      where: { id },
+    });
+    if (!staff) {
+      throw new NotFoundException('El personal no fue encontrado');
+    }
+    const deletedStaff = await this.prisma.staff.delete({
+      where: { id },
+      select: StaffSelect,
+    });
+    return {
+      message: 'Personal eliminado exitosamente',
+      data: deletedStaff,
+    };
+  }
 }
