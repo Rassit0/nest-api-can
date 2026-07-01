@@ -3,6 +3,7 @@ import { ApiExtraModels, ApiOkResponse, ApiResponse, getSchemaPath } from '@nest
 import {
   PaginatedResponseDto,
   StandardResponseDto,
+  MetaDto,
 } from '../dto/api-response.dto';
 
 export const ApiStandardResponse = <DataDto extends Type<unknown>>(
@@ -59,7 +60,7 @@ export const ApiPaginatedResponse = <DataDto extends Type<unknown>>(
   description = 'Datos obtenidos exitosamente',
 ) => {
   return applyDecorators(
-    ApiExtraModels(PaginatedResponseDto, dataDto),
+    ApiExtraModels(PaginatedResponseDto, dataDto, MetaDto),
     ApiOkResponse({
       description,
       schema: {
