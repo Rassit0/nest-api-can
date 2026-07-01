@@ -66,7 +66,7 @@ export class MembershipChargesService {
         status: {
           in: [
             PlayerMembershipStatus.ACTIVE,
-            PlayerMembershipStatus.PENDING,
+            PlayerMembershipStatus.PENDING_ACTIVE,
             PlayerMembershipStatus.SUSPENDED,
           ],
         },

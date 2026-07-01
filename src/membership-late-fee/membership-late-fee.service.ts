@@ -65,7 +65,7 @@ export class MembershipLateFeeService {
               status: {
                 in: [
                   PlayerMembershipStatus.ACTIVE,
-                  PlayerMembershipStatus.PENDING,
+                  PlayerMembershipStatus.PENDING_ACTIVE,
                   PlayerMembershipStatus.SUSPENDED,
                 ],
               },
