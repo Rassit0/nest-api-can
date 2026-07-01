@@ -47,6 +47,8 @@ model Person {
   players      Player[]
   staff        Staff?
   transactions Transaction[]
+  students     Student[]
+  user         User?
 
   @@map("persons")
 }
@@ -93,6 +95,7 @@ model Discipline {
   clubs      Club[]
   categories Category[]
   seasons    Season[]
+  schools    School[]
   createdAt  DateTime   @default(now()) @map("created_at")
   updatedAt  DateTime   @updatedAt @map("updated_at")
 
@@ -117,6 +120,7 @@ model Institution {
   updatedAt DateTime @updatedAt @map("updated_at")
   clubs     Club[]
   seasons   Season[]
+  schools   School[]
 
   @@map("institutions")
 }
@@ -188,9 +192,10 @@ model Category {
   disciplineId String     @map("discipline_id")
   discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
 
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  teamSeasons TeamSeason[]
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  teamSeasons   TeamSeason[]
+  courseSeasons CourseSeason[]
 
   @@unique([disciplineId, name])
   @@map("categories")
@@ -205,16 +210,18 @@ model Category {
 // =================================
 
 model Season {
-  id            String       @id @default(uuid())
-  institutionId String       @map("institution_id")
-  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Restrict)
-  disciplineId  String       @map("discipline_id")
-  discipline    Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  name          String
-  description   String?
-  startDate     DateTime     @map("start_date")
-  endDate       DateTime     @map("end_date")
-  teamSeasons   TeamSeason[]
+  id                  String               @id @default(uuid())
+  institutionId       String               @map("institution_id")
+  institution         Institution          @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+  disciplineId        String               @map("discipline_id")
+  discipline          Discipline           @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  name                String
+  description         String?
+  startDate           DateTime             @map("start_date")
+  endDate             DateTime             @map("end_date")
+  teamSeasons         TeamSeason[]
+  courseSeasons       CourseSeason[]
+  progressEvaluations ProgressEvaluation[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -293,8 +300,8 @@ model TeamSeason {
   teamSeasonStaffs           TeamSeasonStaff[]
   paymentPlans               PaymentPlan[]
   playerMemberships          PlayerMembership[]
-  sessions                   Session[]
-  schedules                  Schedule[]
+  sessionTeams               SessionTeam[]
+  scheduleTeams              ScheduleTeam[]
   matches                    Match[]
 
   @@unique([teamId, categoryId, seasonId, gender])
@@ -302,18 +309,21 @@ model TeamSeason {
 }
 
 model PaymentPlan {
-  id                          String     @id @default(uuid())
-  teamSeasonId                String     @map("team_season_id")
-  teamSeasons                 TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  id                          String        @id @default(uuid())
+  teamSeasonId                String?       @map("team_season_id")
+  teamSeasons                 TeamSeason?   @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  courseSeasonId              String?       @map("course_season_id")
+  courseSeason                CourseSeason? @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   name                        String
-  registrationDiscountPercent Decimal    @map("registration_discount_percent") @db.Decimal(5, 2)
-  monthlyDiscountPercent      Decimal    @map("monthly_discount_percent") @db.Decimal(5, 2)
+  registrationDiscountPercent Decimal       @map("registration_discount_percent") @db.Decimal(5, 2)
+  monthlyDiscountPercent      Decimal       @map("monthly_discount_percent") @db.Decimal(5, 2)
 
   isDefault Boolean @default(false) // si es true, es el plan por defecto
 
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  playerMemberships PlayerMembership[]
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  playerMemberships  PlayerMembership[]
+  studentMemberships StudentMembership[]
 
   @@map("payment_plans")
 }
@@ -327,15 +337,16 @@ model PaymentPlan {
 // =================================
 
 model Player {
-  id                String             @id @default(uuid())
-  personId          String             @unique
-  person            Person             @relation(fields: [personId], references: [id])
-  isActive          Boolean            @default(true)
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  playerMemberships PlayerMembership[]
-  sessionBookings   SessionBooking[]
-  matchLineups      MatchLineup[]
+  id                  String               @id @default(uuid())
+  personId            String               @unique
+  person              Person               @relation(fields: [personId], references: [id])
+  isActive            Boolean              @default(true)
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  playerMemberships   PlayerMembership[]
+  sessionBookings     SessionBooking[]
+  matchLineups        MatchLineup[]
+  progressEvaluations ProgressEvaluation[]
 
   @@map("players")
 }
@@ -443,13 +454,15 @@ model MembershipCharge {
 // =================================
 
 model Staff {
-  id               String            @id @default(uuid())
-  personId         String            @unique @map("person_id")
-  person           Person            @relation(fields: [personId], references: [id])
-  isActive         Boolean           @default(true) @map("is_active")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @updatedAt @map("updated_at")
-  teamSeasonStaffs TeamSeasonStaff[]
+  id                  String               @id @default(uuid())
+  personId            String               @unique @map("person_id")
+  person              Person               @relation(fields: [personId], references: [id])
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  teamSeasonStaffs    TeamSeasonStaff[]
+  courseSeasonStaffs  CourseSeasonStaff[]
+  progressEvaluations ProgressEvaluation[]
 
   @@map("staff")
 }
@@ -523,6 +536,7 @@ model Charge {
   membershipCharges  MembershipCharge[]
   chargeTransactions ChargeTransaction[]
   sessionBooking     SessionBooking?
+  studentCharges     StudentCharge[]
 
   @@map("charges")
 }
@@ -576,20 +590,304 @@ model Transaction {
 }
 
 // =================================
-// ENTRENAMIENTOS Y SESIONES
+// SEGURIDAD (ROLES Y PERMISOS)
+// =================================
+model User {
+  id           String @id @default(uuid())
+  email        String @unique
+  passwordHash String @map("password_hash")
+
+  personId String? @unique @map("person_id")
+  person   Person? @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  roleId String @map("role_id")
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Role {
+  id          String  @id @default(uuid())
+  name        String  @unique // Ej: "ADMIN", "COACH", "PARENT", "PLAYER"
+  description String?
+
+  permissions RolePermission[]
+  users       User[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String  @id @default(uuid())
+  name        String  @unique // Ej: "TAKE_ATTENDANCE", "CREATE_INCIDENT", "VIEW_PAYMENTS"
+  module      String // Ej: "SESSIONS", "BILLING", "TEAMS"
+  description String?
+
+  roles RolePermission[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id")
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissionId String     @map("permission_id")
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+// =================================
+// ESCUELAS Y CURSOS
+// =================================
+model School {
+  id            String      @id @default(uuid())
+  name          String
+  institutionId String      @map("institution_id")
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+  disciplineId  String      @map("discipline_id")
+  discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  courses       Course[]
+
+  @@unique([institutionId, disciplineId, name])
+  @@map("schools")
+}
+
+model Course {
+  id            String         @id @default(uuid())
+  imageUrl      String?        @map("image_url")
+  name          String
+  description   String?
+  schoolId      String         @map("school_id")
+  school        School         @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  courseSeasons CourseSeason[]
+
+  @@unique([schoolId, name])
+  @@map("courses")
+}
+
+enum StatusCourseSeason {
+  DRAFT
+  ACTIVE
+  FINISHED
+  CANCELLED
+}
+
+model CourseSeason {
+  id          String        @id @default(uuid())
+  imageUrl    String?       @map("image_url")
+  description String?
+  maxMembers  Int           @map("max_members")
+  minMembers  Int           @map("min_members")
+  courseId    String        @map("course_id")
+  course      Course        @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  categoryId  String        @map("category_id")
+  category    Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  seasonId    String        @map("season_id")
+  season      Season        @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+  gender      ProgramGender
+
+  billingDay                 Int                @map("billing_day")
+  registrationFee            Decimal            @map("registration_fee") @db.Decimal(10, 2)
+  monthlyFee                 Decimal            @map("monthly_fee") @db.Decimal(10, 2)
+  debtToleranceMonths        Int                @default(2) @map("debt_tolerance_months")
+  lateFeeEnabled             Boolean            @default(false) @map("late_fee_enabled")
+  lateFeePerDay              Decimal            @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
+  graceDays                  Int                @default(0) @map("grace_days")
+  status                     StatusCourseSeason @default(DRAFT)
+  chargeGenerationDaysBefore Int                @default(7) @map("charge_generation_days_before")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  studentMemberships StudentMembership[]
+  paymentPlans       PaymentPlan[]
+  courseSeasonStaffs CourseSeasonStaff[]
+  sessionCourses     SessionCourse[]
+  scheduleCourses    ScheduleCourse[]
+
+  @@unique([courseId, categoryId, seasonId, gender])
+  @@map("course_seasons")
+}
+
+model CourseSeasonStaff {
+  id             String              @id @default(uuid())
+  courseSeasonId String              @map("course_season_id")
+  courseSeason   CourseSeason        @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  staffId        String              @map("staff_id")
+  staff          Staff               @relation(fields: [staffId], references: [id], onDelete: Restrict)
+  role           TeamSeasonStaffRole
+  customRole     String?             @map("custom_role")
+  startedAt      DateTime            @map("started_at")
+  endedAt        DateTime?           @map("ended_at")
+  isPrimary      Boolean             @default(false) @map("is_primary")
+  notes          String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("course_season_staff")
+}
+
+// =================================
+// ESTUDIANTES Y EVALUACIONES
+// =================================
+model Student {
+  id                  String               @id @default(uuid())
+  personId            String               @unique @map("person_id")
+  person              Person               @relation(fields: [personId], references: [id])
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  studentMemberships  StudentMembership[]
+  sessionBookings     SessionBooking[]
+  progressEvaluations ProgressEvaluation[]
+
+  @@map("students")
+}
+
+enum StudentMembershipStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  WITHDRAWN
+  FINISHED
+}
+
+model StudentMembership {
+  id             String       @id @default(uuid())
+  studentId      String       @map("student_id")
+  student        Student      @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  courseSeasonId String       @map("course_season_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  paymentPlanId  String       @map("payment_plan_id")
+  paymentPlan    PaymentPlan  @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
+
+  startedAt DateTime                @map("started_at")
+  endedAt   DateTime?               @map("ended_at")
+  status    StudentMembershipStatus @default(PENDING)
+  notes     String?
+
+  nextMonthlyChargeGenerationDate DateTime?
+
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  studentDiscounts StudentDiscount[]
+  studentCharges   StudentCharge[]
+
+  @@index([nextMonthlyChargeGenerationDate])
+  @@map("student_memberships")
+}
+
+model StudentDiscount {
+  id                  String            @id @default(uuid())
+  studentMembershipId String            @map("student_membership_id")
+  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
+
+  monthlyDiscountPercent      Decimal @map("monthly_discount_percent") @db.Decimal(5, 2)
+  registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
+
+  startDate DateTime               @map("start_date")
+  endDate   DateTime?              @map("end_date")
+  type      MembershipDiscountType
+  reason    String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("student_discounts")
+}
+
+model StudentCharge {
+  id                  String               @id @default(uuid())
+  studentMembershipId String               @map("student_membership_id")
+  studentMembership   StudentMembership    @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
+  chargeId            String               @map("charge_id")
+  charge              Charge               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  type                TypeMembershipCharge
+
+  createdByCron Boolean @default(false) @map("created_by_cron")
+  billingYear   Int?
+  billingMonth  Int?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([studentMembershipId, type, billingMonth, billingYear])
+  @@map("student_charges")
+}
+
+model SessionIncident {
+  id               String         @id @default(uuid())
+  sessionBookingId String         @map("session_booking_id")
+  sessionBooking   SessionBooking @relation(fields: [sessionBookingId], references: [id], onDelete: Cascade)
+
+  description String // Detalle de la actitud negativa / mala conducta
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("session_incidents")
+}
+
+model ProgressEvaluation {
+  id String @id @default(uuid())
+
+  playerId  String?  @map("player_id")
+  player    Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  studentId String?  @map("student_id")
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  evaluatorStaffId String @map("evaluator_staff_id")
+  evaluatorStaff   Staff  @relation(fields: [evaluatorStaffId], references: [id], onDelete: Restrict)
+
+  seasonId String @map("season_id")
+  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+
+  evaluationDate DateTime @map("evaluation_date")
+
+  technicalScore Int? @map("technical_score")
+  tacticalScore  Int? @map("tactical_score")
+  physicalScore  Int? @map("physical_score")
+  behaviorScore  Int? @map("behavior_score")
+
+  notes String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("progress_evaluations")
+}
+
+// =================================
+// ENTRENAMIENTOS Y SESIONES (UNIFICADOS M:N)
 // =================================
 model Session {
-  id           String     @id @default(uuid())
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-  locationId   String?    @map("location_id")
-  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
-
+  id          String    @id @default(uuid())
+  locationId  String?   @map("location_id")
+  location    Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
   title       String?
-  dateTime    DateTime @map("date_time")
-  durationMin Int      @default(90) @map("duration_min")
+  dateTime    DateTime  @map("date_time")
+  durationMin Int       @default(90) @map("duration_min")
 
-  bookings SessionBooking[]
+  sessionTeams   SessionTeam[]
+  sessionCourses SessionCourse[]
+  bookings       SessionBooking[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -597,12 +895,35 @@ model Session {
   @@map("sessions")
 }
 
+model SessionTeam {
+  sessionId    String
+  session      Session    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+
+  @@id([sessionId, teamSeasonId])
+  @@map("session_teams")
+}
+
+model SessionCourse {
+  sessionId      String
+  session        Session      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  courseSeasonId String       @map("course_season_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+
+  @@id([sessionId, courseSeasonId])
+  @@map("session_courses")
+}
+
 model SessionBooking {
   id        String  @id @default(uuid())
   sessionId String  @map("session_id")
   session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  playerId  String  @map("player_id")
-  player    Player  @relation(fields: [playerId], references: [id], onDelete: Restrict)
+
+  playerId  String?  @map("player_id")
+  player    Player?  @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  studentId String?  @map("student_id")
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: Restrict)
 
   isExternal Boolean @default(false) @map("is_external")
   attended   Boolean @default(false)
@@ -613,13 +934,13 @@ model SessionBooking {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  incidents SessionIncident[]
+
   @@unique([sessionId, playerId])
+  @@unique([sessionId, studentId])
   @@map("session_bookings")
 }
 
-// =================================
-// HORARIOS RECURRENTES
-// =================================
 enum DayOfWeek {
   MONDAY
   TUESDAY
@@ -631,20 +952,40 @@ enum DayOfWeek {
 }
 
 model Schedule {
-  id           String     @id @default(uuid())
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  locationId   String?    @map("location_id")
-  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  id         String    @id @default(uuid())
+  locationId String?   @map("location_id")
+  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  dayOfWeek  DayOfWeek @map("day_of_week")
+  startTime  String    @map("start_time")
+  endTime    String    @map("end_time")
 
-  dayOfWeek DayOfWeek @map("day_of_week")
-  startTime String    @map("start_time") // Ej: "18:00"
-  endTime   String    @map("end_time") // Ej: "19:30"
+  scheduleTeams   ScheduleTeam[]
+  scheduleCourses ScheduleCourse[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("schedules")
+}
+
+model ScheduleTeam {
+  scheduleId   String
+  schedule     Schedule   @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  teamSeasonId String     @map("team_season_id")
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+
+  @@id([scheduleId, teamSeasonId])
+  @@map("schedule_teams")
+}
+
+model ScheduleCourse {
+  scheduleId     String
+  schedule       Schedule     @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  courseSeasonId String       @map("course_season_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+
+  @@id([scheduleId, courseSeasonId])
+  @@map("schedule_courses")
 }
 
 // =================================

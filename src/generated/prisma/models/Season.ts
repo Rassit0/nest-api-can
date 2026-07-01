@@ -227,6 +227,8 @@ export type SeasonWhereInput = {
     Prisma.DisciplineWhereInput
   >;
   teamSeasons?: Prisma.TeamSeasonListRelationFilter;
+  courseSeasons?: Prisma.CourseSeasonListRelationFilter;
+  progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
 };
 
 export type SeasonOrderByWithRelationInput = {
@@ -242,6 +244,8 @@ export type SeasonOrderByWithRelationInput = {
   institution?: Prisma.InstitutionOrderByWithRelationInput;
   discipline?: Prisma.DisciplineOrderByWithRelationInput;
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput;
+  courseSeasons?: Prisma.CourseSeasonOrderByRelationAggregateInput;
+  progressEvaluations?: Prisma.ProgressEvaluationOrderByRelationAggregateInput;
 };
 
 export type SeasonWhereUniqueInput = Prisma.AtLeast<
@@ -268,6 +272,8 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<
       Prisma.DisciplineWhereInput
     >;
     teamSeasons?: Prisma.TeamSeasonListRelationFilter;
+    courseSeasons?: Prisma.CourseSeasonListRelationFilter;
+    progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
   },
   'id' | 'institutionId_disciplineId_name'
 >;
@@ -320,6 +326,8 @@ export type SeasonCreateInput = {
   institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput;
   discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput;
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonUncheckedCreateInput = {
@@ -333,6 +341,8 @@ export type SeasonUncheckedCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonUpdateInput = {
@@ -346,6 +356,8 @@ export type SeasonUpdateInput = {
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput;
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput;
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateInput = {
@@ -359,6 +371,8 @@ export type SeasonUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonCreateManyInput = {
@@ -650,6 +664,58 @@ export type SeasonUpdateOneRequiredWithoutTeamSeasonsNestedInput = {
   >;
 };
 
+export type SeasonCreateNestedOneWithoutCourseSeasonsInput = {
+  create?: Prisma.XOR<
+    Prisma.SeasonCreateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCourseSeasonsInput;
+  connect?: Prisma.SeasonWhereUniqueInput;
+};
+
+export type SeasonUpdateOneRequiredWithoutCourseSeasonsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.SeasonCreateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCourseSeasonsInput;
+  upsert?: Prisma.SeasonUpsertWithoutCourseSeasonsInput;
+  connect?: Prisma.SeasonWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.SeasonUpdateToOneWithWhereWithoutCourseSeasonsInput,
+      Prisma.SeasonUpdateWithoutCourseSeasonsInput
+    >,
+    Prisma.SeasonUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+};
+
+export type SeasonCreateNestedOneWithoutProgressEvaluationsInput = {
+  create?: Prisma.XOR<
+    Prisma.SeasonCreateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutProgressEvaluationsInput;
+  connect?: Prisma.SeasonWhereUniqueInput;
+};
+
+export type SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.SeasonCreateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutProgressEvaluationsInput;
+  upsert?: Prisma.SeasonUpsertWithoutProgressEvaluationsInput;
+  connect?: Prisma.SeasonWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.SeasonUpdateToOneWithWhereWithoutProgressEvaluationsInput,
+      Prisma.SeasonUpdateWithoutProgressEvaluationsInput
+    >,
+    Prisma.SeasonUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
 export type SeasonCreateWithoutDisciplineInput = {
   id?: string;
   name: string;
@@ -660,6 +726,8 @@ export type SeasonCreateWithoutDisciplineInput = {
   updatedAt?: Date | string;
   institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput;
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonUncheckedCreateWithoutDisciplineInput = {
@@ -672,6 +740,8 @@ export type SeasonUncheckedCreateWithoutDisciplineInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonCreateOrConnectWithoutDisciplineInput = {
@@ -742,6 +812,8 @@ export type SeasonCreateWithoutInstitutionInput = {
   updatedAt?: Date | string;
   discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput;
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonUncheckedCreateWithoutInstitutionInput = {
@@ -754,6 +826,8 @@ export type SeasonUncheckedCreateWithoutInstitutionInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonCreateOrConnectWithoutInstitutionInput = {
@@ -809,6 +883,8 @@ export type SeasonCreateWithoutTeamSeasonsInput = {
   updatedAt?: Date | string;
   institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput;
   discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonUncheckedCreateWithoutTeamSeasonsInput = {
@@ -821,6 +897,8 @@ export type SeasonUncheckedCreateWithoutTeamSeasonsInput = {
   endDate: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput;
 };
 
 export type SeasonCreateOrConnectWithoutTeamSeasonsInput = {
@@ -861,6 +939,8 @@ export type SeasonUpdateWithoutTeamSeasonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput;
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateWithoutTeamSeasonsInput = {
@@ -873,6 +953,176 @@ export type SeasonUncheckedUpdateWithoutTeamSeasonsInput = {
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput;
+};
+
+export type SeasonCreateWithoutCourseSeasonsInput = {
+  id?: string;
+  name: string;
+  description?: string | null;
+  startDate: Date | string;
+  endDate: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput;
+  discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput;
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput;
+};
+
+export type SeasonUncheckedCreateWithoutCourseSeasonsInput = {
+  id?: string;
+  institutionId: string;
+  disciplineId: string;
+  name: string;
+  description?: string | null;
+  startDate: Date | string;
+  endDate: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput;
+};
+
+export type SeasonCreateOrConnectWithoutCourseSeasonsInput = {
+  where: Prisma.SeasonWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.SeasonCreateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedCreateWithoutCourseSeasonsInput
+  >;
+};
+
+export type SeasonUpsertWithoutCourseSeasonsInput = {
+  update: Prisma.XOR<
+    Prisma.SeasonUpdateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.SeasonCreateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  where?: Prisma.SeasonWhereInput;
+};
+
+export type SeasonUpdateToOneWithWhereWithoutCourseSeasonsInput = {
+  where?: Prisma.SeasonWhereInput;
+  data: Prisma.XOR<
+    Prisma.SeasonUpdateWithoutCourseSeasonsInput,
+    Prisma.SeasonUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+};
+
+export type SeasonUpdateWithoutCourseSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput;
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput;
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput;
+};
+
+export type SeasonUncheckedUpdateWithoutCourseSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput;
+};
+
+export type SeasonCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  name: string;
+  description?: string | null;
+  startDate: Date | string;
+  endDate: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput;
+  discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput;
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput;
+};
+
+export type SeasonUncheckedCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  institutionId: string;
+  disciplineId: string;
+  name: string;
+  description?: string | null;
+  startDate: Date | string;
+  endDate: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput;
+};
+
+export type SeasonCreateOrConnectWithoutProgressEvaluationsInput = {
+  where: Prisma.SeasonWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.SeasonCreateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type SeasonUpsertWithoutProgressEvaluationsInput = {
+  update: Prisma.XOR<
+    Prisma.SeasonUpdateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.SeasonCreateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  where?: Prisma.SeasonWhereInput;
+};
+
+export type SeasonUpdateToOneWithWhereWithoutProgressEvaluationsInput = {
+  where?: Prisma.SeasonWhereInput;
+  data: Prisma.XOR<
+    Prisma.SeasonUpdateWithoutProgressEvaluationsInput,
+    Prisma.SeasonUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type SeasonUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput;
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput;
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput;
+};
+
+export type SeasonUncheckedUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonCreateManyDisciplineInput = {
@@ -896,6 +1146,8 @@ export type SeasonUpdateWithoutDisciplineInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput;
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateWithoutDisciplineInput = {
@@ -908,6 +1160,8 @@ export type SeasonUncheckedUpdateWithoutDisciplineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateManyWithoutDisciplineInput = {
@@ -942,6 +1196,8 @@ export type SeasonUpdateWithoutInstitutionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput;
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateWithoutInstitutionInput = {
@@ -954,6 +1210,8 @@ export type SeasonUncheckedUpdateWithoutInstitutionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput;
 };
 
 export type SeasonUncheckedUpdateManyWithoutInstitutionInput = {
@@ -973,6 +1231,8 @@ export type SeasonUncheckedUpdateManyWithoutInstitutionInput = {
 
 export type SeasonCountOutputType = {
   teamSeasons: number;
+  courseSeasons: number;
+  progressEvaluations: number;
 };
 
 export type SeasonCountOutputTypeSelect<
@@ -980,6 +1240,10 @@ export type SeasonCountOutputTypeSelect<
     runtime.Types.Extensions.DefaultArgs,
 > = {
   teamSeasons?: boolean | SeasonCountOutputTypeCountTeamSeasonsArgs;
+  courseSeasons?: boolean | SeasonCountOutputTypeCountCourseSeasonsArgs;
+  progressEvaluations?:
+    | boolean
+    | SeasonCountOutputTypeCountProgressEvaluationsArgs;
 };
 
 /**
@@ -1005,6 +1269,26 @@ export type SeasonCountOutputTypeCountTeamSeasonsArgs<
   where?: Prisma.TeamSeasonWhereInput;
 };
 
+/**
+ * SeasonCountOutputType without action
+ */
+export type SeasonCountOutputTypeCountCourseSeasonsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.CourseSeasonWhereInput;
+};
+
+/**
+ * SeasonCountOutputType without action
+ */
+export type SeasonCountOutputTypeCountProgressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ProgressEvaluationWhereInput;
+};
+
 export type SeasonSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -1022,6 +1306,10 @@ export type SeasonSelect<
     institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>;
     discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>;
     teamSeasons?: boolean | Prisma.Season$teamSeasonsArgs<ExtArgs>;
+    courseSeasons?: boolean | Prisma.Season$courseSeasonsArgs<ExtArgs>;
+    progressEvaluations?:
+      | boolean
+      | Prisma.Season$progressEvaluationsArgs<ExtArgs>;
     _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['season']
@@ -1101,6 +1389,10 @@ export type SeasonInclude<
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>;
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>;
   teamSeasons?: boolean | Prisma.Season$teamSeasonsArgs<ExtArgs>;
+  courseSeasons?: boolean | Prisma.Season$courseSeasonsArgs<ExtArgs>;
+  progressEvaluations?:
+    | boolean
+    | Prisma.Season$progressEvaluationsArgs<ExtArgs>;
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type SeasonIncludeCreateManyAndReturn<
@@ -1127,6 +1419,8 @@ export type $SeasonPayload<
     institution: Prisma.$InstitutionPayload<ExtArgs>;
     discipline: Prisma.$DisciplinePayload<ExtArgs>;
     teamSeasons: Prisma.$TeamSeasonPayload<ExtArgs>[];
+    courseSeasons: Prisma.$CourseSeasonPayload<ExtArgs>[];
+    progressEvaluations: Prisma.$ProgressEvaluationPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1728,6 +2022,30 @@ export interface Prisma__SeasonClient<
       >
     | Null
   >;
+  courseSeasons<T extends Prisma.Season$courseSeasonsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Season$courseSeasonsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$CourseSeasonPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  progressEvaluations<
+    T extends Prisma.Season$progressEvaluationsArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<T, Prisma.Season$progressEvaluationsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ProgressEvaluationPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2262,6 +2580,68 @@ export type Season$teamSeasonsArgs<
   distinct?:
     | Prisma.TeamSeasonScalarFieldEnum
     | Prisma.TeamSeasonScalarFieldEnum[];
+};
+
+/**
+ * Season.courseSeasons
+ */
+export type Season$courseSeasonsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the CourseSeason
+   */
+  select?: Prisma.CourseSeasonSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the CourseSeason
+   */
+  omit?: Prisma.CourseSeasonOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonInclude<ExtArgs> | null;
+  where?: Prisma.CourseSeasonWhereInput;
+  orderBy?:
+    | Prisma.CourseSeasonOrderByWithRelationInput
+    | Prisma.CourseSeasonOrderByWithRelationInput[];
+  cursor?: Prisma.CourseSeasonWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.CourseSeasonScalarFieldEnum
+    | Prisma.CourseSeasonScalarFieldEnum[];
+};
+
+/**
+ * Season.progressEvaluations
+ */
+export type Season$progressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ProgressEvaluation
+   */
+  select?: Prisma.ProgressEvaluationSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ProgressEvaluation
+   */
+  omit?: Prisma.ProgressEvaluationOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProgressEvaluationInclude<ExtArgs> | null;
+  where?: Prisma.ProgressEvaluationWhereInput;
+  orderBy?:
+    | Prisma.ProgressEvaluationOrderByWithRelationInput
+    | Prisma.ProgressEvaluationOrderByWithRelationInput[];
+  cursor?: Prisma.ProgressEvaluationWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ProgressEvaluationScalarFieldEnum
+    | Prisma.ProgressEvaluationScalarFieldEnum[];
 };
 
 /**

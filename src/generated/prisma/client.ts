@@ -147,10 +147,90 @@ export type ChargeTransaction = Prisma.ChargeTransactionModel;
  */
 export type Transaction = Prisma.TransactionModel;
 /**
+ * Model User
+ *
+ */
+export type User = Prisma.UserModel;
+/**
+ * Model Role
+ *
+ */
+export type Role = Prisma.RoleModel;
+/**
+ * Model Permission
+ *
+ */
+export type Permission = Prisma.PermissionModel;
+/**
+ * Model RolePermission
+ *
+ */
+export type RolePermission = Prisma.RolePermissionModel;
+/**
+ * Model School
+ *
+ */
+export type School = Prisma.SchoolModel;
+/**
+ * Model Course
+ *
+ */
+export type Course = Prisma.CourseModel;
+/**
+ * Model CourseSeason
+ *
+ */
+export type CourseSeason = Prisma.CourseSeasonModel;
+/**
+ * Model CourseSeasonStaff
+ *
+ */
+export type CourseSeasonStaff = Prisma.CourseSeasonStaffModel;
+/**
+ * Model Student
+ *
+ */
+export type Student = Prisma.StudentModel;
+/**
+ * Model StudentMembership
+ *
+ */
+export type StudentMembership = Prisma.StudentMembershipModel;
+/**
+ * Model StudentDiscount
+ *
+ */
+export type StudentDiscount = Prisma.StudentDiscountModel;
+/**
+ * Model StudentCharge
+ *
+ */
+export type StudentCharge = Prisma.StudentChargeModel;
+/**
+ * Model SessionIncident
+ *
+ */
+export type SessionIncident = Prisma.SessionIncidentModel;
+/**
+ * Model ProgressEvaluation
+ *
+ */
+export type ProgressEvaluation = Prisma.ProgressEvaluationModel;
+/**
  * Model Session
  *
  */
 export type Session = Prisma.SessionModel;
+/**
+ * Model SessionTeam
+ *
+ */
+export type SessionTeam = Prisma.SessionTeamModel;
+/**
+ * Model SessionCourse
+ *
+ */
+export type SessionCourse = Prisma.SessionCourseModel;
 /**
  * Model SessionBooking
  *
@@ -161,6 +241,16 @@ export type SessionBooking = Prisma.SessionBookingModel;
  *
  */
 export type Schedule = Prisma.ScheduleModel;
+/**
+ * Model ScheduleTeam
+ *
+ */
+export type ScheduleTeam = Prisma.ScheduleTeamModel;
+/**
+ * Model ScheduleCourse
+ *
+ */
+export type ScheduleCourse = Prisma.ScheduleCourseModel;
 /**
  * Model Match
  *

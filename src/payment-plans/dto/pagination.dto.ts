@@ -16,7 +16,7 @@ export class PaymentPlansPaginationDto extends PaginationDto {
   })
   sortField?: string = 'createdAt'; // Valor por defecto para este módulo
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     // example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'Filtrar por temporada',
   })
@@ -30,5 +30,20 @@ export class PaymentPlansPaginationDto extends PaginationDto {
       constraint1: 'teamSeasonId',
     }),
   })
-  teamSeasonId: string;
+  @IsOptional()
+  teamSeasonId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtrar por periodo de curso',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @Exists('courseSeason', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'courseSeasonId',
+    }),
+  })
+  @IsOptional()
+  courseSeasonId?: string;
 }

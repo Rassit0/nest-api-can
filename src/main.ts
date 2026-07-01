@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { I18nValidationPipe } from 'nestjs-i18n';
+import { I18nValidationPipe, I18nService } from 'nestjs-i18n';
 import { I18nValidationFilter } from './common/filters/i18n-validation/i18n-validation.filter';
 import { useContainer } from 'class-validator';
 import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
+import { I18nHttpExceptionFilter } from './common/filters/i18n-http-exception/i18n-http-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -41,10 +42,13 @@ async function bootstrap() {
     }),
   );
 
+  const i18nService = app.get(I18nService);
+
   // ✅ Tu filtro personalizado (el que creaste)
   app.useGlobalFilters(
     new I18nValidationFilter(),
     app.get(PrismaExceptionFilter),
+    new I18nHttpExceptionFilter(i18nService),
   );
 
   await app.listen(process.env.PORT ?? 3000);

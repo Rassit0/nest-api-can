@@ -84,8 +84,17 @@ export class DisciplinesService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} discipline`;
+  async findOne(id: string) {
+    const discipline = await this.prisma.discipline.findUnique({
+      where: { id },
+    });
+    if (!discipline) {
+      throw new NotFoundException('errors.DISCIPLINE_NOT_FOUND');
+    }
+    return {
+      message: 'Disciplina obtenida exitosamente',
+      data: discipline,
+    };
   }
 
   async update(id: string, updateDisciplineDto: UpdateDisciplineDto) {

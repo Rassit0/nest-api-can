@@ -9,31 +9,81 @@ import {
   Query,
   ParseUUIDPipe,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBody,
+  ApiParam,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
 import { PaymentPlansService } from './payment-plans.service';
 import { CreatePaymentPlanDto } from './dto/create-payment-plan.dto';
 import { UpdatePaymentPlanDto } from './dto/update-payment-plan.dto';
 import { PaymentPlansPaginationDto } from './dto/pagination.dto';
 
+@ApiTags('Payment Plans')
 @Controller('payment-plans')
 export class PaymentPlansController {
   constructor(private readonly paymentPlansService: PaymentPlansService) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Crear un plan de pago',
+    description:
+      'Registra un plan de pago para equipos o cursos (cuotas, recargos, días de gracia).',
+  })
+  @ApiCreatedResponse({ description: 'Plan de pago creado exitosamente.' })
+  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
   async create(@Body() createPaymentPlanDto: CreatePaymentPlanDto) {
     return await this.paymentPlansService.create(createPaymentPlanDto);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Listar planes de pago',
+    description:
+      'Retorna una lista paginada y filtrable de todos los planes de pago.',
+  })
+  @ApiOkResponse({ description: 'Lista de planes obtenida correctamente.' })
   async findAll(@Query() paginationDto: PaymentPlansPaginationDto) {
     return await this.paymentPlansService.findAll(paginationDto);
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Obtener plan de pago por ID',
+    description:
+      'Retorna la configuración completa del plan de pago por su ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del plan de pago (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Plan de pago encontrado exitosamente.' })
+  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Actualizar plan de pago por ID',
+    description:
+      'Modifica detalles de cuotas o mora del plan de pago por su ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del plan de pago a actualizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: UpdatePaymentPlanDto })
+  @ApiOkResponse({ description: 'Plan de pago actualizado con éxito.' })
+  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
+  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePaymentPlanDto: UpdatePaymentPlanDto,
@@ -42,6 +92,17 @@ export class PaymentPlansController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Eliminar plan de pago por ID',
+    description: 'Remueve permanentemente un plan de pago del catálogo.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del plan de pago a eliminar (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Plan de pago eliminado exitosamente.' })
+  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.remove(id);
   }

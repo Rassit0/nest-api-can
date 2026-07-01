@@ -136,6 +136,27 @@ export const PaymentMethod = {
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod];
 
+export const StatusCourseSeason = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  FINISHED: 'FINISHED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export type StatusCourseSeason =
+  (typeof StatusCourseSeason)[keyof typeof StatusCourseSeason];
+
+export const StudentMembershipStatus = {
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  WITHDRAWN: 'WITHDRAWN',
+  FINISHED: 'FINISHED',
+} as const;
+
+export type StudentMembershipStatus =
+  (typeof StudentMembershipStatus)[keyof typeof StudentMembershipStatus];
+
 export const DayOfWeek = {
   MONDAY: 'MONDAY',
   TUESDAY: 'TUESDAY',

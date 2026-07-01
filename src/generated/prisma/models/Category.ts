@@ -253,6 +253,7 @@ export type CategoryWhereInput = {
     Prisma.DisciplineWhereInput
   >;
   teamSeasons?: Prisma.TeamSeasonListRelationFilter;
+  courseSeasons?: Prisma.CourseSeasonListRelationFilter;
 };
 
 export type CategoryOrderByWithRelationInput = {
@@ -266,6 +267,7 @@ export type CategoryOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder;
   discipline?: Prisma.DisciplineOrderByWithRelationInput;
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput;
+  courseSeasons?: Prisma.CourseSeasonOrderByRelationAggregateInput;
 };
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<
@@ -287,6 +289,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<
       Prisma.DisciplineWhereInput
     >;
     teamSeasons?: Prisma.TeamSeasonListRelationFilter;
+    courseSeasons?: Prisma.CourseSeasonListRelationFilter;
   },
   'id' | 'disciplineId_name'
 >;
@@ -338,6 +341,7 @@ export type CategoryCreateInput = {
   updatedAt?: Date | string;
   discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput;
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUncheckedCreateInput = {
@@ -350,6 +354,7 @@ export type CategoryUncheckedCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUpdateInput = {
@@ -362,6 +367,7 @@ export type CategoryUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput;
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryUncheckedUpdateInput = {
@@ -374,6 +380,7 @@ export type CategoryUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryCreateManyInput = {
@@ -599,6 +606,32 @@ export type CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput = {
   >;
 };
 
+export type CategoryCreateNestedOneWithoutCourseSeasonsInput = {
+  create?: Prisma.XOR<
+    Prisma.CategoryCreateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCourseSeasonsInput;
+  connect?: Prisma.CategoryWhereUniqueInput;
+};
+
+export type CategoryUpdateOneRequiredWithoutCourseSeasonsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.CategoryCreateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCourseSeasonsInput;
+  upsert?: Prisma.CategoryUpsertWithoutCourseSeasonsInput;
+  connect?: Prisma.CategoryWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.CategoryUpdateToOneWithWhereWithoutCourseSeasonsInput,
+      Prisma.CategoryUpdateWithoutCourseSeasonsInput
+    >,
+    Prisma.CategoryUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+};
+
 export type CategoryCreateWithoutDisciplineInput = {
   id?: string;
   name: string;
@@ -608,6 +641,7 @@ export type CategoryCreateWithoutDisciplineInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUncheckedCreateWithoutDisciplineInput = {
@@ -619,6 +653,7 @@ export type CategoryUncheckedCreateWithoutDisciplineInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryCreateOrConnectWithoutDisciplineInput = {
@@ -687,6 +722,7 @@ export type CategoryCreateWithoutTeamSeasonsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput;
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUncheckedCreateWithoutTeamSeasonsInput = {
@@ -698,6 +734,7 @@ export type CategoryUncheckedCreateWithoutTeamSeasonsInput = {
   disciplineId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryCreateOrConnectWithoutTeamSeasonsInput = {
@@ -737,6 +774,7 @@ export type CategoryUpdateWithoutTeamSeasonsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryUncheckedUpdateWithoutTeamSeasonsInput = {
@@ -748,6 +786,83 @@ export type CategoryUncheckedUpdateWithoutTeamSeasonsInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
+};
+
+export type CategoryCreateWithoutCourseSeasonsInput = {
+  id?: string;
+  name: string;
+  description?: string | null;
+  maxAge: number;
+  minAge: number;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput;
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput;
+};
+
+export type CategoryUncheckedCreateWithoutCourseSeasonsInput = {
+  id?: string;
+  name: string;
+  description?: string | null;
+  maxAge: number;
+  minAge: number;
+  disciplineId: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput;
+};
+
+export type CategoryCreateOrConnectWithoutCourseSeasonsInput = {
+  where: Prisma.CategoryWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.CategoryCreateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedCreateWithoutCourseSeasonsInput
+  >;
+};
+
+export type CategoryUpsertWithoutCourseSeasonsInput = {
+  update: Prisma.XOR<
+    Prisma.CategoryUpdateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.CategoryCreateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedCreateWithoutCourseSeasonsInput
+  >;
+  where?: Prisma.CategoryWhereInput;
+};
+
+export type CategoryUpdateToOneWithWhereWithoutCourseSeasonsInput = {
+  where?: Prisma.CategoryWhereInput;
+  data: Prisma.XOR<
+    Prisma.CategoryUpdateWithoutCourseSeasonsInput,
+    Prisma.CategoryUncheckedUpdateWithoutCourseSeasonsInput
+  >;
+};
+
+export type CategoryUpdateWithoutCourseSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number;
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput;
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput;
+};
+
+export type CategoryUncheckedUpdateWithoutCourseSeasonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number;
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number;
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryCreateManyDisciplineInput = {
@@ -769,6 +884,7 @@ export type CategoryUpdateWithoutDisciplineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryUncheckedUpdateWithoutDisciplineInput = {
@@ -780,6 +896,7 @@ export type CategoryUncheckedUpdateWithoutDisciplineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryUncheckedUpdateManyWithoutDisciplineInput = {
@@ -798,6 +915,7 @@ export type CategoryUncheckedUpdateManyWithoutDisciplineInput = {
 
 export type CategoryCountOutputType = {
   teamSeasons: number;
+  courseSeasons: number;
 };
 
 export type CategoryCountOutputTypeSelect<
@@ -805,6 +923,7 @@ export type CategoryCountOutputTypeSelect<
     runtime.Types.Extensions.DefaultArgs,
 > = {
   teamSeasons?: boolean | CategoryCountOutputTypeCountTeamSeasonsArgs;
+  courseSeasons?: boolean | CategoryCountOutputTypeCountCourseSeasonsArgs;
 };
 
 /**
@@ -830,6 +949,16 @@ export type CategoryCountOutputTypeCountTeamSeasonsArgs<
   where?: Prisma.TeamSeasonWhereInput;
 };
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountCourseSeasonsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.CourseSeasonWhereInput;
+};
+
 export type CategorySelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -845,6 +974,7 @@ export type CategorySelect<
     updatedAt?: boolean;
     discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>;
     teamSeasons?: boolean | Prisma.Category$teamSeasonsArgs<ExtArgs>;
+    courseSeasons?: boolean | Prisma.Category$courseSeasonsArgs<ExtArgs>;
     _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['category']
@@ -917,6 +1047,7 @@ export type CategoryInclude<
 > = {
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>;
   teamSeasons?: boolean | Prisma.Category$teamSeasonsArgs<ExtArgs>;
+  courseSeasons?: boolean | Prisma.Category$courseSeasonsArgs<ExtArgs>;
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type CategoryIncludeCreateManyAndReturn<
@@ -940,6 +1071,7 @@ export type $CategoryPayload<
   objects: {
     discipline: Prisma.$DisciplinePayload<ExtArgs>;
     teamSeasons: Prisma.$TeamSeasonPayload<ExtArgs>[];
+    courseSeasons: Prisma.$CourseSeasonPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1526,6 +1658,17 @@ export interface Prisma__CategoryClient<
       >
     | Null
   >;
+  courseSeasons<T extends Prisma.Category$courseSeasonsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Category$courseSeasonsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$CourseSeasonPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2065,6 +2208,37 @@ export type Category$teamSeasonsArgs<
   distinct?:
     | Prisma.TeamSeasonScalarFieldEnum
     | Prisma.TeamSeasonScalarFieldEnum[];
+};
+
+/**
+ * Category.courseSeasons
+ */
+export type Category$courseSeasonsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the CourseSeason
+   */
+  select?: Prisma.CourseSeasonSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the CourseSeason
+   */
+  omit?: Prisma.CourseSeasonOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonInclude<ExtArgs> | null;
+  where?: Prisma.CourseSeasonWhereInput;
+  orderBy?:
+    | Prisma.CourseSeasonOrderByWithRelationInput
+    | Prisma.CourseSeasonOrderByWithRelationInput[];
+  cursor?: Prisma.CourseSeasonWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.CourseSeasonScalarFieldEnum
+    | Prisma.CourseSeasonScalarFieldEnum[];
 };
 
 /**

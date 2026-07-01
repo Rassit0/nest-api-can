@@ -193,6 +193,7 @@ export type PlayerWhereInput = {
   playerMemberships?: Prisma.PlayerMembershipListRelationFilter;
   sessionBookings?: Prisma.SessionBookingListRelationFilter;
   matchLineups?: Prisma.MatchLineupListRelationFilter;
+  progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
 };
 
 export type PlayerOrderByWithRelationInput = {
@@ -205,6 +206,7 @@ export type PlayerOrderByWithRelationInput = {
   playerMemberships?: Prisma.PlayerMembershipOrderByRelationAggregateInput;
   sessionBookings?: Prisma.SessionBookingOrderByRelationAggregateInput;
   matchLineups?: Prisma.MatchLineupOrderByRelationAggregateInput;
+  progressEvaluations?: Prisma.ProgressEvaluationOrderByRelationAggregateInput;
 };
 
 export type PlayerWhereUniqueInput = Prisma.AtLeast<
@@ -224,6 +226,7 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<
     playerMemberships?: Prisma.PlayerMembershipListRelationFilter;
     sessionBookings?: Prisma.SessionBookingListRelationFilter;
     matchLineups?: Prisma.MatchLineupListRelationFilter;
+    progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
   },
   'id' | 'personId'
 >;
@@ -263,6 +266,7 @@ export type PlayerCreateInput = {
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUncheckedCreateInput = {
@@ -274,6 +278,7 @@ export type PlayerUncheckedCreateInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUpdateInput = {
@@ -285,6 +290,7 @@ export type PlayerUpdateInput = {
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateInput = {
@@ -296,6 +302,7 @@ export type PlayerUncheckedUpdateInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerCreateManyInput = {
@@ -358,6 +365,11 @@ export type PlayerMinOrderByAggregateInput = {
 export type PlayerScalarRelationFilter = {
   is?: Prisma.PlayerWhereInput;
   isNot?: Prisma.PlayerWhereInput;
+};
+
+export type PlayerNullableScalarRelationFilter = {
+  is?: Prisma.PlayerWhereInput | null;
+  isNot?: Prisma.PlayerWhereInput | null;
 };
 
 export type PlayerCreateNestedManyWithoutPersonInput = {
@@ -472,6 +484,34 @@ export type PlayerUpdateOneRequiredWithoutPlayerMembershipsNestedInput = {
   >;
 };
 
+export type PlayerCreateNestedOneWithoutProgressEvaluationsInput = {
+  create?: Prisma.XOR<
+    Prisma.PlayerCreateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutProgressEvaluationsInput;
+  connect?: Prisma.PlayerWhereUniqueInput;
+};
+
+export type PlayerUpdateOneWithoutProgressEvaluationsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.PlayerCreateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutProgressEvaluationsInput;
+  upsert?: Prisma.PlayerUpsertWithoutProgressEvaluationsInput;
+  disconnect?: Prisma.PlayerWhereInput | boolean;
+  delete?: Prisma.PlayerWhereInput | boolean;
+  connect?: Prisma.PlayerWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.PlayerUpdateToOneWithWhereWithoutProgressEvaluationsInput,
+      Prisma.PlayerUpdateWithoutProgressEvaluationsInput
+    >,
+    Prisma.PlayerUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
 export type PlayerCreateNestedOneWithoutSessionBookingsInput = {
   create?: Prisma.XOR<
     Prisma.PlayerCreateWithoutSessionBookingsInput,
@@ -481,13 +521,15 @@ export type PlayerCreateNestedOneWithoutSessionBookingsInput = {
   connect?: Prisma.PlayerWhereUniqueInput;
 };
 
-export type PlayerUpdateOneRequiredWithoutSessionBookingsNestedInput = {
+export type PlayerUpdateOneWithoutSessionBookingsNestedInput = {
   create?: Prisma.XOR<
     Prisma.PlayerCreateWithoutSessionBookingsInput,
     Prisma.PlayerUncheckedCreateWithoutSessionBookingsInput
   >;
   connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutSessionBookingsInput;
   upsert?: Prisma.PlayerUpsertWithoutSessionBookingsInput;
+  disconnect?: Prisma.PlayerWhereInput | boolean;
+  delete?: Prisma.PlayerWhereInput | boolean;
   connect?: Prisma.PlayerWhereUniqueInput;
   update?: Prisma.XOR<
     Prisma.XOR<
@@ -532,6 +574,7 @@ export type PlayerCreateWithoutPersonInput = {
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUncheckedCreateWithoutPersonInput = {
@@ -542,6 +585,7 @@ export type PlayerUncheckedCreateWithoutPersonInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerCreateOrConnectWithoutPersonInput = {
@@ -606,6 +650,7 @@ export type PlayerCreateWithoutPlayerMembershipsInput = {
   person: Prisma.PersonCreateNestedOneWithoutPlayersInput;
   sessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUncheckedCreateWithoutPlayerMembershipsInput = {
@@ -616,6 +661,7 @@ export type PlayerUncheckedCreateWithoutPlayerMembershipsInput = {
   updatedAt?: Date | string;
   sessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerCreateOrConnectWithoutPlayerMembershipsInput = {
@@ -654,6 +700,7 @@ export type PlayerUpdateWithoutPlayerMembershipsInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutPlayersNestedInput;
   sessionBookings?: Prisma.SessionBookingUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateWithoutPlayerMembershipsInput = {
@@ -662,6 +709,79 @@ export type PlayerUncheckedUpdateWithoutPlayerMembershipsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutPlayerNestedInput;
+  matchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutPlayerNestedInput;
+};
+
+export type PlayerCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  person: Prisma.PersonCreateNestedOneWithoutPlayersInput;
+  playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPlayerInput;
+  sessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutPlayerInput;
+  matchLineups?: Prisma.MatchLineupCreateNestedManyWithoutPlayerInput;
+};
+
+export type PlayerUncheckedCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  personId: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPlayerInput;
+  sessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutPlayerInput;
+  matchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutPlayerInput;
+};
+
+export type PlayerCreateOrConnectWithoutProgressEvaluationsInput = {
+  where: Prisma.PlayerWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.PlayerCreateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type PlayerUpsertWithoutProgressEvaluationsInput = {
+  update: Prisma.XOR<
+    Prisma.PlayerUpdateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.PlayerCreateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  where?: Prisma.PlayerWhereInput;
+};
+
+export type PlayerUpdateToOneWithWhereWithoutProgressEvaluationsInput = {
+  where?: Prisma.PlayerWhereInput;
+  data: Prisma.XOR<
+    Prisma.PlayerUpdateWithoutProgressEvaluationsInput,
+    Prisma.PlayerUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type PlayerUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  person?: Prisma.PersonUpdateOneRequiredWithoutPlayersNestedInput;
+  playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPlayerNestedInput;
+  sessionBookings?: Prisma.SessionBookingUpdateManyWithoutPlayerNestedInput;
+  matchLineups?: Prisma.MatchLineupUpdateManyWithoutPlayerNestedInput;
+};
+
+export type PlayerUncheckedUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  personId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutPlayerNestedInput;
 };
@@ -674,6 +794,7 @@ export type PlayerCreateWithoutSessionBookingsInput = {
   person: Prisma.PersonCreateNestedOneWithoutPlayersInput;
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUncheckedCreateWithoutSessionBookingsInput = {
@@ -684,6 +805,7 @@ export type PlayerUncheckedCreateWithoutSessionBookingsInput = {
   updatedAt?: Date | string;
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPlayerInput;
   matchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerCreateOrConnectWithoutSessionBookingsInput = {
@@ -722,6 +844,7 @@ export type PlayerUpdateWithoutSessionBookingsInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutPlayersNestedInput;
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateWithoutSessionBookingsInput = {
@@ -732,6 +855,7 @@ export type PlayerUncheckedUpdateWithoutSessionBookingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerCreateWithoutMatchLineupsInput = {
@@ -742,6 +866,7 @@ export type PlayerCreateWithoutMatchLineupsInput = {
   person: Prisma.PersonCreateNestedOneWithoutPlayersInput;
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerUncheckedCreateWithoutMatchLineupsInput = {
@@ -752,6 +877,7 @@ export type PlayerUncheckedCreateWithoutMatchLineupsInput = {
   updatedAt?: Date | string;
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPlayerInput;
   sessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutPlayerInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutPlayerInput;
 };
 
 export type PlayerCreateOrConnectWithoutMatchLineupsInput = {
@@ -790,6 +916,7 @@ export type PlayerUpdateWithoutMatchLineupsInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutPlayersNestedInput;
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateWithoutMatchLineupsInput = {
@@ -800,6 +927,7 @@ export type PlayerUncheckedUpdateWithoutMatchLineupsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerCreateManyPersonInput = {
@@ -817,6 +945,7 @@ export type PlayerUpdateWithoutPersonInput = {
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateWithoutPersonInput = {
@@ -827,6 +956,7 @@ export type PlayerUncheckedUpdateWithoutPersonInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPlayerNestedInput;
   sessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutPlayerNestedInput;
   matchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutPlayerNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutPlayerNestedInput;
 };
 
 export type PlayerUncheckedUpdateManyWithoutPersonInput = {
@@ -844,6 +974,7 @@ export type PlayerCountOutputType = {
   playerMemberships: number;
   sessionBookings: number;
   matchLineups: number;
+  progressEvaluations: number;
 };
 
 export type PlayerCountOutputTypeSelect<
@@ -853,6 +984,9 @@ export type PlayerCountOutputTypeSelect<
   playerMemberships?: boolean | PlayerCountOutputTypeCountPlayerMembershipsArgs;
   sessionBookings?: boolean | PlayerCountOutputTypeCountSessionBookingsArgs;
   matchLineups?: boolean | PlayerCountOutputTypeCountMatchLineupsArgs;
+  progressEvaluations?:
+    | boolean
+    | PlayerCountOutputTypeCountProgressEvaluationsArgs;
 };
 
 /**
@@ -898,6 +1032,16 @@ export type PlayerCountOutputTypeCountMatchLineupsArgs<
   where?: Prisma.MatchLineupWhereInput;
 };
 
+/**
+ * PlayerCountOutputType without action
+ */
+export type PlayerCountOutputTypeCountProgressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ProgressEvaluationWhereInput;
+};
+
 export type PlayerSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -912,6 +1056,9 @@ export type PlayerSelect<
     playerMemberships?: boolean | Prisma.Player$playerMembershipsArgs<ExtArgs>;
     sessionBookings?: boolean | Prisma.Player$sessionBookingsArgs<ExtArgs>;
     matchLineups?: boolean | Prisma.Player$matchLineupsArgs<ExtArgs>;
+    progressEvaluations?:
+      | boolean
+      | Prisma.Player$progressEvaluationsArgs<ExtArgs>;
     _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['player']
@@ -970,6 +1117,9 @@ export type PlayerInclude<
   playerMemberships?: boolean | Prisma.Player$playerMembershipsArgs<ExtArgs>;
   sessionBookings?: boolean | Prisma.Player$sessionBookingsArgs<ExtArgs>;
   matchLineups?: boolean | Prisma.Player$matchLineupsArgs<ExtArgs>;
+  progressEvaluations?:
+    | boolean
+    | Prisma.Player$progressEvaluationsArgs<ExtArgs>;
   _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type PlayerIncludeCreateManyAndReturn<
@@ -995,6 +1145,7 @@ export type $PlayerPayload<
     playerMemberships: Prisma.$PlayerMembershipPayload<ExtArgs>[];
     sessionBookings: Prisma.$SessionBookingPayload<ExtArgs>[];
     matchLineups: Prisma.$MatchLineupPayload<ExtArgs>[];
+    progressEvaluations: Prisma.$ProgressEvaluationPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1602,6 +1753,19 @@ export interface Prisma__PlayerClient<
       >
     | Null
   >;
+  progressEvaluations<
+    T extends Prisma.Player$progressEvaluationsArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<T, Prisma.Player$progressEvaluationsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ProgressEvaluationPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2194,6 +2358,37 @@ export type Player$matchLineupsArgs<
   distinct?:
     | Prisma.MatchLineupScalarFieldEnum
     | Prisma.MatchLineupScalarFieldEnum[];
+};
+
+/**
+ * Player.progressEvaluations
+ */
+export type Player$progressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ProgressEvaluation
+   */
+  select?: Prisma.ProgressEvaluationSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ProgressEvaluation
+   */
+  omit?: Prisma.ProgressEvaluationOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProgressEvaluationInclude<ExtArgs> | null;
+  where?: Prisma.ProgressEvaluationWhereInput;
+  orderBy?:
+    | Prisma.ProgressEvaluationOrderByWithRelationInput
+    | Prisma.ProgressEvaluationOrderByWithRelationInput[];
+  cursor?: Prisma.ProgressEvaluationWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ProgressEvaluationScalarFieldEnum
+    | Prisma.ProgressEvaluationScalarFieldEnum[];
 };
 
 /**

@@ -212,6 +212,7 @@ export type InstitutionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'Institution'> | Date | string;
   clubs?: Prisma.ClubListRelationFilter;
   seasons?: Prisma.SeasonListRelationFilter;
+  schools?: Prisma.SchoolListRelationFilter;
 };
 
 export type InstitutionOrderByWithRelationInput = {
@@ -225,6 +226,7 @@ export type InstitutionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder;
   clubs?: Prisma.ClubOrderByRelationAggregateInput;
   seasons?: Prisma.SeasonOrderByRelationAggregateInput;
+  schools?: Prisma.SchoolOrderByRelationAggregateInput;
 };
 
 export type InstitutionWhereUniqueInput = Prisma.AtLeast<
@@ -242,6 +244,7 @@ export type InstitutionWhereUniqueInput = Prisma.AtLeast<
     updatedAt?: Prisma.DateTimeFilter<'Institution'> | Date | string;
     clubs?: Prisma.ClubListRelationFilter;
     seasons?: Prisma.SeasonListRelationFilter;
+    schools?: Prisma.SchoolListRelationFilter;
   },
   'id' | 'email'
 >;
@@ -304,6 +307,7 @@ export type InstitutionCreateInput = {
   updatedAt?: Date | string;
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput;
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionUncheckedCreateInput = {
@@ -317,6 +321,7 @@ export type InstitutionUncheckedCreateInput = {
   updatedAt?: Date | string;
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput;
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionUpdateInput = {
@@ -330,6 +335,7 @@ export type InstitutionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput;
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput;
 };
 
 export type InstitutionUncheckedUpdateInput = {
@@ -343,6 +349,7 @@ export type InstitutionUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput;
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput;
 };
 
 export type InstitutionCreateManyInput = {
@@ -468,6 +475,32 @@ export type InstitutionUpdateOneRequiredWithoutSeasonsNestedInput = {
   >;
 };
 
+export type InstitutionCreateNestedOneWithoutSchoolsInput = {
+  create?: Prisma.XOR<
+    Prisma.InstitutionCreateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedCreateWithoutSchoolsInput
+  >;
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutSchoolsInput;
+  connect?: Prisma.InstitutionWhereUniqueInput;
+};
+
+export type InstitutionUpdateOneRequiredWithoutSchoolsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.InstitutionCreateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedCreateWithoutSchoolsInput
+  >;
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutSchoolsInput;
+  upsert?: Prisma.InstitutionUpsertWithoutSchoolsInput;
+  connect?: Prisma.InstitutionWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.InstitutionUpdateToOneWithWhereWithoutSchoolsInput,
+      Prisma.InstitutionUpdateWithoutSchoolsInput
+    >,
+    Prisma.InstitutionUncheckedUpdateWithoutSchoolsInput
+  >;
+};
+
 export type InstitutionCreateWithoutClubsInput = {
   id?: string;
   name: string;
@@ -478,6 +511,7 @@ export type InstitutionCreateWithoutClubsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionUncheckedCreateWithoutClubsInput = {
@@ -490,6 +524,7 @@ export type InstitutionUncheckedCreateWithoutClubsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionCreateOrConnectWithoutClubsInput = {
@@ -530,6 +565,7 @@ export type InstitutionUpdateWithoutClubsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput;
 };
 
 export type InstitutionUncheckedUpdateWithoutClubsInput = {
@@ -542,6 +578,7 @@ export type InstitutionUncheckedUpdateWithoutClubsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput;
 };
 
 export type InstitutionCreateWithoutSeasonsInput = {
@@ -554,6 +591,7 @@ export type InstitutionCreateWithoutSeasonsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionUncheckedCreateWithoutSeasonsInput = {
@@ -566,6 +604,7 @@ export type InstitutionUncheckedCreateWithoutSeasonsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput;
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput;
 };
 
 export type InstitutionCreateOrConnectWithoutSeasonsInput = {
@@ -606,6 +645,7 @@ export type InstitutionUpdateWithoutSeasonsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput;
 };
 
 export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
@@ -618,6 +658,87 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput;
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput;
+};
+
+export type InstitutionCreateWithoutSchoolsInput = {
+  id?: string;
+  name: string;
+  imageUrl?: string | null;
+  address: string;
+  phone?: string | null;
+  email?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput;
+  seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput;
+};
+
+export type InstitutionUncheckedCreateWithoutSchoolsInput = {
+  id?: string;
+  name: string;
+  imageUrl?: string | null;
+  address: string;
+  phone?: string | null;
+  email?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput;
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput;
+};
+
+export type InstitutionCreateOrConnectWithoutSchoolsInput = {
+  where: Prisma.InstitutionWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.InstitutionCreateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedCreateWithoutSchoolsInput
+  >;
+};
+
+export type InstitutionUpsertWithoutSchoolsInput = {
+  update: Prisma.XOR<
+    Prisma.InstitutionUpdateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedUpdateWithoutSchoolsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.InstitutionCreateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedCreateWithoutSchoolsInput
+  >;
+  where?: Prisma.InstitutionWhereInput;
+};
+
+export type InstitutionUpdateToOneWithWhereWithoutSchoolsInput = {
+  where?: Prisma.InstitutionWhereInput;
+  data: Prisma.XOR<
+    Prisma.InstitutionUpdateWithoutSchoolsInput,
+    Prisma.InstitutionUncheckedUpdateWithoutSchoolsInput
+  >;
+};
+
+export type InstitutionUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  address?: Prisma.StringFieldUpdateOperationsInput | string;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput;
+  seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput;
+};
+
+export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  address?: Prisma.StringFieldUpdateOperationsInput | string;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput;
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput;
 };
 
 /**
@@ -627,6 +748,7 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
 export type InstitutionCountOutputType = {
   clubs: number;
   seasons: number;
+  schools: number;
 };
 
 export type InstitutionCountOutputTypeSelect<
@@ -635,6 +757,7 @@ export type InstitutionCountOutputTypeSelect<
 > = {
   clubs?: boolean | InstitutionCountOutputTypeCountClubsArgs;
   seasons?: boolean | InstitutionCountOutputTypeCountSeasonsArgs;
+  schools?: boolean | InstitutionCountOutputTypeCountSchoolsArgs;
 };
 
 /**
@@ -670,6 +793,16 @@ export type InstitutionCountOutputTypeCountSeasonsArgs<
   where?: Prisma.SeasonWhereInput;
 };
 
+/**
+ * InstitutionCountOutputType without action
+ */
+export type InstitutionCountOutputTypeCountSchoolsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.SchoolWhereInput;
+};
+
 export type InstitutionSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -685,6 +818,7 @@ export type InstitutionSelect<
     updatedAt?: boolean;
     clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>;
     seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>;
+    schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>;
     _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['institution']
@@ -755,6 +889,7 @@ export type InstitutionInclude<
 > = {
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>;
   seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>;
+  schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>;
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type InstitutionIncludeCreateManyAndReturn<
@@ -774,6 +909,7 @@ export type $InstitutionPayload<
   objects: {
     clubs: Prisma.$ClubPayload<ExtArgs>[];
     seasons: Prisma.$SeasonPayload<ExtArgs>[];
+    schools: Prisma.$SchoolPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1360,6 +1496,17 @@ export interface Prisma__InstitutionClient<
       >
     | Null
   >;
+  schools<T extends Prisma.Institution$schoolsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Institution$schoolsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$SchoolPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1924,6 +2071,35 @@ export type Institution$seasonsArgs<
   take?: number;
   skip?: number;
   distinct?: Prisma.SeasonScalarFieldEnum | Prisma.SeasonScalarFieldEnum[];
+};
+
+/**
+ * Institution.schools
+ */
+export type Institution$schoolsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the School
+   */
+  select?: Prisma.SchoolSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the School
+   */
+  omit?: Prisma.SchoolOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolInclude<ExtArgs> | null;
+  where?: Prisma.SchoolWhereInput;
+  orderBy?:
+    | Prisma.SchoolOrderByWithRelationInput
+    | Prisma.SchoolOrderByWithRelationInput[];
+  cursor?: Prisma.SchoolWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.SchoolScalarFieldEnum | Prisma.SchoolScalarFieldEnum[];
 };
 
 /**

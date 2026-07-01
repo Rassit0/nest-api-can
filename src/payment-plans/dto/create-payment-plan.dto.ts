@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDecimal,
   IsInt,
@@ -15,7 +15,7 @@ import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { IsAfter } from 'src/common/validators/decorators/is-after.decorator';
 
 export class CreatePaymentPlanDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description:
       'ID de la oferta de membresía a la que pertenece este plan de pago',
@@ -30,7 +30,26 @@ export class CreatePaymentPlanDto {
       constraint1: 'teamSeasonId',
     }),
   })
-  teamSeasonId: string;
+  @IsOptional()
+  teamSeasonId?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description:
+      'ID de la temporada del curso a la que pertenece este plan de pago',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'courseSeasonId',
+    }),
+  })
+  @Exists('courseSeason', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'courseSeasonId',
+    }),
+  })
+  @IsOptional()
+  courseSeasonId?: string;
 
   @ApiProperty({
     example:

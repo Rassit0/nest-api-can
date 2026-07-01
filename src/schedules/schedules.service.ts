@@ -13,36 +13,69 @@ export const scheduleSelect: Prisma.ScheduleSelect = {
   endTime: true,
   createdAt: true,
   updatedAt: true,
-  teamSeason: {
-    select: {
-      id: true,
-      gender: true,
-      team: {
-        select: {
-          id: true,
-          name: true,
-          imageUrl: true,
-        },
-      },
-      season: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      category: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  },
   location: {
     select: {
       id: true,
       name: true,
       address: true,
+    },
+  },
+  scheduleTeams: {
+    select: {
+      teamSeason: {
+        select: {
+          id: true,
+          gender: true,
+          team: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  },
+  scheduleCourses: {
+    select: {
+      courseSeason: {
+        select: {
+          id: true,
+          gender: true,
+          course: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
     },
   },
 };
@@ -54,8 +87,32 @@ export class SchedulesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createScheduleDto: CreateScheduleDto) {
+    const {
+      teamSeasonIds,
+      courseSeasonIds,
+      locationId,
+      dayOfWeek,
+      startTime,
+      endTime,
+    } = createScheduleDto;
+
     const newSchedule = await this.prisma.schedule.create({
-      data: createScheduleDto,
+      data: {
+        dayOfWeek,
+        startTime,
+        endTime,
+        locationId,
+        scheduleTeams: teamSeasonIds
+          ? {
+              create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
+            }
+          : undefined,
+        scheduleCourses: courseSeasonIds
+          ? {
+              create: courseSeasonIds.map((id) => ({ courseSeasonId: id })),
+            }
+          : undefined,
+      },
       select: scheduleSelect,
     });
 
@@ -80,15 +137,30 @@ export class SchedulesService {
     if (search) {
       where.OR = [
         {
-          teamSeason: {
-            team: {
-              name: { contains: search, mode: 'insensitive' },
+          location: {
+            name: { contains: search, mode: 'insensitive' },
+          },
+        },
+        {
+          scheduleTeams: {
+            some: {
+              teamSeason: {
+                team: {
+                  name: { contains: search, mode: 'insensitive' },
+                },
+              },
             },
           },
         },
         {
-          location: {
-            name: { contains: search, mode: 'insensitive' },
+          scheduleCourses: {
+            some: {
+              courseSeason: {
+                course: {
+                  name: { contains: search, mode: 'insensitive' },
+                },
+              },
+            },
           },
         },
       ];
@@ -136,10 +208,52 @@ export class SchedulesService {
       throw new NotFoundException('El horario solicitado no fue encontrado');
     }
 
-    const updatedSchedule = await this.prisma.schedule.update({
-      where: { id },
-      data: updateScheduleDto,
-      select: scheduleSelect,
+    const {
+      teamSeasonIds,
+      courseSeasonIds,
+      locationId,
+      dayOfWeek,
+      startTime,
+      endTime,
+    } = updateScheduleDto;
+
+    const updatedSchedule = await this.prisma.$transaction(async (tx) => {
+      // Si se provee teamSeasonIds, limpiar y regenerar
+      if (teamSeasonIds !== undefined) {
+        await tx.scheduleTeam.deleteMany({ where: { scheduleId: id } });
+        if (teamSeasonIds) {
+          await tx.scheduleTeam.createMany({
+            data: teamSeasonIds.map((teamSeasonId) => ({
+              scheduleId: id,
+              teamSeasonId,
+            })),
+          });
+        }
+      }
+
+      // Si se provee courseSeasonIds, limpiar y regenerar
+      if (courseSeasonIds !== undefined) {
+        await tx.scheduleCourse.deleteMany({ where: { scheduleId: id } });
+        if (courseSeasonIds) {
+          await tx.scheduleCourse.createMany({
+            data: courseSeasonIds.map((courseSeasonId) => ({
+              scheduleId: id,
+              courseSeasonId,
+            })),
+          });
+        }
+      }
+
+      return await tx.schedule.update({
+        where: { id },
+        data: {
+          dayOfWeek,
+          startTime,
+          endTime,
+          locationId,
+        },
+        select: scheduleSelect,
+      });
     });
 
     return {

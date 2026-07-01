@@ -36,7 +36,6 @@ export type SessionSumAggregateOutputType = {
 
 export type SessionMinAggregateOutputType = {
   id: string | null;
-  teamSeasonId: string | null;
   locationId: string | null;
   title: string | null;
   dateTime: Date | null;
@@ -47,7 +46,6 @@ export type SessionMinAggregateOutputType = {
 
 export type SessionMaxAggregateOutputType = {
   id: string | null;
-  teamSeasonId: string | null;
   locationId: string | null;
   title: string | null;
   dateTime: Date | null;
@@ -58,7 +56,6 @@ export type SessionMaxAggregateOutputType = {
 
 export type SessionCountAggregateOutputType = {
   id: number;
-  teamSeasonId: number;
   locationId: number;
   title: number;
   dateTime: number;
@@ -78,7 +75,6 @@ export type SessionSumAggregateInputType = {
 
 export type SessionMinAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   title?: true;
   dateTime?: true;
@@ -89,7 +85,6 @@ export type SessionMinAggregateInputType = {
 
 export type SessionMaxAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   title?: true;
   dateTime?: true;
@@ -100,7 +95,6 @@ export type SessionMaxAggregateInputType = {
 
 export type SessionCountAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   title?: true;
   dateTime?: true;
@@ -205,7 +199,6 @@ export type SessionGroupByArgs<
 
 export type SessionGroupByOutputType = {
   id: string;
-  teamSeasonId: string;
   locationId: string | null;
   title: string | null;
   dateTime: Date;
@@ -237,35 +230,32 @@ export type SessionWhereInput = {
   OR?: Prisma.SessionWhereInput[];
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[];
   id?: Prisma.StringFilter<'Session'> | string;
-  teamSeasonId?: Prisma.StringFilter<'Session'> | string;
   locationId?: Prisma.StringNullableFilter<'Session'> | string | null;
   title?: Prisma.StringNullableFilter<'Session'> | string | null;
   dateTime?: Prisma.DateTimeFilter<'Session'> | Date | string;
   durationMin?: Prisma.IntFilter<'Session'> | number;
   createdAt?: Prisma.DateTimeFilter<'Session'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Session'> | Date | string;
-  teamSeason?: Prisma.XOR<
-    Prisma.TeamSeasonScalarRelationFilter,
-    Prisma.TeamSeasonWhereInput
-  >;
   location?: Prisma.XOR<
     Prisma.LocationNullableScalarRelationFilter,
     Prisma.LocationWhereInput
   > | null;
+  sessionTeams?: Prisma.SessionTeamListRelationFilter;
+  sessionCourses?: Prisma.SessionCourseListRelationFilter;
   bookings?: Prisma.SessionBookingListRelationFilter;
 };
 
 export type SessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrderInput | Prisma.SortOrder;
   title?: Prisma.SortOrderInput | Prisma.SortOrder;
   dateTime?: Prisma.SortOrder;
   durationMin?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput;
   location?: Prisma.LocationOrderByWithRelationInput;
+  sessionTeams?: Prisma.SessionTeamOrderByRelationAggregateInput;
+  sessionCourses?: Prisma.SessionCourseOrderByRelationAggregateInput;
   bookings?: Prisma.SessionBookingOrderByRelationAggregateInput;
 };
 
@@ -275,21 +265,18 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<
     AND?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[];
     OR?: Prisma.SessionWhereInput[];
     NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[];
-    teamSeasonId?: Prisma.StringFilter<'Session'> | string;
     locationId?: Prisma.StringNullableFilter<'Session'> | string | null;
     title?: Prisma.StringNullableFilter<'Session'> | string | null;
     dateTime?: Prisma.DateTimeFilter<'Session'> | Date | string;
     durationMin?: Prisma.IntFilter<'Session'> | number;
     createdAt?: Prisma.DateTimeFilter<'Session'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Session'> | Date | string;
-    teamSeason?: Prisma.XOR<
-      Prisma.TeamSeasonScalarRelationFilter,
-      Prisma.TeamSeasonWhereInput
-    >;
     location?: Prisma.XOR<
       Prisma.LocationNullableScalarRelationFilter,
       Prisma.LocationWhereInput
     > | null;
+    sessionTeams?: Prisma.SessionTeamListRelationFilter;
+    sessionCourses?: Prisma.SessionCourseListRelationFilter;
     bookings?: Prisma.SessionBookingListRelationFilter;
   },
   'id'
@@ -297,7 +284,6 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrderInput | Prisma.SortOrder;
   title?: Prisma.SortOrderInput | Prisma.SortOrder;
   dateTime?: Prisma.SortOrder;
@@ -320,7 +306,6 @@ export type SessionScalarWhereWithAggregatesInput = {
     | Prisma.SessionScalarWhereWithAggregatesInput
     | Prisma.SessionScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Session'> | string;
-  teamSeasonId?: Prisma.StringWithAggregatesFilter<'Session'> | string;
   locationId?:
     | Prisma.StringNullableWithAggregatesFilter<'Session'>
     | string
@@ -339,20 +324,22 @@ export type SessionCreateInput = {
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSessionsInput;
   location?: Prisma.LocationCreateNestedOneWithoutSessionsInput;
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput;
 };
 
 export type SessionUncheckedCreateInput = {
   id?: string;
-  teamSeasonId: string;
   locationId?: string | null;
   title?: string | null;
   dateTime: Date | string;
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput;
 };
 
@@ -363,26 +350,27 @@ export type SessionUpdateInput = {
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSessionsNestedInput;
   location?: Prisma.LocationUpdateOneWithoutSessionsNestedInput;
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput;
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput;
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionCreateManyInput = {
   id?: string;
-  teamSeasonId: string;
   locationId?: string | null;
   title?: string | null;
   dateTime: Date | string;
@@ -402,7 +390,6 @@ export type SessionUpdateManyMutationInput = {
 
 export type SessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -423,7 +410,6 @@ export type SessionOrderByRelationAggregateInput = {
 
 export type SessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   dateTime?: Prisma.SortOrder;
@@ -438,7 +424,6 @@ export type SessionAvgOrderByAggregateInput = {
 
 export type SessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   dateTime?: Prisma.SortOrder;
@@ -449,7 +434,6 @@ export type SessionMaxOrderByAggregateInput = {
 
 export type SessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   dateTime?: Prisma.SortOrder;
@@ -561,98 +545,56 @@ export type SessionUncheckedUpdateManyWithoutLocationNestedInput = {
     | Prisma.SessionScalarWhereInput[];
 };
 
-export type SessionCreateNestedManyWithoutTeamSeasonInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.SessionCreateWithoutTeamSeasonInput,
-        Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.SessionCreateWithoutTeamSeasonInput[]
-    | Prisma.SessionUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput[];
-  createMany?: Prisma.SessionCreateManyTeamSeasonInputEnvelope;
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
+export type SessionCreateNestedOneWithoutSessionTeamsInput = {
+  create?: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedCreateWithoutSessionTeamsInput
+  >;
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutSessionTeamsInput;
+  connect?: Prisma.SessionWhereUniqueInput;
 };
 
-export type SessionUncheckedCreateNestedManyWithoutTeamSeasonInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.SessionCreateWithoutTeamSeasonInput,
-        Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.SessionCreateWithoutTeamSeasonInput[]
-    | Prisma.SessionUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput[];
-  createMany?: Prisma.SessionCreateManyTeamSeasonInputEnvelope;
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
+export type SessionUpdateOneRequiredWithoutSessionTeamsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedCreateWithoutSessionTeamsInput
+  >;
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutSessionTeamsInput;
+  upsert?: Prisma.SessionUpsertWithoutSessionTeamsInput;
+  connect?: Prisma.SessionWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.SessionUpdateToOneWithWhereWithoutSessionTeamsInput,
+      Prisma.SessionUpdateWithoutSessionTeamsInput
+    >,
+    Prisma.SessionUncheckedUpdateWithoutSessionTeamsInput
+  >;
 };
 
-export type SessionUpdateManyWithoutTeamSeasonNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.SessionCreateWithoutTeamSeasonInput,
-        Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.SessionCreateWithoutTeamSeasonInput[]
-    | Prisma.SessionUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput[];
-  upsert?:
-    | Prisma.SessionUpsertWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.SessionUpsertWithWhereUniqueWithoutTeamSeasonInput[];
-  createMany?: Prisma.SessionCreateManyTeamSeasonInputEnvelope;
-  set?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  disconnect?:
-    | Prisma.SessionWhereUniqueInput
-    | Prisma.SessionWhereUniqueInput[];
-  delete?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  update?:
-    | Prisma.SessionUpdateWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.SessionUpdateWithWhereUniqueWithoutTeamSeasonInput[];
-  updateMany?:
-    | Prisma.SessionUpdateManyWithWhereWithoutTeamSeasonInput
-    | Prisma.SessionUpdateManyWithWhereWithoutTeamSeasonInput[];
-  deleteMany?:
-    | Prisma.SessionScalarWhereInput
-    | Prisma.SessionScalarWhereInput[];
+export type SessionCreateNestedOneWithoutSessionCoursesInput = {
+  create?: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedCreateWithoutSessionCoursesInput
+  >;
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutSessionCoursesInput;
+  connect?: Prisma.SessionWhereUniqueInput;
 };
 
-export type SessionUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.SessionCreateWithoutTeamSeasonInput,
-        Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.SessionCreateWithoutTeamSeasonInput[]
-    | Prisma.SessionUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.SessionCreateOrConnectWithoutTeamSeasonInput[];
-  upsert?:
-    | Prisma.SessionUpsertWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.SessionUpsertWithWhereUniqueWithoutTeamSeasonInput[];
-  createMany?: Prisma.SessionCreateManyTeamSeasonInputEnvelope;
-  set?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  disconnect?:
-    | Prisma.SessionWhereUniqueInput
-    | Prisma.SessionWhereUniqueInput[];
-  delete?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[];
-  update?:
-    | Prisma.SessionUpdateWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.SessionUpdateWithWhereUniqueWithoutTeamSeasonInput[];
-  updateMany?:
-    | Prisma.SessionUpdateManyWithWhereWithoutTeamSeasonInput
-    | Prisma.SessionUpdateManyWithWhereWithoutTeamSeasonInput[];
-  deleteMany?:
-    | Prisma.SessionScalarWhereInput
-    | Prisma.SessionScalarWhereInput[];
+export type SessionUpdateOneRequiredWithoutSessionCoursesNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedCreateWithoutSessionCoursesInput
+  >;
+  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutSessionCoursesInput;
+  upsert?: Prisma.SessionUpsertWithoutSessionCoursesInput;
+  connect?: Prisma.SessionWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.SessionUpdateToOneWithWhereWithoutSessionCoursesInput,
+      Prisma.SessionUpdateWithoutSessionCoursesInput
+    >,
+    Prisma.SessionUncheckedUpdateWithoutSessionCoursesInput
+  >;
 };
 
 export type SessionCreateNestedOneWithoutBookingsInput = {
@@ -688,18 +630,20 @@ export type SessionCreateWithoutLocationInput = {
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSessionsInput;
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput;
 };
 
 export type SessionUncheckedCreateWithoutLocationInput = {
   id?: string;
-  teamSeasonId: string;
   title?: string | null;
   dateTime: Date | string;
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput;
 };
 
@@ -751,7 +695,6 @@ export type SessionScalarWhereInput = {
   OR?: Prisma.SessionScalarWhereInput[];
   NOT?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[];
   id?: Prisma.StringFilter<'Session'> | string;
-  teamSeasonId?: Prisma.StringFilter<'Session'> | string;
   locationId?: Prisma.StringNullableFilter<'Session'> | string | null;
   title?: Prisma.StringNullableFilter<'Session'> | string | null;
   dateTime?: Prisma.DateTimeFilter<'Session'> | Date | string;
@@ -760,7 +703,7 @@ export type SessionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'Session'> | Date | string;
 };
 
-export type SessionCreateWithoutTeamSeasonInput = {
+export type SessionCreateWithoutSessionTeamsInput = {
   id?: string;
   title?: string | null;
   dateTime: Date | string;
@@ -768,10 +711,11 @@ export type SessionCreateWithoutTeamSeasonInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   location?: Prisma.LocationCreateNestedOneWithoutSessionsInput;
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput;
 };
 
-export type SessionUncheckedCreateWithoutTeamSeasonInput = {
+export type SessionUncheckedCreateWithoutSessionTeamsInput = {
   id?: string;
   locationId?: string | null;
   title?: string | null;
@@ -779,50 +723,136 @@ export type SessionUncheckedCreateWithoutTeamSeasonInput = {
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput;
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput;
 };
 
-export type SessionCreateOrConnectWithoutTeamSeasonInput = {
+export type SessionCreateOrConnectWithoutSessionTeamsInput = {
   where: Prisma.SessionWhereUniqueInput;
   create: Prisma.XOR<
-    Prisma.SessionCreateWithoutTeamSeasonInput,
-    Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
+    Prisma.SessionCreateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedCreateWithoutSessionTeamsInput
   >;
 };
 
-export type SessionCreateManyTeamSeasonInputEnvelope = {
-  data:
-    | Prisma.SessionCreateManyTeamSeasonInput
-    | Prisma.SessionCreateManyTeamSeasonInput[];
-  skipDuplicates?: boolean;
-};
-
-export type SessionUpsertWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.SessionWhereUniqueInput;
+export type SessionUpsertWithoutSessionTeamsInput = {
   update: Prisma.XOR<
-    Prisma.SessionUpdateWithoutTeamSeasonInput,
-    Prisma.SessionUncheckedUpdateWithoutTeamSeasonInput
+    Prisma.SessionUpdateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedUpdateWithoutSessionTeamsInput
   >;
   create: Prisma.XOR<
-    Prisma.SessionCreateWithoutTeamSeasonInput,
-    Prisma.SessionUncheckedCreateWithoutTeamSeasonInput
+    Prisma.SessionCreateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedCreateWithoutSessionTeamsInput
+  >;
+  where?: Prisma.SessionWhereInput;
+};
+
+export type SessionUpdateToOneWithWhereWithoutSessionTeamsInput = {
+  where?: Prisma.SessionWhereInput;
+  data: Prisma.XOR<
+    Prisma.SessionUpdateWithoutSessionTeamsInput,
+    Prisma.SessionUncheckedUpdateWithoutSessionTeamsInput
   >;
 };
 
-export type SessionUpdateWithWhereUniqueWithoutTeamSeasonInput = {
+export type SessionUpdateWithoutSessionTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  location?: Prisma.LocationUpdateOneWithoutSessionsNestedInput;
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput;
+  bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput;
+};
+
+export type SessionUncheckedUpdateWithoutSessionTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput;
+  bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput;
+};
+
+export type SessionCreateWithoutSessionCoursesInput = {
+  id?: string;
+  title?: string | null;
+  dateTime: Date | string;
+  durationMin?: number;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  location?: Prisma.LocationCreateNestedOneWithoutSessionsInput;
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput;
+  bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput;
+};
+
+export type SessionUncheckedCreateWithoutSessionCoursesInput = {
+  id?: string;
+  locationId?: string | null;
+  title?: string | null;
+  dateTime: Date | string;
+  durationMin?: number;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput;
+  bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput;
+};
+
+export type SessionCreateOrConnectWithoutSessionCoursesInput = {
   where: Prisma.SessionWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.SessionUpdateWithoutTeamSeasonInput,
-    Prisma.SessionUncheckedUpdateWithoutTeamSeasonInput
+  create: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedCreateWithoutSessionCoursesInput
   >;
 };
 
-export type SessionUpdateManyWithWhereWithoutTeamSeasonInput = {
-  where: Prisma.SessionScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.SessionUpdateManyMutationInput,
-    Prisma.SessionUncheckedUpdateManyWithoutTeamSeasonInput
+export type SessionUpsertWithoutSessionCoursesInput = {
+  update: Prisma.XOR<
+    Prisma.SessionUpdateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedUpdateWithoutSessionCoursesInput
   >;
+  create: Prisma.XOR<
+    Prisma.SessionCreateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedCreateWithoutSessionCoursesInput
+  >;
+  where?: Prisma.SessionWhereInput;
+};
+
+export type SessionUpdateToOneWithWhereWithoutSessionCoursesInput = {
+  where?: Prisma.SessionWhereInput;
+  data: Prisma.XOR<
+    Prisma.SessionUpdateWithoutSessionCoursesInput,
+    Prisma.SessionUncheckedUpdateWithoutSessionCoursesInput
+  >;
+};
+
+export type SessionUpdateWithoutSessionCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  location?: Prisma.LocationUpdateOneWithoutSessionsNestedInput;
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput;
+  bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput;
+};
+
+export type SessionUncheckedUpdateWithoutSessionCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput;
+  bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionCreateWithoutBookingsInput = {
@@ -832,19 +862,21 @@ export type SessionCreateWithoutBookingsInput = {
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSessionsInput;
   location?: Prisma.LocationCreateNestedOneWithoutSessionsInput;
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput;
 };
 
 export type SessionUncheckedCreateWithoutBookingsInput = {
   id?: string;
-  teamSeasonId: string;
   locationId?: string | null;
   title?: string | null;
   dateTime: Date | string;
   durationMin?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput;
 };
 
 export type SessionCreateOrConnectWithoutBookingsInput = {
@@ -882,24 +914,25 @@ export type SessionUpdateWithoutBookingsInput = {
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSessionsNestedInput;
   location?: Prisma.LocationUpdateOneWithoutSessionsNestedInput;
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionCreateManyLocationInput = {
   id?: string;
-  teamSeasonId: string;
   title?: string | null;
   dateTime: Date | string;
   durationMin?: number;
@@ -914,66 +947,25 @@ export type SessionUpdateWithoutLocationInput = {
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSessionsNestedInput;
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput;
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionUncheckedUpdateWithoutLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput;
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput;
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput;
 };
 
 export type SessionUncheckedUpdateManyWithoutLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-};
-
-export type SessionCreateManyTeamSeasonInput = {
-  id?: string;
-  locationId?: string | null;
-  title?: string | null;
-  dateTime: Date | string;
-  durationMin?: number;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-};
-
-export type SessionUpdateWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  location?: Prisma.LocationUpdateOneWithoutSessionsNestedInput;
-  bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput;
-};
-
-export type SessionUncheckedUpdateWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput;
-};
-
-export type SessionUncheckedUpdateManyWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -986,6 +978,8 @@ export type SessionUncheckedUpdateManyWithoutTeamSeasonInput = {
  */
 
 export type SessionCountOutputType = {
+  sessionTeams: number;
+  sessionCourses: number;
   bookings: number;
 };
 
@@ -993,6 +987,8 @@ export type SessionCountOutputTypeSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
+  sessionTeams?: boolean | SessionCountOutputTypeCountSessionTeamsArgs;
+  sessionCourses?: boolean | SessionCountOutputTypeCountSessionCoursesArgs;
   bookings?: boolean | SessionCountOutputTypeCountBookingsArgs;
 };
 
@@ -1012,6 +1008,26 @@ export type SessionCountOutputTypeDefaultArgs<
 /**
  * SessionCountOutputType without action
  */
+export type SessionCountOutputTypeCountSessionTeamsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.SessionTeamWhereInput;
+};
+
+/**
+ * SessionCountOutputType without action
+ */
+export type SessionCountOutputTypeCountSessionCoursesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.SessionCourseWhereInput;
+};
+
+/**
+ * SessionCountOutputType without action
+ */
 export type SessionCountOutputTypeCountBookingsArgs<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -1025,15 +1041,15 @@ export type SessionSelect<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     title?: boolean;
     dateTime?: boolean;
     durationMin?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
+    sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>;
+    sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>;
     bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>;
     _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>;
   },
@@ -1046,14 +1062,12 @@ export type SessionSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     title?: boolean;
     dateTime?: boolean;
     durationMin?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
   },
   ExtArgs['result']['session']
@@ -1065,14 +1079,12 @@ export type SessionSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     title?: boolean;
     dateTime?: boolean;
     durationMin?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
   },
   ExtArgs['result']['session']
@@ -1080,7 +1092,6 @@ export type SessionSelectUpdateManyAndReturn<
 
 export type SessionSelectScalar = {
   id?: boolean;
-  teamSeasonId?: boolean;
   locationId?: boolean;
   title?: boolean;
   dateTime?: boolean;
@@ -1094,7 +1105,6 @@ export type SessionOmit<
     runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
   | 'id'
-  | 'teamSeasonId'
   | 'locationId'
   | 'title'
   | 'dateTime'
@@ -1107,8 +1117,9 @@ export type SessionInclude<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
+  sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>;
+  sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>;
   bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>;
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -1116,14 +1127,12 @@ export type SessionIncludeCreateManyAndReturn<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
 };
 export type SessionIncludeUpdateManyAndReturn<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Session$locationArgs<ExtArgs>;
 };
 
@@ -1133,14 +1142,14 @@ export type $SessionPayload<
 > = {
   name: 'Session';
   objects: {
-    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>;
     location: Prisma.$LocationPayload<ExtArgs> | null;
+    sessionTeams: Prisma.$SessionTeamPayload<ExtArgs>[];
+    sessionCourses: Prisma.$SessionCoursePayload<ExtArgs>[];
     bookings: Prisma.$SessionBookingPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      teamSeasonId: string;
       locationId: string | null;
       title: string | null;
       dateTime: Date;
@@ -1697,20 +1706,6 @@ export interface Prisma__SessionClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__TeamSeasonClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$TeamSeasonPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
   location<T extends Prisma.Session$locationArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Session$locationArgs<ExtArgs>>,
   ): Prisma.Prisma__LocationClient<
@@ -1723,6 +1718,28 @@ export interface Prisma__SessionClient<
     null,
     ExtArgs,
     GlobalOmitOptions
+  >;
+  sessionTeams<T extends Prisma.Session$sessionTeamsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Session$sessionTeamsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$SessionTeamPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  sessionCourses<T extends Prisma.Session$sessionCoursesArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Session$sessionCoursesArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$SessionCoursePayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
   >;
   bookings<T extends Prisma.Session$bookingsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Session$bookingsArgs<ExtArgs>>,
@@ -1778,7 +1795,6 @@ export interface Prisma__SessionClient<
  */
 export interface SessionFieldRefs {
   readonly id: Prisma.FieldRef<'Session', 'String'>;
-  readonly teamSeasonId: Prisma.FieldRef<'Session', 'String'>;
   readonly locationId: Prisma.FieldRef<'Session', 'String'>;
   readonly title: Prisma.FieldRef<'Session', 'String'>;
   readonly dateTime: Prisma.FieldRef<'Session', 'DateTime'>;
@@ -2265,6 +2281,68 @@ export type Session$locationArgs<
    */
   include?: Prisma.LocationInclude<ExtArgs> | null;
   where?: Prisma.LocationWhereInput;
+};
+
+/**
+ * Session.sessionTeams
+ */
+export type Session$sessionTeamsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the SessionTeam
+   */
+  select?: Prisma.SessionTeamSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the SessionTeam
+   */
+  omit?: Prisma.SessionTeamOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionTeamInclude<ExtArgs> | null;
+  where?: Prisma.SessionTeamWhereInput;
+  orderBy?:
+    | Prisma.SessionTeamOrderByWithRelationInput
+    | Prisma.SessionTeamOrderByWithRelationInput[];
+  cursor?: Prisma.SessionTeamWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.SessionTeamScalarFieldEnum
+    | Prisma.SessionTeamScalarFieldEnum[];
+};
+
+/**
+ * Session.sessionCourses
+ */
+export type Session$sessionCoursesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the SessionCourse
+   */
+  select?: Prisma.SessionCourseSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the SessionCourse
+   */
+  omit?: Prisma.SessionCourseOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionCourseInclude<ExtArgs> | null;
+  where?: Prisma.SessionCourseWhereInput;
+  orderBy?:
+    | Prisma.SessionCourseOrderByWithRelationInput
+    | Prisma.SessionCourseOrderByWithRelationInput[];
+  cursor?: Prisma.SessionCourseWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.SessionCourseScalarFieldEnum
+    | Prisma.SessionCourseScalarFieldEnum[];
 };
 
 /**

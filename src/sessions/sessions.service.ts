@@ -13,36 +13,69 @@ export const sessionSelect: Prisma.SessionSelect = {
   durationMin: true,
   createdAt: true,
   updatedAt: true,
-  teamSeason: {
-    select: {
-      id: true,
-      gender: true,
-      team: {
-        select: {
-          id: true,
-          name: true,
-          imageUrl: true,
-        },
-      },
-      season: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      category: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  },
   location: {
     select: {
       id: true,
       name: true,
       address: true,
+    },
+  },
+  sessionTeams: {
+    select: {
+      teamSeason: {
+        select: {
+          id: true,
+          gender: true,
+          team: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  },
+  sessionCourses: {
+    select: {
+      courseSeason: {
+        select: {
+          id: true,
+          gender: true,
+          course: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
     },
   },
 };
@@ -54,13 +87,37 @@ export class SessionsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSessionDto: CreateSessionDto) {
+    const {
+      teamSeasonIds,
+      courseSeasonIds,
+      locationId,
+      title,
+      dateTime,
+      durationMin,
+    } = createSessionDto;
+
     const newSession = await this.prisma.session.create({
-      data: createSessionDto,
+      data: {
+        title,
+        dateTime,
+        durationMin,
+        locationId,
+        sessionTeams: teamSeasonIds
+          ? {
+              create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
+            }
+          : undefined,
+        sessionCourses: courseSeasonIds
+          ? {
+              create: courseSeasonIds.map((id) => ({ courseSeasonId: id })),
+            }
+          : undefined,
+      },
       select: sessionSelect,
     });
 
     return {
-      message: 'Sesión de entrenamiento programada exitosamente',
+      message: 'Sesión de entrenamiento/clase programada exitosamente',
       data: newSession,
     };
   }
@@ -81,15 +138,30 @@ export class SessionsService {
       where.OR = [
         { title: { contains: search, mode: 'insensitive' } },
         {
-          teamSeason: {
-            team: {
-              name: { contains: search, mode: 'insensitive' },
+          location: {
+            name: { contains: search, mode: 'insensitive' },
+          },
+        },
+        {
+          sessionTeams: {
+            some: {
+              teamSeason: {
+                team: {
+                  name: { contains: search, mode: 'insensitive' },
+                },
+              },
             },
           },
         },
         {
-          location: {
-            name: { contains: search, mode: 'insensitive' },
+          sessionCourses: {
+            some: {
+              courseSeason: {
+                course: {
+                  name: { contains: search, mode: 'insensitive' },
+                },
+              },
+            },
           },
         },
       ];
@@ -137,10 +209,52 @@ export class SessionsService {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }
 
-    const updatedSession = await this.prisma.session.update({
-      where: { id },
-      data: updateSessionDto,
-      select: sessionSelect,
+    const {
+      teamSeasonIds,
+      courseSeasonIds,
+      locationId,
+      title,
+      dateTime,
+      durationMin,
+    } = updateSessionDto;
+
+    const updatedSession = await this.prisma.$transaction(async (tx) => {
+      // Si se provee teamSeasonIds, limpiar y regenerar
+      if (teamSeasonIds !== undefined) {
+        await tx.sessionTeam.deleteMany({ where: { sessionId: id } });
+        if (teamSeasonIds) {
+          await tx.sessionTeam.createMany({
+            data: teamSeasonIds.map((teamSeasonId) => ({
+              sessionId: id,
+              teamSeasonId,
+            })),
+          });
+        }
+      }
+
+      // Si se provee courseSeasonIds, limpiar y regenerar
+      if (courseSeasonIds !== undefined) {
+        await tx.sessionCourse.deleteMany({ where: { sessionId: id } });
+        if (courseSeasonIds) {
+          await tx.sessionCourse.createMany({
+            data: courseSeasonIds.map((courseSeasonId) => ({
+              sessionId: id,
+              courseSeasonId,
+            })),
+          });
+        }
+      }
+
+      return await tx.session.update({
+        where: { id },
+        data: {
+          title,
+          dateTime,
+          durationMin,
+          locationId,
+        },
+        select: sessionSelect,
+      });
     });
 
     return {

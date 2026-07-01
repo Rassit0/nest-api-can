@@ -8,6 +8,7 @@ import { PaymentPlansPaginationDto } from './dto/pagination.dto';
 export const paymentPlanSelect: Prisma.PaymentPlanSelect = {
   id: true,
   teamSeasonId: true,
+  courseSeasonId: true,
   name: true,
   registrationDiscountPercent: true,
   monthlyDiscountPercent: true,
@@ -44,6 +45,7 @@ export class PaymentPlansService {
       orderBy = 'asc',
       sortField = 'createdAt',
       teamSeasonId,
+      courseSeasonId,
     } = paginationDto;
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
@@ -52,7 +54,12 @@ export class PaymentPlansService {
       name: search ? { contains: search, mode: 'insensitive' } : undefined,
     };
 
-    where.teamSeasonId = teamSeasonId;
+    if (teamSeasonId) {
+      where.teamSeasonId = teamSeasonId;
+    }
+    if (courseSeasonId) {
+      where.courseSeasonId = courseSeasonId;
+    }
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
     const [paymentPlans, totalItems] = await Promise.all([

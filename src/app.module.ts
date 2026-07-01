@@ -35,6 +35,27 @@ import { SessionBookingsModule } from './session-bookings/session-bookings.modul
 import { MatchesModule } from './matches/matches.module';
 import { MatchLineupsModule } from './match-lineups/match-lineups.module';
 
+// Nuevos módulos RBAC/Seguridad
+import { PermissionsModule } from './permissions/permissions.module';
+import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
+
+// Nuevos módulos Escolares
+import { SchoolsModule } from './schools/schools.module';
+import { CoursesModule } from './courses/courses.module';
+import { CourseSeasonsModule } from './course-seasons/course-seasons.module';
+import { CourseSeasonStaffModule } from './course-season-staff/course-season-staff.module';
+
+// Nuevos módulos de Alumnos e Inscripción/Cobro
+import { StudentsModule } from './students/students.module';
+import { StudentMembershipsModule } from './student-memberships/student-memberships.module';
+import { StudentDiscountsModule } from './student-discounts/student-discounts.module';
+import { StudentChargesModule } from './student-charges/student-charges.module';
+
+// Nuevos módulos de Evaluaciones e Incidencias de conducta
+import { SessionIncidentsModule } from './session-incidents/session-incidents.module';
+import { ProgressEvaluationsModule } from './progress-evaluations/progress-evaluations.module';
+
 @Module({
   imports: [
     CommonModule,
@@ -71,6 +92,21 @@ import { MatchLineupsModule } from './match-lineups/match-lineups.module';
     SessionBookingsModule,
     MatchesModule,
     MatchLineupsModule,
+
+    // Registrar nuevos módulos
+    PermissionsModule,
+    RolesModule,
+    UsersModule,
+    SchoolsModule,
+    CoursesModule,
+    CourseSeasonsModule,
+    CourseSeasonStaffModule,
+    StudentsModule,
+    StudentMembershipsModule,
+    StudentDiscountsModule,
+    StudentChargesModule,
+    SessionIncidentsModule,
+    ProgressEvaluationsModule,
   ],
   controllers: [AppController],
   providers: [

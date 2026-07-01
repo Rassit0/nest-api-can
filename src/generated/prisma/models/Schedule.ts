@@ -26,7 +26,6 @@ export type AggregateSchedule = {
 
 export type ScheduleMinAggregateOutputType = {
   id: string | null;
-  teamSeasonId: string | null;
   locationId: string | null;
   dayOfWeek: $Enums.DayOfWeek | null;
   startTime: string | null;
@@ -37,7 +36,6 @@ export type ScheduleMinAggregateOutputType = {
 
 export type ScheduleMaxAggregateOutputType = {
   id: string | null;
-  teamSeasonId: string | null;
   locationId: string | null;
   dayOfWeek: $Enums.DayOfWeek | null;
   startTime: string | null;
@@ -48,7 +46,6 @@ export type ScheduleMaxAggregateOutputType = {
 
 export type ScheduleCountAggregateOutputType = {
   id: number;
-  teamSeasonId: number;
   locationId: number;
   dayOfWeek: number;
   startTime: number;
@@ -60,7 +57,6 @@ export type ScheduleCountAggregateOutputType = {
 
 export type ScheduleMinAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   dayOfWeek?: true;
   startTime?: true;
@@ -71,7 +67,6 @@ export type ScheduleMinAggregateInputType = {
 
 export type ScheduleMaxAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   dayOfWeek?: true;
   startTime?: true;
@@ -82,7 +77,6 @@ export type ScheduleMaxAggregateInputType = {
 
 export type ScheduleCountAggregateInputType = {
   id?: true;
-  teamSeasonId?: true;
   locationId?: true;
   dayOfWeek?: true;
   startTime?: true;
@@ -173,7 +167,6 @@ export type ScheduleGroupByArgs<
 
 export type ScheduleGroupByOutputType = {
   id: string;
-  teamSeasonId: string;
   locationId: string | null;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
@@ -203,34 +196,31 @@ export type ScheduleWhereInput = {
   OR?: Prisma.ScheduleWhereInput[];
   NOT?: Prisma.ScheduleWhereInput | Prisma.ScheduleWhereInput[];
   id?: Prisma.StringFilter<'Schedule'> | string;
-  teamSeasonId?: Prisma.StringFilter<'Schedule'> | string;
   locationId?: Prisma.StringNullableFilter<'Schedule'> | string | null;
   dayOfWeek?: Prisma.EnumDayOfWeekFilter<'Schedule'> | $Enums.DayOfWeek;
   startTime?: Prisma.StringFilter<'Schedule'> | string;
   endTime?: Prisma.StringFilter<'Schedule'> | string;
   createdAt?: Prisma.DateTimeFilter<'Schedule'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Schedule'> | Date | string;
-  teamSeason?: Prisma.XOR<
-    Prisma.TeamSeasonScalarRelationFilter,
-    Prisma.TeamSeasonWhereInput
-  >;
   location?: Prisma.XOR<
     Prisma.LocationNullableScalarRelationFilter,
     Prisma.LocationWhereInput
   > | null;
+  scheduleTeams?: Prisma.ScheduleTeamListRelationFilter;
+  scheduleCourses?: Prisma.ScheduleCourseListRelationFilter;
 };
 
 export type ScheduleOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrderInput | Prisma.SortOrder;
   dayOfWeek?: Prisma.SortOrder;
   startTime?: Prisma.SortOrder;
   endTime?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput;
   location?: Prisma.LocationOrderByWithRelationInput;
+  scheduleTeams?: Prisma.ScheduleTeamOrderByRelationAggregateInput;
+  scheduleCourses?: Prisma.ScheduleCourseOrderByRelationAggregateInput;
 };
 
 export type ScheduleWhereUniqueInput = Prisma.AtLeast<
@@ -239,28 +229,24 @@ export type ScheduleWhereUniqueInput = Prisma.AtLeast<
     AND?: Prisma.ScheduleWhereInput | Prisma.ScheduleWhereInput[];
     OR?: Prisma.ScheduleWhereInput[];
     NOT?: Prisma.ScheduleWhereInput | Prisma.ScheduleWhereInput[];
-    teamSeasonId?: Prisma.StringFilter<'Schedule'> | string;
     locationId?: Prisma.StringNullableFilter<'Schedule'> | string | null;
     dayOfWeek?: Prisma.EnumDayOfWeekFilter<'Schedule'> | $Enums.DayOfWeek;
     startTime?: Prisma.StringFilter<'Schedule'> | string;
     endTime?: Prisma.StringFilter<'Schedule'> | string;
     createdAt?: Prisma.DateTimeFilter<'Schedule'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Schedule'> | Date | string;
-    teamSeason?: Prisma.XOR<
-      Prisma.TeamSeasonScalarRelationFilter,
-      Prisma.TeamSeasonWhereInput
-    >;
     location?: Prisma.XOR<
       Prisma.LocationNullableScalarRelationFilter,
       Prisma.LocationWhereInput
     > | null;
+    scheduleTeams?: Prisma.ScheduleTeamListRelationFilter;
+    scheduleCourses?: Prisma.ScheduleCourseListRelationFilter;
   },
   'id'
 >;
 
 export type ScheduleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrderInput | Prisma.SortOrder;
   dayOfWeek?: Prisma.SortOrder;
   startTime?: Prisma.SortOrder;
@@ -281,7 +267,6 @@ export type ScheduleScalarWhereWithAggregatesInput = {
     | Prisma.ScheduleScalarWhereWithAggregatesInput
     | Prisma.ScheduleScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Schedule'> | string;
-  teamSeasonId?: Prisma.StringWithAggregatesFilter<'Schedule'> | string;
   locationId?:
     | Prisma.StringNullableWithAggregatesFilter<'Schedule'>
     | string
@@ -302,19 +287,21 @@ export type ScheduleCreateInput = {
   endTime: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSchedulesInput;
   location?: Prisma.LocationCreateNestedOneWithoutSchedulesInput;
+  scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutScheduleInput;
+  scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutScheduleInput;
 };
 
 export type ScheduleUncheckedCreateInput = {
   id?: string;
-  teamSeasonId: string;
   locationId?: string | null;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
   endTime: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutScheduleInput;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedCreateNestedManyWithoutScheduleInput;
 };
 
 export type ScheduleUpdateInput = {
@@ -324,24 +311,25 @@ export type ScheduleUpdateInput = {
   endTime?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSchedulesNestedInput;
   location?: Prisma.LocationUpdateOneWithoutSchedulesNestedInput;
+  scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutScheduleNestedInput;
+  scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutScheduleNestedInput;
 };
 
 export type ScheduleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
   startTime?: Prisma.StringFieldUpdateOperationsInput | string;
   endTime?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutScheduleNestedInput;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutScheduleNestedInput;
 };
 
 export type ScheduleCreateManyInput = {
   id?: string;
-  teamSeasonId: string;
   locationId?: string | null;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
@@ -361,7 +349,6 @@ export type ScheduleUpdateManyMutationInput = {
 
 export type ScheduleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
   startTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -382,7 +369,6 @@ export type ScheduleOrderByRelationAggregateInput = {
 
 export type ScheduleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   dayOfWeek?: Prisma.SortOrder;
   startTime?: Prisma.SortOrder;
@@ -393,7 +379,6 @@ export type ScheduleCountOrderByAggregateInput = {
 
 export type ScheduleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   dayOfWeek?: Prisma.SortOrder;
   startTime?: Prisma.SortOrder;
@@ -404,13 +389,17 @@ export type ScheduleMaxOrderByAggregateInput = {
 
 export type ScheduleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  teamSeasonId?: Prisma.SortOrder;
   locationId?: Prisma.SortOrder;
   dayOfWeek?: Prisma.SortOrder;
   startTime?: Prisma.SortOrder;
   endTime?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+};
+
+export type ScheduleScalarRelationFilter = {
+  is?: Prisma.ScheduleWhereInput;
+  isNot?: Prisma.ScheduleWhereInput;
 };
 
 export type ScheduleCreateNestedManyWithoutLocationInput = {
@@ -507,102 +496,60 @@ export type ScheduleUncheckedUpdateManyWithoutLocationNestedInput = {
     | Prisma.ScheduleScalarWhereInput[];
 };
 
-export type ScheduleCreateNestedManyWithoutTeamSeasonInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ScheduleCreateWithoutTeamSeasonInput,
-        Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.ScheduleCreateWithoutTeamSeasonInput[]
-    | Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput[];
-  createMany?: Prisma.ScheduleCreateManyTeamSeasonInputEnvelope;
-  connect?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-};
-
-export type ScheduleUncheckedCreateNestedManyWithoutTeamSeasonInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ScheduleCreateWithoutTeamSeasonInput,
-        Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.ScheduleCreateWithoutTeamSeasonInput[]
-    | Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput[];
-  createMany?: Prisma.ScheduleCreateManyTeamSeasonInputEnvelope;
-  connect?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-};
-
-export type ScheduleUpdateManyWithoutTeamSeasonNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ScheduleCreateWithoutTeamSeasonInput,
-        Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.ScheduleCreateWithoutTeamSeasonInput[]
-    | Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput[];
-  upsert?:
-    | Prisma.ScheduleUpsertWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.ScheduleUpsertWithWhereUniqueWithoutTeamSeasonInput[];
-  createMany?: Prisma.ScheduleCreateManyTeamSeasonInputEnvelope;
-  set?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ScheduleWhereUniqueInput
-    | Prisma.ScheduleWhereUniqueInput[];
-  delete?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  connect?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  update?:
-    | Prisma.ScheduleUpdateWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.ScheduleUpdateWithWhereUniqueWithoutTeamSeasonInput[];
-  updateMany?:
-    | Prisma.ScheduleUpdateManyWithWhereWithoutTeamSeasonInput
-    | Prisma.ScheduleUpdateManyWithWhereWithoutTeamSeasonInput[];
-  deleteMany?:
-    | Prisma.ScheduleScalarWhereInput
-    | Prisma.ScheduleScalarWhereInput[];
-};
-
-export type ScheduleUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
-  create?:
-    | Prisma.XOR<
-        Prisma.ScheduleCreateWithoutTeamSeasonInput,
-        Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
-      >
-    | Prisma.ScheduleCreateWithoutTeamSeasonInput[]
-    | Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput[];
-  connectOrCreate?:
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput
-    | Prisma.ScheduleCreateOrConnectWithoutTeamSeasonInput[];
-  upsert?:
-    | Prisma.ScheduleUpsertWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.ScheduleUpsertWithWhereUniqueWithoutTeamSeasonInput[];
-  createMany?: Prisma.ScheduleCreateManyTeamSeasonInputEnvelope;
-  set?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  disconnect?:
-    | Prisma.ScheduleWhereUniqueInput
-    | Prisma.ScheduleWhereUniqueInput[];
-  delete?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  connect?: Prisma.ScheduleWhereUniqueInput | Prisma.ScheduleWhereUniqueInput[];
-  update?:
-    | Prisma.ScheduleUpdateWithWhereUniqueWithoutTeamSeasonInput
-    | Prisma.ScheduleUpdateWithWhereUniqueWithoutTeamSeasonInput[];
-  updateMany?:
-    | Prisma.ScheduleUpdateManyWithWhereWithoutTeamSeasonInput
-    | Prisma.ScheduleUpdateManyWithWhereWithoutTeamSeasonInput[];
-  deleteMany?:
-    | Prisma.ScheduleScalarWhereInput
-    | Prisma.ScheduleScalarWhereInput[];
-};
-
 export type EnumDayOfWeekFieldUpdateOperationsInput = {
   set?: $Enums.DayOfWeek;
+};
+
+export type ScheduleCreateNestedOneWithoutScheduleTeamsInput = {
+  create?: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleTeamsInput
+  >;
+  connectOrCreate?: Prisma.ScheduleCreateOrConnectWithoutScheduleTeamsInput;
+  connect?: Prisma.ScheduleWhereUniqueInput;
+};
+
+export type ScheduleUpdateOneRequiredWithoutScheduleTeamsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleTeamsInput
+  >;
+  connectOrCreate?: Prisma.ScheduleCreateOrConnectWithoutScheduleTeamsInput;
+  upsert?: Prisma.ScheduleUpsertWithoutScheduleTeamsInput;
+  connect?: Prisma.ScheduleWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.ScheduleUpdateToOneWithWhereWithoutScheduleTeamsInput,
+      Prisma.ScheduleUpdateWithoutScheduleTeamsInput
+    >,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleTeamsInput
+  >;
+};
+
+export type ScheduleCreateNestedOneWithoutScheduleCoursesInput = {
+  create?: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleCoursesInput
+  >;
+  connectOrCreate?: Prisma.ScheduleCreateOrConnectWithoutScheduleCoursesInput;
+  connect?: Prisma.ScheduleWhereUniqueInput;
+};
+
+export type ScheduleUpdateOneRequiredWithoutScheduleCoursesNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleCoursesInput
+  >;
+  connectOrCreate?: Prisma.ScheduleCreateOrConnectWithoutScheduleCoursesInput;
+  upsert?: Prisma.ScheduleUpsertWithoutScheduleCoursesInput;
+  connect?: Prisma.ScheduleWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.ScheduleUpdateToOneWithWhereWithoutScheduleCoursesInput,
+      Prisma.ScheduleUpdateWithoutScheduleCoursesInput
+    >,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleCoursesInput
+  >;
 };
 
 export type ScheduleCreateWithoutLocationInput = {
@@ -612,17 +559,19 @@ export type ScheduleCreateWithoutLocationInput = {
   endTime: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSchedulesInput;
+  scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutScheduleInput;
+  scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutScheduleInput;
 };
 
 export type ScheduleUncheckedCreateWithoutLocationInput = {
   id?: string;
-  teamSeasonId: string;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
   endTime: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutScheduleInput;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedCreateNestedManyWithoutScheduleInput;
 };
 
 export type ScheduleCreateOrConnectWithoutLocationInput = {
@@ -673,7 +622,6 @@ export type ScheduleScalarWhereInput = {
   OR?: Prisma.ScheduleScalarWhereInput[];
   NOT?: Prisma.ScheduleScalarWhereInput | Prisma.ScheduleScalarWhereInput[];
   id?: Prisma.StringFilter<'Schedule'> | string;
-  teamSeasonId?: Prisma.StringFilter<'Schedule'> | string;
   locationId?: Prisma.StringNullableFilter<'Schedule'> | string | null;
   dayOfWeek?: Prisma.EnumDayOfWeekFilter<'Schedule'> | $Enums.DayOfWeek;
   startTime?: Prisma.StringFilter<'Schedule'> | string;
@@ -682,7 +630,7 @@ export type ScheduleScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'Schedule'> | Date | string;
 };
 
-export type ScheduleCreateWithoutTeamSeasonInput = {
+export type ScheduleCreateWithoutScheduleTeamsInput = {
   id?: string;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
@@ -690,9 +638,10 @@ export type ScheduleCreateWithoutTeamSeasonInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   location?: Prisma.LocationCreateNestedOneWithoutSchedulesInput;
+  scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutScheduleInput;
 };
 
-export type ScheduleUncheckedCreateWithoutTeamSeasonInput = {
+export type ScheduleUncheckedCreateWithoutScheduleTeamsInput = {
   id?: string;
   locationId?: string | null;
   dayOfWeek: $Enums.DayOfWeek;
@@ -700,54 +649,133 @@ export type ScheduleUncheckedCreateWithoutTeamSeasonInput = {
   endTime: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedCreateNestedManyWithoutScheduleInput;
 };
 
-export type ScheduleCreateOrConnectWithoutTeamSeasonInput = {
+export type ScheduleCreateOrConnectWithoutScheduleTeamsInput = {
   where: Prisma.ScheduleWhereUniqueInput;
   create: Prisma.XOR<
-    Prisma.ScheduleCreateWithoutTeamSeasonInput,
-    Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
+    Prisma.ScheduleCreateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleTeamsInput
   >;
 };
 
-export type ScheduleCreateManyTeamSeasonInputEnvelope = {
-  data:
-    | Prisma.ScheduleCreateManyTeamSeasonInput
-    | Prisma.ScheduleCreateManyTeamSeasonInput[];
-  skipDuplicates?: boolean;
-};
-
-export type ScheduleUpsertWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.ScheduleWhereUniqueInput;
+export type ScheduleUpsertWithoutScheduleTeamsInput = {
   update: Prisma.XOR<
-    Prisma.ScheduleUpdateWithoutTeamSeasonInput,
-    Prisma.ScheduleUncheckedUpdateWithoutTeamSeasonInput
+    Prisma.ScheduleUpdateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleTeamsInput
   >;
   create: Prisma.XOR<
-    Prisma.ScheduleCreateWithoutTeamSeasonInput,
-    Prisma.ScheduleUncheckedCreateWithoutTeamSeasonInput
+    Prisma.ScheduleCreateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleTeamsInput
+  >;
+  where?: Prisma.ScheduleWhereInput;
+};
+
+export type ScheduleUpdateToOneWithWhereWithoutScheduleTeamsInput = {
+  where?: Prisma.ScheduleWhereInput;
+  data: Prisma.XOR<
+    Prisma.ScheduleUpdateWithoutScheduleTeamsInput,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleTeamsInput
   >;
 };
 
-export type ScheduleUpdateWithWhereUniqueWithoutTeamSeasonInput = {
+export type ScheduleUpdateWithoutScheduleTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  location?: Prisma.LocationUpdateOneWithoutSchedulesNestedInput;
+  scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutScheduleNestedInput;
+};
+
+export type ScheduleUncheckedUpdateWithoutScheduleTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutScheduleNestedInput;
+};
+
+export type ScheduleCreateWithoutScheduleCoursesInput = {
+  id?: string;
+  dayOfWeek: $Enums.DayOfWeek;
+  startTime: string;
+  endTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  location?: Prisma.LocationCreateNestedOneWithoutSchedulesInput;
+  scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutScheduleInput;
+};
+
+export type ScheduleUncheckedCreateWithoutScheduleCoursesInput = {
+  id?: string;
+  locationId?: string | null;
+  dayOfWeek: $Enums.DayOfWeek;
+  startTime: string;
+  endTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutScheduleInput;
+};
+
+export type ScheduleCreateOrConnectWithoutScheduleCoursesInput = {
   where: Prisma.ScheduleWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ScheduleUpdateWithoutTeamSeasonInput,
-    Prisma.ScheduleUncheckedUpdateWithoutTeamSeasonInput
+  create: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleCoursesInput
   >;
 };
 
-export type ScheduleUpdateManyWithWhereWithoutTeamSeasonInput = {
-  where: Prisma.ScheduleScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ScheduleUpdateManyMutationInput,
-    Prisma.ScheduleUncheckedUpdateManyWithoutTeamSeasonInput
+export type ScheduleUpsertWithoutScheduleCoursesInput = {
+  update: Prisma.XOR<
+    Prisma.ScheduleUpdateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleCoursesInput
   >;
+  create: Prisma.XOR<
+    Prisma.ScheduleCreateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedCreateWithoutScheduleCoursesInput
+  >;
+  where?: Prisma.ScheduleWhereInput;
+};
+
+export type ScheduleUpdateToOneWithWhereWithoutScheduleCoursesInput = {
+  where?: Prisma.ScheduleWhereInput;
+  data: Prisma.XOR<
+    Prisma.ScheduleUpdateWithoutScheduleCoursesInput,
+    Prisma.ScheduleUncheckedUpdateWithoutScheduleCoursesInput
+  >;
+};
+
+export type ScheduleUpdateWithoutScheduleCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  location?: Prisma.LocationUpdateOneWithoutSchedulesNestedInput;
+  scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutScheduleNestedInput;
+};
+
+export type ScheduleUncheckedUpdateWithoutScheduleCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
+  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutScheduleNestedInput;
 };
 
 export type ScheduleCreateManyLocationInput = {
   id?: string;
-  teamSeasonId: string;
   dayOfWeek: $Enums.DayOfWeek;
   startTime: string;
   endTime: string;
@@ -762,22 +790,23 @@ export type ScheduleUpdateWithoutLocationInput = {
   endTime?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSchedulesNestedInput;
+  scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutScheduleNestedInput;
+  scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutScheduleNestedInput;
 };
 
 export type ScheduleUncheckedUpdateWithoutLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
   startTime?: Prisma.StringFieldUpdateOperationsInput | string;
   endTime?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutScheduleNestedInput;
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutScheduleNestedInput;
 };
 
 export type ScheduleUncheckedUpdateManyWithoutLocationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string;
   dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
   startTime?: Prisma.StringFieldUpdateOperationsInput | string;
   endTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -785,44 +814,54 @@ export type ScheduleUncheckedUpdateManyWithoutLocationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type ScheduleCreateManyTeamSeasonInput = {
-  id?: string;
-  locationId?: string | null;
-  dayOfWeek: $Enums.DayOfWeek;
-  startTime: string;
-  endTime: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+/**
+ * Count Type ScheduleCountOutputType
+ */
+
+export type ScheduleCountOutputType = {
+  scheduleTeams: number;
+  scheduleCourses: number;
 };
 
-export type ScheduleUpdateWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
-  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  location?: Prisma.LocationUpdateOneWithoutSchedulesNestedInput;
+export type ScheduleCountOutputTypeSelect<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  scheduleTeams?: boolean | ScheduleCountOutputTypeCountScheduleTeamsArgs;
+  scheduleCourses?: boolean | ScheduleCountOutputTypeCountScheduleCoursesArgs;
 };
 
-export type ScheduleUncheckedUpdateWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
-  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+/**
+ * ScheduleCountOutputType without action
+ */
+export type ScheduleCountOutputTypeDefaultArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ScheduleCountOutputType
+   */
+  select?: Prisma.ScheduleCountOutputTypeSelect<ExtArgs> | null;
 };
 
-export type ScheduleUncheckedUpdateManyWithoutTeamSeasonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  dayOfWeek?: Prisma.EnumDayOfWeekFieldUpdateOperationsInput | $Enums.DayOfWeek;
-  startTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  endTime?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+/**
+ * ScheduleCountOutputType without action
+ */
+export type ScheduleCountOutputTypeCountScheduleTeamsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ScheduleTeamWhereInput;
+};
+
+/**
+ * ScheduleCountOutputType without action
+ */
+export type ScheduleCountOutputTypeCountScheduleCoursesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ScheduleCourseWhereInput;
 };
 
 export type ScheduleSelect<
@@ -831,15 +870,16 @@ export type ScheduleSelect<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     dayOfWeek?: boolean;
     startTime?: boolean;
     endTime?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
+    scheduleTeams?: boolean | Prisma.Schedule$scheduleTeamsArgs<ExtArgs>;
+    scheduleCourses?: boolean | Prisma.Schedule$scheduleCoursesArgs<ExtArgs>;
+    _count?: boolean | Prisma.ScheduleCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['schedule']
 >;
@@ -850,14 +890,12 @@ export type ScheduleSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     dayOfWeek?: boolean;
     startTime?: boolean;
     endTime?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
   },
   ExtArgs['result']['schedule']
@@ -869,14 +907,12 @@ export type ScheduleSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    teamSeasonId?: boolean;
     locationId?: boolean;
     dayOfWeek?: boolean;
     startTime?: boolean;
     endTime?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
     location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
   },
   ExtArgs['result']['schedule']
@@ -884,7 +920,6 @@ export type ScheduleSelectUpdateManyAndReturn<
 
 export type ScheduleSelectScalar = {
   id?: boolean;
-  teamSeasonId?: boolean;
   locationId?: boolean;
   dayOfWeek?: boolean;
   startTime?: boolean;
@@ -898,7 +933,6 @@ export type ScheduleOmit<
     runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
   | 'id'
-  | 'teamSeasonId'
   | 'locationId'
   | 'dayOfWeek'
   | 'startTime'
@@ -911,21 +945,21 @@ export type ScheduleInclude<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
+  scheduleTeams?: boolean | Prisma.Schedule$scheduleTeamsArgs<ExtArgs>;
+  scheduleCourses?: boolean | Prisma.Schedule$scheduleCoursesArgs<ExtArgs>;
+  _count?: boolean | Prisma.ScheduleCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ScheduleIncludeCreateManyAndReturn<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
 };
 export type ScheduleIncludeUpdateManyAndReturn<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
 > = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>;
   location?: boolean | Prisma.Schedule$locationArgs<ExtArgs>;
 };
 
@@ -935,13 +969,13 @@ export type $SchedulePayload<
 > = {
   name: 'Schedule';
   objects: {
-    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>;
     location: Prisma.$LocationPayload<ExtArgs> | null;
+    scheduleTeams: Prisma.$ScheduleTeamPayload<ExtArgs>[];
+    scheduleCourses: Prisma.$ScheduleCoursePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      teamSeasonId: string;
       locationId: string | null;
       dayOfWeek: $Enums.DayOfWeek;
       startTime: string;
@@ -1498,20 +1532,6 @@ export interface Prisma__ScheduleClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__TeamSeasonClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$TeamSeasonPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
   location<T extends Prisma.Schedule$locationArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Schedule$locationArgs<ExtArgs>>,
   ): Prisma.Prisma__LocationClient<
@@ -1524,6 +1544,28 @@ export interface Prisma__ScheduleClient<
     null,
     ExtArgs,
     GlobalOmitOptions
+  >;
+  scheduleTeams<T extends Prisma.Schedule$scheduleTeamsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Schedule$scheduleTeamsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ScheduleTeamPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  scheduleCourses<T extends Prisma.Schedule$scheduleCoursesArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Schedule$scheduleCoursesArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ScheduleCoursePayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
   >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1568,7 +1610,6 @@ export interface Prisma__ScheduleClient<
  */
 export interface ScheduleFieldRefs {
   readonly id: Prisma.FieldRef<'Schedule', 'String'>;
-  readonly teamSeasonId: Prisma.FieldRef<'Schedule', 'String'>;
   readonly locationId: Prisma.FieldRef<'Schedule', 'String'>;
   readonly dayOfWeek: Prisma.FieldRef<'Schedule', 'DayOfWeek'>;
   readonly startTime: Prisma.FieldRef<'Schedule', 'String'>;
@@ -2055,6 +2096,68 @@ export type Schedule$locationArgs<
    */
   include?: Prisma.LocationInclude<ExtArgs> | null;
   where?: Prisma.LocationWhereInput;
+};
+
+/**
+ * Schedule.scheduleTeams
+ */
+export type Schedule$scheduleTeamsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ScheduleTeam
+   */
+  select?: Prisma.ScheduleTeamSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ScheduleTeam
+   */
+  omit?: Prisma.ScheduleTeamOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduleTeamInclude<ExtArgs> | null;
+  where?: Prisma.ScheduleTeamWhereInput;
+  orderBy?:
+    | Prisma.ScheduleTeamOrderByWithRelationInput
+    | Prisma.ScheduleTeamOrderByWithRelationInput[];
+  cursor?: Prisma.ScheduleTeamWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ScheduleTeamScalarFieldEnum
+    | Prisma.ScheduleTeamScalarFieldEnum[];
+};
+
+/**
+ * Schedule.scheduleCourses
+ */
+export type Schedule$scheduleCoursesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ScheduleCourse
+   */
+  select?: Prisma.ScheduleCourseSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ScheduleCourse
+   */
+  omit?: Prisma.ScheduleCourseOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduleCourseInclude<ExtArgs> | null;
+  where?: Prisma.ScheduleCourseWhereInput;
+  orderBy?:
+    | Prisma.ScheduleCourseOrderByWithRelationInput
+    | Prisma.ScheduleCourseOrderByWithRelationInput[];
+  cursor?: Prisma.ScheduleCourseWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ScheduleCourseScalarFieldEnum
+    | Prisma.ScheduleCourseScalarFieldEnum[];
 };
 
 /**

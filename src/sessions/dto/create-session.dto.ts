@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsDate,
   IsInt,
   IsNotEmpty,
@@ -13,25 +14,9 @@ import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
 export class CreateSessionDto {
-  @ApiProperty({
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la temporada del equipo (TeamSeason)',
-  })
-  @IsUUID('4', {
-    message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'teamSeasonId',
-    }),
-  })
-  @Exists('teamSeason', 'id', {
-    message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'teamSeasonId',
-    }),
-  })
-  teamSeasonId: string;
-
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID del lugar de entrenamiento (Location)',
+    description: 'ID del lugar de entrenamiento/clase (Location)',
     nullable: true,
   })
   @IsOptional()
@@ -49,7 +34,7 @@ export class CreateSessionDto {
 
   @ApiPropertyOptional({
     example: 'Entrenamiento de Resistencia',
-    description: 'Título de la sesión de entrenamiento',
+    description: 'Título de la sesión',
     nullable: true,
   })
   @IsOptional()
@@ -79,7 +64,7 @@ export class CreateSessionDto {
 
   @ApiPropertyOptional({
     example: 90,
-    description: 'Duración en minutos del entrenamiento',
+    description: 'Duración en minutos de la sesión',
     default: 90,
   })
   @IsOptional()
@@ -96,4 +81,36 @@ export class CreateSessionDto {
   })
   @Type(() => Number)
   durationMin?: number = 90;
+
+  @ApiPropertyOptional({
+    type: [String],
+    example: ['550e8400-e29b-41d4-a716-446655440000'],
+    description:
+      'Arreglo de IDs de temporadas de equipos asociados (TeamSeason)',
+  })
+  @IsOptional()
+  @IsArray({
+    message: 'teamSeasonIds debe ser un arreglo',
+  })
+  @IsUUID('4', {
+    each: true,
+    message: 'Cada elemento de teamSeasonIds debe ser un UUID válido',
+  })
+  teamSeasonIds?: string[];
+
+  @ApiPropertyOptional({
+    type: [String],
+    example: ['550e8400-e29b-41d4-a716-446655440000'],
+    description:
+      'Arreglo de IDs de temporadas de cursos de escuelas asociados (CourseSeason)',
+  })
+  @IsOptional()
+  @IsArray({
+    message: 'courseSeasonIds debe ser un arreglo',
+  })
+  @IsUUID('4', {
+    each: true,
+    message: 'Cada elemento de courseSeasonIds debe ser un UUID válido',
+  })
+  courseSeasonIds?: string[];
 }

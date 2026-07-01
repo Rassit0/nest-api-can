@@ -190,6 +190,8 @@ export type StaffWhereInput = {
     Prisma.PersonWhereInput
   >;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffListRelationFilter;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffListRelationFilter;
+  progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
 };
 
 export type StaffOrderByWithRelationInput = {
@@ -200,6 +202,8 @@ export type StaffOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder;
   person?: Prisma.PersonOrderByWithRelationInput;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffOrderByRelationAggregateInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffOrderByRelationAggregateInput;
+  progressEvaluations?: Prisma.ProgressEvaluationOrderByRelationAggregateInput;
 };
 
 export type StaffWhereUniqueInput = Prisma.AtLeast<
@@ -217,6 +221,8 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<
       Prisma.PersonWhereInput
     >;
     teamSeasonStaffs?: Prisma.TeamSeasonStaffListRelationFilter;
+    courseSeasonStaffs?: Prisma.CourseSeasonStaffListRelationFilter;
+    progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter;
   },
   'id' | 'personId'
 >;
@@ -254,6 +260,8 @@ export type StaffCreateInput = {
   updatedAt?: Date | string;
   person: Prisma.PersonCreateNestedOneWithoutStaffInput;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffUncheckedCreateInput = {
@@ -263,6 +271,8 @@ export type StaffUncheckedCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffUpdateInput = {
@@ -272,6 +282,8 @@ export type StaffUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput;
 };
 
 export type StaffUncheckedUpdateInput = {
@@ -281,6 +293,8 @@ export type StaffUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput;
 };
 
 export type StaffCreateManyInput = {
@@ -422,12 +436,66 @@ export type StaffUpdateOneRequiredWithoutTeamSeasonStaffsNestedInput = {
   >;
 };
 
+export type StaffCreateNestedOneWithoutCourseSeasonStaffsInput = {
+  create?: Prisma.XOR<
+    Prisma.StaffCreateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedCreateWithoutCourseSeasonStaffsInput
+  >;
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutCourseSeasonStaffsInput;
+  connect?: Prisma.StaffWhereUniqueInput;
+};
+
+export type StaffUpdateOneRequiredWithoutCourseSeasonStaffsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.StaffCreateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedCreateWithoutCourseSeasonStaffsInput
+  >;
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutCourseSeasonStaffsInput;
+  upsert?: Prisma.StaffUpsertWithoutCourseSeasonStaffsInput;
+  connect?: Prisma.StaffWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.StaffUpdateToOneWithWhereWithoutCourseSeasonStaffsInput,
+      Prisma.StaffUpdateWithoutCourseSeasonStaffsInput
+    >,
+    Prisma.StaffUncheckedUpdateWithoutCourseSeasonStaffsInput
+  >;
+};
+
+export type StaffCreateNestedOneWithoutProgressEvaluationsInput = {
+  create?: Prisma.XOR<
+    Prisma.StaffCreateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutProgressEvaluationsInput;
+  connect?: Prisma.StaffWhereUniqueInput;
+};
+
+export type StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.StaffCreateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutProgressEvaluationsInput;
+  upsert?: Prisma.StaffUpsertWithoutProgressEvaluationsInput;
+  connect?: Prisma.StaffWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.StaffUpdateToOneWithWhereWithoutProgressEvaluationsInput,
+      Prisma.StaffUpdateWithoutProgressEvaluationsInput
+    >,
+    Prisma.StaffUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
 export type StaffCreateWithoutPersonInput = {
   id?: string;
   isActive?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffUncheckedCreateWithoutPersonInput = {
@@ -436,6 +504,8 @@ export type StaffUncheckedCreateWithoutPersonInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffCreateOrConnectWithoutPersonInput = {
@@ -472,6 +542,8 @@ export type StaffUpdateWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput;
 };
 
 export type StaffUncheckedUpdateWithoutPersonInput = {
@@ -480,6 +552,8 @@ export type StaffUncheckedUpdateWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput;
 };
 
 export type StaffCreateWithoutTeamSeasonStaffsInput = {
@@ -488,6 +562,8 @@ export type StaffCreateWithoutTeamSeasonStaffsInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   person: Prisma.PersonCreateNestedOneWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffUncheckedCreateWithoutTeamSeasonStaffsInput = {
@@ -496,6 +572,8 @@ export type StaffUncheckedCreateWithoutTeamSeasonStaffsInput = {
   isActive?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput;
 };
 
 export type StaffCreateOrConnectWithoutTeamSeasonStaffsInput = {
@@ -532,6 +610,8 @@ export type StaffUpdateWithoutTeamSeasonStaffsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput;
 };
 
 export type StaffUncheckedUpdateWithoutTeamSeasonStaffsInput = {
@@ -540,6 +620,144 @@ export type StaffUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput;
+};
+
+export type StaffCreateWithoutCourseSeasonStaffsInput = {
+  id?: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  person: Prisma.PersonCreateNestedOneWithoutStaffInput;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput;
+};
+
+export type StaffUncheckedCreateWithoutCourseSeasonStaffsInput = {
+  id?: string;
+  personId: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput;
+};
+
+export type StaffCreateOrConnectWithoutCourseSeasonStaffsInput = {
+  where: Prisma.StaffWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.StaffCreateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedCreateWithoutCourseSeasonStaffsInput
+  >;
+};
+
+export type StaffUpsertWithoutCourseSeasonStaffsInput = {
+  update: Prisma.XOR<
+    Prisma.StaffUpdateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedUpdateWithoutCourseSeasonStaffsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.StaffCreateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedCreateWithoutCourseSeasonStaffsInput
+  >;
+  where?: Prisma.StaffWhereInput;
+};
+
+export type StaffUpdateToOneWithWhereWithoutCourseSeasonStaffsInput = {
+  where?: Prisma.StaffWhereInput;
+  data: Prisma.XOR<
+    Prisma.StaffUpdateWithoutCourseSeasonStaffsInput,
+    Prisma.StaffUncheckedUpdateWithoutCourseSeasonStaffsInput
+  >;
+};
+
+export type StaffUpdateWithoutCourseSeasonStaffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput;
+};
+
+export type StaffUncheckedUpdateWithoutCourseSeasonStaffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  personId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput;
+};
+
+export type StaffCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  person: Prisma.PersonCreateNestedOneWithoutStaffInput;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput;
+};
+
+export type StaffUncheckedCreateWithoutProgressEvaluationsInput = {
+  id?: string;
+  personId: string;
+  isActive?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput;
+};
+
+export type StaffCreateOrConnectWithoutProgressEvaluationsInput = {
+  where: Prisma.StaffWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.StaffCreateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type StaffUpsertWithoutProgressEvaluationsInput = {
+  update: Prisma.XOR<
+    Prisma.StaffUpdateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.StaffCreateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedCreateWithoutProgressEvaluationsInput
+  >;
+  where?: Prisma.StaffWhereInput;
+};
+
+export type StaffUpdateToOneWithWhereWithoutProgressEvaluationsInput = {
+  where?: Prisma.StaffWhereInput;
+  data: Prisma.XOR<
+    Prisma.StaffUpdateWithoutProgressEvaluationsInput,
+    Prisma.StaffUncheckedUpdateWithoutProgressEvaluationsInput
+  >;
+};
+
+export type StaffUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput;
+};
+
+export type StaffUncheckedUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  personId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput;
 };
 
 /**
@@ -548,6 +766,8 @@ export type StaffUncheckedUpdateWithoutTeamSeasonStaffsInput = {
 
 export type StaffCountOutputType = {
   teamSeasonStaffs: number;
+  courseSeasonStaffs: number;
+  progressEvaluations: number;
 };
 
 export type StaffCountOutputTypeSelect<
@@ -555,6 +775,12 @@ export type StaffCountOutputTypeSelect<
     runtime.Types.Extensions.DefaultArgs,
 > = {
   teamSeasonStaffs?: boolean | StaffCountOutputTypeCountTeamSeasonStaffsArgs;
+  courseSeasonStaffs?:
+    | boolean
+    | StaffCountOutputTypeCountCourseSeasonStaffsArgs;
+  progressEvaluations?:
+    | boolean
+    | StaffCountOutputTypeCountProgressEvaluationsArgs;
 };
 
 /**
@@ -580,6 +806,26 @@ export type StaffCountOutputTypeCountTeamSeasonStaffsArgs<
   where?: Prisma.TeamSeasonStaffWhereInput;
 };
 
+/**
+ * StaffCountOutputType without action
+ */
+export type StaffCountOutputTypeCountCourseSeasonStaffsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.CourseSeasonStaffWhereInput;
+};
+
+/**
+ * StaffCountOutputType without action
+ */
+export type StaffCountOutputTypeCountProgressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ProgressEvaluationWhereInput;
+};
+
 export type StaffSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -592,6 +838,10 @@ export type StaffSelect<
     updatedAt?: boolean;
     person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>;
     teamSeasonStaffs?: boolean | Prisma.Staff$teamSeasonStaffsArgs<ExtArgs>;
+    courseSeasonStaffs?: boolean | Prisma.Staff$courseSeasonStaffsArgs<ExtArgs>;
+    progressEvaluations?:
+      | boolean
+      | Prisma.Staff$progressEvaluationsArgs<ExtArgs>;
     _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['staff']
@@ -648,6 +898,8 @@ export type StaffInclude<
 > = {
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>;
   teamSeasonStaffs?: boolean | Prisma.Staff$teamSeasonStaffsArgs<ExtArgs>;
+  courseSeasonStaffs?: boolean | Prisma.Staff$courseSeasonStaffsArgs<ExtArgs>;
+  progressEvaluations?: boolean | Prisma.Staff$progressEvaluationsArgs<ExtArgs>;
   _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type StaffIncludeCreateManyAndReturn<
@@ -671,6 +923,8 @@ export type $StaffPayload<
   objects: {
     person: Prisma.$PersonPayload<ExtArgs>;
     teamSeasonStaffs: Prisma.$TeamSeasonStaffPayload<ExtArgs>[];
+    courseSeasonStaffs: Prisma.$CourseSeasonStaffPayload<ExtArgs>[];
+    progressEvaluations: Prisma.$ProgressEvaluationPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1254,6 +1508,32 @@ export interface Prisma__StaffClient<
       >
     | Null
   >;
+  courseSeasonStaffs<
+    T extends Prisma.Staff$courseSeasonStaffsArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<T, Prisma.Staff$courseSeasonStaffsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$CourseSeasonStaffPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  progressEvaluations<
+    T extends Prisma.Staff$progressEvaluationsArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<T, Prisma.Staff$progressEvaluationsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ProgressEvaluationPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1778,6 +2058,68 @@ export type Staff$teamSeasonStaffsArgs<
   distinct?:
     | Prisma.TeamSeasonStaffScalarFieldEnum
     | Prisma.TeamSeasonStaffScalarFieldEnum[];
+};
+
+/**
+ * Staff.courseSeasonStaffs
+ */
+export type Staff$courseSeasonStaffsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the CourseSeasonStaff
+   */
+  select?: Prisma.CourseSeasonStaffSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the CourseSeasonStaff
+   */
+  omit?: Prisma.CourseSeasonStaffOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonStaffInclude<ExtArgs> | null;
+  where?: Prisma.CourseSeasonStaffWhereInput;
+  orderBy?:
+    | Prisma.CourseSeasonStaffOrderByWithRelationInput
+    | Prisma.CourseSeasonStaffOrderByWithRelationInput[];
+  cursor?: Prisma.CourseSeasonStaffWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.CourseSeasonStaffScalarFieldEnum
+    | Prisma.CourseSeasonStaffScalarFieldEnum[];
+};
+
+/**
+ * Staff.progressEvaluations
+ */
+export type Staff$progressEvaluationsArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ProgressEvaluation
+   */
+  select?: Prisma.ProgressEvaluationSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ProgressEvaluation
+   */
+  omit?: Prisma.ProgressEvaluationOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProgressEvaluationInclude<ExtArgs> | null;
+  where?: Prisma.ProgressEvaluationWhereInput;
+  orderBy?:
+    | Prisma.ProgressEvaluationOrderByWithRelationInput
+    | Prisma.ProgressEvaluationOrderByWithRelationInput[];
+  cursor?: Prisma.ProgressEvaluationWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ProgressEvaluationScalarFieldEnum
+    | Prisma.ProgressEvaluationScalarFieldEnum[];
 };
 
 /**

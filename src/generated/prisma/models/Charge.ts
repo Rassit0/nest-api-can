@@ -277,6 +277,7 @@ export type ChargeWhereInput = {
     Prisma.SessionBookingNullableScalarRelationFilter,
     Prisma.SessionBookingWhereInput
   > | null;
+  studentCharges?: Prisma.StudentChargeListRelationFilter;
 };
 
 export type ChargeOrderByWithRelationInput = {
@@ -294,6 +295,7 @@ export type ChargeOrderByWithRelationInput = {
   membershipCharges?: Prisma.MembershipChargeOrderByRelationAggregateInput;
   chargeTransactions?: Prisma.ChargeTransactionOrderByRelationAggregateInput;
   sessionBooking?: Prisma.SessionBookingOrderByWithRelationInput;
+  studentCharges?: Prisma.StudentChargeOrderByRelationAggregateInput;
 };
 
 export type ChargeWhereUniqueInput = Prisma.AtLeast<
@@ -331,6 +333,7 @@ export type ChargeWhereUniqueInput = Prisma.AtLeast<
       Prisma.SessionBookingNullableScalarRelationFilter,
       Prisma.SessionBookingWhereInput
     > | null;
+    studentCharges?: Prisma.StudentChargeListRelationFilter;
   },
   'id'
 >;
@@ -403,6 +406,7 @@ export type ChargeCreateInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateInput = {
@@ -419,6 +423,7 @@ export type ChargeUncheckedCreateInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUpdateInput = {
@@ -447,6 +452,7 @@ export type ChargeUpdateInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateInput = {
@@ -478,6 +484,7 @@ export type ChargeUncheckedUpdateInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeCreateManyInput = {
@@ -778,6 +785,32 @@ export type ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput = {
   >;
 };
 
+export type ChargeCreateNestedOneWithoutStudentChargesInput = {
+  create?: Prisma.XOR<
+    Prisma.ChargeCreateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedCreateWithoutStudentChargesInput
+  >;
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutStudentChargesInput;
+  connect?: Prisma.ChargeWhereUniqueInput;
+};
+
+export type ChargeUpdateOneRequiredWithoutStudentChargesNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.ChargeCreateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedCreateWithoutStudentChargesInput
+  >;
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutStudentChargesInput;
+  upsert?: Prisma.ChargeUpsertWithoutStudentChargesInput;
+  connect?: Prisma.ChargeWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.ChargeUpdateToOneWithWhereWithoutStudentChargesInput,
+      Prisma.ChargeUpdateWithoutStudentChargesInput
+    >,
+    Prisma.ChargeUncheckedUpdateWithoutStudentChargesInput
+  >;
+};
+
 export type ChargeCreateNestedOneWithoutSessionBookingInput = {
   create?: Prisma.XOR<
     Prisma.ChargeCreateWithoutSessionBookingInput,
@@ -819,6 +852,7 @@ export type ChargeCreateWithoutMembershipChargesInput = {
   childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
@@ -834,6 +868,7 @@ export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeCreateOrConnectWithoutMembershipChargesInput = {
@@ -889,6 +924,7 @@ export type ChargeUpdateWithoutMembershipChargesInput = {
   childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
@@ -919,6 +955,7 @@ export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeCreateWithoutChildChargesInput = {
@@ -934,6 +971,7 @@ export type ChargeCreateWithoutChildChargesInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateWithoutChildChargesInput = {
@@ -949,6 +987,7 @@ export type ChargeUncheckedCreateWithoutChildChargesInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeCreateOrConnectWithoutChildChargesInput = {
@@ -972,6 +1011,7 @@ export type ChargeCreateWithoutParentChargeInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateWithoutParentChargeInput = {
@@ -987,6 +1027,7 @@ export type ChargeUncheckedCreateWithoutParentChargeInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeCreateOrConnectWithoutParentChargeInput = {
@@ -1049,6 +1090,7 @@ export type ChargeUpdateWithoutChildChargesInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateWithoutChildChargesInput = {
@@ -1079,6 +1121,7 @@ export type ChargeUncheckedUpdateWithoutChildChargesInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUpsertWithWhereUniqueWithoutParentChargeInput = {
@@ -1147,6 +1190,7 @@ export type ChargeCreateWithoutChargeTransactionsInput = {
   childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput;
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateWithoutChargeTransactionsInput = {
@@ -1162,6 +1206,7 @@ export type ChargeUncheckedCreateWithoutChargeTransactionsInput = {
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput;
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeCreateOrConnectWithoutChargeTransactionsInput = {
@@ -1217,6 +1262,7 @@ export type ChargeUpdateWithoutChargeTransactionsInput = {
   childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput;
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateWithoutChargeTransactionsInput = {
@@ -1247,6 +1293,126 @@ export type ChargeUncheckedUpdateWithoutChargeTransactionsInput = {
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput;
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
+};
+
+export type ChargeCreateWithoutStudentChargesInput = {
+  id?: string;
+  description?: string | null;
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string;
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string;
+  dueDate: Date | string;
+  status?: $Enums.StatusCharge;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  parentCharge?: Prisma.ChargeCreateNestedOneWithoutChildChargesInput;
+  childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput;
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
+  chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
+  sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput;
+};
+
+export type ChargeUncheckedCreateWithoutStudentChargesInput = {
+  id?: string;
+  parentChargeId?: string | null;
+  description?: string | null;
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string;
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string;
+  dueDate: Date | string;
+  status?: $Enums.StatusCharge;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput;
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
+  sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput;
+};
+
+export type ChargeCreateOrConnectWithoutStudentChargesInput = {
+  where: Prisma.ChargeWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.ChargeCreateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedCreateWithoutStudentChargesInput
+  >;
+};
+
+export type ChargeUpsertWithoutStudentChargesInput = {
+  update: Prisma.XOR<
+    Prisma.ChargeUpdateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedUpdateWithoutStudentChargesInput
+  >;
+  create: Prisma.XOR<
+    Prisma.ChargeCreateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedCreateWithoutStudentChargesInput
+  >;
+  where?: Prisma.ChargeWhereInput;
+};
+
+export type ChargeUpdateToOneWithWhereWithoutStudentChargesInput = {
+  where?: Prisma.ChargeWhereInput;
+  data: Prisma.XOR<
+    Prisma.ChargeUpdateWithoutStudentChargesInput,
+    Prisma.ChargeUncheckedUpdateWithoutStudentChargesInput
+  >;
+};
+
+export type ChargeUpdateWithoutStudentChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  amount?:
+    | Prisma.DecimalFieldUpdateOperationsInput
+    | runtime.Decimal
+    | runtime.DecimalJsLike
+    | number
+    | string;
+  pendingAmount?:
+    | Prisma.DecimalFieldUpdateOperationsInput
+    | runtime.Decimal
+    | runtime.DecimalJsLike
+    | number
+    | string;
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  status?:
+    | Prisma.EnumStatusChargeFieldUpdateOperationsInput
+    | $Enums.StatusCharge;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  parentCharge?: Prisma.ChargeUpdateOneWithoutChildChargesNestedInput;
+  childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput;
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
+  chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
+  sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+};
+
+export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  parentChargeId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  amount?:
+    | Prisma.DecimalFieldUpdateOperationsInput
+    | runtime.Decimal
+    | runtime.DecimalJsLike
+    | number
+    | string;
+  pendingAmount?:
+    | Prisma.DecimalFieldUpdateOperationsInput
+    | runtime.Decimal
+    | runtime.DecimalJsLike
+    | number
+    | string;
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  status?:
+    | Prisma.EnumStatusChargeFieldUpdateOperationsInput
+    | $Enums.StatusCharge;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput;
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
+  sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
 };
 
 export type ChargeCreateWithoutSessionBookingInput = {
@@ -1262,6 +1428,7 @@ export type ChargeCreateWithoutSessionBookingInput = {
   childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput;
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeUncheckedCreateWithoutSessionBookingInput = {
@@ -1277,6 +1444,7 @@ export type ChargeUncheckedCreateWithoutSessionBookingInput = {
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput;
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput;
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput;
 };
 
 export type ChargeCreateOrConnectWithoutSessionBookingInput = {
@@ -1332,6 +1500,7 @@ export type ChargeUpdateWithoutSessionBookingInput = {
   childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput;
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
@@ -1362,6 +1531,7 @@ export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput;
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeCreateManyParentChargeInput = {
@@ -1400,6 +1570,7 @@ export type ChargeUpdateWithoutParentChargeInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateWithoutParentChargeInput = {
@@ -1427,6 +1598,7 @@ export type ChargeUncheckedUpdateWithoutParentChargeInput = {
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput;
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput;
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput;
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput;
 };
 
 export type ChargeUncheckedUpdateManyWithoutParentChargeInput = {
@@ -1460,6 +1632,7 @@ export type ChargeCountOutputType = {
   childCharges: number;
   membershipCharges: number;
   chargeTransactions: number;
+  studentCharges: number;
 };
 
 export type ChargeCountOutputTypeSelect<
@@ -1471,6 +1644,7 @@ export type ChargeCountOutputTypeSelect<
   chargeTransactions?:
     | boolean
     | ChargeCountOutputTypeCountChargeTransactionsArgs;
+  studentCharges?: boolean | ChargeCountOutputTypeCountStudentChargesArgs;
 };
 
 /**
@@ -1516,6 +1690,16 @@ export type ChargeCountOutputTypeCountChargeTransactionsArgs<
   where?: Prisma.ChargeTransactionWhereInput;
 };
 
+/**
+ * ChargeCountOutputType without action
+ */
+export type ChargeCountOutputTypeCountStudentChargesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.StudentChargeWhereInput;
+};
+
 export type ChargeSelect<
   ExtArgs extends runtime.Types.Extensions.InternalArgs =
     runtime.Types.Extensions.DefaultArgs,
@@ -1537,6 +1721,7 @@ export type ChargeSelect<
       | boolean
       | Prisma.Charge$chargeTransactionsArgs<ExtArgs>;
     sessionBooking?: boolean | Prisma.Charge$sessionBookingArgs<ExtArgs>;
+    studentCharges?: boolean | Prisma.Charge$studentChargesArgs<ExtArgs>;
     _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['charge']
@@ -1616,6 +1801,7 @@ export type ChargeInclude<
   membershipCharges?: boolean | Prisma.Charge$membershipChargesArgs<ExtArgs>;
   chargeTransactions?: boolean | Prisma.Charge$chargeTransactionsArgs<ExtArgs>;
   sessionBooking?: boolean | Prisma.Charge$sessionBookingArgs<ExtArgs>;
+  studentCharges?: boolean | Prisma.Charge$studentChargesArgs<ExtArgs>;
   _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ChargeIncludeCreateManyAndReturn<
@@ -1642,6 +1828,7 @@ export type $ChargePayload<
     membershipCharges: Prisma.$MembershipChargePayload<ExtArgs>[];
     chargeTransactions: Prisma.$ChargeTransactionPayload<ExtArgs>[];
     sessionBooking: Prisma.$SessionBookingPayload<ExtArgs> | null;
+    studentCharges: Prisma.$StudentChargePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -2266,6 +2453,17 @@ export interface Prisma__ChargeClient<
     null,
     ExtArgs,
     GlobalOmitOptions
+  >;
+  studentCharges<T extends Prisma.Charge$studentChargesArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Charge$studentChargesArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$StudentChargePayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
   >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2905,6 +3103,37 @@ export type Charge$sessionBookingArgs<
    */
   include?: Prisma.SessionBookingInclude<ExtArgs> | null;
   where?: Prisma.SessionBookingWhereInput;
+};
+
+/**
+ * Charge.studentCharges
+ */
+export type Charge$studentChargesArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs =
+    runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the StudentCharge
+   */
+  select?: Prisma.StudentChargeSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the StudentCharge
+   */
+  omit?: Prisma.StudentChargeOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentChargeInclude<ExtArgs> | null;
+  where?: Prisma.StudentChargeWhereInput;
+  orderBy?:
+    | Prisma.StudentChargeOrderByWithRelationInput
+    | Prisma.StudentChargeOrderByWithRelationInput[];
+  cursor?: Prisma.StudentChargeWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.StudentChargeScalarFieldEnum
+    | Prisma.StudentChargeScalarFieldEnum[];
 };
 
 /**
