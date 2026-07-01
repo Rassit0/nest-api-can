@@ -1,6 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional } from 'class-validator';
+import { IsIn, IsOptional, IsUUID } from 'class-validator';
+import { i18nValidationMessage } from 'nestjs-i18n';
 import { PaginationDto } from 'src/common/dto/pagination';
+import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
 export class ChargesPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
@@ -13,4 +15,19 @@ export class ChargesPaginationDto extends PaginationDto {
     message: 'Columnas permitidas: createdAt, dueDate, amount, status, id',
   })
   sortField?: string = 'createdAt';
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'Filtrar por membresía de jugador',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @Exists('playerMembership', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'playerMembershipId',
+    }),
+  })
+  @IsOptional()
+  playerMembershipId: string;
 }

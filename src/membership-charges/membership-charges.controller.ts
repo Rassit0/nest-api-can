@@ -10,6 +10,8 @@ import {
 import { MembershipChargesService } from './membership-charges.service';
 import { CreateMembershipChargeDto } from './dto/create-membership-charge.dto';
 import { UpdateMembershipChargeDto } from './dto/update-membership-charge.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { MembershipChargeResponseDto } from '../common/dto/responses/entities.dto';
 
 @Controller('membership-charges')
 export class MembershipChargesController {

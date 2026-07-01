@@ -23,6 +23,8 @@ import { StudentMembershipsService } from './student-memberships.service';
 import { CreateStudentMembershipDto } from './dto/create-student-membership.dto';
 import { UpdateStudentMembershipDto } from './dto/update-student-membership.dto';
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { StudentMembershipResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Student Memberships')
 @Controller('student-memberships')
@@ -37,11 +39,7 @@ export class StudentMembershipsController {
     description:
       'Inscribe a un estudiante activo en un curso y periodo específico. Valida de forma estricta los cupos, edad y género.',
   })
-  @ApiCreatedResponse({ description: 'Estudiante inscrito exitosamente.' })
-  @ApiBadRequestResponse({
-    description:
-      'El estudiante no es elegible, el curso está lleno, o ya se encuentra inscrito.',
-  })
+  @ApiStandardCreatedResponse(StudentMembershipResponseDto, 'Estudiante inscrito exitosamente.')
   async create(@Body() createStudentMembershipDto: CreateStudentMembershipDto) {
     return await this.studentMembershipsService.create(
       createStudentMembershipDto,
@@ -54,9 +52,7 @@ export class StudentMembershipsController {
     description:
       'Retorna una lista paginada y filtrable de todas las inscripciones (membresías escolares).',
   })
-  @ApiOkResponse({
-    description: 'Lista de inscripciones obtenida correctamente.',
-  })
+  @ApiPaginatedResponse(StudentMembershipResponseDto, 'Lista de inscripciones obtenida correctamente.')
   async findAll(@Query() paginationDto: StudentMembershipsPaginationDto) {
     return await this.studentMembershipsService.findAll(paginationDto);
   }
@@ -72,10 +68,7 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({
-    description: 'Inscripción escolar encontrada exitosamente.',
-  })
-  @ApiNotFoundResponse({ description: 'La inscripción solicitada no existe.' })
+  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.findOne(id);
   }
@@ -92,11 +85,7 @@ export class StudentMembershipsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentMembershipDto })
-  @ApiOkResponse({
-    description: 'Inscripción escolar actualizada exitosamente.',
-  })
-  @ApiNotFoundResponse({ description: 'La inscripción solicitada no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos inválidos.' })
+  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentMembershipDto: UpdateStudentMembershipDto,
@@ -118,8 +107,7 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Inscripción escolar eliminada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La inscripción solicitada no existe.' })
+  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar eliminada exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.remove(id);
   }

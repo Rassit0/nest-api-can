@@ -23,6 +23,8 @@ import { StudentDiscountsService } from './student-discounts.service';
 import { CreateStudentDiscountDto } from './dto/create-student-discount.dto';
 import { UpdateStudentDiscountDto } from './dto/update-student-discount.dto';
 import { StudentDiscountsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { StudentDiscountResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Student Discounts')
 @Controller('student-discounts')
@@ -37,10 +39,7 @@ export class StudentDiscountsController {
     description:
       'Registra un descuento porcentual para mensualidades y matrícula de una inscripción escolar activa.',
   })
-  @ApiCreatedResponse({
-    description: 'Descuento registrado y aplicado exitosamente.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(StudentDiscountResponseDto, 'Descuento registrado y aplicado exitosamente.')
   async create(@Body() createStudentDiscountDto: CreateStudentDiscountDto) {
     return await this.studentDiscountsService.create(createStudentDiscountDto);
   }
@@ -51,7 +50,7 @@ export class StudentDiscountsController {
     description:
       'Retorna una lista paginada y filtrable de todas las becas y descuentos vigentes.',
   })
-  @ApiOkResponse({ description: 'Lista de descuentos obtenida correctamente.' })
+  @ApiPaginatedResponse(StudentDiscountResponseDto, 'Lista de descuentos obtenida correctamente.')
   async findAll(@Query() paginationDto: StudentDiscountsPaginationDto) {
     return await this.studentDiscountsService.findAll(paginationDto);
   }
@@ -67,8 +66,7 @@ export class StudentDiscountsController {
     description: 'ID de la beca a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Descuento escolar encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El descuento solicitado no existe.' })
+  @ApiStandardResponse(StudentDiscountResponseDto, 'Descuento escolar encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentDiscountsService.findOne(id);
   }
@@ -85,9 +83,7 @@ export class StudentDiscountsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentDiscountDto })
-  @ApiOkResponse({ description: 'Descuento escolar actualizado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El descuento solicitado no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(StudentDiscountResponseDto, 'Descuento escolar actualizado con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentDiscountDto: UpdateStudentDiscountDto,
@@ -109,8 +105,7 @@ export class StudentDiscountsController {
     description: 'ID del descuento a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Descuento escolar eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El descuento solicitado no existe.' })
+  @ApiStandardResponse(StudentDiscountResponseDto, 'Descuento escolar eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentDiscountsService.remove(id);
   }

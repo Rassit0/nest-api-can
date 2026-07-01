@@ -25,6 +25,8 @@ import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { TeamResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Teams')
 @Controller('teams')
@@ -39,9 +41,8 @@ export class TeamsController {
   })
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
-  @ApiCreatedResponse({ description: 'Equipo creado exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
-  create(@Body() createTeamDto: CreateTeamDto) {
+  @ApiStandardCreatedResponse(TeamResponseDto, 'Equipo creado exitosamente.')
+  async create(@Body() createTeamDto: CreateTeamDto) {
     return this.teamsService.create(createTeamDto);
   }
 
@@ -51,8 +52,8 @@ export class TeamsController {
     description:
       'Retorna una lista paginada y filtrable de todos los equipos del sistema.',
   })
-  @ApiOkResponse({ description: 'Lista de equipos obtenida correctamente.' })
-  findAll(@Query() paginationDto: TeamsPaginationDto) {
+  @ApiPaginatedResponse(TeamResponseDto, 'Lista de equipos obtenida correctamente.')
+  async findAll(@Query() paginationDto: TeamsPaginationDto) {
     return this.teamsService.findAll(paginationDto);
   }
 
@@ -63,9 +64,8 @@ export class TeamsController {
       'Busca y retorna los metadatos completos de un equipo por su ID.',
   })
   @ApiParam({ name: 'id', description: 'ID del equipo (UUID)', format: 'uuid' })
-  @ApiOkResponse({ description: 'Equipo encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El equipo no existe.' })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiStandardResponse(TeamResponseDto, 'Equipo encontrado exitosamente.')
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.teamsService.findOne(id);
   }
 
@@ -82,10 +82,8 @@ export class TeamsController {
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
   @ApiBody({ type: UpdateTeamDto })
-  @ApiOkResponse({ description: 'Equipo actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El equipo no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
-  update(
+  @ApiStandardResponse(TeamResponseDto, 'Equipo actualizado exitosamente.')
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamDto: UpdateTeamDto,
   ) {
@@ -103,9 +101,8 @@ export class TeamsController {
     description: 'ID del equipo a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Equipo eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El equipo no existe.' })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiStandardResponse(TeamResponseDto, 'Equipo eliminado exitosamente.')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.teamsService.remove(id);
   }
 

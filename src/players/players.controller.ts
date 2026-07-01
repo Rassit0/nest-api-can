@@ -24,6 +24,8 @@ import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayerPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { PlayerResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Players')
 @Controller('players')
@@ -35,8 +37,7 @@ export class PlayersController {
     summary: 'Registrar un jugador',
     description: 'Vincula una persona existente como jugador activo del club.',
   })
-  @ApiCreatedResponse({ description: 'Jugador registrado exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(PlayerResponseDto, 'Jugador registrado exitosamente.')
   async create(@Body() createPlayerDto: CreatePlayerDto) {
     return await this.playersService.create(createPlayerDto);
   }
@@ -47,7 +48,7 @@ export class PlayersController {
     description:
       'Retorna una lista paginada y filtrable de todos los jugadores del club.',
   })
-  @ApiOkResponse({ description: 'Lista de jugadores obtenida correctamente.' })
+  @ApiPaginatedResponse(PlayerResponseDto, 'Lista de jugadores obtenida correctamente.')
   async findAll(@Query() paginationDto: PlayerPaginationDto) {
     return await this.playersService.findAll(paginationDto);
   }
@@ -63,8 +64,7 @@ export class PlayersController {
     description: 'ID del jugador (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Jugador encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El jugador no existe.' })
+  @ApiStandardResponse(PlayerResponseDto, 'Jugador encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playersService.findOne(id);
   }
@@ -82,9 +82,7 @@ export class PlayersController {
   })
   @ApiBody({ type: UpdatePlayerDto })
   @FormDataRequest()
-  @ApiOkResponse({ description: 'Ficha de jugador actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El jugador no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(PlayerResponseDto, 'Ficha de jugador actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerDto: UpdatePlayerDto,
@@ -102,8 +100,7 @@ export class PlayersController {
     description: 'ID del jugador a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Jugador desvinculado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El jugador no existe.' })
+  @ApiStandardResponse(PlayerResponseDto, 'Jugador desvinculado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playersService.remove(id);
   }

@@ -14,6 +14,8 @@ import { MatchLineupsService } from './match-lineups.service';
 import { CreateMatchLineupDto } from './dto/create-match-lineup.dto';
 import { UpdateMatchLineupDto } from './dto/update-match-lineup.dto';
 import { MatchLineupsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { MatchLineupResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Match Lineups')
 @Controller('match-lineups')

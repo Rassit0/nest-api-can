@@ -23,6 +23,8 @@ import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RolesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { RoleResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Roles')
 @Controller('roles')
@@ -35,12 +37,7 @@ export class RolesController {
     description:
       'Registra un rol en el sistema y asocia los IDs de los permisos pasados en el cuerpo.',
   })
-  @ApiCreatedResponse({
-    description: 'Rol creado y permisos mapeados con éxito.',
-  })
-  @ApiBadRequestResponse({
-    description: 'Datos de entrada inválidos u homónimos duplicados.',
-  })
+  @ApiStandardCreatedResponse(RoleResponseDto, 'Rol creado y permisos mapeados con éxito.')
   async create(@Body() createRoleDto: CreateRoleDto) {
     return await this.rolesService.create(createRoleDto);
   }
@@ -51,7 +48,7 @@ export class RolesController {
     description:
       'Retorna una lista paginada y filtrable de todos los roles cargados.',
   })
-  @ApiOkResponse({ description: 'Lista de roles obtenida correctamente.' })
+  @ApiPaginatedResponse(RoleResponseDto, 'Lista de roles obtenida correctamente.')
   async findAll(@Query() paginationDto: RolesPaginationDto) {
     return await this.rolesService.findAll(paginationDto);
   }
@@ -67,8 +64,7 @@ export class RolesController {
     description: 'ID del rol a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Rol encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El rol solicitado no existe.' })
+  @ApiStandardResponse(RoleResponseDto, 'Rol encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.rolesService.findOne(id);
   }
@@ -85,11 +81,7 @@ export class RolesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateRoleDto })
-  @ApiOkResponse({ description: 'Rol y permisos actualizados exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El rol solicitado no existe.' })
-  @ApiBadRequestResponse({
-    description: 'Los IDs de los permisos son inválidos.',
-  })
+  @ApiStandardResponse(RoleResponseDto, 'Rol y permisos actualizados exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
@@ -108,8 +100,7 @@ export class RolesController {
     description: 'ID del rol a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Rol eliminado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El rol solicitado no existe.' })
+  @ApiStandardResponse(RoleResponseDto, 'Rol eliminado con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.rolesService.remove(id);
   }

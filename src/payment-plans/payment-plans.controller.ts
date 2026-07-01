@@ -23,6 +23,8 @@ import { PaymentPlansService } from './payment-plans.service';
 import { CreatePaymentPlanDto } from './dto/create-payment-plan.dto';
 import { UpdatePaymentPlanDto } from './dto/update-payment-plan.dto';
 import { PaymentPlansPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { PaymentPlanResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Payment Plans')
 @Controller('payment-plans')
@@ -35,8 +37,7 @@ export class PaymentPlansController {
     description:
       'Registra un plan de pago para equipos o cursos (cuotas, recargos, días de gracia).',
   })
-  @ApiCreatedResponse({ description: 'Plan de pago creado exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(PaymentPlanResponseDto, 'Plan de pago creado exitosamente.')
   async create(@Body() createPaymentPlanDto: CreatePaymentPlanDto) {
     return await this.paymentPlansService.create(createPaymentPlanDto);
   }
@@ -47,7 +48,7 @@ export class PaymentPlansController {
     description:
       'Retorna una lista paginada y filtrable de todos los planes de pago.',
   })
-  @ApiOkResponse({ description: 'Lista de planes obtenida correctamente.' })
+  @ApiPaginatedResponse(PaymentPlanResponseDto, 'Lista de planes obtenida correctamente.')
   async findAll(@Query() paginationDto: PaymentPlansPaginationDto) {
     return await this.paymentPlansService.findAll(paginationDto);
   }
@@ -63,8 +64,7 @@ export class PaymentPlansController {
     description: 'ID del plan de pago (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Plan de pago encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
+  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.findOne(id);
   }
@@ -81,9 +81,7 @@ export class PaymentPlansController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePaymentPlanDto })
-  @ApiOkResponse({ description: 'Plan de pago actualizado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago actualizado con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePaymentPlanDto: UpdatePaymentPlanDto,
@@ -101,8 +99,7 @@ export class PaymentPlansController {
     description: 'ID del plan de pago a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Plan de pago eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El plan de pago no existe.' })
+  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.remove(id);
   }

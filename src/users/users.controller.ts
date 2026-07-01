@@ -23,6 +23,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { UserResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -35,13 +37,7 @@ export class UsersController {
     description:
       'Crea las credenciales de acceso para un correo asignando un rol y vinculando opcionalmente un perfil de persona.',
   })
-  @ApiCreatedResponse({
-    description:
-      'Usuario creado exitosamente con la contraseña encriptada SHA-256.',
-  })
-  @ApiBadRequestResponse({
-    description: 'El correo electrónico ya existe o el rol asignado no existe.',
-  })
+  @ApiStandardCreatedResponse(UserResponseDto, 'Usuario creado exitosamente con la contraseña encriptada SHA-256.')
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);
   }
@@ -52,7 +48,7 @@ export class UsersController {
     description:
       'Retorna una lista paginada y filtrable de todos los usuarios registrados en la plataforma.',
   })
-  @ApiOkResponse({ description: 'Lista de usuarios obtenida correctamente.' })
+  @ApiPaginatedResponse(UserResponseDto, 'Lista de usuarios obtenida correctamente.')
   async findAll(@Query() paginationDto: UsersPaginationDto) {
     return await this.usersService.findAll(paginationDto);
   }
@@ -68,8 +64,7 @@ export class UsersController {
     description: 'ID del usuario a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Usuario encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El usuario solicitado no existe.' })
+  @ApiStandardResponse(UserResponseDto, 'Usuario encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.usersService.findOne(id);
   }
@@ -86,12 +81,7 @@ export class UsersController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateUserDto })
-  @ApiOkResponse({ description: 'Usuario actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El usuario solicitado no existe.' })
-  @ApiBadRequestResponse({
-    description:
-      'El correo nuevo ya está registrado por otro usuario o datos inválidos.',
-  })
+  @ApiStandardResponse(UserResponseDto, 'Usuario actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -110,8 +100,7 @@ export class UsersController {
     description: 'ID del usuario a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Usuario eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El usuario solicitado no existe.' })
+  @ApiStandardResponse(UserResponseDto, 'Usuario eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.usersService.remove(id);
   }

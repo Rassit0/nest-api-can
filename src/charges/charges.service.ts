@@ -118,6 +118,7 @@ export class ChargesService {
       search,
       orderBy = 'asc',
       sortField = 'createdAt',
+      playerMembershipId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
@@ -159,6 +160,16 @@ export class ChargesService {
           },
         },
       ];
+    }
+
+    if (playerMembershipId) {
+      where.membershipCharges = {
+        some: {
+          playerMembership: {
+            id: playerMembershipId,
+          },
+        },
+      };
     }
 
     const [charges, totalItems] = await Promise.all([

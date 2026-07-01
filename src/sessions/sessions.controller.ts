@@ -14,6 +14,8 @@ import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { UpdateSessionDto } from './dto/update-session.dto';
 import { SessionsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { SessionResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Sessions')
 @Controller('sessions')

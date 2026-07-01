@@ -24,6 +24,8 @@ import { CreatePlayerMembershipDto } from './dto/create-player-membership.dto';
 import { UpdatePlayerMembershipDto } from './dto/update-player-membership.dto';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 import { ChangeStatusDto } from './dto/change-status.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { PlayerMembershipResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Player Memberships')
 @Controller('player-memberships')
@@ -38,10 +40,7 @@ export class PlayerMembershipsController {
     description:
       'Inscribe a un jugador en una instancia de equipo en temporada validando categorías, edad y cupos.',
   })
-  @ApiCreatedResponse({
-    description: 'Membresía/inscripción de jugador creada con éxito.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(PlayerMembershipResponseDto, 'Membresía/inscripción de jugador creada con éxito.')
   async create(@Body() createPlayerMembershipDto: CreatePlayerMembershipDto) {
     return await this.playerMembershipsService.create(
       createPlayerMembershipDto,
@@ -54,9 +53,7 @@ export class PlayerMembershipsController {
     description:
       'Retorna una lista paginada y filtrable de todas las membresías/inscripciones de jugadores.',
   })
-  @ApiOkResponse({
-    description: 'Lista de inscripciones obtenida correctamente.',
-  })
+  @ApiPaginatedResponse(PlayerMembershipResponseDto, 'Lista de inscripciones obtenida correctamente.')
   async findAll(@Query() paginationDto: PlayerMembershipsPaginationDto) {
     return await this.playerMembershipsService.findAll(paginationDto);
   }
@@ -72,8 +69,7 @@ export class PlayerMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Inscripción encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La inscripción no existe.' })
+  @ApiStandardResponse(PlayerMembershipResponseDto, 'Inscripción encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playerMembershipsService.findOne(id);
   }
@@ -89,9 +85,7 @@ export class PlayerMembershipsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePlayerMembershipDto })
-  @ApiOkResponse({ description: 'Inscripción actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La inscripción no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(PlayerMembershipResponseDto, 'Inscripción actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerMembershipDto: UpdatePlayerMembershipDto,

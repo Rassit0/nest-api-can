@@ -23,6 +23,8 @@ import { DisciplinesService } from './disciplines.service';
 import { CreateDisciplineDto } from './dto/create-discipline.dto';
 import { UpdateDisciplineDto } from './dto/update-discipline.dto';
 import { DisciplinePaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { DisciplineResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Disciplines')
 @Controller('disciplines')
@@ -35,8 +37,7 @@ export class DisciplinesController {
     description:
       'Registra una nueva disciplina (ej: Fútbol, Baloncesto) con su correspondiente ícono representativo.',
   })
-  @ApiCreatedResponse({ description: 'Disciplina creada exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(DisciplineResponseDto, 'Disciplina creada exitosamente.')
   async create(@Body() createDisciplineDto: CreateDisciplineDto) {
     return await this.disciplinesService.create(createDisciplineDto);
   }
@@ -47,9 +48,7 @@ export class DisciplinesController {
     description:
       'Retorna una lista paginada y filtrable de todas las disciplinas deportivas.',
   })
-  @ApiOkResponse({
-    description: 'Lista de disciplinas obtenida correctamente.',
-  })
+  @ApiPaginatedResponse(DisciplineResponseDto, 'Lista de disciplinas obtenida correctamente.')
   async findAll(@Query() paginationDto: DisciplinePaginationDto) {
     return await this.disciplinesService.findAll(paginationDto);
   }
@@ -65,8 +64,7 @@ export class DisciplinesController {
     description: 'ID de la disciplina (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Disciplina encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La disciplina no existe.' })
+  @ApiStandardResponse(DisciplineResponseDto, 'Disciplina encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.disciplinesService.findOne(id);
   }
@@ -83,9 +81,7 @@ export class DisciplinesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateDisciplineDto })
-  @ApiOkResponse({ description: 'Disciplina actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La disciplina no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(DisciplineResponseDto, 'Disciplina actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDisciplineDto: UpdateDisciplineDto,
@@ -104,8 +100,7 @@ export class DisciplinesController {
     description: 'ID de la disciplina a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Disciplina eliminada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La disciplina no existe.' })
+  @ApiStandardResponse(DisciplineResponseDto, 'Disciplina eliminada con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.disciplinesService.remove(id);
   }

@@ -23,6 +23,8 @@ import { TeamSeasonStaffService } from './team-season-staff.service';
 import { CreateTeamSeasonStaffDto } from './dto/create-team-season-staff.dto';
 import { UpdateTeamSeasonStaffDto } from './dto/update-team-season-staff.dto';
 import { TeamSeasonStaffPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { TeamSeasonStaffResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Team Season Staff')
 @Controller('team-season-staff')
@@ -37,11 +39,8 @@ export class TeamSeasonStaffController {
     description:
       'Vincula a un miembro de personal a un equipo y periodo específico.',
   })
-  @ApiCreatedResponse({
-    description: 'Profesor asignado al equipo exitosamente.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
-  create(@Body() createTeamSeasonStaffDto: CreateTeamSeasonStaffDto) {
+  @ApiStandardCreatedResponse(TeamSeasonStaffResponseDto, 'Profesor asignado al equipo exitosamente.')
+  async create(@Body() createTeamSeasonStaffDto: CreateTeamSeasonStaffDto) {
     return this.teamSeasonStaffService.create(createTeamSeasonStaffDto);
   }
 
@@ -51,7 +50,7 @@ export class TeamSeasonStaffController {
     description:
       'Retorna una lista paginada y filtrable de todas las asignaciones de personal a equipos.',
   })
-  @ApiOkResponse({ description: 'Lista de profesores obtenida correctamente.' })
+  @ApiPaginatedResponse(TeamSeasonStaffResponseDto, 'Lista de profesores obtenida correctamente.')
   async findAll(@Query() paginationDto: TeamSeasonStaffPaginationDto) {
     return await this.teamSeasonStaffService.findAll(paginationDto);
   }
@@ -67,8 +66,7 @@ export class TeamSeasonStaffController {
     description: 'ID de la asignación (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Asignación encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La asignación no existe.' })
+  @ApiStandardResponse(TeamSeasonStaffResponseDto, 'Asignación encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonStaffService.findOne(id);
   }
@@ -85,10 +83,8 @@ export class TeamSeasonStaffController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateTeamSeasonStaffDto })
-  @ApiOkResponse({ description: 'Asignación actualizada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La asignación no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
-  update(
+  @ApiStandardResponse(TeamSeasonStaffResponseDto, 'Asignación actualizada con éxito.')
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamSeasonStaffDto: UpdateTeamSeasonStaffDto,
   ) {
@@ -105,9 +101,8 @@ export class TeamSeasonStaffController {
     description: 'ID de la asignación a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Asignación eliminada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La asignación no existe.' })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiStandardResponse(TeamSeasonStaffResponseDto, 'Asignación eliminada con éxito.')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.teamSeasonStaffService.remove(id);
   }
 }

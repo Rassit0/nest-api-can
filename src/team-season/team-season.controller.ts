@@ -25,6 +25,8 @@ import { CreateTeamSeasonDto } from './dto/create-team-season.dto';
 import { UpdateTeamSeasonDto } from './dto/update-team-season.dto';
 import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { TeamSeasonResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Team Seasons')
 @Controller('team-seasons')
@@ -39,10 +41,7 @@ export class TeamSeasonsController {
   })
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
-  @ApiCreatedResponse({
-    description: 'Equipo instanciado en temporada exitosamente.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(TeamSeasonResponseDto, 'Equipo instanciado en temporada exitosamente.')
   async create(@Body() createTeamCategoryDto: CreateTeamSeasonDto) {
     return await this.teamSeasonsService.create(createTeamCategoryDto);
   }
@@ -53,7 +52,7 @@ export class TeamSeasonsController {
     description:
       'Retorna una lista paginada y filtrable de todas las instancias de equipos por periodos.',
   })
-  @ApiOkResponse({ description: 'Lista obtenida correctamente.' })
+  @ApiPaginatedResponse(TeamSeasonResponseDto, 'Lista obtenida correctamente.')
   async findAll(@Query() paginationDto: TeamCategorySeasonsPaginationDto) {
     return await this.teamSeasonsService.findAll(paginationDto);
   }
@@ -69,8 +68,7 @@ export class TeamSeasonsController {
     description: 'ID de la instancia (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Instancia encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La instancia no existe.' })
+  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.findOne(id);
   }
@@ -89,9 +87,7 @@ export class TeamSeasonsController {
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
   @ApiBody({ type: UpdateTeamSeasonDto })
-  @ApiOkResponse({ description: 'Instancia de equipo actualizada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La instancia no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia de equipo actualizada con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamCategoryDto: UpdateTeamSeasonDto,
@@ -110,8 +106,7 @@ export class TeamSeasonsController {
     description: 'ID de la instancia a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Instancia de equipo eliminada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La instancia no existe.' })
+  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia de equipo eliminada exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.remove(id);
   }

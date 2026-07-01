@@ -23,6 +23,8 @@ import { PermissionsService } from './permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { PermissionsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { PermissionResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Permissions')
 @Controller('permissions')
@@ -35,10 +37,7 @@ export class PermissionsController {
     description:
       'Registra un permiso de seguridad en el sistema para asociar a roles.',
   })
-  @ApiCreatedResponse({ description: 'Permiso creado exitosamente.' })
-  @ApiBadRequestResponse({
-    description: 'Datos de entrada inválidos o nombre duplicado.',
-  })
+  @ApiStandardCreatedResponse(PermissionResponseDto, 'Permiso creado exitosamente.')
   async create(@Body() createPermissionDto: CreatePermissionDto) {
     return await this.permissionsService.create(createPermissionDto);
   }
@@ -49,7 +48,7 @@ export class PermissionsController {
     description:
       'Retorna una lista paginada y filtrable de permisos de seguridad.',
   })
-  @ApiOkResponse({ description: 'Lista de permisos obtenida correctamente.' })
+  @ApiPaginatedResponse(PermissionResponseDto, 'Lista de permisos obtenida correctamente.')
   async findAll(@Query() paginationDto: PermissionsPaginationDto) {
     return await this.permissionsService.findAll(paginationDto);
   }
@@ -65,10 +64,7 @@ export class PermissionsController {
     description: 'ID único del permiso (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({
-    description: 'Permiso encontrado y retornado exitosamente.',
-  })
-  @ApiNotFoundResponse({ description: 'El permiso solicitado no existe.' })
+  @ApiStandardResponse(PermissionResponseDto, 'Permiso encontrado y retornado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.permissionsService.findOne(id);
   }
@@ -85,9 +81,7 @@ export class PermissionsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePermissionDto })
-  @ApiOkResponse({ description: 'Permiso actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El permiso no fue encontrado.' })
-  @ApiBadRequestResponse({ description: 'Datos proporcionados incorrectos.' })
+  @ApiStandardResponse(PermissionResponseDto, 'Permiso actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePermissionDto: UpdatePermissionDto,
@@ -105,8 +99,7 @@ export class PermissionsController {
     description: 'ID único del permiso a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Permiso eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El permiso no existe.' })
+  @ApiStandardResponse(PermissionResponseDto, 'Permiso eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.permissionsService.remove(id);
   }

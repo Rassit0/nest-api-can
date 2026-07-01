@@ -21,6 +21,7 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   lateFeePerDay: true,
   graceDays: true,
   chargeGenerationDaysBefore: true,
+  courseSeasonStaffs: true,
   status: true,
   createdAt: true,
   updatedAt: true,

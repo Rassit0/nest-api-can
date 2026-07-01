@@ -24,6 +24,8 @@ import { StudentLateFeeService } from './student-late-fee.service';
 import { CreateStudentChargeDto } from './dto/create-student-charge.dto';
 import { UpdateStudentChargeDto } from './dto/update-student-charge.dto';
 import { StudentChargesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { StudentChargeResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Student Charges')
 @Controller('student-charges')
@@ -39,40 +41,7 @@ export class StudentChargesController {
     description:
       'Ejecuta de forma manual o programada el cron de facturación de mensualidades y cálculo de mora acumulativa para todos los alumnos del club.',
   })
-  @ApiOkResponse({
-    description: 'Cargos y mora calculados y aplicados correctamente.',
-  })
-  async applyCharges() {
-    await this.studentChargesService.applyDailyStudentCharges();
-    await this.studentLateFeeService.applyDailyLateFees();
-
-    return {
-      message:
-        'Proceso de cobros y recargos escolares ejecutado correctamente.',
-    };
-  }
-
-  @Post()
-  @ApiOperation({
-    summary: 'Registrar un cargo a un estudiante manualmente',
-    description:
-      'Crea un mapeo de cargo a una inscripción escolar específica (ej: inscripción, mensualidad o recargo manual).',
-  })
-  @ApiCreatedResponse({ description: 'Cargo escolar registrado con éxito.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
-  async create(@Body() createStudentChargeDto: CreateStudentChargeDto) {
-    return await this.studentChargesService.createStudentCharge(
-      createStudentChargeDto,
-    );
-  }
-
-  @Get()
-  @ApiOperation({
-    summary: 'Obtener lista de cargos de estudiantes',
-    description:
-      'Retorna una lista paginada y filtrable de todos los cargos de estudiantes registrados.',
-  })
-  @ApiOkResponse({ description: 'Lista de cargos obtenida correctamente.' })
+  @ApiPaginatedResponse(StudentChargeResponseDto, 'Cargos y mora calculados y aplicados correctamente.')
   async findAll(@Query() paginationDto: StudentChargesPaginationDto) {
     return await this.studentChargesService.findAll(paginationDto);
   }
@@ -88,8 +57,7 @@ export class StudentChargesController {
     description: 'ID del cargo a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Cargo escolar encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
+  @ApiStandardResponse(StudentChargeResponseDto, 'Cargo escolar encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentChargesService.findOne(id);
   }
@@ -105,11 +73,7 @@ export class StudentChargesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentChargeDto })
-  @ApiOkResponse({
-    description: 'Cargo de estudiante actualizado exitosamente.',
-  })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos inválidos.' })
+  @ApiStandardResponse(StudentChargeResponseDto, 'Cargo de estudiante actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentChargeDto: UpdateStudentChargeDto,
@@ -128,8 +92,7 @@ export class StudentChargesController {
     description: 'ID del cargo a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Cargo escolar eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
+  @ApiStandardResponse(StudentChargeResponseDto, 'Cargo escolar eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentChargesService.remove(id);
   }

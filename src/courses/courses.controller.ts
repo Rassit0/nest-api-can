@@ -23,6 +23,8 @@ import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { CoursesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { CourseResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Courses')
 @Controller('courses')
@@ -35,11 +37,7 @@ export class CoursesController {
     description:
       'Registra un curso académico en el sistema asignándole una escuela deportiva.',
   })
-  @ApiCreatedResponse({ description: 'Curso escolar creado exitosamente.' })
-  @ApiBadRequestResponse({
-    description:
-      'Datos de entrada inválidos o curso duplicado en la misma escuela.',
-  })
+  @ApiStandardCreatedResponse(CourseResponseDto, 'Curso escolar creado exitosamente.')
   async create(@Body() createCourseDto: CreateCourseDto) {
     return await this.coursesService.create(createCourseDto);
   }
@@ -50,7 +48,7 @@ export class CoursesController {
     description:
       'Retorna una lista paginada y filtrable de todos los cursos cargados.',
   })
-  @ApiOkResponse({ description: 'Lista de cursos obtenida correctamente.' })
+  @ApiPaginatedResponse(CourseResponseDto, 'Lista de cursos obtenida correctamente.')
   async findAll(@Query() paginationDto: CoursesPaginationDto) {
     return await this.coursesService.findAll(paginationDto);
   }
@@ -66,8 +64,7 @@ export class CoursesController {
     description: 'ID del curso a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Curso encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El curso solicitado no existe.' })
+  @ApiStandardResponse(CourseResponseDto, 'Curso encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.coursesService.findOne(id);
   }
@@ -84,11 +81,7 @@ export class CoursesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateCourseDto })
-  @ApiOkResponse({ description: 'Curso actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El curso solicitado no existe.' })
-  @ApiBadRequestResponse({
-    description: 'Datos incorrectos o duplicados con otro curso de la escuela.',
-  })
+  @ApiStandardResponse(CourseResponseDto, 'Curso actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCourseDto: UpdateCourseDto,
@@ -106,8 +99,7 @@ export class CoursesController {
     description: 'ID del curso a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Curso eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El curso solicitado no existe.' })
+  @ApiStandardResponse(CourseResponseDto, 'Curso eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.coursesService.remove(id);
   }

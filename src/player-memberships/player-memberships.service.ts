@@ -29,6 +29,7 @@ export const playerMembershipSelect: Prisma.PlayerMembershipSelect = {
   },
   teamSeasonId: true,
   paymentPlanId: true,
+  paymentPlan: true,
   startedAt: true,
   endedAt: true,
   status: true,

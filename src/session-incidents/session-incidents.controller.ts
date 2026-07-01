@@ -23,6 +23,8 @@ import { SessionIncidentsService } from './session-incidents.service';
 import { CreateSessionIncidentDto } from './dto/create-session-incident.dto';
 import { UpdateSessionIncidentDto } from './dto/update-session-incident.dto';
 import { SessionIncidentsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { SessionIncidentResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Session Incidents')
 @Controller('session-incidents')
@@ -37,10 +39,7 @@ export class SessionIncidentsController {
     description:
       'Registra un reporte de indisciplina o actitud negativa asociado a la asistencia de una clase o sesión para un estudiante o jugador.',
   })
-  @ApiCreatedResponse({
-    description: 'Reporte de incidente de conducta creado con éxito.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(SessionIncidentResponseDto, 'Reporte de incidente de conducta creado con éxito.')
   async create(@Body() createSessionIncidentDto: CreateSessionIncidentDto) {
     return await this.sessionIncidentsService.create(createSessionIncidentDto);
   }
@@ -51,7 +50,7 @@ export class SessionIncidentsController {
     description:
       'Retorna una lista paginada y filtrable de todos los incidentes disciplinarios reportados.',
   })
-  @ApiOkResponse({ description: 'Lista de incidentes obtenida correctamente.' })
+  @ApiPaginatedResponse(SessionIncidentResponseDto, 'Lista de incidentes obtenida correctamente.')
   async findAll(@Query() paginationDto: SessionIncidentsPaginationDto) {
     return await this.sessionIncidentsService.findAll(paginationDto);
   }
@@ -67,10 +66,7 @@ export class SessionIncidentsController {
     description: 'ID del incidente disciplinario (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({
-    description: 'Incidente disciplinario encontrado con éxito.',
-  })
-  @ApiNotFoundResponse({ description: 'El incidente solicitado no existe.' })
+  @ApiStandardResponse(SessionIncidentResponseDto, 'Incidente disciplinario encontrado con éxito.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.sessionIncidentsService.findOne(id);
   }
@@ -87,11 +83,7 @@ export class SessionIncidentsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateSessionIncidentDto })
-  @ApiOkResponse({
-    description: 'Detalles del incidente actualizados con éxito.',
-  })
-  @ApiNotFoundResponse({ description: 'El incidente solicitado no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos de actualización inválidos.' })
+  @ApiStandardResponse(SessionIncidentResponseDto, 'Detalles del incidente actualizados con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSessionIncidentDto: UpdateSessionIncidentDto,
@@ -113,8 +105,7 @@ export class SessionIncidentsController {
     description: 'ID del incidente a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Reporte de conducta eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El incidente solicitado no existe.' })
+  @ApiStandardResponse(SessionIncidentResponseDto, 'Reporte de conducta eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.sessionIncidentsService.remove(id);
   }

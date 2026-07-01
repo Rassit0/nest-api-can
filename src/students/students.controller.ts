@@ -23,6 +23,8 @@ import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { StudentResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Students')
 @Controller('students')
@@ -35,11 +37,7 @@ export class StudentsController {
     description:
       'Crea el perfil de un estudiante a partir de un perfil de persona preexistente.',
   })
-  @ApiCreatedResponse({ description: 'Estudiante registrado exitosamente.' })
-  @ApiBadRequestResponse({
-    description:
-      'Datos de entrada inválidos o estudiante ya registrado para esa persona.',
-  })
+  @ApiStandardCreatedResponse(StudentResponseDto, 'Estudiante registrado exitosamente.')
   async create(@Body() createStudentDto: CreateStudentDto) {
     return await this.studentsService.create(createStudentDto);
   }
@@ -50,9 +48,7 @@ export class StudentsController {
     description:
       'Retorna una lista paginada y filtrable de todos los estudiantes registrados.',
   })
-  @ApiOkResponse({
-    description: 'Lista de estudiantes obtenida correctamente.',
-  })
+  @ApiPaginatedResponse(StudentResponseDto, 'Lista de estudiantes obtenida correctamente.')
   async findAll(@Query() paginationDto: StudentsPaginationDto) {
     return await this.studentsService.findAll(paginationDto);
   }
@@ -68,8 +64,7 @@ export class StudentsController {
     description: 'ID del estudiante a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Estudiante encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El estudiante solicitado no existe.' })
+  @ApiStandardResponse(StudentResponseDto, 'Estudiante encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentsService.findOne(id);
   }
@@ -86,9 +81,7 @@ export class StudentsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentDto })
-  @ApiOkResponse({ description: 'Estudiante actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El estudiante solicitado no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos inválidos.' })
+  @ApiStandardResponse(StudentResponseDto, 'Estudiante actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -106,8 +99,7 @@ export class StudentsController {
     description: 'ID del estudiante a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Estudiante eliminado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El estudiante solicitado no existe.' })
+  @ApiStandardResponse(StudentResponseDto, 'Estudiante eliminado con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentsService.remove(id);
   }

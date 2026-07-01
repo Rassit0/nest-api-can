@@ -23,6 +23,8 @@ import { SchoolsService } from './schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
 import { SchoolsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { SchoolResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Schools')
 @Controller('schools')
@@ -35,11 +37,7 @@ export class SchoolsController {
     description:
       'Registra una escuela de formación asociada a una institución y una disciplina deportiva.',
   })
-  @ApiCreatedResponse({ description: 'Escuela creada exitosamente.' })
-  @ApiBadRequestResponse({
-    description:
-      'Datos de entrada inválidos o escuela ya registrada para la misma institución y disciplina.',
-  })
+  @ApiStandardCreatedResponse(SchoolResponseDto, 'Escuela creada exitosamente.')
   async create(@Body() createSchoolDto: CreateSchoolDto) {
     return await this.schoolsService.create(createSchoolDto);
   }
@@ -50,7 +48,7 @@ export class SchoolsController {
     description:
       'Retorna una lista paginada y filtrable de todas las escuelas registradas.',
   })
-  @ApiOkResponse({ description: 'Lista de escuelas obtenida correctamente.' })
+  @ApiPaginatedResponse(SchoolResponseDto, 'Lista de escuelas obtenida correctamente.')
   async findAll(@Query() paginationDto: SchoolsPaginationDto) {
     return await this.schoolsService.findAll(paginationDto);
   }
@@ -66,8 +64,7 @@ export class SchoolsController {
     description: 'ID de la escuela a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Escuela encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La escuela solicitada no existe.' })
+  @ApiStandardResponse(SchoolResponseDto, 'Escuela encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schoolsService.findOne(id);
   }
@@ -84,12 +81,7 @@ export class SchoolsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateSchoolDto })
-  @ApiOkResponse({ description: 'Escuela actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La escuela solicitada no existe.' })
-  @ApiBadRequestResponse({
-    description:
-      'Datos incorrectos o duplicados con otra escuela de la institución.',
-  })
+  @ApiStandardResponse(SchoolResponseDto, 'Escuela actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSchoolDto: UpdateSchoolDto,
@@ -108,8 +100,7 @@ export class SchoolsController {
     description: 'ID de la escuela a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Escuela eliminada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La escuela solicitada no existe.' })
+  @ApiStandardResponse(SchoolResponseDto, 'Escuela eliminada exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schoolsService.remove(id);
   }

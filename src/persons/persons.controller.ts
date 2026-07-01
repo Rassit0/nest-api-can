@@ -25,6 +25,8 @@ import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { PersonResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Persons')
 @Controller('persons')
@@ -39,8 +41,7 @@ export class PersonsController {
   })
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
-  @ApiCreatedResponse({ description: 'Persona creada exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(PersonResponseDto, 'Persona creada exitosamente.')
   async create(@Body() createPersonDto: CreatePersonDto) {
     return await this.personsService.create(createPersonDto);
   }
@@ -51,7 +52,7 @@ export class PersonsController {
     description:
       'Retorna una lista paginada y filtrable de todos los perfiles de personas.',
   })
-  @ApiOkResponse({ description: 'Lista de personas obtenida correctamente.' })
+  @ApiPaginatedResponse(PersonResponseDto, 'Lista de personas obtenida correctamente.')
   async findAll(@Query() paginationDto: PersonPaginationDto) {
     return await this.personsService.findAll(paginationDto);
   }
@@ -67,8 +68,7 @@ export class PersonsController {
     description: 'ID de la persona (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Persona encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La persona no existe.' })
+  @ApiStandardResponse(PersonResponseDto, 'Persona encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.personsService.findOne(id);
   }
@@ -86,9 +86,7 @@ export class PersonsController {
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
   @ApiBody({ type: UpdatePersonDto })
-  @ApiOkResponse({ description: 'Datos de persona actualizados con éxito.' })
-  @ApiNotFoundResponse({ description: 'La persona no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(PersonResponseDto, 'Datos de persona actualizados con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePersonDto: UpdatePersonDto,
@@ -106,8 +104,7 @@ export class PersonsController {
     description: 'ID de la persona a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Persona eliminada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La persona no existe.' })
+  @ApiStandardResponse(PersonResponseDto, 'Persona eliminada exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.personsService.remove(id);
   }

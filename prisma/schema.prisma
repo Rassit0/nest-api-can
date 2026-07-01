@@ -352,7 +352,7 @@ model Player {
 }
 
 enum PlayerMembershipStatus {
-  PENDING // Inscripción creada, esperando pago inicial
+  PENDING_ACTIVE // Inscripción creada, esperando pago inicial
   ACTIVE // Habilitado para entrenar y competir
   SUSPENDED // Suspendido por deuda o decisión administrativa
   WITHDRAWN // Se retiró voluntariamente durante la temporada
@@ -372,7 +372,7 @@ model PlayerMembership {
   startedAt DateTime  @map("started_at")
   endedAt   DateTime? @map("ended_at")
 
-  status PlayerMembershipStatus @default(PENDING)
+  status PlayerMembershipStatus @default(PENDING_ACTIVE)
 
   notes String?
 

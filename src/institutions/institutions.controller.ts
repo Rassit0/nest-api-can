@@ -13,6 +13,8 @@ import { InstitutionsService } from './institutions.service';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { UpdateInstitutionDto } from './dto/update-institution.dto';
 import { InstitutionsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { InstitutionResponseDto } from '../common/dto/responses/entities.dto';
 
 @Controller('institutions')
 export class InstitutionsController {

@@ -23,6 +23,8 @@ import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoriesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { CategoryResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Categories')
 @Controller('categories')
@@ -35,8 +37,7 @@ export class CategoriesController {
     description:
       'Registra una categoría por rangos de edad y género permitidos.',
   })
-  @ApiCreatedResponse({ description: 'Categoría creada con éxito.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(CategoryResponseDto, 'Categoría creada con éxito.')
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return await this.categoriesService.create(createCategoryDto);
   }
@@ -47,7 +48,7 @@ export class CategoriesController {
     description:
       'Retorna una lista paginada y filtrable de todas las categorías.',
   })
-  @ApiOkResponse({ description: 'Lista de categorías obtenida correctamente.' })
+  @ApiPaginatedResponse(CategoryResponseDto, 'Lista de categorías obtenida correctamente.')
   async findAll(@Query() paginationDto: CategoriesPaginationDto) {
     return await this.categoriesService.findAll(paginationDto);
   }
@@ -62,8 +63,7 @@ export class CategoriesController {
     description: 'ID de la categoría (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Categoría encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La categoría no existe.' })
+  @ApiStandardResponse(CategoryResponseDto, 'Categoría encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.categoriesService.findOne(id);
   }
@@ -79,9 +79,7 @@ export class CategoriesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateCategoryDto })
-  @ApiOkResponse({ description: 'Categoría actualizada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La categoría no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(CategoryResponseDto, 'Categoría actualizada con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -99,8 +97,7 @@ export class CategoriesController {
     description: 'ID de la categoría a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Categoría eliminada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La categoría no existe.' })
+  @ApiStandardResponse(CategoryResponseDto, 'Categoría eliminada con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.categoriesService.remove(id);
   }

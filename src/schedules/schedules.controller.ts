@@ -14,6 +14,8 @@ import { SchedulesService } from './schedules.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { SchedulesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { ScheduleResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Schedules')
 @Controller('schedules')

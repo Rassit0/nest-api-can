@@ -14,6 +14,8 @@ import { MatchesService } from './matches.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { MatchesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { MatchResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Matches')
 @Controller('matches')

@@ -23,6 +23,8 @@ import { ClubsService } from './clubs.service';
 import { CreateClubDto } from './dto/create-club.dto';
 import { UpdateClubDto } from './dto/update-club.dto';
 import { ClubsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { ClubResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Clubs')
 @Controller('clubs')
@@ -35,8 +37,7 @@ export class ClubsController {
     description:
       'Registra un club en el sistema asignándole una disciplina y vinculándolo a una institución.',
   })
-  @ApiCreatedResponse({ description: 'Club deportivo creado con éxito.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(ClubResponseDto, 'Club deportivo creado con éxito.')
   async create(@Body() createClubDto: CreateClubDto) {
     return await this.clubsService.create(createClubDto);
   }
@@ -47,7 +48,7 @@ export class ClubsController {
     description:
       'Retorna una lista paginada y filtrable de todos los clubes del sistema.',
   })
-  @ApiOkResponse({ description: 'Lista de clubes obtenida correctamente.' })
+  @ApiPaginatedResponse(ClubResponseDto, 'Lista de clubes obtenida correctamente.')
   async findAll(@Query() paginationDto: ClubsPaginationDto) {
     return await this.clubsService.findAll(paginationDto);
   }
@@ -59,8 +60,7 @@ export class ClubsController {
       'Busca y retorna los metadatos completos de un club por su ID.',
   })
   @ApiParam({ name: 'id', description: 'ID del club (UUID)', format: 'uuid' })
-  @ApiOkResponse({ description: 'Club deportivo encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El club no existe.' })
+  @ApiStandardResponse(ClubResponseDto, 'Club deportivo encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.clubsService.findOne(id);
   }
@@ -76,9 +76,7 @@ export class ClubsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateClubDto })
-  @ApiOkResponse({ description: 'Club deportivo actualizado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El club no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos de actualización inválidos.' })
+  @ApiStandardResponse(ClubResponseDto, 'Club deportivo actualizado con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateClubDto: UpdateClubDto,
@@ -97,8 +95,7 @@ export class ClubsController {
     description: 'ID del club a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Club deportivo eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El club no existe.' })
+  @ApiStandardResponse(ClubResponseDto, 'Club deportivo eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.clubsService.remove(id);
   }

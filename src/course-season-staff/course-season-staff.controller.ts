@@ -23,6 +23,8 @@ import { CourseSeasonStaffService } from './course-season-staff.service';
 import { CreateCourseSeasonStaffDto } from './dto/create-course-season-staff.dto';
 import { UpdateCourseSeasonStaffDto } from './dto/update-course-season-staff.dto';
 import { CourseSeasonStaffPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { CourseSeasonStaffResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Course Season Staff')
 @Controller('course-season-staff')
@@ -37,10 +39,7 @@ export class CourseSeasonStaffController {
     description:
       'Vincula a un entrenador/auxiliar a una instancia de curso escolar con un rol específico. Si se marca como encargado principal, se removerá esa distinción de los otros profesores del curso.',
   })
-  @ApiCreatedResponse({
-    description: 'Miembro del personal asignado exitosamente.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(CourseSeasonStaffResponseDto, 'Miembro del personal asignado exitosamente.')
   async create(@Body() createCourseSeasonStaffDto: CreateCourseSeasonStaffDto) {
     return await this.courseSeasonStaffService.create(
       createCourseSeasonStaffDto,
@@ -53,9 +52,7 @@ export class CourseSeasonStaffController {
     description:
       'Retorna una lista paginada y filtrable de todas las asignaciones de profesores vigentes o históricas.',
   })
-  @ApiOkResponse({
-    description: 'Lista de asignaciones escolares obtenida correctamente.',
-  })
+  @ApiPaginatedResponse(CourseSeasonStaffResponseDto, 'Lista de asignaciones escolares obtenida correctamente.')
   async findAll(@Query() paginationDto: CourseSeasonStaffPaginationDto) {
     return await this.courseSeasonStaffService.findAll(paginationDto);
   }
@@ -71,8 +68,7 @@ export class CourseSeasonStaffController {
     description: 'ID de la asignación a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Asignación encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La asignación solicitada no existe.' })
+  @ApiStandardResponse(CourseSeasonStaffResponseDto, 'Asignación encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonStaffService.findOne(id);
   }
@@ -89,9 +85,7 @@ export class CourseSeasonStaffController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateCourseSeasonStaffDto })
-  @ApiOkResponse({ description: 'Asignación actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La asignación solicitada no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos inválidos.' })
+  @ApiStandardResponse(CourseSeasonStaffResponseDto, 'Asignación actualizada exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCourseSeasonStaffDto: UpdateCourseSeasonStaffDto,
@@ -113,8 +107,7 @@ export class CourseSeasonStaffController {
     description: 'ID de la asignación a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Profesor removido del curso con éxito.' })
-  @ApiNotFoundResponse({ description: 'La asignación solicitada no existe.' })
+  @ApiStandardResponse(CourseSeasonStaffResponseDto, 'Profesor removido del curso con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonStaffService.remove(id);
   }

@@ -23,6 +23,8 @@ import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { LocationsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { LocationResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Locations')
 @Controller('locations')
@@ -35,9 +37,8 @@ export class LocationsController {
     description:
       'Registra un espacio físico o cancha utilizable para entrenamientos, sesiones y horarios de disciplinas.',
   })
-  @ApiCreatedResponse({ description: 'Ubicación física creada exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
-  create(@Body() createLocationDto: CreateLocationDto) {
+  @ApiStandardCreatedResponse(LocationResponseDto, 'Ubicación física creada exitosamente.')
+  async create(@Body() createLocationDto: CreateLocationDto) {
     return this.locationsService.create(createLocationDto);
   }
 
@@ -47,10 +48,8 @@ export class LocationsController {
     description:
       'Retorna una lista paginada y filtrable de todas las ubicaciones registradas.',
   })
-  @ApiOkResponse({
-    description: 'Lista de ubicaciones obtenida correctamente.',
-  })
-  findAll(@Query() paginationDto: LocationsPaginationDto) {
+  @ApiPaginatedResponse(LocationResponseDto, 'Lista de ubicaciones obtenida correctamente.')
+  async findAll(@Query() paginationDto: LocationsPaginationDto) {
     return this.locationsService.findAll(paginationDto);
   }
 
@@ -64,9 +63,8 @@ export class LocationsController {
     description: 'ID de la ubicación (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Ubicación encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La ubicación no existe.' })
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiStandardResponse(LocationResponseDto, 'Ubicación encontrada exitosamente.')
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.locationsService.findOne(id);
   }
 
@@ -82,10 +80,8 @@ export class LocationsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateLocationDto })
-  @ApiOkResponse({ description: 'Ubicación actualizada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La ubicación no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
-  update(
+  @ApiStandardResponse(LocationResponseDto, 'Ubicación actualizada exitosamente.')
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateLocationDto: UpdateLocationDto,
   ) {
@@ -102,9 +98,8 @@ export class LocationsController {
     description: 'ID de la ubicación a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Ubicación eliminada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La ubicación no existe.' })
-  remove(@Param('id', ParseUUIDPipe) id: string) {
+  @ApiStandardResponse(LocationResponseDto, 'Ubicación eliminada con éxito.')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.locationsService.remove(id);
   }
 }

@@ -23,6 +23,8 @@ import { MembershipDiscountService } from './membership-discount.service';
 import { CreateMembershipDiscountDto } from './dto/create-membership-discount.dto';
 import { UpdateMembershipDiscountDto } from './dto/update-membership-discount.dto';
 import { PlayerMembershipDiscountsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { MembershipDiscountResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Player Membership Discounts')
 @Controller('membership-discount')
@@ -36,11 +38,8 @@ export class MembershipDiscountController {
     summary: 'Asignar un descuento a una membresía de jugador',
     description: 'Registra y aplica un descuento a la membresía de un jugador.',
   })
-  @ApiCreatedResponse({
-    description: 'Descuento de membresía registrado exitosamente.',
-  })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
-  create(@Body() createMembershipDiscountDto: CreateMembershipDiscountDto) {
+  @ApiStandardCreatedResponse(MembershipDiscountResponseDto, 'Descuento de membresía registrado exitosamente.')
+  async create(@Body() createMembershipDiscountDto: CreateMembershipDiscountDto) {
     return this.membershipDiscountService.create(createMembershipDiscountDto);
   }
 
@@ -50,7 +49,7 @@ export class MembershipDiscountController {
     description:
       'Retorna una lista paginada y filtrable de todos los descuentos aplicados a membresías de jugadores.',
   })
-  @ApiOkResponse({ description: 'Lista de descuentos obtenida correctamente.' })
+  @ApiPaginatedResponse(MembershipDiscountResponseDto, 'Lista de descuentos obtenida correctamente.')
   async findAll(
     @Query() paginationDto: PlayerMembershipDiscountsPaginationDto,
   ) {
@@ -68,8 +67,7 @@ export class MembershipDiscountController {
     description: 'ID del descuento (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Descuento encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El descuento no existe.' })
+  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.membershipDiscountService.findOne(id);
   }
@@ -85,9 +83,7 @@ export class MembershipDiscountController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateMembershipDiscountDto })
-  @ApiOkResponse({ description: 'Descuento actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El descuento no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateMembershipDiscountDto: UpdateMembershipDiscountDto,
@@ -109,8 +105,7 @@ export class MembershipDiscountController {
     description: 'ID del descuento a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Descuento eliminado con éxito.' })
-  @ApiNotFoundResponse({ description: 'El descuento no existe.' })
+  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento eliminado con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.membershipDiscountService.remove(id);
   }

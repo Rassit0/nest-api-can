@@ -23,6 +23,8 @@ import { ChargesService } from './charges.service';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
 import { ChargesPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { ChargeResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Charges')
 @Controller('charges')
@@ -35,8 +37,7 @@ export class ChargesController {
     description:
       'Registra una obligación de cobro base en el sistema con su descripción, fecha de vencimiento y monto total.',
   })
-  @ApiCreatedResponse({ description: 'Cargo base registrado con éxito.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(ChargeResponseDto, 'Cargo base registrado con éxito.')
   async create(@Body() createChargeDto: CreateChargeDto) {
     return await this.chargesService.create(createChargeDto);
   }
@@ -47,7 +48,7 @@ export class ChargesController {
     description:
       'Retorna una lista paginada y filtrable de todos los cargos de facturación cargados.',
   })
-  @ApiOkResponse({ description: 'Lista de cargos obtenida correctamente.' })
+  @ApiPaginatedResponse(ChargeResponseDto, 'Lista de cargos obtenida correctamente.')
   async findAll(@Query() paginationDto: ChargesPaginationDto) {
     return await this.chargesService.findAll(paginationDto);
   }
@@ -63,8 +64,7 @@ export class ChargesController {
     description: 'ID del cargo a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Cargo encontrado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
+  @ApiStandardResponse(ChargeResponseDto, 'Cargo encontrado exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.findOne(id);
   }
@@ -81,9 +81,7 @@ export class ChargesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateChargeDto })
-  @ApiOkResponse({ description: 'Cargo actualizado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada incorrectos.' })
+  @ApiStandardResponse(ChargeResponseDto, 'Cargo actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateChargeDto: UpdateChargeDto,
@@ -102,8 +100,7 @@ export class ChargesController {
     description: 'ID del cargo a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Cargo eliminado exitosamente.' })
-  @ApiNotFoundResponse({ description: 'El cargo solicitado no existe.' })
+  @ApiStandardResponse(ChargeResponseDto, 'Cargo eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.remove(id);
   }

@@ -14,6 +14,8 @@ import { SessionBookingsService } from './session-bookings.service';
 import { CreateSessionBookingDto } from './dto/create-session-booking.dto';
 import { UpdateSessionBookingDto } from './dto/update-session-booking.dto';
 import { SessionBookingsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { SessionBookingResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Session Bookings')
 @Controller('session-bookings')

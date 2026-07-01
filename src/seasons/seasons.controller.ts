@@ -23,6 +23,8 @@ import { SeasonsService } from './seasons.service';
 import { CreateSeasonDto } from './dto/create-season.dto';
 import { UpdateSeasonDto } from './dto/update-season.dto';
 import { SeasonsPaginationDto } from './dto/pagination.dto';
+import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { SeasonResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Seasons')
 @Controller('seasons')
@@ -35,8 +37,7 @@ export class SeasonsController {
     description:
       'Registra un periodo deportivo activo (año/fase/curso) con rango de fechas en el sistema.',
   })
-  @ApiCreatedResponse({ description: 'Temporada creada exitosamente.' })
-  @ApiBadRequestResponse({ description: 'Datos de entrada inválidos.' })
+  @ApiStandardCreatedResponse(SeasonResponseDto, 'Temporada creada exitosamente.')
   async create(@Body() createSeasonDto: CreateSeasonDto) {
     return await this.seasonsService.create(createSeasonDto);
   }
@@ -47,7 +48,7 @@ export class SeasonsController {
     description:
       'Retorna una lista paginada y filtrable de todas las temporadas deportivas.',
   })
-  @ApiOkResponse({ description: 'Lista de temporadas obtenida correctamente.' })
+  @ApiPaginatedResponse(SeasonResponseDto, 'Lista de temporadas obtenida correctamente.')
   async findAll(@Query() paginationDto: SeasonsPaginationDto) {
     return await this.seasonsService.findAll(paginationDto);
   }
@@ -63,8 +64,7 @@ export class SeasonsController {
     description: 'ID de la temporada (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Temporada encontrada exitosamente.' })
-  @ApiNotFoundResponse({ description: 'La temporada no existe.' })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada encontrada exitosamente.')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.seasonsService.findOne(id);
   }
@@ -80,9 +80,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateSeasonDto })
-  @ApiOkResponse({ description: 'Temporada actualizada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La temporada no existe.' })
-  @ApiBadRequestResponse({ description: 'Datos incorrectos.' })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada actualizada con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
@@ -100,8 +98,7 @@ export class SeasonsController {
     description: 'ID de la temporada a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiOkResponse({ description: 'Temporada eliminada con éxito.' })
-  @ApiNotFoundResponse({ description: 'La temporada no existe.' })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada eliminada con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.seasonsService.remove(id);
   }
