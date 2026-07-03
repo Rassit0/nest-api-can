@@ -60,11 +60,17 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
   };
 }>;
 
+import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
+import { PaginationDto } from 'src/common/dto/pagination';
+
 @Injectable()
 export class PlayerMembershipsService {
   private readonly logger = new Logger('PlayerMembershipsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly membershipChargesService: MembershipChargesService,
+  ) {}
 
   async create(createDto: CreatePlayerMembershipDto) {
     await this.validatePaymentPlan(
@@ -96,6 +102,11 @@ export class PlayerMembershipsService {
       data: createDto,
       select: playerMembershipSelect,
     });
+
+    // Generar cargos inmediatamente después de crear la membresía
+    await this.membershipChargesService.generateChargesForNewMembership(
+      membership.id,
+    );
 
     return {
       message: 'Oferta de membresía de equipo agregada exitosamente',
@@ -400,6 +411,30 @@ export class PlayerMembershipsService {
     };
   }
 
+  async activate(id: string, reason?: string) {
+    const membership = await this.getMembership(id);
+
+    if (membership.status !== PlayerMembershipStatus.PENDING_ACTIVE) {
+      throw new BadRequestException(
+        'Solo una membresía pendiente puede ser activada',
+      );
+    }
+
+    const updatedMembership = await this.prisma.playerMembership.update({
+      where: { id },
+      data: {
+        status: PlayerMembershipStatus.ACTIVE,
+        notes: reason,
+      },
+      select: playerMembershipSelect,
+    });
+
+    return {
+      message: 'Membresía activada exitosamente',
+      data: updatedMembership,
+    };
+  }
+
   private async getMembership(id: string) {
     const membership = await this.prisma.playerMembership.findUnique({
       where: { id },
@@ -559,5 +594,85 @@ export class PlayerMembershipsService {
         `La fecha de inicio de la membresía debe estar dentro del rango de fechas de la temporada (${seasonStartDate.toISOString()} - ${seasonEndDate.toISOString()})`,
       );
     }
+  }
+
+  async getPlayersOptions(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.PlayerWhereInput = {
+      ...(search
+        ? {
+            OR: [
+              { person: { name: { contains: search, mode: 'insensitive' } } },
+              {
+                person: { lastName: { contains: search, mode: 'insensitive' } },
+              },
+              {
+                person: {
+                  secondLastName: { contains: search, mode: 'insensitive' },
+                },
+              },
+              {
+                person: {
+                  documentNumber: { contains: search, mode: 'insensitive' },
+                },
+              },
+            ],
+          }
+        : {}),
+      isActive: true,
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.player.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { person: { name: orderBy } },
+        select: {
+          id: true,
+          isActive: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              documentNumber: true,
+              gender: true,
+              birthDate: true,
+              imageUrl: true,
+            },
+          },
+        },
+      }),
+      this.prisma.player.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Jugadores obtenidos exitosamente',
+      data: persons.map((player) => ({
+        ...player,
+        person: {
+          ...player.person,
+          fullName:
+            `${player.person.name} ${player.person.lastName} ${player.person.secondLastName || ''}`.trim(),
+        },
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
   }
 }

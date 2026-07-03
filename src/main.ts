@@ -44,11 +44,10 @@ async function bootstrap() {
 
   const i18nService = app.get(I18nService);
 
-  // ✅ Tu filtro personalizado (el que creaste)
   app.useGlobalFilters(
-    new I18nValidationFilter(),
-    app.get(PrismaExceptionFilter),
     new I18nHttpExceptionFilter(i18nService),
+    app.get(PrismaExceptionFilter),
+    new I18nValidationFilter(),
   );
 
   await app.listen(process.env.PORT ?? 3000);

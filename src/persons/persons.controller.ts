@@ -25,7 +25,11 @@ import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { PersonResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Persons')
@@ -52,7 +56,10 @@ export class PersonsController {
     description:
       'Retorna una lista paginada y filtrable de todos los perfiles de personas.',
   })
-  @ApiPaginatedResponse(PersonResponseDto, 'Lista de personas obtenida correctamente.')
+  @ApiPaginatedResponse(
+    PersonResponseDto,
+    'Lista de personas obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: PersonPaginationDto) {
     return await this.personsService.findAll(paginationDto);
   }
@@ -86,7 +93,10 @@ export class PersonsController {
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
   @ApiBody({ type: UpdatePersonDto })
-  @ApiStandardResponse(PersonResponseDto, 'Datos de persona actualizados con éxito.')
+  @ApiStandardResponse(
+    PersonResponseDto,
+    'Datos de persona actualizados con éxito.',
+  )
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePersonDto: UpdatePersonDto,

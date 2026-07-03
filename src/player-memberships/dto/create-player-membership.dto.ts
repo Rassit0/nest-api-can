@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsISO8601, IsUUID, Max, Min } from 'class-validator';
+import { IsBoolean, IsInt, IsISO8601, IsUUID, Max, Min } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
@@ -63,6 +63,15 @@ export class CreatePlayerMembershipDto {
     { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
   )
   startedAt: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Indica si la membresía fue migrada',
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN'),
+  })
+  isMigrated: boolean;
 
   // @ApiProperty({
   //     example: PlayerMembershipStatus.ACTIVE,

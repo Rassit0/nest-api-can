@@ -302,6 +302,7 @@ export const PlayerMembershipScalarFieldEnum = {
   status: 'status',
   notes: 'notes',
   nextMonthlyChargeGenerationDate: 'nextMonthlyChargeGenerationDate',
+  isMigrated: 'isMigrated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

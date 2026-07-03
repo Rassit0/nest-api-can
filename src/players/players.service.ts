@@ -9,6 +9,7 @@ import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { PlayerPaginationDto } from './dto/pagination.dto';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 export const PersonSelect: Prisma.PersonSelect = {
   id: true,
@@ -180,6 +181,67 @@ export class PlayersService {
     return {
       message: 'Jugador eliminado exitosamente',
       data: deletedCategory,
+    };
+  }
+
+  async getAvailablePersons(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.PersonWhereInput = {
+      players: { none: {} },
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { lastName: { contains: search, mode: 'insensitive' } },
+              { secondLastName: { contains: search, mode: 'insensitive' } },
+              { documentNumber: { contains: search, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.person.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { name: orderBy },
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          documentNumber: true,
+          gender: true,
+          birthDate: true,
+          imageUrl: true,
+        },
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Personas obtenidas exitosamente',
+      data: persons.map((person) => ({
+        ...person,
+        fullName:
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim(),
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
     };
   }
 }

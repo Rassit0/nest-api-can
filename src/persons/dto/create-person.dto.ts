@@ -84,6 +84,7 @@ export class CreatePersonDto {
     description: 'Imagen de la persona (JPEG o PNG, máximo 5MB)',
   })
   @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsFile()
   @MaxFileSize(5e6, {
     message: i18nValidationMessage('validation.MAX_FILE_SIZE', {
@@ -95,7 +96,7 @@ export class CreatePersonDto {
       constraint1: 'JPEG o PNG',
     }),
   })
-  imageUrl?: File;
+  imageUrl?: File | null;
 
   @ApiProperty({
     example: DocumentType.CI,

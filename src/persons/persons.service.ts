@@ -15,10 +15,16 @@ import { PersonPaginationDto } from './dto/pagination.dto';
 export const PersonSelect: Prisma.PersonSelect = {
   id: true,
   name: true,
+  lastName: true,
+  secondLastName: true,
   imageUrl: true,
   address: true,
   phone: true,
   email: true,
+  gender: true,
+  birthDate: true,
+  documentNumber: true,
+  documentType: true,
   contacts: {
     select: {
       relationship: true,

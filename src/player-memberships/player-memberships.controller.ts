@@ -24,8 +24,13 @@ import { CreatePlayerMembershipDto } from './dto/create-player-membership.dto';
 import { UpdatePlayerMembershipDto } from './dto/update-player-membership.dto';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 import { ChangeStatusDto } from './dto/change-status.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { PlayerMembershipResponseDto } from '../common/dto/responses/entities.dto';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 @ApiTags('Player Memberships')
 @Controller('player-memberships')
@@ -40,7 +45,10 @@ export class PlayerMembershipsController {
     description:
       'Inscribe a un jugador en una instancia de equipo en temporada validando categorías, edad y cupos.',
   })
-  @ApiStandardCreatedResponse(PlayerMembershipResponseDto, 'Membresía/inscripción de jugador creada con éxito.')
+  @ApiStandardCreatedResponse(
+    PlayerMembershipResponseDto,
+    'Membresía/inscripción de jugador creada con éxito.',
+  )
   async create(@Body() createPlayerMembershipDto: CreatePlayerMembershipDto) {
     return await this.playerMembershipsService.create(
       createPlayerMembershipDto,
@@ -53,9 +61,21 @@ export class PlayerMembershipsController {
     description:
       'Retorna una lista paginada y filtrable de todas las membresías/inscripciones de jugadores.',
   })
-  @ApiPaginatedResponse(PlayerMembershipResponseDto, 'Lista de inscripciones obtenida correctamente.')
+  @ApiPaginatedResponse(
+    PlayerMembershipResponseDto,
+    'Lista de inscripciones obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: PlayerMembershipsPaginationDto) {
     return await this.playerMembershipsService.findAll(paginationDto);
+  }
+
+  @Get('players-options')
+  @ApiOperation({
+    summary: 'Listar opciones de jugadores',
+    description: 'Retorna una lista paginada y filtrable de jugadores.',
+  })
+  async getAvailablePersons(@Query() paginationDto: PaginationDto) {
+    return await this.playerMembershipsService.getPlayersOptions(paginationDto);
   }
 
   @Get(':id')
@@ -69,7 +89,10 @@ export class PlayerMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(PlayerMembershipResponseDto, 'Inscripción encontrada exitosamente.')
+  @ApiStandardResponse(
+    PlayerMembershipResponseDto,
+    'Inscripción encontrada exitosamente.',
+  )
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playerMembershipsService.findOne(id);
   }
@@ -85,7 +108,10 @@ export class PlayerMembershipsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePlayerMembershipDto })
-  @ApiStandardResponse(PlayerMembershipResponseDto, 'Inscripción actualizada exitosamente.')
+  @ApiStandardResponse(
+    PlayerMembershipResponseDto,
+    'Inscripción actualizada exitosamente.',
+  )
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerMembershipDto: UpdatePlayerMembershipDto,
@@ -191,6 +217,31 @@ export class PlayerMembershipsController {
     @Body() changeStatusDto: ChangeStatusDto,
   ) {
     return await this.playerMembershipsService.reactivate(
+      id,
+      changeStatusDto.reason,
+    );
+  }
+
+  @Post('activate/:id')
+  @ApiOperation({
+    summary: 'Activar inscripción de jugador',
+    description: 'Pasa el estado de PENDING_ACTIVE a ACTIVE.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la inscripción (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: ChangeStatusDto })
+  @ApiOkResponse({ description: 'Inscripción activada correctamente.' })
+  @ApiBadRequestResponse({
+    description: 'Solo membresías pendientes pueden activarse.',
+  })
+  async activate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() changeStatusDto: ChangeStatusDto,
+  ) {
+    return await this.playerMembershipsService.activate(
       id,
       changeStatusDto.reason,
     );

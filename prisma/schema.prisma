@@ -379,6 +379,9 @@ model PlayerMembership {
   // Campo para guardar cual es la siguiente fecha del cargo
   nextMonthlyChargeGenerationDate DateTime?
 
+  // Campo para indicar que esta membresia fue migrada desde el sistema antiguo, si es true, no se le generaran cargos anteriores como los iniciales ni mensuales
+  isMigrated Boolean @default(false) @map("is_migrated")
+
   createdAt           DateTime             @default(now()) @map("created_at")
   updatedAt           DateTime             @updatedAt @map("updated_at")
   membershipDiscounts MembershipDiscount[]
