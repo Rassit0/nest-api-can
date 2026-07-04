@@ -246,6 +246,9 @@ export class TeamSeasonService {
       where: { id },
       data: {
         ...rest,
+        teamId,
+        seasonId,
+        categoryId,
       },
       select: teamCategorySelect,
     });

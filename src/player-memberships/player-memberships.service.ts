@@ -10,7 +10,7 @@ import { PrismaService } from 'src/prisma.service';
 import { PlayerMembershipStatus, Prisma } from 'src/generated/prisma/client';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 
-export const playerMembershipSelect: Prisma.PlayerMembershipSelect = {
+export const playerMembershipSelect = {
   id: true,
   playerId: true,
   player: {
@@ -35,6 +35,42 @@ export const playerMembershipSelect: Prisma.PlayerMembershipSelect = {
   status: true,
   createdAt: true,
   updatedAt: true,
+  membershipCharges: {
+    where: {
+      charge: {
+        status: {
+          in: ['PENDING', 'PARTIAL'],
+        },
+      },
+    },
+    select: {
+      charge: {
+        select: {
+          pendingAmount: true,
+        },
+      },
+    },
+  },
+} satisfies Prisma.PlayerMembershipSelect;
+
+type PlayerMembershipWithCharges = Prisma.PlayerMembershipGetPayload<{
+  select: typeof playerMembershipSelect;
+}>;
+
+const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
+  const totalPendingAmount =
+    membership.membershipCharges?.reduce(
+      (sum, current) => sum + Number(current.charge.pendingAmount),
+      0,
+    ) || 0;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { membershipCharges, ...rest } = membership;
+
+  return {
+    ...rest,
+    totalPendingAmount,
+  };
 };
 
 type PlayerWithPerson = Prisma.PlayerGetPayload<{
@@ -110,7 +146,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Oferta de membresía de equipo agregada exitosamente',
-      data: membership,
+      data: mapMembershipWithTotal(membership),
     };
   }
 
@@ -197,7 +233,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresías de jugador a equipo obtenidas exitosamente',
-      data: playerMemberships, // Será [] si la página no existe o no hay registros
+      data: playerMemberships.map(mapMembershipWithTotal), // Será [] si la página no existe o no hay registros
       meta: {
         totalItems, // Ej: 25
         itemsPerPage: per_page, // Ej: 10
@@ -222,7 +258,7 @@ export class PlayerMembershipsService {
       );
     }
     return {
-      data: playerMembership,
+      data: mapMembershipWithTotal(playerMembership),
       message: 'Membresía de jugador a equipo obtenida exitosamente',
     };
   }
@@ -279,7 +315,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía de jugador a equipo actualizada exitosamente',
-      data: updatedMembership,
+      data: mapMembershipWithTotal(updatedMembership),
     };
   }
 
@@ -314,7 +350,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía finalizada exitosamente',
-      data: finishedMembership,
+      data: mapMembershipWithTotal(finishedMembership),
     };
   }
 
@@ -348,7 +384,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía suspendida exitosamente',
-      data: finishedMembership,
+      data: mapMembershipWithTotal(finishedMembership),
     };
   }
 
@@ -383,7 +419,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía retirada exitosamente',
-      data: finishedMembership,
+      data: mapMembershipWithTotal(finishedMembership),
     };
   }
 
@@ -407,7 +443,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía reactivada exitosamente',
-      data: updatedMembership,
+      data: mapMembershipWithTotal(updatedMembership),
     };
   }
 
@@ -431,7 +467,7 @@ export class PlayerMembershipsService {
 
     return {
       message: 'Membresía activada exitosamente',
-      data: updatedMembership,
+      data: mapMembershipWithTotal(updatedMembership),
     };
   }
 
