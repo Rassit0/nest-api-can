@@ -25,26 +25,6 @@ export const PersonSelect: Prisma.PersonSelect = {
   birthDate: true,
   documentNumber: true,
   documentType: true,
-  contacts: {
-    select: {
-      relationship: true,
-      isPrimaryContact: true,
-      isEmergencyContact: true,
-      isBillingContact: true,
-      contactPerson: {
-        select: {
-          id: true,
-          name: true,
-          lastName: true,
-          secondLastName: true,
-          documentType: true,
-          documentNumber: true,
-          phone: true,
-          email: true,
-        },
-      },
-    },
-  },
   createdAt: true,
   updatedAt: true,
 };
@@ -149,7 +129,7 @@ export class PersonsService {
     });
 
     return {
-      message: 'Persona y tutores agregados exitosamente',
+      message: 'Persona actualizada exitosamente',
       data: newPerson,
     };
   }
