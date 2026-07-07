@@ -60,7 +60,7 @@ export class MembershipLateFeeService {
         },
         membershipCharges: {
           some: {
-            type: TypeMembershipCharge.MONTHLY_FEE,
+            type: TypeMembershipCharge.RECURRING_FEE,
             playerMembership: {
               status: {
                 in: [

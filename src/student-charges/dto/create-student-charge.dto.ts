@@ -50,8 +50,8 @@ export class CreateStudentChargeDto {
 
   @ApiProperty({
     enum: TypeMembershipCharge,
-    example: TypeMembershipCharge.MONTHLY_FEE,
-    description: 'Tipo de cargo (REGISTRATION, MONTHLY_FEE, LATE_FEE)',
+    example: TypeMembershipCharge.RECURRING_FEE,
+    description: 'Tipo de cargo (REGISTRATION, RECURRING_FEE, LATE_FEE)',
   })
   @IsEnum(TypeMembershipCharge, {
     message: i18nValidationMessage('validation.IS_ENUM', {

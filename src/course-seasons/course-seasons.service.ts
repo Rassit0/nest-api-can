@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
 import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -15,7 +15,7 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   gender: true,
   billingDay: true,
   registrationFee: true,
-  monthlyFee: true,
+  recurringFee: true,
   debtToleranceMonths: true,
   lateFeeEnabled: true,
   lateFeePerDay: true,
@@ -61,6 +61,36 @@ export class CourseSeasonsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createCourseSeasonDto: CreateCourseSeasonDto) {
+    const season = await this.prisma.season.findUnique({
+      where: { id: createCourseSeasonDto.seasonId },
+    });
+    
+    if (!season) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    if (!createCourseSeasonDto.billingFrequency || createCourseSeasonDto.billingFrequency === 'MONTHLY') {
+      const diffTime = season.endDate.getTime() - season.startDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays < 28) {
+        let isValidDay = false;
+        const current = new Date(season.startDate);
+        while (current <= season.endDate) {
+          if (current.getUTCDate() === createCourseSeasonDto.billingDay) {
+            isValidDay = true;
+            break;
+          }
+          current.setUTCDate(current.getUTCDate() + 1);
+        }
+        if (!isValidDay) {
+          throw new BadRequestException(
+            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+          );
+        }
+      }
+    }
+
     const newCourseSeason = await this.prisma.courseSeason.create({
       data: createCourseSeasonDto,
       select: courseSeasonSelect,
@@ -149,6 +179,40 @@ export class CourseSeasonsService {
       throw new NotFoundException(
         'El periodo del curso solicitado no fue encontrado',
       );
+    }
+
+    const seasonId = updateCourseSeasonDto.seasonId ?? courseSeason.seasonId;
+    const season = await this.prisma.season.findUnique({
+      where: { id: seasonId },
+    });
+    
+    if (!season) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    const billingFrequency = updateCourseSeasonDto.billingFrequency ?? courseSeason.billingFrequency;
+    const billingDay = updateCourseSeasonDto.billingDay ?? courseSeason.billingDay;
+
+    if (!billingFrequency || billingFrequency === 'MONTHLY') {
+      const diffTime = season.endDate.getTime() - season.startDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays < 28) {
+        let isValidDay = false;
+        const current = new Date(season.startDate);
+        while (current <= season.endDate) {
+          if (current.getUTCDate() === billingDay) {
+            isValidDay = true;
+            break;
+          }
+          current.setUTCDate(current.getUTCDate() + 1);
+        }
+        if (!isValidDay) {
+          throw new BadRequestException(
+            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+          );
+        }
+      }
     }
 
     const updatedCourseSeason = await this.prisma.courseSeason.update({

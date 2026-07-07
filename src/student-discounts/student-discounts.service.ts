@@ -8,7 +8,7 @@ import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 
 export const studentDiscountSelect: Prisma.StudentDiscountSelect = {
   id: true,
-  monthlyDiscountPercent: true,
+  recurringDiscountPercent: true,
   registrationDiscountPercent: true,
   startDate: true,
   endDate: true,

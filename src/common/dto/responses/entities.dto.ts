@@ -685,7 +685,7 @@ export class TeamSeasonResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  monthlyFee: any;
+  recurringFee: any;
 
   @ApiProperty({
     example: 1,
@@ -808,7 +808,7 @@ export class PaymentPlanResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  monthlyDiscountPercent: any;
+  recurringDiscountPercent: any;
 
   @ApiProperty({
     example: true,
@@ -958,7 +958,7 @@ export class PlayerMembershipResponseDto {
     required: false,
     example: '2024-01-01T00:00:00Z',
   })
-  nextMonthlyChargeGenerationDate?: Date;
+  nextRecurringChargeGenerationDate?: Date;
 
   @ApiProperty({
     example: '2024-01-01T00:00:00Z',
@@ -1003,7 +1003,7 @@ export class MembershipDiscountResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  monthlyDiscountPercent: any;
+  recurringDiscountPercent: any;
 
   @ApiProperty({
     example: 'any',
@@ -1764,7 +1764,7 @@ export class CourseSeasonResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  monthlyFee: any;
+  recurringFee: any;
 
   @ApiProperty({
     example: 1,
@@ -2022,7 +2022,7 @@ export class StudentMembershipResponseDto {
     required: false,
     example: '2024-01-01T00:00:00Z',
   })
-  nextMonthlyChargeGenerationDate?: Date;
+  nextRecurringChargeGenerationDate?: Date;
 
   @ApiProperty({
     example: '2024-01-01T00:00:00Z',
@@ -2067,7 +2067,7 @@ export class StudentDiscountResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  monthlyDiscountPercent: any;
+  recurringDiscountPercent: any;
 
   @ApiProperty({
     example: 'any',

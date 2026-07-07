@@ -26,6 +26,7 @@ import { UpdateStudentChargeDto } from './dto/update-student-charge.dto';
 import { StudentChargesPaginationDto } from './dto/pagination.dto';
 import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
 import { StudentChargeResponseDto } from '../common/dto/responses/entities.dto';
+import { CreateManualChargeDto } from '../membership-charges/dto/create-manual-charge.dto';
 
 @ApiTags('Student Charges')
 @Controller('student-charges')
@@ -95,5 +96,17 @@ export class StudentChargesController {
   @ApiStandardResponse(StudentChargeResponseDto, 'Cargo escolar eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentChargesService.remove(id);
+  }
+
+  @Post('manual')
+  @ApiOperation({
+    summary: 'Generar un cargo manual',
+    description: 'Crea un cargo manual adicional para una inscripción escolar existente (por ejemplo: equipamiento extra, multas, etc).',
+  })
+  @ApiBody({ type: CreateManualChargeDto })
+  @ApiCreatedResponse({ description: 'Cargo manual creado exitosamente para el estudiante.' })
+  @ApiBadRequestResponse({ description: 'Membresía no encontrada o datos inválidos.' })
+  async createManualCharge(@Body() dto: CreateManualChargeDto) {
+    return await this.studentChargesService.createManualCharge(dto);
   }
 }

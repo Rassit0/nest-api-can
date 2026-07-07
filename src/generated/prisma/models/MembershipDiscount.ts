@@ -27,19 +27,19 @@ export type AggregateMembershipDiscount = {
 }
 
 export type MembershipDiscountAvgAggregateOutputType = {
-  monthlyDiscountPercent: runtime.Decimal | null
+  recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
 }
 
 export type MembershipDiscountSumAggregateOutputType = {
-  monthlyDiscountPercent: runtime.Decimal | null
+  recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
 }
 
 export type MembershipDiscountMinAggregateOutputType = {
   id: string | null
   playerMembershipId: string | null
-  monthlyDiscountPercent: runtime.Decimal | null
+  recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
   startDate: Date | null
   endDate: Date | null
@@ -52,7 +52,7 @@ export type MembershipDiscountMinAggregateOutputType = {
 export type MembershipDiscountMaxAggregateOutputType = {
   id: string | null
   playerMembershipId: string | null
-  monthlyDiscountPercent: runtime.Decimal | null
+  recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
   startDate: Date | null
   endDate: Date | null
@@ -65,7 +65,7 @@ export type MembershipDiscountMaxAggregateOutputType = {
 export type MembershipDiscountCountAggregateOutputType = {
   id: number
   playerMembershipId: number
-  monthlyDiscountPercent: number
+  recurringDiscountPercent: number
   registrationDiscountPercent: number
   startDate: number
   endDate: number
@@ -78,19 +78,19 @@ export type MembershipDiscountCountAggregateOutputType = {
 
 
 export type MembershipDiscountAvgAggregateInputType = {
-  monthlyDiscountPercent?: true
+  recurringDiscountPercent?: true
   registrationDiscountPercent?: true
 }
 
 export type MembershipDiscountSumAggregateInputType = {
-  monthlyDiscountPercent?: true
+  recurringDiscountPercent?: true
   registrationDiscountPercent?: true
 }
 
 export type MembershipDiscountMinAggregateInputType = {
   id?: true
   playerMembershipId?: true
-  monthlyDiscountPercent?: true
+  recurringDiscountPercent?: true
   registrationDiscountPercent?: true
   startDate?: true
   endDate?: true
@@ -103,7 +103,7 @@ export type MembershipDiscountMinAggregateInputType = {
 export type MembershipDiscountMaxAggregateInputType = {
   id?: true
   playerMembershipId?: true
-  monthlyDiscountPercent?: true
+  recurringDiscountPercent?: true
   registrationDiscountPercent?: true
   startDate?: true
   endDate?: true
@@ -116,7 +116,7 @@ export type MembershipDiscountMaxAggregateInputType = {
 export type MembershipDiscountCountAggregateInputType = {
   id?: true
   playerMembershipId?: true
-  monthlyDiscountPercent?: true
+  recurringDiscountPercent?: true
   registrationDiscountPercent?: true
   startDate?: true
   endDate?: true
@@ -216,7 +216,7 @@ export type MembershipDiscountGroupByArgs<ExtArgs extends runtime.Types.Extensio
 export type MembershipDiscountGroupByOutputType = {
   id: string
   playerMembershipId: string
-  monthlyDiscountPercent: runtime.Decimal
+  recurringDiscountPercent: runtime.Decimal
   registrationDiscountPercent: runtime.Decimal
   startDate: Date
   endDate: Date | null
@@ -252,7 +252,7 @@ export type MembershipDiscountWhereInput = {
   NOT?: Prisma.MembershipDiscountWhereInput | Prisma.MembershipDiscountWhereInput[]
   id?: Prisma.StringFilter<"MembershipDiscount"> | string
   playerMembershipId?: Prisma.StringFilter<"MembershipDiscount"> | string
-  monthlyDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"MembershipDiscount"> | Date | string | null
@@ -266,7 +266,7 @@ export type MembershipDiscountWhereInput = {
 export type MembershipDiscountOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   playerMembershipId?: Prisma.SortOrder
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -283,7 +283,7 @@ export type MembershipDiscountWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MembershipDiscountWhereInput[]
   NOT?: Prisma.MembershipDiscountWhereInput | Prisma.MembershipDiscountWhereInput[]
   playerMembershipId?: Prisma.StringFilter<"MembershipDiscount"> | string
-  monthlyDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"MembershipDiscount"> | Date | string | null
@@ -297,7 +297,7 @@ export type MembershipDiscountWhereUniqueInput = Prisma.AtLeast<{
 export type MembershipDiscountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   playerMembershipId?: Prisma.SortOrder
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -318,7 +318,7 @@ export type MembershipDiscountScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MembershipDiscountScalarWhereWithAggregatesInput | Prisma.MembershipDiscountScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MembershipDiscount"> | string
   playerMembershipId?: Prisma.StringWithAggregatesFilter<"MembershipDiscount"> | string
-  monthlyDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"MembershipDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"MembershipDiscount"> | Date | string | null
@@ -330,7 +330,7 @@ export type MembershipDiscountScalarWhereWithAggregatesInput = {
 
 export type MembershipDiscountCreateInput = {
   id?: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -344,7 +344,7 @@ export type MembershipDiscountCreateInput = {
 export type MembershipDiscountUncheckedCreateInput = {
   id?: string
   playerMembershipId: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -356,7 +356,7 @@ export type MembershipDiscountUncheckedCreateInput = {
 
 export type MembershipDiscountUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -370,7 +370,7 @@ export type MembershipDiscountUpdateInput = {
 export type MembershipDiscountUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -383,7 +383,7 @@ export type MembershipDiscountUncheckedUpdateInput = {
 export type MembershipDiscountCreateManyInput = {
   id?: string
   playerMembershipId: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -395,7 +395,7 @@ export type MembershipDiscountCreateManyInput = {
 
 export type MembershipDiscountUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -408,7 +408,7 @@ export type MembershipDiscountUpdateManyMutationInput = {
 export type MembershipDiscountUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -431,7 +431,7 @@ export type MembershipDiscountOrderByRelationAggregateInput = {
 export type MembershipDiscountCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerMembershipId?: Prisma.SortOrder
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
@@ -442,14 +442,14 @@ export type MembershipDiscountCountOrderByAggregateInput = {
 }
 
 export type MembershipDiscountAvgOrderByAggregateInput = {
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
 }
 
 export type MembershipDiscountMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerMembershipId?: Prisma.SortOrder
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
@@ -462,7 +462,7 @@ export type MembershipDiscountMaxOrderByAggregateInput = {
 export type MembershipDiscountMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerMembershipId?: Prisma.SortOrder
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
@@ -473,7 +473,7 @@ export type MembershipDiscountMinOrderByAggregateInput = {
 }
 
 export type MembershipDiscountSumOrderByAggregateInput = {
-  monthlyDiscountPercent?: Prisma.SortOrder
+  recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
 }
 
@@ -525,7 +525,7 @@ export type EnumMembershipDiscountTypeFieldUpdateOperationsInput = {
 
 export type MembershipDiscountCreateWithoutPlayerMembershipInput = {
   id?: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -537,7 +537,7 @@ export type MembershipDiscountCreateWithoutPlayerMembershipInput = {
 
 export type MembershipDiscountUncheckedCreateWithoutPlayerMembershipInput = {
   id?: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -579,7 +579,7 @@ export type MembershipDiscountScalarWhereInput = {
   NOT?: Prisma.MembershipDiscountScalarWhereInput | Prisma.MembershipDiscountScalarWhereInput[]
   id?: Prisma.StringFilter<"MembershipDiscount"> | string
   playerMembershipId?: Prisma.StringFilter<"MembershipDiscount"> | string
-  monthlyDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"MembershipDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"MembershipDiscount"> | Date | string | null
@@ -591,7 +591,7 @@ export type MembershipDiscountScalarWhereInput = {
 
 export type MembershipDiscountCreateManyPlayerMembershipInput = {
   id?: string
-  monthlyDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
@@ -603,7 +603,7 @@ export type MembershipDiscountCreateManyPlayerMembershipInput = {
 
 export type MembershipDiscountUpdateWithoutPlayerMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -615,7 +615,7 @@ export type MembershipDiscountUpdateWithoutPlayerMembershipInput = {
 
 export type MembershipDiscountUncheckedUpdateWithoutPlayerMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -627,7 +627,7 @@ export type MembershipDiscountUncheckedUpdateWithoutPlayerMembershipInput = {
 
 export type MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  monthlyDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -642,7 +642,7 @@ export type MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipInput = 
 export type MembershipDiscountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerMembershipId?: boolean
-  monthlyDiscountPercent?: boolean
+  recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
@@ -656,7 +656,7 @@ export type MembershipDiscountSelect<ExtArgs extends runtime.Types.Extensions.In
 export type MembershipDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerMembershipId?: boolean
-  monthlyDiscountPercent?: boolean
+  recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
@@ -670,7 +670,7 @@ export type MembershipDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.
 export type MembershipDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerMembershipId?: boolean
-  monthlyDiscountPercent?: boolean
+  recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
@@ -684,7 +684,7 @@ export type MembershipDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.
 export type MembershipDiscountSelectScalar = {
   id?: boolean
   playerMembershipId?: boolean
-  monthlyDiscountPercent?: boolean
+  recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
@@ -694,7 +694,7 @@ export type MembershipDiscountSelectScalar = {
   updatedAt?: boolean
 }
 
-export type MembershipDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "monthlyDiscountPercent" | "registrationDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipDiscount"]>
+export type MembershipDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipDiscount"]>
 export type MembershipDiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
 }
@@ -713,7 +713,7 @@ export type $MembershipDiscountPayload<ExtArgs extends runtime.Types.Extensions.
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     playerMembershipId: string
-    monthlyDiscountPercent: runtime.Decimal
+    recurringDiscountPercent: runtime.Decimal
     registrationDiscountPercent: runtime.Decimal
     startDate: Date
     endDate: Date | null
@@ -1147,7 +1147,7 @@ export interface Prisma__MembershipDiscountClient<T, Null = never, ExtArgs exten
 export interface MembershipDiscountFieldRefs {
   readonly id: Prisma.FieldRef<"MembershipDiscount", 'String'>
   readonly playerMembershipId: Prisma.FieldRef<"MembershipDiscount", 'String'>
-  readonly monthlyDiscountPercent: Prisma.FieldRef<"MembershipDiscount", 'Decimal'>
+  readonly recurringDiscountPercent: Prisma.FieldRef<"MembershipDiscount", 'Decimal'>
   readonly registrationDiscountPercent: Prisma.FieldRef<"MembershipDiscount", 'Decimal'>
   readonly startDate: Prisma.FieldRef<"MembershipDiscount", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"MembershipDiscount", 'DateTime'>

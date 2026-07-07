@@ -14,7 +14,12 @@ import {
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { ProgramGender, StatusCourseSeason } from 'src/generated/prisma/client';
+import {
+  ProgramGender,
+  StatusCourseSeason,
+  SeasonBillingType,
+  BillingFrequency,
+} from 'src/generated/prisma/client';
 
 export class CreateCourseSeasonDto {
   @ApiProperty({
@@ -137,6 +142,44 @@ export class CreateCourseSeasonDto {
   @Type(() => Number)
   minMembers: number;
 
+  @ApiPropertyOptional({
+    example: 2015,
+    description: 'Año mínimo de nacimiento permitido (sobreescribe la edad de la categoría)',
+  })
+  @Type(() => Number)
+  @IsInt({
+    message: i18nValidationMessage('validation.IS_INT', {
+      constraint1: 'minBirthYear',
+    }),
+  })
+  @Min(1900, {
+    message: i18nValidationMessage('validation.MIN_VALUE', {
+      constraint1: 'minBirthYear',
+      constraint2: 1900,
+    }),
+  })
+  @IsOptional()
+  minBirthYear?: number;
+
+  @ApiPropertyOptional({
+    example: 2016,
+    description: 'Año máximo de nacimiento permitido (sobreescribe la edad de la categoría)',
+  })
+  @Type(() => Number)
+  @IsInt({
+    message: i18nValidationMessage('validation.IS_INT', {
+      constraint1: 'maxBirthYear',
+    }),
+  })
+  @Min(1900, {
+    message: i18nValidationMessage('validation.MIN_VALUE', {
+      constraint1: 'maxBirthYear',
+      constraint2: 1900,
+    }),
+  })
+  @IsOptional()
+  maxBirthYear?: number;
+
   @ApiProperty({
     enum: ProgramGender,
     example: ProgramGender.MIXED,
@@ -204,25 +247,25 @@ export class CreateCourseSeasonDto {
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'monthlyFee',
+      constraint1: 'recurringFee',
     }),
   })
   @IsNumber(
     {},
     {
       message: i18nValidationMessage('validation.IS_NUMBER', {
-        constraint1: 'monthlyFee',
+        constraint1: 'recurringFee',
       }),
     },
   )
   @Min(0, {
     message: i18nValidationMessage('validation.MIN_VALUE', {
-      constraint1: 'monthlyFee',
+      constraint1: 'recurringFee',
       constraint2: 0,
     }),
   })
   @Type(() => Number)
-  monthlyFee: number;
+  recurringFee: number;
 
   @ApiPropertyOptional({
     example: 2,
@@ -338,4 +381,84 @@ export class CreateCourseSeasonDto {
     }),
   })
   status?: StatusCourseSeason = StatusCourseSeason.DRAFT;
+
+  @ApiPropertyOptional({
+    example: SeasonBillingType.MONTHLY_ONLY,
+    enum: SeasonBillingType,
+    description: 'Tipo de facturación (mensual, única o ambas)',
+    default: SeasonBillingType.MONTHLY_ONLY,
+  })
+  @IsEnum(SeasonBillingType, {
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'billingType',
+    }),
+  })
+  @IsOptional()
+  billingType?: SeasonBillingType = SeasonBillingType.MONTHLY_ONLY;
+
+  @ApiPropertyOptional({
+    example: BillingFrequency.MONTHLY,
+    enum: BillingFrequency,
+    description: 'Frecuencia de facturación',
+    default: BillingFrequency.MONTHLY,
+  })
+  @IsEnum(BillingFrequency, {
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'billingFrequency',
+    }),
+  })
+  @IsOptional()
+  billingFrequency?: BillingFrequency = BillingFrequency.MONTHLY;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Prorratear la primera cuota recurrente si no es mes completo',
+    default: true,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'prorateFirstRecurringFee',
+    }),
+  })
+  @IsOptional()
+  prorateFirstRecurringFee?: boolean;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Prorratear la última cuota recurrente si no es mes completo',
+    default: true,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'prorateLastRecurringFee',
+    }),
+  })
+  @IsOptional()
+  prorateLastRecurringFee?: boolean;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Prorratear el monto de inscripción basado en el tiempo restante de la temporada',
+    default: false,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'prorateRegistrationFee',
+    }),
+  })
+  @IsOptional()
+  prorateRegistrationFee?: boolean;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Prorratear el monto de temporada completa (Season Fee) basado en el tiempo restante',
+    default: false,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'prorateSeasonFee',
+    }),
+  })
+  @IsOptional()
+  prorateSeasonFee?: boolean;
 }

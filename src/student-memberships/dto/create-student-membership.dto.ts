@@ -7,10 +7,40 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  IsBoolean,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { StudentMembershipStatus } from 'src/generated/prisma/client';
+import { StudentMembershipStatus, MembershipDiscountType } from 'src/generated/prisma/client';
+import { ValidateNested, IsNumber, IsDateString, IsArray } from 'class-validator';
+
+export class StudentDiscountDto {
+  @ApiProperty({ description: 'Porcentaje de descuento en la matrícula', example: 10 })
+  @IsNumber()
+  registrationDiscountPercent: number;
+
+  @ApiProperty({ description: 'Porcentaje de descuento en la mensualidad', example: 15 })
+  @IsNumber()
+  recurringDiscountPercent: number;
+
+  @ApiProperty({ description: 'Fecha de inicio del descuento', example: '2024-01-01' })
+  @IsDateString()
+  startDate: string;
+
+  @ApiPropertyOptional({ description: 'Fecha de fin del descuento', example: '2024-12-31', nullable: true })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string | null;
+
+  @ApiProperty({ description: 'Tipo de descuento', enum: MembershipDiscountType })
+  @IsEnum(MembershipDiscountType)
+  type: MembershipDiscountType;
+
+  @ApiPropertyOptional({ description: 'Razón del descuento', example: 'Descuento especial', nullable: true })
+  @IsOptional()
+  @IsString()
+  reason?: string | null;
+}
 
 export class CreateStudentMembershipDto {
   @ApiProperty({
@@ -134,4 +164,23 @@ export class CreateStudentMembershipDto {
     }),
   })
   notes?: string | null;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si la membresía proviene de una migración para evitar cargos anteriores',
+    default: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isMigrated?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Lista de descuentos excepcionales aplicables a la membresía de escuela',
+    type: () => [StudentDiscountDto],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => StudentDiscountDto)
+  studentDiscounts?: StudentDiscountDto[];
 }

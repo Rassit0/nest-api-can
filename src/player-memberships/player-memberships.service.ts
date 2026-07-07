@@ -7,7 +7,11 @@ import {
 import { CreatePlayerMembershipDto } from './dto/create-player-membership.dto';
 import { UpdatePlayerMembershipDto } from './dto/update-player-membership.dto';
 import { PrismaService } from 'src/prisma.service';
-import { PlayerMembershipStatus, Prisma } from 'src/generated/prisma/client';
+import {
+  PlayerMembershipStatus,
+  Prisma,
+  StatusTeamSeason,
+} from 'src/generated/prisma/client';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 
 export const playerMembershipSelect = {
@@ -94,7 +98,7 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
       };
     };
   };
-}>;
+}> & { minBirthYear: number | null; maxBirthYear: number | null };
 
 import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 import { PaginationDto } from 'src/common/dto/pagination';
@@ -134,8 +138,29 @@ export class PlayerMembershipsService {
 
     this.validatePlayerEligibility(player, offering);
 
+    if (createDto.membershipDiscounts && createDto.membershipDiscounts.length > 0) {
+      this.validateDiscountDates(
+        createDto.membershipDiscounts,
+        offering.season.startDate,
+        offering.season.endDate
+      );
+    }
+
+    const { membershipDiscounts, ...createData } = createDto;
+
     const membership = await this.prisma.playerMembership.create({
-      data: createDto,
+      data: {
+        ...createData,
+        ...(membershipDiscounts && membershipDiscounts.length > 0 && {
+          membershipDiscounts: {
+            create: membershipDiscounts.map(d => ({
+              ...d,
+              startDate: new Date(d.startDate),
+              endDate: d.endDate ? new Date(d.endDate) : null,
+            }))
+          }
+        })
+      },
       select: playerMembershipSelect,
     });
 
@@ -150,21 +175,12 @@ export class PlayerMembershipsService {
     };
   }
 
-  private calculateAge(birthDate: Date): number {
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
+  private calculateAge(birthDate: Date, referenceDate: Date): number {
+    return referenceDate.getFullYear() - birthDate.getFullYear();
   }
 
-  private validatePlayerAge(birthDate: Date, minAge?: number, maxAge?: number) {
-    const playerAge = this.calculateAge(birthDate);
+  private validatePlayerAge(birthDate: Date, referenceDate: Date, minAge?: number, maxAge?: number) {
+    const playerAge = this.calculateAge(birthDate, referenceDate);
 
     if (maxAge && playerAge > maxAge) {
       throw new BadRequestException(
@@ -176,6 +192,34 @@ export class PlayerMembershipsService {
       throw new BadRequestException(
         'El jugador es demasiado joven para esta categoría',
       );
+    }
+  }
+
+  private validateDiscountDates(
+    discounts: any[],
+    seasonStartDate: Date,
+    seasonEndDate: Date
+  ) {
+    for (const d of discounts) {
+      const dStart = new Date(d.startDate);
+      if (dStart < seasonStartDate || dStart > seasonEndDate) {
+        throw new BadRequestException(
+          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`
+        );
+      }
+      if (d.endDate) {
+        const dEnd = new Date(d.endDate);
+        if (dEnd < dStart) {
+          throw new BadRequestException(
+            'La fecha de fin del descuento no puede ser menor a la fecha de inicio'
+          );
+        }
+        if (dEnd > seasonEndDate) {
+          throw new BadRequestException(
+            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`
+          );
+        }
+      }
     }
   }
 
@@ -307,9 +351,11 @@ export class PlayerMembershipsService {
       await this.validateDuplicateMembership(playerId, offeringId, id);
     }
 
+    const { membershipDiscounts, ...updateData } = updateDto;
+
     const updatedMembership = await this.prisma.playerMembership.update({
       where: { id },
-      data: updateDto,
+      data: updateData,
       select: playerMembershipSelect,
     });
 
@@ -604,11 +650,26 @@ export class PlayerMembershipsService {
       );
     }
 
-    this.validatePlayerAge(
-      player.person.birthDate,
-      offering.category.minAge,
-      offering.category.maxAge,
-    );
+    if (offering.minBirthYear || offering.maxBirthYear) {
+      const birthYear = player.person.birthDate.getFullYear();
+      if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
+        throw new BadRequestException(
+          `El año de nacimiento del jugador (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+        );
+      }
+      if (offering.minBirthYear && birthYear < offering.minBirthYear) {
+        throw new BadRequestException(
+          `El año de nacimiento del jugador (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
+        );
+      }
+    } else {
+      this.validatePlayerAge(
+        player.person.birthDate,
+        offering.season.startDate,
+        offering.category.minAge,
+        offering.category.maxAge,
+      );
+    }
 
     if (
       offering.gender !== 'MIXED' &&
@@ -625,9 +686,18 @@ export class PlayerMembershipsService {
     seasonStartDate: Date,
     seasonEndDate: Date,
   ) {
-    if (startedAt < seasonStartDate || startedAt > seasonEndDate) {
+    const sStart = new Date(seasonStartDate);
+    sStart.setUTCHours(0, 0, 0, 0);
+
+    const sEnd = new Date(seasonEndDate);
+    sEnd.setUTCHours(23, 59, 59, 999);
+
+    if (startedAt < sStart || startedAt > sEnd) {
+      const sent = startedAt.toISOString().split('T')[0];
+      const start = seasonStartDate.toISOString().split('T')[0];
+      const end = seasonEndDate.toISOString().split('T')[0];
       throw new BadRequestException(
-        `La fecha de inicio de la membresía debe estar dentro del rango de fechas de la temporada (${seasonStartDate.toISOString()} - ${seasonEndDate.toISOString()})`,
+        `La fecha de inicio enviada (${sent}) está fuera del rango permitido. Debe estar entre el ${start} y el ${end} (Fechas de la Temporada).`,
       );
     }
   }
@@ -697,6 +767,80 @@ export class PlayerMembershipsService {
           ...player.person,
           fullName:
             `${player.person.name} ${player.person.lastName} ${player.person.secondLastName || ''}`.trim(),
+        },
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
+  }
+
+  async getTeamSeasonsOptions(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.TeamSeasonWhereInput = {
+      ...(search
+        ? {
+            OR: [
+              { description: { contains: search, mode: 'insensitive' } },
+              {
+                season: { name: { contains: search, mode: 'insensitive' } },
+              },
+            ],
+          }
+        : {}),
+      status: StatusTeamSeason.ACTIVE,
+      // Solo temporados que no han finalizado
+      season: {
+        endDate: {
+          gte: new Date(),
+        },
+      },
+    };
+
+    const [teamSeasons, totalItems] = await Promise.all([
+      this.prisma.teamSeason.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { season: { name: orderBy } },
+        select: {
+          id: true,
+          status: true,
+          description: true,
+          season: {
+            select: {
+              id: true,
+              name: true,
+              startDate: true,
+              endDate: true,
+            },
+          },
+          imageUrl: true,
+        },
+      }),
+      this.prisma.teamSeason.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Temporadas obtenidas exitosamente',
+      data: teamSeasons.map((teamSeason) => ({
+        ...teamSeason,
+        season: {
+          ...teamSeason.season,
+          fullName:
+            `${teamSeason.season.name} ${teamSeason.season.startDate} ${teamSeason.season.endDate || ''}`.trim(),
         },
       })),
       meta: {

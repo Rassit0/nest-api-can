@@ -33,7 +33,8 @@ export type StudentMembershipMinAggregateOutputType = {
   endedAt: Date | null
   status: $Enums.StudentMembershipStatus | null
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
+  isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,7 +48,8 @@ export type StudentMembershipMaxAggregateOutputType = {
   endedAt: Date | null
   status: $Enums.StudentMembershipStatus | null
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
+  isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -61,7 +63,8 @@ export type StudentMembershipCountAggregateOutputType = {
   endedAt: number
   status: number
   notes: number
-  nextMonthlyChargeGenerationDate: number
+  nextRecurringChargeGenerationDate: number
+  isMigrated: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -77,7 +80,8 @@ export type StudentMembershipMinAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
+  isMigrated?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,7 +95,8 @@ export type StudentMembershipMaxAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
+  isMigrated?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,7 +110,8 @@ export type StudentMembershipCountAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
+  isMigrated?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -192,7 +198,8 @@ export type StudentMembershipGroupByOutputType = {
   endedAt: Date | null
   status: $Enums.StudentMembershipStatus
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
+  isMigrated: boolean
   createdAt: Date
   updatedAt: Date
   _count: StudentMembershipCountAggregateOutputType | null
@@ -227,7 +234,8 @@ export type StudentMembershipWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembership"> | $Enums.StudentMembershipStatus
   notes?: Prisma.StringNullableFilter<"StudentMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  isMigrated?: Prisma.BoolFilter<"StudentMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
@@ -246,7 +254,8 @@ export type StudentMembershipOrderByWithRelationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   student?: Prisma.StudentOrderByWithRelationInput
@@ -268,7 +277,8 @@ export type StudentMembershipWhereUniqueInput = Prisma.AtLeast<{
   endedAt?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembership"> | $Enums.StudentMembershipStatus
   notes?: Prisma.StringNullableFilter<"StudentMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  isMigrated?: Prisma.BoolFilter<"StudentMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
@@ -287,7 +297,8 @@ export type StudentMembershipOrderByWithAggregationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StudentMembershipCountOrderByAggregateInput
@@ -307,7 +318,8 @@ export type StudentMembershipScalarWhereWithAggregatesInput = {
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentMembership"> | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusWithAggregatesFilter<"StudentMembership"> | $Enums.StudentMembershipStatus
   notes?: Prisma.StringNullableWithAggregatesFilter<"StudentMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentMembership"> | Date | string | null
+  isMigrated?: Prisma.BoolWithAggregatesFilter<"StudentMembership"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentMembership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StudentMembership"> | Date | string
 }
@@ -318,7 +330,8 @@ export type StudentMembershipCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
@@ -337,7 +350,8 @@ export type StudentMembershipUncheckedCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -350,7 +364,8 @@ export type StudentMembershipUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -369,7 +384,8 @@ export type StudentMembershipUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -385,7 +401,8 @@ export type StudentMembershipCreateManyInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -396,7 +413,8 @@ export type StudentMembershipUpdateManyMutationInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -410,7 +428,8 @@ export type StudentMembershipUncheckedUpdateManyInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -434,7 +453,8 @@ export type StudentMembershipCountOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
+  isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -448,7 +468,8 @@ export type StudentMembershipMaxOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
+  isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -462,7 +483,8 @@ export type StudentMembershipMinOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
+  isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -636,7 +658,8 @@ export type StudentMembershipCreateWithoutPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
@@ -653,7 +676,8 @@ export type StudentMembershipUncheckedCreateWithoutPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -698,7 +722,8 @@ export type StudentMembershipScalarWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembership"> | $Enums.StudentMembershipStatus
   notes?: Prisma.StringNullableFilter<"StudentMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"StudentMembership"> | Date | string | null
+  isMigrated?: Prisma.BoolFilter<"StudentMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentMembership"> | Date | string
 }
@@ -709,7 +734,8 @@ export type StudentMembershipCreateWithoutCourseSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
@@ -726,7 +752,8 @@ export type StudentMembershipUncheckedCreateWithoutCourseSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -765,7 +792,8 @@ export type StudentMembershipCreateWithoutStudentInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutStudentMembershipsInput
@@ -782,7 +810,8 @@ export type StudentMembershipUncheckedCreateWithoutStudentInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -821,7 +850,8 @@ export type StudentMembershipCreateWithoutStudentDiscountsInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
@@ -839,7 +869,8 @@ export type StudentMembershipUncheckedCreateWithoutStudentDiscountsInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -867,7 +898,8 @@ export type StudentMembershipUpdateWithoutStudentDiscountsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -885,7 +917,8 @@ export type StudentMembershipUncheckedUpdateWithoutStudentDiscountsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -897,7 +930,8 @@ export type StudentMembershipCreateWithoutStudentChargesInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
@@ -915,7 +949,8 @@ export type StudentMembershipUncheckedCreateWithoutStudentChargesInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
@@ -943,7 +978,8 @@ export type StudentMembershipUpdateWithoutStudentChargesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -961,7 +997,8 @@ export type StudentMembershipUncheckedUpdateWithoutStudentChargesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -975,7 +1012,8 @@ export type StudentMembershipCreateManyPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -986,7 +1024,8 @@ export type StudentMembershipUpdateWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -1003,7 +1042,8 @@ export type StudentMembershipUncheckedUpdateWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -1018,7 +1058,8 @@ export type StudentMembershipUncheckedUpdateManyWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1031,7 +1072,8 @@ export type StudentMembershipCreateManyCourseSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1042,7 +1084,8 @@ export type StudentMembershipUpdateWithoutCourseSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -1059,7 +1102,8 @@ export type StudentMembershipUncheckedUpdateWithoutCourseSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -1074,7 +1118,8 @@ export type StudentMembershipUncheckedUpdateManyWithoutCourseSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1087,7 +1132,8 @@ export type StudentMembershipCreateManyStudentInput = {
   endedAt?: Date | string | null
   status?: $Enums.StudentMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1098,7 +1144,8 @@ export type StudentMembershipUpdateWithoutStudentInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutStudentMembershipsNestedInput
@@ -1115,7 +1162,8 @@ export type StudentMembershipUncheckedUpdateWithoutStudentInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
@@ -1130,7 +1178,8 @@ export type StudentMembershipUncheckedUpdateManyWithoutStudentInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1184,7 +1233,8 @@ export type StudentMembershipSelect<ExtArgs extends runtime.Types.Extensions.Int
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
+  isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -1204,7 +1254,8 @@ export type StudentMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.T
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
+  isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -1221,7 +1272,8 @@ export type StudentMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
+  isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -1238,12 +1290,13 @@ export type StudentMembershipSelectScalar = {
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
+  isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StudentMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextMonthlyChargeGenerationDate" | "createdAt" | "updatedAt", ExtArgs["result"]["studentMembership"]>
+export type StudentMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextRecurringChargeGenerationDate" | "isMigrated" | "createdAt" | "updatedAt", ExtArgs["result"]["studentMembership"]>
 export type StudentMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
@@ -1281,7 +1334,8 @@ export type $StudentMembershipPayload<ExtArgs extends runtime.Types.Extensions.I
     endedAt: Date | null
     status: $Enums.StudentMembershipStatus
     notes: string | null
-    nextMonthlyChargeGenerationDate: Date | null
+    nextRecurringChargeGenerationDate: Date | null
+    isMigrated: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["studentMembership"]>
@@ -1720,7 +1774,8 @@ export interface StudentMembershipFieldRefs {
   readonly endedAt: Prisma.FieldRef<"StudentMembership", 'DateTime'>
   readonly status: Prisma.FieldRef<"StudentMembership", 'StudentMembershipStatus'>
   readonly notes: Prisma.FieldRef<"StudentMembership", 'String'>
-  readonly nextMonthlyChargeGenerationDate: Prisma.FieldRef<"StudentMembership", 'DateTime'>
+  readonly nextRecurringChargeGenerationDate: Prisma.FieldRef<"StudentMembership", 'DateTime'>
+  readonly isMigrated: Prisma.FieldRef<"StudentMembership", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"StudentMembership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StudentMembership", 'DateTime'>
 }

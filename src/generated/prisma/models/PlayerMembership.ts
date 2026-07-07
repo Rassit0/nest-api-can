@@ -33,7 +33,7 @@ export type PlayerMembershipMinAggregateOutputType = {
   endedAt: Date | null
   status: $Enums.PlayerMembershipStatus | null
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
   isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -48,7 +48,7 @@ export type PlayerMembershipMaxAggregateOutputType = {
   endedAt: Date | null
   status: $Enums.PlayerMembershipStatus | null
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
   isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,7 +63,7 @@ export type PlayerMembershipCountAggregateOutputType = {
   endedAt: number
   status: number
   notes: number
-  nextMonthlyChargeGenerationDate: number
+  nextRecurringChargeGenerationDate: number
   isMigrated: number
   createdAt: number
   updatedAt: number
@@ -80,7 +80,7 @@ export type PlayerMembershipMinAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
@@ -95,7 +95,7 @@ export type PlayerMembershipMaxAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
@@ -110,7 +110,7 @@ export type PlayerMembershipCountAggregateInputType = {
   endedAt?: true
   status?: true
   notes?: true
-  nextMonthlyChargeGenerationDate?: true
+  nextRecurringChargeGenerationDate?: true
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
@@ -198,7 +198,7 @@ export type PlayerMembershipGroupByOutputType = {
   endedAt: Date | null
   status: $Enums.PlayerMembershipStatus
   notes: string | null
-  nextMonthlyChargeGenerationDate: Date | null
+  nextRecurringChargeGenerationDate: Date | null
   isMigrated: boolean
   createdAt: Date
   updatedAt: Date
@@ -234,7 +234,7 @@ export type PlayerMembershipWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembership"> | $Enums.PlayerMembershipStatus
   notes?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
@@ -254,7 +254,7 @@ export type PlayerMembershipOrderByWithRelationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -277,7 +277,7 @@ export type PlayerMembershipWhereUniqueInput = Prisma.AtLeast<{
   endedAt?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembership"> | $Enums.PlayerMembershipStatus
   notes?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
@@ -297,7 +297,7 @@ export type PlayerMembershipOrderByWithAggregationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -318,7 +318,7 @@ export type PlayerMembershipScalarWhereWithAggregatesInput = {
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PlayerMembership"> | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusWithAggregatesFilter<"PlayerMembership"> | $Enums.PlayerMembershipStatus
   notes?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PlayerMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PlayerMembership"> | Date | string | null
   isMigrated?: Prisma.BoolWithAggregatesFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerMembership"> | Date | string
@@ -330,7 +330,7 @@ export type PlayerMembershipCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -350,7 +350,7 @@ export type PlayerMembershipUncheckedCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -364,7 +364,7 @@ export type PlayerMembershipUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -384,7 +384,7 @@ export type PlayerMembershipUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,7 +401,7 @@ export type PlayerMembershipCreateManyInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -413,7 +413,7 @@ export type PlayerMembershipUpdateManyMutationInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,7 +428,7 @@ export type PlayerMembershipUncheckedUpdateManyInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -453,7 +453,7 @@ export type PlayerMembershipCountOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -468,7 +468,7 @@ export type PlayerMembershipMaxOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -483,7 +483,7 @@ export type PlayerMembershipMinOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  nextMonthlyChargeGenerationDate?: Prisma.SortOrder
+  nextRecurringChargeGenerationDate?: Prisma.SortOrder
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -658,7 +658,7 @@ export type PlayerMembershipCreateWithoutTeamSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -676,7 +676,7 @@ export type PlayerMembershipUncheckedCreateWithoutTeamSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -722,7 +722,7 @@ export type PlayerMembershipScalarWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembership"> | $Enums.PlayerMembershipStatus
   notes?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.DateTimeNullableFilter<"PlayerMembership"> | Date | string | null
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
@@ -734,7 +734,7 @@ export type PlayerMembershipCreateWithoutPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -752,7 +752,7 @@ export type PlayerMembershipUncheckedCreateWithoutPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -792,7 +792,7 @@ export type PlayerMembershipCreateWithoutPlayerInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -810,7 +810,7 @@ export type PlayerMembershipUncheckedCreateWithoutPlayerInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -850,7 +850,7 @@ export type PlayerMembershipCreateWithoutMembershipDiscountsInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -869,7 +869,7 @@ export type PlayerMembershipUncheckedCreateWithoutMembershipDiscountsInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -898,7 +898,7 @@ export type PlayerMembershipUpdateWithoutMembershipDiscountsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -917,7 +917,7 @@ export type PlayerMembershipUncheckedUpdateWithoutMembershipDiscountsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -930,7 +930,7 @@ export type PlayerMembershipCreateWithoutMembershipChargesInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -949,7 +949,7 @@ export type PlayerMembershipUncheckedCreateWithoutMembershipChargesInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -978,7 +978,7 @@ export type PlayerMembershipUpdateWithoutMembershipChargesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -997,7 +997,7 @@ export type PlayerMembershipUncheckedUpdateWithoutMembershipChargesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1012,7 +1012,7 @@ export type PlayerMembershipCreateManyTeamSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1024,7 +1024,7 @@ export type PlayerMembershipUpdateWithoutTeamSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1042,7 +1042,7 @@ export type PlayerMembershipUncheckedUpdateWithoutTeamSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1058,7 +1058,7 @@ export type PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1072,7 +1072,7 @@ export type PlayerMembershipCreateManyPaymentPlanInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1084,7 +1084,7 @@ export type PlayerMembershipUpdateWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1102,7 +1102,7 @@ export type PlayerMembershipUncheckedUpdateWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1118,7 +1118,7 @@ export type PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1132,7 +1132,7 @@ export type PlayerMembershipCreateManyPlayerInput = {
   endedAt?: Date | string | null
   status?: $Enums.PlayerMembershipStatus
   notes?: string | null
-  nextMonthlyChargeGenerationDate?: Date | string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1144,7 +1144,7 @@ export type PlayerMembershipUpdateWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1162,7 +1162,7 @@ export type PlayerMembershipUncheckedUpdateWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1178,7 +1178,7 @@ export type PlayerMembershipUncheckedUpdateManyWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextMonthlyChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1233,7 +1233,7 @@ export type PlayerMembershipSelect<ExtArgs extends runtime.Types.Extensions.Inte
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1254,7 +1254,7 @@ export type PlayerMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1272,7 +1272,7 @@ export type PlayerMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1290,13 +1290,13 @@ export type PlayerMembershipSelectScalar = {
   endedAt?: boolean
   status?: boolean
   notes?: boolean
-  nextMonthlyChargeGenerationDate?: boolean
+  nextRecurringChargeGenerationDate?: boolean
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextMonthlyChargeGenerationDate" | "isMigrated" | "createdAt" | "updatedAt", ExtArgs["result"]["playerMembership"]>
+export type PlayerMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextRecurringChargeGenerationDate" | "isMigrated" | "createdAt" | "updatedAt", ExtArgs["result"]["playerMembership"]>
 export type PlayerMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
@@ -1334,7 +1334,7 @@ export type $PlayerMembershipPayload<ExtArgs extends runtime.Types.Extensions.In
     endedAt: Date | null
     status: $Enums.PlayerMembershipStatus
     notes: string | null
-    nextMonthlyChargeGenerationDate: Date | null
+    nextRecurringChargeGenerationDate: Date | null
     isMigrated: boolean
     createdAt: Date
     updatedAt: Date
@@ -1774,7 +1774,7 @@ export interface PlayerMembershipFieldRefs {
   readonly endedAt: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
   readonly status: Prisma.FieldRef<"PlayerMembership", 'PlayerMembershipStatus'>
   readonly notes: Prisma.FieldRef<"PlayerMembership", 'String'>
-  readonly nextMonthlyChargeGenerationDate: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
+  readonly nextRecurringChargeGenerationDate: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
   readonly isMigrated: Prisma.FieldRef<"PlayerMembership", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PlayerMembership", 'DateTime'>

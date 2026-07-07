@@ -3734,6 +3734,7 @@ export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[key
 export const ClubScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
@@ -3794,6 +3795,7 @@ export const TeamScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   clubId: 'clubId',
   createdAt: 'createdAt',
@@ -3809,18 +3811,27 @@ export const TeamSeasonScalarFieldEnum = {
   description: 'description',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
+  minBirthYear: 'minBirthYear',
+  maxBirthYear: 'maxBirthYear',
   teamId: 'teamId',
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
   billingDay: 'billingDay',
   registrationFee: 'registrationFee',
-  monthlyFee: 'monthlyFee',
+  recurringFee: 'recurringFee',
   debtToleranceMonths: 'debtToleranceMonths',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
   status: 'status',
+  seasonFee: 'seasonFee',
+  billingType: 'billingType',
+  billingFrequency: 'billingFrequency',
+  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
+  prorateLastRecurringFee: 'prorateLastRecurringFee',
+  prorateRegistrationFee: 'prorateRegistrationFee',
+  prorateSeasonFee: 'prorateSeasonFee',
   chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3835,8 +3846,10 @@ export const PaymentPlanScalarFieldEnum = {
   courseSeasonId: 'courseSeasonId',
   name: 'name',
   registrationDiscountPercent: 'registrationDiscountPercent',
-  monthlyDiscountPercent: 'monthlyDiscountPercent',
+  recurringDiscountPercent: 'recurringDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   isDefault: 'isDefault',
+  isSinglePayment: 'isSinglePayment',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3864,7 +3877,7 @@ export const PlayerMembershipScalarFieldEnum = {
   endedAt: 'endedAt',
   status: 'status',
   notes: 'notes',
-  nextMonthlyChargeGenerationDate: 'nextMonthlyChargeGenerationDate',
+  nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
   isMigrated: 'isMigrated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3876,7 +3889,7 @@ export type PlayerMembershipScalarFieldEnum = (typeof PlayerMembershipScalarFiel
 export const MembershipDiscountScalarFieldEnum = {
   id: 'id',
   playerMembershipId: 'playerMembershipId',
-  monthlyDiscountPercent: 'monthlyDiscountPercent',
+  recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
@@ -3897,6 +3910,7 @@ export const MembershipChargeScalarFieldEnum = {
   createdByCron: 'createdByCron',
   billingYear: 'billingYear',
   billingMonth: 'billingMonth',
+  billingCycle: 'billingCycle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4052,19 +4066,28 @@ export const CourseSeasonScalarFieldEnum = {
   description: 'description',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
+  minBirthYear: 'minBirthYear',
+  maxBirthYear: 'maxBirthYear',
   courseId: 'courseId',
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
   billingDay: 'billingDay',
   registrationFee: 'registrationFee',
-  monthlyFee: 'monthlyFee',
+  recurringFee: 'recurringFee',
   debtToleranceMonths: 'debtToleranceMonths',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
   status: 'status',
   chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
+  seasonFee: 'seasonFee',
+  billingType: 'billingType',
+  billingFrequency: 'billingFrequency',
+  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
+  prorateLastRecurringFee: 'prorateLastRecurringFee',
+  prorateRegistrationFee: 'prorateRegistrationFee',
+  prorateSeasonFee: 'prorateSeasonFee',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4109,7 +4132,8 @@ export const StudentMembershipScalarFieldEnum = {
   endedAt: 'endedAt',
   status: 'status',
   notes: 'notes',
-  nextMonthlyChargeGenerationDate: 'nextMonthlyChargeGenerationDate',
+  nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
+  isMigrated: 'isMigrated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4120,7 +4144,7 @@ export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFi
 export const StudentDiscountScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
-  monthlyDiscountPercent: 'monthlyDiscountPercent',
+  recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
@@ -4141,6 +4165,7 @@ export const StudentChargeScalarFieldEnum = {
   createdByCron: 'createdByCron',
   billingYear: 'billingYear',
   billingMonth: 'billingMonth',
+  billingCycle: 'billingCycle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4459,6 +4484,34 @@ export type EnumStatusTeamSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'StatusTeamSeason[]'
  */
 export type ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusTeamSeason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonBillingType'
+ */
+export type EnumSeasonBillingTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonBillingType'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonBillingType[]'
+ */
+export type ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonBillingType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BillingFrequency'
+ */
+export type EnumBillingFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingFrequency'>
+    
+
+
+/**
+ * Reference to a field of type 'BillingFrequency[]'
+ */
+export type ListEnumBillingFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingFrequency[]'>
     
 
 

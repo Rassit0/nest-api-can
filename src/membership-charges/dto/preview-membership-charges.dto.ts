@@ -15,7 +15,7 @@ class PreviewMembershipDiscountDto {
     example: 15,
   })
   @IsNumber()
-  monthlyDiscountPercent: number;
+  recurringDiscountPercent: number;
 
   @ApiProperty({
     description: 'Fecha de inicio del descuento (YYYY-MM-DD)',

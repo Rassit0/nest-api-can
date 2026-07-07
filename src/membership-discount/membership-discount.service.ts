@@ -13,7 +13,7 @@ import { PlayerMembershipDiscountsPaginationDto } from './dto/pagination.dto';
 export const membershipDiscountSelect: Prisma.MembershipDiscountSelect = {
   id: true,
   playerMembershipId: true,
-  monthlyDiscountPercent: true,
+  recurringDiscountPercent: true,
   registrationDiscountPercent: true,
   startDate: true,
   endDate: true,

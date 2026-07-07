@@ -72,6 +72,25 @@ export const StatusTeamSeason = {
 export type StatusTeamSeason = (typeof StatusTeamSeason)[keyof typeof StatusTeamSeason]
 
 
+export const SeasonBillingType = {
+  MONTHLY_ONLY: 'MONTHLY_ONLY',
+  SINGLE_ONLY: 'SINGLE_ONLY',
+  BOTH: 'BOTH'
+} as const
+
+export type SeasonBillingType = (typeof SeasonBillingType)[keyof typeof SeasonBillingType]
+
+
+export const BillingFrequency = {
+  MONTHLY: 'MONTHLY',
+  WEEKLY: 'WEEKLY',
+  BIWEEKLY: 'BIWEEKLY',
+  SINGLE: 'SINGLE'
+} as const
+
+export type BillingFrequency = (typeof BillingFrequency)[keyof typeof BillingFrequency]
+
+
 export const PlayerMembershipStatus = {
   PENDING_ACTIVE: 'PENDING_ACTIVE',
   ACTIVE: 'ACTIVE',
@@ -97,8 +116,10 @@ export type MembershipDiscountType = (typeof MembershipDiscountType)[keyof typeo
 
 export const TypeMembershipCharge = {
   REGISTRATION: 'REGISTRATION',
-  MONTHLY_FEE: 'MONTHLY_FEE',
-  LATE_FEE: 'LATE_FEE'
+  RECURRING_FEE: 'RECURRING_FEE',
+  SEASON_FEE: 'SEASON_FEE',
+  LATE_FEE: 'LATE_FEE',
+  MANUAL: 'MANUAL'
 } as const
 
 export type TypeMembershipCharge = (typeof TypeMembershipCharge)[keyof typeof TypeMembershipCharge]

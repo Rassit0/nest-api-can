@@ -43,14 +43,14 @@ export class CreateStudentDiscountDto {
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'monthlyDiscountPercent',
+      constraint1: 'recurringDiscountPercent',
     }),
   })
   @IsNumber(
     {},
     {
       message: i18nValidationMessage('validation.IS_NUMBER', {
-        constraint1: 'monthlyDiscountPercent',
+        constraint1: 'recurringDiscountPercent',
       }),
     },
   )
@@ -61,7 +61,7 @@ export class CreateStudentDiscountDto {
     message: 'El descuento de mensualidad máximo es 100%',
   })
   @Type(() => Number)
-  monthlyDiscountPercent: number;
+  recurringDiscountPercent: number;
 
   @ApiProperty({
     example: 50.0,

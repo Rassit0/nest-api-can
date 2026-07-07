@@ -42,7 +42,7 @@ export class CreateMembershipDiscountDto {
     },
     {
       message: i18nValidationMessage('validation.IS_STRING', {
-        constraint1: 'monthlyDiscountPercent',
+        constraint1: 'recurringDiscountPercent',
       }),
     },
   )
@@ -52,7 +52,7 @@ export class CreateMembershipDiscountDto {
   @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
     message: 'El porcentaje debe estar entre 0 y 100',
   })
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent: string;
 
   @ApiProperty({
     example: '20.00',

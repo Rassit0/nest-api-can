@@ -13,6 +13,7 @@ import { ClubsPaginationDto } from './dto/pagination.dto';
 export const clubSelect: Prisma.ClubSelect = {
   id: true,
   name: true,
+  shortName: true,
   createdAt: true,
   updatedAt: true,
   institution: {

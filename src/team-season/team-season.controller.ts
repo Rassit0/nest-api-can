@@ -25,7 +25,11 @@ import { CreateTeamSeasonDto } from './dto/create-team-season.dto';
 import { UpdateTeamSeasonDto } from './dto/update-team-season.dto';
 import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { TeamSeasonResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Team Seasons')
@@ -39,9 +43,12 @@ export class TeamSeasonsController {
     description:
       'Asigna una categoría y una temporada (periodo activo) a un equipo específico con cuotas comerciales.',
   })
-  @ApiConsumes('multipart/form-data')
-  @FormDataRequest()
-  @ApiStandardCreatedResponse(TeamSeasonResponseDto, 'Equipo instanciado en temporada exitosamente.')
+  // @ApiConsumes('multipart/form-data')
+  // @FormDataRequest()
+  @ApiStandardCreatedResponse(
+    TeamSeasonResponseDto,
+    'Equipo instanciado en temporada exitosamente.',
+  )
   async create(@Body() createTeamCategoryDto: CreateTeamSeasonDto) {
     return await this.teamSeasonsService.create(createTeamCategoryDto);
   }
@@ -68,7 +75,10 @@ export class TeamSeasonsController {
     description: 'ID de la instancia (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia encontrada exitosamente.')
+  @ApiStandardResponse(
+    TeamSeasonResponseDto,
+    'Instancia encontrada exitosamente.',
+  )
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.findOne(id);
   }
@@ -84,10 +94,13 @@ export class TeamSeasonsController {
     description: 'ID de la instancia a actualizar (UUID)',
     format: 'uuid',
   })
-  @ApiConsumes('multipart/form-data')
-  @FormDataRequest()
+  // @ApiConsumes('multipart/form-data')
+  // @FormDataRequest()
   @ApiBody({ type: UpdateTeamSeasonDto })
-  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia de equipo actualizada con éxito.')
+  @ApiStandardResponse(
+    TeamSeasonResponseDto,
+    'Instancia de equipo actualizada con éxito.',
+  )
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamCategoryDto: UpdateTeamSeasonDto,
@@ -106,7 +119,10 @@ export class TeamSeasonsController {
     description: 'ID de la instancia a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(TeamSeasonResponseDto, 'Instancia de equipo eliminada exitosamente.')
+  @ApiStandardResponse(
+    TeamSeasonResponseDto,
+    'Instancia de equipo eliminada exitosamente.',
+  )
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.remove(id);
   }

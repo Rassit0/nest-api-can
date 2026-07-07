@@ -10,6 +10,7 @@ import { PrismaService } from 'src/prisma.service';
 import {
   PlayerMembershipStatus,
   Prisma,
+  SeasonBillingType,
   SeasonStatus,
 } from 'src/generated/prisma/client';
 import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
@@ -43,9 +44,18 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   description: true,
   maxMembers: true,
   minMembers: true,
+  minBirthYear: true,
+  maxBirthYear: true,
   billingDay: true,
   registrationFee: true,
-  monthlyFee: true,
+  recurringFee: true,
+  seasonFee: true,
+  billingType: true,
+  billingFrequency: true,
+  prorateFirstRecurringFee: true,
+  prorateLastRecurringFee: true,
+  prorateRegistrationFee: true,
+  prorateSeasonFee: true,
   debtToleranceMonths: true,
   lateFeeEnabled: true,
   lateFeePerDay: true,
@@ -96,10 +106,84 @@ export class TeamSeasonService {
       throw new NotFoundException('La categoria no fue encontrada');
     }
 
+    if (
+      rest.minBirthYear &&
+      rest.maxBirthYear &&
+      rest.minBirthYear > rest.maxBirthYear
+    ) {
+      throw new BadRequestException(
+        'El año mínimo de nacimiento no puede ser mayor al año máximo permitido',
+      );
+    }
+
     if (season.disciplineId !== category.disciplineId) {
       throw new NotFoundException(
         'La temporada y la categoria no pertenecen a la misma disciplina',
       );
+    }
+
+    if (rest.billingType !== SeasonBillingType.SINGLE_ONLY) {
+      if (!rest.recurringFee) {
+        throw new BadRequestException(
+          'La cuota mensual es requerida si el plan no es de pago único exclusivo',
+        );
+      }
+      if (!rest.registrationFee) {
+        throw new BadRequestException(
+          'La matrícula es requerida si el plan no es de pago único exclusivo',
+        );
+      }
+    }
+
+    if (
+      rest.billingType === SeasonBillingType.SINGLE_ONLY ||
+      rest.billingType === SeasonBillingType.BOTH
+    ) {
+      if (!rest.seasonFee) {
+        throw new BadRequestException(
+          'La cuota de temporada es requerida si el plan permite pago único',
+        );
+      }
+    }
+
+    if (!rest.billingFrequency || rest.billingFrequency === 'MONTHLY') {
+      if (rest.billingDay < 1 || rest.billingDay > 28) {
+        throw new BadRequestException(
+          'El día de facturación mensual debe estar entre 1 y 28',
+        );
+      }
+      const diffTime = season.endDate.getTime() - season.startDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      // Si la temporada dura menos de 28 días, el día de facturación podría no ocurrir nunca
+      if (diffDays < 28) {
+        let isValidDay = false;
+        const current = new Date(season.startDate);
+        while (current <= season.endDate) {
+          if (current.getUTCDate() === rest.billingDay) {
+            isValidDay = true;
+            break;
+          }
+          current.setUTCDate(current.getUTCDate() + 1);
+        }
+        if (!isValidDay) {
+          throw new BadRequestException(
+            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+          );
+        }
+      }
+    } else if (rest.billingFrequency === 'WEEKLY') {
+      if (rest.billingDay < 1 || rest.billingDay > 7) {
+        throw new BadRequestException(
+          'El día de facturación semanal debe estar entre 1 y 7',
+        );
+      }
+    } else if (rest.billingFrequency === 'BIWEEKLY') {
+      if (rest.billingDay < 1 || rest.billingDay > 14) {
+        throw new BadRequestException(
+          'El día de facturación quincenal debe estar entre 1 y 14',
+        );
+      }
     }
 
     const newTeamCategorySeason = await this.prisma.teamSeason.create({
@@ -240,6 +324,86 @@ export class TeamSeasonService {
       throw new NotFoundException(
         'La temporada y la categoria no pertenecen a la misma disciplina',
       );
+    }
+
+    const minBirthYear = rest.minBirthYear !== undefined ? rest.minBirthYear : teamSeason.minBirthYear;
+    const maxBirthYear = rest.maxBirthYear !== undefined ? rest.maxBirthYear : teamSeason.maxBirthYear;
+
+    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
+      throw new BadRequestException(
+        'El año mínimo de nacimiento no puede ser mayor al año máximo permitido',
+      );
+    }
+
+    const billingType = rest.billingType ?? teamSeason.billingType;
+    const recurringFee = rest.recurringFee ?? teamSeason.recurringFee;
+    const registrationFee = rest.registrationFee ?? teamSeason.registrationFee;
+    const seasonFee = rest.seasonFee ?? teamSeason.seasonFee;
+
+    if (billingType !== SeasonBillingType.SINGLE_ONLY) {
+      if (!recurringFee) {
+        throw new BadRequestException(
+          'La cuota mensual es requerida si el plan no es de pago único exclusivo',
+        );
+      }
+      if (!registrationFee) {
+        throw new BadRequestException(
+          'La matrícula es requerida si el plan no es de pago único exclusivo',
+        );
+      }
+    }
+
+    if (
+      billingType === SeasonBillingType.SINGLE_ONLY ||
+      billingType === SeasonBillingType.BOTH
+    ) {
+      if (!seasonFee) {
+        throw new BadRequestException(
+          'La cuota de temporada es requerida si el plan permite pago único',
+        );
+      }
+    }
+
+    const billingFrequency = rest.billingFrequency ?? teamSeason.billingFrequency;
+    const billingDay = rest.billingDay ?? teamSeason.billingDay;
+
+    if (!billingFrequency || billingFrequency === 'MONTHLY') {
+      if (billingDay < 1 || billingDay > 28) {
+        throw new BadRequestException(
+          'El día de facturación mensual debe estar entre 1 y 28',
+        );
+      }
+      const diffTime = season.endDate.getTime() - season.startDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays < 28) {
+        let isValidDay = false;
+        const current = new Date(season.startDate);
+        while (current <= season.endDate) {
+          if (current.getUTCDate() === billingDay) {
+            isValidDay = true;
+            break;
+          }
+          current.setUTCDate(current.getUTCDate() + 1);
+        }
+        if (!isValidDay) {
+          throw new BadRequestException(
+            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+          );
+        }
+      }
+    } else if (billingFrequency === 'WEEKLY') {
+      if (billingDay < 1 || billingDay > 7) {
+        throw new BadRequestException(
+          'El día de facturación semanal debe estar entre 1 y 7',
+        );
+      }
+    } else if (billingFrequency === 'BIWEEKLY') {
+      if (billingDay < 1 || billingDay > 14) {
+        throw new BadRequestException(
+          'El día de facturación quincenal debe estar entre 1 y 14',
+        );
+      }
     }
 
     const updatedTeamCategory = await this.prisma.teamSeason.update({

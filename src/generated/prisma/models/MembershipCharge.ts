@@ -29,11 +29,13 @@ export type AggregateMembershipCharge = {
 export type MembershipChargeAvgAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
+  billingCycle: number | null
 }
 
 export type MembershipChargeSumAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
+  billingCycle: number | null
 }
 
 export type MembershipChargeMinAggregateOutputType = {
@@ -44,6 +46,7 @@ export type MembershipChargeMinAggregateOutputType = {
   createdByCron: boolean | null
   billingYear: number | null
   billingMonth: number | null
+  billingCycle: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +59,7 @@ export type MembershipChargeMaxAggregateOutputType = {
   createdByCron: boolean | null
   billingYear: number | null
   billingMonth: number | null
+  billingCycle: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,6 +72,7 @@ export type MembershipChargeCountAggregateOutputType = {
   createdByCron: number
   billingYear: number
   billingMonth: number
+  billingCycle: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -77,11 +82,13 @@ export type MembershipChargeCountAggregateOutputType = {
 export type MembershipChargeAvgAggregateInputType = {
   billingYear?: true
   billingMonth?: true
+  billingCycle?: true
 }
 
 export type MembershipChargeSumAggregateInputType = {
   billingYear?: true
   billingMonth?: true
+  billingCycle?: true
 }
 
 export type MembershipChargeMinAggregateInputType = {
@@ -92,6 +99,7 @@ export type MembershipChargeMinAggregateInputType = {
   createdByCron?: true
   billingYear?: true
   billingMonth?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,6 +112,7 @@ export type MembershipChargeMaxAggregateInputType = {
   createdByCron?: true
   billingYear?: true
   billingMonth?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -116,6 +125,7 @@ export type MembershipChargeCountAggregateInputType = {
   createdByCron?: true
   billingYear?: true
   billingMonth?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -215,6 +225,7 @@ export type MembershipChargeGroupByOutputType = {
   createdByCron: boolean
   billingYear: number | null
   billingMonth: number | null
+  billingCycle: number | null
   createdAt: Date
   updatedAt: Date
   _count: MembershipChargeCountAggregateOutputType | null
@@ -250,6 +261,7 @@ export type MembershipChargeWhereInput = {
   createdByCron?: Prisma.BoolFilter<"MembershipCharge"> | boolean
   billingYear?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
+  billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
@@ -264,6 +276,7 @@ export type MembershipChargeOrderByWithRelationInput = {
   createdByCron?: Prisma.SortOrder
   billingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
@@ -272,7 +285,7 @@ export type MembershipChargeOrderByWithRelationInput = {
 
 export type MembershipChargeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  playerMembershipId_type_billingMonth_billingYear?: Prisma.MembershipChargePlayerMembershipIdTypeBillingMonthBillingYearCompoundUniqueInput
+  playerMembershipId_type_billingMonth_billingYear_billingCycle?: Prisma.MembershipChargePlayerMembershipIdTypeBillingMonthBillingYearBillingCycleCompoundUniqueInput
   AND?: Prisma.MembershipChargeWhereInput | Prisma.MembershipChargeWhereInput[]
   OR?: Prisma.MembershipChargeWhereInput[]
   NOT?: Prisma.MembershipChargeWhereInput | Prisma.MembershipChargeWhereInput[]
@@ -282,11 +295,12 @@ export type MembershipChargeWhereUniqueInput = Prisma.AtLeast<{
   createdByCron?: Prisma.BoolFilter<"MembershipCharge"> | boolean
   billingYear?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
+  billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
-}, "id" | "playerMembershipId_type_billingMonth_billingYear">
+}, "id" | "playerMembershipId_type_billingMonth_billingYear_billingCycle">
 
 export type MembershipChargeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -296,6 +310,7 @@ export type MembershipChargeOrderByWithAggregationInput = {
   createdByCron?: Prisma.SortOrder
   billingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MembershipChargeCountOrderByAggregateInput
@@ -316,6 +331,7 @@ export type MembershipChargeScalarWhereWithAggregatesInput = {
   createdByCron?: Prisma.BoolWithAggregatesFilter<"MembershipCharge"> | boolean
   billingYear?: Prisma.IntNullableWithAggregatesFilter<"MembershipCharge"> | number | null
   billingMonth?: Prisma.IntNullableWithAggregatesFilter<"MembershipCharge"> | number | null
+  billingCycle?: Prisma.IntNullableWithAggregatesFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipCharge"> | Date | string
 }
@@ -326,6 +342,7 @@ export type MembershipChargeCreateInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
@@ -340,6 +357,7 @@ export type MembershipChargeUncheckedCreateInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -350,6 +368,7 @@ export type MembershipChargeUpdateInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
@@ -364,6 +383,7 @@ export type MembershipChargeUncheckedUpdateInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,6 +396,7 @@ export type MembershipChargeCreateManyInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -386,6 +407,7 @@ export type MembershipChargeUpdateManyMutationInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -398,6 +420,7 @@ export type MembershipChargeUncheckedUpdateManyInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,11 +435,12 @@ export type MembershipChargeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type MembershipChargePlayerMembershipIdTypeBillingMonthBillingYearCompoundUniqueInput = {
+export type MembershipChargePlayerMembershipIdTypeBillingMonthBillingYearBillingCycleCompoundUniqueInput = {
   playerMembershipId: string
   type: $Enums.TypeMembershipCharge
   billingMonth: number
   billingYear: number
+  billingCycle: number
 }
 
 export type MembershipChargeCountOrderByAggregateInput = {
@@ -427,6 +451,7 @@ export type MembershipChargeCountOrderByAggregateInput = {
   createdByCron?: Prisma.SortOrder
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -434,6 +459,7 @@ export type MembershipChargeCountOrderByAggregateInput = {
 export type MembershipChargeAvgOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
 }
 
 export type MembershipChargeMaxOrderByAggregateInput = {
@@ -444,6 +470,7 @@ export type MembershipChargeMaxOrderByAggregateInput = {
   createdByCron?: Prisma.SortOrder
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,6 +483,7 @@ export type MembershipChargeMinOrderByAggregateInput = {
   createdByCron?: Prisma.SortOrder
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -463,6 +491,7 @@ export type MembershipChargeMinOrderByAggregateInput = {
 export type MembershipChargeSumOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
 }
 
 export type MembershipChargeCreateNestedManyWithoutPlayerMembershipInput = {
@@ -509,14 +538,6 @@ export type MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInpu
 
 export type EnumTypeMembershipChargeFieldUpdateOperationsInput = {
   set?: $Enums.TypeMembershipCharge
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type MembershipChargeCreateNestedManyWithoutChargeInput = {
@@ -567,6 +588,7 @@ export type MembershipChargeCreateWithoutPlayerMembershipInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutMembershipChargesInput
@@ -579,6 +601,7 @@ export type MembershipChargeUncheckedCreateWithoutPlayerMembershipInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -620,6 +643,7 @@ export type MembershipChargeScalarWhereInput = {
   createdByCron?: Prisma.BoolFilter<"MembershipCharge"> | boolean
   billingYear?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
+  billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
 }
@@ -630,6 +654,7 @@ export type MembershipChargeCreateWithoutChargeInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
@@ -642,6 +667,7 @@ export type MembershipChargeUncheckedCreateWithoutChargeInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -679,6 +705,7 @@ export type MembershipChargeCreateManyPlayerMembershipInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -689,6 +716,7 @@ export type MembershipChargeUpdateWithoutPlayerMembershipInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutMembershipChargesNestedInput
@@ -701,6 +729,7 @@ export type MembershipChargeUncheckedUpdateWithoutPlayerMembershipInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -712,6 +741,7 @@ export type MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -723,6 +753,7 @@ export type MembershipChargeCreateManyChargeInput = {
   createdByCron?: boolean
   billingYear?: number | null
   billingMonth?: number | null
+  billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -733,6 +764,7 @@ export type MembershipChargeUpdateWithoutChargeInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
@@ -745,6 +777,7 @@ export type MembershipChargeUncheckedUpdateWithoutChargeInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -756,6 +789,7 @@ export type MembershipChargeUncheckedUpdateManyWithoutChargeInput = {
   createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -770,6 +804,7 @@ export type MembershipChargeSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdByCron?: boolean
   billingYear?: boolean
   billingMonth?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
@@ -784,6 +819,7 @@ export type MembershipChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   createdByCron?: boolean
   billingYear?: boolean
   billingMonth?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
@@ -798,6 +834,7 @@ export type MembershipChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   createdByCron?: boolean
   billingYear?: boolean
   billingMonth?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
@@ -812,11 +849,12 @@ export type MembershipChargeSelectScalar = {
   createdByCron?: boolean
   billingYear?: boolean
   billingMonth?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MembershipChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipCharge"]>
+export type MembershipChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "billingCycle" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipCharge"]>
 export type MembershipChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
@@ -844,6 +882,7 @@ export type $MembershipChargePayload<ExtArgs extends runtime.Types.Extensions.In
     createdByCron: boolean
     billingYear: number | null
     billingMonth: number | null
+    billingCycle: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["membershipCharge"]>
@@ -1278,6 +1317,7 @@ export interface MembershipChargeFieldRefs {
   readonly createdByCron: Prisma.FieldRef<"MembershipCharge", 'Boolean'>
   readonly billingYear: Prisma.FieldRef<"MembershipCharge", 'Int'>
   readonly billingMonth: Prisma.FieldRef<"MembershipCharge", 'Int'>
+  readonly billingCycle: Prisma.FieldRef<"MembershipCharge", 'Int'>
   readonly createdAt: Prisma.FieldRef<"MembershipCharge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MembershipCharge", 'DateTime'>
 }

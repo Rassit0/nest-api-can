@@ -58,7 +58,7 @@ type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
       };
     };
   };
-}>;
+}> & { minBirthYear: number | null; maxBirthYear: number | null };
 
 @Injectable()
 export class StudentMembershipsService {
@@ -92,8 +92,29 @@ export class StudentMembershipsService {
 
     this.validateStudentEligibility(student, offering);
 
+    if (createDto.studentDiscounts && createDto.studentDiscounts.length > 0) {
+      this.validateDiscountDates(
+        createDto.studentDiscounts,
+        offering.season.startDate,
+        offering.season.endDate
+      );
+    }
+
+    const { studentDiscounts, ...createData } = createDto;
+
     const membership = await this.prisma.studentMembership.create({
-      data: createDto,
+      data: {
+        ...createData,
+        ...(studentDiscounts && studentDiscounts.length > 0 && {
+          studentDiscounts: {
+            create: studentDiscounts.map(d => ({
+              ...d,
+              startDate: new Date(d.startDate),
+              endDate: d.endDate ? new Date(d.endDate) : null,
+            }))
+          }
+        })
+      },
       select: studentMembershipSelect,
     });
 
@@ -103,25 +124,17 @@ export class StudentMembershipsService {
     };
   }
 
-  private calculateAge(birthDate: Date): number {
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
+  private calculateAge(birthDate: Date, referenceDate: Date): number {
+    return referenceDate.getFullYear() - birthDate.getFullYear();
   }
 
   private validateStudentAge(
     birthDate: Date,
+    referenceDate: Date,
     minAge?: number,
     maxAge?: number,
   ) {
-    const studentAge = this.calculateAge(birthDate);
+    const studentAge = this.calculateAge(birthDate, referenceDate);
 
     if (maxAge && studentAge > maxAge) {
       throw new BadRequestException('errors.INVALID_AGE_FOR_CATEGORY');
@@ -129,6 +142,34 @@ export class StudentMembershipsService {
 
     if (minAge && studentAge < minAge) {
       throw new BadRequestException('errors.INVALID_AGE_FOR_CATEGORY');
+    }
+  }
+
+  private validateDiscountDates(
+    discounts: any[],
+    seasonStartDate: Date,
+    seasonEndDate: Date
+  ) {
+    for (const d of discounts) {
+      const dStart = new Date(d.startDate);
+      if (dStart < seasonStartDate || dStart > seasonEndDate) {
+        throw new BadRequestException(
+          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`
+        );
+      }
+      if (d.endDate) {
+        const dEnd = new Date(d.endDate);
+        if (dEnd < dStart) {
+          throw new BadRequestException(
+            'La fecha de fin del descuento no puede ser menor a la fecha de inicio'
+          );
+        }
+        if (dEnd > seasonEndDate) {
+          throw new BadRequestException(
+            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`
+          );
+        }
+      }
     }
   }
 
@@ -245,9 +286,11 @@ export class StudentMembershipsService {
       await this.validateDuplicateMembership(studentId, offeringId, id);
     }
 
+    const { studentDiscounts, ...updateData } = updateDto;
+
     const updatedMembership = await this.prisma.studentMembership.update({
       where: { id },
-      data: updateDto,
+      data: updateData,
       select: studentMembershipSelect,
     });
 
@@ -469,11 +512,26 @@ export class StudentMembershipsService {
     if (!student.person.birthDate) {
       throw new BadRequestException('errors.BIRTHDATE_NOT_FOUND');
     }
-    this.validateStudentAge(
-      student.person.birthDate,
-      offering.category.minAge,
-      offering.category.maxAge,
-    );
+    if (offering.minBirthYear || offering.maxBirthYear) {
+      const birthYear = student.person.birthDate.getFullYear();
+      if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
+        throw new BadRequestException(
+          `El año de nacimiento del estudiante (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+        );
+      }
+      if (offering.minBirthYear && birthYear < offering.minBirthYear) {
+        throw new BadRequestException(
+          `El año de nacimiento del estudiante (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
+        );
+      }
+    } else {
+      this.validateStudentAge(
+        student.person.birthDate,
+        offering.season.startDate,
+        offering.category.minAge,
+        offering.category.maxAge,
+      );
+    }
     if (
       offering.gender !== 'MIXED' &&
       offering.gender !== student.person.gender

@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  IsBoolean,
   Matches,
   Min,
   MinLength,
@@ -69,11 +70,12 @@ export class CreatePaymentPlanDto {
   })
   name: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '20.00',
     description:
       'Porcentaje de descuento de matrícula aplicado a este plan de pago',
   })
+  @IsOptional()
   @IsDecimal(
     {
       decimal_digits: '0,2',
@@ -91,12 +93,13 @@ export class CreatePaymentPlanDto {
   @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
     message: 'El porcentaje debe estar entre 0 y 100',
   })
-  registrationDiscountPercent: string;
+  registrationDiscountPercent?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '20.00',
-    description: 'Porcentaje de descuento mensual aplicado a este plan de pago',
+    description: 'Porcentaje de descuento para la tarifa mensual. Si el plan es de pago mensual, descuenta a la mensualidad.',
   })
+  @IsOptional()
   @IsDecimal(
     {
       decimal_digits: '0,2',
@@ -104,7 +107,7 @@ export class CreatePaymentPlanDto {
     },
     {
       message: i18nValidationMessage('validation.IS_STRING', {
-        constraint1: 'monthlyDiscountPercent',
+        constraint1: 'recurringDiscountPercent',
       }),
     },
   )
@@ -114,5 +117,55 @@ export class CreatePaymentPlanDto {
   @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
     message: 'El porcentaje debe estar entre 0 y 100',
   })
-  monthlyDiscountPercent: string;
+  recurringDiscountPercent?: string;
+
+  @ApiPropertyOptional({
+    example: '15.00',
+    description: 'Porcentaje de descuento aplicado a la tarifa de la temporada completa cuando es un plan de pago único.',
+  })
+  @IsOptional()
+  @IsDecimal(
+    {
+      decimal_digits: '0,2',
+      locale: 'en-US',
+    },
+    {
+      message: i18nValidationMessage('validation.IS_STRING', {
+        constraint1: 'seasonFeeDiscountPercent',
+      }),
+    },
+  )
+  @Matches(/^[^-].*$/, {
+    message: 'No se permiten valores negativos',
+  })
+  @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
+    message: 'El porcentaje debe estar entre 0 y 100',
+  })
+  seasonFeeDiscountPercent?: string;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Si es true, este plan agrupa toda la temporada en un solo cobro adelantado',
+    default: false,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'isSinglePayment',
+    }),
+  })
+  @IsOptional()
+  isSinglePayment?: boolean;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Si es true, este plan serA! seleccionado por defecto en el formulario',
+    default: false,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'isDefault',
+    }),
+  })
+  @IsOptional()
+  isDefault?: boolean;
 }

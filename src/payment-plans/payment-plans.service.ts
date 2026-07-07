@@ -11,7 +11,10 @@ export const paymentPlanSelect: Prisma.PaymentPlanSelect = {
   courseSeasonId: true,
   name: true,
   registrationDiscountPercent: true,
-  monthlyDiscountPercent: true,
+  recurringDiscountPercent: true,
+  seasonFeeDiscountPercent: true,
+  isSinglePayment: true,
+  isDefault: true,
 
   createdAt: true,
   updatedAt: true,
@@ -23,7 +26,40 @@ export class PaymentPlansService {
 
   constructor(private readonly prisma: PrismaService) {}
 
+  private async validateAndSanitizeDiscounts(
+    data: CreatePaymentPlanDto | UpdatePaymentPlanDto,
+    existingPlan?: { teamSeasonId?: string | null; courseSeasonId?: string | null }
+  ) {
+    const teamSeasonId = data.teamSeasonId !== undefined ? data.teamSeasonId : existingPlan?.teamSeasonId;
+    const courseSeasonId = data.courseSeasonId !== undefined ? data.courseSeasonId : existingPlan?.courseSeasonId;
+
+    if (!teamSeasonId && !courseSeasonId) {
+      return;
+    }
+
+    let billingType = 'MONTHLY_ONLY'; // default safe fallback
+
+    if (teamSeasonId) {
+      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId } });
+      if (!ts) throw new NotFoundException('TeamSeason no encontrado');
+      billingType = ts.billingType;
+    } else if (courseSeasonId) {
+      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId } });
+      if (!cs) throw new NotFoundException('CourseSeason no encontrado');
+      billingType = cs.billingType;
+    }
+
+    if (billingType === 'SINGLE_ONLY') {
+      data.recurringDiscountPercent = '0.00';
+      data.registrationDiscountPercent = '0.00';
+      data.isSinglePayment = true;
+    } else if (billingType === 'MONTHLY_ONLY') {
+      data.seasonFeeDiscountPercent = '0.00';
+    }
+  }
+
   async create(createPaymentPlanDto: CreatePaymentPlanDto) {
+    await this.validateAndSanitizeDiscounts(createPaymentPlanDto);
     const newPaymentPlan = await this.prisma.paymentPlan.create({
       data: {
         ...createPaymentPlanDto,
@@ -113,11 +149,13 @@ export class PaymentPlansService {
   async update(id: string, updatePaymentPlanDto: UpdatePaymentPlanDto) {
     const paymentPlan = await this.prisma.paymentPlan.findUnique({
       where: { id },
-      select: paymentPlanSelect,
+      select: { ...paymentPlanSelect, teamSeasonId: true, courseSeasonId: true },
     });
     if (!paymentPlan) {
       throw new NotFoundException('El plan de pago no fue encontrado');
     }
+    await this.validateAndSanitizeDiscounts(updatePaymentPlanDto, paymentPlan);
+
     const updatedPaymentPlan = await this.prisma.paymentPlan.update({
       where: { id },
       data: updatePaymentPlanDto,

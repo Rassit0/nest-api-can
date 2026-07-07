@@ -34,6 +34,19 @@ export class CreateTeamDto {
   name: string;
 
   @ApiProperty({
+    example: 'T1',
+    description: 'Nombre abreviado del equipo',
+    required: false,
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'shortName',
+    }),
+  })
+  @IsOptional()
+  shortName?: string;
+
+  @ApiProperty({
     example: 'Equipo 1 del club',
     description: 'Descripción del equipo',
     required: false,
