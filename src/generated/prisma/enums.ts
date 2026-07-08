@@ -164,6 +164,16 @@ export const PaymentMethod = {
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 
+export const TransactionStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
+
+
 export const StatusCourseSeason = {
   DRAFT: 'DRAFT',
   ACTIVE: 'ACTIVE',

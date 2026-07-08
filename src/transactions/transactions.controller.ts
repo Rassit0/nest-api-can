@@ -1,0 +1,106 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  ParseUUIDPipe,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
+import { TransactionsService } from './transactions.service';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { TransactionsPaginationDto } from './dto/pagination.dto';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
+
+@ApiTags('Transactions')
+@Controller('transactions')
+export class TransactionsController {
+  constructor(private readonly transactionsService: TransactionsService) {}
+
+  @Post()
+  @ApiOperation({
+    summary: 'Registrar una nueva transacción',
+    description:
+      'Registra un ingreso o egreso. Si es código QR, devuelve la data necesaria para dibujarlo. Si se envían cargos a aplicar, se procesan automáticamente.',
+  })
+  // Usamos Object genérico temporalmente hasta definir un ResponseDto estricto, o puedes crear un TransactionResponseDto
+  @ApiStandardCreatedResponse(Object, 'Transacción procesada correctamente.')
+  async create(@Body() createTransactionDto: CreateTransactionDto) {
+    return await this.transactionsService.create(createTransactionDto);
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Obtener lista paginada de transacciones',
+    description:
+      'Retorna una lista paginada y filtrable de todas las transacciones realizadas.',
+  })
+  @ApiPaginatedResponse(Object, 'Lista de transacciones obtenida correctamente.')
+  async findAll(@Query() paginationDto: TransactionsPaginationDto) {
+    return await this.transactionsService.findAll(paginationDto);
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Obtener detalles de una transacción por ID',
+    description:
+      'Busca y retorna los metadatos de una transacción específica, incluyendo sus pagos aplicados a cargos.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la transacción (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(Object, 'Transacción encontrada exitosamente.')
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.transactionsService.findOne(id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Actualizar notas o referencia de una transacción',
+    description: 'Actualiza los campos editables de una transacción.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la transacción a actualizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: UpdateTransactionDto })
+  @ApiStandardResponse(Object, 'Transacción actualizada exitosamente.')
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateTransactionDto: UpdateTransactionDto,
+  ) {
+    return await this.transactionsService.update(id, updateTransactionDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Eliminar / Anular una transacción',
+    description:
+      'Elimina físicamente una transacción y devuelve (reversa) el saldo aplicado a los cargos asociados, devolviéndolos a su estado anterior.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la transacción a anular (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(Object, 'Transacción anulada exitosamente.')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.transactionsService.remove(id);
+  }
+}

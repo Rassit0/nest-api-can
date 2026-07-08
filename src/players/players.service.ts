@@ -193,10 +193,13 @@ export class PlayersService {
       ...(search
         ? {
             OR: [
+              { id: { equals: search } },
               { name: { contains: search, mode: 'insensitive' } },
               { lastName: { contains: search, mode: 'insensitive' } },
               { secondLastName: { contains: search, mode: 'insensitive' } },
               { documentNumber: { contains: search, mode: 'insensitive' } },
+              { phone: { contains: search, mode: 'insensitive' } },
+              { email: { contains: search, mode: 'insensitive' } },
             ],
           }
         : {}),

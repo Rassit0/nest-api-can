@@ -616,6 +616,14 @@ enum PaymentMethod {
   CASH
 }
 
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+
 model Transaction {
   id                 String              @id @default(uuid())
   payerPersonId      String?             @map("payer_person_id")
@@ -627,6 +635,8 @@ model Transaction {
   paymentMethod      PaymentMethod       @map("payment_method")
   reference          String?             @map("reference_number")
   notes              String?
+  status             TransactionStatus   @default(COMPLETED)
+  receiptUrls        String[]            @map("receipt_urls")
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
   chargeTransactions ChargeTransaction[]

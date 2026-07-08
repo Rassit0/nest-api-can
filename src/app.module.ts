@@ -55,6 +55,7 @@ import { StudentChargesModule } from './student-charges/student-charges.module';
 // Nuevos módulos de Evaluaciones e Incidencias de conducta
 import { SessionIncidentsModule } from './session-incidents/session-incidents.module';
 import { ProgressEvaluationsModule } from './progress-evaluations/progress-evaluations.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -107,6 +108,7 @@ import { ProgressEvaluationsModule } from './progress-evaluations/progress-evalu
     StudentChargesModule,
     SessionIncidentsModule,
     ProgressEvaluationsModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [

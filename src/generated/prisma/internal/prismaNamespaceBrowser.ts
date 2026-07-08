@@ -420,6 +420,8 @@ export const TransactionScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   reference: 'reference',
   notes: 'notes',
+  status: 'status',
+  receiptUrls: 'receiptUrls',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
