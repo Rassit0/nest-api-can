@@ -7,5 +7,7 @@ export class UpdateTransactionDto extends PartialType(
     'amount',
     'type',
     'chargeTransactions',
+    'paymentMethod',
+    'transactionDate',
   ] as const),
 ) {}

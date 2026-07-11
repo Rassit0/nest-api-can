@@ -9,6 +9,7 @@ import { UpdateMembershipDiscountDto } from './dto/update-membership-discount.dt
 import { Prisma } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { PlayerMembershipDiscountsPaginationDto } from './dto/pagination.dto';
+import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 
 export const membershipDiscountSelect: Prisma.MembershipDiscountSelect = {
   id: true,
@@ -27,7 +28,10 @@ export const membershipDiscountSelect: Prisma.MembershipDiscountSelect = {
 export class MembershipDiscountService {
   private readonly logger = new Logger('MembershipDiscountService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly membershipChargesService: MembershipChargesService,
+  ) {}
 
   async create(createMembershipDiscountDto: CreateMembershipDiscountDto) {
     // Validamos que las fechas del descuento esten dentro del rango de la temporada
@@ -72,6 +76,11 @@ export class MembershipDiscountService {
         data: createMembershipDiscountDto,
         select: membershipDiscountSelect,
       });
+
+    // Recalcular cargos pendientes tras asignar descuento
+    this.membershipChargesService.recalculatePendingFutureCharges(createMembershipDiscountDto.playerMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras asignar descuento a membresía ${createMembershipDiscountDto.playerMembershipId}`, e.stack);
+    });
 
     return {
       message: 'Descuento de membresia asignada exitosamente',
@@ -207,6 +216,11 @@ export class MembershipDiscountService {
         select: membershipDiscountSelect,
       });
 
+    // Recalcular cargos pendientes
+    this.membershipChargesService.recalculatePendingFutureCharges(membershipDiscount.playerMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras actualizar descuento en membresía ${membershipDiscount.playerMembershipId}`, e.stack);
+    });
+
     return {
       message: 'Descuento de membresía actualizado exitosamente',
       data: updatedMembershipDiscount,
@@ -220,6 +234,11 @@ export class MembershipDiscountService {
 
     await this.prisma.membershipDiscount.delete({
       where: { id },
+    });
+
+    // Recalcular cargos pendientes
+    this.membershipChargesService.recalculatePendingFutureCharges(discount.playerMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras eliminar descuento en membresía ${discount.playerMembershipId}`, e.stack);
     });
 
     return {
@@ -242,17 +261,21 @@ export class MembershipDiscountService {
       );
     }
 
-    const finished = await this.prisma.membershipDiscount.update({
-      where: { id },
-      data: {
-        endDate: now,
-      },
-      select: membershipDiscountSelect,
+    const finishedMembershipDiscount =
+      await this.prisma.membershipDiscount.update({
+        where: { id },
+        data: { endDate: now },
+        select: membershipDiscountSelect,
+      });
+
+    // Recalcular cargos pendientes
+    this.membershipChargesService.recalculatePendingFutureCharges(discount.playerMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras finalizar descuento en membresía ${discount.playerMembershipId}`, e.stack);
     });
 
     return {
       message: 'Descuento finalizado exitosamente',
-      data: finished,
+      data: finishedMembershipDiscount,
     };
   }
 

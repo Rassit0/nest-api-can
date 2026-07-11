@@ -412,6 +412,7 @@ export class CreateTeamSeasonDto {
     description: 'Prorratear la primera cuota recurrente si no es mes completo',
     default: true,
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean({
     message: i18nValidationMessage('validation.IS_BOOLEAN', {
       constraint1: 'prorateFirstRecurringFee',
@@ -425,6 +426,7 @@ export class CreateTeamSeasonDto {
     description: 'Prorratear la última cuota recurrente si no es mes completo',
     default: true,
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean({
     message: i18nValidationMessage('validation.IS_BOOLEAN', {
       constraint1: 'prorateLastRecurringFee',
@@ -438,6 +440,7 @@ export class CreateTeamSeasonDto {
     description: 'Prorratear el monto de inscripción basado en el tiempo restante de la temporada',
     default: false,
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean({
     message: i18nValidationMessage('validation.IS_BOOLEAN', {
       constraint1: 'prorateRegistrationFee',
@@ -451,6 +454,7 @@ export class CreateTeamSeasonDto {
     description: 'Prorratear el monto de temporada completa (Season Fee) basado en el tiempo restante',
     default: false,
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean({
     message: i18nValidationMessage('validation.IS_BOOLEAN', {
       constraint1: 'prorateSeasonFee',

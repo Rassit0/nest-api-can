@@ -11,6 +11,7 @@ import {
   PlayerMembershipStatus,
   Prisma,
   StatusTeamSeason,
+  StatusCharge,
 } from 'src/generated/prisma/client';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 
@@ -27,6 +28,8 @@ export const playerMembershipSelect = {
           email: true,
           phone: true,
           birthDate: true,
+          documentNumber: true,
+          documentType: true,
         },
       },
     },
@@ -43,7 +46,7 @@ export const playerMembershipSelect = {
     where: {
       charge: {
         status: {
-          in: ['PENDING', 'PARTIAL'],
+          not: 'CANCELLED',
         },
       },
     },
@@ -51,6 +54,7 @@ export const playerMembershipSelect = {
       charge: {
         select: {
           pendingAmount: true,
+          amount: true,
         },
       },
     },
@@ -62,11 +66,21 @@ type PlayerMembershipWithCharges = Prisma.PlayerMembershipGetPayload<{
 }>;
 
 const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
-  const totalPendingAmount =
-    membership.membershipCharges?.reduce(
+  const totalPendingAmount = Number(
+    (membership.membershipCharges?.reduce(
       (sum, current) => sum + Number(current.charge.pendingAmount),
       0,
-    ) || 0;
+    ) || 0).toFixed(2),
+  );
+
+  const totalPaidAmount = Number(
+    (membership.membershipCharges?.reduce(
+      (sum, current) =>
+        sum +
+        (Number(current.charge.amount) - Number(current.charge.pendingAmount)),
+      0,
+    ) || 0).toFixed(2),
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { membershipCharges, ...rest } = membership;
@@ -74,6 +88,7 @@ const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
   return {
     ...rest,
     totalPendingAmount,
+    totalPaidAmount,
   };
 };
 
@@ -138,11 +153,14 @@ export class PlayerMembershipsService {
 
     this.validatePlayerEligibility(player, offering);
 
-    if (createDto.membershipDiscounts && createDto.membershipDiscounts.length > 0) {
+    if (
+      createDto.membershipDiscounts &&
+      createDto.membershipDiscounts.length > 0
+    ) {
       this.validateDiscountDates(
         createDto.membershipDiscounts,
         offering.season.startDate,
-        offering.season.endDate
+        offering.season.endDate,
       );
     }
 
@@ -151,15 +169,16 @@ export class PlayerMembershipsService {
     const membership = await this.prisma.playerMembership.create({
       data: {
         ...createData,
-        ...(membershipDiscounts && membershipDiscounts.length > 0 && {
-          membershipDiscounts: {
-            create: membershipDiscounts.map(d => ({
-              ...d,
-              startDate: new Date(d.startDate),
-              endDate: d.endDate ? new Date(d.endDate) : null,
-            }))
-          }
-        })
+        ...(membershipDiscounts &&
+          membershipDiscounts.length > 0 && {
+            membershipDiscounts: {
+              create: membershipDiscounts.map((d) => ({
+                ...d,
+                startDate: new Date(d.startDate),
+                endDate: d.endDate ? new Date(d.endDate) : null,
+              })),
+            },
+          }),
       },
       select: playerMembershipSelect,
     });
@@ -170,7 +189,7 @@ export class PlayerMembershipsService {
     );
 
     return {
-      message: 'Oferta de membresía de equipo agregada exitosamente',
+      message: 'Membresía creada exitosamente',
       data: mapMembershipWithTotal(membership),
     };
   }
@@ -179,7 +198,12 @@ export class PlayerMembershipsService {
     return referenceDate.getFullYear() - birthDate.getFullYear();
   }
 
-  private validatePlayerAge(birthDate: Date, referenceDate: Date, minAge?: number, maxAge?: number) {
+  private validatePlayerAge(
+    birthDate: Date,
+    referenceDate: Date,
+    minAge?: number,
+    maxAge?: number,
+  ) {
     const playerAge = this.calculateAge(birthDate, referenceDate);
 
     if (maxAge && playerAge > maxAge) {
@@ -198,25 +222,25 @@ export class PlayerMembershipsService {
   private validateDiscountDates(
     discounts: any[],
     seasonStartDate: Date,
-    seasonEndDate: Date
+    seasonEndDate: Date,
   ) {
     for (const d of discounts) {
       const dStart = new Date(d.startDate);
       if (dStart < seasonStartDate || dStart > seasonEndDate) {
         throw new BadRequestException(
-          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`
+          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`,
         );
       }
       if (d.endDate) {
         const dEnd = new Date(d.endDate);
         if (dEnd < dStart) {
           throw new BadRequestException(
-            'La fecha de fin del descuento no puede ser menor a la fecha de inicio'
+            'La fecha de fin del descuento no puede ser menor a la fecha de inicio',
           );
         }
         if (dEnd > seasonEndDate) {
           throw new BadRequestException(
-            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`
+            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`,
           );
         }
       }
@@ -256,8 +280,14 @@ export class PlayerMembershipsService {
       where.status = status;
     }
 
-    // Ejecutamos ambas consultas en paralelo para máxima velocidad
-    const [playerMemberships, totalItems] = await Promise.all([
+    // Ejecutamos las consultas en paralelo para máxima velocidad
+    const [
+      playerMemberships,
+      totalItems,
+      allCharges,
+      activeMembersCount,
+      suspendedMembersCount,
+    ] = await Promise.all([
       this.prisma.playerMembership.findMany({
         where,
         take: per_page,
@@ -266,7 +296,53 @@ export class PlayerMembershipsService {
         select: playerMembershipSelect,
       }),
       this.prisma.playerMembership.count({ where }),
+      this.prisma.membershipCharge.findMany({
+        where: {
+          playerMembership: where,
+          charge: {
+            status: {
+              not: 'CANCELLED',
+            },
+          },
+        },
+        select: {
+          charge: {
+            select: {
+              amount: true,
+              pendingAmount: true,
+            },
+          },
+        },
+      }),
+      this.prisma.playerMembership.count({
+        where: { ...where, status: 'ACTIVE' },
+      }),
+      this.prisma.playerMembership.count({
+        where: { ...where, status: 'SUSPENDED' },
+      }),
     ]);
+
+
+    // Calcular totales globales (facturado, recaudado y pendiente) para esta búsqueda
+    const globalTotalBilled = Number(
+      allCharges
+        .reduce((sum, mc) => sum + (Number(mc.charge.amount) || 0), 0)
+        .toFixed(2),
+    );
+    const globalTotalPending = Number(
+      allCharges
+        .reduce((sum, mc) => sum + (Number(mc.charge.pendingAmount) || 0), 0)
+        .toFixed(2),
+    );
+    const globalTotalPaid = Number(
+      allCharges
+        .reduce(
+          (sum, mc) =>
+            sum + (Number(mc.charge.amount) - (Number(mc.charge.pendingAmount) || 0)),
+          0,
+        )
+        .toFixed(2),
+    );
 
     // Lógica de metadatos
     const totalPages = Math.ceil(totalItems / per_page);
@@ -278,6 +354,13 @@ export class PlayerMembershipsService {
     return {
       message: 'Membresías de jugador a equipo obtenidas exitosamente',
       data: playerMemberships.map(mapMembershipWithTotal), // Será [] si la página no existe o no hay registros
+      summary: {
+        totalPending: globalTotalPending,
+        totalPaid: globalTotalPaid,
+        totalBilled: globalTotalBilled,
+        activeMembers: activeMembersCount,
+        suspendedMembers: suspendedMembersCount,
+      },
       meta: {
         totalItems, // Ej: 25
         itemsPerPage: per_page, // Ej: 10
@@ -358,6 +441,22 @@ export class PlayerMembershipsService {
       data: updateData,
       select: playerMembershipSelect,
     });
+
+    // Si se modificó el plan de pago, recalculamos los cargos pendientes
+    if (
+      updateDto.paymentPlanId &&
+      updateDto.paymentPlanId !== membership.paymentPlanId
+    ) {
+      // Usamos .catch para que no bloquee la respuesta si hay un error en la regeneración
+      this.membershipChargesService
+        .recalculatePendingFutureCharges(id)
+        .catch((e) => {
+          this.logger.error(
+            `Error al recalcular cargos tras cambio de plan en membresía ${id}`,
+            e.stack,
+          );
+        });
+    }
 
     return {
       message: 'Membresía de jugador a equipo actualizada exitosamente',
@@ -462,6 +561,42 @@ export class PlayerMembershipsService {
       },
       select: playerMembershipSelect,
     });
+
+    // Cancelar cargos futuros pendientes
+    const pendingCharges = await this.prisma.membershipCharge.findMany({
+      where: {
+        playerMembershipId: id,
+        charge: { status: StatusCharge.PENDING },
+      },
+      select: {
+        chargeId: true,
+        charge: {
+          select: { description: true },
+        },
+      },
+    });
+
+    if (pendingCharges.length > 0) {
+      const cancelReason = reason
+        ? `(Cancelado por retiro: ${reason})`
+        : '(Cancelado por retiro de membresía)';
+
+      const updatePromises = pendingCharges.map((pc) => {
+        const newDescription = pc.charge.description
+          ? `${pc.charge.description} ${cancelReason}`
+          : cancelReason;
+
+        return this.prisma.charge.update({
+          where: { id: pc.chargeId },
+          data: {
+            status: StatusCharge.CANCELLED,
+            description: newDescription,
+          },
+        });
+      });
+
+      await Promise.all(updatePromises);
+    }
 
     return {
       message: 'Membresía retirada exitosamente',
@@ -621,6 +756,13 @@ export class PlayerMembershipsService {
       where: {
         playerId,
         teamSeasonId,
+        status: {
+          in: [
+            PlayerMembershipStatus.ACTIVE,
+            PlayerMembershipStatus.PENDING_ACTIVE,
+            PlayerMembershipStatus.SUSPENDED,
+          ],
+        },
         ...(currentMembershipId && {
           NOT: {
             id: currentMembershipId,
@@ -631,7 +773,7 @@ export class PlayerMembershipsService {
 
     if (existingMembership) {
       throw new BadRequestException(
-        'El jugador ya se encuentra registrado en esta oferta',
+        'El jugador ya se encuentra registrado y activo (o suspendido) en esta oferta',
       );
     }
   }

@@ -30,4 +30,19 @@ export class TransactionsPaginationDto extends PaginationDto {
   })
   @IsOptional()
   payerPersonId?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'Filtrar transacciones aplicadas a un cargo en específico',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @Exists('charge', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'chargeId',
+    }),
+  })
+  @IsOptional()
+  chargeId?: string;
 }

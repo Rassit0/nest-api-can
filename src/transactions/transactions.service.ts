@@ -61,7 +61,7 @@ export class TransactionsService {
         (acc, curr) => acc + curr.amountApplied,
         0,
       );
-      if (totalApplied > amount) {
+      if (Number(totalApplied.toFixed(2)) > Number(amount.toFixed(2))) {
         throw new BadRequestException(
           'La suma de los montos aplicados a los cargos no puede ser mayor al monto de la transacción.',
         );
@@ -102,9 +102,12 @@ export class TransactionsService {
             throw new NotFoundException(`Cargo con ID ${ct.chargeId} no encontrado`);
           }
 
-          if (charge.pendingAmount.toNumber() < ct.amountApplied) {
+          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
+          const applied = Number(ct.amountApplied.toFixed(2));
+
+          if (currentPending < applied) {
             throw new BadRequestException(
-              `El monto aplicado (${ct.amountApplied}) supera el saldo pendiente (${charge.pendingAmount}) del cargo ${charge.id}`,
+              `El monto aplicado (${applied}) supera el saldo pendiente (${currentPending}) del cargo ${charge.id}`,
             );
           }
 
@@ -113,17 +116,18 @@ export class TransactionsService {
             data: {
               chargeId: ct.chargeId,
               transactionId: transaction.id,
-              amountApplied: ct.amountApplied,
+              amountApplied: applied,
             },
           });
 
           // Actualizar saldo pendiente
-          const newPendingAmount = charge.pendingAmount.toNumber() - ct.amountApplied;
+          const newPendingAmount = Number((currentPending - applied).toFixed(2));
+          const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
           let newStatus = charge.status;
 
           if (newPendingAmount <= 0) {
             newStatus = StatusCharge.PAID;
-          } else if (newPendingAmount < charge.amount.toNumber()) {
+          } else if (newPendingAmount < chargeAmount) {
             newStatus = StatusCharge.PARTIAL;
           }
 
@@ -157,12 +161,18 @@ export class TransactionsService {
       sortField,
       orderBy,
       payerPersonId,
+      chargeId,
     } = paginationDto;
 
     const skip = (page - 1) * per_page;
 
     const where: Prisma.TransactionWhereInput = {
       ...(payerPersonId && { payerPersonId }),
+      ...(chargeId && {
+        chargeTransactions: {
+          some: { chargeId }
+        }
+      }),
       ...(search && {
         OR: [
           { description: { contains: search, mode: 'insensitive' } },
@@ -237,11 +247,15 @@ export class TransactionsService {
           where: { id: ct.chargeId },
         });
         if (charge) {
-          const newPendingAmount = charge.pendingAmount.toNumber() + ct.amountApplied.toNumber();
+          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
+          const applied = Number(ct.amountApplied.toNumber().toFixed(2));
+          const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
+
+          const newPendingAmount = Number((currentPending + applied).toFixed(2));
           let newStatus = charge.status;
 
-          // Si el pending es igual al amount, vuelve a PENDING
-          if (newPendingAmount >= charge.amount.toNumber()) {
+          // Si el pending es igual o mayor al amount, vuelve a PENDING
+          if (newPendingAmount >= chargeAmount) {
             newStatus = StatusCharge.PENDING;
           } else if (newPendingAmount > 0) {
             newStatus = StatusCharge.PARTIAL; // Si era PAID, ahora debe ser PARTIAL

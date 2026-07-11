@@ -60,11 +60,16 @@ type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
   };
 }> & { minBirthYear: number | null; maxBirthYear: number | null };
 
+import { StudentChargesService } from 'src/student-charges/student-charges.service';
+
 @Injectable()
 export class StudentMembershipsService {
   private readonly logger = new Logger('StudentMembershipsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly studentChargesService: StudentChargesService,
+  ) {}
 
   async create(createDto: CreateStudentMembershipDto) {
     await this.validatePaymentPlan(
@@ -293,6 +298,12 @@ export class StudentMembershipsService {
       data: updateData,
       select: studentMembershipSelect,
     });
+
+    if (updateDto.paymentPlanId && updateDto.paymentPlanId !== membership.paymentPlanId) {
+      this.studentChargesService.recalculatePendingFutureCharges(id).catch(e => {
+        this.logger.error(`Error al recalcular cargos tras cambio de plan en membresía de estudiante ${id}`, e.stack);
+      });
+    }
 
     return {
       message: 'Inscripción escolar actualizada exitosamente',

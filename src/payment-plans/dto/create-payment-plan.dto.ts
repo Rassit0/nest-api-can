@@ -168,4 +168,43 @@ export class CreatePaymentPlanDto {
   })
   @IsOptional()
   isDefault?: boolean;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'Cantidad de cuotas agrupadas/adelantadas',
+    default: 1,
+  })
+  @IsInt({
+    message: i18nValidationMessage('validation.IS_INT'),
+  })
+  @Min(1, {
+    message: i18nValidationMessage('validation.MIN'),
+  })
+  @IsOptional()
+  advanceCycles?: number;
+
+  @ApiPropertyOptional({
+    example: '15.00',
+    description: 'Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas',
+  })
+  @IsOptional()
+  @IsDecimal(
+    {
+      decimal_digits: '0,2',
+      locale: 'en-US',
+    },
+    {
+      message: i18nValidationMessage('validation.IS_STRING', {
+        constraint1: 'advanceCyclesDiscountPercent',
+      }),
+    },
+  )
+  @Matches(/^[^-].*$/, {
+    message: 'No se permiten valores negativos',
+  })
+  @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
+    message: 'El porcentaje debe estar entre 0 y 100',
+  })
+  advanceCyclesDiscountPercent?: string;
+
 }

@@ -3,15 +3,13 @@
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
 }
 
-generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+datasource db {
+  provider = "postgresql"
 }
 
 enum DocumentType {
@@ -309,7 +307,7 @@ model TeamSeason {
 
   billingDay          Int              @map("billing_day") // 1 - 28
   registrationFee     Decimal?         @map("registration_fee") @db.Decimal(10, 2)
-  recurringFee          Decimal?         @map("recurring_fee") @db.Decimal(10, 2)
+  recurringFee        Decimal?         @map("recurring_fee") @db.Decimal(10, 2)
   debtToleranceMonths Int              @default(2) @map("debt_tolerance_months") // meses de tolerancia para no pagar
   lateFeeEnabled      Boolean          @default(false) @map("late_fee_enabled")
   lateFeePerDay       Decimal          @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
@@ -317,11 +315,11 @@ model TeamSeason {
   status              StatusTeamSeason @default(DRAFT)
 
   /// Precio total si el usuario opta por pagar la temporada de un solo golpe (usado en planes SINGLE_ONLY o cuando isSinglePayment es true en BOTH).
-  seasonFee   Decimal?          @map("season_fee") @db.Decimal(10, 2)
-  
+  seasonFee Decimal? @map("season_fee") @db.Decimal(10, 2)
+
   /// Estrategia de facturación aplicable a esta temporada.
-  billingType SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
-  billingFrequency    BillingFrequency  @default(MONTHLY) @map("billing_frequency")
+  billingType      SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
+  billingFrequency BillingFrequency  @default(MONTHLY) @map("billing_frequency")
 
   // Configuraciones de Prorrateo
   prorateFirstRecurringFee Boolean @default(true) @map("prorate_first_recurring_fee")
@@ -351,13 +349,19 @@ model PaymentPlan {
   courseSeason                CourseSeason? @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   name                        String
   registrationDiscountPercent Decimal       @default(0) @map("registration_discount_percent") @db.Decimal(5, 2)
-  recurringDiscountPercent      Decimal       @default(0) @map("recurring_discount_percent") @db.Decimal(5, 2)
+  recurringDiscountPercent    Decimal       @default(0) @map("recurring_discount_percent") @db.Decimal(5, 2)
   seasonFeeDiscountPercent    Decimal       @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
 
   isDefault Boolean @default(false) // si es true, es el plan por defecto
 
   /// Si es true, este plan de pago agrupará toda la temporada en un solo cobro (pago completo de la temporada). Útil para ofrecer descuentos por pago adelantado en temporadas tipo "BOTH".
   isSinglePayment Boolean @default(false) @map("is_single_payment")
+
+  /// Cantidad de cuotas que este plan adelanta/agrupa en un solo recibo. Por defecto 1 (cobro normal). Si es 6, cobra 6 ciclos juntos.
+  advanceCycles Int @default(1) @map("advance_cycles")
+
+  /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas. Reemplaza a freeInitialCycles.
+  advanceCyclesDiscountPercent Decimal @default(0) @map("advance_cycles_discount_percent") @db.Decimal(5, 2)
 
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
@@ -444,7 +448,7 @@ model MembershipDiscount {
   playerMembershipId String           @map("player_membership_id")
   playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
 
-  recurringDiscountPercent      Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
+  recurringDiscountPercent    Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
   registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
 
   startDate DateTime  @map("start_date")
@@ -623,7 +627,6 @@ enum TransactionStatus {
   CANCELLED
 }
 
-
 model Transaction {
   id                 String              @id @default(uuid())
   payerPersonId      String?             @map("payer_person_id")
@@ -744,26 +747,26 @@ enum StatusCourseSeason {
 }
 
 model CourseSeason {
-  id          String        @id @default(uuid())
-  imageUrl    String?       @map("image_url")
+  id          String  @id @default(uuid())
+  imageUrl    String? @map("image_url")
   description String?
-  maxMembers  Int           @map("max_members")
-  minMembers  Int           @map("min_members")
+  maxMembers  Int     @map("max_members")
+  minMembers  Int     @map("min_members")
 
   minBirthYear Int? @map("min_birth_year")
   maxBirthYear Int? @map("max_birth_year")
 
-  courseId    String        @map("course_id")
-  course      Course        @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  categoryId  String        @map("category_id")
-  category    Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  seasonId    String        @map("season_id")
-  season      Season        @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-  gender      ProgramGender
+  courseId   String        @map("course_id")
+  course     Course        @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  categoryId String        @map("category_id")
+  category   Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  seasonId   String        @map("season_id")
+  season     Season        @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+  gender     ProgramGender
 
   billingDay                 Int                @map("billing_day")
   registrationFee            Decimal?           @map("registration_fee") @db.Decimal(10, 2)
-  recurringFee                 Decimal?           @map("recurring_fee") @db.Decimal(10, 2)
+  recurringFee               Decimal?           @map("recurring_fee") @db.Decimal(10, 2)
   debtToleranceMonths        Int                @default(2) @map("debt_tolerance_months")
   lateFeeEnabled             Boolean            @default(false) @map("late_fee_enabled")
   lateFeePerDay              Decimal            @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
@@ -772,11 +775,11 @@ model CourseSeason {
   chargeGenerationDaysBefore Int                @default(7) @map("charge_generation_days_before")
 
   /// Precio total si el usuario opta por pagar la temporada de un solo golpe (usado en planes SINGLE_ONLY o cuando isSinglePayment es true en BOTH).
-  seasonFee   Decimal?          @map("season_fee") @db.Decimal(10, 2)
-  
+  seasonFee Decimal? @map("season_fee") @db.Decimal(10, 2)
+
   /// Estrategia de facturación aplicable a esta temporada.
-  billingType SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
-  billingFrequency BillingFrequency @default(MONTHLY) @map("billing_frequency")
+  billingType      SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
+  billingFrequency BillingFrequency  @default(MONTHLY) @map("billing_frequency")
 
   // Configuraciones de Prorrateo
   prorateFirstRecurringFee Boolean @default(true) @map("prorate_first_recurring_fee")
@@ -874,7 +877,7 @@ model StudentDiscount {
   studentMembershipId String            @map("student_membership_id")
   studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
 
-  recurringDiscountPercent      Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
+  recurringDiscountPercent    Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
   registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
 
   startDate DateTime               @map("start_date")
@@ -899,7 +902,7 @@ model StudentCharge {
   createdByCron Boolean @default(false) @map("created_by_cron")
   billingYear   Int?
   billingMonth  Int?
-  billingCycle  Int? @map("billing_cycle")
+  billingCycle  Int?    @map("billing_cycle")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

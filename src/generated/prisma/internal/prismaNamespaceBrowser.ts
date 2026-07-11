@@ -287,6 +287,8 @@ export const PaymentPlanScalarFieldEnum = {
   seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   isDefault: 'isDefault',
   isSinglePayment: 'isSinglePayment',
+  advanceCycles: 'advanceCycles',
+  advanceCyclesDiscountPercent: 'advanceCyclesDiscountPercent',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

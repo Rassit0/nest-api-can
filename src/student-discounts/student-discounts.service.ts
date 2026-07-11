@@ -46,16 +46,25 @@ export const studentDiscountSelect: Prisma.StudentDiscountSelect = {
   },
 };
 
+import { StudentChargesService } from 'src/student-charges/student-charges.service';
+
 @Injectable()
 export class StudentDiscountsService {
   private readonly logger = new Logger('StudentDiscountsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly studentChargesService: StudentChargesService,
+  ) {}
 
   async create(createStudentDiscountDto: CreateStudentDiscountDto) {
     const newDiscount = await this.prisma.studentDiscount.create({
       data: createStudentDiscountDto,
       select: studentDiscountSelect,
+    });
+
+    this.studentChargesService.recalculatePendingFutureCharges(createStudentDiscountDto.studentMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras asignar descuento escolar a membresía ${createStudentDiscountDto.studentMembershipId}`, e.stack);
     });
 
     return {
@@ -142,6 +151,10 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
+    this.studentChargesService.recalculatePendingFutureCharges(discount.studentMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras actualizar descuento escolar en membresía ${discount.studentMembershipId}`, e.stack);
+    });
+
     return {
       message: 'Descuento actualizado exitosamente',
       data: updatedDiscount,
@@ -159,6 +172,10 @@ export class StudentDiscountsService {
     const deletedDiscount = await this.prisma.studentDiscount.delete({
       where: { id },
       select: studentDiscountSelect,
+    });
+
+    this.studentChargesService.recalculatePendingFutureCharges(discount.studentMembershipId).catch(e => {
+      this.logger.error(`Error al recalcular cargos tras eliminar descuento escolar en membresía ${discount.studentMembershipId}`, e.stack);
     });
 
     return {

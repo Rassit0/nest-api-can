@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CreatePaymentPlanDto } from './dto/create-payment-plan.dto';
 import { UpdatePaymentPlanDto } from './dto/update-payment-plan.dto';
 import { Prisma } from 'src/generated/prisma/client';
@@ -13,6 +13,8 @@ export const paymentPlanSelect: Prisma.PaymentPlanSelect = {
   registrationDiscountPercent: true,
   recurringDiscountPercent: true,
   seasonFeeDiscountPercent: true,
+  advanceCycles: true,
+  advanceCyclesDiscountPercent: true,
   isSinglePayment: true,
   isDefault: true,
 
@@ -38,18 +40,48 @@ export class PaymentPlansService {
     }
 
     let billingType = 'MONTHLY_ONLY'; // default safe fallback
+    let billingFrequency = 'MONTHLY';
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
 
     if (teamSeasonId) {
-      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId } });
+      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId }, include: { season: true } });
       if (!ts) throw new NotFoundException('TeamSeason no encontrado');
       billingType = ts.billingType;
+      billingFrequency = ts.billingFrequency;
+      if (ts.season) { startDate = ts.season.startDate; endDate = ts.season.endDate; }
     } else if (courseSeasonId) {
-      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId } });
+      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId }, include: { season: true } });
       if (!cs) throw new NotFoundException('CourseSeason no encontrado');
       billingType = cs.billingType;
+      billingFrequency = cs.billingFrequency;
+      if (cs.season) { startDate = cs.season.startDate; endDate = cs.season.endDate; }
+    }
+
+    let maxCycles = 120; // fallback para evitar bloqueos si faltan fechas
+    if (startDate && endDate) {
+       const days = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+       if (billingFrequency === 'MONTHLY') {
+          maxCycles = Math.ceil(days / 30) + 1;
+       } else if (billingFrequency === 'BIWEEKLY') {
+          maxCycles = Math.ceil(days / 14) + 1;
+       } else if (billingFrequency === 'WEEKLY') {
+          maxCycles = Math.ceil(days / 7) + 1;
+       } else if (billingFrequency === 'SINGLE') {
+          maxCycles = 1;
+       }
+    }
+    
+    const advance = (data as any).advanceCycles || 1;
+    
+    if (advance > maxCycles) {
+       throw new BadRequestException(`El número de cuotas adelantadas (${advance}) no puede superar la duración máxima de la temporada (${maxCycles} ciclos).`);
     }
 
     if (billingType === 'SINGLE_ONLY') {
+      if (advance > 1) {
+          throw new BadRequestException(`No se pueden configurar ciclos por adelantado en temporadas de pago único.`);
+      }
       data.recurringDiscountPercent = '0.00';
       data.registrationDiscountPercent = '0.00';
       data.isSinglePayment = true;

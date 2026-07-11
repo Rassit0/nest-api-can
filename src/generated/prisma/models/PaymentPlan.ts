@@ -30,12 +30,16 @@ export type PaymentPlanAvgAggregateOutputType = {
   registrationDiscountPercent: runtime.Decimal | null
   recurringDiscountPercent: runtime.Decimal | null
   seasonFeeDiscountPercent: runtime.Decimal | null
+  advanceCycles: number | null
+  advanceCyclesDiscountPercent: runtime.Decimal | null
 }
 
 export type PaymentPlanSumAggregateOutputType = {
   registrationDiscountPercent: runtime.Decimal | null
   recurringDiscountPercent: runtime.Decimal | null
   seasonFeeDiscountPercent: runtime.Decimal | null
+  advanceCycles: number | null
+  advanceCyclesDiscountPercent: runtime.Decimal | null
 }
 
 export type PaymentPlanMinAggregateOutputType = {
@@ -48,6 +52,8 @@ export type PaymentPlanMinAggregateOutputType = {
   seasonFeeDiscountPercent: runtime.Decimal | null
   isDefault: boolean | null
   isSinglePayment: boolean | null
+  advanceCycles: number | null
+  advanceCyclesDiscountPercent: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +68,8 @@ export type PaymentPlanMaxAggregateOutputType = {
   seasonFeeDiscountPercent: runtime.Decimal | null
   isDefault: boolean | null
   isSinglePayment: boolean | null
+  advanceCycles: number | null
+  advanceCyclesDiscountPercent: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -76,6 +84,8 @@ export type PaymentPlanCountAggregateOutputType = {
   seasonFeeDiscountPercent: number
   isDefault: number
   isSinglePayment: number
+  advanceCycles: number
+  advanceCyclesDiscountPercent: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,12 +96,16 @@ export type PaymentPlanAvgAggregateInputType = {
   registrationDiscountPercent?: true
   recurringDiscountPercent?: true
   seasonFeeDiscountPercent?: true
+  advanceCycles?: true
+  advanceCyclesDiscountPercent?: true
 }
 
 export type PaymentPlanSumAggregateInputType = {
   registrationDiscountPercent?: true
   recurringDiscountPercent?: true
   seasonFeeDiscountPercent?: true
+  advanceCycles?: true
+  advanceCyclesDiscountPercent?: true
 }
 
 export type PaymentPlanMinAggregateInputType = {
@@ -104,6 +118,8 @@ export type PaymentPlanMinAggregateInputType = {
   seasonFeeDiscountPercent?: true
   isDefault?: true
   isSinglePayment?: true
+  advanceCycles?: true
+  advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +134,8 @@ export type PaymentPlanMaxAggregateInputType = {
   seasonFeeDiscountPercent?: true
   isDefault?: true
   isSinglePayment?: true
+  advanceCycles?: true
+  advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -132,6 +150,8 @@ export type PaymentPlanCountAggregateInputType = {
   seasonFeeDiscountPercent?: true
   isDefault?: true
   isSinglePayment?: true
+  advanceCycles?: true
+  advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -233,6 +253,8 @@ export type PaymentPlanGroupByOutputType = {
   seasonFeeDiscountPercent: runtime.Decimal
   isDefault: boolean
   isSinglePayment: boolean
+  advanceCycles: number
+  advanceCyclesDiscountPercent: runtime.Decimal
   createdAt: Date
   updatedAt: Date
   _count: PaymentPlanCountAggregateOutputType | null
@@ -270,6 +292,8 @@ export type PaymentPlanWhereInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFilter<"PaymentPlan"> | boolean
   isSinglePayment?: Prisma.BoolFilter<"PaymentPlan"> | boolean
+  advanceCycles?: Prisma.IntFilter<"PaymentPlan"> | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   teamSeasons?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
@@ -288,6 +312,8 @@ export type PaymentPlanOrderByWithRelationInput = {
   seasonFeeDiscountPercent?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   isSinglePayment?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamSeasons?: Prisma.TeamSeasonOrderByWithRelationInput
@@ -309,6 +335,8 @@ export type PaymentPlanWhereUniqueInput = Prisma.AtLeast<{
   seasonFeeDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFilter<"PaymentPlan"> | boolean
   isSinglePayment?: Prisma.BoolFilter<"PaymentPlan"> | boolean
+  advanceCycles?: Prisma.IntFilter<"PaymentPlan"> | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   teamSeasons?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
@@ -327,6 +355,8 @@ export type PaymentPlanOrderByWithAggregationInput = {
   seasonFeeDiscountPercent?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   isSinglePayment?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PaymentPlanCountOrderByAggregateInput
@@ -349,6 +379,8 @@ export type PaymentPlanScalarWhereWithAggregatesInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolWithAggregatesFilter<"PaymentPlan"> | boolean
   isSinglePayment?: Prisma.BoolWithAggregatesFilter<"PaymentPlan"> | boolean
+  advanceCycles?: Prisma.IntWithAggregatesFilter<"PaymentPlan"> | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
 }
@@ -361,6 +393,8 @@ export type PaymentPlanCreateInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
@@ -379,6 +413,8 @@ export type PaymentPlanUncheckedCreateInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
@@ -393,6 +429,8 @@ export type PaymentPlanUpdateInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
@@ -411,6 +449,8 @@ export type PaymentPlanUncheckedUpdateInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
@@ -427,6 +467,8 @@ export type PaymentPlanCreateManyInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -439,6 +481,8 @@ export type PaymentPlanUpdateManyMutationInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +497,8 @@ export type PaymentPlanUncheckedUpdateManyInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -477,6 +523,8 @@ export type PaymentPlanCountOrderByAggregateInput = {
   seasonFeeDiscountPercent?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   isSinglePayment?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -485,6 +533,8 @@ export type PaymentPlanAvgOrderByAggregateInput = {
   registrationDiscountPercent?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   seasonFeeDiscountPercent?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
 }
 
 export type PaymentPlanMaxOrderByAggregateInput = {
@@ -497,6 +547,8 @@ export type PaymentPlanMaxOrderByAggregateInput = {
   seasonFeeDiscountPercent?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   isSinglePayment?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -511,6 +563,8 @@ export type PaymentPlanMinOrderByAggregateInput = {
   seasonFeeDiscountPercent?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   isSinglePayment?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,6 +573,8 @@ export type PaymentPlanSumOrderByAggregateInput = {
   registrationDiscountPercent?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   seasonFeeDiscountPercent?: Prisma.SortOrder
+  advanceCycles?: Prisma.SortOrder
+  advanceCyclesDiscountPercent?: Prisma.SortOrder
 }
 
 export type PaymentPlanScalarRelationFilter = {
@@ -646,6 +702,8 @@ export type PaymentPlanCreateWithoutTeamSeasonsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
@@ -662,6 +720,8 @@ export type PaymentPlanUncheckedCreateWithoutTeamSeasonsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
@@ -707,6 +767,8 @@ export type PaymentPlanScalarWhereInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFilter<"PaymentPlan"> | boolean
   isSinglePayment?: Prisma.BoolFilter<"PaymentPlan"> | boolean
+  advanceCycles?: Prisma.IntFilter<"PaymentPlan"> | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
 }
@@ -719,6 +781,8 @@ export type PaymentPlanCreateWithoutPlayerMembershipsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
@@ -736,6 +800,8 @@ export type PaymentPlanUncheckedCreateWithoutPlayerMembershipsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
@@ -765,6 +831,8 @@ export type PaymentPlanUpdateWithoutPlayerMembershipsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
@@ -782,6 +850,8 @@ export type PaymentPlanUncheckedUpdateWithoutPlayerMembershipsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
@@ -795,6 +865,8 @@ export type PaymentPlanCreateWithoutCourseSeasonInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
@@ -811,6 +883,8 @@ export type PaymentPlanUncheckedCreateWithoutCourseSeasonInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
@@ -851,6 +925,8 @@ export type PaymentPlanCreateWithoutStudentMembershipsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
@@ -868,6 +944,8 @@ export type PaymentPlanUncheckedCreateWithoutStudentMembershipsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
@@ -897,6 +975,8 @@ export type PaymentPlanUpdateWithoutStudentMembershipsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
@@ -914,6 +994,8 @@ export type PaymentPlanUncheckedUpdateWithoutStudentMembershipsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
@@ -928,6 +1010,8 @@ export type PaymentPlanCreateManyTeamSeasonsInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -940,6 +1024,8 @@ export type PaymentPlanUpdateWithoutTeamSeasonsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
@@ -956,6 +1042,8 @@ export type PaymentPlanUncheckedUpdateWithoutTeamSeasonsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
@@ -971,6 +1059,8 @@ export type PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -984,6 +1074,8 @@ export type PaymentPlanCreateManyCourseSeasonInput = {
   seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -996,6 +1088,8 @@ export type PaymentPlanUpdateWithoutCourseSeasonInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
@@ -1012,6 +1106,8 @@ export type PaymentPlanUncheckedUpdateWithoutCourseSeasonInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
@@ -1027,6 +1123,8 @@ export type PaymentPlanUncheckedUpdateManyWithoutCourseSeasonInput = {
   seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1081,6 +1179,8 @@ export type PaymentPlanSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   seasonFeeDiscountPercent?: boolean
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: boolean
+  advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
@@ -1100,6 +1200,8 @@ export type PaymentPlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   seasonFeeDiscountPercent?: boolean
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: boolean
+  advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
@@ -1116,6 +1218,8 @@ export type PaymentPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   seasonFeeDiscountPercent?: boolean
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: boolean
+  advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
@@ -1132,11 +1236,13 @@ export type PaymentPlanSelectScalar = {
   seasonFeeDiscountPercent?: boolean
   isDefault?: boolean
   isSinglePayment?: boolean
+  advanceCycles?: boolean
+  advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "courseSeasonId" | "name" | "registrationDiscountPercent" | "recurringDiscountPercent" | "seasonFeeDiscountPercent" | "isDefault" | "isSinglePayment" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPlan"]>
+export type PaymentPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "courseSeasonId" | "name" | "registrationDiscountPercent" | "recurringDiscountPercent" | "seasonFeeDiscountPercent" | "isDefault" | "isSinglePayment" | "advanceCycles" | "advanceCyclesDiscountPercent" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPlan"]>
 export type PaymentPlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
@@ -1174,6 +1280,14 @@ export type $PaymentPlanPayload<ExtArgs extends runtime.Types.Extensions.Interna
      * Si es true, este plan de pago agrupará toda la temporada en un solo cobro (pago completo de la temporada). Útil para ofrecer descuentos por pago adelantado en temporadas tipo "BOTH".
      */
     isSinglePayment: boolean
+    /**
+     * Cantidad de cuotas que este plan adelanta/agrupa en un solo recibo. Por defecto 1 (cobro normal). Si es 6, cobra 6 ciclos juntos.
+     */
+    advanceCycles: number
+    /**
+     * Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas. Reemplaza a freeInitialCycles.
+     */
+    advanceCyclesDiscountPercent: runtime.Decimal
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["paymentPlan"]>
@@ -1612,6 +1726,8 @@ export interface PaymentPlanFieldRefs {
   readonly seasonFeeDiscountPercent: Prisma.FieldRef<"PaymentPlan", 'Decimal'>
   readonly isDefault: Prisma.FieldRef<"PaymentPlan", 'Boolean'>
   readonly isSinglePayment: Prisma.FieldRef<"PaymentPlan", 'Boolean'>
+  readonly advanceCycles: Prisma.FieldRef<"PaymentPlan", 'Int'>
+  readonly advanceCyclesDiscountPercent: Prisma.FieldRef<"PaymentPlan", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"PaymentPlan", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PaymentPlan", 'DateTime'>
 }
