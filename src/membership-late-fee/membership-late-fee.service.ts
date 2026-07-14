@@ -63,17 +63,17 @@ export class MembershipLateFeeService {
     if (!membershipChargeRelation) return;
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
-    if (!teamSeason || !teamSeason.lateFeeEnabled) return;
+    if (!teamSeason || !teamSeason.billingConfig?.lateFeeEnabled) return;
 
     const dueDate = DateUtils.getStartOfUTCDay(baseCharge.dueDate);
 
     const elapsedDays = this.calculateElapsedDays(dueDate, evaluationDate);
-    const graceDays = Number(teamSeason.graceDays || 0);
+    const graceDays = Number(teamSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) return;
 
     const penaltyDays = elapsedDays - graceDays;
-    const lateFeePerDay = Number(teamSeason.lateFeePerDay || 0);
+    const lateFeePerDay = Number(teamSeason.billingConfig?.lateFeePerDay || 0);
     const targetLateFeeAmount = penaltyDays * lateFeePerDay;
 
     if (targetLateFeeAmount <= 0) return;

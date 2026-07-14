@@ -13,7 +13,11 @@ type ChargeWithRelations = Prisma.ChargeGetPayload<{
       include: {
         studentMembership: {
           include: {
-            courseSeason: true;
+            courseSeason: {
+              include: {
+                billingConfig: true;
+              };
+            };
           };
         };
       };
@@ -26,7 +30,11 @@ const chargeInclude = {
     include: {
       studentMembership: {
         include: {
-          courseSeason: true,
+          courseSeason: {
+            include: {
+              billingConfig: true,
+            },
+          },
         },
       },
     },
@@ -106,18 +114,18 @@ export class StudentLateFeeService {
     const courseSeason = studentChargeRelation.studentMembership?.courseSeason;
     if (!courseSeason) return;
 
-    if (!courseSeason.lateFeeEnabled) return;
+    if (!courseSeason.billingConfig?.lateFeeEnabled) return;
 
     const dueDate = new Date(baseCharge.dueDate);
     dueDate.setHours(0, 0, 0, 0);
 
     const elapsedDays = this.calculateElapsedDays(dueDate, today);
-    const graceDays = Number(courseSeason.graceDays || 0);
+    const graceDays = Number(courseSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) return;
 
     const penaltyDays = elapsedDays - graceDays;
-    const lateFeePerDay = Number(courseSeason.lateFeePerDay || 0);
+    const lateFeePerDay = Number(courseSeason.billingConfig?.lateFeePerDay || 0);
     const targetLateFeeAmount = penaltyDays * lateFeePerDay;
 
     if (targetLateFeeAmount <= 0) return;

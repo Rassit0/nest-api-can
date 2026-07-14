@@ -90,6 +90,29 @@ export class CreateStudentDiscountDto {
   @Type(() => Number)
   registrationDiscountPercent: number;
 
+  @ApiPropertyOptional({
+    example: 0.0,
+    description: 'Porcentaje de descuento en el pago de la temporada completa (0.00 a 100.00)',
+    nullable: true,
+  })
+  @IsOptional()
+  @IsNumber(
+    {},
+    {
+      message: i18nValidationMessage('validation.IS_NUMBER', {
+        constraint1: 'seasonFeeDiscountPercent',
+      }),
+    },
+  )
+  @Min(0, {
+    message: 'El descuento mínimo es 0%',
+  })
+  @Max(100, {
+    message: 'El descuento máximo es 100%',
+  })
+  @Type(() => Number)
+  seasonFeeDiscountPercent?: number;
+
   @ApiProperty({
     example: '2026-06-30T00:00:00.000Z',
     description: 'Fecha de inicio de vigencia del descuento',

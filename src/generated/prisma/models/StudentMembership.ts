@@ -243,6 +243,7 @@ export type StudentMembershipWhereInput = {
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanScalarRelationFilter, Prisma.PaymentPlanWhereInput>
   studentDiscounts?: Prisma.StudentDiscountListRelationFilter
   studentCharges?: Prisma.StudentChargeListRelationFilter
+  pauses?: Prisma.StudentMembershipPauseListRelationFilter
 }
 
 export type StudentMembershipOrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type StudentMembershipOrderByWithRelationInput = {
   paymentPlan?: Prisma.PaymentPlanOrderByWithRelationInput
   studentDiscounts?: Prisma.StudentDiscountOrderByRelationAggregateInput
   studentCharges?: Prisma.StudentChargeOrderByRelationAggregateInput
+  pauses?: Prisma.StudentMembershipPauseOrderByRelationAggregateInput
 }
 
 export type StudentMembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -286,6 +288,7 @@ export type StudentMembershipWhereUniqueInput = Prisma.AtLeast<{
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanScalarRelationFilter, Prisma.PaymentPlanWhereInput>
   studentDiscounts?: Prisma.StudentDiscountListRelationFilter
   studentCharges?: Prisma.StudentChargeListRelationFilter
+  pauses?: Prisma.StudentMembershipPauseListRelationFilter
 }, "id">
 
 export type StudentMembershipOrderByWithAggregationInput = {
@@ -339,6 +342,7 @@ export type StudentMembershipCreateInput = {
   paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
   studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateInput = {
@@ -356,6 +360,7 @@ export type StudentMembershipUncheckedCreateInput = {
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUpdateInput = {
@@ -373,6 +378,7 @@ export type StudentMembershipUpdateInput = {
   paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateInput = {
@@ -390,6 +396,7 @@ export type StudentMembershipUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipCreateManyInput = {
@@ -624,6 +631,20 @@ export type EnumStudentMembershipStatusFieldUpdateOperationsInput = {
   set?: $Enums.StudentMembershipStatus
 }
 
+export type StudentMembershipCreateNestedOneWithoutPausesInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipCreateWithoutPausesInput, Prisma.StudentMembershipUncheckedCreateWithoutPausesInput>
+  connectOrCreate?: Prisma.StudentMembershipCreateOrConnectWithoutPausesInput
+  connect?: Prisma.StudentMembershipWhereUniqueInput
+}
+
+export type StudentMembershipUpdateOneRequiredWithoutPausesNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipCreateWithoutPausesInput, Prisma.StudentMembershipUncheckedCreateWithoutPausesInput>
+  connectOrCreate?: Prisma.StudentMembershipCreateOrConnectWithoutPausesInput
+  upsert?: Prisma.StudentMembershipUpsertWithoutPausesInput
+  connect?: Prisma.StudentMembershipWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentMembershipUpdateToOneWithWhereWithoutPausesInput, Prisma.StudentMembershipUpdateWithoutPausesInput>, Prisma.StudentMembershipUncheckedUpdateWithoutPausesInput>
+}
+
 export type StudentMembershipCreateNestedOneWithoutStudentDiscountsInput = {
   create?: Prisma.XOR<Prisma.StudentMembershipCreateWithoutStudentDiscountsInput, Prisma.StudentMembershipUncheckedCreateWithoutStudentDiscountsInput>
   connectOrCreate?: Prisma.StudentMembershipCreateOrConnectWithoutStudentDiscountsInput
@@ -666,6 +687,7 @@ export type StudentMembershipCreateWithoutPaymentPlanInput = {
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutStudentMembershipsInput
   studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateWithoutPaymentPlanInput = {
@@ -682,6 +704,7 @@ export type StudentMembershipUncheckedCreateWithoutPaymentPlanInput = {
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipCreateOrConnectWithoutPaymentPlanInput = {
@@ -742,6 +765,7 @@ export type StudentMembershipCreateWithoutCourseSeasonInput = {
   paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
   studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateWithoutCourseSeasonInput = {
@@ -758,6 +782,7 @@ export type StudentMembershipUncheckedCreateWithoutCourseSeasonInput = {
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipCreateOrConnectWithoutCourseSeasonInput = {
@@ -800,6 +825,7 @@ export type StudentMembershipCreateWithoutStudentInput = {
   paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
   studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateWithoutStudentInput = {
@@ -816,6 +842,7 @@ export type StudentMembershipUncheckedCreateWithoutStudentInput = {
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipCreateOrConnectWithoutStudentInput = {
@@ -844,6 +871,90 @@ export type StudentMembershipUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.StudentMembershipUpdateManyMutationInput, Prisma.StudentMembershipUncheckedUpdateManyWithoutStudentInput>
 }
 
+export type StudentMembershipCreateWithoutPausesInput = {
+  id?: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.StudentMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  student: Prisma.StudentCreateNestedOneWithoutStudentMembershipsInput
+  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutStudentMembershipsInput
+  paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
+  studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+}
+
+export type StudentMembershipUncheckedCreateWithoutPausesInput = {
+  id?: string
+  studentId: string
+  courseSeasonId: string
+  paymentPlanId: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.StudentMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+}
+
+export type StudentMembershipCreateOrConnectWithoutPausesInput = {
+  where: Prisma.StudentMembershipWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentMembershipCreateWithoutPausesInput, Prisma.StudentMembershipUncheckedCreateWithoutPausesInput>
+}
+
+export type StudentMembershipUpsertWithoutPausesInput = {
+  update: Prisma.XOR<Prisma.StudentMembershipUpdateWithoutPausesInput, Prisma.StudentMembershipUncheckedUpdateWithoutPausesInput>
+  create: Prisma.XOR<Prisma.StudentMembershipCreateWithoutPausesInput, Prisma.StudentMembershipUncheckedCreateWithoutPausesInput>
+  where?: Prisma.StudentMembershipWhereInput
+}
+
+export type StudentMembershipUpdateToOneWithWhereWithoutPausesInput = {
+  where?: Prisma.StudentMembershipWhereInput
+  data: Prisma.XOR<Prisma.StudentMembershipUpdateWithoutPausesInput, Prisma.StudentMembershipUncheckedUpdateWithoutPausesInput>
+}
+
+export type StudentMembershipUpdateWithoutPausesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  student?: Prisma.StudentUpdateOneRequiredWithoutStudentMembershipsNestedInput
+  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutStudentMembershipsNestedInput
+  paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
+  studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+}
+
+export type StudentMembershipUncheckedUpdateWithoutPausesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+}
+
 export type StudentMembershipCreateWithoutStudentDiscountsInput = {
   id?: string
   startedAt: Date | string
@@ -858,6 +969,7 @@ export type StudentMembershipCreateWithoutStudentDiscountsInput = {
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutStudentMembershipsInput
   paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateWithoutStudentDiscountsInput = {
@@ -874,6 +986,7 @@ export type StudentMembershipUncheckedCreateWithoutStudentDiscountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipCreateOrConnectWithoutStudentDiscountsInput = {
@@ -906,6 +1019,7 @@ export type StudentMembershipUpdateWithoutStudentDiscountsInput = {
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutStudentMembershipsNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateWithoutStudentDiscountsInput = {
@@ -922,6 +1036,7 @@ export type StudentMembershipUncheckedUpdateWithoutStudentDiscountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipCreateWithoutStudentChargesInput = {
@@ -938,6 +1053,7 @@ export type StudentMembershipCreateWithoutStudentChargesInput = {
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutStudentMembershipsInput
   paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutStudentMembershipsInput
   studentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipUncheckedCreateWithoutStudentChargesInput = {
@@ -954,6 +1070,7 @@ export type StudentMembershipUncheckedCreateWithoutStudentChargesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutStudentMembershipInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutStudentMembershipInput
 }
 
 export type StudentMembershipCreateOrConnectWithoutStudentChargesInput = {
@@ -986,6 +1103,7 @@ export type StudentMembershipUpdateWithoutStudentChargesInput = {
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutStudentMembershipsNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateWithoutStudentChargesInput = {
@@ -1002,6 +1120,7 @@ export type StudentMembershipUncheckedUpdateWithoutStudentChargesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipCreateManyPaymentPlanInput = {
@@ -1032,6 +1151,7 @@ export type StudentMembershipUpdateWithoutPaymentPlanInput = {
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateWithoutPaymentPlanInput = {
@@ -1048,6 +1168,7 @@ export type StudentMembershipUncheckedUpdateWithoutPaymentPlanInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateManyWithoutPaymentPlanInput = {
@@ -1092,6 +1213,7 @@ export type StudentMembershipUpdateWithoutCourseSeasonInput = {
   paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateWithoutCourseSeasonInput = {
@@ -1108,6 +1230,7 @@ export type StudentMembershipUncheckedUpdateWithoutCourseSeasonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateManyWithoutCourseSeasonInput = {
@@ -1152,6 +1275,7 @@ export type StudentMembershipUpdateWithoutStudentInput = {
   paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutStudentMembershipsNestedInput
   studentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateWithoutStudentInput = {
@@ -1168,6 +1292,7 @@ export type StudentMembershipUncheckedUpdateWithoutStudentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutStudentMembershipNestedInput
+  pauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutStudentMembershipNestedInput
 }
 
 export type StudentMembershipUncheckedUpdateManyWithoutStudentInput = {
@@ -1192,11 +1317,13 @@ export type StudentMembershipUncheckedUpdateManyWithoutStudentInput = {
 export type StudentMembershipCountOutputType = {
   studentDiscounts: number
   studentCharges: number
+  pauses: number
 }
 
 export type StudentMembershipCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentDiscounts?: boolean | StudentMembershipCountOutputTypeCountStudentDiscountsArgs
   studentCharges?: boolean | StudentMembershipCountOutputTypeCountStudentChargesArgs
+  pauses?: boolean | StudentMembershipCountOutputTypeCountPausesArgs
 }
 
 /**
@@ -1223,6 +1350,13 @@ export type StudentMembershipCountOutputTypeCountStudentChargesArgs<ExtArgs exte
   where?: Prisma.StudentChargeWhereInput
 }
 
+/**
+ * StudentMembershipCountOutputType without action
+ */
+export type StudentMembershipCountOutputTypeCountPausesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentMembershipPauseWhereInput
+}
+
 
 export type StudentMembershipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1242,6 +1376,7 @@ export type StudentMembershipSelect<ExtArgs extends runtime.Types.Extensions.Int
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
   studentDiscounts?: boolean | Prisma.StudentMembership$studentDiscountsArgs<ExtArgs>
   studentCharges?: boolean | Prisma.StudentMembership$studentChargesArgs<ExtArgs>
+  pauses?: boolean | Prisma.StudentMembership$pausesArgs<ExtArgs>
   _count?: boolean | Prisma.StudentMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembership"]>
 
@@ -1303,6 +1438,7 @@ export type StudentMembershipInclude<ExtArgs extends runtime.Types.Extensions.In
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
   studentDiscounts?: boolean | Prisma.StudentMembership$studentDiscountsArgs<ExtArgs>
   studentCharges?: boolean | Prisma.StudentMembership$studentChargesArgs<ExtArgs>
+  pauses?: boolean | Prisma.StudentMembership$pausesArgs<ExtArgs>
   _count?: boolean | Prisma.StudentMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentMembershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1324,6 +1460,7 @@ export type $StudentMembershipPayload<ExtArgs extends runtime.Types.Extensions.I
     paymentPlan: Prisma.$PaymentPlanPayload<ExtArgs>
     studentDiscounts: Prisma.$StudentDiscountPayload<ExtArgs>[]
     studentCharges: Prisma.$StudentChargePayload<ExtArgs>[]
+    pauses: Prisma.$StudentMembershipPausePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1737,6 +1874,7 @@ export interface Prisma__StudentMembershipClient<T, Null = never, ExtArgs extend
   paymentPlan<T extends Prisma.PaymentPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__PaymentPlanClient<runtime.Types.Result.GetResult<Prisma.$PaymentPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   studentDiscounts<T extends Prisma.StudentMembership$studentDiscountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembership$studentDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentCharges<T extends Prisma.StudentMembership$studentChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembership$studentChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pauses<T extends Prisma.StudentMembership$pausesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembership$pausesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPausePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2219,6 +2357,30 @@ export type StudentMembership$studentChargesArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.StudentChargeScalarFieldEnum | Prisma.StudentChargeScalarFieldEnum[]
+}
+
+/**
+ * StudentMembership.pauses
+ */
+export type StudentMembership$pausesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentMembershipPause
+   */
+  select?: Prisma.StudentMembershipPauseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentMembershipPause
+   */
+  omit?: Prisma.StudentMembershipPauseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentMembershipPauseInclude<ExtArgs> | null
+  where?: Prisma.StudentMembershipPauseWhereInput
+  orderBy?: Prisma.StudentMembershipPauseOrderByWithRelationInput | Prisma.StudentMembershipPauseOrderByWithRelationInput[]
+  cursor?: Prisma.StudentMembershipPauseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentMembershipPauseScalarFieldEnum | Prisma.StudentMembershipPauseScalarFieldEnum[]
 }
 
 /**

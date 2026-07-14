@@ -23,6 +23,11 @@ export class StudentDiscountDto {
   @IsNumber()
   recurringDiscountPercent: number;
 
+  @ApiPropertyOptional({ description: 'Porcentaje de descuento en el pago de temporada', example: 0 })
+  @IsOptional()
+  @IsNumber()
+  seasonFeeDiscountPercent?: number;
+
   @ApiProperty({ description: 'Fecha de inicio del descuento', example: '2024-01-01' })
   @IsDateString()
   startDate: string;

@@ -66,13 +66,13 @@ export class MembershipGenerationService {
        return;
     }
 
-    const isSeasonFeeOnly = membership.teamSeason.billingType === 'SINGLE_ONLY' || (membership.teamSeason.billingType === 'BOTH' && membership.paymentPlan?.isSinglePayment === true);
+    const isSeasonFeeOnly = membership.teamSeason.billingConfig?.billingType === 'SINGLE_ONLY' || (membership.teamSeason.billingConfig?.billingType === 'BOTH' && membership.paymentPlan?.isSinglePayment === true);
     const isFullPaymentPlan = membership.paymentPlan?.isSinglePayment === true;
 
     if (isSeasonFeeOnly) {
         nextPointer = await this.processSinglePaymentGeneration(tx, membership, allCycles);
     } else {
-        const billingFrequency = membership.teamSeason.billingFrequency || 'MONTHLY';
+        const billingFrequency = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
         const existingChargesSet = await this.fetchExistingChargesSet(tx, membership.id, billingFrequency);
         
         // Si es pago completo, generamos todos los ciclos ignorando evaluationDate
@@ -146,7 +146,7 @@ export class MembershipGenerationService {
   ): Promise<Date | null> {
     let nextPointer: Date | null = generationDate;
     
-    const ungeneratedCycles = allCycles.filter(cycle => !this.isCycleGenerated(cycle, existingChargesSet, membership.teamSeason.billingFrequency));
+    const ungeneratedCycles = allCycles.filter(cycle => !this.isCycleGenerated(cycle, existingChargesSet, membership));
     
     const validStartingCycles = ungeneratedCycles.filter(c => {
        let cycleGenDate = this.calculateNextGenerationPointer(membership, c.dueDate);
@@ -243,10 +243,21 @@ export class MembershipGenerationService {
     return new Set(existing.map(c => `${c.billingYear}-${c.billingMonth}-${billingFrequency === 'MONTHLY' ? 'NONE' : c.billingCycle}`));
   }
 
-  public isCycleGenerated(cycle: SimulatedCycle, existingChargesSet: Set<string>, billingFrequency: string | null): boolean {
-    const freq = billingFrequency || 'MONTHLY';
+  public isCycleGenerated(cycle: SimulatedCycle, existingChargesSet: Set<string>, membership: PlayerMembershipWithRelations): boolean {
+    const freq = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
     const chargeKey = `${cycle.billingYear}-${cycle.billingMonth}-${freq === 'MONTHLY' ? 'NONE' : cycle.billingCycle}`;
-    return existingChargesSet.has(chargeKey);
+    
+    if (existingChargesSet.has(chargeKey)) return true;
+
+    if (membership.isMigrated) {
+      const startYear = membership.startedAt.getUTCFullYear();
+      const startMonth = membership.startedAt.getUTCMonth() + 1;
+      if (cycle.billingYear < startYear || (cycle.billingYear === startYear && cycle.billingMonth <= startMonth)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public calculateNextGenerationPointer(
@@ -257,7 +268,7 @@ export class MembershipGenerationService {
     if (lastNextDueDate > seasonEnd) return null;
     
     const nextGenerationDate = new Date(lastNextDueDate);
-    nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - membership.teamSeason.chargeGenerationDaysBefore);
+    nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.teamSeason.billingConfig?.chargeGenerationDaysBefore || 7));
     return nextGenerationDate;
   }
 
@@ -272,16 +283,23 @@ export class MembershipGenerationService {
     if (!membership.isMigrated) return new Date(membership.startedAt);
     
     let tempPointer = new Date(membership.startedAt);
+    const startYear = membership.startedAt.getUTCFullYear();
+    const startMonth = membership.startedAt.getUTCMonth() + 1;
     
     for (const cycle of allCycles) {
-      const dueStartOfDay = DateUtils.getStartOfUTCDay(cycle.dueDate);
-      const evalStartOfDay = DateUtils.getStartOfUTCDay(evaluationDate);
+      // Para membresías migradas, asumimos que todo el mes actual (el mes de startedAt) y anteriores
+      // ya fueron pagados en el sistema anterior. Saltamos estos ciclos.
+      const isCycleFromPastOrCurrentMonth = 
+        cycle.billingYear < startYear || 
+        (cycle.billingYear === startYear && cycle.billingMonth <= startMonth);
       
-      if (dueStartOfDay < evalStartOfDay) {
+      if (isCycleFromPastOrCurrentMonth) {
         const nextGenerationDate = this.calculateNextGenerationPointer(membership, cycle.nextDueDate);
         if (!nextGenerationDate) { tempPointer = new Date(0); break; }
         tempPointer = nextGenerationDate;
-      } else { break; }
+      } else { 
+        break; 
+      }
     }
     return tempPointer.getTime() === 0 ? null : tempPointer;
   }
@@ -293,7 +311,7 @@ export class MembershipGenerationService {
     existingChargesSet?: Set<string>,
     groupDueDate?: Date
   ): Promise<SimulatedCycle | null> {
-    const billingFrequency = membership.teamSeason.billingFrequency || 'MONTHLY';
+    const billingFrequency = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
     let lastGeneratedCycle: SimulatedCycle | null = null;
     
     for (const cycle of cycles) {
@@ -324,13 +342,13 @@ export class MembershipGenerationService {
     membership: PlayerMembershipWithRelations,
     quantity: number,
   ): Promise<SimulatedCycle[]> {
-    const billingFrequency = membership.teamSeason.billingFrequency || 'MONTHLY';
+    const billingFrequency = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
     const allCycles = simulateAllCycles(membership);
     const existingChargesSet = await this.fetchExistingChargesSet(tx, membership.id, billingFrequency);
 
     const nextCycles: SimulatedCycle[] = [];
     for (const cycle of allCycles) {
-      if (!this.isCycleGenerated(cycle, existingChargesSet, billingFrequency)) {
+      if (!this.isCycleGenerated(cycle, existingChargesSet, membership)) {
         nextCycles.push(cycle);
         if (nextCycles.length === quantity) break;
       }

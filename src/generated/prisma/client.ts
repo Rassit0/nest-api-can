@@ -83,6 +83,11 @@ export type Category = Prisma.CategoryModel
  */
 export type Season = Prisma.SeasonModel
 /**
+ * Model SeasonEvent
+ * 
+ */
+export type SeasonEvent = Prisma.SeasonEventModel
+/**
  * Model Team
  * 
  */
@@ -92,6 +97,11 @@ export type Team = Prisma.TeamModel
  * 
  */
 export type TeamSeason = Prisma.TeamSeasonModel
+/**
+ * Model TeamSeasonBillingConfig
+ * 
+ */
+export type TeamSeasonBillingConfig = Prisma.TeamSeasonBillingConfigModel
 /**
  * Model PaymentPlan
  * 
@@ -107,6 +117,16 @@ export type Player = Prisma.PlayerModel
  * 
  */
 export type PlayerMembership = Prisma.PlayerMembershipModel
+/**
+ * Model PlayerMembershipHistory
+ * 
+ */
+export type PlayerMembershipHistory = Prisma.PlayerMembershipHistoryModel
+/**
+ * Model PlayerMembershipPause
+ * 
+ */
+export type PlayerMembershipPause = Prisma.PlayerMembershipPauseModel
 /**
  * Model MembershipDiscount
  * 
@@ -178,6 +198,21 @@ export type Course = Prisma.CourseModel
  */
 export type CourseSeason = Prisma.CourseSeasonModel
 /**
+ * Model TeamSeasonPause
+ * 
+ */
+export type TeamSeasonPause = Prisma.TeamSeasonPauseModel
+/**
+ * Model CourseSeasonPause
+ * 
+ */
+export type CourseSeasonPause = Prisma.CourseSeasonPauseModel
+/**
+ * Model CourseSeasonBillingConfig
+ * 
+ */
+export type CourseSeasonBillingConfig = Prisma.CourseSeasonBillingConfigModel
+/**
  * Model CourseSeasonStaff
  * 
  */
@@ -192,6 +227,11 @@ export type Student = Prisma.StudentModel
  * 
  */
 export type StudentMembership = Prisma.StudentMembershipModel
+/**
+ * Model StudentMembershipPause
+ * 
+ */
+export type StudentMembershipPause = Prisma.StudentMembershipPauseModel
 /**
  * Model StudentDiscount
  * 

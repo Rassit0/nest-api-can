@@ -246,4 +246,28 @@ export class PlayerMembershipsController {
       changeStatusDto.reason,
     );
   }
+
+  @Get(':id/pauses')
+  @ApiOperation({ summary: 'Obtener las pausas de una membresía' })
+  async getPauses(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.playerMembershipsService.getPauses(id);
+  }
+
+  @Post(':id/pauses')
+  @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
+  async createPause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: import('./dto/create-player-membership-pause.dto').CreatePlayerMembershipPauseDto,
+  ) {
+    return await this.playerMembershipsService.createPause(id, dto);
+  }
+
+  @Delete(':id/pauses/:pauseId')
+  @ApiOperation({ summary: 'Eliminar una pausa de la membresía' })
+  async removePause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('pauseId', ParseUUIDPipe) pauseId: string,
+  ) {
+    return await this.playerMembershipsService.removePause(id, pauseId);
+  }
 }

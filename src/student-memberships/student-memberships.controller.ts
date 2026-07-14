@@ -246,4 +246,28 @@ export class StudentMembershipsController {
   ) {
     return await this.studentMembershipsService.reactivate(id, reason);
   }
+
+  @Get(':id/pauses')
+  @ApiOperation({ summary: 'Obtener las pausas de una membresía' })
+  async getPauses(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.studentMembershipsService.getPauses(id);
+  }
+
+  @Post(':id/pauses')
+  @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
+  async createPause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: import('./dto/create-student-membership-pause.dto').CreateStudentMembershipPauseDto,
+  ) {
+    return await this.studentMembershipsService.createPause(id, dto);
+  }
+
+  @Delete(':id/pauses/:pauseId')
+  @ApiOperation({ summary: 'Eliminar una pausa de la membresía' })
+  async removePause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('pauseId', ParseUUIDPipe) pauseId: string,
+  ) {
+    return await this.studentMembershipsService.removePause(id, pauseId);
+  }
 }

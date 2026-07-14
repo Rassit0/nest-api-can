@@ -23,6 +23,9 @@ import {
 import { TeamSeasonService } from './team-season.service';
 import { CreateTeamSeasonDto } from './dto/create-team-season.dto';
 import { UpdateTeamSeasonDto } from './dto/update-team-season.dto';
+import { FinalizeTeamSeasonDto } from './dto/finalize-team-season.dto';
+import { CancelTeamSeasonDto } from './dto/cancel-team-season.dto';
+import { CreateTeamSeasonPauseDto } from './dto/create-team-season-pause.dto';
 import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
 import {
@@ -163,5 +166,105 @@ export class TeamSeasonsController {
     return await this.teamSeasonsService.getSeasonsByDisciplineOptions(
       disciplineId,
     );
+  }
+
+  @Patch(':id/finish')
+  @ApiOperation({
+    summary: 'Finalizar una temporada de equipo por ID',
+    description: 'Marca la temporada de equipo como FINALIZADA.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: FinalizeTeamSeasonDto })
+  @ApiStandardResponse(
+    TeamSeasonResponseDto,
+    'Instancia finalizada exitosamente.',
+  )
+  async finish(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() finalizeTeamSeasonDto: FinalizeTeamSeasonDto,
+  ) {
+    return await this.teamSeasonsService.finish(id, finalizeTeamSeasonDto);
+  }
+
+  @Patch(':id/cancel')
+  @ApiOperation({
+    summary: 'Cancelar una temporada de equipo por ID',
+    description: 'Marca la temporada de equipo como CANCELADA.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: CancelTeamSeasonDto })
+  @ApiStandardResponse(
+    TeamSeasonResponseDto,
+    'Instancia cancelada exitosamente.',
+  )
+  async cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() cancelTeamSeasonDto: CancelTeamSeasonDto,
+  ) {
+    return await this.teamSeasonsService.cancel(id, cancelTeamSeasonDto);
+  }
+
+  @Patch(':id/toggle-billing-engine')
+  @ApiOperation({
+    summary: 'Activar/Desactivar motor de cobros por ID',
+    description: 'Pausa o reanuda la generación automática de cargos y multas para esta temporada.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia de temporada (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ 
+    schema: { 
+      type: 'object', 
+      properties: { 
+        isEngineActive: { type: 'boolean', example: false } 
+      } 
+    } 
+  })
+  @ApiStandardResponse(
+    TeamSeasonResponseDto, // Re-utilizamos esto o devuelves solo un config.
+    'Motor de cobros actualizado exitosamente.',
+  )
+  async toggleBillingEngine(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body('isEngineActive') isEngineActive: boolean,
+  ) {
+    return await this.teamSeasonsService.toggleBillingEngine(id, isEngineActive);
+  }
+
+  @Get(':id/pauses')
+  @ApiOperation({
+    summary: 'Obtener las pausas de la temporada',
+  })
+  async getPauses(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.teamSeasonsService.getPauses(id);
+  }
+
+  @Post(':id/pauses')
+  @ApiOperation({
+    summary: 'Agregar una pausa a la temporada (vacaciones/receso)',
+  })
+  async addPause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() createPauseDto: CreateTeamSeasonPauseDto,
+  ) {
+    return await this.teamSeasonsService.addPause(id, createPauseDto);
+  }
+
+  @Delete('pauses/:pauseId')
+  @ApiOperation({
+    summary: 'Eliminar una pausa de temporada',
+  })
+  async removePause(@Param('pauseId', ParseUUIDPipe) pauseId: string) {
+    return await this.teamSeasonsService.removePause(pauseId);
   }
 }

@@ -45,16 +45,16 @@ export class PaymentPlansService {
     let endDate: Date | null = null;
 
     if (teamSeasonId) {
-      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId }, include: { season: true } });
+      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId }, include: { season: true, billingConfig: true } });
       if (!ts) throw new NotFoundException('TeamSeason no encontrado');
-      billingType = ts.billingType;
-      billingFrequency = ts.billingFrequency;
+      billingType = ts.billingConfig?.billingType || 'MONTHLY_ONLY';
+      billingFrequency = ts.billingConfig?.billingFrequency || 'MONTHLY';
       if (ts.season) { startDate = ts.season.startDate; endDate = ts.season.endDate; }
     } else if (courseSeasonId) {
-      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId }, include: { season: true } });
+      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId }, include: { season: true, billingConfig: true } });
       if (!cs) throw new NotFoundException('CourseSeason no encontrado');
-      billingType = cs.billingType;
-      billingFrequency = cs.billingFrequency;
+      billingType = cs.billingConfig?.billingType || 'MONTHLY_ONLY';
+      billingFrequency = cs.billingConfig?.billingFrequency || 'MONTHLY';
       if (cs.season) { startDate = cs.season.startDate; endDate = cs.season.endDate; }
     }
 

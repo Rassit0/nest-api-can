@@ -101,7 +101,7 @@ export class StudentMembershipsService {
       this.validateDiscountDates(
         createDto.studentDiscounts,
         offering.season.startDate,
-        offering.season.endDate
+        offering.season.endDate,
       );
     }
 
@@ -110,15 +110,16 @@ export class StudentMembershipsService {
     const membership = await this.prisma.studentMembership.create({
       data: {
         ...createData,
-        ...(studentDiscounts && studentDiscounts.length > 0 && {
-          studentDiscounts: {
-            create: studentDiscounts.map(d => ({
-              ...d,
-              startDate: new Date(d.startDate),
-              endDate: d.endDate ? new Date(d.endDate) : null,
-            }))
-          }
-        })
+        ...(studentDiscounts &&
+          studentDiscounts.length > 0 && {
+            studentDiscounts: {
+              create: studentDiscounts.map((d) => ({
+                ...d,
+                startDate: new Date(d.startDate),
+                endDate: d.endDate ? new Date(d.endDate) : null,
+              })),
+            },
+          }),
       },
       select: studentMembershipSelect,
     });
@@ -153,25 +154,25 @@ export class StudentMembershipsService {
   private validateDiscountDates(
     discounts: any[],
     seasonStartDate: Date,
-    seasonEndDate: Date
+    seasonEndDate: Date,
   ) {
     for (const d of discounts) {
       const dStart = new Date(d.startDate);
       if (dStart < seasonStartDate || dStart > seasonEndDate) {
         throw new BadRequestException(
-          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`
+          `La fecha de inicio del descuento (${dStart.toLocaleDateString()}) debe estar dentro de la temporada (${seasonStartDate.toLocaleDateString()} - ${seasonEndDate.toLocaleDateString()})`,
         );
       }
       if (d.endDate) {
         const dEnd = new Date(d.endDate);
         if (dEnd < dStart) {
           throw new BadRequestException(
-            'La fecha de fin del descuento no puede ser menor a la fecha de inicio'
+            'La fecha de fin del descuento no puede ser menor a la fecha de inicio',
           );
         }
         if (dEnd > seasonEndDate) {
           throw new BadRequestException(
-            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`
+            `La fecha de fin del descuento (${dEnd.toLocaleDateString()}) no puede exceder el fin de la temporada (${seasonEndDate.toLocaleDateString()})`,
           );
         }
       }
@@ -299,10 +300,18 @@ export class StudentMembershipsService {
       select: studentMembershipSelect,
     });
 
-    if (updateDto.paymentPlanId && updateDto.paymentPlanId !== membership.paymentPlanId) {
-      this.studentChargesService.recalculatePendingFutureCharges(id).catch(e => {
-        this.logger.error(`Error al recalcular cargos tras cambio de plan en membresía de estudiante ${id}`, e.stack);
-      });
+    if (
+      updateDto.paymentPlanId &&
+      updateDto.paymentPlanId !== membership.paymentPlanId
+    ) {
+      this.studentChargesService
+        .recalculatePendingFutureCharges(id)
+        .catch((e) => {
+          this.logger.error(
+            `Error al recalcular cargos tras cambio de plan en membresía de estudiante ${id}`,
+            e.stack,
+          );
+        });
     }
 
     return {
@@ -476,8 +485,10 @@ export class StudentMembershipsService {
 
   private async validateOfferingCapacity(
     offeringId: string,
-    maxMembers: number,
+    maxMembers: number | null,
   ) {
+    if (maxMembers === null) return;
+
     const activeMembers = await this.prisma.studentMembership.count({
       where: {
         courseSeasonId: offeringId,
@@ -489,6 +500,7 @@ export class StudentMembershipsService {
         },
       },
     });
+
     if (activeMembers >= maxMembers) {
       throw new BadRequestException('errors.NO_VACANCIES_AVAILABLE');
     }
@@ -559,5 +571,121 @@ export class StudentMembershipsService {
     if (startedAt < seasonStartDate || startedAt > seasonEndDate) {
       throw new BadRequestException('errors.INVALID_DATE_FOR_SEASON');
     }
+  }
+
+  // MÉTODOS DE PAUSA
+  async getPauses(membershipId: string) {
+    const pauses = await this.prisma.studentMembershipPause.findMany({
+      where: { studentMembershipId: membershipId },
+      orderBy: { startDate: 'desc' },
+    });
+    return { message: 'Pausas obtenidas exitosamente', data: pauses };
+  }
+
+  async createPause(
+    membershipId: string,
+    dto: import('./dto/create-student-membership-pause.dto').CreateStudentMembershipPauseDto,
+  ) {
+    const membership = await this.prisma.studentMembership.findUnique({
+      where: { id: membershipId },
+      include: {
+        courseSeason: { include: { season: true } },
+        pauses: true,
+      },
+    });
+    if (!membership) {
+      throw new NotFoundException(`Membresía ${membershipId} no encontrada`);
+    }
+    if (
+      membership.status === StudentMembershipStatus.FINISHED ||
+      membership.status === StudentMembershipStatus.WITHDRAWN
+    ) {
+      throw new BadRequestException(
+        'No se pueden agregar pausas a una membresía finalizada o retirada',
+      );
+    }
+
+    if (dto.startDate > dto.endDate) {
+      throw new BadRequestException(
+        'La fecha de inicio debe ser anterior o igual a la de fin',
+      );
+    }
+
+    const seasonStart = new Date(membership.courseSeason.season.startDate);
+    seasonStart.setUTCHours(0, 0, 0, 0);
+    const seasonEnd = new Date(membership.courseSeason.season.endDate);
+    seasonEnd.setUTCHours(23, 59, 59, 999);
+
+    const pauseStart = new Date(dto.startDate);
+    pauseStart.setUTCHours(0, 0, 0, 0);
+    const pauseEnd = new Date(dto.endDate);
+    pauseEnd.setUTCHours(23, 59, 59, 999);
+
+    if (pauseStart < seasonStart || pauseEnd > seasonEnd) {
+      const sStart = seasonStart.toISOString().split('T')[0];
+      const sEnd = seasonEnd.toISOString().split('T')[0];
+      throw new BadRequestException(
+        `Las fechas de la pausa deben estar dentro de la duración de la temporada (${sStart} al ${sEnd})`,
+      );
+    }
+
+    const overlappingPause = membership.pauses.find((p) => {
+      const existingStart = new Date(p.startDate);
+      existingStart.setUTCHours(0, 0, 0, 0);
+      const existingEnd = new Date(p.endDate);
+      existingEnd.setUTCHours(23, 59, 59, 999);
+      return pauseStart <= existingEnd && pauseEnd >= existingStart;
+    });
+
+    if (overlappingPause) {
+      const pStart = new Date(overlappingPause.startDate).toISOString().split('T')[0];
+      const pEnd = new Date(overlappingPause.endDate).toISOString().split('T')[0];
+      throw new BadRequestException(
+        `El rango de fechas se superpone con una pausa existente (${pStart} al ${pEnd})`,
+      );
+    }
+
+    const pause = await this.prisma.studentMembershipPause.create({
+      data: {
+        studentMembershipId: membershipId,
+        startDate: dto.startDate,
+        endDate: dto.endDate,
+        reason: dto.reason,
+      },
+    });
+
+    const todayZero = new Date();
+    todayZero.setUTCHours(0, 0, 0, 0);
+
+    if (
+      pauseStart <= todayZero &&
+      pauseEnd >= todayZero &&
+      membership.status === 'ACTIVE'
+    ) {
+      await this.prisma.studentMembership.update({
+        where: { id: membershipId },
+        data: {
+          status: 'SUSPENDED',
+          notes: dto.reason || 'Pausa iniciada automáticamente',
+        },
+      });
+    }
+
+    return { message: 'Pausa creada exitosamente', data: pause };
+  }
+
+  async removePause(membershipId: string, pauseId: string) {
+    const pause = await this.prisma.studentMembershipPause.findUnique({
+      where: { id: pauseId },
+    });
+    if (!pause || pause.studentMembershipId !== membershipId) {
+      throw new NotFoundException(`Pausa ${pauseId} no encontrada`);
+    }
+
+    await this.prisma.studentMembershipPause.delete({
+      where: { id: pauseId },
+    });
+
+    return { message: 'Pausa eliminada exitosamente' };
   }
 }

@@ -67,19 +67,24 @@ type PlayerMembershipWithCharges = Prisma.PlayerMembershipGetPayload<{
 
 const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
   const totalPendingAmount = Number(
-    (membership.membershipCharges?.reduce(
-      (sum, current) => sum + Number(current.charge.pendingAmount),
-      0,
-    ) || 0).toFixed(2),
+    (
+      membership.membershipCharges?.reduce(
+        (sum, current) => sum + Number(current.charge.pendingAmount),
+        0,
+      ) || 0
+    ).toFixed(2),
   );
 
   const totalPaidAmount = Number(
-    (membership.membershipCharges?.reduce(
-      (sum, current) =>
-        sum +
-        (Number(current.charge.amount) - Number(current.charge.pendingAmount)),
-      0,
-    ) || 0).toFixed(2),
+    (
+      membership.membershipCharges?.reduce(
+        (sum, current) =>
+          sum +
+          (Number(current.charge.amount) -
+            Number(current.charge.pendingAmount)),
+        0,
+      ) || 0
+    ).toFixed(2),
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -117,6 +122,7 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
 
 import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 import { PaginationDto } from 'src/common/dto/pagination';
+import { CreatePlayerMembershipPauseDto } from './dto/create-player-membership-pause.dto';
 
 @Injectable()
 export class PlayerMembershipsService {
@@ -179,6 +185,14 @@ export class PlayerMembershipsService {
               })),
             },
           }),
+        histories: {
+          create: {
+            previousStatus: null,
+            newStatus:
+              createData.status ?? PlayerMembershipStatus.PENDING_ACTIVE,
+            reason: createData.notes ?? 'Creación de membresía',
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -280,6 +294,25 @@ export class PlayerMembershipsService {
       where.status = status;
     }
 
+    if (search) {
+      where.player = {
+        person: {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { lastName: { contains: search, mode: 'insensitive' } },
+            { secondLastName: { contains: search, mode: 'insensitive' } },
+            { documentNumber: { contains: search, mode: 'insensitive' } },
+          ],
+        },
+      };
+    }
+
+    // `globalWhere` se usa para obtener el "Summary" global, ignorando filtros de búsqueda o de estado.
+    const globalWhere: Prisma.PlayerMembershipWhereInput = {};
+    if (playerId) globalWhere.playerId = playerId;
+    if (teamSeasonId) globalWhere.teamSeasonId = teamSeasonId;
+    if (paymentPlanId) globalWhere.paymentPlanId = paymentPlanId;
+
     // Ejecutamos las consultas en paralelo para máxima velocidad
     const [
       playerMemberships,
@@ -287,6 +320,7 @@ export class PlayerMembershipsService {
       allCharges,
       activeMembersCount,
       suspendedMembersCount,
+      teamSeasonData,
     ] = await Promise.all([
       this.prisma.playerMembership.findMany({
         where,
@@ -298,7 +332,7 @@ export class PlayerMembershipsService {
       this.prisma.playerMembership.count({ where }),
       this.prisma.membershipCharge.findMany({
         where: {
-          playerMembership: where,
+          playerMembership: globalWhere,
           charge: {
             status: {
               not: 'CANCELLED',
@@ -315,13 +349,18 @@ export class PlayerMembershipsService {
         },
       }),
       this.prisma.playerMembership.count({
-        where: { ...where, status: 'ACTIVE' },
+        where: { ...globalWhere, status: 'ACTIVE' },
       }),
       this.prisma.playerMembership.count({
-        where: { ...where, status: 'SUSPENDED' },
+        where: { ...globalWhere, status: 'SUSPENDED' },
       }),
+      teamSeasonId
+        ? this.prisma.teamSeason.findUnique({
+            where: { id: teamSeasonId },
+            select: { maxMembers: true },
+          })
+        : Promise.resolve(null),
     ]);
-
 
     // Calcular totales globales (facturado, recaudado y pendiente) para esta búsqueda
     const globalTotalBilled = Number(
@@ -338,7 +377,8 @@ export class PlayerMembershipsService {
       allCharges
         .reduce(
           (sum, mc) =>
-            sum + (Number(mc.charge.amount) - (Number(mc.charge.pendingAmount) || 0)),
+            sum +
+            (Number(mc.charge.amount) - (Number(mc.charge.pendingAmount) || 0)),
           0,
         )
         .toFixed(2),
@@ -355,11 +395,13 @@ export class PlayerMembershipsService {
       message: 'Membresías de jugador a equipo obtenidas exitosamente',
       data: playerMemberships.map(mapMembershipWithTotal), // Será [] si la página no existe o no hay registros
       summary: {
-        totalPending: globalTotalPending,
-        totalPaid: globalTotalPaid,
         totalBilled: globalTotalBilled,
+        totalPaid: globalTotalPaid,
+        totalPending: globalTotalPending,
         activeMembers: activeMembersCount,
         suspendedMembers: suspendedMembersCount,
+        occupiedSlotsCount: activeMembersCount + suspendedMembersCount,
+        maxMembers: teamSeasonData?.maxMembers || null,
       },
       meta: {
         totalItems, // Ej: 25
@@ -489,6 +531,13 @@ export class PlayerMembershipsService {
         status: PlayerMembershipStatus.FINISHED,
         endedAt: new Date(),
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.FINISHED,
+            reason,
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -523,6 +572,13 @@ export class PlayerMembershipsService {
       data: {
         status: PlayerMembershipStatus.SUSPENDED,
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.SUSPENDED,
+            reason,
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -542,12 +598,6 @@ export class PlayerMembershipsService {
       );
     }
 
-    if (membership.status === PlayerMembershipStatus.SUSPENDED) {
-      throw new BadRequestException(
-        'La membresía se encuentra suspendida y no puede ser finalizada',
-      );
-    }
-
     if (membership.status === PlayerMembershipStatus.WITHDRAWN) {
       throw new BadRequestException('La membresía ya se encuentra retirada');
     }
@@ -558,6 +608,13 @@ export class PlayerMembershipsService {
         status: PlayerMembershipStatus.WITHDRAWN,
         endedAt: new Date(),
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.WITHDRAWN,
+            reason,
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -618,6 +675,13 @@ export class PlayerMembershipsService {
       data: {
         status: PlayerMembershipStatus.ACTIVE,
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.ACTIVE,
+            reason,
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -637,11 +701,24 @@ export class PlayerMembershipsService {
       );
     }
 
+    const offering = await this.getTeamMembershipOffering(
+      membership.teamSeasonId,
+    );
+
+    await this.validateOfferingCapacity(offering.id, offering.maxMembers);
+
     const updatedMembership = await this.prisma.playerMembership.update({
       where: { id },
       data: {
         status: PlayerMembershipStatus.ACTIVE,
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.ACTIVE,
+            reason,
+          },
+        },
       },
       select: playerMembershipSelect,
     });
@@ -729,8 +806,10 @@ export class PlayerMembershipsService {
 
   private async validateOfferingCapacity(
     offeringId: string,
-    maxMembers: number,
+    maxMembers: number | null,
   ) {
+    if (maxMembers === null) return;
+
     const activeMembers = await this.prisma.playerMembership.count({
       where: {
         teamSeasonId: offeringId,
@@ -996,5 +1075,126 @@ export class PlayerMembershipsService {
         prevPage: page > 1 ? page - 1 : null,
       },
     };
+  }
+
+  // MÉTODOS DE PAUSA
+  async getPauses(membershipId: string) {
+    const pauses = await this.prisma.playerMembershipPause.findMany({
+      where: { playerMembershipId: membershipId },
+      orderBy: { startDate: 'desc' },
+    });
+    return { message: 'Pausas obtenidas exitosamente', data: pauses };
+  }
+
+  async createPause(membershipId: string, dto: CreatePlayerMembershipPauseDto) {
+    const membership = await this.prisma.playerMembership.findUnique({
+      where: { id: membershipId },
+      include: {
+        teamSeason: { include: { season: true } },
+        pauses: true,
+      },
+    });
+    if (!membership) {
+      throw new NotFoundException(`Membresía ${membershipId} no encontrada`);
+    }
+
+    if (
+      membership.status === PlayerMembershipStatus.FINISHED ||
+      membership.status === PlayerMembershipStatus.WITHDRAWN
+    ) {
+      throw new BadRequestException(
+        'No se pueden agregar pausas a una membresía finalizada o retirada',
+      );
+    }
+    if (dto.startDate > dto.endDate) {
+      throw new BadRequestException(
+        'La fecha de inicio debe ser anterior o igual a la de fin',
+      );
+    }
+
+    const seasonStart = new Date(membership.teamSeason.season.startDate);
+    seasonStart.setUTCHours(0, 0, 0, 0);
+    const seasonEnd = new Date(membership.teamSeason.season.endDate);
+    seasonEnd.setUTCHours(23, 59, 59, 999);
+
+    const pauseStart = new Date(dto.startDate);
+    pauseStart.setUTCHours(0, 0, 0, 0);
+    const pauseEnd = new Date(dto.endDate);
+    pauseEnd.setUTCHours(23, 59, 59, 999);
+
+    if (pauseStart < seasonStart || pauseEnd > seasonEnd) {
+      const sStart = seasonStart.toISOString().split('T')[0];
+      const sEnd = seasonEnd.toISOString().split('T')[0];
+      throw new BadRequestException(
+        `Las fechas de la pausa deben estar dentro de la duración de la temporada (${sStart} al ${sEnd})`,
+      );
+    }
+
+    const overlappingPause = membership.pauses.find((p) => {
+      const existingStart = new Date(p.startDate);
+      existingStart.setUTCHours(0, 0, 0, 0);
+      const existingEnd = new Date(p.endDate);
+      existingEnd.setUTCHours(23, 59, 59, 999);
+      return pauseStart <= existingEnd && pauseEnd >= existingStart;
+    });
+
+    if (overlappingPause) {
+      const pStart = new Date(overlappingPause.startDate).toISOString().split('T')[0];
+      const pEnd = new Date(overlappingPause.endDate).toISOString().split('T')[0];
+      throw new BadRequestException(
+        `El rango de fechas se superpone con una pausa existente (${pStart} al ${pEnd})`,
+      );
+    }
+
+    const pause = await this.prisma.playerMembershipPause.create({
+      data: {
+        playerMembershipId: membershipId,
+        startDate: dto.startDate,
+        endDate: dto.endDate,
+        reason: dto.reason,
+      },
+    });
+
+    // Si la pausa empieza hoy o en el pasado y termina en el futuro (o es para hoy mismo), pausar la membresía si está activa
+    const todayZero = new Date();
+    todayZero.setUTCHours(0, 0, 0, 0);
+
+    if (
+      pauseStart <= todayZero &&
+      pauseEnd >= todayZero &&
+      membership.status === 'ACTIVE'
+    ) {
+      await this.prisma.playerMembership.update({
+        where: { id: membershipId },
+        data: {
+          status: 'SUSPENDED',
+          notes: dto.reason || 'Pausa iniciada automáticamente',
+          histories: {
+            create: {
+              previousStatus: membership.status,
+              newStatus: 'SUSPENDED',
+              reason: 'Creación de pausa activa',
+            },
+          },
+        },
+      });
+    }
+
+    return { message: 'Pausa creada exitosamente', data: pause };
+  }
+
+  async removePause(membershipId: string, pauseId: string) {
+    const pause = await this.prisma.playerMembershipPause.findUnique({
+      where: { id: pauseId },
+    });
+    if (!pause || pause.playerMembershipId !== membershipId) {
+      throw new NotFoundException(`Pausa ${pauseId} no encontrada`);
+    }
+
+    await this.prisma.playerMembershipPause.delete({
+      where: { id: pauseId },
+    });
+
+    return { message: 'Pausa eliminada exitosamente' };
   }
 }

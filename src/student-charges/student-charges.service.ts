@@ -25,9 +25,12 @@ type StudentMembershipWithRelations = Prisma.StudentMembershipGetPayload<{
   include: {
     paymentPlan: true;
     studentDiscounts: true;
+    pauses: true;
     courseSeason: {
       include: {
         season: true;
+        billingConfig: true;
+        pauses: true;
       };
     };
   };
@@ -36,9 +39,12 @@ type StudentMembershipWithRelations = Prisma.StudentMembershipGetPayload<{
 const studentMembershipInclude = {
   paymentPlan: true,
   studentDiscounts: true,
+  pauses: true,
   courseSeason: {
     include: {
       season: true,
+      billingConfig: true,
+      pauses: true,
     },
   },
 } as const;
@@ -58,7 +64,7 @@ export class StudentChargesService {
 
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id: courseSeasonId },
-      include: { season: true },
+      include: { season: true, billingConfig: true },
     });
 
     if (!courseSeason) throw new BadRequestException('Temporada de escuela no encontrada');
@@ -90,6 +96,7 @@ export class StudentChargesService {
       courseSeason,
       paymentPlan,
       studentDiscounts: parsedDiscounts,
+      pauses: [],
       isMigrated: isMigrated || false,
     } as unknown as StudentMembershipWithRelations;
 
@@ -124,9 +131,9 @@ export class StudentChargesService {
 
     const seasonEnd = new Date(courseSeason.season.endDate);
     seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(courseSeason.billingDay);
-    const isSinglePayment = paymentPlan.isSinglePayment || courseSeason.billingType === 'SINGLE_ONLY';
-    const billingFrequency = courseSeason.billingFrequency || 'MONTHLY';
+    const billingDay = Number(courseSeason.billingConfig?.billingDay || 1);
+    const isSinglePayment = paymentPlan.isSinglePayment || courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
+    const billingFrequency = courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
 
     let singlePaymentTotalAmount = 0;
     let singlePaymentBaseAmount = 0;
@@ -215,9 +222,9 @@ export class StudentChargesService {
 
     const seasonEnd = new Date(membership.courseSeason.season.endDate);
     seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(membership.courseSeason.billingDay);
-    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingType === 'SINGLE_ONLY';
-    const billingFrequency = membership.courseSeason.billingFrequency || 'MONTHLY';
+    const billingDay = Number(membership.courseSeason.billingConfig?.billingDay || 1);
+    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
+    const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
     let keepGenerating = true;
     const hasSinglePaymentCharge = existingCharges.some(
       (c) => (c.type === TypeMembershipCharge.SEASON_FEE || c.type === TypeMembershipCharge.RECURRING_FEE) && c.billingYear === membership.startedAt.getUTCFullYear() && c.billingMonth === membership.startedAt.getUTCMonth() + 1
@@ -306,7 +313,10 @@ export class StudentChargesService {
       where: {
         status: { in: [ StudentMembershipStatus.ACTIVE, StudentMembershipStatus.SUSPENDED ] },
         OR: [ { nextRecurringChargeGenerationDate: { lte: today } }, { nextRecurringChargeGenerationDate: null } ],
-        courseSeason: { season: { endDate: { gte: today } } },
+        courseSeason: { 
+          season: { endDate: { gte: today } },
+          billingConfig: { isEngineActive: true }
+        },
       },
       include: studentMembershipInclude,
     });
@@ -374,9 +384,9 @@ export class StudentChargesService {
     let generationDate = membership.nextRecurringChargeGenerationDate;
     const seasonEnd = new Date(membership.courseSeason.season.endDate);
     seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(membership.courseSeason.billingDay);
-    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingType === 'SINGLE_ONLY';
-    const billingFrequency = membership.courseSeason.billingFrequency || 'MONTHLY';
+    const billingDay = Number(membership.courseSeason.billingConfig?.billingDay || 1);
+    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
+    const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
     const advanceCycles = Math.max(1, membership.paymentPlan?.advanceCycles || 1);
 
     const allCycles = simulateAllCycles(membership as any);
@@ -391,7 +401,7 @@ export class StudentChargesService {
           todayStartOfDay.setUTCHours(0, 0, 0, 0);
           if (dueStartOfDay < todayStartOfDay) {
             const nextGenerationDate = new Date(cycle.nextDueDate);
-            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
             if (cycle.nextDueDate > seasonEnd) { tempPointer = new Date(0); break; }
             tempPointer = nextGenerationDate;
           } else { break; }
@@ -442,7 +452,7 @@ export class StudentChargesService {
            for (const cycle of allCycles) {
               if (tempPointer >= generationDate) break;
               tempPointer = new Date(cycle.nextDueDate);
-              tempPointer.setUTCDate(tempPointer.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+              tempPointer.setUTCDate(tempPointer.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
               currentCycleCounter++;
            }
         }
@@ -457,7 +467,7 @@ export class StudentChargesService {
 
           if (exists) {
             const nextGenerationDate = new Date(cycle.nextDueDate);
-            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
             if (cycle.nextDueDate > seasonEnd) { nextPointer = null; break; }
             nextPointer = nextGenerationDate;
             generationDate = nextGenerationDate;
@@ -502,7 +512,7 @@ export class StudentChargesService {
           }
 
           const nextGenerationDate = new Date(lastNextDueDate);
-          nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+          nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
           if (lastNextDueDate > seasonEnd) { nextPointer = null; break; }
           nextPointer = nextGenerationDate;
           generationDate = nextGenerationDate;
@@ -537,7 +547,7 @@ export class StudentChargesService {
 
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id: studentMembershipId },
-      include: { courseSeason: true }
+      include: { courseSeason: { include: { billingConfig: true } } }
     });
 
     const recurringCharges = pendingMembershipCharges.filter(mc => fullyPendingChargeIds.includes(mc.chargeId) && mc.type === TypeMembershipCharge.RECURRING_FEE);
@@ -547,7 +557,7 @@ export class StudentChargesService {
     if (recurringCharges.length > 0 && membership?.courseSeason) {
       const earliestDueDate = new Date(Math.min(...recurringCharges.map(mc => mc.charge.dueDate.getTime())));
       const targetResetDate = new Date(earliestDueDate);
-      targetResetDate.setUTCDate(targetResetDate.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+      targetResetDate.setUTCDate(targetResetDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
       if (!resetDate || targetResetDate < resetDate) { resetDate = targetResetDate; }
     }
 

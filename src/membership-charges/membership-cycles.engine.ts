@@ -24,9 +24,9 @@ const MAX_BILLING_CYCLES = 60; // Safe upper bound for cycle generation loop
 export function simulateAllCycles(membership: PlayerMembershipWithRelations): SimulatedCycle[] {
   const seasonEnd = new Date(membership.teamSeason.season.endDate);
   seasonEnd.setUTCHours(23, 59, 59, 999);
-  const billingDay = Number(membership.teamSeason.billingDay);
-  const billingFrequency = membership.teamSeason.billingFrequency || 'MONTHLY';
-  const isSinglePayment = membership.paymentPlan?.isSinglePayment || membership.teamSeason.billingType === 'SINGLE_ONLY';
+  const billingDay = Number(membership.teamSeason.billingConfig?.billingDay || 1);
+  const billingFrequency = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
+  const isSinglePayment = membership.paymentPlan?.isSinglePayment || membership.teamSeason.billingConfig?.billingType === 'SINGLE_ONLY';
   
   const cycles: SimulatedCycle[] = [];
   let cycleCounter = 1;
@@ -40,7 +40,7 @@ export function simulateAllCycles(membership: PlayerMembershipWithRelations): Si
     const isFirstCycle = cycleCounter === 1;
     let description = buildCycleDescription(membership.startedAt, billingFrequency, billingYear, billingMonth, billingCycle);
 
-    if (isFirstCycle && nextDueDate && membership.teamSeason.prorateFirstRecurringFee === true) {
+    if (isFirstCycle && nextDueDate && membership.teamSeason.billingConfig?.prorateFirstRecurringFee === true) {
       const cycleDays = Math.round((nextDueDate.getTime() - theoreticalDueDate.getTime()) / MILLISECONDS_IN_DAY);
       const periodEnd = nextDueDate > seasonEnd ? seasonEnd : nextDueDate;
       const activeDays = Math.max(0, Math.round((periodEnd.getTime() - membership.startedAt.getTime()) / MILLISECONDS_IN_DAY));
@@ -49,7 +49,7 @@ export function simulateAllCycles(membership: PlayerMembershipWithRelations): Si
       }
     }
 
-    if (nextDueDate && nextDueDate > seasonEnd && membership.teamSeason.prorateLastRecurringFee === true) {
+    if (nextDueDate && nextDueDate > seasonEnd && membership.teamSeason.billingConfig?.prorateLastRecurringFee === true) {
       const cycleDays = Math.round((nextDueDate.getTime() - theoreticalDueDate.getTime()) / MILLISECONDS_IN_DAY);
       const activeDays = Math.max(0, Math.round((seasonEnd.getTime() - dueDate.getTime()) / MILLISECONDS_IN_DAY));
       if (activeDays > 0 && activeDays !== cycleDays) {

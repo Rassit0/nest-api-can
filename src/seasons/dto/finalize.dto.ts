@@ -4,13 +4,13 @@ import { i18nValidationMessage } from 'nestjs-i18n';
 export class FinalizeSeasonDto {
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {
-      constraint1: 'statusNotes',
+      constraint1: 'reason',
     }),
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'statusNotes',
+      constraint1: 'reason',
     }),
   })
-  statusNotes: string;
+  reason: string;
 }

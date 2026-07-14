@@ -1,33 +1,78 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsInt, IsISO8601, IsUUID, Max, Min, ValidateNested, IsOptional, IsArray, IsNumber, IsDateString, IsEnum, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsInt,
+  IsISO8601,
+  IsUUID,
+  Max,
+  Min,
+  ValidateNested,
+  IsOptional,
+  IsArray,
+  IsNumber,
+  IsDateString,
+  IsEnum,
+  IsString,
+} from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { Type } from 'class-transformer';
-import { MembershipDiscountType } from 'src/generated/prisma/client';
+import {
+  MembershipDiscountType,
+  PlayerMembershipStatus,
+} from 'src/generated/prisma/client';
 
 export class MembershipDiscountDto {
-  @ApiProperty({ description: 'Porcentaje de descuento en la matrícula', example: 10 })
+  @ApiProperty({
+    description: 'Porcentaje de descuento en la matrícula',
+    example: 10,
+  })
   @IsNumber()
   registrationDiscountPercent: number;
 
-  @ApiProperty({ description: 'Porcentaje de descuento en la mensualidad', example: 15 })
+  @ApiPropertyOptional({
+    description: 'Porcentaje de descuento en el pago de temporada',
+    example: 0,
+  })
+  @IsOptional()
+  @IsNumber()
+  seasonFeeDiscountPercent?: number;
+
+  @ApiProperty({
+    description: 'Porcentaje de descuento en la mensualidad',
+    example: 15,
+  })
   @IsNumber()
   recurringDiscountPercent: number;
 
-  @ApiProperty({ description: 'Fecha de inicio del descuento', example: '2024-01-01' })
+  @ApiProperty({
+    description: 'Fecha de inicio del descuento',
+    example: '2024-01-01',
+  })
   @IsDateString()
   startDate: string;
 
-  @ApiPropertyOptional({ description: 'Fecha de fin del descuento', example: '2024-12-31', nullable: true })
+  @ApiPropertyOptional({
+    description: 'Fecha de fin del descuento',
+    example: '2024-12-31',
+    nullable: true,
+  })
   @IsOptional()
   @IsDateString()
   endDate?: string | null;
 
-  @ApiProperty({ description: 'Tipo de descuento', enum: MembershipDiscountType })
+  @ApiProperty({
+    description: 'Tipo de descuento',
+    enum: MembershipDiscountType,
+  })
   @IsEnum(MembershipDiscountType)
   type: MembershipDiscountType;
 
-  @ApiPropertyOptional({ description: 'Razón del descuento', example: 'Descuento especial', nullable: true })
+  @ApiPropertyOptional({
+    description: 'Razón del descuento',
+    example: 'Descuento especial',
+    nullable: true,
+  })
   @IsOptional()
   @IsString()
   reason?: string | null;
@@ -113,15 +158,24 @@ export class CreatePlayerMembershipDto {
   @Type(() => MembershipDiscountDto)
   membershipDiscounts?: MembershipDiscountDto[];
 
-  // @ApiProperty({
-  //     example: PlayerMembershipStatus.ACTIVE,
-  //     enum: PlayerMembershipStatus,
-  //     description: 'Estado de la membresía de jugador a equipo (ACTIVE, SUSPENDED, WITHDRAWN)',
-  // })
-  // @IsEnum(PlayerMembershipStatus, {
-  //     message: i18nValidationMessage('validation.IS_ENUM', {
-  //         constraint1: 'status',
-  //     }),
-  // })
-  // status: PlayerMembershipStatus;
+  @ApiPropertyOptional({
+    example: PlayerMembershipStatus.ACTIVE,
+    enum: PlayerMembershipStatus,
+    description:
+      'Estado de la membresía de jugador a equipo (ACTIVE, SUSPENDED, WITHDRAWN)',
+  })
+  @IsEnum(PlayerMembershipStatus, {
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'status',
+    }),
+  })
+  @IsOptional()
+  status?: PlayerMembershipStatus;
+
+  @ApiPropertyOptional({
+    description: 'Notas o razón inicial',
+  })
+  @IsOptional()
+  @IsString()
+  notes?: string;
 }

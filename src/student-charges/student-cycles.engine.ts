@@ -36,8 +36,8 @@ export function simulateAllCycles(membership: StudentMembershipWithRelations): S
   const allCycles: SimulatedCycle[] = [];
   const seasonEnd = new Date(membership.courseSeason.season.endDate);
   seasonEnd.setUTCHours(23, 59, 59, 999);
-  const billingDay = Number(membership.courseSeason.billingDay);
-  const billingFrequency = membership.courseSeason.billingFrequency || 'MONTHLY';
+  const billingDay = Number(membership.courseSeason.billingConfig?.billingDay || 1);
+  const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
 
   let cycleCounter = 1;
 

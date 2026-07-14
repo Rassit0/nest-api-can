@@ -14,7 +14,7 @@ export class MembershipPreviewService {
     existingCharges: ExistingChargeMinimal[] | null
   ): PreviewResult {
     let charges: PreviewCharge[] = [];
-    const isSeasonFeeOnly = membership.teamSeason.billingType === 'SINGLE_ONLY' || (membership.teamSeason.billingType === 'BOTH' && membership.paymentPlan?.isSinglePayment === true);
+    const isSeasonFeeOnly = membership.teamSeason.billingConfig?.billingType === 'SINGLE_ONLY' || (membership.teamSeason.billingConfig?.billingType === 'BOTH' && membership.paymentPlan?.isSinglePayment === true);
     const isFullPaymentPlan = membership.paymentPlan?.isSinglePayment === true;
     const isMigratedContext = existingCharges === null ? membership.isMigrated : membership.isMigrated;
     const allCycles = (isMigratedContext && (!existingCharges || existingCharges.length === 0)) ? [] : simulateAllCycles(membership);
@@ -98,7 +98,7 @@ export class MembershipPreviewService {
   ): PreviewCharge[] {
     const charges: PreviewCharge[] = [];
     const advanceCycles = isFullPaymentPlan ? allCycles.length : Math.max(1, membership.paymentPlan?.advanceCycles || 1);
-    const billingFrequency = membership.teamSeason.billingFrequency || 'MONTHLY';
+    const billingFrequency = membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
     let firstDueDate: Date | null = null;
     
     for (const cycle of allCycles) {

@@ -22,6 +22,7 @@ import {
 import { CourseSeasonsService } from './course-seasons.service';
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
 import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
+import { CreateCourseSeasonPauseDto } from './dto/create-course-season-pause.dto';
 import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
 import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
 import { CourseSeasonResponseDto } from '../common/dto/responses/entities.dto';
@@ -102,5 +103,61 @@ export class CourseSeasonsController {
   @ApiStandardResponse(CourseSeasonResponseDto, 'Periodo de curso eliminado con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.remove(id);
+  }
+
+  @Patch(':id/toggle-billing-engine')
+  @ApiOperation({
+    summary: 'Activar/Desactivar motor de cobros por ID',
+    description: 'Pausa o reanuda la generación automática de cargos y multas para este periodo de curso.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia del curso (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ 
+    schema: { 
+      type: 'object', 
+      properties: { 
+        isEngineActive: { type: 'boolean', example: false } 
+      } 
+    } 
+  })
+  @ApiStandardResponse(
+    CourseSeasonResponseDto,
+    'Motor de cobros actualizado exitosamente.',
+  )
+  async toggleBillingEngine(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body('isEngineActive') isEngineActive: boolean,
+  ) {
+    return await this.courseSeasonsService.toggleBillingEngine(id, isEngineActive);
+  }
+
+  @Get(':id/pauses')
+  @ApiOperation({
+    summary: 'Obtener las pausas del curso',
+  })
+  async getPauses(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.courseSeasonsService.getPauses(id);
+  }
+
+  @Post(':id/pauses')
+  @ApiOperation({
+    summary: 'Agregar una pausa al curso (vacaciones/receso)',
+  })
+  async addPause(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() createPauseDto: CreateCourseSeasonPauseDto,
+  ) {
+    return await this.courseSeasonsService.addPause(id, createPauseDto);
+  }
+
+  @Delete('pauses/:pauseId')
+  @ApiOperation({
+    summary: 'Eliminar una pausa de curso',
+  })
+  async removePause(@Param('pauseId', ParseUUIDPipe) pauseId: string) {
+    return await this.courseSeasonsService.removePause(pauseId);
   }
 }

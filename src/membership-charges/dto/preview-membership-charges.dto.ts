@@ -10,6 +10,14 @@ class PreviewMembershipDiscountDto {
   @IsNumber()
   registrationDiscountPercent: number;
 
+  @ApiPropertyOptional({
+    description: 'Porcentaje de descuento en el pago de temporada',
+    example: 0,
+  })
+  @IsOptional()
+  @IsNumber()
+  seasonFeeDiscountPercent?: number;
+
   @ApiProperty({
     description: 'Porcentaje de descuento en la mensualidad',
     example: 15,

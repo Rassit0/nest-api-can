@@ -398,11 +398,15 @@ export const ModelName = {
   Location: 'Location',
   Category: 'Category',
   Season: 'Season',
+  SeasonEvent: 'SeasonEvent',
   Team: 'Team',
   TeamSeason: 'TeamSeason',
+  TeamSeasonBillingConfig: 'TeamSeasonBillingConfig',
   PaymentPlan: 'PaymentPlan',
   Player: 'Player',
   PlayerMembership: 'PlayerMembership',
+  PlayerMembershipHistory: 'PlayerMembershipHistory',
+  PlayerMembershipPause: 'PlayerMembershipPause',
   MembershipDiscount: 'MembershipDiscount',
   MembershipCharge: 'MembershipCharge',
   Staff: 'Staff',
@@ -417,9 +421,13 @@ export const ModelName = {
   School: 'School',
   Course: 'Course',
   CourseSeason: 'CourseSeason',
+  TeamSeasonPause: 'TeamSeasonPause',
+  CourseSeasonPause: 'CourseSeasonPause',
+  CourseSeasonBillingConfig: 'CourseSeasonBillingConfig',
   CourseSeasonStaff: 'CourseSeasonStaff',
   Student: 'Student',
   StudentMembership: 'StudentMembership',
+  StudentMembershipPause: 'StudentMembershipPause',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
@@ -448,7 +456,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "club" | "location" | "category" | "season" | "team" | "teamSeason" | "paymentPlan" | "player" | "playerMembership" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonStaff" | "student" | "studentMembership" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1044,6 +1052,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SeasonEvent: {
+      payload: Prisma.$SeasonEventPayload<ExtArgs>
+      fields: Prisma.SeasonEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SeasonEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SeasonEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        findFirst: {
+          args: Prisma.SeasonEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SeasonEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        findMany: {
+          args: Prisma.SeasonEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>[]
+        }
+        create: {
+          args: Prisma.SeasonEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        createMany: {
+          args: Prisma.SeasonEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SeasonEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>[]
+        }
+        delete: {
+          args: Prisma.SeasonEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        update: {
+          args: Prisma.SeasonEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.SeasonEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SeasonEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SeasonEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.SeasonEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SeasonEventPayload>
+        }
+        aggregate: {
+          args: Prisma.SeasonEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSeasonEvent>
+        }
+        groupBy: {
+          args: Prisma.SeasonEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SeasonEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SeasonEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SeasonEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Team: {
       payload: Prisma.$TeamPayload<ExtArgs>
       fields: Prisma.TeamFieldRefs
@@ -1189,6 +1271,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TeamSeasonCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TeamSeasonCountAggregateOutputType> | number
+        }
+      }
+    }
+    TeamSeasonBillingConfig: {
+      payload: Prisma.$TeamSeasonBillingConfigPayload<ExtArgs>
+      fields: Prisma.TeamSeasonBillingConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamSeasonBillingConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamSeasonBillingConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.TeamSeasonBillingConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamSeasonBillingConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        findMany: {
+          args: Prisma.TeamSeasonBillingConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>[]
+        }
+        create: {
+          args: Prisma.TeamSeasonBillingConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        createMany: {
+          args: Prisma.TeamSeasonBillingConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamSeasonBillingConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.TeamSeasonBillingConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        update: {
+          args: Prisma.TeamSeasonBillingConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamSeasonBillingConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamSeasonBillingConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamSeasonBillingConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamSeasonBillingConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonBillingConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.TeamSeasonBillingConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeasonBillingConfig>
+        }
+        groupBy: {
+          args: Prisma.TeamSeasonBillingConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonBillingConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamSeasonBillingConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonBillingConfigCountAggregateOutputType> | number
         }
       }
     }
@@ -1411,6 +1567,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PlayerMembershipCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PlayerMembershipCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlayerMembershipHistory: {
+      payload: Prisma.$PlayerMembershipHistoryPayload<ExtArgs>
+      fields: Prisma.PlayerMembershipHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlayerMembershipHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlayerMembershipHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.PlayerMembershipHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlayerMembershipHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.PlayerMembershipHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.PlayerMembershipHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.PlayerMembershipHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlayerMembershipHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.PlayerMembershipHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        update: {
+          args: Prisma.PlayerMembershipHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlayerMembershipHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlayerMembershipHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlayerMembershipHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlayerMembershipHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.PlayerMembershipHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayerMembershipHistory>
+        }
+        groupBy: {
+          args: Prisma.PlayerMembershipHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayerMembershipHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlayerMembershipHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayerMembershipHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlayerMembershipPause: {
+      payload: Prisma.$PlayerMembershipPausePayload<ExtArgs>
+      fields: Prisma.PlayerMembershipPauseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlayerMembershipPauseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlayerMembershipPauseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        findFirst: {
+          args: Prisma.PlayerMembershipPauseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlayerMembershipPauseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        findMany: {
+          args: Prisma.PlayerMembershipPauseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>[]
+        }
+        create: {
+          args: Prisma.PlayerMembershipPauseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        createMany: {
+          args: Prisma.PlayerMembershipPauseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlayerMembershipPauseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>[]
+        }
+        delete: {
+          args: Prisma.PlayerMembershipPauseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        update: {
+          args: Prisma.PlayerMembershipPauseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        deleteMany: {
+          args: Prisma.PlayerMembershipPauseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlayerMembershipPauseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlayerMembershipPauseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>[]
+        }
+        upsert: {
+          args: Prisma.PlayerMembershipPauseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayerMembershipPausePayload>
+        }
+        aggregate: {
+          args: Prisma.PlayerMembershipPauseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayerMembershipPause>
+        }
+        groupBy: {
+          args: Prisma.PlayerMembershipPauseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayerMembershipPauseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlayerMembershipPauseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayerMembershipPauseCountAggregateOutputType> | number
         }
       }
     }
@@ -2450,6 +2754,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TeamSeasonPause: {
+      payload: Prisma.$TeamSeasonPausePayload<ExtArgs>
+      fields: Prisma.TeamSeasonPauseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamSeasonPauseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamSeasonPauseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        findFirst: {
+          args: Prisma.TeamSeasonPauseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamSeasonPauseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        findMany: {
+          args: Prisma.TeamSeasonPauseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>[]
+        }
+        create: {
+          args: Prisma.TeamSeasonPauseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        createMany: {
+          args: Prisma.TeamSeasonPauseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamSeasonPauseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>[]
+        }
+        delete: {
+          args: Prisma.TeamSeasonPauseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        update: {
+          args: Prisma.TeamSeasonPauseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamSeasonPauseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamSeasonPauseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamSeasonPauseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamSeasonPauseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonPausePayload>
+        }
+        aggregate: {
+          args: Prisma.TeamSeasonPauseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeasonPause>
+        }
+        groupBy: {
+          args: Prisma.TeamSeasonPauseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonPauseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamSeasonPauseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonPauseCountAggregateOutputType> | number
+        }
+      }
+    }
+    CourseSeasonPause: {
+      payload: Prisma.$CourseSeasonPausePayload<ExtArgs>
+      fields: Prisma.CourseSeasonPauseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CourseSeasonPauseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CourseSeasonPauseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        findFirst: {
+          args: Prisma.CourseSeasonPauseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CourseSeasonPauseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        findMany: {
+          args: Prisma.CourseSeasonPauseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>[]
+        }
+        create: {
+          args: Prisma.CourseSeasonPauseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        createMany: {
+          args: Prisma.CourseSeasonPauseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CourseSeasonPauseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>[]
+        }
+        delete: {
+          args: Prisma.CourseSeasonPauseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        update: {
+          args: Prisma.CourseSeasonPauseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        deleteMany: {
+          args: Prisma.CourseSeasonPauseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CourseSeasonPauseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CourseSeasonPauseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>[]
+        }
+        upsert: {
+          args: Prisma.CourseSeasonPauseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonPausePayload>
+        }
+        aggregate: {
+          args: Prisma.CourseSeasonPauseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseSeasonPause>
+        }
+        groupBy: {
+          args: Prisma.CourseSeasonPauseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonPauseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CourseSeasonPauseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonPauseCountAggregateOutputType> | number
+        }
+      }
+    }
+    CourseSeasonBillingConfig: {
+      payload: Prisma.$CourseSeasonBillingConfigPayload<ExtArgs>
+      fields: Prisma.CourseSeasonBillingConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CourseSeasonBillingConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CourseSeasonBillingConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.CourseSeasonBillingConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CourseSeasonBillingConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        findMany: {
+          args: Prisma.CourseSeasonBillingConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>[]
+        }
+        create: {
+          args: Prisma.CourseSeasonBillingConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        createMany: {
+          args: Prisma.CourseSeasonBillingConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CourseSeasonBillingConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.CourseSeasonBillingConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        update: {
+          args: Prisma.CourseSeasonBillingConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.CourseSeasonBillingConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CourseSeasonBillingConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CourseSeasonBillingConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.CourseSeasonBillingConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonBillingConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.CourseSeasonBillingConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseSeasonBillingConfig>
+        }
+        groupBy: {
+          args: Prisma.CourseSeasonBillingConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonBillingConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CourseSeasonBillingConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonBillingConfigCountAggregateOutputType> | number
+        }
+      }
+    }
     CourseSeasonStaff: {
       payload: Prisma.$CourseSeasonStaffPayload<ExtArgs>
       fields: Prisma.CourseSeasonStaffFieldRefs
@@ -2669,6 +3195,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StudentMembershipCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StudentMembershipCountAggregateOutputType> | number
+        }
+      }
+    }
+    StudentMembershipPause: {
+      payload: Prisma.$StudentMembershipPausePayload<ExtArgs>
+      fields: Prisma.StudentMembershipPauseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StudentMembershipPauseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StudentMembershipPauseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        findFirst: {
+          args: Prisma.StudentMembershipPauseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StudentMembershipPauseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        findMany: {
+          args: Prisma.StudentMembershipPauseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>[]
+        }
+        create: {
+          args: Prisma.StudentMembershipPauseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        createMany: {
+          args: Prisma.StudentMembershipPauseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StudentMembershipPauseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>[]
+        }
+        delete: {
+          args: Prisma.StudentMembershipPauseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        update: {
+          args: Prisma.StudentMembershipPauseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        deleteMany: {
+          args: Prisma.StudentMembershipPauseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StudentMembershipPauseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StudentMembershipPauseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>[]
+        }
+        upsert: {
+          args: Prisma.StudentMembershipPauseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipPausePayload>
+        }
+        aggregate: {
+          args: Prisma.StudentMembershipPauseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudentMembershipPause>
+        }
+        groupBy: {
+          args: Prisma.StudentMembershipPauseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentMembershipPauseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StudentMembershipPauseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentMembershipPauseCountAggregateOutputType> | number
         }
       }
     }
@@ -3784,11 +4384,25 @@ export const SeasonScalarFieldEnum = {
   description: 'description',
   startDate: 'startDate',
   endDate: 'endDate',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
+
+
+export const SeasonEventScalarFieldEnum = {
+  id: 'id',
+  seasonId: 'seasonId',
+  eventType: 'eventType',
+  originalEndDate: 'originalEndDate',
+  newEndDate: 'newEndDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type SeasonEventScalarFieldEnum = (typeof SeasonEventScalarFieldEnum)[keyof typeof SeasonEventScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {
@@ -3817,27 +4431,37 @@ export const TeamSeasonScalarFieldEnum = {
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
+  status: 'status',
+  statusNotes: 'statusNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
+
+
+export const TeamSeasonBillingConfigScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  isEngineActive: 'isEngineActive',
   billingDay: 'billingDay',
   registrationFee: 'registrationFee',
   recurringFee: 'recurringFee',
+  seasonFee: 'seasonFee',
   debtToleranceMonths: 'debtToleranceMonths',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
-  status: 'status',
-  seasonFee: 'seasonFee',
   billingType: 'billingType',
   billingFrequency: 'billingFrequency',
   prorateFirstRecurringFee: 'prorateFirstRecurringFee',
   prorateLastRecurringFee: 'prorateLastRecurringFee',
   prorateRegistrationFee: 'prorateRegistrationFee',
   prorateSeasonFee: 'prorateSeasonFee',
-  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore'
 } as const
 
-export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
+export type TeamSeasonBillingConfigScalarFieldEnum = (typeof TeamSeasonBillingConfigScalarFieldEnum)[keyof typeof TeamSeasonBillingConfigScalarFieldEnum]
 
 
 export const PaymentPlanScalarFieldEnum = {
@@ -3888,11 +4512,37 @@ export const PlayerMembershipScalarFieldEnum = {
 export type PlayerMembershipScalarFieldEnum = (typeof PlayerMembershipScalarFieldEnum)[keyof typeof PlayerMembershipScalarFieldEnum]
 
 
+export const PlayerMembershipHistoryScalarFieldEnum = {
+  id: 'id',
+  playerMembershipId: 'playerMembershipId',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type PlayerMembershipHistoryScalarFieldEnum = (typeof PlayerMembershipHistoryScalarFieldEnum)[keyof typeof PlayerMembershipHistoryScalarFieldEnum]
+
+
+export const PlayerMembershipPauseScalarFieldEnum = {
+  id: 'id',
+  playerMembershipId: 'playerMembershipId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlayerMembershipPauseScalarFieldEnum = (typeof PlayerMembershipPauseScalarFieldEnum)[keyof typeof PlayerMembershipPauseScalarFieldEnum]
+
+
 export const MembershipDiscountScalarFieldEnum = {
   id: 'id',
   playerMembershipId: 'playerMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
@@ -4076,27 +4726,60 @@ export const CourseSeasonScalarFieldEnum = {
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
-  billingDay: 'billingDay',
-  registrationFee: 'registrationFee',
-  recurringFee: 'recurringFee',
-  debtToleranceMonths: 'debtToleranceMonths',
-  lateFeeEnabled: 'lateFeeEnabled',
-  lateFeePerDay: 'lateFeePerDay',
-  graceDays: 'graceDays',
   status: 'status',
-  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
-  seasonFee: 'seasonFee',
-  billingType: 'billingType',
-  billingFrequency: 'billingFrequency',
-  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
-  prorateLastRecurringFee: 'prorateLastRecurringFee',
-  prorateRegistrationFee: 'prorateRegistrationFee',
-  prorateSeasonFee: 'prorateSeasonFee',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
+
+
+export const TeamSeasonPauseScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type TeamSeasonPauseScalarFieldEnum = (typeof TeamSeasonPauseScalarFieldEnum)[keyof typeof TeamSeasonPauseScalarFieldEnum]
+
+
+export const CourseSeasonPauseScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CourseSeasonPauseScalarFieldEnum = (typeof CourseSeasonPauseScalarFieldEnum)[keyof typeof CourseSeasonPauseScalarFieldEnum]
+
+
+export const CourseSeasonBillingConfigScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  isEngineActive: 'isEngineActive',
+  billingDay: 'billingDay',
+  registrationFee: 'registrationFee',
+  recurringFee: 'recurringFee',
+  seasonFee: 'seasonFee',
+  debtToleranceMonths: 'debtToleranceMonths',
+  lateFeeEnabled: 'lateFeeEnabled',
+  lateFeePerDay: 'lateFeePerDay',
+  graceDays: 'graceDays',
+  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
+  billingType: 'billingType',
+  billingFrequency: 'billingFrequency',
+  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
+  prorateLastRecurringFee: 'prorateLastRecurringFee',
+  prorateRegistrationFee: 'prorateRegistrationFee',
+  prorateSeasonFee: 'prorateSeasonFee'
+} as const
+
+export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBillingConfigScalarFieldEnum)[keyof typeof CourseSeasonBillingConfigScalarFieldEnum]
 
 
 export const CourseSeasonStaffScalarFieldEnum = {
@@ -4145,11 +4828,25 @@ export const StudentMembershipScalarFieldEnum = {
 export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFieldEnum)[keyof typeof StudentMembershipScalarFieldEnum]
 
 
+export const StudentMembershipPauseScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentMembershipPauseScalarFieldEnum = (typeof StudentMembershipPauseScalarFieldEnum)[keyof typeof StudentMembershipPauseScalarFieldEnum]
+
+
 export const StudentDiscountScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
@@ -4450,6 +5147,34 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'SeasonStatus'
+ */
+export type EnumSeasonStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonStatus[]'
+ */
+export type ListEnumSeasonStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonEventType'
+ */
+export type EnumSeasonEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonEventType'>
+    
+
+
+/**
+ * Reference to a field of type 'SeasonEventType[]'
+ */
+export type ListEnumSeasonEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonEventType[]'>
+    
+
+
+/**
  * Reference to a field of type 'ProgramGender'
  */
 export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
@@ -4464,20 +5189,6 @@ export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-/**
  * Reference to a field of type 'StatusTeamSeason'
  */
 export type EnumStatusTeamSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusTeamSeason'>
@@ -4488,6 +5199,20 @@ export type EnumStatusTeamSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'StatusTeamSeason[]'
  */
 export type ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusTeamSeason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -4795,11 +5520,15 @@ export type GlobalOmitConfig = {
   location?: Prisma.LocationOmit
   category?: Prisma.CategoryOmit
   season?: Prisma.SeasonOmit
+  seasonEvent?: Prisma.SeasonEventOmit
   team?: Prisma.TeamOmit
   teamSeason?: Prisma.TeamSeasonOmit
+  teamSeasonBillingConfig?: Prisma.TeamSeasonBillingConfigOmit
   paymentPlan?: Prisma.PaymentPlanOmit
   player?: Prisma.PlayerOmit
   playerMembership?: Prisma.PlayerMembershipOmit
+  playerMembershipHistory?: Prisma.PlayerMembershipHistoryOmit
+  playerMembershipPause?: Prisma.PlayerMembershipPauseOmit
   membershipDiscount?: Prisma.MembershipDiscountOmit
   membershipCharge?: Prisma.MembershipChargeOmit
   staff?: Prisma.StaffOmit
@@ -4814,9 +5543,13 @@ export type GlobalOmitConfig = {
   school?: Prisma.SchoolOmit
   course?: Prisma.CourseOmit
   courseSeason?: Prisma.CourseSeasonOmit
+  teamSeasonPause?: Prisma.TeamSeasonPauseOmit
+  courseSeasonPause?: Prisma.CourseSeasonPauseOmit
+  courseSeasonBillingConfig?: Prisma.CourseSeasonBillingConfigOmit
   courseSeasonStaff?: Prisma.CourseSeasonStaffOmit
   student?: Prisma.StudentOmit
   studentMembership?: Prisma.StudentMembershipOmit
+  studentMembershipPause?: Prisma.StudentMembershipPauseOmit
   studentDiscount?: Prisma.StudentDiscountOmit
   studentCharge?: Prisma.StudentChargeOmit
   sessionIncident?: Prisma.SessionIncidentOmit

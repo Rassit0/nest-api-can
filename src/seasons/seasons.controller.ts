@@ -23,6 +23,9 @@ import { SeasonsService } from './seasons.service';
 import { CreateSeasonDto } from './dto/create-season.dto';
 import { UpdateSeasonDto } from './dto/update-season.dto';
 import { SeasonsPaginationDto } from './dto/pagination.dto';
+import { ExtendSeasonDto } from './dto/extend.dto';
+import { FinalizeSeasonDto } from './dto/finalize.dto';
+import { CancelSeasonDto } from './dto/cancel.dto';
 import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
 import { SeasonResponseDto } from '../common/dto/responses/entities.dto';
 
@@ -101,5 +104,69 @@ export class SeasonsController {
   @ApiStandardResponse(SeasonResponseDto, 'Temporada eliminada con éxito.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.seasonsService.remove(id);
+  }
+
+  @Patch(':id/extend')
+  @ApiOperation({
+    summary: 'Extender temporada',
+    description: 'Extiende la fecha de finalización de una temporada y guarda el evento.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la temporada a extender (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada extendida con éxito.')
+  async extend(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() extendSeasonDto: ExtendSeasonDto,
+  ) {
+    return await this.seasonsService.extend(id, extendSeasonDto);
+  }
+
+  @Patch(':id/finish')
+  @ApiOperation({
+    summary: 'Finalizar temporada',
+    description: 'Marca la temporada como FINALIZADA y guarda el evento con el motivo.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la temporada a finalizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada finalizada con éxito.')
+  async finish(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() finalizeSeasonDto: FinalizeSeasonDto,
+  ) {
+    return await this.seasonsService.finish(id, finalizeSeasonDto);
+  }
+
+  @Patch(':id/cancel')
+  @ApiOperation({
+    summary: 'Cancelar temporada',
+    description: 'Marca la temporada como CANCELADA y guarda el evento con el motivo.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la temporada a cancelar (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(SeasonResponseDto, 'Temporada cancelada con éxito.')
+  async cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() cancelSeasonDto: CancelSeasonDto,
+  ) {
+    return this.seasonsService.cancel(id, cancelSeasonDto);
+  }
+
+  @Post('auto-finalize')
+  @ApiOperation({
+    summary: 'Finalizar temporadas expiradas automáticamente (Cron)',
+    description:
+      'Busca todas las temporadas activas cuya fecha de fin ya pasó y las marca como FINISHED.',
+  })
+  async autoFinalize() {
+    return await this.seasonsService.autoFinalizeExpiredSeasons();
   }
 }

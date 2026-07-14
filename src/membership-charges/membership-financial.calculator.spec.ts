@@ -40,19 +40,27 @@ describe('MembershipFinancialCalculator', () => {
         id: 'team-season-1',
         teamId: 'team-1',
         seasonId: 'season-1',
-        registrationFee: 100,
-        recurringFee: 50,
-        seasonFee: 500,
-        prorateRegistrationFee: false,
-        prorateFirstRecurringFee: true,
-        prorateLastRecurringFee: true,
-        prorateSeasonFee: false,
-        billingFrequency: 'MONTHLY',
-        billingDay: 1,
-        billingType: 'RECURRING',
-        chargeGenerationDaysBefore: 7,
-        lateFeeDaysAfter: 5,
-        lateFeePercent: 10,
+        billingConfig: {
+          id: 'config-1',
+          teamSeasonId: 'team-season-1',
+          registrationFee: 100,
+          recurringFee: 50,
+          seasonFee: 500,
+          prorateRegistrationFee: false,
+          prorateFirstRecurringFee: true,
+          prorateLastRecurringFee: true,
+          prorateSeasonFee: false,
+          billingFrequency: 'MONTHLY',
+          billingDay: 1,
+          billingType: 'RECURRING',
+          chargeGenerationDaysBefore: 7,
+          lateFeeDaysAfter: 5,
+          lateFeePercent: 10,
+          isEngineActive: true,
+          nextLateFeeCheck: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         capacity: 20,
         status: 'ACTIVE',
         createdAt: new Date(),
@@ -107,7 +115,7 @@ describe('MembershipFinancialCalculator', () => {
 
     it('should calculate prorated registration fee correctly', () => {
       const membership = getMockMembership();
-      membership.teamSeason.prorateRegistrationFee = true;
+      membership.teamSeason.billingConfig!.prorateRegistrationFee = true;
       membership.startedAt = new Date('2024-07-01T00:00:00Z'); // Halfway through the year
       
       const result = calculateRegistrationFee(membership);
@@ -204,7 +212,7 @@ describe('MembershipFinancialCalculator', () => {
 
     it('should prorate seasonFee when joining late in the season', () => {
       const membership = getMockMembership();
-      membership.teamSeason.prorateSeasonFee = true;
+      membership.teamSeason.billingConfig!.prorateSeasonFee = true;
       membership.startedAt = new Date('2024-07-01T00:00:00Z'); // Half season
 
       const result = calculateSinglePaymentFee(membership, 0, 0);
@@ -215,7 +223,7 @@ describe('MembershipFinancialCalculator', () => {
 
     it('should use accumulated values if no seasonFee is configured', () => {
       const membership = getMockMembership();
-      membership.teamSeason.seasonFee = null;
+      membership.teamSeason.billingConfig!.seasonFee = null;
 
       const result = calculateSinglePaymentFee(membership, 600, 10);
       

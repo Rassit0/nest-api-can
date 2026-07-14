@@ -57,11 +57,15 @@ export const ModelName = {
   Location: 'Location',
   Category: 'Category',
   Season: 'Season',
+  SeasonEvent: 'SeasonEvent',
   Team: 'Team',
   TeamSeason: 'TeamSeason',
+  TeamSeasonBillingConfig: 'TeamSeasonBillingConfig',
   PaymentPlan: 'PaymentPlan',
   Player: 'Player',
   PlayerMembership: 'PlayerMembership',
+  PlayerMembershipHistory: 'PlayerMembershipHistory',
+  PlayerMembershipPause: 'PlayerMembershipPause',
   MembershipDiscount: 'MembershipDiscount',
   MembershipCharge: 'MembershipCharge',
   Staff: 'Staff',
@@ -76,9 +80,13 @@ export const ModelName = {
   School: 'School',
   Course: 'Course',
   CourseSeason: 'CourseSeason',
+  TeamSeasonPause: 'TeamSeasonPause',
+  CourseSeasonPause: 'CourseSeasonPause',
+  CourseSeasonBillingConfig: 'CourseSeasonBillingConfig',
   CourseSeasonStaff: 'CourseSeasonStaff',
   Student: 'Student',
   StudentMembership: 'StudentMembership',
+  StudentMembershipPause: 'StudentMembershipPause',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
@@ -221,11 +229,25 @@ export const SeasonScalarFieldEnum = {
   description: 'description',
   startDate: 'startDate',
   endDate: 'endDate',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
+
+
+export const SeasonEventScalarFieldEnum = {
+  id: 'id',
+  seasonId: 'seasonId',
+  eventType: 'eventType',
+  originalEndDate: 'originalEndDate',
+  newEndDate: 'newEndDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type SeasonEventScalarFieldEnum = (typeof SeasonEventScalarFieldEnum)[keyof typeof SeasonEventScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {
@@ -254,27 +276,37 @@ export const TeamSeasonScalarFieldEnum = {
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
+  status: 'status',
+  statusNotes: 'statusNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
+
+
+export const TeamSeasonBillingConfigScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  isEngineActive: 'isEngineActive',
   billingDay: 'billingDay',
   registrationFee: 'registrationFee',
   recurringFee: 'recurringFee',
+  seasonFee: 'seasonFee',
   debtToleranceMonths: 'debtToleranceMonths',
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
-  status: 'status',
-  seasonFee: 'seasonFee',
   billingType: 'billingType',
   billingFrequency: 'billingFrequency',
   prorateFirstRecurringFee: 'prorateFirstRecurringFee',
   prorateLastRecurringFee: 'prorateLastRecurringFee',
   prorateRegistrationFee: 'prorateRegistrationFee',
   prorateSeasonFee: 'prorateSeasonFee',
-  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore'
 } as const
 
-export type TeamSeasonScalarFieldEnum = (typeof TeamSeasonScalarFieldEnum)[keyof typeof TeamSeasonScalarFieldEnum]
+export type TeamSeasonBillingConfigScalarFieldEnum = (typeof TeamSeasonBillingConfigScalarFieldEnum)[keyof typeof TeamSeasonBillingConfigScalarFieldEnum]
 
 
 export const PaymentPlanScalarFieldEnum = {
@@ -325,11 +357,37 @@ export const PlayerMembershipScalarFieldEnum = {
 export type PlayerMembershipScalarFieldEnum = (typeof PlayerMembershipScalarFieldEnum)[keyof typeof PlayerMembershipScalarFieldEnum]
 
 
+export const PlayerMembershipHistoryScalarFieldEnum = {
+  id: 'id',
+  playerMembershipId: 'playerMembershipId',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type PlayerMembershipHistoryScalarFieldEnum = (typeof PlayerMembershipHistoryScalarFieldEnum)[keyof typeof PlayerMembershipHistoryScalarFieldEnum]
+
+
+export const PlayerMembershipPauseScalarFieldEnum = {
+  id: 'id',
+  playerMembershipId: 'playerMembershipId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlayerMembershipPauseScalarFieldEnum = (typeof PlayerMembershipPauseScalarFieldEnum)[keyof typeof PlayerMembershipPauseScalarFieldEnum]
+
+
 export const MembershipDiscountScalarFieldEnum = {
   id: 'id',
   playerMembershipId: 'playerMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
@@ -513,27 +571,60 @@ export const CourseSeasonScalarFieldEnum = {
   categoryId: 'categoryId',
   seasonId: 'seasonId',
   gender: 'gender',
-  billingDay: 'billingDay',
-  registrationFee: 'registrationFee',
-  recurringFee: 'recurringFee',
-  debtToleranceMonths: 'debtToleranceMonths',
-  lateFeeEnabled: 'lateFeeEnabled',
-  lateFeePerDay: 'lateFeePerDay',
-  graceDays: 'graceDays',
   status: 'status',
-  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
-  seasonFee: 'seasonFee',
-  billingType: 'billingType',
-  billingFrequency: 'billingFrequency',
-  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
-  prorateLastRecurringFee: 'prorateLastRecurringFee',
-  prorateRegistrationFee: 'prorateRegistrationFee',
-  prorateSeasonFee: 'prorateSeasonFee',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
+
+
+export const TeamSeasonPauseScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type TeamSeasonPauseScalarFieldEnum = (typeof TeamSeasonPauseScalarFieldEnum)[keyof typeof TeamSeasonPauseScalarFieldEnum]
+
+
+export const CourseSeasonPauseScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CourseSeasonPauseScalarFieldEnum = (typeof CourseSeasonPauseScalarFieldEnum)[keyof typeof CourseSeasonPauseScalarFieldEnum]
+
+
+export const CourseSeasonBillingConfigScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  isEngineActive: 'isEngineActive',
+  billingDay: 'billingDay',
+  registrationFee: 'registrationFee',
+  recurringFee: 'recurringFee',
+  seasonFee: 'seasonFee',
+  debtToleranceMonths: 'debtToleranceMonths',
+  lateFeeEnabled: 'lateFeeEnabled',
+  lateFeePerDay: 'lateFeePerDay',
+  graceDays: 'graceDays',
+  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
+  billingType: 'billingType',
+  billingFrequency: 'billingFrequency',
+  prorateFirstRecurringFee: 'prorateFirstRecurringFee',
+  prorateLastRecurringFee: 'prorateLastRecurringFee',
+  prorateRegistrationFee: 'prorateRegistrationFee',
+  prorateSeasonFee: 'prorateSeasonFee'
+} as const
+
+export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBillingConfigScalarFieldEnum)[keyof typeof CourseSeasonBillingConfigScalarFieldEnum]
 
 
 export const CourseSeasonStaffScalarFieldEnum = {
@@ -582,11 +673,25 @@ export const StudentMembershipScalarFieldEnum = {
 export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFieldEnum)[keyof typeof StudentMembershipScalarFieldEnum]
 
 
+export const StudentMembershipPauseScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentMembershipPauseScalarFieldEnum = (typeof StudentMembershipPauseScalarFieldEnum)[keyof typeof StudentMembershipPauseScalarFieldEnum]
+
+
 export const StudentDiscountScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',

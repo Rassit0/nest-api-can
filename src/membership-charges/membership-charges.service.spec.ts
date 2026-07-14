@@ -73,19 +73,23 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       id: 'season-1',
       startDate: new Date('2026-01-01T00:00:00.000Z'),
       endDate: new Date('2026-12-31T23:59:59.999Z'),
+      status: 'ACTIVE',
     };
 
     const mockTeamSeason = {
       id: 'team-season-1',
-      billingType: 'MONTHLY',
-      billingFrequency: 'MONTHLY',
-      billingDay: 1,
-      registrationFee: 100,
-      recurringFee: 200,
-      seasonFee: null,
+      billingConfig: {
+        billingType: 'MONTHLY',
+        billingFrequency: 'MONTHLY',
+        billingDay: 1,
+        registrationFee: 100,
+        recurringFee: 200,
+        seasonFee: null,
+        prorateFirstRecurringFee: true,
+        prorateRegistrationFee: false,
+      },
       season: mockSeason,
-      prorateFirstRecurringFee: true,
-      prorateRegistrationFee: false,
+      status: 'ACTIVE',
     };
 
     const basePlan = {
@@ -155,7 +159,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
 
     it('Caso 4: Pago Único de Temporada (isSinglePayment = true)', async () => {
       const singlePlan = { ...basePlan, isSinglePayment: true, seasonFeeDiscountPercent: 10 };
-      const teamSeasonSingle = { ...mockTeamSeason, billingType: 'SINGLE_ONLY', seasonFee: 2000 };
+      const teamSeasonSingle = { ...mockTeamSeason, billingConfig: { ...mockTeamSeason.billingConfig, billingType: 'SINGLE_ONLY', seasonFee: 2000 } };
       
       membershipRepo.getTeamSeasonOrThrow.mockResolvedValue(teamSeasonSingle as unknown as Awaited<ReturnType<typeof membershipRepo.getTeamSeasonOrThrow>>);
       membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(singlePlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
@@ -193,6 +197,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
     it('Caso Extraordinario 1: Stress Test Bulk Insert de 3,500 membresías (Chunking)', async () => {
       const activeIds = Array.from({ length: 3500 }, (_, i) => ({ id: `mem-${i}` }));
       membershipRepo.getActiveMembershipsIdsBySeason.mockResolvedValue(activeIds);
+      membershipRepo.getTeamSeasonOrThrow.mockResolvedValue({ id: 'ts1', status: 'ACTIVE', season: { status: 'ACTIVE' } } as any);
 
       const res = await service.createMassiveManualCharge({
         teamSeasonId: 'team-season-1',
@@ -215,6 +220,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
 
     it('Caso Vacío en Masivos: 0 membresías no ejecuta base de datos', async () => {
       membershipRepo.getActiveMembershipsIdsBySeason.mockResolvedValue([]);
+      membershipRepo.getTeamSeasonOrThrow.mockResolvedValue({ id: 'ts1', status: 'ACTIVE', season: { status: 'ACTIVE' } } as any);
 
       await expect(service.createMassiveManualCharge({
         teamSeasonId: 'team-season-1',
@@ -245,7 +251,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       ];
 
       chargeRepo.fetchPendingFutureMembershipCharges.mockResolvedValue(mockCharges as unknown as Awaited<ReturnType<typeof chargeRepo.fetchPendingFutureMembershipCharges>>);
-      membershipRepo.getMembershipById.mockResolvedValue({ id: 'mem-1', teamSeason: { chargeGenerationDaysBefore: 15 } } as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipById>>);
+      membershipRepo.getMembershipById.mockResolvedValue({ id: 'mem-1', teamSeason: { billingConfig: { chargeGenerationDaysBefore: 15 } } } as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipById>>);
 
       await service.recalculatePendingFutureCharges('membership-1');
 
@@ -256,7 +262,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
 
   describe('generateAdvanceCharges (Generación Adelantada Manual)', () => {
     it('Debe abortar elegantemente si no hay ciclos por generar', async () => {
-      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1' } as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipOrThrow>>);
+      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1', teamSeason: { status: 'ACTIVE', season: { status: 'ACTIVE' } } } as any);
       generationService.findNextUngeneratedCycles.mockResolvedValue([]);
 
       const result = await service.generateAdvanceCharges('mem-1', 5);
@@ -266,7 +272,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
     });
 
     it('Debe invocar la generación si hay ciclos', async () => {
-      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1' } as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipOrThrow>>);
+      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1', teamSeason: { status: 'ACTIVE', season: { status: 'ACTIVE' } } } as any);
       generationService.findNextUngeneratedCycles.mockResolvedValue([{}, {}] as unknown as ReturnType<typeof generationService.findNextUngeneratedCycles>);
 
       const result = await service.generateAdvanceCharges('mem-1', 2);

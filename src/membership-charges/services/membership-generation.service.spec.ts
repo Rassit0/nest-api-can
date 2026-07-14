@@ -43,19 +43,27 @@ describe('MembershipGenerationService', () => {
         id: 'team-season-1',
         teamId: 'team-1',
         seasonId: 'season-1',
-        registrationFee: 100,
-        recurringFee: 50,
-        seasonFee: 500,
-        prorateRegistrationFee: false,
-        prorateFirstRecurringFee: true,
-        prorateLastRecurringFee: true,
-        prorateSeasonFee: false,
-        billingFrequency: 'MONTHLY',
-        billingDay: 1,
-        billingType: 'RECURRING',
-        chargeGenerationDaysBefore: 7,
-        lateFeeDaysAfter: 5,
-        lateFeePercent: 10,
+        billingConfig: {
+          id: 'config-1',
+          teamSeasonId: 'team-season-1',
+          registrationFee: 100,
+          recurringFee: 50,
+          seasonFee: 500,
+          prorateRegistrationFee: false,
+          prorateFirstRecurringFee: true,
+          prorateLastRecurringFee: true,
+          prorateSeasonFee: false,
+          billingFrequency: 'MONTHLY',
+          billingDay: 1,
+          billingType: 'RECURRING',
+          chargeGenerationDaysBefore: 7,
+          lateFeeDaysAfter: 5,
+          lateFeePercent: 10,
+          isEngineActive: true,
+          nextLateFeeCheck: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         capacity: 20,
         status: 'ACTIVE',
         createdAt: new Date(),
@@ -124,7 +132,7 @@ describe('MembershipGenerationService', () => {
 
     it('should not generate registration charge if base == 0', async () => {
       const membership = getMockMembership();
-      membership.teamSeason.registrationFee = new Prisma.Decimal(0);
+      membership.teamSeason.billingConfig!.registrationFee = new Prisma.Decimal(0);
       await service.ensureRegistrationCharge(mockTx, membership);
       
       expect(mockTx.charge.create).not.toHaveBeenCalled();

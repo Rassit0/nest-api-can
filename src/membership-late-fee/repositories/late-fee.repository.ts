@@ -8,7 +8,11 @@ export type ChargeWithLateFeeRelations = Prisma.ChargeGetPayload<{
       include: {
         playerMembership: {
           include: {
-            teamSeason: true;
+            teamSeason: {
+              include: {
+                billingConfig: true;
+              };
+            };
           };
         };
       };
@@ -21,7 +25,11 @@ const chargeInclude = {
     include: {
       playerMembership: {
         include: {
-          teamSeason: true,
+          teamSeason: {
+            include: {
+              billingConfig: true,
+            },
+          },
         },
       },
     },
@@ -48,6 +56,11 @@ export class LateFeeRepository {
                   PlayerMembershipStatus.PENDING_ACTIVE,
                   PlayerMembershipStatus.SUSPENDED,
                 ],
+              },
+              teamSeason: {
+                billingConfig: {
+                  isEngineActive: true,
+                },
               },
             },
           },

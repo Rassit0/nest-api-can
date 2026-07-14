@@ -57,8 +57,11 @@ import { SessionIncidentsModule } from './session-incidents/session-incidents.mo
 import { ProgressEvaluationsModule } from './progress-evaluations/progress-evaluations.module';
 import { TransactionsModule } from './transactions/transactions.module';
 
+import { ScheduleModule } from '@nestjs/schedule';
+
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     CommonModule,
     PersonsModule,
     DisciplinesModule,

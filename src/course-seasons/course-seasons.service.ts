@@ -13,16 +13,9 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   maxMembers: true,
   minMembers: true,
   gender: true,
-  billingDay: true,
-  registrationFee: true,
-  recurringFee: true,
-  debtToleranceMonths: true,
-  lateFeeEnabled: true,
-  lateFeePerDay: true,
-  graceDays: true,
-  chargeGenerationDaysBefore: true,
   courseSeasonStaffs: true,
   status: true,
+  billingConfig: true,
   createdAt: true,
   updatedAt: true,
   course: {
@@ -69,30 +62,37 @@ export class CourseSeasonsService {
       throw new NotFoundException('La temporada no fue encontrada');
     }
 
-    if (!createCourseSeasonDto.billingFrequency || createCourseSeasonDto.billingFrequency === 'MONTHLY') {
-      const diffTime = season.endDate.getTime() - season.startDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      if (diffDays < 28) {
-        let isValidDay = false;
-        const current = new Date(season.startDate);
-        while (current <= season.endDate) {
-          if (current.getUTCDate() === createCourseSeasonDto.billingDay) {
-            isValidDay = true;
-            break;
+    if (createCourseSeasonDto.billingConfig) {
+      const { billingFrequency, billingDay } = createCourseSeasonDto.billingConfig;
+      if (!billingFrequency || billingFrequency === 'MONTHLY') {
+        const diffTime = season.endDate.getTime() - season.startDate.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays < 28) {
+          let isValidDay = false;
+          const current = new Date(season.startDate);
+          while (current <= season.endDate) {
+            if (current.getUTCDate() === billingDay) {
+              isValidDay = true;
+              break;
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
           }
-          current.setUTCDate(current.getUTCDate() + 1);
-        }
-        if (!isValidDay) {
-          throw new BadRequestException(
-            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
-          );
+          if (!isValidDay) {
+            throw new BadRequestException(
+              'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+            );
+          }
         }
       }
     }
 
+    const { billingConfig, ...courseSeasonData } = createCourseSeasonDto;
     const newCourseSeason = await this.prisma.courseSeason.create({
-      data: createCourseSeasonDto,
+      data: {
+        ...courseSeasonData,
+        ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
+      },
       select: courseSeasonSelect,
     });
 
@@ -190,34 +190,23 @@ export class CourseSeasonsService {
       throw new NotFoundException('La temporada no fue encontrada');
     }
 
-    const billingFrequency = updateCourseSeasonDto.billingFrequency ?? courseSeason.billingFrequency;
-    const billingDay = updateCourseSeasonDto.billingDay ?? courseSeason.billingDay;
+    // TODO: implement validation for billingConfig update here if needed.
+    // For now we'll just upsert it in Prisma.
 
-    if (!billingFrequency || billingFrequency === 'MONTHLY') {
-      const diffTime = season.endDate.getTime() - season.startDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      if (diffDays < 28) {
-        let isValidDay = false;
-        const current = new Date(season.startDate);
-        while (current <= season.endDate) {
-          if (current.getUTCDate() === billingDay) {
-            isValidDay = true;
-            break;
-          }
-          current.setUTCDate(current.getUTCDate() + 1);
-        }
-        if (!isValidDay) {
-          throw new BadRequestException(
-            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
-          );
-        }
-      }
-    }
-
+    const { billingConfig, ...courseSeasonData } = updateCourseSeasonDto;
     const updatedCourseSeason = await this.prisma.courseSeason.update({
       where: { id },
-      data: updateCourseSeasonDto,
+      data: {
+        ...courseSeasonData,
+        ...(billingConfig ? {
+          billingConfig: {
+            upsert: {
+              create: billingConfig,
+              update: billingConfig,
+            }
+          }
+        } : {}),
+      },
       select: courseSeasonSelect,
     });
 
@@ -246,5 +235,101 @@ export class CourseSeasonsService {
       message: 'Periodo del curso eliminado exitosamente',
       data: deletedCourseSeason,
     };
+  }
+
+  async toggleBillingEngine(id: string, isEngineActive: boolean) {
+    const courseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id },
+      include: { billingConfig: true },
+    });
+    if (!courseSeason || !courseSeason.billingConfig) {
+      throw new NotFoundException(
+        'La configuración de cobros para este periodo de curso no fue encontrada',
+      );
+    }
+
+    const updated = await this.prisma.courseSeasonBillingConfig.update({
+      where: { courseSeasonId: id },
+      data: { isEngineActive },
+    });
+
+    return {
+      message: `Motor de cobros ${isEngineActive ? 'activado' : 'pausado'} exitosamente`,
+      data: updated,
+    };
+  }
+
+  async getPauses(courseSeasonId: string) {
+    const pauses = await this.prisma.courseSeasonPause.findMany({
+      where: { courseSeasonId },
+      orderBy: { startDate: 'desc' },
+    });
+    return { data: pauses, message: 'Pausas obtenidas' };
+  }
+
+  async addPause(
+    courseSeasonId: string,
+    createPauseDto: { startDate: string; endDate: string; reason?: string },
+  ) {
+    const courseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id: courseSeasonId },
+      include: { season: true },
+    });
+
+    if (!courseSeason) throw new BadRequestException('Course season not found');
+
+    const startDate = new Date(createPauseDto.startDate);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(createPauseDto.endDate);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    if (startDate > endDate) {
+      throw new BadRequestException('La fecha de inicio debe ser anterior o igual a la de fin');
+    }
+
+    if (startDate < courseSeason.season.startDate || endDate > courseSeason.season.endDate) {
+      throw new BadRequestException(
+        `Las fechas de la pausa deben estar dentro del rango de la temporada (${courseSeason.season.startDate.toISOString().split('T')[0]} - ${courseSeason.season.endDate.toISOString().split('T')[0]})`,
+      );
+    }
+
+    const overlapping = await this.prisma.courseSeasonPause.findFirst({
+      where: {
+        courseSeasonId,
+        OR: [
+          { startDate: { lte: endDate }, endDate: { gte: startDate } },
+        ],
+      },
+    });
+
+    if (overlapping) {
+      throw new BadRequestException(
+        `Ya existe una pausa para este curso en estas fechas (${overlapping.startDate.toISOString().split('T')[0]} - ${overlapping.endDate.toISOString().split('T')[0]})`,
+      );
+    }
+
+    const pause = await this.prisma.courseSeasonPause.create({
+      data: {
+        courseSeasonId,
+        startDate,
+        endDate,
+        reason: createPauseDto.reason,
+      },
+    });
+
+    return { message: 'Pausa agregada correctamente', data: pause };
+  }
+
+  async removePause(id: string) {
+    const pause = await this.prisma.courseSeasonPause.findUnique({
+      where: { id },
+    });
+    if (!pause) throw new BadRequestException('Pausa no encontrada');
+
+    await this.prisma.courseSeasonPause.delete({
+      where: { id },
+    });
+
+    return { message: 'Pausa eliminada correctamente' };
   }
 }

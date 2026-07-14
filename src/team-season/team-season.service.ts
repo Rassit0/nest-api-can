@@ -11,8 +11,12 @@ import {
   PlayerMembershipStatus,
   Prisma,
   SeasonBillingType,
+  StatusTeamSeason,
   SeasonStatus,
+  StatusCharge,
 } from 'src/generated/prisma/client';
+import { FinalizeTeamSeasonDto } from './dto/finalize-team-season.dto';
+import { CancelTeamSeasonDto } from './dto/cancel-team-season.dto';
 import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
 
 export const teamCategorySelect: Prisma.TeamSeasonSelect = {
@@ -46,21 +50,8 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   minMembers: true,
   minBirthYear: true,
   maxBirthYear: true,
-  billingDay: true,
-  registrationFee: true,
-  recurringFee: true,
-  seasonFee: true,
-  billingType: true,
-  billingFrequency: true,
-  prorateFirstRecurringFee: true,
-  prorateLastRecurringFee: true,
-  prorateRegistrationFee: true,
-  prorateSeasonFee: true,
-  debtToleranceMonths: true,
-  lateFeeEnabled: true,
-  lateFeePerDay: true,
-  graceDays: true,
   status: true,
+  billingConfig: true,
   _count: {
     select: {
       playerMemberships: {
@@ -98,6 +89,15 @@ export class TeamSeasonService {
       throw new NotFoundException('La temporada no fue encontrada');
     }
 
+    if (
+      season.status === SeasonStatus.FINISHED ||
+      season.status === SeasonStatus.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede asignar un equipo a una temporada inactiva o finalizada',
+      );
+    }
+
     const category = await this.prisma.category.findUnique({
       where: { id: createTeamCategoryDto.categoryId },
     });
@@ -122,73 +122,77 @@ export class TeamSeasonService {
       );
     }
 
-    if (rest.billingType !== SeasonBillingType.SINGLE_ONLY) {
-      if (!rest.recurringFee) {
-        throw new BadRequestException(
-          'La cuota mensual es requerida si el plan no es de pago único exclusivo',
-        );
-      }
-      if (!rest.registrationFee) {
-        throw new BadRequestException(
-          'La matrícula es requerida si el plan no es de pago único exclusivo',
-        );
-      }
-    }
-
-    if (
-      rest.billingType === SeasonBillingType.SINGLE_ONLY ||
-      rest.billingType === SeasonBillingType.BOTH
-    ) {
-      if (!rest.seasonFee) {
-        throw new BadRequestException(
-          'La cuota de temporada es requerida si el plan permite pago único',
-        );
-      }
-    }
-
-    if (!rest.billingFrequency || rest.billingFrequency === 'MONTHLY') {
-      if (rest.billingDay < 1 || rest.billingDay > 28) {
-        throw new BadRequestException(
-          'El día de facturación mensual debe estar entre 1 y 28',
-        );
-      }
-      const diffTime = season.endDate.getTime() - season.startDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      // Si la temporada dura menos de 28 días, el día de facturación podría no ocurrir nunca
-      if (diffDays < 28) {
-        let isValidDay = false;
-        const current = new Date(season.startDate);
-        while (current <= season.endDate) {
-          if (current.getUTCDate() === rest.billingDay) {
-            isValidDay = true;
-            break;
-          }
-          current.setUTCDate(current.getUTCDate() + 1);
-        }
-        if (!isValidDay) {
+    if (rest.billingConfig) {
+      if (rest.billingConfig.billingType !== SeasonBillingType.SINGLE_ONLY) {
+        if (!rest.billingConfig.recurringFee) {
           throw new BadRequestException(
-            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+            'La cuota mensual es requerida si el plan no es de pago único exclusivo',
+          );
+        }
+        if (!rest.billingConfig.registrationFee) {
+          throw new BadRequestException(
+            'La matrícula es requerida si el plan no es de pago único exclusivo',
           );
         }
       }
-    } else if (rest.billingFrequency === 'WEEKLY') {
-      if (rest.billingDay < 1 || rest.billingDay > 7) {
-        throw new BadRequestException(
-          'El día de facturación semanal debe estar entre 1 y 7',
-        );
+
+      if (
+        rest.billingConfig.billingType === SeasonBillingType.SINGLE_ONLY ||
+        rest.billingConfig.billingType === SeasonBillingType.BOTH
+      ) {
+        if (!rest.billingConfig.seasonFee) {
+          throw new BadRequestException(
+            'La cuota de temporada es requerida si el plan permite pago único',
+          );
+        }
       }
-    } else if (rest.billingFrequency === 'BIWEEKLY') {
-      if (rest.billingDay < 1 || rest.billingDay > 14) {
-        throw new BadRequestException(
-          'El día de facturación quincenal debe estar entre 1 y 14',
-        );
+
+      if (!rest.billingConfig.billingFrequency || rest.billingConfig.billingFrequency === 'MONTHLY') {
+        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 28) {
+          throw new BadRequestException(
+            'El día de facturación mensual debe estar entre 1 y 28',
+          );
+        }
+        const diffTime = season.endDate.getTime() - season.startDate.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Si la temporada dura menos de 28 días, el día de facturación podría no ocurrir nunca
+        if (diffDays < 28) {
+          let isValidDay = false;
+          const current = new Date(season.startDate);
+          while (current <= season.endDate) {
+            if (current.getUTCDate() === rest.billingConfig.billingDay) {
+              isValidDay = true;
+              break;
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
+          }
+          if (!isValidDay) {
+            throw new BadRequestException(
+              'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
+            );
+          }
+        }
+      } else if (rest.billingConfig.billingFrequency === 'WEEKLY') {
+        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 7) {
+          throw new BadRequestException(
+            'El día de facturación semanal debe estar entre 1 y 7',
+          );
+        }
+      } else if (rest.billingConfig.billingFrequency === 'BIWEEKLY') {
+        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 14) {
+          throw new BadRequestException(
+            'El día de facturación quincenal debe estar entre 1 y 14',
+          );
+        }
       }
     }
 
+    const { billingConfig, ...teamSeasonData } = rest;
     const newTeamCategorySeason = await this.prisma.teamSeason.create({
       data: {
-        ...rest,
+        ...teamSeasonData,
+        ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
       },
       select: teamCategorySelect,
     });
@@ -316,6 +320,15 @@ export class TeamSeasonService {
     if (!season) {
       throw new NotFoundException('La temporada no fue encontrada');
     }
+
+    if (
+      season.status === SeasonStatus.FINISHED ||
+      season.status === SeasonStatus.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede actualizar ni reasignar un equipo a una temporada inactiva o finalizada',
+      );
+    }
     if (!category) {
       throw new NotFoundException('La categoria no fue encontrada');
     }
@@ -326,8 +339,14 @@ export class TeamSeasonService {
       );
     }
 
-    const minBirthYear = rest.minBirthYear !== undefined ? rest.minBirthYear : teamSeason.minBirthYear;
-    const maxBirthYear = rest.maxBirthYear !== undefined ? rest.maxBirthYear : teamSeason.maxBirthYear;
+    const minBirthYear =
+      rest.minBirthYear !== undefined
+        ? rest.minBirthYear
+        : teamSeason.minBirthYear;
+    const maxBirthYear =
+      rest.maxBirthYear !== undefined
+        ? rest.maxBirthYear
+        : teamSeason.maxBirthYear;
 
     if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
       throw new BadRequestException(
@@ -335,84 +354,26 @@ export class TeamSeasonService {
       );
     }
 
-    const billingType = rest.billingType ?? teamSeason.billingType;
-    const recurringFee = rest.recurringFee ?? teamSeason.recurringFee;
-    const registrationFee = rest.registrationFee ?? teamSeason.registrationFee;
-    const seasonFee = rest.seasonFee ?? teamSeason.seasonFee;
+    // TODO: implement validation for billingConfig update here if needed.
+    // For now we'll just upsert it in Prisma.
 
-    if (billingType !== SeasonBillingType.SINGLE_ONLY) {
-      if (!recurringFee) {
-        throw new BadRequestException(
-          'La cuota mensual es requerida si el plan no es de pago único exclusivo',
-        );
-      }
-      if (!registrationFee) {
-        throw new BadRequestException(
-          'La matrícula es requerida si el plan no es de pago único exclusivo',
-        );
-      }
-    }
-
-    if (
-      billingType === SeasonBillingType.SINGLE_ONLY ||
-      billingType === SeasonBillingType.BOTH
-    ) {
-      if (!seasonFee) {
-        throw new BadRequestException(
-          'La cuota de temporada es requerida si el plan permite pago único',
-        );
-      }
-    }
-
-    const billingFrequency = rest.billingFrequency ?? teamSeason.billingFrequency;
-    const billingDay = rest.billingDay ?? teamSeason.billingDay;
-
-    if (!billingFrequency || billingFrequency === 'MONTHLY') {
-      if (billingDay < 1 || billingDay > 28) {
-        throw new BadRequestException(
-          'El día de facturación mensual debe estar entre 1 y 28',
-        );
-      }
-      const diffTime = season.endDate.getTime() - season.startDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      if (diffDays < 28) {
-        let isValidDay = false;
-        const current = new Date(season.startDate);
-        while (current <= season.endDate) {
-          if (current.getUTCDate() === billingDay) {
-            isValidDay = true;
-            break;
-          }
-          current.setUTCDate(current.getUTCDate() + 1);
-        }
-        if (!isValidDay) {
-          throw new BadRequestException(
-            'El día de facturación seleccionado no ocurre dentro de las fechas de esta temporada.',
-          );
-        }
-      }
-    } else if (billingFrequency === 'WEEKLY') {
-      if (billingDay < 1 || billingDay > 7) {
-        throw new BadRequestException(
-          'El día de facturación semanal debe estar entre 1 y 7',
-        );
-      }
-    } else if (billingFrequency === 'BIWEEKLY') {
-      if (billingDay < 1 || billingDay > 14) {
-        throw new BadRequestException(
-          'El día de facturación quincenal debe estar entre 1 y 14',
-        );
-      }
-    }
+    const { billingConfig, ...teamSeasonData } = rest;
 
     const updatedTeamCategory = await this.prisma.teamSeason.update({
       where: { id },
       data: {
-        ...rest,
+        ...teamSeasonData,
         teamId,
         seasonId,
         categoryId,
+        ...(billingConfig ? {
+          billingConfig: {
+            upsert: {
+              create: billingConfig,
+              update: billingConfig,
+            }
+          }
+        } : {}),
       },
       select: teamCategorySelect,
     });
@@ -424,6 +385,9 @@ export class TeamSeasonService {
 
   async getSeasonsOptions() {
     const seasons = await this.prisma.season.findMany({
+      where: {
+        status: SeasonStatus.ACTIVE,
+      },
       select: {
         id: true,
         name: true,
@@ -454,7 +418,10 @@ export class TeamSeasonService {
   }
   async getSeasonsByDisciplineOptions(disciplineId: string) {
     const seasons = await this.prisma.season.findMany({
-      where: { disciplineId },
+      where: {
+        disciplineId,
+        status: SeasonStatus.ACTIVE,
+      },
       select: {
         id: true,
         name: true,
@@ -483,7 +450,7 @@ export class TeamSeasonService {
         'La categoria de equipo en temporada no fue encontrada',
       );
     }
-    if (teamSeason.status !== SeasonStatus.DRAFT) {
+    if (teamSeason.status !== StatusTeamSeason.DRAFT) {
       throw new BadRequestException(
         'La temporada de equipo no puede ser eliminada',
       );
@@ -502,86 +469,230 @@ export class TeamSeasonService {
     };
   }
 
-  // async finalize(id: string, finalizeTeamSeasonDto: FinalizeTeamSeasonDto) {
-  //   const teamSeason = await this.findOne(id);
-  //   if (teamSeason.data.status === SeasonStatus.ACTIVE) {
-  //     const updatedTeamOffering = await this.prisma.teamSeason.update({
-  //       where: { id },
-  //       data: {
-  //         status: SeasonStatus.FINISHED,
-  //         statusNotes: finalizeTeamSeasonDto.statusNotes,
-  //       },
-  //       select: teamSeasonSelect,
-  //     });
-  //     return {
-  //       message: 'Temporada de equipo finalizada exitosamente',
-  //       data: updatedTeamOffering,
-  //     };
-  //   } else {
-  //     throw new BadRequestException(
-  //       'La temporada de equipo no puede ser finalizada',
-  //     );
-  //   }
-  // }
+  async finish(id: string, finalizeTeamSeasonDto: FinalizeTeamSeasonDto) {
+    const teamSeason = await this.prisma.teamSeason.findUnique({
+      where: { id },
+      select: { status: true },
+    });
+    if (!teamSeason) {
+      throw new NotFoundException('La temporada de equipo no fue encontrada');
+    }
 
-  // async cancel(id: string, cancelTeamSeasonDto: CancelTeamSeasonDto) {
-  //   const teamSeason = await this.findOne(id);
-  //   if (teamSeason.data.status === SeasonStatus.ACTIVE) {
-  //     const updatedTeamOffering = await this.prisma.teamSeason.update({
-  //       where: { id },
-  //       data: {
-  //         status: SeasonStatus.CANCELLED,
-  //         statusNotes: cancelTeamSeasonDto.statusNotes,
-  //       },
-  //       select: teamSeasonSelect,
-  //     });
-  //     return {
-  //       message: 'Temporada de equipo cancelada exitosamente',
-  //       data: updatedTeamOffering,
-  //     };
-  //   } else {
-  //     throw new BadRequestException(
-  //       'La temporada de equipo no puede ser cancelada',
-  //     );
-  //   }
-  // }
+    if (teamSeason.status === StatusTeamSeason.ACTIVE) {
+      const updatedTeamSeason = await this.prisma.$transaction(async (tx) => {
+        const updated = await tx.teamSeason.update({
+          where: { id },
+          data: {
+            status: StatusTeamSeason.FINISHED,
+            statusNotes: finalizeTeamSeasonDto.reason,
+          },
+          select: teamCategorySelect,
+        });
 
-  // async extend(id: string, extendTeamSeasonDto: ExtendTeamSeasonDto) {
-  //   const teamSeason = await this.findOne(id);
-  //   if (teamSeason.data.status === SeasonStatus.ACTIVE) {
-  //     if (teamSeason.data.endDate > new Date(extendTeamSeasonDto.newEndDate)) {
-  //       throw new BadRequestException(
-  //         'La nueva fecha final no puede ser menor a la fecha final de la temporada',
-  //       );
-  //     }
-  //     return await this.prisma.$transaction(async (tx) => {
-  //       const updatedTeamSeason = await tx.teamSeason.update({
-  //         where: { id },
-  //         data: {
-  //           endDate: extendTeamSeasonDto.newEndDate,
-  //           statusNotes: extendTeamSeasonDto.reason,
-  //         },
-  //         select: teamSeasonSelect,
-  //       });
+        // Actualizar membresías activas o suspendidas a FINISHED
+        await tx.playerMembership.updateMany({
+          where: {
+            teamSeasonId: id,
+            status: {
+              in: [
+                PlayerMembershipStatus.ACTIVE,
+                PlayerMembershipStatus.SUSPENDED,
+                PlayerMembershipStatus.PENDING_ACTIVE,
+              ],
+            },
+          },
+          data: { status: PlayerMembershipStatus.FINISHED },
+        });
 
-  //       // Crear el registro de extensión historico
-  //       await tx.teamSeasonExtension.create({
-  //         data: {
-  //           teamSeasonId: id,
-  //           previousEndDate: teamSeason.data.endDate,
-  //           newEndDate: extendTeamSeasonDto.newEndDate,
-  //           reason: extendTeamSeasonDto.reason,
-  //         },
-  //       });
-  //       return {
-  //         message: 'Temporada de equipo extendida exitosamente',
-  //         data: updatedTeamSeason,
-  //       };
-  //     });
-  //   } else {
-  //     throw new BadRequestException(
-  //       'La temporada de equipo no puede ser extendida',
-  //     );
-  //   }
-  // }
+        return updated;
+      });
+
+      return {
+        message: 'Temporada de equipo finalizada exitosamente',
+        data: updatedTeamSeason,
+      };
+    } else {
+      throw new BadRequestException(
+        'Solo una temporada de equipo activa puede ser finalizada',
+      );
+    }
+  }
+
+  async cancel(id: string, cancelTeamSeasonDto: CancelTeamSeasonDto) {
+    const teamSeason = await this.prisma.teamSeason.findUnique({
+      where: { id },
+      select: { status: true },
+    });
+    if (!teamSeason) {
+      throw new NotFoundException('La temporada de equipo no fue encontrada');
+    }
+
+    if (
+      teamSeason.status === StatusTeamSeason.ACTIVE ||
+      teamSeason.status === StatusTeamSeason.DRAFT
+    ) {
+      const updatedTeamSeason = await this.prisma.$transaction(async (tx) => {
+        const updated = await tx.teamSeason.update({
+          where: { id },
+          data: {
+            status: StatusTeamSeason.CANCELLED,
+            statusNotes: cancelTeamSeasonDto.reason,
+          },
+          select: teamCategorySelect,
+        });
+
+        if (teamSeason.status === StatusTeamSeason.ACTIVE) {
+          const memberships = await tx.playerMembership.findMany({
+            where: {
+              teamSeasonId: id,
+              status: {
+                in: [
+                  PlayerMembershipStatus.ACTIVE,
+                  PlayerMembershipStatus.SUSPENDED,
+                  PlayerMembershipStatus.PENDING_ACTIVE,
+                ],
+              },
+            },
+            select: { id: true },
+          });
+
+          const membershipIds = memberships.map((m) => m.id);
+
+          if (membershipIds.length > 0) {
+            // Encontrar todos los cargos pendientes de estas membresías
+            const membershipCharges = await tx.membershipCharge.findMany({
+              where: {
+                playerMembershipId: { in: membershipIds },
+                charge: { status: StatusCharge.PENDING },
+              },
+              select: { chargeId: true },
+            });
+
+            const chargeIds = membershipCharges.map((mc) => mc.chargeId);
+
+            if (chargeIds.length > 0) {
+              // Cancelar cargos pendientes
+              await tx.charge.updateMany({
+                where: { id: { in: chargeIds } },
+                data: { status: StatusCharge.CANCELLED },
+              });
+            }
+
+            // Cambiar estado de las membresías a WITHDRAWN
+            await tx.playerMembership.updateMany({
+              where: { id: { in: membershipIds } },
+              data: { status: PlayerMembershipStatus.WITHDRAWN },
+            });
+          }
+        }
+
+        return updated;
+      });
+
+      return {
+        message: 'Temporada de equipo cancelada exitosamente',
+        data: updatedTeamSeason,
+      };
+    } else {
+      throw new BadRequestException(
+        'Esta temporada de equipo no puede ser cancelada',
+      );
+    }
+  }
+
+  async toggleBillingEngine(id: string, isEngineActive: boolean) {
+    const teamSeason = await this.prisma.teamSeason.findUnique({
+      where: { id },
+      include: { billingConfig: true },
+    });
+    if (!teamSeason || !teamSeason.billingConfig) {
+      throw new NotFoundException(
+        'La configuración de cobros para esta temporada no fue encontrada',
+      );
+    }
+
+    const updated = await this.prisma.teamSeasonBillingConfig.update({
+      where: { teamSeasonId: id },
+      data: { isEngineActive },
+    });
+
+    return {
+      message: `Motor de cobros ${isEngineActive ? 'activado' : 'pausado'} exitosamente`,
+      data: updated,
+    };
+  }
+
+  async getPauses(teamSeasonId: string) {
+    const pauses = await this.prisma.teamSeasonPause.findMany({
+      where: { teamSeasonId },
+      orderBy: { startDate: 'desc' },
+    });
+    return { data: pauses, message: 'Pausas obtenidas' };
+  }
+
+  async addPause(
+    teamSeasonId: string,
+    createPauseDto: { startDate: string; endDate: string; reason?: string },
+  ) {
+    const teamSeason = await this.prisma.teamSeason.findUnique({
+      where: { id: teamSeasonId },
+      include: { season: true },
+    });
+
+    if (!teamSeason) throw new BadRequestException('Team season not found');
+
+    const startDate = new Date(createPauseDto.startDate);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(createPauseDto.endDate);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    if (startDate > endDate) {
+      throw new BadRequestException('La fecha de inicio debe ser anterior o igual a la de fin');
+    }
+
+    if (startDate < teamSeason.season.startDate || endDate > teamSeason.season.endDate) {
+      throw new BadRequestException(
+        `Las fechas de la pausa deben estar dentro del rango de la temporada (${teamSeason.season.startDate.toISOString().split('T')[0]} - ${teamSeason.season.endDate.toISOString().split('T')[0]})`,
+      );
+    }
+
+    const overlapping = await this.prisma.teamSeasonPause.findFirst({
+      where: {
+        teamSeasonId,
+        OR: [
+          { startDate: { lte: endDate }, endDate: { gte: startDate } },
+        ],
+      },
+    });
+
+    if (overlapping) {
+      throw new BadRequestException(
+        `Ya existe una pausa para este equipo en estas fechas (${overlapping.startDate.toISOString().split('T')[0]} - ${overlapping.endDate.toISOString().split('T')[0]})`,
+      );
+    }
+
+    const pause = await this.prisma.teamSeasonPause.create({
+      data: {
+        teamSeasonId,
+        startDate,
+        endDate,
+        reason: createPauseDto.reason,
+      },
+    });
+
+    return { message: 'Pausa agregada correctamente', data: pause };
+  }
+
+  async removePause(id: string) {
+    const pause = await this.prisma.teamSeasonPause.findUnique({
+      where: { id },
+    });
+    if (!pause) throw new BadRequestException('Pausa no encontrada');
+
+    await this.prisma.teamSeasonPause.delete({
+      where: { id },
+    });
+
+    return { message: 'Pausa eliminada correctamente' };
+  }
 }

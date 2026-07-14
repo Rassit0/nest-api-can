@@ -34,19 +34,27 @@ describe('MembershipCyclesEngine', () => {
         id: 'team-season-1',
         teamId: 'team-1',
         seasonId: 'season-1',
-        registrationFee: 100,
-        recurringFee: 50,
-        seasonFee: 500,
-        prorateRegistrationFee: false,
-        prorateFirstRecurringFee: true,
-        prorateLastRecurringFee: true,
-        prorateSeasonFee: false,
-        billingFrequency: 'MONTHLY',
-        billingDay: 1,
-        billingType: 'RECURRING',
-        chargeGenerationDaysBefore: 7,
-        lateFeeDaysAfter: 5,
-        lateFeePercent: 10,
+        billingConfig: {
+          id: 'config-1',
+          teamSeasonId: 'team-season-1',
+          registrationFee: 100,
+          recurringFee: 50,
+          seasonFee: 500,
+          prorateRegistrationFee: false,
+          prorateFirstRecurringFee: true,
+          prorateLastRecurringFee: true,
+          prorateSeasonFee: false,
+          billingFrequency: 'MONTHLY',
+          billingDay: 1,
+          billingType: 'RECURRING',
+          chargeGenerationDaysBefore: 7,
+          lateFeeDaysAfter: 5,
+          lateFeePercent: 10,
+          isEngineActive: true,
+          nextLateFeeCheck: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         capacity: 20,
         status: 'ACTIVE',
         createdAt: new Date(),
@@ -95,7 +103,7 @@ describe('MembershipCyclesEngine', () => {
 
   it('should respect custom billing frequencies (WEEKLY)', () => {
     const membership = getMockMembership();
-    membership.teamSeason.billingFrequency = 'WEEKLY';
+    membership.teamSeason.billingConfig!.billingFrequency = 'WEEKLY';
     
     const cycles = simulateAllCycles(membership);
     
@@ -107,7 +115,7 @@ describe('MembershipCyclesEngine', () => {
 
   it('should cap out at MAX_BILLING_CYCLES', () => {
     const membership = getMockMembership();
-    membership.teamSeason.billingFrequency = 'WEEKLY';
+    membership.teamSeason.billingConfig!.billingFrequency = 'WEEKLY';
     // Very long season to hit max cycles
     membership.teamSeason.season.endDate = new Date(Date.UTC(2030, 11, 31, 23, 59, 59, 999));
     

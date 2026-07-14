@@ -78,6 +78,29 @@ export class CreateMembershipDiscountDto {
   registrationDiscountPercent: string;
 
   @ApiProperty({
+    example: '20.00',
+    description: 'Porcentaje de descuento al pago de temporada completa',
+  })
+  @IsDecimal(
+    {
+      decimal_digits: '0,2',
+      locale: 'en-US',
+    },
+    {
+      message: i18nValidationMessage('validation.IS_STRING', {
+        constraint1: 'seasonFeeDiscountPercent',
+      }),
+    },
+  )
+  @Matches(/^[^-].*$/, {
+    message: 'No se permiten valores negativos',
+  })
+  @Matches(/^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/, {
+    message: 'El porcentaje debe estar entre 0 y 100',
+  })
+  seasonFeeDiscountPercent: string;
+
+  @ApiProperty({
     example: '2024-01-01T00:00:00.000Z',
     description: 'Fecha de inicio de la temporada (formato ISO 8601)',
   })

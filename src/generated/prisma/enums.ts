@@ -44,13 +44,21 @@ export type ContactRelationship = (typeof ContactRelationship)[keyof typeof Cont
 
 
 export const SeasonStatus = {
-  DRAFT: 'DRAFT',
   ACTIVE: 'ACTIVE',
   FINISHED: 'FINISHED',
   CANCELLED: 'CANCELLED'
 } as const
 
 export type SeasonStatus = (typeof SeasonStatus)[keyof typeof SeasonStatus]
+
+
+export const SeasonEventType = {
+  EXTENSION: 'EXTENSION',
+  FINALIZATION: 'FINALIZATION',
+  CANCELLATION: 'CANCELLATION'
+} as const
+
+export type SeasonEventType = (typeof SeasonEventType)[keyof typeof SeasonEventType]
 
 
 export const ProgramGender = {

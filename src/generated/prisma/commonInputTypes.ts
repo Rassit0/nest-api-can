@@ -253,6 +253,40 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumSeasonStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel> | $Enums.SeasonStatus
+}
+
+export type EnumSeasonStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel> | $Enums.SeasonStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+}
+
+export type EnumSeasonEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonEventType | Prisma.EnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel> | $Enums.SeasonEventType
+}
+
+export type EnumSeasonEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonEventType | Prisma.EnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.SeasonEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel>
+}
+
 export type IntNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -271,47 +305,11 @@ export type EnumProgramGenderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
 }
 
-export type DecimalNullableFilter<$PrismaModel = never> = {
-  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
-  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
-  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
-  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-}
-
-export type DecimalFilter<$PrismaModel = never> = {
-  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
-  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
-  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type EnumStatusTeamSeasonFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel> | $Enums.StatusTeamSeason
-}
-
-export type EnumSeasonBillingTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonBillingType | Prisma.EnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonBillingTypeFilter<$PrismaModel> | $Enums.SeasonBillingType
-}
-
-export type EnumBillingFrequencyFilter<$PrismaModel = never> = {
-  equals?: $Enums.BillingFrequency | Prisma.EnumBillingFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumBillingFrequencyFilter<$PrismaModel> | $Enums.BillingFrequency
 }
 
 export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -338,6 +336,52 @@ export type EnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+}
+
+export type EnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+}
+
+export type DecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
+export type DecimalFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type EnumSeasonBillingTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonBillingType | Prisma.EnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonBillingTypeFilter<$PrismaModel> | $Enums.SeasonBillingType
+}
+
+export type EnumBillingFrequencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.BillingFrequency | Prisma.EnumBillingFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBillingFrequencyFilter<$PrismaModel> | $Enums.BillingFrequency
 }
 
 export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -370,16 +414,6 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
-}
-
-export type EnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
 }
 
 export type EnumSeasonBillingTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -417,6 +451,23 @@ export type EnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
+}
+
+export type EnumPlayerMembershipStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel> | $Enums.PlayerMembershipStatus | null
+}
+
+export type EnumPlayerMembershipStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayerMembershipStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.PlayerMembershipStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel>
 }
 
 export type EnumMembershipDiscountTypeFilter<$PrismaModel = never> = {
@@ -875,6 +926,40 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type NestedEnumSeasonStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel> | $Enums.SeasonStatus
+}
+
+export type NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonStatus | Prisma.EnumSeasonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonStatus[] | Prisma.ListEnumSeasonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonStatusWithAggregatesFilter<$PrismaModel> | $Enums.SeasonStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSeasonStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumSeasonEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonEventType | Prisma.EnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel> | $Enums.SeasonEventType
+}
+
+export type NestedEnumSeasonEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonEventType | Prisma.EnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonEventType[] | Prisma.ListEnumSeasonEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.SeasonEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSeasonEventTypeFilter<$PrismaModel>
+}
+
 export type NestedEnumProgramGenderFilter<$PrismaModel = never> = {
   equals?: $Enums.ProgramGender | Prisma.EnumProgramGenderFieldRefInput<$PrismaModel>
   in?: $Enums.ProgramGender[] | Prisma.ListEnumProgramGenderFieldRefInput<$PrismaModel>
@@ -882,47 +967,11 @@ export type NestedEnumProgramGenderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel> | $Enums.ProgramGender
 }
 
-export type NestedDecimalNullableFilter<$PrismaModel = never> = {
-  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
-  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
-  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
-  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-}
-
-export type NestedDecimalFilter<$PrismaModel = never> = {
-  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
-  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
-  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type NestedEnumStatusTeamSeasonFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel> | $Enums.StatusTeamSeason
-}
-
-export type NestedEnumSeasonBillingTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.SeasonBillingType | Prisma.EnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSeasonBillingTypeFilter<$PrismaModel> | $Enums.SeasonBillingType
-}
-
-export type NestedEnumBillingFrequencyFilter<$PrismaModel = never> = {
-  equals?: $Enums.BillingFrequency | Prisma.EnumBillingFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumBillingFrequencyFilter<$PrismaModel> | $Enums.BillingFrequency
 }
 
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -949,6 +998,52 @@ export type NestedEnumProgramGenderWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProgramGenderFilter<$PrismaModel>
+}
+
+export type NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
+}
+
+export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
+export type NestedDecimalFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NestedEnumSeasonBillingTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SeasonBillingType | Prisma.EnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SeasonBillingType[] | Prisma.ListEnumSeasonBillingTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSeasonBillingTypeFilter<$PrismaModel> | $Enums.SeasonBillingType
+}
+
+export type NestedEnumBillingFrequencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.BillingFrequency | Prisma.EnumBillingFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BillingFrequency[] | Prisma.ListEnumBillingFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBillingFrequencyFilter<$PrismaModel> | $Enums.BillingFrequency
 }
 
 export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -981,16 +1076,6 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
-}
-
-export type NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.StatusTeamSeason | Prisma.EnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StatusTeamSeason[] | Prisma.ListEnumStatusTeamSeasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStatusTeamSeasonWithAggregatesFilter<$PrismaModel> | $Enums.StatusTeamSeason
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumStatusTeamSeasonFilter<$PrismaModel>
 }
 
 export type NestedEnumSeasonBillingTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -1028,6 +1113,23 @@ export type NestedEnumPlayerMembershipStatusWithAggregatesFilter<$PrismaModel = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPlayerMembershipStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel> | $Enums.PlayerMembershipStatus | null
+}
+
+export type NestedEnumPlayerMembershipStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerMembershipStatus | Prisma.EnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayerMembershipStatus[] | Prisma.ListEnumPlayerMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayerMembershipStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.PlayerMembershipStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerMembershipStatusNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumMembershipDiscountTypeFilter<$PrismaModel = never> = {

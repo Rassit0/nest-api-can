@@ -31,14 +31,6 @@ export type TeamSeasonAvgAggregateOutputType = {
   minMembers: number | null
   minBirthYear: number | null
   maxBirthYear: number | null
-  billingDay: number | null
-  registrationFee: runtime.Decimal | null
-  recurringFee: runtime.Decimal | null
-  debtToleranceMonths: number | null
-  lateFeePerDay: runtime.Decimal | null
-  graceDays: number | null
-  seasonFee: runtime.Decimal | null
-  chargeGenerationDaysBefore: number | null
 }
 
 export type TeamSeasonSumAggregateOutputType = {
@@ -46,14 +38,6 @@ export type TeamSeasonSumAggregateOutputType = {
   minMembers: number | null
   minBirthYear: number | null
   maxBirthYear: number | null
-  billingDay: number | null
-  registrationFee: runtime.Decimal | null
-  recurringFee: runtime.Decimal | null
-  debtToleranceMonths: number | null
-  lateFeePerDay: runtime.Decimal | null
-  graceDays: number | null
-  seasonFee: runtime.Decimal | null
-  chargeGenerationDaysBefore: number | null
 }
 
 export type TeamSeasonMinAggregateOutputType = {
@@ -68,22 +52,8 @@ export type TeamSeasonMinAggregateOutputType = {
   categoryId: string | null
   seasonId: string | null
   gender: $Enums.ProgramGender | null
-  billingDay: number | null
-  registrationFee: runtime.Decimal | null
-  recurringFee: runtime.Decimal | null
-  debtToleranceMonths: number | null
-  lateFeeEnabled: boolean | null
-  lateFeePerDay: runtime.Decimal | null
-  graceDays: number | null
   status: $Enums.StatusTeamSeason | null
-  seasonFee: runtime.Decimal | null
-  billingType: $Enums.SeasonBillingType | null
-  billingFrequency: $Enums.BillingFrequency | null
-  prorateFirstRecurringFee: boolean | null
-  prorateLastRecurringFee: boolean | null
-  prorateRegistrationFee: boolean | null
-  prorateSeasonFee: boolean | null
-  chargeGenerationDaysBefore: number | null
+  statusNotes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -100,22 +70,8 @@ export type TeamSeasonMaxAggregateOutputType = {
   categoryId: string | null
   seasonId: string | null
   gender: $Enums.ProgramGender | null
-  billingDay: number | null
-  registrationFee: runtime.Decimal | null
-  recurringFee: runtime.Decimal | null
-  debtToleranceMonths: number | null
-  lateFeeEnabled: boolean | null
-  lateFeePerDay: runtime.Decimal | null
-  graceDays: number | null
   status: $Enums.StatusTeamSeason | null
-  seasonFee: runtime.Decimal | null
-  billingType: $Enums.SeasonBillingType | null
-  billingFrequency: $Enums.BillingFrequency | null
-  prorateFirstRecurringFee: boolean | null
-  prorateLastRecurringFee: boolean | null
-  prorateRegistrationFee: boolean | null
-  prorateSeasonFee: boolean | null
-  chargeGenerationDaysBefore: number | null
+  statusNotes: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -132,22 +88,8 @@ export type TeamSeasonCountAggregateOutputType = {
   categoryId: number
   seasonId: number
   gender: number
-  billingDay: number
-  registrationFee: number
-  recurringFee: number
-  debtToleranceMonths: number
-  lateFeeEnabled: number
-  lateFeePerDay: number
-  graceDays: number
   status: number
-  seasonFee: number
-  billingType: number
-  billingFrequency: number
-  prorateFirstRecurringFee: number
-  prorateLastRecurringFee: number
-  prorateRegistrationFee: number
-  prorateSeasonFee: number
-  chargeGenerationDaysBefore: number
+  statusNotes: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -159,14 +101,6 @@ export type TeamSeasonAvgAggregateInputType = {
   minMembers?: true
   minBirthYear?: true
   maxBirthYear?: true
-  billingDay?: true
-  registrationFee?: true
-  recurringFee?: true
-  debtToleranceMonths?: true
-  lateFeePerDay?: true
-  graceDays?: true
-  seasonFee?: true
-  chargeGenerationDaysBefore?: true
 }
 
 export type TeamSeasonSumAggregateInputType = {
@@ -174,14 +108,6 @@ export type TeamSeasonSumAggregateInputType = {
   minMembers?: true
   minBirthYear?: true
   maxBirthYear?: true
-  billingDay?: true
-  registrationFee?: true
-  recurringFee?: true
-  debtToleranceMonths?: true
-  lateFeePerDay?: true
-  graceDays?: true
-  seasonFee?: true
-  chargeGenerationDaysBefore?: true
 }
 
 export type TeamSeasonMinAggregateInputType = {
@@ -196,22 +122,8 @@ export type TeamSeasonMinAggregateInputType = {
   categoryId?: true
   seasonId?: true
   gender?: true
-  billingDay?: true
-  registrationFee?: true
-  recurringFee?: true
-  debtToleranceMonths?: true
-  lateFeeEnabled?: true
-  lateFeePerDay?: true
-  graceDays?: true
   status?: true
-  seasonFee?: true
-  billingType?: true
-  billingFrequency?: true
-  prorateFirstRecurringFee?: true
-  prorateLastRecurringFee?: true
-  prorateRegistrationFee?: true
-  prorateSeasonFee?: true
-  chargeGenerationDaysBefore?: true
+  statusNotes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -228,22 +140,8 @@ export type TeamSeasonMaxAggregateInputType = {
   categoryId?: true
   seasonId?: true
   gender?: true
-  billingDay?: true
-  registrationFee?: true
-  recurringFee?: true
-  debtToleranceMonths?: true
-  lateFeeEnabled?: true
-  lateFeePerDay?: true
-  graceDays?: true
   status?: true
-  seasonFee?: true
-  billingType?: true
-  billingFrequency?: true
-  prorateFirstRecurringFee?: true
-  prorateLastRecurringFee?: true
-  prorateRegistrationFee?: true
-  prorateSeasonFee?: true
-  chargeGenerationDaysBefore?: true
+  statusNotes?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -260,22 +158,8 @@ export type TeamSeasonCountAggregateInputType = {
   categoryId?: true
   seasonId?: true
   gender?: true
-  billingDay?: true
-  registrationFee?: true
-  recurringFee?: true
-  debtToleranceMonths?: true
-  lateFeeEnabled?: true
-  lateFeePerDay?: true
-  graceDays?: true
   status?: true
-  seasonFee?: true
-  billingType?: true
-  billingFrequency?: true
-  prorateFirstRecurringFee?: true
-  prorateLastRecurringFee?: true
-  prorateRegistrationFee?: true
-  prorateSeasonFee?: true
-  chargeGenerationDaysBefore?: true
+  statusNotes?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -379,22 +263,8 @@ export type TeamSeasonGroupByOutputType = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee: runtime.Decimal | null
-  recurringFee: runtime.Decimal | null
-  debtToleranceMonths: number
-  lateFeeEnabled: boolean
-  lateFeePerDay: runtime.Decimal
-  graceDays: number
   status: $Enums.StatusTeamSeason
-  seasonFee: runtime.Decimal | null
-  billingType: $Enums.SeasonBillingType
-  billingFrequency: $Enums.BillingFrequency
-  prorateFirstRecurringFee: boolean
-  prorateLastRecurringFee: boolean
-  prorateRegistrationFee: boolean
-  prorateSeasonFee: boolean
-  chargeGenerationDaysBefore: number
+  statusNotes: string | null
   createdAt: Date
   updatedAt: Date
   _count: TeamSeasonCountAggregateOutputType | null
@@ -434,22 +304,8 @@ export type TeamSeasonWhereInput = {
   categoryId?: Prisma.StringFilter<"TeamSeason"> | string
   seasonId?: Prisma.StringFilter<"TeamSeason"> | string
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
-  billingDay?: Prisma.IntFilter<"TeamSeason"> | number
-  registrationFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFilter<"TeamSeason"> | number
-  lateFeeEnabled?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  lateFeePerDay?: Prisma.DecimalFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFilter<"TeamSeason"> | number
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFilter<"TeamSeason"> | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFilter<"TeamSeason"> | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateLastRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateRegistrationFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateSeasonFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFilter<"TeamSeason"> | number
+  statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -461,6 +317,8 @@ export type TeamSeasonWhereInput = {
   sessionTeams?: Prisma.SessionTeamListRelationFilter
   scheduleTeams?: Prisma.ScheduleTeamListRelationFilter
   matches?: Prisma.MatchListRelationFilter
+  billingConfig?: Prisma.XOR<Prisma.TeamSeasonBillingConfigNullableScalarRelationFilter, Prisma.TeamSeasonBillingConfigWhereInput> | null
+  teamSeasonPauses?: Prisma.TeamSeasonPauseListRelationFilter
 }
 
 export type TeamSeasonOrderByWithRelationInput = {
@@ -475,22 +333,8 @@ export type TeamSeasonOrderByWithRelationInput = {
   categoryId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  recurringFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeeEnabled?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  billingType?: Prisma.SortOrder
-  billingFrequency?: Prisma.SortOrder
-  prorateFirstRecurringFee?: Prisma.SortOrder
-  prorateLastRecurringFee?: Prisma.SortOrder
-  prorateRegistrationFee?: Prisma.SortOrder
-  prorateSeasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
+  statusNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -502,6 +346,8 @@ export type TeamSeasonOrderByWithRelationInput = {
   sessionTeams?: Prisma.SessionTeamOrderByRelationAggregateInput
   scheduleTeams?: Prisma.ScheduleTeamOrderByRelationAggregateInput
   matches?: Prisma.MatchOrderByRelationAggregateInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigOrderByWithRelationInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseOrderByRelationAggregateInput
 }
 
 export type TeamSeasonWhereUniqueInput = Prisma.AtLeast<{
@@ -520,22 +366,8 @@ export type TeamSeasonWhereUniqueInput = Prisma.AtLeast<{
   categoryId?: Prisma.StringFilter<"TeamSeason"> | string
   seasonId?: Prisma.StringFilter<"TeamSeason"> | string
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
-  billingDay?: Prisma.IntFilter<"TeamSeason"> | number
-  registrationFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFilter<"TeamSeason"> | number
-  lateFeeEnabled?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  lateFeePerDay?: Prisma.DecimalFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFilter<"TeamSeason"> | number
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFilter<"TeamSeason"> | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFilter<"TeamSeason"> | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateLastRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateRegistrationFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateSeasonFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFilter<"TeamSeason"> | number
+  statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -547,6 +379,8 @@ export type TeamSeasonWhereUniqueInput = Prisma.AtLeast<{
   sessionTeams?: Prisma.SessionTeamListRelationFilter
   scheduleTeams?: Prisma.ScheduleTeamListRelationFilter
   matches?: Prisma.MatchListRelationFilter
+  billingConfig?: Prisma.XOR<Prisma.TeamSeasonBillingConfigNullableScalarRelationFilter, Prisma.TeamSeasonBillingConfigWhereInput> | null
+  teamSeasonPauses?: Prisma.TeamSeasonPauseListRelationFilter
 }, "id" | "teamId_categoryId_seasonId_gender">
 
 export type TeamSeasonOrderByWithAggregationInput = {
@@ -561,22 +395,8 @@ export type TeamSeasonOrderByWithAggregationInput = {
   categoryId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  recurringFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeeEnabled?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrderInput | Prisma.SortOrder
-  billingType?: Prisma.SortOrder
-  billingFrequency?: Prisma.SortOrder
-  prorateFirstRecurringFee?: Prisma.SortOrder
-  prorateLastRecurringFee?: Prisma.SortOrder
-  prorateRegistrationFee?: Prisma.SortOrder
-  prorateSeasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
+  statusNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TeamSeasonCountOrderByAggregateInput
@@ -601,22 +421,8 @@ export type TeamSeasonScalarWhereWithAggregatesInput = {
   categoryId?: Prisma.StringWithAggregatesFilter<"TeamSeason"> | string
   seasonId?: Prisma.StringWithAggregatesFilter<"TeamSeason"> | string
   gender?: Prisma.EnumProgramGenderWithAggregatesFilter<"TeamSeason"> | $Enums.ProgramGender
-  billingDay?: Prisma.IntWithAggregatesFilter<"TeamSeason"> | number
-  registrationFee?: Prisma.DecimalNullableWithAggregatesFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.DecimalNullableWithAggregatesFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntWithAggregatesFilter<"TeamSeason"> | number
-  lateFeeEnabled?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
-  lateFeePerDay?: Prisma.DecimalWithAggregatesFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntWithAggregatesFilter<"TeamSeason"> | number
   status?: Prisma.EnumStatusTeamSeasonWithAggregatesFilter<"TeamSeason"> | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.DecimalNullableWithAggregatesFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeWithAggregatesFilter<"TeamSeason"> | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyWithAggregatesFilter<"TeamSeason"> | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
-  prorateLastRecurringFee?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
-  prorateRegistrationFee?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
-  prorateSeasonFee?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
-  chargeGenerationDaysBefore?: Prisma.IntWithAggregatesFilter<"TeamSeason"> | number
+  statusNotes?: Prisma.StringNullableWithAggregatesFilter<"TeamSeason"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeason"> | Date | string
 }
@@ -630,22 +436,8 @@ export type TeamSeasonCreateInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -657,6 +449,8 @@ export type TeamSeasonCreateInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateInput = {
@@ -671,22 +465,8 @@ export type TeamSeasonUncheckedCreateInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -695,6 +475,8 @@ export type TeamSeasonUncheckedCreateInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUpdateInput = {
@@ -706,22 +488,8 @@ export type TeamSeasonUpdateInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -733,6 +501,8 @@ export type TeamSeasonUpdateInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateInput = {
@@ -747,22 +517,8 @@ export type TeamSeasonUncheckedUpdateInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -771,6 +527,8 @@ export type TeamSeasonUncheckedUpdateInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateManyInput = {
@@ -785,22 +543,8 @@ export type TeamSeasonCreateManyInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -814,22 +558,8 @@ export type TeamSeasonUpdateManyMutationInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -846,22 +576,8 @@ export type TeamSeasonUncheckedUpdateManyInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -895,22 +611,8 @@ export type TeamSeasonCountOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrder
-  recurringFee?: Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeeEnabled?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrder
-  billingType?: Prisma.SortOrder
-  billingFrequency?: Prisma.SortOrder
-  prorateFirstRecurringFee?: Prisma.SortOrder
-  prorateLastRecurringFee?: Prisma.SortOrder
-  prorateRegistrationFee?: Prisma.SortOrder
-  prorateSeasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
+  statusNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -920,14 +622,6 @@ export type TeamSeasonAvgOrderByAggregateInput = {
   minMembers?: Prisma.SortOrder
   minBirthYear?: Prisma.SortOrder
   maxBirthYear?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrder
-  recurringFee?: Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
 }
 
 export type TeamSeasonMaxOrderByAggregateInput = {
@@ -942,22 +636,8 @@ export type TeamSeasonMaxOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrder
-  recurringFee?: Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeeEnabled?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrder
-  billingType?: Prisma.SortOrder
-  billingFrequency?: Prisma.SortOrder
-  prorateFirstRecurringFee?: Prisma.SortOrder
-  prorateLastRecurringFee?: Prisma.SortOrder
-  prorateRegistrationFee?: Prisma.SortOrder
-  prorateSeasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
+  statusNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -974,22 +654,8 @@ export type TeamSeasonMinOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrder
-  recurringFee?: Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeeEnabled?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrder
-  billingType?: Prisma.SortOrder
-  billingFrequency?: Prisma.SortOrder
-  prorateFirstRecurringFee?: Prisma.SortOrder
-  prorateLastRecurringFee?: Prisma.SortOrder
-  prorateRegistrationFee?: Prisma.SortOrder
-  prorateSeasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
+  statusNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -999,24 +665,16 @@ export type TeamSeasonSumOrderByAggregateInput = {
   minMembers?: Prisma.SortOrder
   minBirthYear?: Prisma.SortOrder
   maxBirthYear?: Prisma.SortOrder
-  billingDay?: Prisma.SortOrder
-  registrationFee?: Prisma.SortOrder
-  recurringFee?: Prisma.SortOrder
-  debtToleranceMonths?: Prisma.SortOrder
-  lateFeePerDay?: Prisma.SortOrder
-  graceDays?: Prisma.SortOrder
-  seasonFee?: Prisma.SortOrder
-  chargeGenerationDaysBefore?: Prisma.SortOrder
-}
-
-export type TeamSeasonNullableScalarRelationFilter = {
-  is?: Prisma.TeamSeasonWhereInput | null
-  isNot?: Prisma.TeamSeasonWhereInput | null
 }
 
 export type TeamSeasonScalarRelationFilter = {
   is?: Prisma.TeamSeasonWhereInput
   isNot?: Prisma.TeamSeasonWhereInput
+}
+
+export type TeamSeasonNullableScalarRelationFilter = {
+  is?: Prisma.TeamSeasonWhereInput | null
+  isNot?: Prisma.TeamSeasonWhereInput | null
 }
 
 export type TeamSeasonCreateNestedManyWithoutCategoryInput = {
@@ -1157,32 +815,22 @@ export type EnumProgramGenderFieldUpdateOperationsInput = {
   set?: $Enums.ProgramGender
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type EnumStatusTeamSeasonFieldUpdateOperationsInput = {
   set?: $Enums.StatusTeamSeason
 }
 
-export type EnumSeasonBillingTypeFieldUpdateOperationsInput = {
-  set?: $Enums.SeasonBillingType
+export type TeamSeasonCreateNestedOneWithoutBillingConfigInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCreateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedCreateWithoutBillingConfigInput>
+  connectOrCreate?: Prisma.TeamSeasonCreateOrConnectWithoutBillingConfigInput
+  connect?: Prisma.TeamSeasonWhereUniqueInput
 }
 
-export type EnumBillingFrequencyFieldUpdateOperationsInput = {
-  set?: $Enums.BillingFrequency
+export type TeamSeasonUpdateOneRequiredWithoutBillingConfigNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCreateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedCreateWithoutBillingConfigInput>
+  connectOrCreate?: Prisma.TeamSeasonCreateOrConnectWithoutBillingConfigInput
+  upsert?: Prisma.TeamSeasonUpsertWithoutBillingConfigInput
+  connect?: Prisma.TeamSeasonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonUpdateToOneWithWhereWithoutBillingConfigInput, Prisma.TeamSeasonUpdateWithoutBillingConfigInput>, Prisma.TeamSeasonUncheckedUpdateWithoutBillingConfigInput>
 }
 
 export type TeamSeasonCreateNestedOneWithoutPaymentPlansInput = {
@@ -1227,6 +875,20 @@ export type TeamSeasonUpdateOneRequiredWithoutTeamSeasonStaffsNestedInput = {
   upsert?: Prisma.TeamSeasonUpsertWithoutTeamSeasonStaffsInput
   connect?: Prisma.TeamSeasonWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonUpdateToOneWithWhereWithoutTeamSeasonStaffsInput, Prisma.TeamSeasonUpdateWithoutTeamSeasonStaffsInput>, Prisma.TeamSeasonUncheckedUpdateWithoutTeamSeasonStaffsInput>
+}
+
+export type TeamSeasonCreateNestedOneWithoutTeamSeasonPausesInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCreateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput>
+  connectOrCreate?: Prisma.TeamSeasonCreateOrConnectWithoutTeamSeasonPausesInput
+  connect?: Prisma.TeamSeasonWhereUniqueInput
+}
+
+export type TeamSeasonUpdateOneRequiredWithoutTeamSeasonPausesNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCreateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput>
+  connectOrCreate?: Prisma.TeamSeasonCreateOrConnectWithoutTeamSeasonPausesInput
+  upsert?: Prisma.TeamSeasonUpsertWithoutTeamSeasonPausesInput
+  connect?: Prisma.TeamSeasonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonUpdateToOneWithWhereWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUpdateWithoutTeamSeasonPausesInput>, Prisma.TeamSeasonUncheckedUpdateWithoutTeamSeasonPausesInput>
 }
 
 export type TeamSeasonCreateNestedOneWithoutSessionTeamsInput = {
@@ -1280,22 +942,8 @@ export type TeamSeasonCreateWithoutCategoryInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1306,6 +954,8 @@ export type TeamSeasonCreateWithoutCategoryInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutCategoryInput = {
@@ -1319,22 +969,8 @@ export type TeamSeasonUncheckedCreateWithoutCategoryInput = {
   teamId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1343,6 +979,8 @@ export type TeamSeasonUncheckedCreateWithoutCategoryInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutCategoryInput = {
@@ -1386,22 +1024,8 @@ export type TeamSeasonScalarWhereInput = {
   categoryId?: Prisma.StringFilter<"TeamSeason"> | string
   seasonId?: Prisma.StringFilter<"TeamSeason"> | string
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
-  billingDay?: Prisma.IntFilter<"TeamSeason"> | number
-  registrationFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFilter<"TeamSeason"> | number
-  lateFeeEnabled?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  lateFeePerDay?: Prisma.DecimalFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFilter<"TeamSeason"> | number
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.DecimalNullableFilter<"TeamSeason"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFilter<"TeamSeason"> | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFilter<"TeamSeason"> | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateLastRecurringFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateRegistrationFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  prorateSeasonFee?: Prisma.BoolFilter<"TeamSeason"> | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFilter<"TeamSeason"> | number
+  statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
 }
@@ -1415,22 +1039,8 @@ export type TeamSeasonCreateWithoutSeasonInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1441,6 +1051,8 @@ export type TeamSeasonCreateWithoutSeasonInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutSeasonInput = {
@@ -1454,22 +1066,8 @@ export type TeamSeasonUncheckedCreateWithoutSeasonInput = {
   teamId: string
   categoryId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1478,6 +1076,8 @@ export type TeamSeasonUncheckedCreateWithoutSeasonInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutSeasonInput = {
@@ -1515,22 +1115,8 @@ export type TeamSeasonCreateWithoutTeamInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonsInput
@@ -1541,6 +1127,8 @@ export type TeamSeasonCreateWithoutTeamInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutTeamInput = {
@@ -1554,22 +1142,8 @@ export type TeamSeasonUncheckedCreateWithoutTeamInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1578,6 +1152,8 @@ export type TeamSeasonUncheckedCreateWithoutTeamInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutTeamInput = {
@@ -1606,6 +1182,122 @@ export type TeamSeasonUpdateManyWithWhereWithoutTeamInput = {
   data: Prisma.XOR<Prisma.TeamSeasonUpdateManyMutationInput, Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamInput>
 }
 
+export type TeamSeasonCreateWithoutBillingConfigInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusTeamSeason
+  statusNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
+  category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonsInput
+  season: Prisma.SeasonCreateNestedOneWithoutTeamSeasonsInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutTeamSeasonInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutTeamSeasonsInput
+  playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
+  scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
+  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
+}
+
+export type TeamSeasonUncheckedCreateWithoutBillingConfigInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  teamId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusTeamSeason
+  statusNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutTeamSeasonsInput
+  playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
+  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
+}
+
+export type TeamSeasonCreateOrConnectWithoutBillingConfigInput = {
+  where: Prisma.TeamSeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamSeasonCreateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedCreateWithoutBillingConfigInput>
+}
+
+export type TeamSeasonUpsertWithoutBillingConfigInput = {
+  update: Prisma.XOR<Prisma.TeamSeasonUpdateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedUpdateWithoutBillingConfigInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCreateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedCreateWithoutBillingConfigInput>
+  where?: Prisma.TeamSeasonWhereInput
+}
+
+export type TeamSeasonUpdateToOneWithWhereWithoutBillingConfigInput = {
+  where?: Prisma.TeamSeasonWhereInput
+  data: Prisma.XOR<Prisma.TeamSeasonUpdateWithoutBillingConfigInput, Prisma.TeamSeasonUncheckedUpdateWithoutBillingConfigInput>
+}
+
+export type TeamSeasonUpdateWithoutBillingConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutTeamSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutTeamSeasonsNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
+  scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
+  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
+}
+
+export type TeamSeasonUncheckedUpdateWithoutBillingConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
+}
+
 export type TeamSeasonCreateWithoutPaymentPlansInput = {
   id?: string
   imageUrl?: string | null
@@ -1615,22 +1307,8 @@ export type TeamSeasonCreateWithoutPaymentPlansInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1641,6 +1319,8 @@ export type TeamSeasonCreateWithoutPaymentPlansInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutPaymentPlansInput = {
@@ -1655,22 +1335,8 @@ export type TeamSeasonUncheckedCreateWithoutPaymentPlansInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1678,6 +1344,8 @@ export type TeamSeasonUncheckedCreateWithoutPaymentPlansInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutPaymentPlansInput = {
@@ -1705,22 +1373,8 @@ export type TeamSeasonUpdateWithoutPaymentPlansInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1731,6 +1385,8 @@ export type TeamSeasonUpdateWithoutPaymentPlansInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutPaymentPlansInput = {
@@ -1745,22 +1401,8 @@ export type TeamSeasonUncheckedUpdateWithoutPaymentPlansInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1768,6 +1410,8 @@ export type TeamSeasonUncheckedUpdateWithoutPaymentPlansInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateWithoutPlayerMembershipsInput = {
@@ -1779,22 +1423,8 @@ export type TeamSeasonCreateWithoutPlayerMembershipsInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1805,6 +1435,8 @@ export type TeamSeasonCreateWithoutPlayerMembershipsInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutPlayerMembershipsInput = {
@@ -1819,22 +1451,8 @@ export type TeamSeasonUncheckedCreateWithoutPlayerMembershipsInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1842,6 +1460,8 @@ export type TeamSeasonUncheckedCreateWithoutPlayerMembershipsInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutPlayerMembershipsInput = {
@@ -1869,22 +1489,8 @@ export type TeamSeasonUpdateWithoutPlayerMembershipsInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1895,6 +1501,8 @@ export type TeamSeasonUpdateWithoutPlayerMembershipsInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutPlayerMembershipsInput = {
@@ -1909,22 +1517,8 @@ export type TeamSeasonUncheckedUpdateWithoutPlayerMembershipsInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1932,6 +1526,8 @@ export type TeamSeasonUncheckedUpdateWithoutPlayerMembershipsInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateWithoutTeamSeasonStaffsInput = {
@@ -1943,22 +1539,8 @@ export type TeamSeasonCreateWithoutTeamSeasonStaffsInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1969,6 +1551,8 @@ export type TeamSeasonCreateWithoutTeamSeasonStaffsInput = {
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutTeamSeasonStaffsInput = {
@@ -1983,22 +1567,8 @@ export type TeamSeasonUncheckedCreateWithoutTeamSeasonStaffsInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutTeamSeasonsInput
@@ -2006,6 +1576,8 @@ export type TeamSeasonUncheckedCreateWithoutTeamSeasonStaffsInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutTeamSeasonStaffsInput = {
@@ -2033,22 +1605,8 @@ export type TeamSeasonUpdateWithoutTeamSeasonStaffsInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2059,6 +1617,8 @@ export type TeamSeasonUpdateWithoutTeamSeasonStaffsInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutTeamSeasonStaffsInput = {
@@ -2073,22 +1633,8 @@ export type TeamSeasonUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsNestedInput
@@ -2096,6 +1642,124 @@ export type TeamSeasonUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
+}
+
+export type TeamSeasonCreateWithoutTeamSeasonPausesInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusTeamSeason
+  statusNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
+  category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonsInput
+  season: Prisma.SeasonCreateNestedOneWithoutTeamSeasonsInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutTeamSeasonInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutTeamSeasonsInput
+  playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
+  scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
+  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+}
+
+export type TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  teamId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusTeamSeason
+  statusNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutTeamSeasonsInput
+  playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
+  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+}
+
+export type TeamSeasonCreateOrConnectWithoutTeamSeasonPausesInput = {
+  where: Prisma.TeamSeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamSeasonCreateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput>
+}
+
+export type TeamSeasonUpsertWithoutTeamSeasonPausesInput = {
+  update: Prisma.XOR<Prisma.TeamSeasonUpdateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedUpdateWithoutTeamSeasonPausesInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCreateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput>
+  where?: Prisma.TeamSeasonWhereInput
+}
+
+export type TeamSeasonUpdateToOneWithWhereWithoutTeamSeasonPausesInput = {
+  where?: Prisma.TeamSeasonWhereInput
+  data: Prisma.XOR<Prisma.TeamSeasonUpdateWithoutTeamSeasonPausesInput, Prisma.TeamSeasonUncheckedUpdateWithoutTeamSeasonPausesInput>
+}
+
+export type TeamSeasonUpdateWithoutTeamSeasonPausesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutTeamSeasonsNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutTeamSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutTeamSeasonsNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
+  scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
+  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+}
+
+export type TeamSeasonUncheckedUpdateWithoutTeamSeasonPausesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateWithoutSessionTeamsInput = {
@@ -2107,22 +1771,8 @@ export type TeamSeasonCreateWithoutSessionTeamsInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -2133,6 +1783,8 @@ export type TeamSeasonCreateWithoutSessionTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutSessionTeamsInput = {
@@ -2147,22 +1799,8 @@ export type TeamSeasonUncheckedCreateWithoutSessionTeamsInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -2170,6 +1808,8 @@ export type TeamSeasonUncheckedCreateWithoutSessionTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutSessionTeamsInput = {
@@ -2197,22 +1837,8 @@ export type TeamSeasonUpdateWithoutSessionTeamsInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2223,6 +1849,8 @@ export type TeamSeasonUpdateWithoutSessionTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutSessionTeamsInput = {
@@ -2237,22 +1865,8 @@ export type TeamSeasonUncheckedUpdateWithoutSessionTeamsInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2260,6 +1874,8 @@ export type TeamSeasonUncheckedUpdateWithoutSessionTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateWithoutScheduleTeamsInput = {
@@ -2271,22 +1887,8 @@ export type TeamSeasonCreateWithoutScheduleTeamsInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -2297,6 +1899,8 @@ export type TeamSeasonCreateWithoutScheduleTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonInput
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutScheduleTeamsInput = {
@@ -2311,22 +1915,8 @@ export type TeamSeasonUncheckedCreateWithoutScheduleTeamsInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -2334,6 +1924,8 @@ export type TeamSeasonUncheckedCreateWithoutScheduleTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutScheduleTeamsInput = {
@@ -2361,22 +1953,8 @@ export type TeamSeasonUpdateWithoutScheduleTeamsInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2387,6 +1965,8 @@ export type TeamSeasonUpdateWithoutScheduleTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutScheduleTeamsInput = {
@@ -2401,22 +1981,8 @@ export type TeamSeasonUncheckedUpdateWithoutScheduleTeamsInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2424,6 +1990,8 @@ export type TeamSeasonUncheckedUpdateWithoutScheduleTeamsInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateWithoutMatchesInput = {
@@ -2435,22 +2003,8 @@ export type TeamSeasonCreateWithoutMatchesInput = {
   minBirthYear?: number | null
   maxBirthYear?: number | null
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -2461,6 +2015,8 @@ export type TeamSeasonCreateWithoutMatchesInput = {
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonInput
   sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonUncheckedCreateWithoutMatchesInput = {
@@ -2475,22 +2031,8 @@ export type TeamSeasonUncheckedCreateWithoutMatchesInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -2498,6 +2040,8 @@ export type TeamSeasonUncheckedCreateWithoutMatchesInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonInput
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedCreateNestedManyWithoutTeamSeasonInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedOneWithoutTeamSeasonInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutTeamSeasonInput
 }
 
 export type TeamSeasonCreateOrConnectWithoutMatchesInput = {
@@ -2525,22 +2069,8 @@ export type TeamSeasonUpdateWithoutMatchesInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2551,6 +2081,8 @@ export type TeamSeasonUpdateWithoutMatchesInput = {
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutMatchesInput = {
@@ -2565,22 +2097,8 @@ export type TeamSeasonUncheckedUpdateWithoutMatchesInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2588,6 +2106,8 @@ export type TeamSeasonUncheckedUpdateWithoutMatchesInput = {
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonNestedInput
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonCreateManyCategoryInput = {
@@ -2601,22 +2121,8 @@ export type TeamSeasonCreateManyCategoryInput = {
   teamId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2630,22 +2136,8 @@ export type TeamSeasonUpdateWithoutCategoryInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2656,6 +2148,8 @@ export type TeamSeasonUpdateWithoutCategoryInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutCategoryInput = {
@@ -2669,22 +2163,8 @@ export type TeamSeasonUncheckedUpdateWithoutCategoryInput = {
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2693,6 +2173,8 @@ export type TeamSeasonUncheckedUpdateWithoutCategoryInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateManyWithoutCategoryInput = {
@@ -2706,22 +2188,8 @@ export type TeamSeasonUncheckedUpdateManyWithoutCategoryInput = {
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2737,22 +2205,8 @@ export type TeamSeasonCreateManySeasonInput = {
   teamId: string
   categoryId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2766,22 +2220,8 @@ export type TeamSeasonUpdateWithoutSeasonInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2792,6 +2232,8 @@ export type TeamSeasonUpdateWithoutSeasonInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutSeasonInput = {
@@ -2805,22 +2247,8 @@ export type TeamSeasonUncheckedUpdateWithoutSeasonInput = {
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2829,6 +2257,8 @@ export type TeamSeasonUncheckedUpdateWithoutSeasonInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateManyWithoutSeasonInput = {
@@ -2842,22 +2272,8 @@ export type TeamSeasonUncheckedUpdateManyWithoutSeasonInput = {
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2873,22 +2289,8 @@ export type TeamSeasonCreateManyTeamInput = {
   categoryId: string
   seasonId: string
   gender: $Enums.ProgramGender
-  billingDay: number
-  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: number
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: number
   status?: $Enums.StatusTeamSeason
-  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: $Enums.SeasonBillingType
-  billingFrequency?: $Enums.BillingFrequency
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: number
+  statusNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2902,22 +2304,8 @@ export type TeamSeasonUpdateWithoutTeamInput = {
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2928,6 +2316,8 @@ export type TeamSeasonUpdateWithoutTeamInput = {
   sessionTeams?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateWithoutTeamInput = {
@@ -2941,22 +2331,8 @@ export type TeamSeasonUncheckedUpdateWithoutTeamInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2965,6 +2341,8 @@ export type TeamSeasonUncheckedUpdateWithoutTeamInput = {
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   scheduleTeams?: Prisma.ScheduleTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput
+  billingConfig?: Prisma.TeamSeasonBillingConfigUncheckedUpdateOneWithoutTeamSeasonNestedInput
+  teamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutTeamSeasonNestedInput
 }
 
 export type TeamSeasonUncheckedUpdateManyWithoutTeamInput = {
@@ -2978,22 +2356,8 @@ export type TeamSeasonUncheckedUpdateManyWithoutTeamInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
-  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
-  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
-  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
-  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
-  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
-  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3010,6 +2374,7 @@ export type TeamSeasonCountOutputType = {
   sessionTeams: number
   scheduleTeams: number
   matches: number
+  teamSeasonPauses: number
 }
 
 export type TeamSeasonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3019,6 +2384,7 @@ export type TeamSeasonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extens
   sessionTeams?: boolean | TeamSeasonCountOutputTypeCountSessionTeamsArgs
   scheduleTeams?: boolean | TeamSeasonCountOutputTypeCountScheduleTeamsArgs
   matches?: boolean | TeamSeasonCountOutputTypeCountMatchesArgs
+  teamSeasonPauses?: boolean | TeamSeasonCountOutputTypeCountTeamSeasonPausesArgs
 }
 
 /**
@@ -3073,6 +2439,13 @@ export type TeamSeasonCountOutputTypeCountMatchesArgs<ExtArgs extends runtime.Ty
   where?: Prisma.MatchWhereInput
 }
 
+/**
+ * TeamSeasonCountOutputType without action
+ */
+export type TeamSeasonCountOutputTypeCountTeamSeasonPausesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamSeasonPauseWhereInput
+}
+
 
 export type TeamSeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3086,22 +2459,8 @@ export type TeamSeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   categoryId?: boolean
   seasonId?: boolean
   gender?: boolean
-  billingDay?: boolean
-  registrationFee?: boolean
-  recurringFee?: boolean
-  debtToleranceMonths?: boolean
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: boolean
-  graceDays?: boolean
   status?: boolean
-  seasonFee?: boolean
-  billingType?: boolean
-  billingFrequency?: boolean
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: boolean
+  statusNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -3113,6 +2472,8 @@ export type TeamSeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   sessionTeams?: boolean | Prisma.TeamSeason$sessionTeamsArgs<ExtArgs>
   scheduleTeams?: boolean | Prisma.TeamSeason$scheduleTeamsArgs<ExtArgs>
   matches?: boolean | Prisma.TeamSeason$matchesArgs<ExtArgs>
+  billingConfig?: boolean | Prisma.TeamSeason$billingConfigArgs<ExtArgs>
+  teamSeasonPauses?: boolean | Prisma.TeamSeason$teamSeasonPausesArgs<ExtArgs>
   _count?: boolean | Prisma.TeamSeasonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeason"]>
 
@@ -3128,22 +2489,8 @@ export type TeamSeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   categoryId?: boolean
   seasonId?: boolean
   gender?: boolean
-  billingDay?: boolean
-  registrationFee?: boolean
-  recurringFee?: boolean
-  debtToleranceMonths?: boolean
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: boolean
-  graceDays?: boolean
   status?: boolean
-  seasonFee?: boolean
-  billingType?: boolean
-  billingFrequency?: boolean
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: boolean
+  statusNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -3163,22 +2510,8 @@ export type TeamSeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   categoryId?: boolean
   seasonId?: boolean
   gender?: boolean
-  billingDay?: boolean
-  registrationFee?: boolean
-  recurringFee?: boolean
-  debtToleranceMonths?: boolean
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: boolean
-  graceDays?: boolean
   status?: boolean
-  seasonFee?: boolean
-  billingType?: boolean
-  billingFrequency?: boolean
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: boolean
+  statusNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -3198,27 +2531,13 @@ export type TeamSeasonSelectScalar = {
   categoryId?: boolean
   seasonId?: boolean
   gender?: boolean
-  billingDay?: boolean
-  registrationFee?: boolean
-  recurringFee?: boolean
-  debtToleranceMonths?: boolean
-  lateFeeEnabled?: boolean
-  lateFeePerDay?: boolean
-  graceDays?: boolean
   status?: boolean
-  seasonFee?: boolean
-  billingType?: boolean
-  billingFrequency?: boolean
-  prorateFirstRecurringFee?: boolean
-  prorateLastRecurringFee?: boolean
-  prorateRegistrationFee?: boolean
-  prorateSeasonFee?: boolean
-  chargeGenerationDaysBefore?: boolean
+  statusNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TeamSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "teamId" | "categoryId" | "seasonId" | "gender" | "billingDay" | "registrationFee" | "recurringFee" | "debtToleranceMonths" | "lateFeeEnabled" | "lateFeePerDay" | "graceDays" | "status" | "seasonFee" | "billingType" | "billingFrequency" | "prorateFirstRecurringFee" | "prorateLastRecurringFee" | "prorateRegistrationFee" | "prorateSeasonFee" | "chargeGenerationDaysBefore" | "createdAt" | "updatedAt", ExtArgs["result"]["teamSeason"]>
+export type TeamSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "teamId" | "categoryId" | "seasonId" | "gender" | "status" | "statusNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["teamSeason"]>
 export type TeamSeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -3229,6 +2548,8 @@ export type TeamSeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   sessionTeams?: boolean | Prisma.TeamSeason$sessionTeamsArgs<ExtArgs>
   scheduleTeams?: boolean | Prisma.TeamSeason$scheduleTeamsArgs<ExtArgs>
   matches?: boolean | Prisma.TeamSeason$matchesArgs<ExtArgs>
+  billingConfig?: boolean | Prisma.TeamSeason$billingConfigArgs<ExtArgs>
+  teamSeasonPauses?: boolean | Prisma.TeamSeason$teamSeasonPausesArgs<ExtArgs>
   _count?: boolean | Prisma.TeamSeasonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TeamSeasonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3254,6 +2575,8 @@ export type $TeamSeasonPayload<ExtArgs extends runtime.Types.Extensions.Internal
     sessionTeams: Prisma.$SessionTeamPayload<ExtArgs>[]
     scheduleTeams: Prisma.$ScheduleTeamPayload<ExtArgs>[]
     matches: Prisma.$MatchPayload<ExtArgs>[]
+    billingConfig: Prisma.$TeamSeasonBillingConfigPayload<ExtArgs> | null
+    teamSeasonPauses: Prisma.$TeamSeasonPausePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3267,28 +2590,8 @@ export type $TeamSeasonPayload<ExtArgs extends runtime.Types.Extensions.Internal
     categoryId: string
     seasonId: string
     gender: $Enums.ProgramGender
-    billingDay: number
-    registrationFee: runtime.Decimal | null
-    recurringFee: runtime.Decimal | null
-    debtToleranceMonths: number
-    lateFeeEnabled: boolean
-    lateFeePerDay: runtime.Decimal
-    graceDays: number
     status: $Enums.StatusTeamSeason
-    /**
-     * Precio total si el usuario opta por pagar la temporada de un solo golpe (usado en planes SINGLE_ONLY o cuando isSinglePayment es true en BOTH).
-     */
-    seasonFee: runtime.Decimal | null
-    /**
-     * Estrategia de facturación aplicable a esta temporada.
-     */
-    billingType: $Enums.SeasonBillingType
-    billingFrequency: $Enums.BillingFrequency
-    prorateFirstRecurringFee: boolean
-    prorateLastRecurringFee: boolean
-    prorateRegistrationFee: boolean
-    prorateSeasonFee: boolean
-    chargeGenerationDaysBefore: number
+    statusNotes: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["teamSeason"]>
@@ -3694,6 +2997,8 @@ export interface Prisma__TeamSeasonClient<T, Null = never, ExtArgs extends runti
   sessionTeams<T extends Prisma.TeamSeason$sessionTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeason$sessionTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scheduleTeams<T extends Prisma.TeamSeason$scheduleTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeason$scheduleTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduleTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matches<T extends Prisma.TeamSeason$matchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeason$matchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  billingConfig<T extends Prisma.TeamSeason$billingConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeason$billingConfigArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonBillingConfigClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonBillingConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teamSeasonPauses<T extends Prisma.TeamSeason$teamSeasonPausesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeason$teamSeasonPausesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPausePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3734,22 +3039,8 @@ export interface TeamSeasonFieldRefs {
   readonly categoryId: Prisma.FieldRef<"TeamSeason", 'String'>
   readonly seasonId: Prisma.FieldRef<"TeamSeason", 'String'>
   readonly gender: Prisma.FieldRef<"TeamSeason", 'ProgramGender'>
-  readonly billingDay: Prisma.FieldRef<"TeamSeason", 'Int'>
-  readonly registrationFee: Prisma.FieldRef<"TeamSeason", 'Decimal'>
-  readonly recurringFee: Prisma.FieldRef<"TeamSeason", 'Decimal'>
-  readonly debtToleranceMonths: Prisma.FieldRef<"TeamSeason", 'Int'>
-  readonly lateFeeEnabled: Prisma.FieldRef<"TeamSeason", 'Boolean'>
-  readonly lateFeePerDay: Prisma.FieldRef<"TeamSeason", 'Decimal'>
-  readonly graceDays: Prisma.FieldRef<"TeamSeason", 'Int'>
   readonly status: Prisma.FieldRef<"TeamSeason", 'StatusTeamSeason'>
-  readonly seasonFee: Prisma.FieldRef<"TeamSeason", 'Decimal'>
-  readonly billingType: Prisma.FieldRef<"TeamSeason", 'SeasonBillingType'>
-  readonly billingFrequency: Prisma.FieldRef<"TeamSeason", 'BillingFrequency'>
-  readonly prorateFirstRecurringFee: Prisma.FieldRef<"TeamSeason", 'Boolean'>
-  readonly prorateLastRecurringFee: Prisma.FieldRef<"TeamSeason", 'Boolean'>
-  readonly prorateRegistrationFee: Prisma.FieldRef<"TeamSeason", 'Boolean'>
-  readonly prorateSeasonFee: Prisma.FieldRef<"TeamSeason", 'Boolean'>
-  readonly chargeGenerationDaysBefore: Prisma.FieldRef<"TeamSeason", 'Int'>
+  readonly statusNotes: Prisma.FieldRef<"TeamSeason", 'String'>
   readonly createdAt: Prisma.FieldRef<"TeamSeason", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TeamSeason", 'DateTime'>
 }
@@ -4289,6 +3580,49 @@ export type TeamSeason$matchesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
+ * TeamSeason.billingConfig
+ */
+export type TeamSeason$billingConfigArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeamSeasonBillingConfig
+   */
+  select?: Prisma.TeamSeasonBillingConfigSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeamSeasonBillingConfig
+   */
+  omit?: Prisma.TeamSeasonBillingConfigOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamSeasonBillingConfigInclude<ExtArgs> | null
+  where?: Prisma.TeamSeasonBillingConfigWhereInput
+}
+
+/**
+ * TeamSeason.teamSeasonPauses
+ */
+export type TeamSeason$teamSeasonPausesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeamSeasonPause
+   */
+  select?: Prisma.TeamSeasonPauseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeamSeasonPause
+   */
+  omit?: Prisma.TeamSeasonPauseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamSeasonPauseInclude<ExtArgs> | null
+  where?: Prisma.TeamSeasonPauseWhereInput
+  orderBy?: Prisma.TeamSeasonPauseOrderByWithRelationInput | Prisma.TeamSeasonPauseOrderByWithRelationInput[]
+  cursor?: Prisma.TeamSeasonPauseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeamSeasonPauseScalarFieldEnum | Prisma.TeamSeasonPauseScalarFieldEnum[]
 }
 
 /**

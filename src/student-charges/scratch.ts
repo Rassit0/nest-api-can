@@ -31,7 +31,7 @@ export async function recalculatePendingFutureCharges(
 
     const membership = await prisma.studentMembership.findUnique({
       where: { id: studentMembershipId },
-      include: { courseSeason: true }
+      include: { courseSeason: { include: { billingConfig: true } } }
     });
 
     const recurringCharges = pendingMembershipCharges.filter(mc => fullyPendingChargeIds.includes(mc.chargeId) && mc.type === TypeMembershipCharge.RECURRING_FEE);
@@ -41,7 +41,7 @@ export async function recalculatePendingFutureCharges(
     if (recurringCharges.length > 0 && membership?.courseSeason) {
       const earliestDueDate = new Date(Math.min(...recurringCharges.map(mc => mc.charge.dueDate.getTime())));
       const calculatedResetDate = new Date(earliestDueDate);
-      calculatedResetDate.setUTCDate(calculatedResetDate.getUTCDate() - membership.courseSeason.chargeGenerationDaysBefore);
+      calculatedResetDate.setUTCDate(calculatedResetDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore ?? 0));
       if (!resetDate || calculatedResetDate < resetDate) {
         resetDate = calculatedResetDate;
       }

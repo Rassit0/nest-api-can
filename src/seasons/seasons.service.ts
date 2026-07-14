@@ -4,6 +4,9 @@ import { UpdateSeasonDto } from './dto/update-season.dto';
 import { Prisma } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { SeasonsPaginationDto } from './dto/pagination.dto';
+import { ExtendSeasonDto } from './dto/extend.dto';
+import { FinalizeSeasonDto } from './dto/finalize.dto';
+import { CancelSeasonDto } from './dto/cancel.dto';
 
 export const seasonSelect: Prisma.SeasonSelect = {
   id: true,
@@ -11,6 +14,10 @@ export const seasonSelect: Prisma.SeasonSelect = {
   description: true,
   startDate: true,
   endDate: true,
+  status: true,
+  events: {
+    orderBy: { createdAt: 'desc' },
+  },
   discipline: {
     select: {
       id: true,
@@ -156,5 +163,149 @@ export class SeasonsService {
       message: 'Temporada eliminada exitosamente',
       data: deletedSeason,
     };
+  }
+
+  async extend(id: string, extendSeasonDto: ExtendSeasonDto) {
+    const season = await this.prisma.season.findUnique({ where: { id } });
+    if (!season) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    const updatedSeason = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.season.update({
+        where: { id },
+        data: {
+          endDate: new Date(extendSeasonDto.newEndDate),
+        },
+        select: seasonSelect,
+      });
+
+      await tx.seasonEvent.create({
+        data: {
+          seasonId: id,
+          eventType: 'EXTENSION',
+          originalEndDate: season.endDate,
+          newEndDate: new Date(extendSeasonDto.newEndDate),
+          reason: extendSeasonDto.reason,
+        },
+      });
+
+      return updated;
+    });
+
+    return {
+      message: 'Temporada extendida exitosamente',
+      data: updatedSeason,
+    };
+  }
+
+  async finish(id: string, finalizeSeasonDto: FinalizeSeasonDto) {
+    const season = await this.prisma.season.findUnique({ where: { id } });
+    if (!season) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    const updatedSeason = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.season.update({
+        where: { id },
+        data: {
+          status: 'FINISHED',
+        },
+        select: seasonSelect,
+      });
+
+      await tx.seasonEvent.create({
+        data: {
+          seasonId: id,
+          eventType: 'FINALIZATION',
+          reason: finalizeSeasonDto.reason,
+        },
+      });
+
+      return updated;
+    });
+
+    return {
+      message: 'Temporada finalizada exitosamente',
+      data: updatedSeason,
+    };
+  }
+
+  async cancel(id: string, cancelSeasonDto: CancelSeasonDto) {
+    const season = await this.prisma.season.findUnique({ where: { id } });
+    if (!season) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    const updatedSeason = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.season.update({
+        where: { id },
+        data: {
+          status: 'CANCELLED',
+        },
+        select: seasonSelect,
+      });
+
+      await tx.seasonEvent.create({
+        data: {
+          seasonId: id,
+          eventType: 'CANCELLATION',
+          reason: cancelSeasonDto.reason,
+        },
+      });
+
+      return updated;
+    });
+
+    return {
+      message: 'Temporada cancelada exitosamente',
+      data: updatedSeason,
+    };
+  }
+
+  async autoFinalizeExpiredSeasons() {
+    this.logger.log('Iniciando proceso de finalización automática de temporadas...');
+    const now = new Date();
+
+    const expiredSeasons = await this.prisma.season.findMany({
+      where: {
+        status: 'ACTIVE',
+        endDate: { lt: now },
+      },
+    });
+
+    if (expiredSeasons.length === 0) {
+      this.logger.log('No hay temporadas expiradas para finalizar.');
+      return { message: 'No hay temporadas expiradas para finalizar.' };
+    }
+
+    let count = 0;
+    for (const season of expiredSeasons) {
+      try {
+        await this.prisma.$transaction(async (tx) => {
+          await tx.season.update({
+            where: { id: season.id },
+            data: { status: 'FINISHED' },
+          });
+
+          await tx.seasonEvent.create({
+            data: {
+              seasonId: season.id,
+              eventType: 'FINALIZATION',
+              reason: 'Finalización automática por el sistema al cumplirse la fecha de cierre.',
+            },
+          });
+        });
+        count++;
+      } catch (error) {
+        this.logger.error(
+          `Error al auto-finalizar la temporada ${season.id}:`,
+          error,
+        );
+      }
+    }
+
+    this.logger.log(`Proceso terminado. Se finalizaron ${count} temporadas.`);
+    return { message: `Se finalizaron ${count} temporadas automáticamente.` };
   }
 }
