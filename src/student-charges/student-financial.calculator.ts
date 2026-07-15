@@ -1,5 +1,5 @@
-import { Prisma } from 'src/generated/prisma/client';
-import { MILLISECONDS_IN_DAY } from 'src/membership-charges/membership-billing.utils';
+import { Prisma , StatusCourseSeason } from 'src/generated/prisma/client';
+import { MILLISECONDS_IN_DAY } from './student-billing.utils';
 
 export type StudentMembershipWithRelations = Prisma.StudentMembershipGetPayload<{
   include: {
@@ -28,7 +28,7 @@ export function calculateRegistrationFee(
   membership: StudentMembershipWithRelations,
 ): FinancialCalculationResult {
   let base = Number(membership.courseSeason.billingConfig?.registrationFee || 0);
-  if (membership.courseSeason.billingConfig?.prorateRegistrationFee && membership.courseSeason.season) {
+  if (membership.courseSeason.billingConfig?.prorateRegistrationFee === true && membership.courseSeason.season) {
     const startDate = new Date(membership.courseSeason.season.startDate);
     const endDate = new Date(membership.courseSeason.season.endDate);
     const totalDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_DAY));
@@ -60,7 +60,6 @@ export function calculateRegistrationFee(
   let discountAmount = (base * discount) / 100;
   discountAmount = Number(discountAmount.toFixed(2));
   let netAmount = Number(Math.max(0, base - discountAmount).toFixed(2));
-  
   return { baseAmount: Number(base.toFixed(2)), discountPercent: Number(discount.toFixed(2)), discountAmount, netAmount, appliedDiscounts };
 }
 
@@ -87,18 +86,19 @@ export function calculateRecurringFeeForDate(
   }
 
   if (isFirstCycle && nextDueDate && theoreticalDueDate) {
-    if (membership.courseSeason.billingConfig?.prorateFirstRecurringFee !== false) {
+    if (membership.courseSeason.billingConfig?.prorateFirstRecurringFee === true) {
       const activeDays = Math.round((periodEnd.getTime() - membership.startedAt.getTime()) / MILLISECONDS_IN_DAY);
       activeDaysInCycle = activeDays;
       periodStart = membership.startedAt > theoreticalDueDate ? membership.startedAt : theoreticalDueDate;
     }
   } else if (nextDueDate && seasonEnd && nextDueDate > seasonEnd) {
-    if (membership.courseSeason.billingConfig?.prorateLastRecurringFee !== false) {
+    if (membership.courseSeason.billingConfig?.prorateLastRecurringFee === true) {
       const activeDays = Math.round((seasonEnd.getTime() - dueDate.getTime()) / MILLISECONDS_IN_DAY);
       activeDaysInCycle = activeDays;
     }
   }
 
+  // Restar días de pausas (vacaciones/suspensiones)
   let pauseDays = 0;
   const allPauses = [
     ...(membership.pauses || []),
@@ -151,17 +151,17 @@ export function calculateRecurringFeeForDate(
     if (ppRecDiscount > 0) {
       appliedDiscounts.push({ percent: ppRecDiscount, reason: 'Plan de pago' });
     }
+  }
 
-    const activeRecDiscounts = (membership.studentDiscounts || []).filter((d) => {
-      const evalDate = dueDate < membership.startedAt ? membership.startedAt : dueDate;
-      return d.startDate <= evalDate && (!d.endDate || d.endDate >= evalDate);
-    });
+  const activeRecDiscounts = (membership.studentDiscounts || []).filter((d) => {
+    const evalDate = dueDate < membership.startedAt ? membership.startedAt : dueDate;
+    return d.startDate <= evalDate && (!d.endDate || d.endDate >= evalDate);
+  });
 
-    for (const d of activeRecDiscounts) {
-      const p = Number(d.recurringDiscountPercent || 0);
-      if (p > 0) {
-        appliedDiscounts.push({ percent: p, reason: d.reason || d.type, endDate: d.endDate });
-      }
+  for (const d of activeRecDiscounts) {
+    const p = Number(d.recurringDiscountPercent || 0);
+    if (p > 0) {
+      appliedDiscounts.push({ percent: p, reason: d.reason || d.type, endDate: d.endDate });
     }
   }
 
@@ -170,37 +170,45 @@ export function calculateRecurringFeeForDate(
   let discountAmount = (base * discount) / 100;
   discountAmount = Number(discountAmount.toFixed(2));
   let netAmount = Number(Math.max(0, base - discountAmount).toFixed(2));
-  
   return { baseAmount: Number(base.toFixed(2)), discountPercent: Number(discount.toFixed(2)), discountAmount, netAmount, appliedDiscounts };
 }
 
 export function calculateSinglePaymentFee(
   membership: StudentMembershipWithRelations,
   accumulatedBaseAmount: number,
-  accumulatedDiscountPercent: number
-): {
-  description: string;
-  hasSinglePaymentAmount: boolean;
-  baseAmount: number;
-  discountPercent: number;
-  discountAmount: number;
-  netAmount: number;
-} {
-  let singlePaymentBaseAmount = accumulatedBaseAmount;
-  let singlePaymentDiscountPercent = accumulatedDiscountPercent;
+  accumulatedDiscountPercent: number,
+): FinancialCalculationResult & { description: string; hasSinglePaymentAmount: boolean } {
+  const courseSeason = membership.courseSeason;
+  const paymentPlan = membership.paymentPlan;
 
-  if (membership.courseSeason.billingConfig?.seasonFee) {
-    singlePaymentBaseAmount = Number(membership.courseSeason.billingConfig.seasonFee);
-    if (membership.courseSeason.billingConfig.prorateSeasonFee && membership.courseSeason.season) {
-      const startDate = new Date(membership.courseSeason.season.startDate);
-      const endDate = new Date(membership.courseSeason.season.endDate);
-      const totalDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_DAY));
-      const activeDays = Math.max(0, Math.round((endDate.getTime() - membership.startedAt.getTime()) / MILLISECONDS_IN_DAY));
-      const factor = Math.min(1, activeDays / totalDays);
-      singlePaymentBaseAmount = singlePaymentBaseAmount * factor;
+  let baseAmount = accumulatedBaseAmount;
+  let discountPercent = accumulatedDiscountPercent;
+
+  let factor = 1;
+  let totalDays = 0;
+  let activeDays = 0;
+
+  const hasSinglePaymentAmount = baseAmount > 0 || Number(courseSeason.billingConfig?.seasonFee || 0) > 0;
+
+  if (courseSeason.billingConfig?.seasonFee) {
+    baseAmount = Number(courseSeason.billingConfig.seasonFee);
+    if (courseSeason.billingConfig.prorateSeasonFee === true && courseSeason.season) {
+      const startDate = new Date(courseSeason.season.startDate);
+      const endDate = new Date(courseSeason.season.endDate);
+      totalDays = Math.max(1, Math.round((endDate.getTime() - startDate.getTime()) / MILLISECONDS_IN_DAY));
+      activeDays = Math.max(0, Math.round((endDate.getTime() - membership.startedAt.getTime()) / MILLISECONDS_IN_DAY));
+      factor = Math.min(1, activeDays / totalDays);
+      baseAmount = baseAmount * factor;
     }
-    singlePaymentDiscountPercent = Number(membership.paymentPlan.seasonFeeDiscountPercent || 0);
+    discountPercent = Number(paymentPlan?.seasonFeeDiscountPercent || 0);
+  }
 
+  const appliedDiscounts: { percent: number; reason?: string; endDate?: Date | null }[] = [];
+  if (discountPercent > 0) {
+    appliedDiscounts.push({ percent: discountPercent, reason: 'Plan de pago' });
+  }
+
+  if (courseSeason.billingConfig?.seasonFee) {
     const activeSeasonDiscounts = (membership.studentDiscounts || []).filter((d) => {
       return d.startDate <= membership.startedAt && (!d.endDate || d.endDate >= membership.startedAt);
     });
@@ -208,27 +216,34 @@ export function calculateSinglePaymentFee(
     for (const d of activeSeasonDiscounts) {
       const p = Number(d.seasonFeeDiscountPercent || 0);
       if (p > 0) {
-        singlePaymentDiscountPercent += p;
+        appliedDiscounts.push({ percent: p, reason: d.reason || d.type, endDate: d.endDate });
+        discountPercent += p;
       }
     }
-    singlePaymentDiscountPercent = Math.min(100, singlePaymentDiscountPercent);
+    discountPercent = Math.min(100, discountPercent);
   }
 
-  const hasSinglePaymentAmount = singlePaymentBaseAmount > 0 || Number(membership.courseSeason.billingConfig?.seasonFee || 0) > 0;
-  const singlePaymentDiscountAmount = Number(((singlePaymentBaseAmount * singlePaymentDiscountPercent) / 100).toFixed(2));
-  const singlePaymentTotalAmount = Number(Math.max(0, singlePaymentBaseAmount - singlePaymentDiscountAmount).toFixed(2));
+  let discountAmount = Number(((baseAmount * discountPercent) / 100).toFixed(2));
+  let netAmount = Number(Math.max(0, baseAmount - discountAmount).toFixed(2));
 
-  let seasonFeeDesc = 'Pago Completo - Temporada';
-  if (singlePaymentDiscountPercent > 0) {
-    seasonFeeDesc += ` (Descuento de ${singlePaymentDiscountPercent}%)`;
+  let description = 'Pago Completo - Temporada';
+  if (factor < 1) {
+    description += ` (Prorrateado: cubre ${activeDays} de ${totalDays} días)`;
+  }
+  if (appliedDiscounts.length > 0) {
+    const { formatDiscountsDescription } = require('./student-billing.utils');
+    description += formatDiscountsDescription(appliedDiscounts);
   }
 
   return {
-    hasSinglePaymentAmount,
-    description: seasonFeeDesc,
-    baseAmount: singlePaymentBaseAmount,
-    discountPercent: singlePaymentDiscountPercent,
-    discountAmount: singlePaymentDiscountAmount,
-    netAmount: singlePaymentTotalAmount,
+    baseAmount: Number(baseAmount.toFixed(2)),
+    discountPercent: Number(discountPercent.toFixed(2)),
+    discountAmount,
+    netAmount,
+    appliedDiscounts,
+    description,
+    hasSinglePaymentAmount
   };
 }
+
+

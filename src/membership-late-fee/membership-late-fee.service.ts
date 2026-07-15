@@ -63,11 +63,27 @@ export class MembershipLateFeeService {
     if (!membershipChargeRelation) return;
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
-    if (!teamSeason || !teamSeason.billingConfig?.lateFeeEnabled) return;
+    if (!teamSeason || !teamSeason.billingConfig?.lateFeeEnabled || teamSeason.billingConfig?.isEngineActive === false) return;
 
     const dueDate = DateUtils.getStartOfUTCDay(baseCharge.dueDate);
 
-    const elapsedDays = this.calculateElapsedDays(dueDate, evaluationDate);
+    
+    const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
+    let pausedDays = 0;
+
+    for (const p of teamSeasonPauses) {
+      if (p.startDate > evaluationDate || p.endDate < dueDate) continue;
+
+      const pauseStart = p.startDate < dueDate ? dueDate : p.startDate;
+      const pauseEnd = p.endDate > evaluationDate ? evaluationDate : p.endDate;
+
+      if (pauseStart <= pauseEnd) {
+        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd);
+      }
+    }
+
+    const elapsedDays = this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays;
+
     const graceDays = Number(teamSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) return;

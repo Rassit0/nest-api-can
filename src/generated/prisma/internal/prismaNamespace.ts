@@ -427,6 +427,7 @@ export const ModelName = {
   CourseSeasonStaff: 'CourseSeasonStaff',
   Student: 'Student',
   StudentMembership: 'StudentMembership',
+  StudentMembershipHistory: 'StudentMembershipHistory',
   StudentMembershipPause: 'StudentMembershipPause',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
@@ -456,7 +457,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3198,6 +3199,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StudentMembershipHistory: {
+      payload: Prisma.$StudentMembershipHistoryPayload<ExtArgs>
+      fields: Prisma.StudentMembershipHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StudentMembershipHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StudentMembershipHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.StudentMembershipHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StudentMembershipHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.StudentMembershipHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.StudentMembershipHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.StudentMembershipHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StudentMembershipHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.StudentMembershipHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        update: {
+          args: Prisma.StudentMembershipHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.StudentMembershipHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StudentMembershipHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StudentMembershipHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.StudentMembershipHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentMembershipHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.StudentMembershipHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudentMembershipHistory>
+        }
+        groupBy: {
+          args: Prisma.StudentMembershipHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentMembershipHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StudentMembershipHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentMembershipHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
     StudentMembershipPause: {
       payload: Prisma.$StudentMembershipPausePayload<ExtArgs>
       fields: Prisma.StudentMembershipPauseFieldRefs
@@ -4692,6 +4767,7 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
@@ -4705,6 +4781,7 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   schoolId: 'schoolId',
   createdAt: 'createdAt',
@@ -4727,6 +4804,7 @@ export const CourseSeasonScalarFieldEnum = {
   seasonId: 'seasonId',
   gender: 'gender',
   status: 'status',
+  statusNotes: 'statusNotes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4826,6 +4904,18 @@ export const StudentMembershipScalarFieldEnum = {
 } as const
 
 export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFieldEnum)[keyof typeof StudentMembershipScalarFieldEnum]
+
+
+export const StudentMembershipHistoryScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type StudentMembershipHistoryScalarFieldEnum = (typeof StudentMembershipHistoryScalarFieldEnum)[keyof typeof StudentMembershipHistoryScalarFieldEnum]
 
 
 export const StudentMembershipPauseScalarFieldEnum = {
@@ -5371,6 +5461,20 @@ export type ListEnumStatusCourseSeasonFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'CourseSeasonStaffRole'
+ */
+export type EnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourseSeasonStaffRole'>
+    
+
+
+/**
+ * Reference to a field of type 'CourseSeasonStaffRole[]'
+ */
+export type ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourseSeasonStaffRole[]'>
+    
+
+
+/**
  * Reference to a field of type 'StudentMembershipStatus'
  */
 export type EnumStudentMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentMembershipStatus'>
@@ -5549,6 +5653,7 @@ export type GlobalOmitConfig = {
   courseSeasonStaff?: Prisma.CourseSeasonStaffOmit
   student?: Prisma.StudentOmit
   studentMembership?: Prisma.StudentMembershipOmit
+  studentMembershipHistory?: Prisma.StudentMembershipHistoryOmit
   studentMembershipPause?: Prisma.StudentMembershipPauseOmit
   studentDiscount?: Prisma.StudentDiscountOmit
   studentCharge?: Prisma.StudentChargeOmit

@@ -215,20 +215,21 @@ export class TeamSeasonsController {
   @Patch(':id/toggle-billing-engine')
   @ApiOperation({
     summary: 'Activar/Desactivar motor de cobros por ID',
-    description: 'Pausa o reanuda la generación automática de cargos y multas para esta temporada.',
+    description:
+      'Pausa o reanuda la generación automática de cargos y multas para esta temporada.',
   })
   @ApiParam({
     name: 'id',
     description: 'ID de la instancia de temporada (UUID)',
     format: 'uuid',
   })
-  @ApiBody({ 
-    schema: { 
-      type: 'object', 
-      properties: { 
-        isEngineActive: { type: 'boolean', example: false } 
-      } 
-    } 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        isEngineActive: { type: 'boolean', example: false },
+      },
+    },
   })
   @ApiStandardResponse(
     TeamSeasonResponseDto, // Re-utilizamos esto o devuelves solo un config.
@@ -238,7 +239,10 @@ export class TeamSeasonsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body('isEngineActive') isEngineActive: boolean,
   ) {
-    return await this.teamSeasonsService.toggleBillingEngine(id, isEngineActive);
+    return await this.teamSeasonsService.toggleBillingEngine(
+      id,
+      isEngineActive,
+    );
   }
 
   @Get(':id/pauses')

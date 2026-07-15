@@ -43,8 +43,7 @@ export class MembershipChargeRepository {
         playerMembershipId: membershipId, 
         type: TypeMembershipCharge.REGISTRATION, 
         billingYear, 
-        billingMonth, 
-        billingCycle: null 
+        billingMonth
       },
       select: { chargeId: true }
     });

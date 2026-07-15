@@ -203,6 +203,11 @@ export type Student = Prisma.StudentModel
  */
 export type StudentMembership = Prisma.StudentMembershipModel
 /**
+ * Model StudentMembershipHistory
+ * 
+ */
+export type StudentMembershipHistory = Prisma.StudentMembershipHistoryModel
+/**
  * Model StudentMembershipPause
  * 
  */

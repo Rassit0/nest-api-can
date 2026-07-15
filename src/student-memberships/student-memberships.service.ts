@@ -7,11 +7,17 @@ import {
 import { CreateStudentMembershipDto } from './dto/create-student-membership.dto';
 import { UpdateStudentMembershipDto } from './dto/update-student-membership.dto';
 import { PrismaService } from 'src/prisma.service';
-import { StudentMembershipStatus, Prisma } from 'src/generated/prisma/client';
+import {
+  StudentMembershipStatus,
+  Prisma,
+  StatusCourseSeason,
+  StatusCharge,
+} from 'src/generated/prisma/client';
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
-import { createPaginationResult } from 'src/common/helpers/pagination.helper';
+import { PaginationDto } from 'src/common/dto/pagination';
+import { CreateStudentMembershipPauseDto } from './dto/create-student-membership-pause.dto';
 
-export const studentMembershipSelect: Prisma.StudentMembershipSelect = {
+export const studentMembershipSelect = {
   id: true,
   studentId: true,
   student: {
@@ -24,17 +30,73 @@ export const studentMembershipSelect: Prisma.StudentMembershipSelect = {
           email: true,
           phone: true,
           birthDate: true,
+          documentNumber: true,
+          documentType: true,
         },
       },
     },
   },
   courseSeasonId: true,
   paymentPlanId: true,
+  paymentPlan: true,
   startedAt: true,
   endedAt: true,
   status: true,
   createdAt: true,
   updatedAt: true,
+  studentCharges: {
+    where: {
+      charge: {
+        status: {
+          not: 'CANCELLED',
+        },
+      },
+    },
+    select: {
+      charge: {
+        select: {
+          pendingAmount: true,
+          amount: true,
+        },
+      },
+    },
+  },
+} satisfies Prisma.StudentMembershipSelect;
+
+type StudentMembershipWithCharges = Prisma.StudentMembershipGetPayload<{
+  select: typeof studentMembershipSelect;
+}>;
+
+const mapMembershipWithTotal = (membership: StudentMembershipWithCharges) => {
+  const totalPendingAmount = Number(
+    (
+      membership.studentCharges?.reduce(
+        (sum, current) => sum + Number(current.charge.pendingAmount),
+        0,
+      ) || 0
+    ).toFixed(2),
+  );
+
+  const totalPaidAmount = Number(
+    (
+      membership.studentCharges?.reduce(
+        (sum, current) =>
+          sum +
+          (Number(current.charge.amount) -
+            Number(current.charge.pendingAmount)),
+        0,
+      ) || 0
+    ).toFixed(2),
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { studentCharges, ...rest } = membership;
+
+  return {
+    ...rest,
+    totalPendingAmount,
+    totalPaidAmount,
+  };
 };
 
 type StudentWithPerson = Prisma.StudentGetPayload<{
@@ -120,13 +182,26 @@ export class StudentMembershipsService {
               })),
             },
           }),
+        histories: {
+          create: {
+            previousStatus: null,
+            newStatus:
+              createData.status ?? StudentMembershipStatus.PENDING_ACTIVE,
+            reason: createData.notes ?? 'Creación de inscripción',
+          },
+        },
       },
       select: studentMembershipSelect,
     });
 
+    // Generar cargos inmediatamente después de crear la membresía
+    await this.studentChargesService.generateChargesForNewMembership(
+      membership.id,
+    );
+
     return {
       message: 'Inscripción de estudiante a curso escolar creada exitosamente',
-      data: membership,
+      data: mapMembershipWithTotal(membership),
     };
   }
 
@@ -188,38 +263,55 @@ export class StudentMembershipsService {
       sortField = 'createdAt',
       courseSeasonId,
       studentId,
+      paymentPlanId,
       status,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.StudentMembershipWhereInput = {};
 
-    if (courseSeasonId) {
-      where.courseSeasonId = courseSeasonId;
-    }
     if (studentId) {
       where.studentId = studentId;
     }
+
+    if (courseSeasonId) {
+      where.courseSeasonId = courseSeasonId;
+    }
+
+    if (paymentPlanId) {
+      where.paymentPlanId = paymentPlanId;
+    }
+
     if (status) {
       where.status = status;
     }
 
     if (search) {
-      where.OR = [
-        {
-          student: {
-            person: {
-              OR: [
-                { name: { contains: search, mode: 'insensitive' } },
-                { lastName: { contains: search, mode: 'insensitive' } },
-              ],
-            },
-          },
+      where.student = {
+        person: {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { lastName: { contains: search, mode: 'insensitive' } },
+            { secondLastName: { contains: search, mode: 'insensitive' } },
+            { documentNumber: { contains: search, mode: 'insensitive' } },
+          ],
         },
-      ];
+      };
     }
 
-    const [memberships, totalItems] = await Promise.all([
+    const globalWhere: Prisma.StudentMembershipWhereInput = {};
+    if (studentId) globalWhere.studentId = studentId;
+    if (courseSeasonId) globalWhere.courseSeasonId = courseSeasonId;
+    if (paymentPlanId) globalWhere.paymentPlanId = paymentPlanId;
+
+    const [
+      studentMemberships,
+      totalItems,
+      allCharges,
+      activeMembersCount,
+      suspendedMembersCount,
+      courseSeasonData,
+    ] = await Promise.all([
       this.prisma.studentMembership.findMany({
         where,
         take: per_page,
@@ -228,15 +320,85 @@ export class StudentMembershipsService {
         select: studentMembershipSelect,
       }),
       this.prisma.studentMembership.count({ where }),
+      this.prisma.studentCharge.findMany({
+        where: {
+          studentMembership: globalWhere,
+          charge: {
+            status: {
+              not: 'CANCELLED',
+            },
+          },
+        },
+        select: {
+          charge: {
+            select: {
+              amount: true,
+              pendingAmount: true,
+            },
+          },
+        },
+      }),
+      this.prisma.studentMembership.count({
+        where: { ...globalWhere, status: 'ACTIVE' },
+      }),
+      this.prisma.studentMembership.count({
+        where: { ...globalWhere, status: 'SUSPENDED' },
+      }),
+      courseSeasonId
+        ? this.prisma.courseSeason.findUnique({
+            where: { id: courseSeasonId },
+            select: { maxMembers: true },
+          })
+        : Promise.resolve(null),
     ]);
 
-    return createPaginationResult(
-      memberships,
-      totalItems,
-      page,
-      per_page,
-      'Inscripciones escolares obtenidas exitosamente',
+    const globalTotalBilled = Number(
+      allCharges
+        .reduce((sum, mc) => sum + (Number(mc.charge.amount) || 0), 0)
+        .toFixed(2),
     );
+    const globalTotalPending = Number(
+      allCharges
+        .reduce((sum, mc) => sum + (Number(mc.charge.pendingAmount) || 0), 0)
+        .toFixed(2),
+    );
+    const globalTotalPaid = Number(
+      allCharges
+        .reduce(
+          (sum, mc) =>
+            sum +
+            (Number(mc.charge.amount) - (Number(mc.charge.pendingAmount) || 0)),
+          0,
+        )
+        .toFixed(2),
+    );
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = page;
+
+    return {
+      message: 'Inscripciones escolares obtenidas exitosamente',
+      data: studentMemberships.map(mapMembershipWithTotal),
+      summary: {
+        totalBilled: globalTotalBilled,
+        totalPaid: globalTotalPaid,
+        totalPending: globalTotalPending,
+        activeMembers: activeMembersCount,
+        suspendedMembers: suspendedMembersCount,
+        occupiedSlotsCount: activeMembersCount + suspendedMembersCount,
+        maxMembers: courseSeasonData?.maxMembers || null,
+      },
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
   }
 
   async findOne(id: string) {
@@ -249,7 +411,7 @@ export class StudentMembershipsService {
     }
     return {
       message: 'Inscripción escolar obtenida exitosamente',
-      data: membership,
+      data: mapMembershipWithTotal(membership),
     };
   }
 
@@ -316,7 +478,7 @@ export class StudentMembershipsService {
 
     return {
       message: 'Inscripción escolar actualizada exitosamente',
-      data: updatedMembership,
+      data: mapMembershipWithTotal(updatedMembership),
     };
   }
 
@@ -324,7 +486,19 @@ export class StudentMembershipsService {
     const membership = await this.getMembership(id);
 
     if (membership.status === StudentMembershipStatus.FINISHED) {
-      throw new BadRequestException('errors.FINISH_ONLY_ACTIVE_OR_SUSPENDED');
+      throw new BadRequestException('La membresía ya se encuentra finalizada');
+    }
+
+    if (membership.status === StudentMembershipStatus.SUSPENDED) {
+      throw new BadRequestException(
+        'La membresía se encuentra suspendida y no puede ser finalizada',
+      );
+    }
+
+    if (membership.status === StudentMembershipStatus.WITHDRAWN) {
+      throw new BadRequestException(
+        'La membresía se encuentra retirada y no puede ser finalizada',
+      );
     }
 
     const finishedMembership = await this.prisma.studentMembership.update({
@@ -333,21 +507,40 @@ export class StudentMembershipsService {
         status: StudentMembershipStatus.FINISHED,
         endedAt: new Date(),
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: StudentMembershipStatus.FINISHED,
+            reason,
+          },
+        },
       },
       select: studentMembershipSelect,
     });
 
     return {
       message: 'Inscripción escolar finalizada exitosamente',
-      data: finishedMembership,
+      data: mapMembershipWithTotal(finishedMembership),
     };
   }
 
   async suspend(id: string, reason?: string) {
     const membership = await this.getMembership(id);
 
+    if (membership.status === StudentMembershipStatus.FINISHED) {
+      throw new BadRequestException(
+        'La membresía se encuentra finalizada y no puede ser suspendida',
+      );
+    }
+
     if (membership.status === StudentMembershipStatus.SUSPENDED) {
-      throw new BadRequestException('errors.SUSPEND_ONLY_ACTIVE');
+      throw new BadRequestException('La membresía ya se encuentra suspendida');
+    }
+
+    if (membership.status === StudentMembershipStatus.WITHDRAWN) {
+      throw new BadRequestException(
+        'La membresía se encuentra retirada y no puede ser suspendida',
+      );
     }
 
     const suspendedMembership = await this.prisma.studentMembership.update({
@@ -355,21 +548,34 @@ export class StudentMembershipsService {
       data: {
         status: StudentMembershipStatus.SUSPENDED,
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: StudentMembershipStatus.SUSPENDED,
+            reason,
+          },
+        },
       },
       select: studentMembershipSelect,
     });
 
     return {
       message: 'Inscripción escolar suspendida exitosamente',
-      data: suspendedMembership,
+      data: mapMembershipWithTotal(suspendedMembership),
     };
   }
 
   async withdraw(id: string, reason?: string) {
     const membership = await this.getMembership(id);
 
+    if (membership.status === StudentMembershipStatus.FINISHED) {
+      throw new BadRequestException(
+        'La membresía se encuentra finalizada y no puede ser retirada',
+      );
+    }
+
     if (membership.status === StudentMembershipStatus.WITHDRAWN) {
-      throw new BadRequestException('errors.MEMBERSHIP_ALREADY_WITHDRAWN');
+      throw new BadRequestException('La membresía ya se encuentra retirada');
     }
 
     const withdrawnMembership = await this.prisma.studentMembership.update({
@@ -378,13 +584,55 @@ export class StudentMembershipsService {
         status: StudentMembershipStatus.WITHDRAWN,
         endedAt: new Date(),
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: StudentMembershipStatus.WITHDRAWN,
+            reason,
+          },
+        },
       },
       select: studentMembershipSelect,
     });
 
+    const pendingCharges = await this.prisma.studentCharge.findMany({
+      where: {
+        studentMembershipId: id,
+        charge: { status: StatusCharge.PENDING },
+      },
+      select: {
+        chargeId: true,
+        charge: {
+          select: { description: true },
+        },
+      },
+    });
+
+    if (pendingCharges.length > 0) {
+      const cancelReason = reason
+        ? `(Cancelado por retiro: ${reason})`
+        : '(Cancelado por retiro de inscripción)';
+
+      const updatePromises = pendingCharges.map((pc) => {
+        const newDescription = pc.charge.description
+          ? `${pc.charge.description} ${cancelReason}`
+          : cancelReason;
+
+        return this.prisma.charge.update({
+          where: { id: pc.chargeId },
+          data: {
+            status: StatusCharge.CANCELLED,
+            description: newDescription,
+          },
+        });
+      });
+
+      await Promise.all(updatePromises);
+    }
+
     return {
       message: 'Inscripción escolar retirada exitosamente',
-      data: withdrawnMembership,
+      data: mapMembershipWithTotal(withdrawnMembership),
     };
   }
 
@@ -392,7 +640,9 @@ export class StudentMembershipsService {
     const membership = await this.getMembership(id);
 
     if (membership.status !== StudentMembershipStatus.SUSPENDED) {
-      throw new BadRequestException('errors.REACTIVATE_ONLY_SUSPENDED');
+      throw new BadRequestException(
+        'Solo una membresía suspendida puede reactivarse',
+      );
     }
 
     const updatedMembership = await this.prisma.studentMembership.update({
@@ -400,16 +650,60 @@ export class StudentMembershipsService {
       data: {
         status: StudentMembershipStatus.ACTIVE,
         notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: StudentMembershipStatus.ACTIVE,
+            reason,
+          },
+        },
       },
       select: studentMembershipSelect,
     });
 
     return {
       message: 'Inscripción escolar reactivada exitosamente',
-      data: updatedMembership,
+      data: mapMembershipWithTotal(updatedMembership),
     };
   }
 
+  async activate(id: string, reason?: string) {
+    const membership = await this.getMembership(id);
+
+    if (membership.status !== StudentMembershipStatus.PENDING_ACTIVE) {
+      throw new BadRequestException(
+        'Solo una membresía pendiente puede ser activada',
+      );
+    }
+
+    const offering = await this.getCourseMembershipOffering(
+      membership.courseSeasonId,
+    );
+
+    await this.validateOfferingCapacity(offering.id, offering.maxMembers);
+
+    const updatedMembership = await this.prisma.studentMembership.update({
+      where: { id },
+      data: {
+        status: StudentMembershipStatus.ACTIVE,
+        notes: reason,
+        histories: {
+          create: {
+            previousStatus: membership.status,
+            newStatus: StudentMembershipStatus.ACTIVE,
+            reason,
+          },
+        },
+      },
+      select: studentMembershipSelect,
+    });
+
+    return {
+      message: 'Inscripción activada exitosamente',
+      data: mapMembershipWithTotal(updatedMembership),
+    };
+  }
+  
   async remove(id: string) {
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id },
@@ -425,7 +719,7 @@ export class StudentMembershipsService {
 
     return {
       message: 'Inscripción escolar eliminada exitosamente',
-      data: deletedMembership,
+      data: mapMembershipWithTotal(deletedMembership),
     };
   }
 
@@ -434,7 +728,7 @@ export class StudentMembershipsService {
       where: { id },
     });
     if (!membership) {
-      throw new NotFoundException('errors.MEMBERSHIP_NOT_FOUND');
+      throw new NotFoundException('La inscripción no fue encontrada');
     }
     return membership;
   }
@@ -447,10 +741,10 @@ export class StudentMembershipsService {
       where: { id: paymentPlanId },
     });
     if (!paymentPlan) {
-      throw new BadRequestException('errors.PAYMENT_PLAN_NOT_FOUND');
+      throw new BadRequestException('El plan de pago no fue encontrado');
     }
     if (paymentPlan.courseSeasonId !== courseSeasonId) {
-      throw new BadRequestException('errors.PLAN_NOT_BELONGS');
+      throw new BadRequestException('El plan de pago no pertenece al curso seleccionado');
     }
   }
 
@@ -460,7 +754,7 @@ export class StudentMembershipsService {
       include: { person: true },
     });
     if (!student) {
-      throw new NotFoundException('errors.STUDENT_NOT_FOUND');
+      throw new NotFoundException('El estudiante no fue encontrado');
     }
     return student;
   }
@@ -478,7 +772,7 @@ export class StudentMembershipsService {
       },
     });
     if (!offering) {
-      throw new NotFoundException('errors.COURSE_SEASON_NOT_FOUND');
+      throw new NotFoundException('La temporada de curso no fue encontrada');
     }
     return offering;
   }
@@ -502,7 +796,7 @@ export class StudentMembershipsService {
     });
 
     if (activeMembers >= maxMembers) {
-      throw new BadRequestException('errors.NO_VACANCIES_AVAILABLE');
+      throw new BadRequestException('El curso ya alcanzó el número máximo de miembros');
     }
   }
 
@@ -515,13 +809,20 @@ export class StudentMembershipsService {
       where: {
         studentId,
         courseSeasonId,
+        status: {
+          in: [
+            StudentMembershipStatus.ACTIVE,
+            StudentMembershipStatus.PENDING_ACTIVE,
+            StudentMembershipStatus.SUSPENDED,
+          ],
+        },
         ...(currentMembershipId && {
           NOT: { id: currentMembershipId },
         }),
       },
     });
     if (existingMembership) {
-      throw new BadRequestException('errors.STUDENT_ALREADY_ENROLLED');
+      throw new BadRequestException('El estudiante ya se encuentra registrado en este curso');
     }
   }
 
@@ -530,10 +831,10 @@ export class StudentMembershipsService {
     offering: CourseMembershipOfferingWithCategory,
   ) {
     if (!student.isActive) {
-      throw new BadRequestException('errors.STUDENT_INACTIVE');
+      throw new BadRequestException('El estudiante se encuentra inactivo');
     }
     if (!student.person.birthDate) {
-      throw new BadRequestException('errors.BIRTHDATE_NOT_FOUND');
+      throw new BadRequestException('La fecha de nacimiento del estudiante no fue encontrada');
     }
     if (offering.minBirthYear || offering.maxBirthYear) {
       const birthYear = student.person.birthDate.getFullYear();
@@ -559,7 +860,7 @@ export class StudentMembershipsService {
       offering.gender !== 'MIXED' &&
       offering.gender !== student.person.gender
     ) {
-      throw new BadRequestException('errors.INVALID_GENDER_FOR_CATEGORY');
+      throw new BadRequestException('El género del estudiante no es compatible con el curso');
     }
   }
 
@@ -568,8 +869,19 @@ export class StudentMembershipsService {
     seasonStartDate: Date,
     seasonEndDate: Date,
   ) {
-    if (startedAt < seasonStartDate || startedAt > seasonEndDate) {
-      throw new BadRequestException('errors.INVALID_DATE_FOR_SEASON');
+    const sStart = new Date(seasonStartDate);
+    sStart.setUTCHours(0, 0, 0, 0);
+
+    const sEnd = new Date(seasonEndDate);
+    sEnd.setUTCHours(23, 59, 59, 999);
+
+    if (startedAt < sStart || startedAt > sEnd) {
+      const sent = startedAt.toISOString().split('T')[0];
+      const start = seasonStartDate.toISOString().split('T')[0];
+      const end = seasonEndDate.toISOString().split('T')[0];
+      throw new BadRequestException(
+        `La fecha de inicio enviada (${sent}) está fuera del rango permitido. Debe estar entre el ${start} y el ${end} (Fechas de la Temporada).`,
+      );
     }
   }
 
@@ -584,7 +896,7 @@ export class StudentMembershipsService {
 
   async createPause(
     membershipId: string,
-    dto: import('./dto/create-student-membership-pause.dto').CreateStudentMembershipPauseDto,
+    dto: CreateStudentMembershipPauseDto,
   ) {
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id: membershipId },
@@ -667,6 +979,13 @@ export class StudentMembershipsService {
         data: {
           status: 'SUSPENDED',
           notes: dto.reason || 'Pausa iniciada automáticamente',
+          histories: {
+            create: {
+              previousStatus: membership.status,
+              newStatus: 'SUSPENDED',
+              reason: 'Creación de pausa activa',
+            },
+          },
         },
       });
     }
@@ -687,5 +1006,144 @@ export class StudentMembershipsService {
     });
 
     return { message: 'Pausa eliminada exitosamente' };
+  }
+
+  async getStudentsOptions(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.StudentWhereInput = {
+      ...(search
+        ? {
+            OR: [
+              { person: { name: { contains: search, mode: 'insensitive' } } },
+              { person: { lastName: { contains: search, mode: 'insensitive' } } },
+              { person: { secondLastName: { contains: search, mode: 'insensitive' } } },
+              { person: { documentNumber: { contains: search, mode: 'insensitive' } } },
+            ],
+          }
+        : {}),
+      isActive: true,
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.student.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { person: { name: orderBy } },
+        select: {
+          id: true,
+          isActive: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              documentNumber: true,
+              gender: true,
+              birthDate: true,
+              imageUrl: true,
+            },
+          },
+        },
+      }),
+      this.prisma.student.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Estudiantes obtenidos exitosamente',
+      data: persons.map((student) => ({
+        ...student,
+        person: {
+          ...student.person,
+          fullName: `${student.person.name} ${student.person.lastName} ${student.person.secondLastName || ''}`.trim(),
+        },
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
+  }
+
+  async getCourseSeasonsOptions(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.CourseSeasonWhereInput = {
+      ...(search
+        ? {
+            OR: [
+              { description: { contains: search, mode: 'insensitive' } },
+              { season: { name: { contains: search, mode: 'insensitive' } } },
+            ],
+          }
+        : {}),
+      status: StatusCourseSeason.ACTIVE,
+      season: {
+        endDate: {
+          gte: new Date(),
+        },
+      },
+    };
+
+    const [courseSeasons, totalItems] = await Promise.all([
+      this.prisma.courseSeason.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { season: { name: orderBy } },
+        select: {
+          id: true,
+          status: true,
+          description: true,
+          season: {
+            select: {
+              id: true,
+              name: true,
+              startDate: true,
+              endDate: true,
+            },
+          },
+          imageUrl: true,
+        },
+      }),
+      this.prisma.courseSeason.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Temporadas obtenidas exitosamente',
+      data: courseSeasons.map((courseSeason) => ({
+        ...courseSeason,
+        season: {
+          ...courseSeason.season,
+          fullName: `${courseSeason.season.name} ${courseSeason.season.startDate.toISOString().split('T')[0]} ${courseSeason.season.endDate.toISOString().split('T')[0] || ''}`.trim(),
+        },
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
   }
 }

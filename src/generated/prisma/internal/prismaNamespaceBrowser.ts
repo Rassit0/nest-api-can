@@ -86,6 +86,7 @@ export const ModelName = {
   CourseSeasonStaff: 'CourseSeasonStaff',
   Student: 'Student',
   StudentMembership: 'StudentMembership',
+  StudentMembershipHistory: 'StudentMembershipHistory',
   StudentMembershipPause: 'StudentMembershipPause',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
@@ -537,6 +538,7 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
@@ -550,6 +552,7 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   schoolId: 'schoolId',
   createdAt: 'createdAt',
@@ -572,6 +575,7 @@ export const CourseSeasonScalarFieldEnum = {
   seasonId: 'seasonId',
   gender: 'gender',
   status: 'status',
+  statusNotes: 'statusNotes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -671,6 +675,18 @@ export const StudentMembershipScalarFieldEnum = {
 } as const
 
 export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFieldEnum)[keyof typeof StudentMembershipScalarFieldEnum]
+
+
+export const StudentMembershipHistoryScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type StudentMembershipHistoryScalarFieldEnum = (typeof StudentMembershipHistoryScalarFieldEnum)[keyof typeof StudentMembershipHistoryScalarFieldEnum]
 
 
 export const StudentMembershipPauseScalarFieldEnum = {

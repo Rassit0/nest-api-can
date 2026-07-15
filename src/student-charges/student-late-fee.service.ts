@@ -5,6 +5,7 @@ import {
   Prisma,
   StatusCharge,
   TypeMembershipCharge,
+  StatusCourseSeason 
 } from 'src/generated/prisma/client';
 
 type ChargeWithRelations = Prisma.ChargeGetPayload<{
@@ -16,6 +17,7 @@ type ChargeWithRelations = Prisma.ChargeGetPayload<{
             courseSeason: {
               include: {
                 billingConfig: true;
+                pauses: true;
               };
             };
           };
@@ -33,6 +35,7 @@ const chargeInclude = {
           courseSeason: {
             include: {
               billingConfig: true,
+              pauses: true,
             },
           },
         },
@@ -68,7 +71,7 @@ export class StudentLateFeeService {
               status: {
                 in: [
                   StudentMembershipStatus.ACTIVE,
-                  StudentMembershipStatus.PENDING,
+                  StudentMembershipStatus.PENDING_ACTIVE,
                   StudentMembershipStatus.SUSPENDED,
                 ],
               },
@@ -114,12 +117,26 @@ export class StudentLateFeeService {
     const courseSeason = studentChargeRelation.studentMembership?.courseSeason;
     if (!courseSeason) return;
 
-    if (!courseSeason.billingConfig?.lateFeeEnabled) return;
+    if (!courseSeason.billingConfig?.lateFeeEnabled || courseSeason.billingConfig?.isEngineActive === false) return;
 
     const dueDate = new Date(baseCharge.dueDate);
     dueDate.setHours(0, 0, 0, 0);
 
-    const elapsedDays = this.calculateElapsedDays(dueDate, today);
+    const courseSeasonPauses = courseSeason.pauses || [];
+    let pausedDays = 0;
+
+    for (const p of courseSeasonPauses) {
+      if (p.startDate > today || p.endDate < dueDate) continue;
+
+      const pauseStart = p.startDate < dueDate ? dueDate : p.startDate;
+      const pauseEnd = p.endDate > today ? today : p.endDate;
+
+      if (pauseStart <= pauseEnd) {
+        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd);
+      }
+    }
+
+    const elapsedDays = this.calculateElapsedDays(dueDate, today) - pausedDays;
     const graceDays = Number(courseSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) return;

@@ -36,4 +36,11 @@ export class StudentMembershipsPaginationDto extends PaginationDto {
   @IsEnum(StudentMembershipStatus)
   @IsOptional()
   status?: StudentMembershipStatus;
+
+  @ApiPropertyOptional({
+    description: 'Filtrar por plan de pago',
+  })
+  @IsUUID('4')
+  @IsOptional()
+  paymentPlanId?: string;
 }

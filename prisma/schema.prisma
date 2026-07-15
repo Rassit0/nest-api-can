@@ -783,6 +783,7 @@ model RolePermission {
 model School {
   id            String      @id @default(uuid())
   name          String
+  shortName     String?     @map("short_name")
   institutionId String      @map("institution_id")
   institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
   disciplineId  String      @map("discipline_id")
@@ -799,6 +800,7 @@ model Course {
   id            String         @id @default(uuid())
   imageUrl      String?        @map("image_url")
   name          String
+  shortName     String?        @map("short_name")
   description   String?
   schoolId      String         @map("school_id")
   school        School         @relation(fields: [schoolId], references: [id], onDelete: Restrict)
@@ -835,7 +837,8 @@ model CourseSeason {
   season     Season        @relation(fields: [seasonId], references: [id], onDelete: Restrict)
   gender     ProgramGender
 
-  status StatusCourseSeason @default(DRAFT)
+  status      StatusCourseSeason @default(DRAFT)
+  statusNotes String?            @map("status_notes") @db.Text
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -905,13 +908,22 @@ model CourseSeasonBillingConfig {
   @@map("course_season_billing_configs")
 }
 
+enum CourseSeasonStaffRole {
+  HEAD_COACH
+  ASSISTANT_COACH
+  ASSISTANT
+  VOLUNTEER
+  DELEGATE
+  OTHER
+}
+
 model CourseSeasonStaff {
   id             String              @id @default(uuid())
   courseSeasonId String              @map("course_season_id")
   courseSeason   CourseSeason        @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
   staffId        String              @map("staff_id")
   staff          Staff               @relation(fields: [staffId], references: [id], onDelete: Restrict)
-  role           TeamSeasonStaffRole
+  role           CourseSeasonStaffRole
   customRole     String?             @map("custom_role")
   startedAt      DateTime            @map("started_at")
   endedAt        DateTime?           @map("ended_at")
@@ -942,7 +954,7 @@ model Student {
 }
 
 enum StudentMembershipStatus {
-  PENDING
+  PENDING_ACTIVE
   ACTIVE
   SUSPENDED
   WITHDRAWN
@@ -960,7 +972,7 @@ model StudentMembership {
 
   startedAt DateTime                @map("started_at")
   endedAt   DateTime?               @map("ended_at")
-  status    StudentMembershipStatus @default(PENDING)
+  status    StudentMembershipStatus @default(PENDING_ACTIVE)
   notes     String?
 
   nextRecurringChargeGenerationDate DateTime?
@@ -968,14 +980,30 @@ model StudentMembership {
   // Campo para indicar que esta membresia fue migrada desde el sistema antiguo, si es true, no se le generaran cargos anteriores como los iniciales ni mensuales
   isMigrated Boolean @default(false) @map("is_migrated")
 
-  createdAt        DateTime                 @default(now()) @map("created_at")
-  updatedAt        DateTime                 @updatedAt @map("updated_at")
+  createdAt        DateTime                   @default(now()) @map("created_at")
+  updatedAt        DateTime                   @updatedAt @map("updated_at")
   studentDiscounts StudentDiscount[]
   studentCharges   StudentCharge[]
   pauses           StudentMembershipPause[]
+  histories        StudentMembershipHistory[]
 
   @@index([nextRecurringChargeGenerationDate])
   @@map("student_memberships")
+}
+
+model StudentMembershipHistory {
+  id                  String            @id @default(uuid())
+  studentMembershipId String            @map("student_membership_id")
+  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
+
+  previousStatus StudentMembershipStatus? @map("previous_status") // Null si es la creación
+  newStatus      StudentMembershipStatus  @map("new_status")
+
+  reason String? @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("student_membership_histories")
 }
 
 model StudentMembershipPause {

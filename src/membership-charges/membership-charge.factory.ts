@@ -11,6 +11,16 @@ export class MembershipChargeFactory {
     billingMonth: number,
     billingCycle?: number | null
   ): Prisma.ChargeCreateInput {
+    // Protección contra Race Conditions en Postgres (null != null)
+    let safeBillingCycle = billingCycle;
+    if (safeBillingCycle == null) {
+      if (type !== TypeMembershipCharge.MANUAL && type !== TypeMembershipCharge.LATE_FEE) {
+        safeBillingCycle = 0; // Usar 0 para activar la protección de @@unique
+      } else {
+        safeBillingCycle = null; // Manual y Multas sí permiten múltiples en un mes
+      }
+    }
+
     return {
       description,
       amount,
@@ -23,7 +33,7 @@ export class MembershipChargeFactory {
           type,
           billingYear,
           billingMonth,
-          billingCycle: billingCycle || null,
+          billingCycle: safeBillingCycle,
         },
       },
     };

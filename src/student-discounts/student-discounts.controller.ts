@@ -109,4 +109,25 @@ export class StudentDiscountsController {
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentDiscountsService.remove(id);
   }
+
+  @Post(':id/finish')
+  @ApiOperation({
+    summary: 'Finalizar vigencia del descuento escolar',
+    description:
+      'Finaliza de forma manual y anticipada la vigencia del descuento aplicado a la inscripción escolar.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del descuento a finalizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({
+    description: 'Vigencia del descuento finalizada correctamente.',
+  })
+  @ApiBadRequestResponse({
+    description: 'No se puede finalizar el descuento en su estado actual.',
+  })
+  async finish(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.studentDiscountsService.finish(id);
+  }
 }

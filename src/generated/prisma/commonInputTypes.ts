@@ -606,6 +606,23 @@ export type EnumStatusCourseSeasonWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumStatusCourseSeasonFilter<$PrismaModel>
 }
 
+export type EnumCourseSeasonStaffRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseSeasonStaffRole | Prisma.EnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel> | $Enums.CourseSeasonStaffRole
+}
+
+export type EnumCourseSeasonStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseSeasonStaffRole | Prisma.EnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseSeasonStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.CourseSeasonStaffRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel>
+}
+
 export type EnumStudentMembershipStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel>
   in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel>
@@ -621,6 +638,23 @@ export type EnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
+}
+
+export type EnumStudentMembershipStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel> | $Enums.StudentMembershipStatus | null
+}
+
+export type EnumStudentMembershipStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.StudentMembershipStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
 }
 
 export type EnumDayOfWeekFilter<$PrismaModel = never> = {
@@ -1268,6 +1302,23 @@ export type NestedEnumStatusCourseSeasonWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumStatusCourseSeasonFilter<$PrismaModel>
 }
 
+export type NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseSeasonStaffRole | Prisma.EnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel> | $Enums.CourseSeasonStaffRole
+}
+
+export type NestedEnumCourseSeasonStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseSeasonStaffRole | Prisma.EnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseSeasonStaffRole[] | Prisma.ListEnumCourseSeasonStaffRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseSeasonStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.CourseSeasonStaffRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCourseSeasonStaffRoleFilter<$PrismaModel>
+}
+
 export type NestedEnumStudentMembershipStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel>
   in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel>
@@ -1283,6 +1334,23 @@ export type NestedEnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel> | $Enums.StudentMembershipStatus | null
+}
+
+export type NestedEnumStudentMembershipStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.StudentMembershipStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumDayOfWeekFilter<$PrismaModel = never> = {

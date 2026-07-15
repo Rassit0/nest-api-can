@@ -22,6 +22,8 @@ import {
 import { CourseSeasonsService } from './course-seasons.service';
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
 import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
+import { FinalizeCourseSeasonDto } from './dto/finalize-course-season.dto';
+import { CancelCourseSeasonDto } from './dto/cancel-course-season.dto';
 import { CreateCourseSeasonPauseDto } from './dto/create-course-season-pause.dto';
 import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
 import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
@@ -132,6 +134,64 @@ export class CourseSeasonsController {
     @Body('isEngineActive') isEngineActive: boolean,
   ) {
     return await this.courseSeasonsService.toggleBillingEngine(id, isEngineActive);
+  }
+
+
+  @Patch(':id/finish')
+  @ApiOperation({
+    summary: 'Finalizar un periodo de curso',
+    description: 'Cambia el estado del curso a FINALIZADO y finaliza a todos los inscritos.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia del curso (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: FinalizeCourseSeasonDto })
+  @ApiStandardResponse(
+    CourseSeasonResponseDto,
+    'Periodo de curso finalizado exitosamente.',
+  )
+  async finish(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() finalizeCourseSeasonDto: FinalizeCourseSeasonDto,
+  ) {
+    return await this.courseSeasonsService.finish(id, finalizeCourseSeasonDto);
+  }
+
+  @Patch(':id/cancel')
+  @ApiOperation({
+    summary: 'Cancelar un periodo de curso',
+    description: 'Cancela el periodo del curso, cancela inscripciones y anula cargos pendientes.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia del curso (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: CancelCourseSeasonDto })
+  @ApiStandardResponse(
+    CourseSeasonResponseDto,
+    'Periodo de curso cancelado exitosamente.',
+  )
+  async cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() cancelCourseSeasonDto: CancelCourseSeasonDto,
+  ) {
+    return await this.courseSeasonsService.cancel(id, cancelCourseSeasonDto);
+  }
+
+
+  @Get('categories-by-discipline/options/:disciplineId')
+  @ApiOperation({ summary: 'Obtener categorias por disciplina' })
+  async getCategoriesByDisciplineOptions(@Param('disciplineId', ParseUUIDPipe) disciplineId: string) {
+    return await this.courseSeasonsService.getCategoriesByDisciplineOptions(disciplineId);
+  }
+
+  @Get('seasons-by-discipline/options/:disciplineId')
+  @ApiOperation({ summary: 'Obtener temporadas por disciplina' })
+  async getSeasonsByDisciplineOptions(@Param('disciplineId', ParseUUIDPipe) disciplineId: string) {
+    return await this.courseSeasonsService.getSeasonsByDisciplineOptions(disciplineId);
   }
 
   @Get(':id/pauses')

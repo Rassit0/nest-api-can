@@ -23,8 +23,13 @@ import { StudentMembershipsService } from './student-memberships.service';
 import { CreateStudentMembershipDto } from './dto/create-student-membership.dto';
 import { UpdateStudentMembershipDto } from './dto/update-student-membership.dto';
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { StudentMembershipResponseDto } from '../common/dto/responses/entities.dto';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 @ApiTags('Student Memberships')
 @Controller('student-memberships')
@@ -39,7 +44,10 @@ export class StudentMembershipsController {
     description:
       'Inscribe a un estudiante activo en un curso y periodo específico. Valida de forma estricta los cupos, edad y género.',
   })
-  @ApiStandardCreatedResponse(StudentMembershipResponseDto, 'Estudiante inscrito exitosamente.')
+  @ApiStandardCreatedResponse(
+    StudentMembershipResponseDto,
+    'Estudiante inscrito exitosamente.',
+  )
   async create(@Body() createStudentMembershipDto: CreateStudentMembershipDto) {
     return await this.studentMembershipsService.create(
       createStudentMembershipDto,
@@ -52,9 +60,35 @@ export class StudentMembershipsController {
     description:
       'Retorna una lista paginada y filtrable de todas las inscripciones (membresías escolares).',
   })
-  @ApiPaginatedResponse(StudentMembershipResponseDto, 'Lista de inscripciones obtenida correctamente.')
+  @ApiPaginatedResponse(
+    StudentMembershipResponseDto,
+    'Lista de inscripciones obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: StudentMembershipsPaginationDto) {
     return await this.studentMembershipsService.findAll(paginationDto);
+  }
+
+  @Get('students-options')
+  @ApiOperation({
+    summary: 'Listar opciones de estudiantes',
+    description: 'Retorna una lista paginada y filtrable de estudiantes.',
+  })
+  async getAvailableStudents(@Query() paginationDto: PaginationDto) {
+    return await this.studentMembershipsService.getStudentsOptions(
+      paginationDto,
+    );
+  }
+
+  @Get('course-seasons-options')
+  @ApiOperation({
+    summary: 'Listar opciones de cursos',
+    description:
+      'Retorna una lista paginada y filtrable de temporadas de cursos.',
+  })
+  async getAvailableCourseSeasons(@Query() paginationDto: PaginationDto) {
+    return await this.studentMembershipsService.getCourseSeasonsOptions(
+      paginationDto,
+    );
   }
 
   @Get(':id')
@@ -68,7 +102,10 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar encontrada exitosamente.')
+  @ApiStandardResponse(
+    StudentMembershipResponseDto,
+    'Inscripción escolar encontrada exitosamente.',
+  )
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.findOne(id);
   }
@@ -85,7 +122,10 @@ export class StudentMembershipsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentMembershipDto })
-  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar actualizada exitosamente.')
+  @ApiStandardResponse(
+    StudentMembershipResponseDto,
+    'Inscripción escolar actualizada exitosamente.',
+  )
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentMembershipDto: UpdateStudentMembershipDto,
@@ -107,7 +147,10 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(StudentMembershipResponseDto, 'Inscripción escolar eliminada exitosamente.')
+  @ApiStandardResponse(
+    StudentMembershipResponseDto,
+    'Inscripción escolar eliminada exitosamente.',
+  )
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.remove(id);
   }
@@ -247,6 +290,39 @@ export class StudentMembershipsController {
     return await this.studentMembershipsService.reactivate(id, reason);
   }
 
+  @Post(':id/activate')
+  @ApiOperation({
+    summary: 'Activar inscripción escolar pendiente',
+    description: 'Cambia el estado de PENDING_ACTIVE a ACTIVE de forma manual.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la inscripción (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        reason: {
+          type: 'string',
+          description: 'Notas de activación',
+          example: 'Pagó la inscripción',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({ description: 'Inscripción activada exitosamente.' })
+  @ApiBadRequestResponse({
+    description: 'Solo inscripciones pendientes pueden ser activadas.',
+  })
+  async activate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body('reason') reason?: string,
+  ) {
+    return await this.studentMembershipsService.activate(id, reason);
+  }
+
   @Get(':id/pauses')
   @ApiOperation({ summary: 'Obtener las pausas de una membresía' })
   async getPauses(@Param('id', ParseUUIDPipe) id: string) {
@@ -257,7 +333,8 @@ export class StudentMembershipsController {
   @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
   async createPause(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: import('./dto/create-student-membership-pause.dto').CreateStudentMembershipPauseDto,
+    @Body()
+    dto: import('./dto/create-student-membership-pause.dto').CreateStudentMembershipPauseDto,
   ) {
     return await this.studentMembershipsService.createPause(id, dto);
   }

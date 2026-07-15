@@ -1,699 +1,577 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { CreateStudentChargeDto } from './dto/create-student-charge.dto';
-import { UpdateStudentChargeDto } from './dto/update-student-charge.dto';
+import { randomUUID } from 'crypto';
 import { PreviewStudentChargesDto } from './dto/preview-student-charges.dto';
 import { CreateManualChargeDto } from './dto/create-manual-charge.dto';
-import { StudentChargesPaginationDto } from './dto/pagination.dto';
+import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
 import { PrismaService } from 'src/prisma.service';
 import {
-  Charge,
-  StudentMembershipStatus,
   Prisma,
-  StatusCharge,
+  SeasonStatus,
+  StatusCourseSeason,
   TypeMembershipCharge,
 } from 'src/generated/prisma/client';
+import { DateUtils } from 'src/utils/date.utils';
+import { StudentChargeFactory } from './student-charge.factory';
+import { StudentPreviewService } from './services/student-preview.service';
+import { StudentGenerationService } from './services/student-generation.service';
+import { PreviewMembershipFactory } from './factories/preview-student.factory';
+import { StudentMembershipWithRelations } from './student-financial.calculator';
+import { StudentMembershipRepository } from './repositories/student-membership.repository';
+import { StudentChargeRepository } from './repositories/student-charge.repository';
 
-import {
-  calculateRegistrationFee,
-  calculateSinglePaymentFee,
-} from './student-financial.calculator';
-
-import { simulateAllCycles } from './student-cycles.engine';
-import { formatDiscountsDescription } from '../membership-charges/membership-billing.utils';
-
-type StudentMembershipWithRelations = Prisma.StudentMembershipGetPayload<{
-  include: {
-    paymentPlan: true;
-    studentDiscounts: true;
-    pauses: true;
-    courseSeason: {
-      include: {
-        season: true;
-        billingConfig: true;
-        pauses: true;
-      };
-    };
-  };
-}>;
-
-const studentMembershipInclude = {
-  paymentPlan: true,
-  studentDiscounts: true,
-  pauses: true,
-  courseSeason: {
-    include: {
-      season: true,
-      billingConfig: true,
-      pauses: true,
-    },
-  },
-} as const;
-
+/**
+ * Servicio central orquestador de cargos (charges) para membresías de jugadores.
+ * Responsable de coordinar la previsualización, generación diaria (cron),
+ * cobros masivos, cobros manuales y cálculos de recalibración (ej. al cambiar de plan).
+ */
 @Injectable()
 export class StudentChargesService {
   private readonly logger = new Logger(StudentChargesService.name);
 
-  private readonly MONTH_NAMES = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-  ];
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly previewService: StudentPreviewService,
+    private readonly generationService: StudentGenerationService,
+    private readonly membershipRepo: StudentMembershipRepository,
+    private readonly chargeRepo: StudentChargeRepository,
+  ) {}
 
-  constructor(private readonly prisma: PrismaService) {}
-
+  /**
+   * Genera un desglose simulado (preview) de cómo se verán los cargos para una nueva
+   * membresía ANTES de ser creada.
+   * Valida que la fecha de inicio esté dentro de la temporada y construye un entorno
+   * virtual ("mock") de la membresía para calcular matemáticamente las primeras cuotas.
+   *
+   * @param data Configuraciones como courseSeasonId, paymentPlanId, startDate y descuentos.
+   * @returns Estructura IPreviewChargesResponse con cargos y totales.
+   */
   async previewCharges(data: PreviewStudentChargesDto) {
-    const { courseSeasonId, paymentPlanId, startDate, studentDiscounts = [], isMigrated } = data;
+    const {
+      courseSeasonId,
+      paymentPlanId,
+      startDate,
+      studentDiscounts = [],
+      isMigrated,
+    } = data;
 
-    const courseSeason = await this.prisma.courseSeason.findUnique({
-      where: { id: courseSeasonId },
-      include: { season: true, billingConfig: true },
-    });
+    const courseSeason =
+      await this.membershipRepo.getCourseSeasonOrThrow(courseSeasonId);
 
-    if (!courseSeason) throw new BadRequestException('Temporada de escuela no encontrada');
+    if (
+      courseSeason.season.status === SeasonStatus.CANCELLED ||
+      courseSeason.season.status === SeasonStatus.FINISHED ||
+      courseSeason.status === StatusCourseSeason.CANCELLED ||
+      courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden previsualizar cargos de una temporada o equipo inactivo (cancelado o finalizado)',
+      );
+    }
 
-    const paymentPlan = await this.prisma.paymentPlan.findUnique({
-      where: { id: paymentPlanId },
-    });
-
-    if (!paymentPlan) throw new BadRequestException('Plan de pago no encontrado');
+    const paymentPlan =
+      await this.membershipRepo.getPaymentPlanOrThrow(paymentPlanId);
 
     const mockStartedAt = new Date(startDate);
-    const seasonStart = new Date(courseSeason.season.startDate);
-    seasonStart.setUTCHours(0, 0, 0, 0);
-    const seasonEndValidation = new Date(courseSeason.season.endDate);
-    seasonEndValidation.setUTCHours(23, 59, 59, 999);
+    const seasonStart = DateUtils.getStartOfUTCDay(courseSeason.season.startDate);
+    const seasonEndValidation = DateUtils.getEndOfUTCDay(
+      courseSeason.season.endDate,
+    );
 
     if (mockStartedAt < seasonStart || mockStartedAt > seasonEndValidation) {
-      throw new BadRequestException('La fecha de inicio debe estar dentro de la duración de la temporada');
+      throw new BadRequestException(
+        'La fecha de inicio debe estar dentro de la duración de la temporada',
+      );
     }
 
     const parsedDiscounts = studentDiscounts.map((d) => ({
       ...d,
+      id: 'preview-discount',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      studentMembershipId: 'preview-id',
+      type: 'CUSTOM' as const,
+      reason: 'Preview',
+      registrationDiscountPercent: new Prisma.Decimal(
+        d.registrationDiscountPercent || 0,
+      ),
+      recurringDiscountPercent: new Prisma.Decimal(
+        d.recurringDiscountPercent || 0,
+      ),
+      seasonFeeDiscountPercent: new Prisma.Decimal(
+        d.seasonFeeDiscountPercent || 0,
+      ),
       startDate: new Date(d.startDate),
       endDate: d.endDate ? new Date(d.endDate) : null,
-    }));
+    })) as unknown as StudentMembershipWithRelations['studentDiscounts'];
 
-    const mockMembership = {
-      startedAt: mockStartedAt,
+    const mockMembership = PreviewMembershipFactory.createMockMembership(
+      mockStartedAt,
       courseSeason,
       paymentPlan,
-      studentDiscounts: parsedDiscounts,
-      pauses: [],
-      isMigrated: isMigrated || false,
-    } as unknown as StudentMembershipWithRelations;
-
-    const chargesToGenerate: {
-      type: TypeMembershipCharge;
-      description: string;
-      amount: number;
-      baseAmount?: number;
-      discountAmount?: number;
-      discountPercent?: number;
-      dueDate: Date;
-      billingYear: number;
-      billingMonth: number;
-    }[] = [];
-
-    if (!isMigrated) {
-      const { netAmount: registrationAmount, baseAmount, discountAmount, discountPercent, appliedDiscounts } = calculateRegistrationFee(mockMembership);
-      if (baseAmount && baseAmount > 0) {
-        chargesToGenerate.push({
-          type: TypeMembershipCharge.REGISTRATION,
-          description: 'Inscripción' + formatDiscountsDescription(appliedDiscounts),
-          amount: registrationAmount,
-          baseAmount,
-          discountAmount,
-          discountPercent,
-          dueDate: mockMembership.startedAt,
-          billingYear: mockMembership.startedAt.getUTCFullYear(),
-          billingMonth: mockMembership.startedAt.getUTCMonth() + 1,
-        });
-      }
-    }
-
-    const seasonEnd = new Date(courseSeason.season.endDate);
-    seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(courseSeason.billingConfig?.billingDay || 1);
-    const isSinglePayment = paymentPlan.isSinglePayment || courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
-    const billingFrequency = courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
-
-    let singlePaymentTotalAmount = 0;
-    let singlePaymentBaseAmount = 0;
-    let singlePaymentDiscountAmount = 0;
-    let singlePaymentDiscountPercent = 0;
-
-    const allCycles = isMigrated ? [] : simulateAllCycles(mockMembership as any);
-    const advanceCycles = Math.max(1, paymentPlan.advanceCycles || 1);
-
-    for (const cycle of allCycles) {
-      if (isSinglePayment) {
-        singlePaymentTotalAmount += cycle.netAmount;
-        singlePaymentBaseAmount += cycle.baseAmount;
-        singlePaymentDiscountAmount += cycle.discountAmount;
-        singlePaymentDiscountPercent = cycle.discountPercent;
-      } else {
-        chargesToGenerate.push({
-          type: TypeMembershipCharge.RECURRING_FEE,
-          description: cycle.description,
-          amount: cycle.netAmount,
-          baseAmount: cycle.baseAmount,
-          discountAmount: cycle.discountAmount,
-          discountPercent: cycle.discountPercent,
-          dueDate: cycle.dueDate,
-          billingYear: cycle.billingYear,
-          billingMonth: cycle.billingMonth,
-        });
-        
-        if (cycle.cycleCounter >= advanceCycles) {
-            break;
-        }
-      }
-    }
-    
-    const singlePayment = calculateSinglePaymentFee(mockMembership as any, singlePaymentBaseAmount, singlePaymentDiscountPercent);
-    
-    if (isSinglePayment && !isMigrated && singlePayment.hasSinglePaymentAmount) {
-      chargesToGenerate.push({
-        type: TypeMembershipCharge.SEASON_FEE,
-        description: singlePayment.description,
-        amount: singlePayment.netAmount,
-        baseAmount: singlePayment.baseAmount,
-        discountAmount: singlePayment.discountAmount,
-        discountPercent: singlePayment.discountPercent,
-        dueDate: mockMembership.startedAt,
-        billingYear: mockMembership.startedAt.getUTCFullYear(),
-        billingMonth: mockMembership.startedAt.getUTCMonth() + 1,
-      });
-    }
-
-    const totalBaseAmount = chargesToGenerate.reduce((sum, c) => sum + (c.baseAmount || 0), 0);
-    const totalDiscountAmount = chargesToGenerate.reduce((sum, c) => sum + (c.discountAmount || 0), 0);
-    const totalNetAmount = chargesToGenerate.reduce((sum, c) => sum + c.amount, 0);
-
-    return { charges: chargesToGenerate, breakdown: { totalBaseAmount, totalDiscount: totalDiscountAmount, totalNetAmount, currency: 'BOB' } };
-  }
-
-  async previewExistingCharges(membershipId: string) {
-    const membership = await this.prisma.studentMembership.findUnique({
-      where: { id: membershipId },
-      include: studentMembershipInclude,
-    });
-    if (!membership) throw new BadRequestException('Membresía no encontrada');
-    const existingCharges = await this.prisma.studentCharge.findMany({
-      where: { studentMembershipId: membershipId },
-      select: { type: true, billingYear: true, billingMonth: true },
-    });
-
-    const chargesToGenerate: { type: TypeMembershipCharge; description: string; amount: number; baseAmount?: number; discountAmount?: number; discountPercent?: number; dueDate: Date; billingYear: number; billingMonth: number; }[] = [];
-
-    const hasRegistration = existingCharges.some((c) => c.type === TypeMembershipCharge.REGISTRATION);
-    if (!hasRegistration) {
-      const { netAmount: registrationAmount, baseAmount, discountAmount, discountPercent, appliedDiscounts } = calculateRegistrationFee(membership);
-      if (baseAmount && baseAmount > 0) {
-        chargesToGenerate.push({
-          type: TypeMembershipCharge.REGISTRATION,
-          description: 'Inscripción' + formatDiscountsDescription(appliedDiscounts),
-          amount: registrationAmount,
-          dueDate: membership.startedAt,
-          billingYear: membership.startedAt.getUTCFullYear(),
-          billingMonth: membership.startedAt.getUTCMonth() + 1,
-          ...({ baseAmount, discountAmount, discountPercent })
-        });
-      }
-    }
-
-    const seasonEnd = new Date(membership.courseSeason.season.endDate);
-    seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(membership.courseSeason.billingConfig?.billingDay || 1);
-    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
-    const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
-    let keepGenerating = true;
-    const hasSinglePaymentCharge = existingCharges.some(
-      (c) => (c.type === TypeMembershipCharge.SEASON_FEE || c.type === TypeMembershipCharge.RECURRING_FEE) && c.billingYear === membership.startedAt.getUTCFullYear() && c.billingMonth === membership.startedAt.getUTCMonth() + 1
+      parsedDiscounts,
+      isMigrated || false,
     );
 
-    if (isSinglePayment && hasSinglePaymentCharge) keepGenerating = false;
+    return this.previewService.extractPreviewChargesFromCycles(
+      mockMembership,
+      null,
+    );
+  }
 
-    let singlePaymentTotalAmount = 0;
-    let singlePaymentBaseAmount = 0;
-    let singlePaymentDiscountAmount = 0;
-    let singlePaymentDiscountPercent = 0;
-    
-    let advanceCycles = Math.max(1, membership.paymentPlan?.advanceCycles || 1);
-    let firstDueDate: Date | null = null;
-    let firstBillingYear: number = 0;
-    let firstBillingMonth: number = 0;
-    
-    const allCycles = simulateAllCycles(membership as any);
+  /**
+   * Extrae y formatea los cargos reales que ya están almacenados en la base de datos
+   * para una membresía existente. Usado cuando un administrador visualiza el drawer
+   * de una membresía activa y requiere ver lo que el sistema ya calculó.
+   *
+   * @param membershipId ID real de la membresía.
+   */
+  async previewExistingCharges(membershipId: string) {
+    const membership =
+      await this.membershipRepo.getMembershipOrThrow(membershipId);
+    const existingCharges = await this.chargeRepo.fetchExistingCharges(
+      this.prisma,
+      membershipId,
+      [
+        TypeMembershipCharge.REGISTRATION,
+        TypeMembershipCharge.SEASON_FEE,
+        TypeMembershipCharge.RECURRING_FEE,
+      ],
+    );
 
-    for (const cycle of allCycles) {
-      const hasMonthly = existingCharges.some(
-        (c) => c.type === TypeMembershipCharge.RECURRING_FEE && c.billingYear === cycle.billingYear && c.billingMonth === cycle.billingMonth
+    return this.previewService.extractPreviewChargesFromCycles(
+      membership,
+      existingCharges,
+    );
+  }
+
+  /**
+   * [PROCESO CRON DIARIO]
+   * Orquesta la evaluación masiva de todas las membresías activas del sistema.
+   * Se procesa en bloques (chunks) para cuidar la memoria RAM y envolviendo
+   * en transacciones iterativas para asegurar atomicidad sin bloquear toda la DB.
+   */
+  async applyDailyStudentCharges() {
+    this.logger.log('Iniciando proceso diario de cálculo de cargos...');
+    const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
+
+    const memberships =
+      await this.membershipRepo.getMembershipsForDailyGeneration(
+        evaluationDate,
       );
+    this.logger.log(
+      `Se encontraron ${memberships.length} membresías activas o pendientes.`,
+    );
 
-      if (isSinglePayment) {
-        singlePaymentTotalAmount += cycle.netAmount;
-        singlePaymentBaseAmount += cycle.baseAmount;
-        singlePaymentDiscountAmount += cycle.discountAmount;
-        singlePaymentDiscountPercent = cycle.discountPercent;
-      } else {
-        if (!hasMonthly) {
-            if (!firstDueDate) {
-                firstDueDate = cycle.dueDate;
-                firstBillingYear = cycle.billingYear;
-                firstBillingMonth = cycle.billingMonth;
-            }
-            
-            chargesToGenerate.push({
-              type: TypeMembershipCharge.RECURRING_FEE,
-              description: cycle.description,
-              amount: cycle.netAmount,
-              baseAmount: cycle.baseAmount,
-              discountAmount: cycle.discountAmount,
-              discountPercent: cycle.discountPercent,
-              dueDate: firstDueDate as Date,
-              billingYear: cycle.billingYear,
-              billingMonth: cycle.billingMonth,
-            });
-
-            const currentGenerated = chargesToGenerate.filter(c => c.type === TypeMembershipCharge.RECURRING_FEE).length;
-            
-            if (currentGenerated >= advanceCycles) {
-                break;
-            }
+    const chunkSize = 50;
+    for (let i = 0; i < memberships.length; i += chunkSize) {
+      const chunk = memberships.slice(i, i + chunkSize);
+      for (const membership of chunk) {
+        try {
+          await this.prisma.$transaction(async (tx) => {
+            await this.generationService.ensureStudentCharges(
+              tx,
+              membership,
+              evaluationDate,
+            );
+          });
+        } catch (error) {
+          if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+            this.logger.warn(`Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`);
+          } else {
+            this.logger.error(
+              `Error procesando cargos para la membresía ID ${membership.id}:`,
+              error,
+            );
+          }
         }
       }
     }
-    
-    const singlePayment = calculateSinglePaymentFee(membership as any, singlePaymentBaseAmount, singlePaymentDiscountPercent);
-    
-    if (isSinglePayment && !membership.isMigrated && singlePayment.hasSinglePaymentAmount && !hasSinglePaymentCharge) {
-      chargesToGenerate.push({
-        type: TypeMembershipCharge.SEASON_FEE,
-        description: singlePayment.description,
-        amount: singlePayment.netAmount,
-        baseAmount: singlePayment.baseAmount,
-        discountAmount: singlePayment.discountAmount,
-        discountPercent: singlePayment.discountPercent,
-        dueDate: membership.startedAt,
-        billingYear: membership.startedAt.getUTCFullYear(),
-        billingMonth: membership.startedAt.getUTCMonth() + 1,
-      });
-    }
-    const totalBaseAmount = chargesToGenerate.reduce((sum, c) => sum + (c.baseAmount || 0), 0);
-    const totalDiscountAmount = chargesToGenerate.reduce((sum, c) => sum + (c.discountAmount || 0), 0);
-    const totalNetAmount = chargesToGenerate.reduce((sum, c) => sum + c.amount, 0);
 
-    return { charges: chargesToGenerate, breakdown: { totalBaseAmount, totalDiscount: totalDiscountAmount, totalNetAmount, currency: 'BOB' } };
-  }
-
-  async applyDailyStudentCharges() {
-    this.logger.log('Iniciando proceso diario de cálculo de cargos...');
-    const today = new Date();
-    today.setUTCHours(23, 59, 59, 999);
-    const memberships = await this.prisma.studentMembership.findMany({
-      where: {
-        status: { in: [ StudentMembershipStatus.ACTIVE, StudentMembershipStatus.SUSPENDED ] },
-        OR: [ { nextRecurringChargeGenerationDate: { lte: today } }, { nextRecurringChargeGenerationDate: null } ],
-        courseSeason: { 
-          season: { endDate: { gte: today } },
-          billingConfig: { isEngineActive: true }
-        },
-      },
-      include: studentMembershipInclude,
-    });
-    this.logger.log('Se encontraron ' + memberships.length + ' membresías activas o pendientes.');
-    for (const membership of memberships) {
-      try {
-        await this.prisma.$transaction(async (tx) => {
-          await this.ensureStudentCharges(tx, membership, today);
-        });
-      } catch (error) {
-        this.logger.error('Error procesando cargos para la membresía ID ' + membership.id + ':', error);
-      }
-    }
     this.logger.log('Proceso de cargos finalizado.');
   }
 
+  /**
+   * Fuerza matemáticamente la generación del siguiente ciclo de cobro disponible,
+   * sin importar si aún no se ha cumplido la fecha límite de generación.
+   * Util para administradores que requieren facturar por adelantado manualmente.
+   */
   async generateNextChargeManually(membershipId: string) {
-    const membership = await this.prisma.studentMembership.findUnique({
-      where: { id: membershipId },
-      include: studentMembershipInclude,
-    });
-    if (!membership) throw new BadRequestException('Membresía no encontrada');
-    if (!membership.nextRecurringChargeGenerationDate) throw new BadRequestException('La membresía no tiene próximas cuotas programadas (fin de temporada o no inicializada)');
-    const fakeToday = new Date(membership.nextRecurringChargeGenerationDate);
-    fakeToday.setUTCHours(23, 59, 59, 999);
+    const membership =
+      await this.membershipRepo.getMembershipOrThrow(membershipId);
+
+    if (
+      membership.courseSeason.season.status === SeasonStatus.CANCELLED ||
+      membership.courseSeason.season.status === SeasonStatus.FINISHED ||
+      membership.courseSeason.status === StatusCourseSeason.CANCELLED ||
+      membership.courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden generar cargos para una temporada o equipo que ha finalizado o fue cancelada',
+      );
+    }
+
+    if (!membership.nextRecurringChargeGenerationDate) {
+      throw new BadRequestException(
+        'La membresía no tiene próximas cuotas programadas (fin de temporada o no inicializada)',
+      );
+    }
+
+    const evaluationDate = DateUtils.getEndOfUTCDay(
+      membership.nextRecurringChargeGenerationDate,
+    );
+
     await this.prisma.$transaction(async (tx) => {
-      await this.ensureRecurringCharges(tx, membership, fakeToday);
+      await this.generationService.ensureRecurringCharges(
+        tx,
+        membership,
+        evaluationDate,
+      );
     });
     return { message: 'Próxima cuota generada por adelantado exitosamente' };
   }
 
+  /**
+   * Evento transaccional ejecutado inmediatamente después de que un jugador
+   * compra o inscribe una membresía. Fuerza la creación del cobro inicial
+   * (matrícula y primera cuota) en tiempo real.
+   */
   async generateChargesForNewMembership(membershipId: string) {
-    const membership = await this.prisma.studentMembership.findUnique({
-      where: { id: membershipId },
-      include: studentMembershipInclude,
-    });
+    const membership =
+      await this.membershipRepo.getMembershipById(membershipId);
     if (!membership) return;
-    const today = new Date();
-    today.setUTCHours(23, 59, 59, 999);
+
+    const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
+
     try {
-      await this.prisma.$transaction(async (tx) => { await this.ensureStudentCharges(tx, membership, today); });
-      this.logger.log('Cargos generados/actualizados para nueva membresía ' + membershipId);
+      await this.prisma.$transaction(async (tx) => {
+        await this.generationService.ensureStudentCharges(
+          tx,
+          membership,
+          evaluationDate,
+        );
+      });
+      this.logger.log(
+        `Cargos generados/actualizados para nueva membresía ${membershipId}`,
+      );
     } catch (error) {
-      this.logger.error('Error generando cargos para nueva membresía ID ' + membershipId + ':', error);
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        this.logger.warn(`Colisión de cargos prevenida (idempotencia) al generar cargos de nueva membresía ${membershipId}`);
+      } else {
+        this.logger.error(
+          `Error generando cargos para nueva membresía ID ${membershipId}:`,
+          error,
+        );
+      }
     }
   }
 
-  private async ensureStudentCharges(tx: Prisma.TransactionClient, membership: StudentMembershipWithRelations, today: Date) {
-    if (!membership.isMigrated) { await this.ensureRegistrationCharge(tx, membership); }
-    await this.ensureRecurringCharges(tx, membership, today);
-  }
+  /**
+   * Aplica un cargo extraordinario (Multa, uniforme, extra) a todos los miembros
+   * activos de una temporada. Emplea un mecanismo altamente optimizado usando
+   * inserciones masivas (createMany) fraccionadas, permitiendo operar
+   * miles de usuarios instantáneamente.
+   */
+  async createMassiveManualCharge(dto: CreateMassiveManualChargeDto) {
+    const { courseSeasonId, description, amount, dueDate } = dto;
+    const due = DateUtils.getEndOfUTCDay(dueDate);
 
-  private async ensureRegistrationCharge(tx: Prisma.TransactionClient, membership: StudentMembershipWithRelations) {
-    const exists = await tx.studentCharge.findFirst({
-      where: { studentMembershipId: membership.id, type: TypeMembershipCharge.REGISTRATION, billingYear: membership.startedAt.getUTCFullYear(), billingMonth: membership.startedAt.getUTCMonth() + 1, billingCycle: null },
-    });
-    if (exists) return;
-    const { netAmount, appliedDiscounts } = calculateRegistrationFee(membership);
-    if (netAmount <= 0) return;
-    await this.createCharge(tx, membership.id, { description: 'Inscripción' + formatDiscountsDescription(appliedDiscounts), amount: netAmount, dueDate: membership.startedAt }, TypeMembershipCharge.REGISTRATION, membership.startedAt.getUTCFullYear(), membership.startedAt.getUTCMonth() + 1, null);
-  }
+    const courseSeason =
+      await this.membershipRepo.getCourseSeasonOrThrow(courseSeasonId);
+    if (
+      courseSeason.season.status === SeasonStatus.CANCELLED ||
+      courseSeason.season.status === SeasonStatus.FINISHED ||
+      courseSeason.status === StatusCourseSeason.CANCELLED ||
+      courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden generar cargos masivos para una temporada o equipo que ha finalizado o fue cancelada',
+      );
+    }
 
-  private async ensureRecurringCharges(tx: Prisma.TransactionClient, membership: StudentMembershipWithRelations, today: Date) {
-    let nextPointer = membership.nextRecurringChargeGenerationDate;
-    let generationDate = membership.nextRecurringChargeGenerationDate;
-    const seasonEnd = new Date(membership.courseSeason.season.endDate);
-    seasonEnd.setUTCHours(23, 59, 59, 999);
-    const billingDay = Number(membership.courseSeason.billingConfig?.billingDay || 1);
-    const isSinglePayment = membership.paymentPlan.isSinglePayment || membership.courseSeason.billingConfig?.billingType === 'SINGLE_ONLY';
-    const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
-    const advanceCycles = Math.max(1, membership.paymentPlan?.advanceCycles || 1);
+    const activeMemberships =
+      await this.membershipRepo.getActiveMembershipsIdsBySeason(courseSeasonId);
 
-    const allCycles = simulateAllCycles(membership as any);
+    if (activeMemberships.length === 0) {
+      throw new BadRequestException(
+        'No hay miembros activos para generar el cargo.',
+      );
+    }
 
-    if (!generationDate) {
-      if (membership.isMigrated) {
-        let tempPointer = new Date(membership.startedAt);
-        for (const cycle of allCycles) {
-          const dueStartOfDay = new Date(cycle.dueDate);
-          dueStartOfDay.setUTCHours(0, 0, 0, 0);
-          const todayStartOfDay = new Date(today);
-          todayStartOfDay.setUTCHours(0, 0, 0, 0);
-          if (dueStartOfDay < todayStartOfDay) {
-            const nextGenerationDate = new Date(cycle.nextDueDate);
-            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
-            if (cycle.nextDueDate > seasonEnd) { tempPointer = new Date(0); break; }
-            tempPointer = nextGenerationDate;
-          } else { break; }
-        }
-        if (tempPointer.getTime() === 0) {
-          await tx.studentMembership.update({ where: { id: membership.id }, data: { nextRecurringChargeGenerationDate: null } });
-          return;
-        }
-        generationDate = tempPointer;
-      } else {
-        generationDate = new Date(membership.startedAt);
+    const chargesData: Prisma.ChargeCreateManyInput[] = [];
+    const studentChargesData: Prisma.StudentChargeCreateManyInput[] = [];
+
+    for (const membership of activeMemberships) {
+      const chargeId = randomUUID();
+      const payload = StudentChargeFactory.buildManualChargePayload(
+        membership.id,
+        amount,
+        description,
+        due,
+      );
+
+      const chargeFields = { ...payload };
+      delete chargeFields.studentCharges;
+
+      chargesData.push({
+        id: chargeId,
+        ...chargeFields,
+      } as Prisma.ChargeCreateManyInput);
+
+      const mcCreate = payload.studentCharges?.create;
+      if (mcCreate && !Array.isArray(mcCreate)) {
+        studentChargesData.push({
+          chargeId,
+          ...mcCreate,
+        } as Prisma.StudentChargeCreateManyInput);
       }
     }
 
-    if (isSinglePayment) {
-        if (membership.isMigrated) {
-            if (membership.nextRecurringChargeGenerationDate !== null) {
-              await tx.studentMembership.update({ where: { id: membership.id }, data: { nextRecurringChargeGenerationDate: null } });
-            }
-            return;
-        }
-        const startBillingYear = membership.startedAt.getUTCFullYear();
-        const startBillingMonth = membership.startedAt.getUTCMonth() + 1;
-        const exists = await tx.studentCharge.findFirst({
-            where: { studentMembershipId: membership.id, type: { in: [TypeMembershipCharge.SEASON_FEE, TypeMembershipCharge.RECURRING_FEE] }, billingYear: startBillingYear, billingMonth: startBillingMonth },
-        });
-        if (!exists) {
-            let singlePaymentBaseAmount = 0;
-            let singlePaymentDiscountPercent = 0;
-            
-            for (const cycle of allCycles) {
-                singlePaymentBaseAmount += cycle.baseAmount;
-                singlePaymentDiscountPercent = cycle.discountPercent;
-            }
-            
-            const singlePayment = calculateSinglePaymentFee(membership as any, singlePaymentBaseAmount, singlePaymentDiscountPercent);
-            
-            if (singlePayment.hasSinglePaymentAmount) {
-                await this.createCharge(tx, membership.id, { description: singlePayment.description, amount: singlePayment.netAmount, dueDate: membership.startedAt }, TypeMembershipCharge.SEASON_FEE, startBillingYear, startBillingMonth);
-            }
-        }
-        nextPointer = null;
-    } else {
-        let currentCycleCounter = 1;
-        
-        if (membership.isMigrated || generationDate > membership.startedAt) {
-           let tempPointer = new Date(membership.startedAt);
-           for (const cycle of allCycles) {
-              if (tempPointer >= generationDate) break;
-              tempPointer = new Date(cycle.nextDueDate);
-              tempPointer.setUTCDate(tempPointer.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
-              currentCycleCounter++;
-           }
-        }
-        
-        while (generationDate && generationDate <= today) {
-          const cycle = allCycles[currentCycleCounter - 1];
-          if (!cycle) break;
-          
-          const exists = await tx.studentCharge.findFirst({
-            where: { studentMembershipId: membership.id, type: TypeMembershipCharge.RECURRING_FEE, billingYear: cycle.billingYear, billingMonth: cycle.billingMonth, billingCycle: billingFrequency === 'MONTHLY' ? null : cycle.billingCycle },
-          });
+    const chunkSize = 1000;
 
-          if (exists) {
-            const nextGenerationDate = new Date(cycle.nextDueDate);
-            nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
-            if (cycle.nextDueDate > seasonEnd) { nextPointer = null; break; }
-            nextPointer = nextGenerationDate;
-            generationDate = nextGenerationDate;
-            currentCycleCounter++;
-            continue;
-          }
+    await this.prisma.$transaction(async (tx) => {
+      for (let i = 0; i < chargesData.length; i += chunkSize) {
+        const chargesChunk = chargesData.slice(i, i + chunkSize);
+        await this.chargeRepo.bulkCreateCharges(tx, chargesChunk);
+      }
 
-          let groupDueDate = cycle.dueDate;
-          let cyclePointer = currentCycleCounter;
-          let lastNextDueDate = cycle.nextDueDate;
-
-          for (let i = 0; i < advanceCycles; i++) {
-             const c = allCycles[cyclePointer - 1];
-             if (!c) break;
-             if (i > 0 && c.dueDate > seasonEnd) { break; }
-             
-             if (c.netAmount >= 0) {
-                 await tx.charge.create({
-                     data: {
-                         description: c.description,
-                         amount: c.netAmount,
-                         pendingAmount: c.netAmount,
-                         dueDate: groupDueDate,
-                         status: c.netAmount > 0 ? 'PENDING' : 'PAID',
-                         studentCharges: {
-                             create: {
-                                 studentMembershipId: membership.id,
-                                 type: TypeMembershipCharge.RECURRING_FEE,
-                                 billingYear: c.billingYear,
-                                 billingMonth: c.billingMonth,
-                                 billingCycle: billingFrequency === 'MONTHLY' ? null : c.billingCycle,
-                             }
-                         }
-                     }
-                 });
-             }
-             
-             lastNextDueDate = c.nextDueDate;
-             cyclePointer++;
-             
-             if (c.nextDueDate > seasonEnd) { break; }
-          }
-
-          const nextGenerationDate = new Date(lastNextDueDate);
-          nextGenerationDate.setUTCDate(nextGenerationDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
-          if (lastNextDueDate > seasonEnd) { nextPointer = null; break; }
-          nextPointer = nextGenerationDate;
-          generationDate = nextGenerationDate;
-          currentCycleCounter = cyclePointer;
-        }
-    }
-    if (membership.nextRecurringChargeGenerationDate?.getTime() !== nextPointer?.getTime()) {
-      await tx.studentMembership.update({ where: { id: membership.id }, data: { nextRecurringChargeGenerationDate: nextPointer } });
-    }
-  }
-
-  async recalculatePendingFutureCharges(studentMembershipId: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const pendingMembershipCharges = await this.prisma.studentCharge.findMany({
-      where: {
-        studentMembershipId,
-        charge: { status: StatusCharge.PENDING, dueDate: { gte: today } },
-        type: { in: [ TypeMembershipCharge.RECURRING_FEE, TypeMembershipCharge.REGISTRATION, TypeMembershipCharge.SEASON_FEE ] },
-      },
-      include: { charge: true },
+      for (let i = 0; i < studentChargesData.length; i += chunkSize) {
+        const studentChargesChunk = studentChargesData.slice(
+          i,
+          i + chunkSize,
+        );
+        await this.chargeRepo.bulkCreateStudentCharges(
+          tx,
+          studentChargesChunk,
+        );
+      }
     });
 
-    if (pendingMembershipCharges.length === 0) return;
+    return {
+      message: `Cargos generados exitosamente para ${activeMemberships.length} miembros.`,
+    };
+  }
 
-    const fullyPendingChargeIds = pendingMembershipCharges
-      .filter((mc) => Number(mc.charge.pendingAmount) === Number(mc.charge.amount))
+  /**
+   * Crea un cargo extraordinario manual para un único jugador específico.
+   */
+  async createManualCharge(dto: CreateManualChargeDto) {
+    const membership = await this.membershipRepo.getMembershipOrThrow(
+      dto.membershipId,
+    );
+
+    if (
+      membership.courseSeason.season.status === SeasonStatus.CANCELLED ||
+      membership.courseSeason.season.status === SeasonStatus.FINISHED ||
+      membership.courseSeason.status === StatusCourseSeason.CANCELLED ||
+      membership.courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden generar cargos manuales para una temporada o equipo que ha finalizado o fue cancelada',
+      );
+    }
+
+    const dueDate = DateUtils.getStartOfUTCDay(dto.dueDate);
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.charge.create({
+        data: StudentChargeFactory.buildManualChargePayload(
+          membership.id,
+          dto.amount,
+          dto.description,
+          dueDate,
+        ),
+      });
+    });
+
+    return { message: 'Cargo manual creado exitosamente' };
+  }
+
+  /**
+   * Módulo de Autorreparación/Recalibración de Cargos.
+   * Invocado cuando ocurre un cambio mutacional (ej: Se le cambia el PaymentPlan al usuario).
+   *
+   * Lógica crítica:
+   * 1. Descubre todos los cargos recurrentes pendientes a futuro.
+   * 2. (PROTECCIÓN FINANCIERA): Solo selecciona aquellos donde (PendingAmount === Amount).
+   *    Si el usuario ya pagó $1 de una cuota de $100, la cuota está bloqueada y NO se borra.
+   * 3. Borra las cuotas elegibles.
+   * 4. Retrasa el 'nextRecurringChargeGenerationDate' para simular que retrocedimos en el tiempo.
+   * 5. Fuerza un recalculo para que nazcan nuevas cuotas con los beneficios del nuevo plan.
+   */
+  async recalculatePendingFutureCharges(studentMembershipId: string) {
+    // 1. Tomamos el momento actual como base para buscar cargos futuros
+    const evaluationDate = DateUtils.getStartOfUTCDay(new Date());
+
+    const pendingStudentCharges =
+      await this.chargeRepo.fetchPendingFutureStudentCharges(
+        studentMembershipId,
+        evaluationDate,
+      );
+    if (pendingStudentCharges.length === 0) return;
+
+    // 2. Filtro estricto: Solo tocamos cuotas que no tengan pagos parciales (pendingAmount === amount)
+    const fullyPendingChargeIds = pendingStudentCharges
+      .filter(
+        (mc) => Number(mc.charge.pendingAmount) === Number(mc.charge.amount),
+      )
       .map((mc) => mc.chargeId);
 
     if (fullyPendingChargeIds.length === 0) return;
 
-    const membership = await this.prisma.studentMembership.findUnique({
-      where: { id: studentMembershipId },
-      include: { courseSeason: { include: { billingConfig: true } } }
-    });
+    const membership =
+      await this.membershipRepo.getMembershipById(studentMembershipId);
+    
+    // Filtramos cuáles de los cargos eliminables son cuotas recurrentes
+    const recurringCharges = pendingStudentCharges.filter(
+      (mc) =>
+        fullyPendingChargeIds.includes(mc.chargeId) &&
+        mc.type === TypeMembershipCharge.RECURRING_FEE,
+    );
 
-    const recurringCharges = pendingMembershipCharges.filter(mc => fullyPendingChargeIds.includes(mc.chargeId) && mc.type === TypeMembershipCharge.RECURRING_FEE);
     let resetDate = membership?.nextRecurringChargeGenerationDate || null;
     let oldNextDate = membership?.nextRecurringChargeGenerationDate || null;
-    
+
+    // 3. Retrocedemos el reloj (nextRecurringChargeGenerationDate) basándonos en el cargo más antiguo que vamos a borrar
     if (recurringCharges.length > 0 && membership?.courseSeason) {
-      const earliestDueDate = new Date(Math.min(...recurringCharges.map(mc => mc.charge.dueDate.getTime())));
-      const targetResetDate = new Date(earliestDueDate);
-      targetResetDate.setUTCDate(targetResetDate.getUTCDate() - (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7));
-      if (!resetDate || targetResetDate < resetDate) { resetDate = targetResetDate; }
+      const earliestDueDate = new Date(
+        Math.min(...recurringCharges.map((mc) => mc.charge.dueDate.getTime())),
+      );
+      
+      // Ajustamos la fecha restando los días de anticipación de cobro configurados
+      const calculatedResetDate = new Date(earliestDueDate);
+      calculatedResetDate.setUTCDate(
+        calculatedResetDate.getUTCDate() -
+          (membership.courseSeason.billingConfig?.chargeGenerationDaysBefore ??
+            0),
+      );
+      
+      // Solo retrocedemos si la fecha calculada es anterior a la actual
+      if (!resetDate || calculatedResetDate < resetDate) {
+        resetDate = calculatedResetDate;
+      }
     }
 
+    // 4. Eliminación física de los cargos obsoletos e inmaculados
     await this.prisma.$transaction(async (tx) => {
-      await tx.studentCharge.deleteMany({ where: { chargeId: { in: fullyPendingChargeIds } } });
-      await tx.charge.deleteMany({ where: { id: { in: fullyPendingChargeIds } } });
-      if (resetDate && (!oldNextDate || resetDate.getTime() !== oldNextDate.getTime())) {
-        await tx.studentMembership.update({ where: { id: studentMembershipId }, data: { nextRecurringChargeGenerationDate: resetDate } });
+      await this.chargeRepo.deletePendingCharges(tx, fullyPendingChargeIds);
+
+      // Guardamos el nuevo puntero de generación de tiempo si hubo cambios
+      if (
+        membership &&
+        resetDate &&
+        resetDate.getTime() !== oldNextDate?.getTime()
+      ) {
+        await this.membershipRepo.updateNextGenerationPointer(
+          tx,
+          studentMembershipId,
+          resetDate,
+        );
       }
     });
 
-    this.logger.log(`Recalculados cargos futuros para estudiante membresía ${studentMembershipId}. Se eliminaron ${fullyPendingChargeIds.length} cargos puramente pendientes.`);
-    
-    await this.generateChargesForNewMembership(studentMembershipId);
+    // 5. Autosanación: Simulamos que es de noche para forzar la regeneración inmediata de los cargos
+    try {
+      if (membership && resetDate) {
+        const fakeToday = DateUtils.getEndOfUTCDay(new Date());
+        const fullMembership =
+          await this.membershipRepo.getMembershipById(studentMembershipId);
+          
+        if (fullMembership) {
+          await this.prisma.$transaction(async (tx) => {
+            await this.generationService.ensureStudentCharges(
+              tx,
+              fullMembership,
+              fakeToday,
+            );
+          });
+        }
+      }
+    } catch (error) {
+      this.logger.warn(
+        `No se pudo regenerar los cargos tras recálculo para ${studentMembershipId}: ${error.message}`,
+      );
+    }
   }
 
-  private async createCharge(tx: Prisma.TransactionClient, studentMembershipId: string, charge: { description: string; amount: number; dueDate: Date; }, type: TypeMembershipCharge, billingYear: number, billingMonth: number, billingCycle?: number | null) {
-    await tx.charge.create({
-      data: {
-        description: charge.description,
-        amount: charge.amount,
-        pendingAmount: charge.amount,
-        dueDate: charge.dueDate,
-        status: StatusCharge.PENDING,
-        studentCharges: { create: { studentMembershipId, type, billingYear, billingMonth, billingCycle, }, },
-      },
-    });
-  }
+  /**
+   * Simula N ciclos hacia adelante sin guardarlos en la base de datos.
+   * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
+   */
+  async previewAdvanceCharges(membershipId: string, quantity: number) {
+    const membership =
+      await this.membershipRepo.getMembershipOrThrow(membershipId);
 
-  async createManualCharge(dto: CreateManualChargeDto) {
-    const membership = await this.prisma.studentMembership.findUnique({ where: { id: dto.membershipId }, });
-    if (!membership) throw new BadRequestException('Membresía no encontrada');
-    const dueDate = new Date(dto.dueDate);
-    await this.prisma.$transaction(async (tx) => {
-      await this.createCharge(tx, membership.id, { description: dto.description, amount: dto.amount, dueDate, }, TypeMembershipCharge.MANUAL, dueDate.getUTCFullYear(), dueDate.getUTCMonth() + 1);
-    });
-    return { message: 'Cargo manual creado exitosamente' };
-  }
+    if (
+      membership.courseSeason.season.status === SeasonStatus.CANCELLED ||
+      membership.courseSeason.season.status === SeasonStatus.FINISHED ||
+      membership.courseSeason.status === StatusCourseSeason.CANCELLED ||
+      membership.courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden previsualizar cuotas adelantadas para una temporada o equipo inactivo',
+      );
+    }
 
-  async findAll(paginationDto: StudentChargesPaginationDto) {
-    const {
-      per_page = 10,
-      page = 1,
-      search = '',
-      sortField = 'createdAt',
-      orderBy = 'desc',
-    } = paginationDto;
+    const nextCycles = await this.generationService.findNextUngeneratedCycles(
+      this.prisma,
+      membership,
+      quantity,
+    );
 
-    const where: Prisma.StudentChargeWhereInput = {};
-
-    if (search) {
-      where.charge = {
-        description: {
-          contains: search,
-          mode: 'insensitive',
-        },
+    if (nextCycles.length === 0) {
+      return {
+        charges: [],
+        breakdown: this.previewService.buildChargesBreakdown([]),
       };
     }
 
-    const [total, data] = await this.prisma.$transaction([
-      this.prisma.studentCharge.count({ where }),
-      this.prisma.studentCharge.findMany({
-        where,
-        take: per_page,
-        skip: (page - 1) * per_page,
-        orderBy: {
-          [sortField]: orderBy,
-        },
-        include: {
-          charge: true,
-          studentMembership: {
-            include: {
-              student: {
-                include: {
-                  person: true,
-                },
-              },
-            },
-          },
-        },
-      }),
-    ]);
+    return this.previewService.extractAdvanceChargesFromCycles(nextCycles);
+  }
+
+  /**
+   * Concreta la generación física (persistida) de N cuotas por adelantado
+   * bajo el contexto de un solo agrupamiento transaccional.
+   */
+  async generateAdvanceCharges(membershipId: string, quantity: number) {
+    const membership =
+      await this.membershipRepo.getMembershipOrThrow(membershipId);
+
+    if (
+      membership.courseSeason.season.status === SeasonStatus.CANCELLED ||
+      membership.courseSeason.season.status === SeasonStatus.FINISHED ||
+      membership.courseSeason.status === StatusCourseSeason.CANCELLED ||
+      membership.courseSeason.status === StatusCourseSeason.FINISHED
+    ) {
+      throw new BadRequestException(
+        'No se pueden generar cuotas adelantadas para una temporada o equipo inactivo',
+      );
+    }
+
+    const nextCycles = await this.generationService.findNextUngeneratedCycles(
+      this.prisma,
+      membership,
+      quantity,
+    );
+
+    if (nextCycles.length === 0) {
+      return {
+        message: 'No hay más cuotas disponibles para generar en la temporada.',
+      };
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await this.generationService.generateAdvanceCharges(
+        tx,
+        membership,
+        nextCycles,
+      );
+    });
 
     return {
-      data,
-      meta: {
-        current_page: page,
-        last_page: Math.ceil(total / per_page),
-        per_page,
-        total,
-      },
+      message: `Se generaron exitosamente ${nextCycles.length} cuotas por adelantado.`,
     };
   }
-
-  async findOne(id: string) {
-    const charge = await this.prisma.studentCharge.findUnique({
-      where: { id },
-      include: {
-        charge: true,
-        studentMembership: {
-          include: {
-            student: {
-              include: {
-                person: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    if (!charge) {
-      throw new BadRequestException('Cargo escolar no encontrado');
-    }
-
-    return charge;
-  }
-
-  async update(id: string, updateStudentChargeDto: UpdateStudentChargeDto) {
-    // Implementación mínima para mantener el contrato
-    return { message: 'Operación no soportada' };
-  }
-
-  async remove(id: string) {
-    const charge = await this.prisma.studentCharge.findUnique({
-      where: { id },
-    });
-
-    if (!charge) {
-      throw new BadRequestException('Cargo escolar no encontrado');
-    }
-
-    await this.prisma.charge.delete({
-      where: { id: charge.chargeId },
-    });
-
-    return { message: 'Cargo escolar eliminado exitosamente' };
-  }
 }
+
+
+

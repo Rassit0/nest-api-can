@@ -192,8 +192,20 @@ export const StatusCourseSeason = {
 export type StatusCourseSeason = (typeof StatusCourseSeason)[keyof typeof StatusCourseSeason]
 
 
+export const CourseSeasonStaffRole = {
+  HEAD_COACH: 'HEAD_COACH',
+  ASSISTANT_COACH: 'ASSISTANT_COACH',
+  ASSISTANT: 'ASSISTANT',
+  VOLUNTEER: 'VOLUNTEER',
+  DELEGATE: 'DELEGATE',
+  OTHER: 'OTHER'
+} as const
+
+export type CourseSeasonStaffRole = (typeof CourseSeasonStaffRole)[keyof typeof CourseSeasonStaffRole]
+
+
 export const StudentMembershipStatus = {
-  PENDING: 'PENDING',
+  PENDING_ACTIVE: 'PENDING_ACTIVE',
   ACTIVE: 'ACTIVE',
   SUSPENDED: 'SUSPENDED',
   WITHDRAWN: 'WITHDRAWN',

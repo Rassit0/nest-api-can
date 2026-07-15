@@ -27,7 +27,6 @@ import { StaffModule } from './staff/staff.module';
 import { TeamSeasonStaffModule } from './team-season-staff/team-season-staff.module';
 import { ChargesModule } from './charges/charges.module';
 import { MembershipChargesModule } from './membership-charges/membership-charges.module';
-import { MembershipChargeGeneratorService } from './membership-charge-generator/membership-charge-generator.service';
 import { MembershipLateFeeModule } from './membership-late-fee/membership-late-fee.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { SessionsModule } from './sessions/sessions.module';
@@ -117,7 +116,6 @@ import { ScheduleModule } from '@nestjs/schedule';
   providers: [
     AppService,
     PrismaExceptionFilter,
-    MembershipChargeGeneratorService,
   ],
 })
 export class AppModule {}

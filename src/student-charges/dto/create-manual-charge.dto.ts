@@ -1,20 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID, IsNumber, IsDateString, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsString, IsUUID, Min } from 'class-validator';
 
 export class CreateManualChargeDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'El ID de la membresía (puede ser StudentMembership o StudentMembership según el contexto)',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
   @IsUUID()
+  @IsNotEmpty()
   membershipId: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Descripción que justificará el cargo manual',
+    example: 'Cuota de equipamiento deportivo extra'
+  })
   @IsString()
+  @IsNotEmpty()
   description: string;
 
-  @ApiProperty()
-  @IsNumber()
+  @ApiProperty({
+    description: 'Monto a cobrar por el cargo',
+    example: 150.50
+  })
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @IsNotEmpty()
   amount: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Fecha límite de pago (Due Date)',
+    example: '2026-07-15T00:00:00Z'
+  })
   @IsDateString()
+  @IsNotEmpty()
   dueDate: string;
 }

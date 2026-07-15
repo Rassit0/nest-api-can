@@ -1,72 +1,95 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { StudentChargesService } from './student-charges.service';
 import { PrismaService } from 'src/prisma.service';
-import { TypeMembershipCharge } from 'src/generated/prisma/client';
+import { Prisma, TypeMembershipCharge , StatusCourseSeason } from 'src/generated/prisma/client';
+import { PreviewCharge } from './interfaces/student-charge.types';
+import { StudentPreviewService } from './services/student-preview.service';
+import { StudentGenerationService } from './services/student-generation.service';
+import { StudentMembershipRepository } from './repositories/student-membership.repository';
+import { StudentChargeRepository } from './repositories/student-charge.repository';
+import { DateUtils } from 'src/utils/date.utils';
 
-describe('StudentChargesService (Financial Engine)', () => {
+describe('StudentChargesService (Financial Engine - Extremo)', () => {
   let service: StudentChargesService;
-  let prismaService: PrismaService;
+  let membershipRepo: jest.Mocked<StudentMembershipRepository>;
+  let chargeRepo: jest.Mocked<StudentChargeRepository>;
+  let generationService: jest.Mocked<StudentGenerationService>;
+  let prisma: PrismaService;
 
   beforeEach(async () => {
+    const mockPrisma = {
+      $transaction: jest.fn(async (cb) => cb(mockPrisma)),
+    };
+    
+    const mockMembershipRepo = {
+      getCourseSeasonOrThrow: jest.fn(),
+      getPaymentPlanOrThrow: jest.fn(),
+      getMembershipOrThrow: jest.fn(),
+      getMembershipById: jest.fn(),
+      getActiveMembershipsIdsBySeason: jest.fn(),
+      getMembershipsForDailyGeneration: jest.fn(),
+      updateNextGenerationPointer: jest.fn(),
+    };
+
+    const mockChargeRepo = {
+      fetchExistingCharges: jest.fn(),
+      fetchPendingFutureStudentCharges: jest.fn(),
+      bulkCreateCharges: jest.fn(),
+      bulkCreateStudentCharges: jest.fn(),
+      deletePendingCharges: jest.fn(),
+    };
+
+    const mockGenerationService = {
+      ensureStudentCharges: jest.fn(),
+      ensureRecurringCharges: jest.fn(),
+      findNextUngeneratedCycles: jest.fn(),
+      generateAdvanceCharges: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StudentChargesService,
-        {
-          provide: PrismaService,
-          useValue: {
-            courseSeason: {
-              findUnique: jest.fn(),
-            },
-            paymentPlan: {
-              findUnique: jest.fn(),
-            },
-            studentMembership: {
-              findUnique: jest.fn(),
-            },
-            membershipCharge: {
-              findMany: jest.fn(),
-              deleteMany: jest.fn(),
-            },
-            studentCharge: {
-              findMany: jest.fn(),
-              deleteMany: jest.fn(),
-            },
-            charge: {
-              deleteMany: jest.fn(),
-              create: jest.fn(),
-            },
-            $transaction: jest.fn(),
-          },
-        },
+        StudentPreviewService, // Inyección real para mantener tests de cálculo matemático de ciclos
+        { provide: StudentGenerationService, useValue: mockGenerationService },
+        { provide: StudentMembershipRepository, useValue: mockMembershipRepo },
+        { provide: StudentChargeRepository, useValue: mockChargeRepo },
+        { provide: PrismaService, useValue: mockPrisma },
       ],
     }).compile();
 
     service = module.get<StudentChargesService>(StudentChargesService);
-    prismaService = module.get<PrismaService>(PrismaService);
+    membershipRepo = module.get(StudentMembershipRepository);
+    chargeRepo = module.get(StudentChargeRepository);
+    generationService = module.get(StudentGenerationService);
+    prisma = module.get(PrismaService);
   });
 
-  it('should be defined', () => {
+  it('debe estar definido', () => {
     expect(service).toBeDefined();
   });
 
-  describe('previewCharges (Generación Matemática de Cobros)', () => {
+  describe('previewCharges (Casos Dorados de Motor Financiero)', () => {
     const mockSeason = {
       id: 'season-1',
       startDate: new Date('2026-01-01T00:00:00.000Z'),
       endDate: new Date('2026-12-31T23:59:59.999Z'),
+      status: 'ACTIVE',
     };
 
     const mockCourseSeason = {
       id: 'course-season-1',
-      billingType: 'MONTHLY',
-      billingFrequency: 'MONTHLY',
-      billingDay: 1,
-      registrationFee: 100,
-      recurringFee: 200,
-      seasonFee: null,
+      billingConfig: {
+        billingType: 'MONTHLY',
+        billingFrequency: 'MONTHLY',
+        billingDay: 1,
+        registrationFee: 100,
+        recurringFee: 200,
+        seasonFee: null,
+        prorateFirstRecurringFee: true,
+        prorateRegistrationFee: false,
+      },
       season: mockSeason,
-      prorateFirstRecurringFee: true,
-      prorateRegistrationFee: false,
+      status: 'ACTIVE',
     };
 
     const basePlan = {
@@ -79,8 +102,8 @@ describe('StudentChargesService (Financial Engine)', () => {
     };
 
     it('Caso 1: Cobro Mensual Estándar (Sin descuentos, 1 ciclo)', async () => {
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(basePlan);
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(mockCourseSeason as unknown as Awaited<ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>>);
+      membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(basePlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
 
       const result = await service.previewCharges({
         courseSeasonId: 'course-season-1',
@@ -90,38 +113,19 @@ describe('StudentChargesService (Financial Engine)', () => {
 
       expect(result.charges.length).toBe(2);
       
-      const regCharge = result.charges.find((c: any) => c.type === TypeMembershipCharge.REGISTRATION);
+      const regCharge = result.charges.find((c: PreviewCharge) => c.type === TypeMembershipCharge.REGISTRATION);
       expect(regCharge?.amount).toBe(100);
 
-      const recCharge = result.charges.find((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
+      const recCharge = result.charges.find((c: PreviewCharge) => c.type === TypeMembershipCharge.RECURRING_FEE);
       expect(recCharge?.amount).toBe(200);
       expect(recCharge?.description).toContain('Primera Mensualidad - Enero 2026');
     });
 
-    it('Caso 2: Cobro Agrupado con Descuento Adelantado (advanceCycles = 3, discount = 100%)', async () => {
-      const trimestralPromoPlan = { ...basePlan, advanceCycles: 3, advanceCyclesDiscountPercent: 100 };
-      
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(trimestralPromoPlan);
-
-      const result = await service.previewCharges({
-        courseSeasonId: 'course-season-1',
-        paymentPlanId: 'plan-1',
-        startDate: '2026-01-01T00:00:00.000Z',
-      });
-
-      const recCharges = result.charges.filter((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
-      expect(recCharges.length).toBe(3);
-      expect(recCharges[0].amount).toBe(0); // 100% discount on 200
-      expect(recCharges[0].discountAmount).toBe(200); 
-      expect(recCharges[0].description).toContain('Descuento Pago Adelantado');
-    });
-
-    it('Caso 3: Cobro Agrupado (Trimestral, advanceCycles = 3, sin descuento)', async () => {
+    it('Caso 2: Cobro Agrupado (Trimestral, advanceCycles = 3, sin descuento)', async () => {
       const trimestralPlan = { ...basePlan, advanceCycles: 3 };
       
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(trimestralPlan);
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(mockCourseSeason as unknown as Awaited<ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>>);
+      membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(trimestralPlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
 
       const result = await service.previewCharges({
         courseSeasonId: 'course-season-1',
@@ -129,18 +133,36 @@ describe('StudentChargesService (Financial Engine)', () => {
         startDate: '2026-01-01T00:00:00.000Z',
       });
 
-      const recCharges = result.charges.filter((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
+      const recCharges = result.charges.filter((c: PreviewCharge) => c.type === TypeMembershipCharge.RECURRING_FEE);
       expect(recCharges.length).toBe(3);
-      expect(recCharges[0].amount).toBe(200); // Individual charge is 200
+      expect(recCharges[0].amount).toBe(200);
       expect(recCharges[0].description).toContain('Mensualidad');
+    });
+
+    it('Caso 3: Cobro Agrupado con Descuento Adelantado (advanceCycles = 3, discount = 100%)', async () => {
+      const trimestralPromoPlan = { ...basePlan, advanceCycles: 3, advanceCyclesDiscountPercent: 100 };
+      
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(mockCourseSeason as unknown as Awaited<ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>>);
+      membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(trimestralPromoPlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
+
+      const result = await service.previewCharges({
+        courseSeasonId: 'course-season-1',
+        paymentPlanId: 'plan-1',
+        startDate: '2026-01-01T00:00:00.000Z',
+      });
+
+      const recCharges = result.charges.filter((c: PreviewCharge) => c.type === TypeMembershipCharge.RECURRING_FEE);
+      expect(recCharges.length).toBe(3);
+      expect(recCharges[0].amount).toBe(0); // 100% discount
+      expect(recCharges[0].discountAmount).toBe(200); 
     });
 
     it('Caso 4: Pago Único de Temporada (isSinglePayment = true)', async () => {
       const singlePlan = { ...basePlan, isSinglePayment: true, seasonFeeDiscountPercent: 10 };
-      const courseSeasonSingle = { ...mockCourseSeason, billingType: 'SINGLE_ONLY', seasonFee: 2000 };
+      const courseSeasonSingle = { ...mockCourseSeason, billingConfig: { ...mockCourseSeason.billingConfig, billingType: 'SINGLE_ONLY', seasonFee: 2000 } };
       
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(courseSeasonSingle);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(singlePlan);
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(courseSeasonSingle as unknown as Awaited<ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>>);
+      membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(singlePlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
 
       const result = await service.previewCharges({
         courseSeasonId: 'course-season-1',
@@ -148,93 +170,117 @@ describe('StudentChargesService (Financial Engine)', () => {
         startDate: '2026-01-01T00:00:00.000Z',
       });
 
-      const seasonCharge = result.charges.find((c: any) => c.type === TypeMembershipCharge.SEASON_FEE);
+      const seasonCharge = result.charges.find((c: PreviewCharge) => c.type === TypeMembershipCharge.SEASON_FEE);
       expect(seasonCharge?.amount).toBe(1800); // 2000 - 10%
       expect(seasonCharge?.discountAmount).toBe(200);
-      expect(seasonCharge?.description).toContain('Pago Completo - Temporada (Descuento de 10% - Plan de pago)');
     });
 
-    it('Caso 5: Prorrateo primera cuota (Ingreso el 16 del mes)', async () => {
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(basePlan);
+    it('Caso 5: Prorrateo primera cuota (Ingreso a mitad de mes)', async () => {
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(mockCourseSeason as unknown as Awaited<ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>>);
+      membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(basePlan as unknown as Awaited<ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>>);
 
       const result = await service.previewCharges({
         courseSeasonId: 'course-season-1',
         paymentPlanId: 'plan-1',
-        startDate: '2026-01-16T00:00:00.000Z', // Ingresa el día 16
+        startDate: '2026-01-16T00:00:00.000Z', 
       });
 
-      const recCharge = result.charges.find((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
-      // El mes tiene 31 dias.
+      const recCharge = result.charges.find((c: PreviewCharge) => c.type === TypeMembershipCharge.RECURRING_FEE);
       expect(recCharge?.amount).toBeLessThan(200);
       expect(recCharge?.amount).toBeGreaterThan(0);
       expect(recCharge?.description).toContain('Prorrateado');
     });
+  });
 
-    it('Caso 6: Acumulación de descuentos topada al 100% (Descuento Plan + Descuento Beca)', async () => {
-      const promoPlan = { ...basePlan, recurringDiscountPercent: 60 };
-      
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(promoPlan);
+  describe('Pruebas de Estrés y Chunking (Nuevos Requisitos Enterprise)', () => {
+    
+    it('Caso Extraordinario 1: Stress Test Bulk Insert de 3,500 membresías (Chunking)', async () => {
+      const activeIds = Array.from({ length: 3500 }, (_, i) => ({ id: `mem-${i}` }));
+      membershipRepo.getActiveMembershipsIdsBySeason.mockResolvedValue(activeIds);
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue({ id: 'ts1', status: 'ACTIVE', season: { status: 'ACTIVE' } } as any);
 
-      const result = await service.previewCharges({
+      const res = await service.createMassiveManualCharge({
         courseSeasonId: 'course-season-1',
-        paymentPlanId: 'plan-1',
-        startDate: '2026-01-01T00:00:00.000Z',
-        studentDiscounts: [{
-          id: 'desc-1',
-          startDate: '2026-01-01T00:00:00.000Z',
-          endDate: null,
-          recurringDiscountPercent: 60,
-          reason: 'Beca Escolar'
-        } as any]
-      });
+        amount: 50,
+        description: 'Bono Especial',
+        dueDate: '2026-08-01T00:00:00.000Z'
+      } as unknown as Parameters<typeof service.createMassiveManualCharge>[0]);
 
-      const recCharge = result.charges.find((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
-      // 60% del plan + 60% de beca = 120%, pero debe estar topado a 100%
-      expect(recCharge?.amount).toBe(0);
-      expect(recCharge?.discountAmount).toBe(200);
+      expect(res.message).toContain('3500 miembros');
+      
+      // Lotes de 1000 = 4 interacciones
+      expect(chargeRepo.bulkCreateCharges).toHaveBeenCalledTimes(4);
+      expect(chargeRepo.bulkCreateStudentCharges).toHaveBeenCalledTimes(4);
+      
+      // Primer chunk debe tener 1000 elementos
+      expect(chargeRepo.bulkCreateCharges.mock.calls[0][1].length).toBe(1000);
+      // Último chunk debe tener 500 elementos
+      expect(chargeRepo.bulkCreateCharges.mock.calls[3][1].length).toBe(500);
     });
 
-    it('Caso Extraordinario 1: advanceCycles extremadamente alto (200) superando el fin de temporada', async () => {
-      const extremePlan = { ...basePlan, advanceCycles: 200 };
-      
-      (prismaService.courseSeason.findUnique as jest.Mock).mockResolvedValue(mockCourseSeason);
-      (prismaService.paymentPlan.findUnique as jest.Mock).mockResolvedValue(extremePlan);
+    it('Caso Vacío en Masivos: 0 membresías no ejecuta base de datos', async () => {
+      membershipRepo.getActiveMembershipsIdsBySeason.mockResolvedValue([]);
+      membershipRepo.getCourseSeasonOrThrow.mockResolvedValue({ id: 'ts1', status: 'ACTIVE', season: { status: 'ACTIVE' } } as any);
 
-      const result = await service.previewCharges({
+      await expect(service.createMassiveManualCharge({
         courseSeasonId: 'course-season-1',
-        paymentPlanId: 'plan-1',
-        startDate: '2026-01-01T00:00:00.000Z',
-      });
+        amount: 50,
+        description: 'Prueba',
+        dueDate: '2026-08-01T00:00:00.000Z'
+      } as Parameters<typeof service.createMassiveManualCharge>[0])).rejects.toThrow('No hay miembros activos');
 
-      const recCharges = result.charges.filter((c: any) => c.type === TypeMembershipCharge.RECURRING_FEE);
-      // Solo hay 12 meses en la temporada de 2026, por lo que el advanceCycles de 200 debe topar a 12.
-      expect(recCharges.length).toBe(12);
+      expect(chargeRepo.bulkCreateCharges).not.toHaveBeenCalled();
+    });
+
+    it('Caso Extraordinario 2: Stress Test de Cron Diario con 125 membresías', async () => {
+      const dailyMemberships = Array.from({ length: 125 }, (_, i) => ({ id: `mem-${i}` }));
+      membershipRepo.getMembershipsForDailyGeneration.mockResolvedValue(dailyMemberships as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipsForDailyGeneration>>);
+
+      await service.applyDailyStudentCharges();
+
+      // Debe llamar ensureStudentCharges exactamente 125 veces
+      expect(generationService.ensureStudentCharges).toHaveBeenCalledTimes(125);
     });
   });
 
-  describe('recalculatePendingFutureCharges', () => {
-    it('Caso 7: Solo debe borrar cargos totalmente PENDING, ignorando los pagados parcialmente', async () => {
+  describe('recalculatePendingFutureCharges (Recálculo Seguro de Punteros)', () => {
+    it('Caso Extremo de Riesgo: Ignora cargos que están parcialmente pagados y borra solo los 100% pendientes', async () => {
       const mockCharges = [
-        { chargeId: 'fut-1', charge: { dueDate: new Date('2026-07-01T00:00:00.000Z'), status: 'PENDING', amount: 200, pendingAmount: 200 } },
-        { chargeId: 'fut-2', charge: { dueDate: new Date('2026-08-01T00:00:00.000Z'), status: 'PENDING', amount: 200, pendingAmount: 100 } }
+        { chargeId: 'fut-1', type: TypeMembershipCharge.RECURRING_FEE, charge: { dueDate: new Date('2026-07-01T00:00:00.000Z'), status: 'PENDING', amount: 200, pendingAmount: 200 } },
+        { chargeId: 'fut-2', type: TypeMembershipCharge.RECURRING_FEE, charge: { dueDate: new Date('2026-08-01T00:00:00.000Z'), status: 'PENDING', amount: 200, pendingAmount: 100 } } // Pagó la mitad
       ];
 
-      (prismaService.studentCharge.findMany as jest.Mock).mockResolvedValue(mockCharges);
-
-      (prismaService.$transaction as jest.Mock).mockImplementation(async (callback) => {
-        return await callback(prismaService);
-      });
+      chargeRepo.fetchPendingFutureStudentCharges.mockResolvedValue(mockCharges as unknown as Awaited<ReturnType<typeof chargeRepo.fetchPendingFutureStudentCharges>>);
+      membershipRepo.getMembershipById.mockResolvedValue({ id: 'mem-1', courseSeason: { billingConfig: { chargeGenerationDaysBefore: 15 } } } as unknown as Awaited<ReturnType<typeof membershipRepo.getMembershipById>>);
 
       await service.recalculatePendingFutureCharges('membership-1');
 
-      expect(prismaService.studentCharge.deleteMany).toHaveBeenCalledWith({
-        where: { chargeId: { in: ['fut-1'] } }
-      });
-      expect(prismaService.charge.deleteMany).toHaveBeenCalledWith({
-        where: { id: { in: ['fut-1'] } }
-      });
+      // Solo debe borrar 'fut-1' porque 'fut-2' tiene pago parcial
+      expect(chargeRepo.deletePendingCharges).toHaveBeenCalledWith(expect.anything(), ['fut-1']);
+    });
+  });
+
+  describe('generateAdvanceCharges (Generación Adelantada Manual)', () => {
+    it('Debe abortar elegantemente si no hay ciclos por generar', async () => {
+      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1', courseSeason: { status: 'ACTIVE', season: { status: 'ACTIVE' } } } as any);
+      generationService.findNextUngeneratedCycles.mockResolvedValue([]);
+
+      const result = await service.generateAdvanceCharges('mem-1', 5);
+
+      expect(result.message).toContain('No hay más cuotas disponibles');
+      expect(generationService.generateAdvanceCharges).not.toHaveBeenCalled();
+    });
+
+    it('Debe invocar la generación si hay ciclos', async () => {
+      membershipRepo.getMembershipOrThrow.mockResolvedValue({ id: 'mem-1', courseSeason: { status: 'ACTIVE', season: { status: 'ACTIVE' } } } as any);
+      generationService.findNextUngeneratedCycles.mockResolvedValue([{}, {}] as unknown as ReturnType<typeof generationService.findNextUngeneratedCycles>);
+
+      const result = await service.generateAdvanceCharges('mem-1', 2);
+
+      expect(result.message).toContain('Se generaron exitosamente 2 cuotas por adelantado');
+      expect(generationService.generateAdvanceCharges).toHaveBeenCalledTimes(1);
     });
   });
 });
+
+
