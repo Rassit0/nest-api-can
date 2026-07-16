@@ -311,6 +311,7 @@ export class StudentMembershipsService {
       allCharges,
       activeMembersCount,
       suspendedMembersCount,
+      pendingActiveMembersCount,
       courseSeasonData,
     ] = await Promise.all([
       this.prisma.studentMembership.findMany({
@@ -345,6 +346,9 @@ export class StudentMembershipsService {
       this.prisma.studentMembership.count({
         where: { ...globalWhere, status: 'SUSPENDED' },
       }),
+      this.prisma.studentMembership.count({
+        where: { ...globalWhere, status: 'PENDING_ACTIVE' },
+      }),
       courseSeasonId
         ? this.prisma.courseSeason.findUnique({
             where: { id: courseSeasonId },
@@ -373,7 +377,6 @@ export class StudentMembershipsService {
         )
         .toFixed(2),
     );
-
     const totalPages = Math.ceil(totalItems / per_page);
     const currentPage = page;
 
@@ -386,7 +389,11 @@ export class StudentMembershipsService {
         totalPending: globalTotalPending,
         activeMembers: activeMembersCount,
         suspendedMembers: suspendedMembersCount,
-        occupiedSlotsCount: activeMembersCount + suspendedMembersCount,
+        pendingMembers: pendingActiveMembersCount,
+        occupiedSlotsCount:
+          activeMembersCount +
+          suspendedMembersCount +
+          pendingActiveMembersCount,
         maxMembers: courseSeasonData?.maxMembers || null,
       },
       meta: {

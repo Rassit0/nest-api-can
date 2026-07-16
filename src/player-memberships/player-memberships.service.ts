@@ -321,6 +321,7 @@ export class PlayerMembershipsService {
       allCharges,
       activeMembersCount,
       suspendedMembersCount,
+      pendingActiveMembersCount,
       teamSeasonData,
     ] = await Promise.all([
       this.prisma.playerMembership.findMany({
@@ -354,6 +355,9 @@ export class PlayerMembershipsService {
       }),
       this.prisma.playerMembership.count({
         where: { ...globalWhere, status: 'SUSPENDED' },
+      }),
+      this.prisma.playerMembership.count({
+        where: { ...globalWhere, status: 'PENDING_ACTIVE' },
       }),
       teamSeasonId
         ? this.prisma.teamSeason.findUnique({
@@ -401,7 +405,11 @@ export class PlayerMembershipsService {
         totalPending: globalTotalPending,
         activeMembers: activeMembersCount,
         suspendedMembers: suspendedMembersCount,
-        occupiedSlotsCount: activeMembersCount + suspendedMembersCount,
+        pendingMembers: pendingActiveMembersCount,
+        occupiedSlotsCount:
+          activeMembersCount +
+          suspendedMembersCount +
+          pendingActiveMembersCount,
         maxMembers: teamSeasonData?.maxMembers || null,
       },
       meta: {
