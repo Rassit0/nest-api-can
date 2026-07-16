@@ -115,21 +115,35 @@ export class TeamSeasonsController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Obtener instancia de equipo por ID',
-    description:
-      'Busca y retorna los detalles completos de una instancia de equipo en temporada.',
+    summary: 'Obtener temporada de equipo por ID',
+    description: 'Retorna los detalles de un equipo instanciado en temporada.',
   })
   @ApiParam({
     name: 'id',
-    description: 'ID de la instancia (UUID)',
+    description: 'ID de la temporada de equipo (UUID)',
     format: 'uuid',
   })
   @ApiStandardResponse(
     TeamSeasonResponseDto,
-    'Instancia encontrada exitosamente.',
+    'Temporada de equipo obtenida exitosamente.',
   )
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.findOne(id);
+  }
+
+  @Get(':id/summary')
+  @ApiOperation({
+    summary: 'Obtener resumen de la temporada',
+    description: 'Retorna un resumen de métricas y cobranzas.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la temporada de equipo (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Resumen de temporada de equipo.' })
+  async getSummary(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.teamSeasonsService.getSummary(id);
   }
 
   @Patch(':id')

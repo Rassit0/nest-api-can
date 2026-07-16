@@ -72,13 +72,16 @@ export class MembershipLateFeeService {
     let pausedDays = 0;
 
     for (const p of teamSeasonPauses) {
-      if (p.startDate > evaluationDate || p.endDate < dueDate) continue;
+      const pStart = DateUtils.getStartOfUTCDay(p.startDate);
+      const pEnd = DateUtils.getStartOfUTCDay(p.endDate);
 
-      const pauseStart = p.startDate < dueDate ? dueDate : p.startDate;
-      const pauseEnd = p.endDate > evaluationDate ? evaluationDate : p.endDate;
+      if (pStart > evaluationDate || pEnd < dueDate) continue;
+
+      const pauseStart = pStart < dueDate ? dueDate : pStart;
+      const pauseEnd = pEnd > evaluationDate ? evaluationDate : pEnd;
 
       if (pauseStart <= pauseEnd) {
-        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd);
+        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd) + 1;
       }
     }
 

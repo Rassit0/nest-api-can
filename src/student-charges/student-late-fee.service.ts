@@ -7,7 +7,7 @@ import {
   TypeMembershipCharge,
   StatusCourseSeason 
 } from 'src/generated/prisma/client';
-
+import { DateUtils } from 'src/utils/date.utils';
 type ChargeWithRelations = Prisma.ChargeGetPayload<{
   include: {
     studentCharges: {
@@ -55,8 +55,7 @@ export class StudentLateFeeService {
       'Iniciando proceso diario de cálculo de recargos escolares (mora)...',
     );
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const evaluationDate = DateUtils.getStartOfUTCDay(new Date());
 
     // Buscar cargos base vencidos de mensualidad de estudiantes
     const overdueCharges = await this.prisma.charge.findMany({
@@ -80,7 +79,7 @@ export class StudentLateFeeService {
         },
         parentChargeId: null,
         dueDate: {
-          lt: today,
+          lt: evaluationDate,
         },
       },
       include: chargeInclude,
@@ -93,7 +92,7 @@ export class StudentLateFeeService {
     for (const baseCharge of overdueCharges) {
       try {
         await this.prisma.$transaction(async (tx) => {
-          await this.processChargeLateFee(tx, baseCharge, today);
+          await this.processChargeLateFee(tx, baseCharge, evaluationDate);
         });
       } catch (error) {
         this.logger.error(
@@ -109,7 +108,7 @@ export class StudentLateFeeService {
   private async processChargeLateFee(
     tx: Prisma.TransactionClient,
     baseCharge: ChargeWithRelations,
-    today: Date,
+    evaluationDate: Date,
   ) {
     const studentChargeRelation = baseCharge.studentCharges[0];
     if (!studentChargeRelation) return;
@@ -119,24 +118,26 @@ export class StudentLateFeeService {
 
     if (!courseSeason.billingConfig?.lateFeeEnabled || courseSeason.billingConfig?.isEngineActive === false) return;
 
-    const dueDate = new Date(baseCharge.dueDate);
-    dueDate.setHours(0, 0, 0, 0);
+    const dueDate = DateUtils.getStartOfUTCDay(baseCharge.dueDate);
 
     const courseSeasonPauses = courseSeason.pauses || [];
     let pausedDays = 0;
 
     for (const p of courseSeasonPauses) {
-      if (p.startDate > today || p.endDate < dueDate) continue;
+      const pStart = DateUtils.getStartOfUTCDay(p.startDate);
+      const pEnd = DateUtils.getStartOfUTCDay(p.endDate);
 
-      const pauseStart = p.startDate < dueDate ? dueDate : p.startDate;
-      const pauseEnd = p.endDate > today ? today : p.endDate;
+      if (pStart > evaluationDate || pEnd < dueDate) continue;
+
+      const pauseStart = pStart < dueDate ? dueDate : pStart;
+      const pauseEnd = pEnd > evaluationDate ? evaluationDate : pEnd;
 
       if (pauseStart <= pauseEnd) {
-        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd);
+        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd) + 1;
       }
     }
 
-    const elapsedDays = this.calculateElapsedDays(dueDate, today) - pausedDays;
+    const elapsedDays = this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays;
     const graceDays = Number(courseSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) return;
@@ -192,7 +193,7 @@ export class StudentLateFeeService {
           description: `Recargo Mora Curso - ${penaltyDays} días de retraso`,
           amount: targetLateFeeAmount,
           pendingAmount: targetLateFeeAmount,
-          dueDate: today,
+          dueDate: evaluationDate,
           status: StatusCharge.PENDING,
           studentCharges: {
             create: {

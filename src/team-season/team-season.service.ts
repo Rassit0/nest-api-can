@@ -286,14 +286,72 @@ export class TeamSeasonService {
       where: { id },
       select: teamCategorySelect,
     });
+
     if (!teamSeason) {
       throw new NotFoundException(
         'La categoria de equipo en temporada no fue encontrada',
       );
     }
+
     return {
       data: teamSeason,
       message: 'Temporada de equipo obtenida exitosamente',
+    };
+  }
+
+  async getSummary(id: string) {
+    const [
+      teamSeason,
+      chargesAggr,
+      activeMembers,
+      suspendedMembers,
+      pendingMembers,
+    ] = await Promise.all([
+      this.prisma.teamSeason.findUnique({
+        where: { id },
+        select: { id: true, maxMembers: true },
+      }),
+      this.prisma.charge.aggregate({
+        where: {
+          membershipCharges: {
+            some: { playerMembership: { teamSeasonId: id } },
+          },
+        },
+        _sum: { amount: true, pendingAmount: true },
+      }),
+      this.prisma.playerMembership.count({
+        where: { teamSeasonId: id, status: 'ACTIVE' },
+      }),
+      this.prisma.playerMembership.count({
+        where: { teamSeasonId: id, status: 'SUSPENDED' },
+      }),
+      this.prisma.playerMembership.count({
+        where: { teamSeasonId: id, status: 'PENDING_ACTIVE' },
+      }),
+    ]);
+
+    if (!teamSeason) {
+      throw new NotFoundException(
+        'La categoria de equipo en temporada no fue encontrada',
+      );
+    }
+
+    const totalBilled = Number(chargesAggr._sum.amount || 0);
+    const totalPending = Number(chargesAggr._sum.pendingAmount || 0);
+    const totalPaid = totalBilled - totalPending;
+
+    return {
+      data: {
+        totalBilled,
+        totalPaid,
+        totalPending,
+        activeMembers,
+        suspendedMembers,
+        pendingMembers,
+        occupiedSlotsCount: activeMembers + suspendedMembers + pendingMembers,
+        maxMembers: teamSeason.maxMembers,
+      },
+      message: 'Resumen de la temporada de equipo obtenido exitosamente',
     };
   }
 
@@ -308,6 +366,45 @@ export class TeamSeasonService {
       throw new NotFoundException(
         'La categoria de equipo en temporada no fue encontrada',
       );
+    }
+
+    if (
+      teamSeason.status === StatusTeamSeason.FINISHED ||
+      teamSeason.status === StatusTeamSeason.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede editar una temporada de equipo que ya finalizó o fue cancelada',
+      );
+    }
+
+    if (teamSeason.status === StatusTeamSeason.ACTIVE) {
+      if (
+        (teamId && teamId !== teamSeason.team.id) ||
+        (seasonId && seasonId !== teamSeason.season.id) ||
+        (categoryId && categoryId !== teamSeason.category.id) ||
+        (updateTeamSeasonDto.gender && updateTeamSeasonDto.gender !== teamSeason.gender)
+      ) {
+        throw new BadRequestException(
+          'No se puede modificar el equipo, la temporada, la categoría ni el género una vez que la temporada de equipo está activa',
+        );
+      }
+
+      const billing = updateTeamSeasonDto.billingConfig;
+      if (billing && teamSeason.billingConfig) {
+        if (
+          (billing.billingType !== undefined && billing.billingType !== teamSeason.billingConfig.billingType) ||
+          (billing.billingFrequency !== undefined && billing.billingFrequency !== teamSeason.billingConfig.billingFrequency) ||
+          (billing.billingDay !== undefined && billing.billingDay !== teamSeason.billingConfig.billingDay) ||
+          (billing.prorateRegistrationFee !== undefined && billing.prorateRegistrationFee !== teamSeason.billingConfig.prorateRegistrationFee) ||
+          (billing.prorateFirstRecurringFee !== undefined && billing.prorateFirstRecurringFee !== teamSeason.billingConfig.prorateFirstRecurringFee) ||
+          (billing.prorateLastRecurringFee !== undefined && billing.prorateLastRecurringFee !== teamSeason.billingConfig.prorateLastRecurringFee) ||
+          (billing.prorateSeasonFee !== undefined && billing.prorateSeasonFee !== teamSeason.billingConfig.prorateSeasonFee)
+        ) {
+          throw new BadRequestException(
+            'No se puede modificar la configuración base del motor de cobros (tipo, frecuencia, día y prorrateos) en una temporada activa. Solo se permite actualizar montos para nuevas inscripciones.',
+          );
+        }
+      }
     }
 
     let season = await this.prisma.season.findUnique({
@@ -387,8 +484,50 @@ export class TeamSeasonService {
       }
     }
 
-    // TODO: implement validation for billingConfig update here if needed.
-    // For now we'll just upsert it in Prisma.
+    if (rest.billingConfig) {
+      const currentBillingConfig = teamSeason.billingConfig;
+      const targetBillingType =
+        rest.billingConfig.billingType ?? currentBillingConfig?.billingType;
+
+      if (targetBillingType !== SeasonBillingType.SINGLE_ONLY) {
+        const finalRecurringFee =
+          rest.billingConfig.recurringFee !== undefined
+            ? rest.billingConfig.recurringFee
+            : currentBillingConfig?.recurringFee;
+
+        const finalRegistrationFee =
+          rest.billingConfig.registrationFee !== undefined
+            ? rest.billingConfig.registrationFee
+            : currentBillingConfig?.registrationFee;
+
+        if (!finalRecurringFee) {
+          throw new BadRequestException(
+            'La cuota mensual es requerida si el plan no es de pago único exclusivo',
+          );
+        }
+        if (!finalRegistrationFee) {
+          throw new BadRequestException(
+            'La matrícula es requerida si el plan no es de pago único exclusivo',
+          );
+        }
+      }
+
+      if (
+        targetBillingType === SeasonBillingType.SINGLE_ONLY ||
+        targetBillingType === SeasonBillingType.BOTH
+      ) {
+        const finalSeasonFee =
+          rest.billingConfig.seasonFee !== undefined
+            ? rest.billingConfig.seasonFee
+            : currentBillingConfig?.seasonFee;
+
+        if (!finalSeasonFee) {
+          throw new BadRequestException(
+            'La cuota de temporada es requerida si el plan permite pago único',
+          );
+        }
+      }
+    }
 
     const { billingConfig, ...teamSeasonData } = rest;
 

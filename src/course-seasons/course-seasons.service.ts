@@ -291,14 +291,72 @@ export class CourseSeasonsService {
       where: { id },
       select: courseSeasonSelect,
     });
+
     if (!courseSeason) {
       throw new NotFoundException(
-        'La categoria de equipo en temporada no fue encontrada',
+        'La categoria de curso en temporada no fue encontrada',
       );
     }
+
     return {
       data: courseSeason,
-      message: 'Temporada de equipo obtenida exitosamente',
+      message: 'Temporada de curso obtenida exitosamente',
+    };
+  }
+
+  async getSummary(id: string) {
+    const [
+      courseSeason,
+      chargesAggr,
+      activeMembers,
+      suspendedMembers,
+      pendingMembers,
+    ] = await Promise.all([
+      this.prisma.courseSeason.findUnique({
+        where: { id },
+        select: { id: true, maxMembers: true },
+      }),
+      this.prisma.charge.aggregate({
+        where: {
+          studentCharges: {
+            some: { studentMembership: { courseSeasonId: id } },
+          },
+        },
+        _sum: { amount: true, pendingAmount: true },
+      }),
+      this.prisma.studentMembership.count({
+        where: { courseSeasonId: id, status: 'ACTIVE' },
+      }),
+      this.prisma.studentMembership.count({
+        where: { courseSeasonId: id, status: 'SUSPENDED' },
+      }),
+      this.prisma.studentMembership.count({
+        where: { courseSeasonId: id, status: 'PENDING_ACTIVE' },
+      }),
+    ]);
+
+    if (!courseSeason) {
+      throw new NotFoundException(
+        'La categoria de curso en temporada no fue encontrada',
+      );
+    }
+
+    const totalBilled = Number(chargesAggr._sum.amount || 0);
+    const totalPending = Number(chargesAggr._sum.pendingAmount || 0);
+    const totalPaid = totalBilled - totalPending;
+
+    return {
+      data: {
+        totalBilled,
+        totalPaid,
+        totalPending,
+        activeMembers,
+        suspendedMembers,
+        pendingMembers,
+        occupiedSlotsCount: activeMembers + suspendedMembers + pendingMembers,
+        maxMembers: courseSeason.maxMembers,
+      },
+      message: 'Resumen de la temporada de curso obtenido exitosamente',
     };
   }
 
@@ -311,8 +369,60 @@ export class CourseSeasonsService {
     });
     if (!courseSeason) {
       throw new NotFoundException(
-        'La categoria de equipo en temporada no fue encontrada',
+        'La categoria de curso en temporada no fue encontrada',
       );
+    }
+
+    if (
+      courseSeason.status === StatusCourseSeason.FINISHED ||
+      courseSeason.status === StatusCourseSeason.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede editar una temporada de curso que ya finalizó o fue cancelada',
+      );
+    }
+
+    if (courseSeason.status === StatusCourseSeason.ACTIVE) {
+      if (
+        (courseId && courseId !== courseSeason.course.id) ||
+        (seasonId && seasonId !== courseSeason.season.id) ||
+        (categoryId && categoryId !== courseSeason.category.id) ||
+        (updateCourseSeasonDto.gender &&
+          updateCourseSeasonDto.gender !== courseSeason.gender)
+      ) {
+        throw new BadRequestException(
+          'No se puede modificar el curso, la temporada, la categoría ni el género una vez que la temporada de curso está activa',
+        );
+      }
+
+      const billing = updateCourseSeasonDto.billingConfig;
+      if (billing && courseSeason.billingConfig) {
+        if (
+          (billing.billingType !== undefined &&
+            billing.billingType !== courseSeason.billingConfig.billingType) ||
+          (billing.billingFrequency !== undefined &&
+            billing.billingFrequency !==
+              courseSeason.billingConfig.billingFrequency) ||
+          (billing.billingDay !== undefined &&
+            billing.billingDay !== courseSeason.billingConfig.billingDay) ||
+          (billing.prorateRegistrationFee !== undefined &&
+            billing.prorateRegistrationFee !==
+              courseSeason.billingConfig.prorateRegistrationFee) ||
+          (billing.prorateFirstRecurringFee !== undefined &&
+            billing.prorateFirstRecurringFee !==
+              courseSeason.billingConfig.prorateFirstRecurringFee) ||
+          (billing.prorateLastRecurringFee !== undefined &&
+            billing.prorateLastRecurringFee !==
+              courseSeason.billingConfig.prorateLastRecurringFee) ||
+          (billing.prorateSeasonFee !== undefined &&
+            billing.prorateSeasonFee !==
+              courseSeason.billingConfig.prorateSeasonFee)
+        ) {
+          throw new BadRequestException(
+            'No se puede modificar la configuración base del motor de cobros (tipo, frecuencia, día y prorrateos) en una temporada activa. Solo se permite actualizar montos para nuevas inscripciones.',
+          );
+        }
+      }
     }
 
     let season = await this.prisma.season.findUnique({
@@ -392,8 +502,50 @@ export class CourseSeasonsService {
       }
     }
 
-    // TODO: implement validation for billingConfig update here if needed.
-    // For now we'll just upsert it in Prisma.
+    if (rest.billingConfig) {
+      const currentBillingConfig = courseSeason.billingConfig;
+      const targetBillingType =
+        rest.billingConfig.billingType ?? currentBillingConfig?.billingType;
+
+      if (targetBillingType !== SeasonBillingType.SINGLE_ONLY) {
+        const finalRecurringFee =
+          rest.billingConfig.recurringFee !== undefined
+            ? rest.billingConfig.recurringFee
+            : currentBillingConfig?.recurringFee;
+
+        const finalRegistrationFee =
+          rest.billingConfig.registrationFee !== undefined
+            ? rest.billingConfig.registrationFee
+            : currentBillingConfig?.registrationFee;
+
+        if (!finalRecurringFee) {
+          throw new BadRequestException(
+            'La cuota mensual es requerida si el plan no es de pago único exclusivo',
+          );
+        }
+        if (!finalRegistrationFee) {
+          throw new BadRequestException(
+            'La matrícula es requerida si el plan no es de pago único exclusivo',
+          );
+        }
+      }
+
+      if (
+        targetBillingType === SeasonBillingType.SINGLE_ONLY ||
+        targetBillingType === SeasonBillingType.BOTH
+      ) {
+        const finalSeasonFee =
+          rest.billingConfig.seasonFee !== undefined
+            ? rest.billingConfig.seasonFee
+            : currentBillingConfig?.seasonFee;
+
+        if (!finalSeasonFee) {
+          throw new BadRequestException(
+            'La cuota de temporada es requerida si el plan permite pago único',
+          );
+        }
+      }
+    }
 
     const { billingConfig, ...courseSeasonData } = rest;
 

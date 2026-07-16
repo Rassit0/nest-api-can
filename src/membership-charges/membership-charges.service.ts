@@ -175,8 +175,13 @@ export class MembershipChargesService {
             );
           });
         } catch (error) {
-          if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-            this.logger.warn(`Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`);
+          if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+          ) {
+            this.logger.warn(
+              `Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`,
+            );
           } else {
             this.logger.error(
               `Error procesando cargos para la membresía ID ${membership.id}:`,
@@ -254,8 +259,13 @@ export class MembershipChargesService {
         `Cargos generados/actualizados para nueva membresía ${membershipId}`,
       );
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        this.logger.warn(`Colisión de cargos prevenida (idempotencia) al generar cargos de nueva membresía ${membershipId}`);
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        this.logger.warn(
+          `Colisión de cargos prevenida (idempotencia) al generar cargos de nueva membresía ${membershipId}`,
+        );
       } else {
         this.logger.error(
           `Error generando cargos para nueva membresía ID ${membershipId}:`,
@@ -420,7 +430,7 @@ export class MembershipChargesService {
 
     const membership =
       await this.membershipRepo.getMembershipById(playerMembershipId);
-    
+
     // Filtramos cuáles de los cargos eliminables son cuotas recurrentes
     const recurringCharges = pendingMembershipCharges.filter(
       (mc) =>
@@ -436,7 +446,7 @@ export class MembershipChargesService {
       const earliestDueDate = new Date(
         Math.min(...recurringCharges.map((mc) => mc.charge.dueDate.getTime())),
       );
-      
+
       // Ajustamos la fecha restando los días de anticipación de cobro configurados
       const calculatedResetDate = new Date(earliestDueDate);
       calculatedResetDate.setUTCDate(
@@ -444,7 +454,7 @@ export class MembershipChargesService {
           (membership.teamSeason.billingConfig?.chargeGenerationDaysBefore ??
             0),
       );
-      
+
       // Solo retrocedemos si la fecha calculada es anterior a la actual
       if (!resetDate || calculatedResetDate < resetDate) {
         resetDate = calculatedResetDate;
@@ -471,11 +481,11 @@ export class MembershipChargesService {
 
     // 5. Autosanación: Simulamos que es de noche para forzar la regeneración inmediata de los cargos
     try {
-      if (membership && resetDate) {
+      if (membership) {
         const fakeToday = DateUtils.getEndOfUTCDay(new Date());
         const fullMembership =
           await this.membershipRepo.getMembershipById(playerMembershipId);
-        
+
         if (fullMembership) {
           await this.prisma.$transaction(async (tx) => {
             await this.generationService.ensureMembershipCharges(

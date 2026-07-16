@@ -471,7 +471,7 @@ export class StudentChargesService {
 
     // 5. Autosanación: Simulamos que es de noche para forzar la regeneración inmediata de los cargos
     try {
-      if (membership && resetDate) {
+      if (membership) {
         const fakeToday = DateUtils.getEndOfUTCDay(new Date());
         const fullMembership =
           await this.membershipRepo.getMembershipById(studentMembershipId);

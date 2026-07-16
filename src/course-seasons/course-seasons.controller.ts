@@ -113,6 +113,21 @@ export class CourseSeasonsController {
     return await this.courseSeasonsService.findOne(id);
   }
 
+  @Get(':id/summary')
+  @ApiOperation({
+    summary: 'Obtener resumen del periodo de curso',
+    description: 'Retorna un resumen de métricas y cobranzas.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del periodo del curso a consultar (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Resumen de periodo de curso.' })
+  async getSummary(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.courseSeasonsService.getSummary(id);
+  }
+
   @Patch(':id')
   @ApiOperation({
     summary: 'Actualizar configuración de un periodo de curso específico',
