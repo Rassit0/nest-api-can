@@ -122,6 +122,11 @@ export class PlayerMembershipsController {
     );
   }
 
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.playerMembershipsService.remove(id);
+  }
+
   @Post('finish/:id')
   @ApiOperation({
     summary: 'Finalizar inscripción de jugador',

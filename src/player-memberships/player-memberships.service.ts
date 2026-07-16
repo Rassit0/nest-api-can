@@ -738,6 +738,81 @@ export class PlayerMembershipsService {
     };
   }
 
+  async remove(id: string) {
+    const membership = await this.prisma.playerMembership.findUnique({
+      where: { id },
+      include: {
+        membershipCharges: {
+          include: {
+            charge: {
+              include: {
+                chargeTransactions: true,
+                childCharges: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!membership) {
+      throw new NotFoundException(
+        'La membresía de jugador a equipo no fue encontrada',
+      );
+    }
+
+    // Validar que no hayan cargos pagados, parcialmente pagados, o transacciones de pago vinculadas.
+    const hasTransactionsOrPaid = membership.membershipCharges.some(
+      (mc) =>
+        (mc.charge.status !== StatusCharge.PENDING &&
+          mc.charge.status !== StatusCharge.CANCELLED) ||
+        Number(mc.charge.amount) > Number(mc.charge.pendingAmount) ||
+        mc.charge.chargeTransactions.length > 0 ||
+        mc.charge.childCharges.length > 0,
+    );
+
+    if (hasTransactionsOrPaid) {
+      throw new BadRequestException(
+        'No se puede eliminar la membresía porque cuenta con pagos registrados, transacciones o cargos anidados. En su lugar, utilice la opción de Finalizar o Retirar.',
+      );
+    }
+
+    // Si llegamos aquí, es 100% seguro eliminar la membresía y limpiar el historial y los cargos.
+    const chargeIds = membership.membershipCharges.map((mc) => mc.chargeId);
+
+    await this.prisma.$transaction([
+      // 1. Borrar historial de pausas
+      this.prisma.playerMembershipPause.deleteMany({
+        where: { playerMembershipId: id },
+      }),
+      // 2. Borrar historial de estados de membresía
+      this.prisma.playerMembershipHistory.deleteMany({
+        where: { playerMembershipId: id },
+      }),
+      // 3. Borrar descuentos asociados
+      this.prisma.membershipDiscount.deleteMany({
+        where: { playerMembershipId: id },
+      }),
+      // 4. Borrar la tabla pivote de cargos
+      this.prisma.membershipCharge.deleteMany({
+        where: { playerMembershipId: id },
+      }),
+      // 5. Borrar los cargos reales vinculados a la membresía (ya no tendrán referencias)
+      this.prisma.charge.deleteMany({
+        where: { id: { in: chargeIds } },
+      }),
+      // 6. Finalmente, borrar la membresía
+      this.prisma.playerMembership.delete({
+        where: { id },
+      }),
+    ]);
+
+    return {
+      message: 'Membresía eliminada de forma permanente y segura',
+      data: null,
+    };
+  }
+
   private async getMembership(id: string) {
     const membership = await this.prisma.playerMembership.findUnique({
       where: { id },

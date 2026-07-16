@@ -712,22 +712,79 @@ export class StudentMembershipsService {
     };
   }
 
+
   async remove(id: string) {
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id },
+      include: {
+        studentCharges: {
+          include: {
+            charge: {
+              include: {
+                chargeTransactions: true,
+                childCharges: true,
+              },
+            },
+          },
+        },
+      },
     });
+
     if (!membership) {
-      throw new NotFoundException('errors.MEMBERSHIP_NOT_FOUND');
+      throw new NotFoundException(
+        'La membresía de estudiante no fue encontrada',
+      );
     }
 
-    const deletedMembership = await this.prisma.studentMembership.delete({
-      where: { id },
-      select: studentMembershipSelect,
-    });
+    // Validar que no hayan cargos pagados, parcialmente pagados, o transacciones de pago vinculadas.
+    const hasTransactionsOrPaid = membership.studentCharges.some(
+      (mc) =>
+        (mc.charge.status !== StatusCharge.PENDING &&
+          mc.charge.status !== StatusCharge.CANCELLED) ||
+        Number(mc.charge.amount) > Number(mc.charge.pendingAmount) ||
+        mc.charge.chargeTransactions.length > 0 ||
+        mc.charge.childCharges.length > 0,
+    );
+
+    if (hasTransactionsOrPaid) {
+      throw new BadRequestException(
+        'No se puede eliminar la membresía porque cuenta con pagos registrados, transacciones o cargos anidados. En su lugar, utilice la opción de Finalizar o Retirar.',
+      );
+    }
+
+    // Si llegamos aquí, es 100% seguro eliminar la membresía y limpiar el historial y los cargos.
+    const chargeIds = membership.studentCharges.map((mc) => mc.chargeId);
+
+    await this.prisma.$transaction([
+      // 1. Borrar historial de pausas
+      this.prisma.studentMembershipPause.deleteMany({
+        where: { studentMembershipId: id },
+      }),
+      // 2. Borrar historial de estados de membresía
+      this.prisma.studentMembershipHistory.deleteMany({
+        where: { studentMembershipId: id },
+      }),
+      // 3. Borrar descuentos asociados
+      this.prisma.studentDiscount.deleteMany({
+        where: { studentMembershipId: id },
+      }),
+      // 4. Borrar la tabla pivote de cargos
+      this.prisma.studentCharge.deleteMany({
+        where: { studentMembershipId: id },
+      }),
+      // 5. Borrar los cargos reales vinculados a la membresía (ya no tendrán referencias)
+      this.prisma.charge.deleteMany({
+        where: { id: { in: chargeIds } },
+      }),
+      // 6. Finalmente, borrar la membresía
+      this.prisma.studentMembership.delete({
+        where: { id },
+      }),
+    ]);
 
     return {
-      message: 'Inscripción escolar eliminada exitosamente',
-      data: mapMembershipWithTotal(deletedMembership),
+      message: 'Membresía eliminada de forma permanente y segura',
+      data: null,
     };
   }
 
