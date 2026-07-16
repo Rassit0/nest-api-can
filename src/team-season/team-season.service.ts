@@ -51,6 +51,7 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   minBirthYear: true,
   maxBirthYear: true,
   status: true,
+  isRegistrationOpen: true,
   billingConfig: true,
   _count: {
     select: {
@@ -147,8 +148,14 @@ export class TeamSeasonService {
         }
       }
 
-      if (!rest.billingConfig.billingFrequency || rest.billingConfig.billingFrequency === 'MONTHLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 28) {
+      if (
+        !rest.billingConfig.billingFrequency ||
+        rest.billingConfig.billingFrequency === 'MONTHLY'
+      ) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 28
+        ) {
           throw new BadRequestException(
             'El día de facturación mensual debe estar entre 1 y 28',
           );
@@ -174,13 +181,19 @@ export class TeamSeasonService {
           }
         }
       } else if (rest.billingConfig.billingFrequency === 'WEEKLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 7) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 7
+        ) {
           throw new BadRequestException(
             'El día de facturación semanal debe estar entre 1 y 7',
           );
         }
       } else if (rest.billingConfig.billingFrequency === 'BIWEEKLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 14) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 14
+        ) {
           throw new BadRequestException(
             'El día de facturación quincenal debe estar entre 1 y 14',
           );
@@ -298,11 +311,11 @@ export class TeamSeasonService {
     }
 
     let season = await this.prisma.season.findUnique({
-      where: { id: seasonId ? seasonId : teamSeason.seasonId },
+      where: { id: seasonId ? seasonId : teamSeason.season.id },
     });
 
     let category = await this.prisma.category.findUnique({
-      where: { id: categoryId ? categoryId : teamSeason.categoryId },
+      where: { id: categoryId ? categoryId : teamSeason.category.id },
     });
 
     if (updateTeamSeasonDto.seasonId) {
@@ -354,6 +367,26 @@ export class TeamSeasonService {
       );
     }
 
+    if (
+      rest.maxMembers !== undefined &&
+      rest.maxMembers < teamSeason.maxMembers
+    ) {
+      const activeMembersCount = await this.prisma.playerMembership.count({
+        where: {
+          teamSeasonId: id,
+          status: {
+            in: ['ACTIVE', 'PENDING_ACTIVE', 'SUSPENDED'],
+          },
+        },
+      });
+
+      if (rest.maxMembers < activeMembersCount) {
+        throw new BadRequestException(
+          `No se pueden reducir los cupos máximos a ${rest.maxMembers} porque ya hay ${activeMembersCount} jugadores ocupando un cupo.`,
+        );
+      }
+    }
+
     // TODO: implement validation for billingConfig update here if needed.
     // For now we'll just upsert it in Prisma.
 
@@ -366,14 +399,16 @@ export class TeamSeasonService {
         teamId,
         seasonId,
         categoryId,
-        ...(billingConfig ? {
-          billingConfig: {
-            upsert: {
-              create: billingConfig,
-              update: billingConfig,
+        ...(billingConfig
+          ? {
+              billingConfig: {
+                upsert: {
+                  create: billingConfig,
+                  update: billingConfig,
+                },
+              },
             }
-          }
-        } : {}),
+          : {}),
       },
       select: teamCategorySelect,
     });
@@ -647,10 +682,15 @@ export class TeamSeasonService {
     endDate.setUTCHours(23, 59, 59, 999);
 
     if (startDate > endDate) {
-      throw new BadRequestException('La fecha de inicio debe ser anterior o igual a la de fin');
+      throw new BadRequestException(
+        'La fecha de inicio debe ser anterior o igual a la de fin',
+      );
     }
 
-    if (startDate < teamSeason.season.startDate || endDate > teamSeason.season.endDate) {
+    if (
+      startDate < teamSeason.season.startDate ||
+      endDate > teamSeason.season.endDate
+    ) {
       throw new BadRequestException(
         `Las fechas de la pausa deben estar dentro del rango de la temporada (${teamSeason.season.startDate.toISOString().split('T')[0]} - ${teamSeason.season.endDate.toISOString().split('T')[0]})`,
       );
@@ -659,9 +699,7 @@ export class TeamSeasonService {
     const overlapping = await this.prisma.teamSeasonPause.findFirst({
       where: {
         teamSeasonId,
-        OR: [
-          { startDate: { lte: endDate }, endDate: { gte: startDate } },
-        ],
+        OR: [{ startDate: { lte: endDate }, endDate: { gte: startDate } }],
       },
     });
 

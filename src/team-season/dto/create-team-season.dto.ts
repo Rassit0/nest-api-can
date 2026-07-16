@@ -223,4 +223,13 @@ export class CreateTeamSeasonDto {
   })
   status: StatusTeamSeason;
 
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si las inscripciones están abiertas',
+  })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  isRegistrationOpen?: boolean;
+
 }

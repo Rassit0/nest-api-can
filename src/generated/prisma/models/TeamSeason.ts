@@ -54,6 +54,7 @@ export type TeamSeasonMinAggregateOutputType = {
   gender: $Enums.ProgramGender | null
   status: $Enums.StatusTeamSeason | null
   statusNotes: string | null
+  isRegistrationOpen: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +73,7 @@ export type TeamSeasonMaxAggregateOutputType = {
   gender: $Enums.ProgramGender | null
   status: $Enums.StatusTeamSeason | null
   statusNotes: string | null
+  isRegistrationOpen: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -90,6 +92,7 @@ export type TeamSeasonCountAggregateOutputType = {
   gender: number
   status: number
   statusNotes: number
+  isRegistrationOpen: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -124,6 +127,7 @@ export type TeamSeasonMinAggregateInputType = {
   gender?: true
   status?: true
   statusNotes?: true
+  isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -142,6 +146,7 @@ export type TeamSeasonMaxAggregateInputType = {
   gender?: true
   status?: true
   statusNotes?: true
+  isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -160,6 +165,7 @@ export type TeamSeasonCountAggregateInputType = {
   gender?: true
   status?: true
   statusNotes?: true
+  isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -265,6 +271,7 @@ export type TeamSeasonGroupByOutputType = {
   gender: $Enums.ProgramGender
   status: $Enums.StatusTeamSeason
   statusNotes: string | null
+  isRegistrationOpen: boolean
   createdAt: Date
   updatedAt: Date
   _count: TeamSeasonCountAggregateOutputType | null
@@ -306,6 +313,7 @@ export type TeamSeasonWhereInput = {
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
   statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
+  isRegistrationOpen?: Prisma.BoolFilter<"TeamSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -335,6 +343,7 @@ export type TeamSeasonOrderByWithRelationInput = {
   gender?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -368,6 +377,7 @@ export type TeamSeasonWhereUniqueInput = Prisma.AtLeast<{
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
   statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
+  isRegistrationOpen?: Prisma.BoolFilter<"TeamSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -397,6 +407,7 @@ export type TeamSeasonOrderByWithAggregationInput = {
   gender?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TeamSeasonCountOrderByAggregateInput
@@ -423,6 +434,7 @@ export type TeamSeasonScalarWhereWithAggregatesInput = {
   gender?: Prisma.EnumProgramGenderWithAggregatesFilter<"TeamSeason"> | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonWithAggregatesFilter<"TeamSeason"> | $Enums.StatusTeamSeason
   statusNotes?: Prisma.StringNullableWithAggregatesFilter<"TeamSeason"> | string | null
+  isRegistrationOpen?: Prisma.BoolWithAggregatesFilter<"TeamSeason"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeason"> | Date | string
 }
@@ -438,6 +450,7 @@ export type TeamSeasonCreateInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -467,6 +480,7 @@ export type TeamSeasonUncheckedCreateInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -490,6 +504,7 @@ export type TeamSeasonUpdateInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -519,6 +534,7 @@ export type TeamSeasonUncheckedUpdateInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -545,6 +561,7 @@ export type TeamSeasonCreateManyInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -560,6 +577,7 @@ export type TeamSeasonUpdateManyMutationInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -578,6 +596,7 @@ export type TeamSeasonUncheckedUpdateManyInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -613,6 +632,7 @@ export type TeamSeasonCountOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusNotes?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -638,6 +658,7 @@ export type TeamSeasonMaxOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusNotes?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -656,6 +677,7 @@ export type TeamSeasonMinOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   status?: Prisma.SortOrder
   statusNotes?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -944,6 +966,7 @@ export type TeamSeasonCreateWithoutCategoryInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -971,6 +994,7 @@ export type TeamSeasonUncheckedCreateWithoutCategoryInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1026,6 +1050,7 @@ export type TeamSeasonScalarWhereInput = {
   gender?: Prisma.EnumProgramGenderFilter<"TeamSeason"> | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFilter<"TeamSeason"> | $Enums.StatusTeamSeason
   statusNotes?: Prisma.StringNullableFilter<"TeamSeason"> | string | null
+  isRegistrationOpen?: Prisma.BoolFilter<"TeamSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeason"> | Date | string
 }
@@ -1041,6 +1066,7 @@ export type TeamSeasonCreateWithoutSeasonInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1068,6 +1094,7 @@ export type TeamSeasonUncheckedCreateWithoutSeasonInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1117,6 +1144,7 @@ export type TeamSeasonCreateWithoutTeamInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonsInput
@@ -1144,6 +1172,7 @@ export type TeamSeasonUncheckedCreateWithoutTeamInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1193,6 +1222,7 @@ export type TeamSeasonCreateWithoutBillingConfigInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1221,6 +1251,7 @@ export type TeamSeasonUncheckedCreateWithoutBillingConfigInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1259,6 +1290,7 @@ export type TeamSeasonUpdateWithoutBillingConfigInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1287,6 +1319,7 @@ export type TeamSeasonUncheckedUpdateWithoutBillingConfigInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1309,6 +1342,7 @@ export type TeamSeasonCreateWithoutPaymentPlansInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1337,6 +1371,7 @@ export type TeamSeasonUncheckedCreateWithoutPaymentPlansInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1375,6 +1410,7 @@ export type TeamSeasonUpdateWithoutPaymentPlansInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1403,6 +1439,7 @@ export type TeamSeasonUncheckedUpdateWithoutPaymentPlansInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1425,6 +1462,7 @@ export type TeamSeasonCreateWithoutPlayerMembershipsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1453,6 +1491,7 @@ export type TeamSeasonUncheckedCreateWithoutPlayerMembershipsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1491,6 +1530,7 @@ export type TeamSeasonUpdateWithoutPlayerMembershipsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1519,6 +1559,7 @@ export type TeamSeasonUncheckedUpdateWithoutPlayerMembershipsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1541,6 +1582,7 @@ export type TeamSeasonCreateWithoutTeamSeasonStaffsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1569,6 +1611,7 @@ export type TeamSeasonUncheckedCreateWithoutTeamSeasonStaffsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutTeamSeasonsInput
@@ -1607,6 +1650,7 @@ export type TeamSeasonUpdateWithoutTeamSeasonStaffsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1635,6 +1679,7 @@ export type TeamSeasonUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsNestedInput
@@ -1657,6 +1702,7 @@ export type TeamSeasonCreateWithoutTeamSeasonPausesInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1685,6 +1731,7 @@ export type TeamSeasonUncheckedCreateWithoutTeamSeasonPausesInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1723,6 +1770,7 @@ export type TeamSeasonUpdateWithoutTeamSeasonPausesInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1751,6 +1799,7 @@ export type TeamSeasonUncheckedUpdateWithoutTeamSeasonPausesInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1773,6 +1822,7 @@ export type TeamSeasonCreateWithoutSessionTeamsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1801,6 +1851,7 @@ export type TeamSeasonUncheckedCreateWithoutSessionTeamsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1839,6 +1890,7 @@ export type TeamSeasonUpdateWithoutSessionTeamsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1867,6 +1919,7 @@ export type TeamSeasonUncheckedUpdateWithoutSessionTeamsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -1889,6 +1942,7 @@ export type TeamSeasonCreateWithoutScheduleTeamsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -1917,6 +1971,7 @@ export type TeamSeasonUncheckedCreateWithoutScheduleTeamsInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -1955,6 +2010,7 @@ export type TeamSeasonUpdateWithoutScheduleTeamsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -1983,6 +2039,7 @@ export type TeamSeasonUncheckedUpdateWithoutScheduleTeamsInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2005,6 +2062,7 @@ export type TeamSeasonCreateWithoutMatchesInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTeamSeasonsInput
@@ -2033,6 +2091,7 @@ export type TeamSeasonUncheckedCreateWithoutMatchesInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonInput
@@ -2071,6 +2130,7 @@ export type TeamSeasonUpdateWithoutMatchesInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2099,6 +2159,7 @@ export type TeamSeasonUncheckedUpdateWithoutMatchesInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2123,6 +2184,7 @@ export type TeamSeasonCreateManyCategoryInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2138,6 +2200,7 @@ export type TeamSeasonUpdateWithoutCategoryInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2165,6 +2228,7 @@ export type TeamSeasonUncheckedUpdateWithoutCategoryInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2190,6 +2254,7 @@ export type TeamSeasonUncheckedUpdateManyWithoutCategoryInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2207,6 +2272,7 @@ export type TeamSeasonCreateManySeasonInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2222,6 +2288,7 @@ export type TeamSeasonUpdateWithoutSeasonInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2249,6 +2316,7 @@ export type TeamSeasonUncheckedUpdateWithoutSeasonInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2274,6 +2342,7 @@ export type TeamSeasonUncheckedUpdateManyWithoutSeasonInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2291,6 +2360,7 @@ export type TeamSeasonCreateManyTeamInput = {
   gender: $Enums.ProgramGender
   status?: $Enums.StatusTeamSeason
   statusNotes?: string | null
+  isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2306,6 +2376,7 @@ export type TeamSeasonUpdateWithoutTeamInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput
@@ -2333,6 +2404,7 @@ export type TeamSeasonUncheckedUpdateWithoutTeamInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonNestedInput
@@ -2358,6 +2430,7 @@ export type TeamSeasonUncheckedUpdateManyWithoutTeamInput = {
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   status?: Prisma.EnumStatusTeamSeasonFieldUpdateOperationsInput | $Enums.StatusTeamSeason
   statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2461,6 +2534,7 @@ export type TeamSeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   gender?: boolean
   status?: boolean
   statusNotes?: boolean
+  isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -2491,6 +2565,7 @@ export type TeamSeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   gender?: boolean
   status?: boolean
   statusNotes?: boolean
+  isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -2512,6 +2587,7 @@ export type TeamSeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   gender?: boolean
   status?: boolean
   statusNotes?: boolean
+  isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -2533,11 +2609,12 @@ export type TeamSeasonSelectScalar = {
   gender?: boolean
   status?: boolean
   statusNotes?: boolean
+  isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TeamSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "teamId" | "categoryId" | "seasonId" | "gender" | "status" | "statusNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["teamSeason"]>
+export type TeamSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "teamId" | "categoryId" | "seasonId" | "gender" | "status" | "statusNotes" | "isRegistrationOpen" | "createdAt" | "updatedAt", ExtArgs["result"]["teamSeason"]>
 export type TeamSeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -2592,6 +2669,7 @@ export type $TeamSeasonPayload<ExtArgs extends runtime.Types.Extensions.Internal
     gender: $Enums.ProgramGender
     status: $Enums.StatusTeamSeason
     statusNotes: string | null
+    isRegistrationOpen: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["teamSeason"]>
@@ -3041,6 +3119,7 @@ export interface TeamSeasonFieldRefs {
   readonly gender: Prisma.FieldRef<"TeamSeason", 'ProgramGender'>
   readonly status: Prisma.FieldRef<"TeamSeason", 'StatusTeamSeason'>
   readonly statusNotes: Prisma.FieldRef<"TeamSeason", 'String'>
+  readonly isRegistrationOpen: Prisma.FieldRef<"TeamSeason", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"TeamSeason", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TeamSeason", 'DateTime'>
 }

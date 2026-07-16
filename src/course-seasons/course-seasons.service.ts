@@ -60,6 +60,7 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   maxBirthYear: true,
   status: true,
   billingConfig: true,
+  isRegistrationOpen: true,
   courseSeasonStaffs: true,
   _count: {
     select: {
@@ -152,8 +153,14 @@ export class CourseSeasonsService {
         }
       }
 
-      if (!rest.billingConfig.billingFrequency || rest.billingConfig.billingFrequency === 'MONTHLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 28) {
+      if (
+        !rest.billingConfig.billingFrequency ||
+        rest.billingConfig.billingFrequency === 'MONTHLY'
+      ) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 28
+        ) {
           throw new BadRequestException(
             'El día de facturación mensual debe estar entre 1 y 28',
           );
@@ -179,13 +186,19 @@ export class CourseSeasonsService {
           }
         }
       } else if (rest.billingConfig.billingFrequency === 'WEEKLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 7) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 7
+        ) {
           throw new BadRequestException(
             'El día de facturación semanal debe estar entre 1 y 7',
           );
         }
       } else if (rest.billingConfig.billingFrequency === 'BIWEEKLY') {
-        if (rest.billingConfig.billingDay < 1 || rest.billingConfig.billingDay > 14) {
+        if (
+          rest.billingConfig.billingDay < 1 ||
+          rest.billingConfig.billingDay > 14
+        ) {
           throw new BadRequestException(
             'El día de facturación quincenal debe estar entre 1 y 14',
           );
@@ -303,11 +316,11 @@ export class CourseSeasonsService {
     }
 
     let season = await this.prisma.season.findUnique({
-      where: { id: seasonId ? seasonId : courseSeason.seasonId },
+      where: { id: seasonId ? seasonId : courseSeason.season.id },
     });
 
     let category = await this.prisma.category.findUnique({
-      where: { id: categoryId ? categoryId : courseSeason.categoryId },
+      where: { id: categoryId ? categoryId : courseSeason.category.id },
     });
 
     if (updateCourseSeasonDto.seasonId) {
@@ -359,6 +372,26 @@ export class CourseSeasonsService {
       );
     }
 
+    if (
+      rest.maxMembers !== undefined &&
+      rest.maxMembers < courseSeason.maxMembers
+    ) {
+      const activeMembersCount = await this.prisma.studentMembership.count({
+        where: {
+          courseSeasonId: id,
+          status: {
+            in: ['ACTIVE', 'PENDING_ACTIVE', 'SUSPENDED'],
+          },
+        },
+      });
+
+      if (rest.maxMembers < activeMembersCount) {
+        throw new BadRequestException(
+          `No se pueden reducir los cupos máximos a ${rest.maxMembers} porque ya hay ${activeMembersCount} estudiantes ocupando un cupo.`,
+        );
+      }
+    }
+
     // TODO: implement validation for billingConfig update here if needed.
     // For now we'll just upsert it in Prisma.
 
@@ -371,14 +404,16 @@ export class CourseSeasonsService {
         courseId,
         seasonId,
         categoryId,
-        ...(billingConfig ? {
-          billingConfig: {
-            upsert: {
-              create: billingConfig,
-              update: billingConfig,
+        ...(billingConfig
+          ? {
+              billingConfig: {
+                upsert: {
+                  create: billingConfig,
+                  update: billingConfig,
+                },
+              },
             }
-          }
-        } : {}),
+          : {}),
       },
       select: courseSeasonSelect,
     });
@@ -489,7 +524,6 @@ export class CourseSeasonsService {
           where: { id },
           data: {
             status: StatusCourseSeason.FINISHED,
-            
           },
           select: courseSeasonSelect,
         });
@@ -541,7 +575,6 @@ export class CourseSeasonsService {
           where: { id },
           data: {
             status: StatusCourseSeason.CANCELLED,
-            
           },
           select: courseSeasonSelect,
         });
@@ -652,10 +685,15 @@ export class CourseSeasonsService {
     endDate.setUTCHours(23, 59, 59, 999);
 
     if (startDate > endDate) {
-      throw new BadRequestException('La fecha de inicio debe ser anterior o igual a la de fin');
+      throw new BadRequestException(
+        'La fecha de inicio debe ser anterior o igual a la de fin',
+      );
     }
 
-    if (startDate < courseSeason.season.startDate || endDate > courseSeason.season.endDate) {
+    if (
+      startDate < courseSeason.season.startDate ||
+      endDate > courseSeason.season.endDate
+    ) {
       throw new BadRequestException(
         `Las fechas de la pausa deben estar dentro del rango de la temporada (${courseSeason.season.startDate.toISOString().split('T')[0]} - ${courseSeason.season.endDate.toISOString().split('T')[0]})`,
       );
@@ -664,9 +702,7 @@ export class CourseSeasonsService {
     const overlapping = await this.prisma.courseSeasonPause.findFirst({
       where: {
         courseSeasonId,
-        OR: [
-          { startDate: { lte: endDate }, endDate: { gte: startDate } },
-        ],
+        OR: [{ startDate: { lte: endDate }, endDate: { gte: startDate } }],
       },
     });
 

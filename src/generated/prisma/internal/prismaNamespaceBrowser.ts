@@ -279,6 +279,7 @@ export const TeamSeasonScalarFieldEnum = {
   gender: 'gender',
   status: 'status',
   statusNotes: 'statusNotes',
+  isRegistrationOpen: 'isRegistrationOpen',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -576,6 +577,7 @@ export const CourseSeasonScalarFieldEnum = {
   gender: 'gender',
   status: 'status',
   statusNotes: 'statusNotes',
+  isRegistrationOpen: 'isRegistrationOpen',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

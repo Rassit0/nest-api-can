@@ -334,6 +334,8 @@ model TeamSeason {
   status      StatusTeamSeason @default(DRAFT)
   statusNotes String?          @map("status_notes") @db.Text
 
+  isRegistrationOpen Boolean @default(true) @map("is_registration_open")
+
   createdAt         DateTime                 @default(now()) @map("created_at")
   updatedAt         DateTime                 @updatedAt @map("updated_at")
   teamSeasonStaffs  TeamSeasonStaff[]
@@ -839,6 +841,8 @@ model CourseSeason {
 
   status      StatusCourseSeason @default(DRAFT)
   statusNotes String?            @map("status_notes") @db.Text
+
+  isRegistrationOpen Boolean @default(true) @map("is_registration_open")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -216,5 +216,14 @@ export class CreateCourseSeasonDto {
   })
   status?: StatusCourseSeason = StatusCourseSeason.DRAFT;
 
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si las inscripciones están abiertas',
+  })
+  @IsOptional()
+  @Type(() => Boolean)
+  @IsBoolean()
+  isRegistrationOpen?: boolean;
+
 
 }
