@@ -123,6 +123,7 @@ type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
 }> & { minBirthYear: number | null; maxBirthYear: number | null };
 
 import { StudentChargesService } from 'src/student-charges/student-charges.service';
+import { StudentsOptionsPaginationDto } from './dto/students-options-pagination.dto';
 
 @Injectable()
 export class StudentMembershipsService {
@@ -703,7 +704,7 @@ export class StudentMembershipsService {
       data: mapMembershipWithTotal(updatedMembership),
     };
   }
-  
+
   async remove(id: string) {
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id },
@@ -744,7 +745,9 @@ export class StudentMembershipsService {
       throw new BadRequestException('El plan de pago no fue encontrado');
     }
     if (paymentPlan.courseSeasonId !== courseSeasonId) {
-      throw new BadRequestException('El plan de pago no pertenece al curso seleccionado');
+      throw new BadRequestException(
+        'El plan de pago no pertenece al curso seleccionado',
+      );
     }
   }
 
@@ -796,7 +799,9 @@ export class StudentMembershipsService {
     });
 
     if (activeMembers >= maxMembers) {
-      throw new BadRequestException('El curso ya alcanzó el número máximo de miembros');
+      throw new BadRequestException(
+        'El curso ya alcanzó el número máximo de miembros',
+      );
     }
   }
 
@@ -822,7 +827,9 @@ export class StudentMembershipsService {
       },
     });
     if (existingMembership) {
-      throw new BadRequestException('El estudiante ya se encuentra registrado en este curso');
+      throw new BadRequestException(
+        'El estudiante ya se encuentra registrado en este curso',
+      );
     }
   }
 
@@ -834,7 +841,9 @@ export class StudentMembershipsService {
       throw new BadRequestException('El estudiante se encuentra inactivo');
     }
     if (!student.person.birthDate) {
-      throw new BadRequestException('La fecha de nacimiento del estudiante no fue encontrada');
+      throw new BadRequestException(
+        'La fecha de nacimiento del estudiante no fue encontrada',
+      );
     }
     if (offering.minBirthYear || offering.maxBirthYear) {
       const birthYear = student.person.birthDate.getFullYear();
@@ -860,7 +869,9 @@ export class StudentMembershipsService {
       offering.gender !== 'MIXED' &&
       offering.gender !== student.person.gender
     ) {
-      throw new BadRequestException('El género del estudiante no es compatible con el curso');
+      throw new BadRequestException(
+        'El género del estudiante no es compatible con el curso',
+      );
     }
   }
 
@@ -950,8 +961,12 @@ export class StudentMembershipsService {
     });
 
     if (overlappingPause) {
-      const pStart = new Date(overlappingPause.startDate).toISOString().split('T')[0];
-      const pEnd = new Date(overlappingPause.endDate).toISOString().split('T')[0];
+      const pStart = new Date(overlappingPause.startDate)
+        .toISOString()
+        .split('T')[0];
+      const pEnd = new Date(overlappingPause.endDate)
+        .toISOString()
+        .split('T')[0];
       throw new BadRequestException(
         `El rango de fechas se superpone con una pausa existente (${pStart} al ${pEnd})`,
       );
@@ -1008,8 +1023,14 @@ export class StudentMembershipsService {
     return { message: 'Pausa eliminada exitosamente' };
   }
 
-  async getStudentsOptions(paginationDto: PaginationDto) {
-    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+  async getStudentsOptions(paginationDto: StudentsOptionsPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      gender,
+    } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.StudentWhereInput = {
@@ -1017,13 +1038,24 @@ export class StudentMembershipsService {
         ? {
             OR: [
               { person: { name: { contains: search, mode: 'insensitive' } } },
-              { person: { lastName: { contains: search, mode: 'insensitive' } } },
-              { person: { secondLastName: { contains: search, mode: 'insensitive' } } },
-              { person: { documentNumber: { contains: search, mode: 'insensitive' } } },
+              {
+                person: { lastName: { contains: search, mode: 'insensitive' } },
+              },
+              {
+                person: {
+                  secondLastName: { contains: search, mode: 'insensitive' },
+                },
+              },
+              {
+                person: {
+                  documentNumber: { contains: search, mode: 'insensitive' },
+                },
+              },
             ],
           }
         : {}),
       isActive: true,
+      ...(gender && { person: { gender } }),
     };
 
     const [persons, totalItems] = await Promise.all([
@@ -1061,7 +1093,8 @@ export class StudentMembershipsService {
         ...student,
         person: {
           ...student.person,
-          fullName: `${student.person.name} ${student.person.lastName} ${student.person.secondLastName || ''}`.trim(),
+          fullName:
+            `${student.person.name} ${student.person.lastName} ${student.person.secondLastName || ''}`.trim(),
         },
       })),
       meta: {
@@ -1131,7 +1164,8 @@ export class StudentMembershipsService {
         ...courseSeason,
         season: {
           ...courseSeason.season,
-          fullName: `${courseSeason.season.name} ${courseSeason.season.startDate.toISOString().split('T')[0]} ${courseSeason.season.endDate.toISOString().split('T')[0] || ''}`.trim(),
+          fullName:
+            `${courseSeason.season.name} ${courseSeason.season.startDate.toISOString().split('T')[0]} ${courseSeason.season.endDate.toISOString().split('T')[0] || ''}`.trim(),
         },
       })),
       meta: {

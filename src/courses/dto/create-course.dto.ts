@@ -21,6 +21,18 @@ export class CreateCourseDto {
   name: string;
 
   @ApiPropertyOptional({
+    example: 'T1',
+    description: 'Nombre abreviado del equipo',
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'shortName',
+    }),
+  })
+  @IsOptional()
+  shortName?: string;
+
+  @ApiPropertyOptional({
     example:
       'Curso destinado a niños de 8 a 10 años con bases técnicas desarrolladas',
     description: 'Descripción del curso',

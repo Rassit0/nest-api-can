@@ -23,7 +23,11 @@ import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { CoursesPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { CourseResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Courses')
@@ -37,7 +41,10 @@ export class CoursesController {
     description:
       'Registra un curso académico en el sistema asignándole una escuela deportiva.',
   })
-  @ApiStandardCreatedResponse(CourseResponseDto, 'Curso escolar creado exitosamente.')
+  @ApiStandardCreatedResponse(
+    CourseResponseDto,
+    'Curso escolar creado exitosamente.',
+  )
   async create(@Body() createCourseDto: CreateCourseDto) {
     return await this.coursesService.create(createCourseDto);
   }
@@ -48,7 +55,10 @@ export class CoursesController {
     description:
       'Retorna una lista paginada y filtrable de todos los cursos cargados.',
   })
-  @ApiPaginatedResponse(CourseResponseDto, 'Lista de cursos obtenida correctamente.')
+  @ApiPaginatedResponse(
+    CourseResponseDto,
+    'Lista de cursos obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: CoursesPaginationDto) {
     return await this.coursesService.findAll(paginationDto);
   }
@@ -102,5 +112,37 @@ export class CoursesController {
   @ApiStandardResponse(CourseResponseDto, 'Curso eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.coursesService.remove(id);
+  }
+
+  @Get('schools-by-discipline/options/:disciplineId')
+  @ApiOperation({
+    summary: 'Obtener escuelas por disciplina',
+    description:
+      'Retorna las escuelas asociadas a una disciplina deportiva específica.',
+  })
+  @ApiParam({
+    name: 'disciplineId',
+    description: 'ID de la disciplina (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Opciones de clubes obtenidas correctamente.' })
+  async getSchoolsByDisciplineOptions(
+    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
+  ) {
+    return await this.coursesService.getSchoolsByDisciplineOptions(
+      disciplineId,
+    );
+  }
+
+  @Get('disciplines/options')
+  @ApiOperation({
+    summary: 'Obtener disciplinas disponibles',
+    description: 'Retorna selectores de disciplinas deportivas.',
+  })
+  @ApiOkResponse({
+    description: 'Opciones de disciplinas obtenidas correctamente.',
+  })
+  async getDisciplinesOptions() {
+    return await this.coursesService.getDisciplinesOptions();
   }
 }

@@ -257,7 +257,8 @@ export class PlayerMembershipsController {
   @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
   async createPause(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: import('./dto/create-player-membership-pause.dto').CreatePlayerMembershipPauseDto,
+    @Body()
+    dto: import('./dto/create-player-membership-pause.dto').CreatePlayerMembershipPauseDto,
   ) {
     return await this.playerMembershipsService.createPause(id, dto);
   }

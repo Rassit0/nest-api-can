@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -21,10 +21,9 @@ export class CreateClubDto {
   })
   name: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'CAN',
     description: 'Nombre abreviado del club',
-    required: false,
   })
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {

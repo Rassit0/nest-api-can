@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -34,8 +39,19 @@ export class SchoolsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSchoolDto: CreateSchoolDto) {
+    const institution = await this.prisma.institution.findFirst({
+      select: {
+        id: true,
+      },
+    });
+    if (!institution) {
+      throw new NotFoundException('La organización no fue encontrada');
+    }
     const newSchool = await this.prisma.school.create({
-      data: createSchoolDto,
+      data: {
+        ...createSchoolDto,
+        institutionId: institution.id,
+      },
       select: schoolSelect,
     });
 
@@ -119,10 +135,42 @@ export class SchoolsService {
     if (!school) {
       throw new NotFoundException('La escuela solicitada no fue encontrada');
     }
+    const institution = await this.prisma.institution.findFirst({
+      select: {
+        id: true,
+      },
+    });
+    if (!institution) {
+      throw new NotFoundException('La organización no fue encontrada');
+    }
+
+    const hasRelations = await this.prisma.courseSeason.findFirst({
+      where: {
+        course: {
+          schoolId: id,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (
+      updateSchoolDto.disciplineId &&
+      updateSchoolDto.disciplineId !== school.disciplineId &&
+      hasRelations
+    ) {
+      throw new BadRequestException(
+        'No se puede cambiar la disciplina porque la escuela tiene cursos y categorías relacionadas.',
+      );
+    }
 
     const updatedSchool = await this.prisma.school.update({
       where: { id },
-      data: updateSchoolDto,
+      data: {
+        ...updateSchoolDto,
+        institutionId: institution.id,
+      },
       select: schoolSelect,
     });
 
@@ -148,6 +196,56 @@ export class SchoolsService {
     return {
       message: 'Escuela eliminada exitosamente',
       data: deletedSchool,
+    };
+  }
+
+  async getSchoolsOptions() {
+    const schools = await this.prisma.school.findMany({
+      select: {
+        id: true,
+        name: true,
+        discipline: {
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+          },
+        },
+      },
+    });
+
+    return {
+      data: schools,
+      message: 'Escuelas obtenidas exitosamente',
+    };
+  }
+
+  async getDisciplinesOptions() {
+    const disciplines = await this.prisma.discipline.findMany({
+      select: {
+        id: true,
+        name: true,
+        icon: true,
+      },
+    });
+
+    return {
+      data: disciplines,
+      message: 'Disciplinas obtenidas exitosamente',
+    };
+  }
+
+  async getOrganizationsOptions() {
+    const institutions = await this.prisma.institution.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return {
+      data: institutions,
+      message: 'Organizaciones obtenidas exitosamente',
     };
   }
 }

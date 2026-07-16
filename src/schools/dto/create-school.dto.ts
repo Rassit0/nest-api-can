@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
@@ -20,21 +20,17 @@ export class CreateSchoolDto {
   })
   name: string;
 
-  @ApiProperty({
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la institución (Institution)',
+  @ApiPropertyOptional({
+    example: 'CAN',
+    description: 'Nombre abreviado del club',
   })
-  @IsUUID('4', {
-    message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'institutionId',
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'shortName',
     }),
   })
-  @Exists('institution', 'id', {
-    message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'institutionId',
-    }),
-  })
-  institutionId: string;
+  @IsOptional()
+  shortName?: string;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

@@ -104,4 +104,41 @@ export class SchoolsController {
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schoolsService.remove(id);
   }
+
+  @Get('all/options')
+  @ApiOperation({
+    summary: 'Obtener opciones de escuelas',
+    description:
+      'Retorna pares de clave-valor (ID y nombre) de todas las escuelas para componentes de selección en el frontend.',
+  })
+  @ApiOkResponse({
+    description: 'Lista de opciones de escuelas obtenida correctamente.',
+  })
+  async getSchoolsOptions() {
+    return await this.schoolsService.getSchoolsOptions();
+  }
+
+  @Get('disciplines/options')
+  @ApiOperation({
+    summary: 'Obtener opciones de disciplinas de escuelas',
+    description: 'Retorna las disciplinas asociadas a escuelas para selectores.',
+  })
+  @ApiOkResponse({
+    description: 'Lista de opciones de disciplinas obtenida correctamente.',
+  })
+  async getDisciplinesOptions() {
+    return await this.schoolsService.getDisciplinesOptions();
+  }
+
+  @Get('organizations/options')
+  @ApiOperation({
+    summary: 'Obtener opciones de instituciones asociadas',
+    description: 'Retorna las organizaciones/instituciones para selectores.',
+  })
+  @ApiOkResponse({
+    description: 'Lista de opciones de instituciones obtenida correctamente.',
+  })
+  async getOrganizationsOptions() {
+    return await this.schoolsService.getOrganizationsOptions();
+  }
 }

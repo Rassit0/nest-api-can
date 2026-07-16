@@ -23,6 +23,7 @@ import { StudentMembershipsService } from './student-memberships.service';
 import { CreateStudentMembershipDto } from './dto/create-student-membership.dto';
 import { UpdateStudentMembershipDto } from './dto/update-student-membership.dto';
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
+import { ChangeStatusDto } from './dto/change-status.dto';
 import {
   ApiStandardResponse,
   ApiStandardCreatedResponse,
@@ -155,7 +156,7 @@ export class StudentMembershipsController {
     return await this.studentMembershipsService.remove(id);
   }
 
-  @Post(':id/finish')
+  @Post('finish/:id')
   @ApiOperation({
     summary: 'Marcar inscripción como finalizada',
     description:
@@ -166,30 +167,19 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reason: {
-          type: 'string',
-          description: 'Motivo de finalización',
-          example: 'Fin de temporada',
-        },
-      },
-    },
-  })
+  @ApiBody({ type: ChangeStatusDto })
   @ApiOkResponse({ description: 'Estado cambiado a FINISHED correctamente.' })
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede finalizar en su estado actual.',
   })
   async finish(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('reason') reason?: string,
+    @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.finish(id, reason);
+    return await this.studentMembershipsService.finish(id, changeStatusDto.reason);
   }
 
-  @Post(':id/suspend')
+  @Post('suspend/:id')
   @ApiOperation({
     summary: 'Suspender inscripción escolar',
     description:
@@ -200,30 +190,19 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reason: {
-          type: 'string',
-          description: 'Motivo de la suspensión',
-          example: 'Falta de pago',
-        },
-      },
-    },
-  })
+  @ApiBody({ type: ChangeStatusDto })
   @ApiOkResponse({ description: 'Inscripción suspendida correctamente.' })
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede suspender en su estado actual.',
   })
   async suspend(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('reason') reason?: string,
+    @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.suspend(id, reason);
+    return await this.studentMembershipsService.suspend(id, changeStatusDto.reason);
   }
 
-  @Post(':id/withdraw')
+  @Post('withdraw/:id')
   @ApiOperation({
     summary: 'Marcar retiro voluntario de una inscripción escolar',
     description: 'Cambia el estado de la inscripción a WITHDRAWN.',
@@ -233,30 +212,19 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reason: {
-          type: 'string',
-          description: 'Motivo del retiro voluntario',
-          example: 'Cambio de domicilio',
-        },
-      },
-    },
-  })
+  @ApiBody({ type: ChangeStatusDto })
   @ApiOkResponse({
     description: 'Inscripción retirada voluntariamente con éxito.',
   })
   @ApiBadRequestResponse({ description: 'La inscripción no se puede retirar.' })
   async withdraw(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('reason') reason?: string,
+    @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.withdraw(id, reason);
+    return await this.studentMembershipsService.withdraw(id, changeStatusDto.reason);
   }
 
-  @Post(':id/reactivate')
+  @Post('reactivate/:id')
   @ApiOperation({
     summary: 'Reactivar inscripción escolar suspendida',
     description:
@@ -267,30 +235,19 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reason: {
-          type: 'string',
-          description: 'Notas de reactivación',
-          example: 'Regularizó deudas',
-        },
-      },
-    },
-  })
+  @ApiBody({ type: ChangeStatusDto })
   @ApiOkResponse({ description: 'Inscripción reactivada exitosamente.' })
   @ApiBadRequestResponse({
     description: 'Solo inscripciones suspendidas pueden ser reactivadas.',
   })
   async reactivate(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('reason') reason?: string,
+    @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.reactivate(id, reason);
+    return await this.studentMembershipsService.reactivate(id, changeStatusDto.reason);
   }
 
-  @Post(':id/activate')
+  @Post('activate/:id')
   @ApiOperation({
     summary: 'Activar inscripción escolar pendiente',
     description: 'Cambia el estado de PENDING_ACTIVE a ACTIVE de forma manual.',
@@ -300,27 +257,16 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reason: {
-          type: 'string',
-          description: 'Notas de activación',
-          example: 'Pagó la inscripción',
-        },
-      },
-    },
-  })
+  @ApiBody({ type: ChangeStatusDto })
   @ApiOkResponse({ description: 'Inscripción activada exitosamente.' })
   @ApiBadRequestResponse({
     description: 'Solo inscripciones pendientes pueden ser activadas.',
   })
   async activate(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('reason') reason?: string,
+    @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.activate(id, reason);
+    return await this.studentMembershipsService.activate(id, changeStatusDto.reason);
   }
 
   @Get(':id/pauses')

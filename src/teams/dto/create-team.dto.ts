@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsDefined,
@@ -33,10 +33,9 @@ export class CreateTeamDto {
   })
   name: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'T1',
     description: 'Nombre abreviado del equipo',
-    required: false,
   })
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {

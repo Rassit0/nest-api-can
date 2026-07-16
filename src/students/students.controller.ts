@@ -23,6 +23,7 @@ import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentsPaginationDto } from './dto/pagination.dto';
+import { FormDataRequest } from 'nestjs-form-data';
 import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
 import { StudentResponseDto } from '../common/dto/responses/entities.dto';
 
@@ -53,6 +54,15 @@ export class StudentsController {
     return await this.studentsService.findAll(paginationDto);
   }
 
+  @Get('available-persons-options')
+  @ApiOperation({
+    summary: 'Listar opciones de personas disponibles',
+    description: 'Retorna una lista paginada de personas que aún no son estudiantes.',
+  })
+  async getAvailablePersons(@Query() paginationDto: import('src/common/dto/pagination').PaginationDto) {
+    return await this.studentsService.getAvailablePersons(paginationDto);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener un estudiante por ID',
@@ -81,6 +91,7 @@ export class StudentsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStudentDto })
+  @FormDataRequest()
   @ApiStandardResponse(StudentResponseDto, 'Estudiante actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,

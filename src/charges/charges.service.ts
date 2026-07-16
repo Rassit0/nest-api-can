@@ -119,6 +119,7 @@ export class ChargesService {
       orderBy = 'asc',
       sortField = 'createdAt',
       playerMembershipId,
+      studentMembershipId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
@@ -167,6 +168,16 @@ export class ChargesService {
         some: {
           playerMembership: {
             id: playerMembershipId,
+          },
+        },
+      };
+    }
+
+    if (studentMembershipId) {
+      where.studentCharges = {
+        some: {
+          studentMembership: {
+            id: studentMembershipId,
           },
         },
       };

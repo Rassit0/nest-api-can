@@ -30,4 +30,19 @@ export class ChargesPaginationDto extends PaginationDto {
   })
   @IsOptional()
   playerMembershipId: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440001',
+    description: 'Filtrar por membresía de estudiante',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @Exists('studentMembership', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'studentMembershipId',
+    }),
+  })
+  @IsOptional()
+  studentMembershipId?: string;
 }

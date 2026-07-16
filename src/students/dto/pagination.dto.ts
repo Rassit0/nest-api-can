@@ -5,12 +5,36 @@ import { PaginationDto } from 'src/common/dto/pagination';
 export class StudentsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Campo por el cual ordenar los resultados',
-    default: 'createdAt',
-    enum: ['createdAt', 'isActive', 'id'],
+    default: 'name',
+    enum: [
+      'name',
+      'lastName',
+      'secondLastName',
+      'documentNumber',
+      'birthDate',
+      'phone',
+      'gender',
+      'createdAt',
+      'id',
+    ],
   })
   @IsOptional()
-  @IsIn(['createdAt', 'isActive', 'id'], {
-    message: 'Columnas permitidas: createdAt, isActive, id',
-  })
-  sortField?: string = 'createdAt';
+  @IsIn(
+    [
+      'name',
+      'lastName',
+      'secondLastName',
+      'documentNumber',
+      'birthDate',
+      'phone',
+      'gender',
+      'createdAt',
+      'id',
+    ],
+    {
+      message:
+        'Columnas permitidas: name, lastName, secondLastName, documentNumber, birthDate, phone, gender, createdAt, id',
+    },
+  )
+  sortField?: string = 'name';
 }

@@ -123,6 +123,7 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
 import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { CreatePlayerMembershipPauseDto } from './dto/create-player-membership-pause.dto';
+import { PlayersOptionsPaginationDto } from './dto/players-options-pagination.dto';
 
 @Injectable()
 export class PlayerMembershipsService {
@@ -923,8 +924,14 @@ export class PlayerMembershipsService {
     }
   }
 
-  async getPlayersOptions(paginationDto: PaginationDto) {
-    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+  async getPlayersOptions(paginationDto: PlayersOptionsPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      gender,
+    } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.PlayerWhereInput = {
@@ -949,6 +956,7 @@ export class PlayerMembershipsService {
           }
         : {}),
       isActive: true,
+      ...(gender && { person: { gender } }),
     };
 
     const [persons, totalItems] = await Promise.all([
@@ -1139,8 +1147,12 @@ export class PlayerMembershipsService {
     });
 
     if (overlappingPause) {
-      const pStart = new Date(overlappingPause.startDate).toISOString().split('T')[0];
-      const pEnd = new Date(overlappingPause.endDate).toISOString().split('T')[0];
+      const pStart = new Date(overlappingPause.startDate)
+        .toISOString()
+        .split('T')[0];
+      const pEnd = new Date(overlappingPause.endDate)
+        .toISOString()
+        .split('T')[0];
       throw new BadRequestException(
         `El rango de fechas se superpone con una pausa existente (${pStart} al ${pEnd})`,
       );

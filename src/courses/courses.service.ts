@@ -146,4 +146,33 @@ export class CoursesService {
       data: deletedCourse,
     };
   }
+
+  async getSchoolsByDisciplineOptions(disciplineId: string) {
+    const schools = await this.prisma.school.findMany({
+      where: { disciplineId },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return {
+      data: schools,
+      message: 'Escuelas obtenidas exitosamente',
+    };
+  }
+
+  async getDisciplinesOptions() {
+    const disciplines = await this.prisma.discipline.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return {
+      data: disciplines,
+      message: 'Disciplinas obtenidas exitosamente',
+    };
+  }
 }

@@ -67,6 +67,52 @@ export class TeamSeasonsController {
     return await this.teamSeasonsService.findAll(paginationDto);
   }
 
+  @Get('categories-by-discipline/options/:disciplineId')
+  @ApiOperation({
+    summary: 'Listar categorías por disciplina para selectores',
+    description: 'Retorna las categorías asociadas a una disciplina deportiva.',
+  })
+  @ApiParam({
+    name: 'disciplineId',
+    description: 'ID de la disciplina (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Opciones de categorías obtenidas con éxito.' })
+  async getCategoriesByDisciplineOptions(
+    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
+  ) {
+    return await this.teamSeasonsService.getCategoriesByDisciplineOptions(
+      disciplineId,
+    );
+  }
+
+  @Get('seasons-by-discipline/options/:disciplineId')
+  @ApiOperation({
+    summary: 'Listar temporadas por disciplina para selectores',
+    description: 'Retorna las temporadas de una disciplina deportiva.',
+  })
+  @ApiParam({
+    name: 'disciplineId',
+    description: 'ID de la disciplina (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Opciones de temporadas obtenidas con éxito.' })
+  async getSeasonsByDisciplineOptions(
+    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
+  ) {
+    return await this.teamSeasonsService.getSeasonsByDisciplineOptions(
+      disciplineId,
+    );
+  }
+
+  @Delete('pauses/:pauseId')
+  @ApiOperation({
+    summary: 'Eliminar una pausa de temporada',
+  })
+  async removePause(@Param('pauseId', ParseUUIDPipe) pauseId: string) {
+    return await this.teamSeasonsService.removePause(pauseId);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener instancia de equipo por ID',
@@ -128,44 +174,6 @@ export class TeamSeasonsController {
   )
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.teamSeasonsService.remove(id);
-  }
-
-  @Get('categories-by-discipline/options/:disciplineId')
-  @ApiOperation({
-    summary: 'Listar categorías por disciplina para selectores',
-    description: 'Retorna las categorías asociadas a una disciplina deportiva.',
-  })
-  @ApiParam({
-    name: 'disciplineId',
-    description: 'ID de la disciplina (UUID)',
-    format: 'uuid',
-  })
-  @ApiOkResponse({ description: 'Opciones de categorías obtenidas con éxito.' })
-  async getCategoriesByDisciplineOptions(
-    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
-  ) {
-    return await this.teamSeasonsService.getCategoriesByDisciplineOptions(
-      disciplineId,
-    );
-  }
-
-  @Get('seasons-by-discipline/options/:disciplineId')
-  @ApiOperation({
-    summary: 'Listar temporadas por disciplina para selectores',
-    description: 'Retorna las temporadas de una disciplina deportiva.',
-  })
-  @ApiParam({
-    name: 'disciplineId',
-    description: 'ID de la disciplina (UUID)',
-    format: 'uuid',
-  })
-  @ApiOkResponse({ description: 'Opciones de temporadas obtenidas con éxito.' })
-  async getSeasonsByDisciplineOptions(
-    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
-  ) {
-    return await this.teamSeasonsService.getSeasonsByDisciplineOptions(
-      disciplineId,
-    );
   }
 
   @Patch(':id/finish')
@@ -262,13 +270,5 @@ export class TeamSeasonsController {
     @Body() createPauseDto: CreateTeamSeasonPauseDto,
   ) {
     return await this.teamSeasonsService.addPause(id, createPauseDto);
-  }
-
-  @Delete('pauses/:pauseId')
-  @ApiOperation({
-    summary: 'Eliminar una pausa de temporada',
-  })
-  async removePause(@Param('pauseId', ParseUUIDPipe) pauseId: string) {
-    return await this.teamSeasonsService.removePause(pauseId);
   }
 }
