@@ -1,18 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsDecimal,
-  IsInt,
-  IsISO8601,
-  IsOptional,
-  IsString,
-  IsUUID,
-  Matches,
-  Min,
-  MinLength,
-} from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { IsAfter } from 'src/common/validators/decorators/is-after.decorator';
 
 export class ChangeStatusDto {
   @ApiProperty({

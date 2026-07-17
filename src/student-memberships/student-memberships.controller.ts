@@ -31,6 +31,7 @@ import {
 } from '../common/decorators/api-responses.decorator';
 import { StudentMembershipResponseDto } from '../common/dto/responses/entities.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
+import { ChangeActivateStatusDto } from './dto/change-activate-status.dto';
 
 @ApiTags('Student Memberships')
 @Controller('student-memberships')
@@ -176,7 +177,10 @@ export class StudentMembershipsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.finish(id, changeStatusDto.reason);
+    return await this.studentMembershipsService.finish(
+      id,
+      changeStatusDto.reason,
+    );
   }
 
   @Post('suspend/:id')
@@ -199,7 +203,10 @@ export class StudentMembershipsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.suspend(id, changeStatusDto.reason);
+    return await this.studentMembershipsService.suspend(
+      id,
+      changeStatusDto.reason,
+    );
   }
 
   @Post('withdraw/:id')
@@ -221,7 +228,10 @@ export class StudentMembershipsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.withdraw(id, changeStatusDto.reason);
+    return await this.studentMembershipsService.withdraw(
+      id,
+      changeStatusDto.reason,
+    );
   }
 
   @Post('reactivate/:id')
@@ -244,7 +254,10 @@ export class StudentMembershipsController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
   ) {
-    return await this.studentMembershipsService.reactivate(id, changeStatusDto.reason);
+    return await this.studentMembershipsService.reactivate(
+      id,
+      changeStatusDto.reason,
+    );
   }
 
   @Post('activate/:id')
@@ -257,16 +270,19 @@ export class StudentMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({ type: ChangeStatusDto })
+  @ApiBody({ type: ChangeActivateStatusDto })
   @ApiOkResponse({ description: 'Inscripción activada exitosamente.' })
   @ApiBadRequestResponse({
     description: 'Solo inscripciones pendientes pueden ser activadas.',
   })
   async activate(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() changeStatusDto: ChangeStatusDto,
+    @Body() changeStatusDto: ChangeActivateStatusDto,
   ) {
-    return await this.studentMembershipsService.activate(id, changeStatusDto.reason);
+    return await this.studentMembershipsService.activate(
+      id,
+      changeStatusDto.reason,
+    );
   }
 
   @Get(':id/pauses')

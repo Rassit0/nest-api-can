@@ -515,7 +515,7 @@ export class PlayerMembershipsService {
     };
   }
 
-  async finish(id: string, reason?: string) {
+  async finish(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === PlayerMembershipStatus.FINISHED) {
@@ -557,7 +557,7 @@ export class PlayerMembershipsService {
     };
   }
 
-  async suspend(id: string, reason?: string) {
+  async suspend(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === PlayerMembershipStatus.FINISHED) {
@@ -598,7 +598,7 @@ export class PlayerMembershipsService {
     };
   }
 
-  async withdraw(id: string, reason?: string) {
+  async withdraw(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === PlayerMembershipStatus.FINISHED) {
@@ -670,7 +670,7 @@ export class PlayerMembershipsService {
     };
   }
 
-  async reactivate(id: string, reason?: string) {
+  async reactivate(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status !== PlayerMembershipStatus.SUSPENDED) {

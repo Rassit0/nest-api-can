@@ -56,6 +56,19 @@ export class TeamSeasonsController {
     return await this.teamSeasonsService.create(createTeamCategoryDto);
   }
 
+  @Get('public/list')
+  @ApiOperation({
+    summary: 'Listar equipos públicos',
+    description: 'Retorna una lista adaptada para el portal web con información pública de los equipos.',
+  })
+  @ApiOkResponse({ description: 'Equipos públicos obtenidos correctamente.' })
+  async findPublic(
+    @Query('isHistorical') isHistorical?: string,
+  ) {
+    const historical = isHistorical === 'true';
+    return await this.teamSeasonsService.findPublic(historical);
+  }
+
   @Get()
   @ApiOperation({
     summary: 'Listar equipos instanciados en temporadas',

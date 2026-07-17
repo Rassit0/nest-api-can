@@ -490,7 +490,7 @@ export class StudentMembershipsService {
     };
   }
 
-  async finish(id: string, reason?: string) {
+  async finish(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === StudentMembershipStatus.FINISHED) {
@@ -532,7 +532,7 @@ export class StudentMembershipsService {
     };
   }
 
-  async suspend(id: string, reason?: string) {
+  async suspend(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === StudentMembershipStatus.FINISHED) {
@@ -573,7 +573,7 @@ export class StudentMembershipsService {
     };
   }
 
-  async withdraw(id: string, reason?: string) {
+  async withdraw(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status === StudentMembershipStatus.FINISHED) {
@@ -644,7 +644,7 @@ export class StudentMembershipsService {
     };
   }
 
-  async reactivate(id: string, reason?: string) {
+  async reactivate(id: string, reason: string) {
     const membership = await this.getMembership(id);
 
     if (membership.status !== StudentMembershipStatus.SUSPENDED) {
@@ -711,7 +711,6 @@ export class StudentMembershipsService {
       data: mapMembershipWithTotal(updatedMembership),
     };
   }
-
 
   async remove(id: string) {
     const membership = await this.prisma.studentMembership.findUnique({

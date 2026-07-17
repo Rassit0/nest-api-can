@@ -865,11 +865,94 @@ export class TeamSeasonService {
       where: { id },
     });
     if (!pause) throw new BadRequestException('Pausa no encontrada');
-
     await this.prisma.teamSeasonPause.delete({
       where: { id },
     });
 
     return { message: 'Pausa eliminada correctamente' };
+  }
+
+  async findPublic(isHistorical?: boolean) {
+    const status = isHistorical ? StatusTeamSeason.FINISHED : StatusTeamSeason.ACTIVE;
+    
+    const teamSeasons = await this.prisma.teamSeason.findMany({
+      where: {
+        status,
+        ...(isHistorical ? {} : { isRegistrationOpen: true })
+      },
+      select: {
+        id: true,
+        gender: true,
+        minBirthYear: true,
+        maxBirthYear: true,
+        maxMembers: true,
+        description: true,
+        team: {
+          select: {
+            name: true,
+            club: { select: { name: true } },
+          }
+        },
+        category: { 
+          select: { 
+            name: true, 
+            minAge: true, 
+            maxAge: true,
+            discipline: { select: { name: true } }
+          } 
+        },
+        billingConfig: { 
+          select: { 
+            registrationFee: true, 
+            recurringFee: true, 
+            seasonFee: true, 
+            billingType: true 
+          } 
+        },
+        _count: {
+          select: {
+            playerMemberships: {
+              where: {
+                status: { in: ['ACTIVE', 'SUSPENDED'] }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const mapped = teamSeasons.map(ts => {
+      let regFee = 0;
+      let monthFee = 0;
+      if (ts.billingConfig) {
+        regFee = Number(ts.billingConfig.registrationFee || 0);
+        if (ts.billingConfig.billingType === 'SINGLE_ONLY') {
+          monthFee = Number(ts.billingConfig.seasonFee || 0);
+        } else {
+          monthFee = Number(ts.billingConfig.recurringFee || 0);
+        }
+      }
+
+      return {
+        id: ts.id,
+        name: ts.team.name,
+        discipline: ts.category.discipline.name,
+        club: ts.team.club.name,
+        gender: ts.gender === 'MALE' ? 'Masculino' : ts.gender === 'FEMALE' ? 'Femenino' : 'Mixto',
+        minAge: ts.category.minAge,
+        maxAge: ts.category.maxAge,
+        category: ts.category.name,
+        tournament: ts.description || 'Competencia local',
+        capacity: ts.maxMembers,
+        enrolled: ts._count.playerMemberships,
+        registrationFee: regFee,
+        monthlyFee: monthFee,
+      };
+    });
+
+    return {
+      message: 'Equipos públicos obtenidos exitosamente',
+      data: mapped
+    };
   }
 }

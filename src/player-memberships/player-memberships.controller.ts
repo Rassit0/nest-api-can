@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -31,6 +32,7 @@ import {
 } from '../common/decorators/api-responses.decorator';
 import { PlayerMembershipResponseDto } from '../common/dto/responses/entities.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
+import { ChangeActivateStatusDto } from './dto/change-activate-status.dto';
 
 @ApiTags('Player Memberships')
 @Controller('player-memberships')
@@ -237,14 +239,14 @@ export class PlayerMembershipsController {
     description: 'ID de la inscripción (UUID)',
     format: 'uuid',
   })
-  @ApiBody({ type: ChangeStatusDto })
+  @ApiBody({ type: ChangeActivateStatusDto })
   @ApiOkResponse({ description: 'Inscripción activada correctamente.' })
   @ApiBadRequestResponse({
     description: 'Solo membresías pendientes pueden activarse.',
   })
   async activate(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() changeStatusDto: ChangeStatusDto,
+    @Body() changeStatusDto: ChangeActivateStatusDto,
   ) {
     return await this.playerMembershipsService.activate(
       id,
