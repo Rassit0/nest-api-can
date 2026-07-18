@@ -6,6 +6,7 @@ import { MembershipPreviewService } from './services/membership-preview.service'
 import { MembershipGenerationService } from './services/membership-generation.service';
 import { MembershipRepository } from './repositories/membership.repository';
 import { MembershipChargeRepository } from './repositories/membership-charge.repository';
+import { MembershipChargesCron } from './membership-charges.cron';
 
 @Module({
   controllers: [MembershipChargesController],
@@ -15,7 +16,8 @@ import { MembershipChargeRepository } from './repositories/membership-charge.rep
     MembershipPreviewService, 
     MembershipGenerationService,
     MembershipRepository,
-    MembershipChargeRepository
+    MembershipChargeRepository,
+    MembershipChargesCron
   ],
   exports: [MembershipChargesService],
 })

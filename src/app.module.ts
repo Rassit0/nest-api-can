@@ -113,9 +113,6 @@ import { ScheduleModule } from '@nestjs/schedule';
     TransactionsModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    PrismaExceptionFilter,
-  ],
+  providers: [AppService, PrismaExceptionFilter],
 })
 export class AppModule {}

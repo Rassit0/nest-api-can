@@ -7,6 +7,8 @@ import { StudentPreviewService } from './services/student-preview.service';
 import { StudentGenerationService } from './services/student-generation.service';
 import { StudentMembershipRepository } from './repositories/student-membership.repository';
 import { StudentChargeRepository } from './repositories/student-charge.repository';
+import { StudentChargesCron } from './student-charges.cron';
+import { StudentLateFeeCron } from './student-late-fee.cron';
 
 @Module({
   controllers: [StudentChargesController],
@@ -17,7 +19,9 @@ import { StudentChargeRepository } from './repositories/student-charge.repositor
     StudentPreviewService,
     StudentGenerationService,
     StudentMembershipRepository,
-    StudentChargeRepository
+    StudentChargeRepository,
+    StudentChargesCron,
+    StudentLateFeeCron
   ],
   exports: [StudentChargesService, StudentLateFeeService],
 })

@@ -65,7 +65,9 @@ export class StudentLateFeeService {
         },
         studentCharges: {
           some: {
-            type: TypeMembershipCharge.RECURRING_FEE,
+            type: {
+              in: [TypeMembershipCharge.RECURRING_FEE, TypeMembershipCharge.SEASON_FEE],
+            },
             studentMembership: {
               status: {
                 in: [

@@ -50,7 +50,9 @@ export class LateFeeRepository {
         },
         membershipCharges: {
           some: {
-            type: TypeMembershipCharge.RECURRING_FEE,
+            type: {
+              in: [TypeMembershipCharge.RECURRING_FEE, TypeMembershipCharge.SEASON_FEE],
+            },
             playerMembership: {
               status: {
                 in: [
