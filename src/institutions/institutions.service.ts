@@ -28,6 +28,26 @@ export const institutionsSelect: Prisma.InstitutionSelect = {
     select: {
       id: true,
       name: true,
+      discipline: {
+        select: {
+          id: true,
+          name: true,
+          icon: true,
+        },
+      },
+    },
+  },
+  schools: {
+    select: {
+      id: true,
+      name: true,
+      discipline: {
+        select: {
+          id: true,
+          name: true,
+          icon: true,
+        },
+      },
     },
   },
   createdAt: true,
@@ -129,10 +149,25 @@ export class InstitutionsService {
     if (!institution) {
       throw new NotFoundException('No hay ninguna institución registrada');
     }
+    const locations = await this.prisma.location.findMany({
+      where: { isInternal: true },
+      select: {
+        id: true,
+        name: true,
+        address: true,
+        description: true,
+        googleMapsUrl: true,
+        latitude: true,
+        longitude: true,
+      },
+    });
     
     return {
       message: 'Institución principal obtenida exitosamente',
-      data: institution,
+      data: {
+        ...institution,
+        locations,
+      },
     };
   }
 
