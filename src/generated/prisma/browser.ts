@@ -38,6 +38,11 @@ export type Discipline = Prisma.DisciplineModel
  */
 export type Institution = Prisma.InstitutionModel
 /**
+ * Model InstitutionContact
+ * 
+ */
+export type InstitutionContact = Prisma.InstitutionContactModel
+/**
  * Model Club
  * 
  */

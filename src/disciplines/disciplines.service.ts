@@ -84,6 +84,16 @@ export class DisciplinesService {
     };
   }
 
+  async findAllUnpaginated() {
+    const disciplines = await this.prisma.discipline.findMany({
+      orderBy: { name: 'asc' },
+    });
+    return {
+      message: 'Disciplinas obtenidas exitosamente',
+      data: disciplines,
+    };
+  }
+
   async findOne(id: string) {
     const discipline = await this.prisma.discipline.findUnique({
       where: { id },

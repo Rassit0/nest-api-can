@@ -394,6 +394,7 @@ export const ModelName = {
   PersonContact: 'PersonContact',
   Discipline: 'Discipline',
   Institution: 'Institution',
+  InstitutionContact: 'InstitutionContact',
   Club: 'Club',
   Location: 'Location',
   Category: 'Category',
@@ -457,7 +458,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "transaction" | "user" | "role" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "schedule" | "scheduleTeam" | "scheduleCourse" | "match" | "matchLineup"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -754,6 +755,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.InstitutionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.InstitutionCountAggregateOutputType> | number
+        }
+      }
+    }
+    InstitutionContact: {
+      payload: Prisma.$InstitutionContactPayload<ExtArgs>
+      fields: Prisma.InstitutionContactFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InstitutionContactFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InstitutionContactFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        findFirst: {
+          args: Prisma.InstitutionContactFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InstitutionContactFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        findMany: {
+          args: Prisma.InstitutionContactFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>[]
+        }
+        create: {
+          args: Prisma.InstitutionContactCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        createMany: {
+          args: Prisma.InstitutionContactCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InstitutionContactCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>[]
+        }
+        delete: {
+          args: Prisma.InstitutionContactDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        update: {
+          args: Prisma.InstitutionContactUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        deleteMany: {
+          args: Prisma.InstitutionContactDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InstitutionContactUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InstitutionContactUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>[]
+        }
+        upsert: {
+          args: Prisma.InstitutionContactUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionContactPayload>
+        }
+        aggregate: {
+          args: Prisma.InstitutionContactAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInstitutionContact>
+        }
+        groupBy: {
+          args: Prisma.InstitutionContactGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionContactGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InstitutionContactCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionContactCountAggregateOutputType> | number
         }
       }
     }
@@ -4397,13 +4472,29 @@ export const InstitutionScalarFieldEnum = {
   name: 'name',
   imageUrl: 'imageUrl',
   address: 'address',
-  phone: 'phone',
-  email: 'email',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  googleMapsUrl: 'googleMapsUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
+
+
+export const InstitutionContactScalarFieldEnum = {
+  id: 'id',
+  institutionId: 'institutionId',
+  department: 'department',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionContactScalarFieldEnum = (typeof InstitutionContactScalarFieldEnum)[keyof typeof InstitutionContactScalarFieldEnum]
 
 
 export const ClubScalarFieldEnum = {
@@ -4723,7 +4814,7 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  passwordHash: 'passwordHash',
+  password: 'password',
   personId: 'personId',
   roleId: 'roleId',
   isActive: 'isActive',
@@ -5622,6 +5713,7 @@ export type GlobalOmitConfig = {
   personContact?: Prisma.PersonContactOmit
   discipline?: Prisma.DisciplineOmit
   institution?: Prisma.InstitutionOmit
+  institutionContact?: Prisma.InstitutionContactOmit
   club?: Prisma.ClubOmit
   location?: Prisma.LocationOmit
   category?: Prisma.CategoryOmit

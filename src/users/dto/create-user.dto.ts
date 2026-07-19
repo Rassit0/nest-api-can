@@ -5,10 +5,12 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  Matches,
   MinLength,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
+import { IsEqualTo } from 'src/common/validators/decorators/is-equal-to.decorator';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -48,7 +50,35 @@ export class CreateUserDto {
   @MinLength(6, {
     message: 'La contraseña debe tener al menos 6 caracteres',
   })
+  @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message:
+      'The password must have a Uppercase, lowercase letter and a number',
+  })
   password: string;
+
+  @ApiProperty({
+    example: 'password123',
+    description: 'Confirmación de la contraseña',
+    minLength: 6,
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
+      constraint1: 'confirmPassword',
+    }),
+  })
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'confirmPassword',
+    }),
+  })
+  @MinLength(6, {
+    message:
+      'La confirmación de la contraseña debe tener al menos 6 caracteres',
+  })
+  @IsEqualTo<CreateUserDto>('password', {
+    message: 'Las contraseñas no coinciden',
+  })
+  confirmPassword: string;
 
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',

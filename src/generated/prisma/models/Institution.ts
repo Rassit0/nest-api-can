@@ -20,8 +20,20 @@ export type InstitutionModel = runtime.Types.Result.DefaultSelection<Prisma.$Ins
 
 export type AggregateInstitution = {
   _count: InstitutionCountAggregateOutputType | null
+  _avg: InstitutionAvgAggregateOutputType | null
+  _sum: InstitutionSumAggregateOutputType | null
   _min: InstitutionMinAggregateOutputType | null
   _max: InstitutionMaxAggregateOutputType | null
+}
+
+export type InstitutionAvgAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
+}
+
+export type InstitutionSumAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
 }
 
 export type InstitutionMinAggregateOutputType = {
@@ -29,8 +41,9 @@ export type InstitutionMinAggregateOutputType = {
   name: string | null
   imageUrl: string | null
   address: string | null
-  phone: string | null
-  email: string | null
+  latitude: number | null
+  longitude: number | null
+  googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,8 +53,9 @@ export type InstitutionMaxAggregateOutputType = {
   name: string | null
   imageUrl: string | null
   address: string | null
-  phone: string | null
-  email: string | null
+  latitude: number | null
+  longitude: number | null
+  googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,21 +65,33 @@ export type InstitutionCountAggregateOutputType = {
   name: number
   imageUrl: number
   address: number
-  phone: number
-  email: number
+  latitude: number
+  longitude: number
+  googleMapsUrl: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
+export type InstitutionAvgAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
+export type InstitutionSumAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
 export type InstitutionMinAggregateInputType = {
   id?: true
   name?: true
   imageUrl?: true
   address?: true
-  phone?: true
-  email?: true
+  latitude?: true
+  longitude?: true
+  googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -75,8 +101,9 @@ export type InstitutionMaxAggregateInputType = {
   name?: true
   imageUrl?: true
   address?: true
-  phone?: true
-  email?: true
+  latitude?: true
+  longitude?: true
+  googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -86,8 +113,9 @@ export type InstitutionCountAggregateInputType = {
   name?: true
   imageUrl?: true
   address?: true
-  phone?: true
-  email?: true
+  latitude?: true
+  longitude?: true
+  googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -131,6 +159,18 @@ export type InstitutionAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: InstitutionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: InstitutionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: InstitutionMinAggregateInputType
@@ -161,6 +201,8 @@ export type InstitutionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: InstitutionCountAggregateInputType | true
+  _avg?: InstitutionAvgAggregateInputType
+  _sum?: InstitutionSumAggregateInputType
   _min?: InstitutionMinAggregateInputType
   _max?: InstitutionMaxAggregateInputType
 }
@@ -170,11 +212,14 @@ export type InstitutionGroupByOutputType = {
   name: string
   imageUrl: string | null
   address: string
-  phone: string | null
-  email: string | null
+  latitude: number | null
+  longitude: number | null
+  googleMapsUrl: string | null
   createdAt: Date
   updatedAt: Date
   _count: InstitutionCountAggregateOutputType | null
+  _avg: InstitutionAvgAggregateOutputType | null
+  _sum: InstitutionSumAggregateOutputType | null
   _min: InstitutionMinAggregateOutputType | null
   _max: InstitutionMaxAggregateOutputType | null
 }
@@ -202,13 +247,15 @@ export type InstitutionWhereInput = {
   name?: Prisma.StringFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   address?: Prisma.StringFilter<"Institution"> | string
-  phone?: Prisma.StringNullableFilter<"Institution"> | string | null
-  email?: Prisma.StringNullableFilter<"Institution"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   clubs?: Prisma.ClubListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
+  contacts?: Prisma.InstitutionContactListRelationFilter
 }
 
 export type InstitutionOrderByWithRelationInput = {
@@ -216,44 +263,51 @@ export type InstitutionOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   clubs?: Prisma.ClubOrderByRelationAggregateInput
   seasons?: Prisma.SeasonOrderByRelationAggregateInput
   schools?: Prisma.SchoolOrderByRelationAggregateInput
+  contacts?: Prisma.InstitutionContactOrderByRelationAggregateInput
 }
 
 export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   AND?: Prisma.InstitutionWhereInput | Prisma.InstitutionWhereInput[]
   OR?: Prisma.InstitutionWhereInput[]
   NOT?: Prisma.InstitutionWhereInput | Prisma.InstitutionWhereInput[]
   name?: Prisma.StringFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   address?: Prisma.StringFilter<"Institution"> | string
-  phone?: Prisma.StringNullableFilter<"Institution"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   clubs?: Prisma.ClubListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
-}, "id" | "email">
+  contacts?: Prisma.InstitutionContactListRelationFilter
+}, "id">
 
 export type InstitutionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.InstitutionCountOrderByAggregateInput
+  _avg?: Prisma.InstitutionAvgOrderByAggregateInput
   _max?: Prisma.InstitutionMaxOrderByAggregateInput
   _min?: Prisma.InstitutionMinOrderByAggregateInput
+  _sum?: Prisma.InstitutionSumOrderByAggregateInput
 }
 
 export type InstitutionScalarWhereWithAggregatesInput = {
@@ -264,8 +318,9 @@ export type InstitutionScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   address?: Prisma.StringWithAggregatesFilter<"Institution"> | string
-  phone?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
-  email?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"Institution"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
 }
@@ -275,13 +330,15 @@ export type InstitutionCreateInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUncheckedCreateInput = {
@@ -289,13 +346,15 @@ export type InstitutionUncheckedCreateInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUpdateInput = {
@@ -303,13 +362,15 @@ export type InstitutionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateInput = {
@@ -317,13 +378,15 @@ export type InstitutionUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateManyInput = {
@@ -331,8 +394,9 @@ export type InstitutionCreateManyInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -342,8 +406,9 @@ export type InstitutionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -353,8 +418,9 @@ export type InstitutionUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -364,10 +430,16 @@ export type InstitutionCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type InstitutionAvgOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
 }
 
 export type InstitutionMaxOrderByAggregateInput = {
@@ -375,8 +447,9 @@ export type InstitutionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -386,15 +459,43 @@ export type InstitutionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type InstitutionSumOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
 }
 
 export type InstitutionScalarRelationFilter = {
   is?: Prisma.InstitutionWhereInput
   isNot?: Prisma.InstitutionWhereInput
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type InstitutionCreateNestedOneWithoutContactsInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutContactsInput, Prisma.InstitutionUncheckedCreateWithoutContactsInput>
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutContactsInput
+  connect?: Prisma.InstitutionWhereUniqueInput
+}
+
+export type InstitutionUpdateOneRequiredWithoutContactsNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutContactsInput, Prisma.InstitutionUncheckedCreateWithoutContactsInput>
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutContactsInput
+  upsert?: Prisma.InstitutionUpsertWithoutContactsInput
+  connect?: Prisma.InstitutionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstitutionUpdateToOneWithWhereWithoutContactsInput, Prisma.InstitutionUpdateWithoutContactsInput>, Prisma.InstitutionUncheckedUpdateWithoutContactsInput>
 }
 
 export type InstitutionCreateNestedOneWithoutClubsInput = {
@@ -439,17 +540,95 @@ export type InstitutionUpdateOneRequiredWithoutSchoolsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InstitutionUpdateToOneWithWhereWithoutSchoolsInput, Prisma.InstitutionUpdateWithoutSchoolsInput>, Prisma.InstitutionUncheckedUpdateWithoutSchoolsInput>
 }
 
+export type InstitutionCreateWithoutContactsInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+}
+
+export type InstitutionUncheckedCreateWithoutContactsInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+}
+
+export type InstitutionCreateOrConnectWithoutContactsInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutContactsInput, Prisma.InstitutionUncheckedCreateWithoutContactsInput>
+}
+
+export type InstitutionUpsertWithoutContactsInput = {
+  update: Prisma.XOR<Prisma.InstitutionUpdateWithoutContactsInput, Prisma.InstitutionUncheckedUpdateWithoutContactsInput>
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutContactsInput, Prisma.InstitutionUncheckedCreateWithoutContactsInput>
+  where?: Prisma.InstitutionWhereInput
+}
+
+export type InstitutionUpdateToOneWithWhereWithoutContactsInput = {
+  where?: Prisma.InstitutionWhereInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateWithoutContactsInput, Prisma.InstitutionUncheckedUpdateWithoutContactsInput>
+}
+
+export type InstitutionUpdateWithoutContactsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionUncheckedUpdateWithoutContactsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
 export type InstitutionCreateWithoutClubsInput = {
   id?: string
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUncheckedCreateWithoutClubsInput = {
@@ -457,12 +636,14 @@ export type InstitutionUncheckedCreateWithoutClubsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutClubsInput = {
@@ -486,12 +667,14 @@ export type InstitutionUpdateWithoutClubsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutClubsInput = {
@@ -499,12 +682,14 @@ export type InstitutionUncheckedUpdateWithoutClubsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutSeasonsInput = {
@@ -512,12 +697,14 @@ export type InstitutionCreateWithoutSeasonsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUncheckedCreateWithoutSeasonsInput = {
@@ -525,12 +712,14 @@ export type InstitutionUncheckedCreateWithoutSeasonsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutSeasonsInput = {
@@ -554,12 +743,14 @@ export type InstitutionUpdateWithoutSeasonsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
@@ -567,12 +758,14 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutSchoolsInput = {
@@ -580,12 +773,14 @@ export type InstitutionCreateWithoutSchoolsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUncheckedCreateWithoutSchoolsInput = {
@@ -593,12 +788,14 @@ export type InstitutionUncheckedCreateWithoutSchoolsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  phone?: string | null
-  email?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutSchoolsInput = {
@@ -622,12 +819,14 @@ export type InstitutionUpdateWithoutSchoolsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
@@ -635,12 +834,14 @@ export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 
@@ -652,12 +853,14 @@ export type InstitutionCountOutputType = {
   clubs: number
   seasons: number
   schools: number
+  contacts: number
 }
 
 export type InstitutionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clubs?: boolean | InstitutionCountOutputTypeCountClubsArgs
   seasons?: boolean | InstitutionCountOutputTypeCountSeasonsArgs
   schools?: boolean | InstitutionCountOutputTypeCountSchoolsArgs
+  contacts?: boolean | InstitutionCountOutputTypeCountContactsArgs
 }
 
 /**
@@ -691,19 +894,28 @@ export type InstitutionCountOutputTypeCountSchoolsArgs<ExtArgs extends runtime.T
   where?: Prisma.SchoolWhereInput
 }
 
+/**
+ * InstitutionCountOutputType without action
+ */
+export type InstitutionCountOutputTypeCountContactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InstitutionContactWhereInput
+}
+
 
 export type InstitutionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  phone?: boolean
-  email?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
   seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
+  contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["institution"]>
 
@@ -712,8 +924,9 @@ export type InstitutionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  phone?: boolean
-  email?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["institution"]>
@@ -723,8 +936,9 @@ export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  phone?: boolean
-  email?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["institution"]>
@@ -734,17 +948,19 @@ export type InstitutionSelectScalar = {
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  phone?: boolean
-  email?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "phone" | "email" | "createdAt" | "updatedAt", ExtArgs["result"]["institution"]>
+export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "latitude" | "longitude" | "googleMapsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["institution"]>
 export type InstitutionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
   seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
+  contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InstitutionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -756,14 +972,16 @@ export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     clubs: Prisma.$ClubPayload<ExtArgs>[]
     seasons: Prisma.$SeasonPayload<ExtArgs>[]
     schools: Prisma.$SchoolPayload<ExtArgs>[]
+    contacts: Prisma.$InstitutionContactPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     imageUrl: string | null
     address: string
-    phone: string | null
-    email: string | null
+    latitude: number | null
+    longitude: number | null
+    googleMapsUrl: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["institution"]>
@@ -1163,6 +1381,7 @@ export interface Prisma__InstitutionClient<T, Null = never, ExtArgs extends runt
   clubs<T extends Prisma.Institution$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   seasons<T extends Prisma.Institution$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   schools<T extends Prisma.Institution$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contacts<T extends Prisma.Institution$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1196,8 +1415,9 @@ export interface InstitutionFieldRefs {
   readonly name: Prisma.FieldRef<"Institution", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Institution", 'String'>
   readonly address: Prisma.FieldRef<"Institution", 'String'>
-  readonly phone: Prisma.FieldRef<"Institution", 'String'>
-  readonly email: Prisma.FieldRef<"Institution", 'String'>
+  readonly latitude: Prisma.FieldRef<"Institution", 'Float'>
+  readonly longitude: Prisma.FieldRef<"Institution", 'Float'>
+  readonly googleMapsUrl: Prisma.FieldRef<"Institution", 'String'>
   readonly createdAt: Prisma.FieldRef<"Institution", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Institution", 'DateTime'>
 }
@@ -1657,6 +1877,30 @@ export type Institution$schoolsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SchoolScalarFieldEnum | Prisma.SchoolScalarFieldEnum[]
+}
+
+/**
+ * Institution.contacts
+ */
+export type Institution$contactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InstitutionContact
+   */
+  select?: Prisma.InstitutionContactSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InstitutionContact
+   */
+  omit?: Prisma.InstitutionContactOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstitutionContactInclude<ExtArgs> | null
+  where?: Prisma.InstitutionContactWhereInput
+  orderBy?: Prisma.InstitutionContactOrderByWithRelationInput | Prisma.InstitutionContactOrderByWithRelationInput[]
+  cursor?: Prisma.InstitutionContactWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InstitutionContactScalarFieldEnum | Prisma.InstitutionContactScalarFieldEnum[]
 }
 
 /**

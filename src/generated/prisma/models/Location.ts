@@ -535,14 +535,6 @@ export type LocationNullableScalarRelationFilter = {
   isNot?: Prisma.LocationWhereInput | null
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type LocationCreateNestedOneWithoutSessionsInput = {
   create?: Prisma.XOR<Prisma.LocationCreateWithoutSessionsInput, Prisma.LocationUncheckedCreateWithoutSessionsInput>
   connectOrCreate?: Prisma.LocationCreateOrConnectWithoutSessionsInput

@@ -53,6 +53,7 @@ export const ModelName = {
   PersonContact: 'PersonContact',
   Discipline: 'Discipline',
   Institution: 'Institution',
+  InstitutionContact: 'InstitutionContact',
   Club: 'Club',
   Location: 'Location',
   Category: 'Category',
@@ -168,13 +169,29 @@ export const InstitutionScalarFieldEnum = {
   name: 'name',
   imageUrl: 'imageUrl',
   address: 'address',
-  phone: 'phone',
-  email: 'email',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  googleMapsUrl: 'googleMapsUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
+
+
+export const InstitutionContactScalarFieldEnum = {
+  id: 'id',
+  institutionId: 'institutionId',
+  department: 'department',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionContactScalarFieldEnum = (typeof InstitutionContactScalarFieldEnum)[keyof typeof InstitutionContactScalarFieldEnum]
 
 
 export const ClubScalarFieldEnum = {
@@ -494,7 +511,7 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  passwordHash: 'passwordHash',
+  password: 'password',
   personId: 'personId',
   roleId: 'roleId',
   isActive: 'isActive',

@@ -106,16 +106,38 @@ model Institution {
   id        String   @id @default(uuid())
   name      String
   imageUrl  String?  @map("image_url")
-  address   String
-  phone     String?
-  email     String?  @unique
+  address       String
+
+  latitude      Float?
+  longitude     Float?
+  googleMapsUrl String?  @map("google_maps_url")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   clubs     Club[]
   seasons   Season[]
   schools   School[]
+  contacts  InstitutionContact[]
 
   @@map("institutions")
+}
+
+model InstitutionContact {
+  id            String      @id @default(uuid())
+  institutionId String      @map("institution_id")
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  
+  department    String      // Ej: "Administración", "Prensa", "Secretaría"
+  contactName   String?     @map("contact_name")
+  phone         String?
+  email         String?
+  
+  isDefault     Boolean     @default(false) @map("is_default") // Contacto principal a mostrar en el footer
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("institution_contacts")
 }
 
 // ============================
@@ -724,9 +746,9 @@ model Transaction {
 // SEGURIDAD (ROLES Y PERMISOS)
 // =================================
 model User {
-  id           String @id @default(uuid())
-  email        String @unique
-  passwordHash String @map("password_hash")
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
 
   personId String? @unique @map("person_id")
   person   Person? @relation(fields: [personId], references: [id], onDelete: Cascade)
@@ -922,16 +944,16 @@ enum CourseSeasonStaffRole {
 }
 
 model CourseSeasonStaff {
-  id             String              @id @default(uuid())
-  courseSeasonId String              @map("course_season_id")
-  courseSeason   CourseSeason        @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  staffId        String              @map("staff_id")
-  staff          Staff               @relation(fields: [staffId], references: [id], onDelete: Restrict)
+  id             String                @id @default(uuid())
+  courseSeasonId String                @map("course_season_id")
+  courseSeason   CourseSeason          @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  staffId        String                @map("staff_id")
+  staff          Staff                 @relation(fields: [staffId], references: [id], onDelete: Restrict)
   role           CourseSeasonStaffRole
-  customRole     String?             @map("custom_role")
-  startedAt      DateTime            @map("started_at")
-  endedAt        DateTime?           @map("ended_at")
-  isPrimary      Boolean             @default(false) @map("is_primary")
+  customRole     String?               @map("custom_role")
+  startedAt      DateTime              @map("started_at")
+  endedAt        DateTime?             @map("ended_at")
+  isPrimary      Boolean               @default(false) @map("is_primary")
   notes          String?
 
   createdAt DateTime @default(now()) @map("created_at")

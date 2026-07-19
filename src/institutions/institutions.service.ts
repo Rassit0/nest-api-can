@@ -11,8 +11,19 @@ export const institutionsSelect: Prisma.InstitutionSelect = {
   name: true,
   imageUrl: true,
   address: true,
-  phone: true,
-  email: true,
+  latitude: true,
+  longitude: true,
+  googleMapsUrl: true,
+  contacts: {
+    select: {
+      id: true,
+      department: true,
+      contactName: true,
+      phone: true,
+      email: true,
+      isDefault: true,
+    },
+  },
   clubs: {
     select: {
       id: true,
@@ -107,6 +118,21 @@ export class InstitutionsService {
     return {
       message: 'Organizacion obtenida exitosamente',
       data: institutions,
+    };
+  }
+
+  async findDefault() {
+    const institution = await this.prisma.institution.findFirst({
+      select: institutionsSelect,
+    });
+
+    if (!institution) {
+      throw new NotFoundException('No hay ninguna institución registrada');
+    }
+    
+    return {
+      message: 'Institución principal obtenida exitosamente',
+      data: institution,
     };
   }
 

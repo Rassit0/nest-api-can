@@ -53,6 +53,17 @@ export class DisciplinesController {
     return await this.disciplinesService.findAll(paginationDto);
   }
 
+  @Get('all')
+  @ApiOperation({
+    summary: 'Listar todas las disciplinas (Público)',
+    description:
+      'Retorna una lista completa sin paginación de todas las disciplinas, ideal para listas desplegables (dropdowns) en el portal web.',
+  })
+  @ApiStandardResponse(DisciplineResponseDto, 'Disciplinas obtenidas exitosamente.')
+  async findAllUnpaginated() {
+    return await this.disciplinesService.findAllUnpaginated();
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener disciplina por ID',

@@ -57,6 +57,7 @@ import { ProgressEvaluationsModule } from './progress-evaluations/progress-evalu
 import { TransactionsModule } from './transactions/transactions.module';
 
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -111,6 +112,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     SessionIncidentsModule,
     ProgressEvaluationsModule,
     TransactionsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

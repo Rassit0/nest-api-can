@@ -11,6 +11,7 @@ import { Prisma } from 'src/generated/prisma/client';
 import { UsersPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 export const userSelect: Prisma.UserSelect = {
   id: true,
@@ -45,11 +46,18 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   private hashPassword(password: string): string {
-    return crypto.createHash('sha256').update(password).digest('hex');
+    // Encripta el
+    return bcrypt.hashSync(password, 10);
   }
 
   async create(createUserDto: CreateUserDto) {
-    const { email, password, personId, roleId } = createUserDto;
+    const {
+      email,
+      password,
+      confirmPassword: _,
+      personId,
+      roleId,
+    } = createUserDto;
 
     // Verificar si el correo ya existe
     const exists = await this.prisma.user.findUnique({
@@ -64,7 +72,7 @@ export class UsersService {
     const newUser = await this.prisma.user.create({
       data: {
         email,
-        passwordHash,
+        password: passwordHash,
         personId,
         roleId,
       },
@@ -179,7 +187,7 @@ export class UsersService {
     }
 
     if (password) {
-      data.passwordHash = this.hashPassword(password);
+      data.password = this.hashPassword(password);
     }
 
     const updatedUser = await this.prisma.user.update({
