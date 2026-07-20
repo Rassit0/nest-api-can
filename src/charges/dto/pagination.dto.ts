@@ -45,4 +45,24 @@ export class ChargesPaginationDto extends PaginationDto {
   })
   @IsOptional()
   studentMembershipId?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440002',
+    description: 'Filtrar por membresías de una temporada de equipo',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @IsOptional()
+  teamSeasonId?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440003',
+    description: 'Filtrar por membresías de una temporada de curso',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
+  @IsOptional()
+  courseSeasonId?: string;
 }

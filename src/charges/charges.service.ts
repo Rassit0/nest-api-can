@@ -128,6 +128,8 @@ export class ChargesService {
       sortField = 'createdAt',
       playerMembershipId,
       studentMembershipId,
+      teamSeasonId,
+      courseSeasonId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
@@ -186,6 +188,26 @@ export class ChargesService {
         some: {
           studentMembership: {
             id: studentMembershipId,
+          },
+        },
+      };
+    }
+
+    if (teamSeasonId) {
+      where.membershipCharges = {
+        some: {
+          playerMembership: {
+            teamSeasonId,
+          },
+        },
+      };
+    }
+
+    if (courseSeasonId) {
+      where.studentCharges = {
+        some: {
+          studentMembership: {
+            courseSeasonId,
           },
         },
       };
