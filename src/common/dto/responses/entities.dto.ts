@@ -1267,6 +1267,17 @@ export class ChargeResponseDto {
   pendingAmount: any;
 
   @ApiProperty({
+    example: 'any',
+  })
+  discountAmount: any;
+
+  @ApiProperty({
+    required: false,
+    example: 'string',
+  })
+  discountReason?: string;
+
+  @ApiProperty({
     example: '2024-01-01T00:00:00Z',
   })
   dueDate: Date;

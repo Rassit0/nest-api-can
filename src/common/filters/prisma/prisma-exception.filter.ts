@@ -8,6 +8,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { I18nService } from 'nestjs-i18n';
 import { Prisma } from 'src/generated/prisma/client';
 
@@ -83,10 +84,15 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         // 3. Como 'field' es un string, lo metemos en un array para que el resto de tu lógica funcione
         const fields = [normalizeField(field)];
 
+        const requestMethod = ctx.getRequest<Request>().method;
+        const i18nKey = requestMethod === 'DELETE' 
+          ? 'validation.RELATION_DEPENDENCY' 
+          : 'validation.NOT_FOUND_RELATION';
+
         const errors = fields.reduce(
           (acc, f) => {
             acc[f] = [
-              this.i18n.t('validation.NOT_FOUND_RELATION', {
+              this.i18n.t(i18nKey, {
                 args: {
                   entity: this.i18n.t(`fields.${f}`),
                 },

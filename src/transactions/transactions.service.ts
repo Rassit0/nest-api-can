@@ -120,15 +120,19 @@ export class TransactionsService {
             },
           });
 
-          // Actualizar saldo pendiente
           const newPendingAmount = Number((currentPending - applied).toFixed(2));
           const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
+          const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
+          const expectedTotal = chargeAmount - discountAmount;
+          
           let newStatus = charge.status;
 
           if (newPendingAmount <= 0) {
             newStatus = StatusCharge.PAID;
-          } else if (newPendingAmount < chargeAmount) {
+          } else if (newPendingAmount < expectedTotal) {
             newStatus = StatusCharge.PARTIAL;
+          } else {
+            newStatus = StatusCharge.PENDING;
           }
 
           await prisma.charge.update({
@@ -250,12 +254,15 @@ export class TransactionsService {
           const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
           const applied = Number(ct.amountApplied.toNumber().toFixed(2));
           const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
+          const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
+          
+          const expectedTotal = chargeAmount - discountAmount;
 
           const newPendingAmount = Number((currentPending + applied).toFixed(2));
           let newStatus = charge.status;
 
-          // Si el pending es igual o mayor al amount, vuelve a PENDING
-          if (newPendingAmount >= chargeAmount) {
+          // Si el pending es igual o mayor al expectedTotal, vuelve a PENDING
+          if (newPendingAmount >= expectedTotal) {
             newStatus = StatusCharge.PENDING;
           } else if (newPendingAmount > 0) {
             newStatus = StatusCharge.PARTIAL; // Si era PAID, ahora debe ser PARTIAL

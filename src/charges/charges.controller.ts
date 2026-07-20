@@ -23,7 +23,12 @@ import { ChargesService } from './charges.service';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
 import { ChargesPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import { AddDiscountDto } from './dto/add-discount.dto';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { ChargeResponseDto } from '../common/dto/responses/entities.dto';
 
 @ApiTags('Charges')
@@ -37,7 +42,10 @@ export class ChargesController {
     description:
       'Registra una obligación de cobro base en el sistema con su descripción, fecha de vencimiento y monto total.',
   })
-  @ApiStandardCreatedResponse(ChargeResponseDto, 'Cargo base registrado con éxito.')
+  @ApiStandardCreatedResponse(
+    ChargeResponseDto,
+    'Cargo base registrado con éxito.',
+  )
   async create(@Body() createChargeDto: CreateChargeDto) {
     return await this.chargesService.create(createChargeDto);
   }
@@ -48,9 +56,46 @@ export class ChargesController {
     description:
       'Retorna una lista paginada y filtrable de todos los cargos de facturación cargados.',
   })
-  @ApiPaginatedResponse(ChargeResponseDto, 'Lista de cargos obtenida correctamente.')
+  @ApiPaginatedResponse(
+    ChargeResponseDto,
+    'Lista de cargos obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: ChargesPaginationDto) {
     return await this.chargesService.findAll(paginationDto);
+  }
+
+  @Patch(':id/discount')
+  @ApiOperation({
+    summary: 'Agregar descuento a un cargo',
+    description: 'Aplica un descuento específico a un cargo existente.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del cargo (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: AddDiscountDto })
+  @ApiStandardResponse(ChargeResponseDto, 'Descuento agregado exitosamente.')
+  async addDiscount(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() addDiscountDto: AddDiscountDto,
+  ) {
+    return await this.chargesService.addDiscount(id, addDiscountDto);
+  }
+
+  @Delete(':id/discount')
+  @ApiOperation({
+    summary: 'Eliminar descuento de un cargo',
+    description: 'Remueve el descuento aplicado a un cargo específico.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del cargo (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(ChargeResponseDto, 'Descuento eliminado exitosamente.')
+  async removeDiscount(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.chargesService.removeDiscount(id);
   }
 
   @Get(':id')

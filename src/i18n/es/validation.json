@@ -37,6 +37,7 @@
   "IS_DEFINED": "Debe estar definido",
   "NOT_FOUND_RELATION": "{entity} no se encuentra registrado",
   "RELATION_ERROR": "{entity} no se encuentra registrado",
+  "RELATION_DEPENDENCY": "No se puede completar la acción porque el registro de {entity} está siendo referenciado por otros (por ejemplo, tiene dependencias).",
   "IS_AFTER_START_DATE": "La fecha final debe ser mayor a la fecha inicial",
   "MAX_FILE_SIZE": "El archivo debe pesar menos de {constraint1}",
   "WRONG_FILE_TYPE": "El archivo debe ser de tipo {constraint1}"

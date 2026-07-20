@@ -4771,6 +4771,8 @@ export const ChargeScalarFieldEnum = {
   description: 'description',
   amount: 'amount',
   pendingAmount: 'pendingAmount',
+  discountAmount: 'discountAmount',
+  discountReason: 'discountReason',
   dueDate: 'dueDate',
   status: 'status',
   createdAt: 'createdAt',

@@ -672,6 +672,11 @@ model Charge {
   description   String?
   amount        Decimal      @db.Decimal(10, 2)
   pendingAmount Decimal      @map("pending_amount") @db.Decimal(10, 2)
+  
+  // Descuentos aplicados específicamente a este cargo
+  discountAmount Decimal      @default(0) @map("discount_amount") @db.Decimal(10, 2)
+  discountReason String?      @map("discount_reason")
+
   dueDate       DateTime     @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
   status        StatusCharge @default(PENDING)
 

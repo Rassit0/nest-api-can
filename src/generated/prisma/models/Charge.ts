@@ -29,11 +29,13 @@ export type AggregateCharge = {
 export type ChargeAvgAggregateOutputType = {
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
 }
 
 export type ChargeSumAggregateOutputType = {
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
 }
 
 export type ChargeMinAggregateOutputType = {
@@ -42,6 +44,8 @@ export type ChargeMinAggregateOutputType = {
   description: string | null
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountReason: string | null
   dueDate: Date | null
   status: $Enums.StatusCharge | null
   createdAt: Date | null
@@ -54,6 +58,8 @@ export type ChargeMaxAggregateOutputType = {
   description: string | null
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountReason: string | null
   dueDate: Date | null
   status: $Enums.StatusCharge | null
   createdAt: Date | null
@@ -66,6 +72,8 @@ export type ChargeCountAggregateOutputType = {
   description: number
   amount: number
   pendingAmount: number
+  discountAmount: number
+  discountReason: number
   dueDate: number
   status: number
   createdAt: number
@@ -77,11 +85,13 @@ export type ChargeCountAggregateOutputType = {
 export type ChargeAvgAggregateInputType = {
   amount?: true
   pendingAmount?: true
+  discountAmount?: true
 }
 
 export type ChargeSumAggregateInputType = {
   amount?: true
   pendingAmount?: true
+  discountAmount?: true
 }
 
 export type ChargeMinAggregateInputType = {
@@ -90,6 +100,8 @@ export type ChargeMinAggregateInputType = {
   description?: true
   amount?: true
   pendingAmount?: true
+  discountAmount?: true
+  discountReason?: true
   dueDate?: true
   status?: true
   createdAt?: true
@@ -102,6 +114,8 @@ export type ChargeMaxAggregateInputType = {
   description?: true
   amount?: true
   pendingAmount?: true
+  discountAmount?: true
+  discountReason?: true
   dueDate?: true
   status?: true
   createdAt?: true
@@ -114,6 +128,8 @@ export type ChargeCountAggregateInputType = {
   description?: true
   amount?: true
   pendingAmount?: true
+  discountAmount?: true
+  discountReason?: true
   dueDate?: true
   status?: true
   createdAt?: true
@@ -213,6 +229,8 @@ export type ChargeGroupByOutputType = {
   description: string | null
   amount: runtime.Decimal
   pendingAmount: runtime.Decimal
+  discountAmount: runtime.Decimal
+  discountReason: string | null
   dueDate: Date
   status: $Enums.StatusCharge
   createdAt: Date
@@ -248,6 +266,8 @@ export type ChargeWhereInput = {
   description?: Prisma.StringNullableFilter<"Charge"> | string | null
   amount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Charge"> | Date | string
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
@@ -266,6 +286,8 @@ export type ChargeOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountReason?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -287,6 +309,8 @@ export type ChargeWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"Charge"> | string | null
   amount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Charge"> | Date | string
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
@@ -305,6 +329,8 @@ export type ChargeOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountReason?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -325,6 +351,8 @@ export type ChargeScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
   amount?: Prisma.DecimalWithAggregatesFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalWithAggregatesFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalWithAggregatesFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
   status?: Prisma.EnumStatusChargeWithAggregatesFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
@@ -336,6 +364,8 @@ export type ChargeCreateInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -354,6 +384,8 @@ export type ChargeUncheckedCreateInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -370,6 +402,8 @@ export type ChargeUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,6 +422,8 @@ export type ChargeUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -405,6 +441,8 @@ export type ChargeCreateManyInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -416,6 +454,8 @@ export type ChargeUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,6 +468,8 @@ export type ChargeUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -460,6 +502,8 @@ export type ChargeCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountReason?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -469,6 +513,7 @@ export type ChargeCountOrderByAggregateInput = {
 export type ChargeAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type ChargeMaxOrderByAggregateInput = {
@@ -477,6 +522,8 @@ export type ChargeMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountReason?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -489,6 +536,8 @@ export type ChargeMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountReason?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -498,6 +547,7 @@ export type ChargeMinOrderByAggregateInput = {
 export type ChargeSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type ChargeCreateNestedOneWithoutMembershipChargesInput = {
@@ -625,6 +675,8 @@ export type ChargeCreateWithoutMembershipChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -642,6 +694,8 @@ export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -673,6 +727,8 @@ export type ChargeUpdateWithoutMembershipChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -690,6 +746,8 @@ export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -705,6 +763,8 @@ export type ChargeCreateWithoutChildChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -722,6 +782,8 @@ export type ChargeUncheckedCreateWithoutChildChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -742,6 +804,8 @@ export type ChargeCreateWithoutParentChargeInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -758,6 +822,8 @@ export type ChargeUncheckedCreateWithoutParentChargeInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -795,6 +861,8 @@ export type ChargeUpdateWithoutChildChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -812,6 +880,8 @@ export type ChargeUncheckedUpdateWithoutChildChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -847,6 +917,8 @@ export type ChargeScalarWhereInput = {
   description?: Prisma.StringNullableFilter<"Charge"> | string | null
   amount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Charge"> | Date | string
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
@@ -858,6 +930,8 @@ export type ChargeCreateWithoutChargeTransactionsInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -875,6 +949,8 @@ export type ChargeUncheckedCreateWithoutChargeTransactionsInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -906,6 +982,8 @@ export type ChargeUpdateWithoutChargeTransactionsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -923,6 +1001,8 @@ export type ChargeUncheckedUpdateWithoutChargeTransactionsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -938,6 +1018,8 @@ export type ChargeCreateWithoutStudentChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -955,6 +1037,8 @@ export type ChargeUncheckedCreateWithoutStudentChargesInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -986,6 +1070,8 @@ export type ChargeUpdateWithoutStudentChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1003,6 +1089,8 @@ export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1018,6 +1106,8 @@ export type ChargeCreateWithoutSessionBookingInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -1035,6 +1125,8 @@ export type ChargeUncheckedCreateWithoutSessionBookingInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -1066,6 +1158,8 @@ export type ChargeUpdateWithoutSessionBookingInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1083,6 +1177,8 @@ export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1098,6 +1194,8 @@ export type ChargeCreateManyParentChargeInput = {
   description?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
   dueDate: Date | string
   status?: $Enums.StatusCharge
   createdAt?: Date | string
@@ -1109,6 +1207,8 @@ export type ChargeUpdateWithoutParentChargeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1125,6 +1225,8 @@ export type ChargeUncheckedUpdateWithoutParentChargeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1141,6 +1243,8 @@ export type ChargeUncheckedUpdateManyWithoutParentChargeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1211,6 +1315,8 @@ export type ChargeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   description?: boolean
   amount?: boolean
   pendingAmount?: boolean
+  discountAmount?: boolean
+  discountReason?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1230,6 +1336,8 @@ export type ChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   description?: boolean
   amount?: boolean
   pendingAmount?: boolean
+  discountAmount?: boolean
+  discountReason?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1243,6 +1351,8 @@ export type ChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   description?: boolean
   amount?: boolean
   pendingAmount?: boolean
+  discountAmount?: boolean
+  discountReason?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1256,13 +1366,15 @@ export type ChargeSelectScalar = {
   description?: boolean
   amount?: boolean
   pendingAmount?: boolean
+  discountAmount?: boolean
+  discountReason?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "dueDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["charge"]>
+export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "discountAmount" | "discountReason" | "dueDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["charge"]>
 export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
   childCharges?: boolean | Prisma.Charge$childChargesArgs<ExtArgs>
@@ -1295,6 +1407,8 @@ export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     description: string | null
     amount: runtime.Decimal
     pendingAmount: runtime.Decimal
+    discountAmount: runtime.Decimal
+    discountReason: string | null
     dueDate: Date
     status: $Enums.StatusCharge
     createdAt: Date
@@ -1733,6 +1847,8 @@ export interface ChargeFieldRefs {
   readonly description: Prisma.FieldRef<"Charge", 'String'>
   readonly amount: Prisma.FieldRef<"Charge", 'Decimal'>
   readonly pendingAmount: Prisma.FieldRef<"Charge", 'Decimal'>
+  readonly discountAmount: Prisma.FieldRef<"Charge", 'Decimal'>
+  readonly discountReason: Prisma.FieldRef<"Charge", 'String'>
   readonly dueDate: Prisma.FieldRef<"Charge", 'DateTime'>
   readonly status: Prisma.FieldRef<"Charge", 'StatusCharge'>
   readonly createdAt: Prisma.FieldRef<"Charge", 'DateTime'>
