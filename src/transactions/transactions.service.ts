@@ -111,6 +111,12 @@ export class TransactionsService {
             );
           }
 
+          if (applied === 0 && currentPending > 0) {
+            throw new BadRequestException(
+              `Solo se permiten recibos de monto 0 si el cargo tiene un saldo pendiente de 0.`,
+            );
+          }
+
           // Crear pivote
           await prisma.chargeTransaction.create({
             data: {

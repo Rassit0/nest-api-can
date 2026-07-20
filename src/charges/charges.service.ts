@@ -231,6 +231,7 @@ export class ChargesService {
       include: {
         membershipCharges: true,
         studentCharges: true,
+        chargeTransactions: true,
       },
     });
     if (!charge) {
@@ -247,9 +248,9 @@ export class ChargesService {
       );
     }
 
-    if (charge.status !== StatusCharge.PENDING) {
+    if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
       throw new BadRequestException(
-        'No se puede editar un cargo que ya tiene pagos parciales o está pagado.',
+        'No se puede editar un cargo que ya tiene transacciones (pagos) registradas.',
       );
     }
 
@@ -317,12 +318,6 @@ export class ChargesService {
         'Solo se pueden eliminar cargos creados de forma manual.',
       );
     }
-
-    if (charge.status !== StatusCharge.PENDING) {
-      throw new BadRequestException(
-        'No se puede eliminar un cargo que ya tiene pagos parciales o está pagado.',
-      );
-    }
     
     if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
       throw new BadRequestException(
@@ -358,6 +353,7 @@ export class ChargesService {
   async addDiscount(id: string, addDiscountDto: AddDiscountDto) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
+      include: { chargeTransactions: true },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
@@ -385,7 +381,11 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      newStatus = StatusCharge.PAID;
+      if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+        newStatus = StatusCharge.PAID;
+      } else {
+        newStatus = StatusCharge.PENDING;
+      }
     } else if (paidAmount > 0) {
       newStatus = StatusCharge.PARTIAL;
     } else {
@@ -412,15 +412,10 @@ export class ChargesService {
   async removeDiscount(id: string) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
+      include: { chargeTransactions: true },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
-    }
-
-    if (charge.status === StatusCharge.PAID) {
-      throw new BadRequestException(
-        'No se puede eliminar el descuento de un cargo que ya ha sido pagado',
-      );
     }
 
     const oldDiscount = Number(charge.discountAmount || 0);
@@ -441,7 +436,11 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      newStatus = StatusCharge.PAID;
+      if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+        newStatus = StatusCharge.PAID;
+      } else {
+        newStatus = StatusCharge.PENDING;
+      }
     } else if (paidAmount > 0) {
       newStatus = StatusCharge.PARTIAL;
     } else {
