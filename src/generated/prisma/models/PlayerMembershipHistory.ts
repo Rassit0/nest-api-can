@@ -31,6 +31,8 @@ export type PlayerMembershipHistoryMinAggregateOutputType = {
   newStatus: $Enums.PlayerMembershipStatus | null
   reason: string | null
   createdAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PlayerMembershipHistoryMaxAggregateOutputType = {
@@ -40,6 +42,8 @@ export type PlayerMembershipHistoryMaxAggregateOutputType = {
   newStatus: $Enums.PlayerMembershipStatus | null
   reason: string | null
   createdAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PlayerMembershipHistoryCountAggregateOutputType = {
@@ -49,6 +53,8 @@ export type PlayerMembershipHistoryCountAggregateOutputType = {
   newStatus: number
   reason: number
   createdAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -60,6 +66,8 @@ export type PlayerMembershipHistoryMinAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PlayerMembershipHistoryMaxAggregateInputType = {
@@ -69,6 +77,8 @@ export type PlayerMembershipHistoryMaxAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PlayerMembershipHistoryCountAggregateInputType = {
@@ -78,6 +88,8 @@ export type PlayerMembershipHistoryCountAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -160,6 +172,8 @@ export type PlayerMembershipHistoryGroupByOutputType = {
   newStatus: $Enums.PlayerMembershipStatus
   reason: string | null
   createdAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: PlayerMembershipHistoryCountAggregateOutputType | null
   _min: PlayerMembershipHistoryMinAggregateOutputType | null
   _max: PlayerMembershipHistoryMaxAggregateOutputType | null
@@ -190,7 +204,11 @@ export type PlayerMembershipHistoryWhereInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembershipHistory"> | $Enums.PlayerMembershipStatus
   reason?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type PlayerMembershipHistoryOrderByWithRelationInput = {
@@ -200,7 +218,11 @@ export type PlayerMembershipHistoryOrderByWithRelationInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type PlayerMembershipHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -213,7 +235,11 @@ export type PlayerMembershipHistoryWhereUniqueInput = Prisma.AtLeast<{
   newStatus?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembershipHistory"> | $Enums.PlayerMembershipStatus
   reason?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type PlayerMembershipHistoryOrderByWithAggregationInput = {
@@ -223,6 +249,8 @@ export type PlayerMembershipHistoryOrderByWithAggregationInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PlayerMembershipHistoryCountOrderByAggregateInput
   _max?: Prisma.PlayerMembershipHistoryMaxOrderByAggregateInput
   _min?: Prisma.PlayerMembershipHistoryMinOrderByAggregateInput
@@ -238,6 +266,8 @@ export type PlayerMembershipHistoryScalarWhereWithAggregatesInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusWithAggregatesFilter<"PlayerMembershipHistory"> | $Enums.PlayerMembershipStatus
   reason?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembershipHistory"> | string | null
 }
 
 export type PlayerMembershipHistoryCreateInput = {
@@ -247,6 +277,8 @@ export type PlayerMembershipHistoryCreateInput = {
   reason?: string | null
   createdAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutHistoriesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipHistoriesInput
 }
 
 export type PlayerMembershipHistoryUncheckedCreateInput = {
@@ -256,6 +288,8 @@ export type PlayerMembershipHistoryUncheckedCreateInput = {
   newStatus: $Enums.PlayerMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipHistoryUpdateInput = {
@@ -265,6 +299,8 @@ export type PlayerMembershipHistoryUpdateInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipHistoriesNestedInput
 }
 
 export type PlayerMembershipHistoryUncheckedUpdateInput = {
@@ -274,6 +310,8 @@ export type PlayerMembershipHistoryUncheckedUpdateInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipHistoryCreateManyInput = {
@@ -283,6 +321,8 @@ export type PlayerMembershipHistoryCreateManyInput = {
   newStatus: $Enums.PlayerMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipHistoryUpdateManyMutationInput = {
@@ -300,6 +340,8 @@ export type PlayerMembershipHistoryUncheckedUpdateManyInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipHistoryListRelationFilter = {
@@ -319,6 +361,8 @@ export type PlayerMembershipHistoryCountOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipHistoryMaxOrderByAggregateInput = {
@@ -328,6 +372,8 @@ export type PlayerMembershipHistoryMaxOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipHistoryMinOrderByAggregateInput = {
@@ -337,6 +383,8 @@ export type PlayerMembershipHistoryMinOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput = {
@@ -385,12 +433,98 @@ export type NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput = {
   set?: $Enums.PlayerMembershipStatus | null
 }
 
+export type PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+}
+
+export type PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+}
+
+export type PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+}
+
+export type PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+}
+
+export type PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipHistoryScalarWhereInput | Prisma.PlayerMembershipHistoryScalarWhereInput[]
+}
+
+export type PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipHistoryScalarWhereInput | Prisma.PlayerMembershipHistoryScalarWhereInput[]
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipHistoryScalarWhereInput | Prisma.PlayerMembershipHistoryScalarWhereInput[]
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipHistoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipHistoryWhereUniqueInput | Prisma.PlayerMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PlayerMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipHistoryScalarWhereInput | Prisma.PlayerMembershipHistoryScalarWhereInput[]
+}
+
 export type PlayerMembershipHistoryCreateWithoutPlayerMembershipInput = {
   id?: string
   previousStatus?: $Enums.PlayerMembershipStatus | null
   newStatus: $Enums.PlayerMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipHistoriesInput
 }
 
 export type PlayerMembershipHistoryUncheckedCreateWithoutPlayerMembershipInput = {
@@ -399,6 +533,8 @@ export type PlayerMembershipHistoryUncheckedCreateWithoutPlayerMembershipInput =
   newStatus: $Enums.PlayerMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipHistoryCreateOrConnectWithoutPlayerMembershipInput = {
@@ -437,6 +573,100 @@ export type PlayerMembershipHistoryScalarWhereInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusFilter<"PlayerMembershipHistory"> | $Enums.PlayerMembershipStatus
   reason?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayerMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembershipHistory"> | string | null
+}
+
+export type PlayerMembershipHistoryCreateWithoutCreatedByInput = {
+  id?: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipHistoriesInput
+}
+
+export type PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  updatedById?: string | null
+}
+
+export type PlayerMembershipHistoryCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipHistoryCreateManyCreatedByInputEnvelope = {
+  data: Prisma.PlayerMembershipHistoryCreateManyCreatedByInput | Prisma.PlayerMembershipHistoryCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerMembershipHistoryCreateWithoutUpdatedByInput = {
+  id?: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutHistoriesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipHistoriesInput
+}
+
+export type PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  createdById?: string | null
+}
+
+export type PlayerMembershipHistoryCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipHistoryCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.PlayerMembershipHistoryCreateManyUpdatedByInput | Prisma.PlayerMembershipHistoryCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateWithoutCreatedByInput, Prisma.PlayerMembershipHistoryUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateManyMutationInput, Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type PlayerMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.PlayerMembershipHistoryCreateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateWithoutUpdatedByInput, Prisma.PlayerMembershipHistoryUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerMembershipHistoryUpdateManyMutationInput, Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type PlayerMembershipHistoryCreateManyPlayerMembershipInput = {
@@ -445,6 +675,8 @@ export type PlayerMembershipHistoryCreateManyPlayerMembershipInput = {
   newStatus: $Enums.PlayerMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipHistoryUpdateWithoutPlayerMembershipInput = {
@@ -453,6 +685,8 @@ export type PlayerMembershipHistoryUpdateWithoutPlayerMembershipInput = {
   newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipHistoriesNestedInput
 }
 
 export type PlayerMembershipHistoryUncheckedUpdateWithoutPlayerMembershipInput = {
@@ -461,6 +695,8 @@ export type PlayerMembershipHistoryUncheckedUpdateWithoutPlayerMembershipInput =
   newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipInput = {
@@ -469,6 +705,88 @@ export type PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipInp
   newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipHistoryCreateManyCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  updatedById?: string | null
+}
+
+export type PlayerMembershipHistoryCreateManyUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  previousStatus?: $Enums.PlayerMembershipStatus | null
+  newStatus: $Enums.PlayerMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  createdById?: string | null
+}
+
+export type PlayerMembershipHistoryUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipHistoriesNestedInput
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipHistoryUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipHistoriesNestedInput
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus | null
+  newStatus?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -480,7 +798,11 @@ export type PlayerMembershipHistorySelect<ExtArgs extends runtime.Types.Extensio
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipHistory"]>
 
 export type PlayerMembershipHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -490,7 +812,11 @@ export type PlayerMembershipHistorySelectCreateManyAndReturn<ExtArgs extends run
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipHistory"]>
 
 export type PlayerMembershipHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -500,7 +826,11 @@ export type PlayerMembershipHistorySelectUpdateManyAndReturn<ExtArgs extends run
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipHistory"]>
 
 export type PlayerMembershipHistorySelectScalar = {
@@ -510,23 +840,33 @@ export type PlayerMembershipHistorySelectScalar = {
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type PlayerMembershipHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "previousStatus" | "newStatus" | "reason" | "createdAt", ExtArgs["result"]["playerMembershipHistory"]>
+export type PlayerMembershipHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "previousStatus" | "newStatus" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["playerMembershipHistory"]>
 export type PlayerMembershipHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type PlayerMembershipHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type PlayerMembershipHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>
 }
 
 export type $PlayerMembershipHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PlayerMembershipHistory"
   objects: {
     playerMembership: Prisma.$PlayerMembershipPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -535,6 +875,8 @@ export type $PlayerMembershipHistoryPayload<ExtArgs extends runtime.Types.Extens
     newStatus: $Enums.PlayerMembershipStatus
     reason: string | null
     createdAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["playerMembershipHistory"]>
   composites: {}
 }
@@ -930,6 +1272,8 @@ readonly fields: PlayerMembershipHistoryFieldRefs;
 export interface Prisma__PlayerMembershipHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   playerMembership<T extends Prisma.PlayerMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerMembershipClient<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipHistory$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipHistory$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -965,6 +1309,8 @@ export interface PlayerMembershipHistoryFieldRefs {
   readonly newStatus: Prisma.FieldRef<"PlayerMembershipHistory", 'PlayerMembershipStatus'>
   readonly reason: Prisma.FieldRef<"PlayerMembershipHistory", 'String'>
   readonly createdAt: Prisma.FieldRef<"PlayerMembershipHistory", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"PlayerMembershipHistory", 'String'>
+  readonly updatedById: Prisma.FieldRef<"PlayerMembershipHistory", 'String'>
 }
     
 
@@ -1358,6 +1704,44 @@ export type PlayerMembershipHistoryDeleteManyArgs<ExtArgs extends runtime.Types.
    * Limit how many PlayerMembershipHistories to delete.
    */
   limit?: number
+}
+
+/**
+ * PlayerMembershipHistory.createdBy
+ */
+export type PlayerMembershipHistory$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * PlayerMembershipHistory.updatedBy
+ */
+export type PlayerMembershipHistory$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

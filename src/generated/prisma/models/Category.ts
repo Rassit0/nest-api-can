@@ -45,6 +45,8 @@ export type CategoryMinAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CategoryMaxAggregateOutputType = {
@@ -56,6 +58,8 @@ export type CategoryMaxAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CategoryCountAggregateOutputType = {
@@ -67,6 +71,8 @@ export type CategoryCountAggregateOutputType = {
   disciplineId: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -90,6 +96,8 @@ export type CategoryMinAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CategoryMaxAggregateInputType = {
@@ -101,6 +109,8 @@ export type CategoryMaxAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CategoryCountAggregateInputType = {
@@ -112,6 +122,8 @@ export type CategoryCountAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -210,6 +222,8 @@ export type CategoryGroupByOutputType = {
   disciplineId: string
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: CategoryCountAggregateOutputType | null
   _avg: CategoryAvgAggregateOutputType | null
   _sum: CategorySumAggregateOutputType | null
@@ -244,9 +258,13 @@ export type CategoryWhereInput = {
   disciplineId?: Prisma.StringFilter<"Category"> | string
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Category"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Category"> | string | null
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
   courseSeasons?: Prisma.CourseSeasonListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -258,9 +276,13 @@ export type CategoryOrderByWithRelationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   discipline?: Prisma.DisciplineOrderByWithRelationInput
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput
   courseSeasons?: Prisma.CourseSeasonOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -276,9 +298,13 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   disciplineId?: Prisma.StringFilter<"Category"> | string
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Category"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Category"> | string | null
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
   courseSeasons?: Prisma.CourseSeasonListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "disciplineId_name">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -290,6 +316,8 @@ export type CategoryOrderByWithAggregationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CategoryCountOrderByAggregateInput
   _avg?: Prisma.CategoryAvgOrderByAggregateInput
   _max?: Prisma.CategoryMaxOrderByAggregateInput
@@ -309,6 +337,8 @@ export type CategoryScalarWhereWithAggregatesInput = {
   disciplineId?: Prisma.StringWithAggregatesFilter<"Category"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
 }
 
 export type CategoryCreateInput = {
@@ -322,6 +352,8 @@ export type CategoryCreateInput = {
   discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCategoriesInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -333,6 +365,8 @@ export type CategoryUncheckedCreateInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -348,6 +382,8 @@ export type CategoryUpdateInput = {
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCategoriesNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -359,6 +395,8 @@ export type CategoryUncheckedUpdateInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -372,6 +410,8 @@ export type CategoryCreateManyInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CategoryUpdateManyMutationInput = {
@@ -393,6 +433,8 @@ export type CategoryUncheckedUpdateManyInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CategoryListRelationFilter = {
@@ -419,6 +461,8 @@ export type CategoryCountOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CategoryAvgOrderByAggregateInput = {
@@ -435,6 +479,8 @@ export type CategoryMaxOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CategoryMinOrderByAggregateInput = {
@@ -446,6 +492,8 @@ export type CategoryMinOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CategorySumOrderByAggregateInput = {
@@ -522,6 +570,90 @@ export type CategoryUpdateOneRequiredWithoutTeamSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutTeamSeasonsInput, Prisma.CategoryUpdateWithoutTeamSeasonsInput>, Prisma.CategoryUncheckedUpdateWithoutTeamSeasonsInput>
 }
 
+export type CategoryCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput> | Prisma.CategoryCreateWithoutCreatedByInput[] | Prisma.CategoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCreatedByInput | Prisma.CategoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CategoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+}
+
+export type CategoryCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput> | Prisma.CategoryCreateWithoutUpdatedByInput[] | Prisma.CategoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUpdatedByInput | Prisma.CategoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CategoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+}
+
+export type CategoryUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput> | Prisma.CategoryCreateWithoutCreatedByInput[] | Prisma.CategoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCreatedByInput | Prisma.CategoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CategoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+}
+
+export type CategoryUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput> | Prisma.CategoryCreateWithoutUpdatedByInput[] | Prisma.CategoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUpdatedByInput | Prisma.CategoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CategoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+}
+
+export type CategoryUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput> | Prisma.CategoryCreateWithoutCreatedByInput[] | Prisma.CategoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCreatedByInput | Prisma.CategoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CategoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CategoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CategoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  disconnect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  delete?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  update?: Prisma.CategoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CategoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CategoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.CategoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
+}
+
+export type CategoryUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput> | Prisma.CategoryCreateWithoutUpdatedByInput[] | Prisma.CategoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUpdatedByInput | Prisma.CategoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CategoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CategoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CategoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  disconnect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  delete?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  update?: Prisma.CategoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CategoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CategoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CategoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
+}
+
+export type CategoryUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput> | Prisma.CategoryCreateWithoutCreatedByInput[] | Prisma.CategoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCreatedByInput | Prisma.CategoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CategoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CategoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CategoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  disconnect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  delete?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  update?: Prisma.CategoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CategoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CategoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.CategoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
+}
+
+export type CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput> | Prisma.CategoryCreateWithoutUpdatedByInput[] | Prisma.CategoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutUpdatedByInput | Prisma.CategoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CategoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CategoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CategoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  disconnect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  delete?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  connect?: Prisma.CategoryWhereUniqueInput | Prisma.CategoryWhereUniqueInput[]
+  update?: Prisma.CategoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CategoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CategoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CategoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
+}
+
 export type CategoryCreateNestedOneWithoutCourseSeasonsInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutCourseSeasonsInput, Prisma.CategoryUncheckedCreateWithoutCourseSeasonsInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCourseSeasonsInput
@@ -546,6 +678,8 @@ export type CategoryCreateWithoutDisciplineInput = {
   updatedAt?: Date | string
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCategoriesInput
 }
 
 export type CategoryUncheckedCreateWithoutDisciplineInput = {
@@ -556,6 +690,8 @@ export type CategoryUncheckedCreateWithoutDisciplineInput = {
   minAge: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -598,6 +734,8 @@ export type CategoryScalarWhereInput = {
   disciplineId?: Prisma.StringFilter<"Category"> | string
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Category"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Category"> | string | null
 }
 
 export type CategoryCreateWithoutTeamSeasonsInput = {
@@ -610,6 +748,8 @@ export type CategoryCreateWithoutTeamSeasonsInput = {
   updatedAt?: Date | string
   discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCategoriesInput
 }
 
 export type CategoryUncheckedCreateWithoutTeamSeasonsInput = {
@@ -621,6 +761,8 @@ export type CategoryUncheckedCreateWithoutTeamSeasonsInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -650,6 +792,8 @@ export type CategoryUpdateWithoutTeamSeasonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCategoriesNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutTeamSeasonsInput = {
@@ -661,7 +805,117 @@ export type CategoryUncheckedUpdateWithoutTeamSeasonsInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCategoriesInput
+}
+
+export type CategoryUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CategoryCreateManyCreatedByInputEnvelope = {
+  data: Prisma.CategoryCreateManyCreatedByInput | Prisma.CategoryCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CategoryCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCategoriesInput
+}
+
+export type CategoryUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CategoryCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.CategoryCreateManyUpdatedByInput | Prisma.CategoryCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CategoryUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutCreatedByInput, Prisma.CategoryUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCreatedByInput, Prisma.CategoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CategoryUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutCreatedByInput, Prisma.CategoryUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type CategoryUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.CategoryScalarWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateManyMutationInput, Prisma.CategoryUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type CategoryUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutUpdatedByInput, Prisma.CategoryUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutUpdatedByInput, Prisma.CategoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CategoryUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutUpdatedByInput, Prisma.CategoryUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type CategoryUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.CategoryScalarWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateManyMutationInput, Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type CategoryCreateWithoutCourseSeasonsInput = {
@@ -674,6 +928,8 @@ export type CategoryCreateWithoutCourseSeasonsInput = {
   updatedAt?: Date | string
   discipline: Prisma.DisciplineCreateNestedOneWithoutCategoriesInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCategoriesInput
 }
 
 export type CategoryUncheckedCreateWithoutCourseSeasonsInput = {
@@ -685,6 +941,8 @@ export type CategoryUncheckedCreateWithoutCourseSeasonsInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -714,6 +972,8 @@ export type CategoryUpdateWithoutCourseSeasonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCategoriesNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutCourseSeasonsInput = {
@@ -725,6 +985,8 @@ export type CategoryUncheckedUpdateWithoutCourseSeasonsInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -736,6 +998,8 @@ export type CategoryCreateManyDisciplineInput = {
   minAge: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CategoryUpdateWithoutDisciplineInput = {
@@ -748,6 +1012,8 @@ export type CategoryUpdateWithoutDisciplineInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCategoriesNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutDisciplineInput = {
@@ -758,6 +1024,8 @@ export type CategoryUncheckedUpdateWithoutDisciplineInput = {
   minAge?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -770,6 +1038,112 @@ export type CategoryUncheckedUpdateManyWithoutDisciplineInput = {
   minAge?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CategoryCreateManyCreatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type CategoryCreateManyUpdatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  maxAge: number
+  minAge: number
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type CategoryUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCategoriesNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CategoryUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutCategoriesNestedInput
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCategoryNestedInput
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCategoriesNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCategoryNestedInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxAge?: Prisma.IntFieldUpdateOperationsInput | number
+  minAge?: Prisma.IntFieldUpdateOperationsInput | number
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -821,9 +1195,13 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Category$teamSeasonsArgs<ExtArgs>
   courseSeasons?: boolean | Prisma.Category$courseSeasonsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -836,7 +1214,11 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -848,7 +1230,11 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectScalar = {
@@ -860,20 +1246,28 @@ export type CategorySelectScalar = {
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "maxAge" | "minAge" | "disciplineId" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "maxAge" | "minAge" | "disciplineId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Category$teamSeasonsArgs<ExtArgs>
   courseSeasons?: boolean | Prisma.Category$courseSeasonsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
 }
 export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Category$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Category$updatedByArgs<ExtArgs>
 }
 
 export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -882,6 +1276,8 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     discipline: Prisma.$DisciplinePayload<ExtArgs>
     teamSeasons: Prisma.$TeamSeasonPayload<ExtArgs>[]
     courseSeasons: Prisma.$CourseSeasonPayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -892,6 +1288,8 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     disciplineId: string
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["category"]>
   composites: {}
 }
@@ -1289,6 +1687,8 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   discipline<T extends Prisma.DisciplineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DisciplineDefaultArgs<ExtArgs>>): Prisma.Prisma__DisciplineClient<runtime.Types.Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teamSeasons<T extends Prisma.Category$teamSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$teamSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   courseSeasons<T extends Prisma.Category$courseSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$courseSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.Category$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.Category$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1326,6 +1726,8 @@ export interface CategoryFieldRefs {
   readonly disciplineId: Prisma.FieldRef<"Category", 'String'>
   readonly createdAt: Prisma.FieldRef<"Category", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Category", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"Category", 'String'>
+  readonly updatedById: Prisma.FieldRef<"Category", 'String'>
 }
     
 
@@ -1767,6 +2169,44 @@ export type Category$courseSeasonsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.CourseSeasonScalarFieldEnum | Prisma.CourseSeasonScalarFieldEnum[]
+}
+
+/**
+ * Category.createdBy
+ */
+export type Category$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Category.updatedBy
+ */
+export type Category$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

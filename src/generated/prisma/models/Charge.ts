@@ -50,6 +50,8 @@ export type ChargeMinAggregateOutputType = {
   status: $Enums.StatusCharge | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type ChargeMaxAggregateOutputType = {
@@ -64,6 +66,8 @@ export type ChargeMaxAggregateOutputType = {
   status: $Enums.StatusCharge | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type ChargeCountAggregateOutputType = {
@@ -78,6 +82,8 @@ export type ChargeCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -106,6 +112,8 @@ export type ChargeMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type ChargeMaxAggregateInputType = {
@@ -120,6 +128,8 @@ export type ChargeMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type ChargeCountAggregateInputType = {
@@ -134,6 +144,8 @@ export type ChargeCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -235,6 +247,8 @@ export type ChargeGroupByOutputType = {
   status: $Enums.StatusCharge
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: ChargeCountAggregateOutputType | null
   _avg: ChargeAvgAggregateOutputType | null
   _sum: ChargeSumAggregateOutputType | null
@@ -272,12 +286,16 @@ export type ChargeWhereInput = {
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
   parentCharge?: Prisma.XOR<Prisma.ChargeNullableScalarRelationFilter, Prisma.ChargeWhereInput> | null
   childCharges?: Prisma.ChargeListRelationFilter
   membershipCharges?: Prisma.MembershipChargeListRelationFilter
   chargeTransactions?: Prisma.ChargeTransactionListRelationFilter
   sessionBooking?: Prisma.XOR<Prisma.SessionBookingNullableScalarRelationFilter, Prisma.SessionBookingWhereInput> | null
   studentCharges?: Prisma.StudentChargeListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ChargeOrderByWithRelationInput = {
@@ -292,12 +310,16 @@ export type ChargeOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   parentCharge?: Prisma.ChargeOrderByWithRelationInput
   childCharges?: Prisma.ChargeOrderByRelationAggregateInput
   membershipCharges?: Prisma.MembershipChargeOrderByRelationAggregateInput
   chargeTransactions?: Prisma.ChargeTransactionOrderByRelationAggregateInput
   sessionBooking?: Prisma.SessionBookingOrderByWithRelationInput
   studentCharges?: Prisma.StudentChargeOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ChargeWhereUniqueInput = Prisma.AtLeast<{
@@ -315,12 +337,16 @@ export type ChargeWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
   parentCharge?: Prisma.XOR<Prisma.ChargeNullableScalarRelationFilter, Prisma.ChargeWhereInput> | null
   childCharges?: Prisma.ChargeListRelationFilter
   membershipCharges?: Prisma.MembershipChargeListRelationFilter
   chargeTransactions?: Prisma.ChargeTransactionListRelationFilter
   sessionBooking?: Prisma.XOR<Prisma.SessionBookingNullableScalarRelationFilter, Prisma.SessionBookingWhereInput> | null
   studentCharges?: Prisma.StudentChargeListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type ChargeOrderByWithAggregationInput = {
@@ -335,6 +361,8 @@ export type ChargeOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChargeCountOrderByAggregateInput
   _avg?: Prisma.ChargeAvgOrderByAggregateInput
   _max?: Prisma.ChargeMaxOrderByAggregateInput
@@ -357,6 +385,8 @@ export type ChargeScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumStatusChargeWithAggregatesFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
 }
 
 export type ChargeCreateInput = {
@@ -376,6 +406,8 @@ export type ChargeCreateInput = {
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateInput = {
@@ -390,6 +422,8 @@ export type ChargeUncheckedCreateInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
@@ -414,6 +448,8 @@ export type ChargeUpdateInput = {
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateInput = {
@@ -428,6 +464,8 @@ export type ChargeUncheckedUpdateInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
@@ -447,6 +485,8 @@ export type ChargeCreateManyInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeUpdateManyMutationInput = {
@@ -474,6 +514,8 @@ export type ChargeUncheckedUpdateManyInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeScalarRelationFilter = {
@@ -508,6 +550,8 @@ export type ChargeCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeAvgOrderByAggregateInput = {
@@ -528,6 +572,8 @@ export type ChargeMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeMinOrderByAggregateInput = {
@@ -542,6 +588,8 @@ export type ChargeMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeSumOrderByAggregateInput = {
@@ -640,6 +688,90 @@ export type ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChargeUpdateToOneWithWhereWithoutChargeTransactionsInput, Prisma.ChargeUpdateWithoutChargeTransactionsInput>, Prisma.ChargeUncheckedUpdateWithoutChargeTransactionsInput>
 }
 
+export type ChargeCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeCreateWithoutCreatedByInput[] | Prisma.ChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCreatedByInput | Prisma.ChargeCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeCreateManyCreatedByInputEnvelope
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+}
+
+export type ChargeCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeCreateWithoutUpdatedByInput[] | Prisma.ChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+}
+
+export type ChargeUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeCreateWithoutCreatedByInput[] | Prisma.ChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCreatedByInput | Prisma.ChargeCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeCreateManyCreatedByInputEnvelope
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+}
+
+export type ChargeUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeCreateWithoutUpdatedByInput[] | Prisma.ChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+}
+
+export type ChargeUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeCreateWithoutCreatedByInput[] | Prisma.ChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCreatedByInput | Prisma.ChargeCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.ChargeUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeCreateManyCreatedByInputEnvelope
+  set?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  disconnect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  delete?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  update?: Prisma.ChargeUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.ChargeUpdateManyWithWhereWithoutCreatedByInput | Prisma.ChargeUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.ChargeScalarWhereInput | Prisma.ChargeScalarWhereInput[]
+}
+
+export type ChargeUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeCreateWithoutUpdatedByInput[] | Prisma.ChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.ChargeUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeCreateManyUpdatedByInputEnvelope
+  set?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  disconnect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  delete?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  update?: Prisma.ChargeUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.ChargeUpdateManyWithWhereWithoutUpdatedByInput | Prisma.ChargeUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.ChargeScalarWhereInput | Prisma.ChargeScalarWhereInput[]
+}
+
+export type ChargeUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeCreateWithoutCreatedByInput[] | Prisma.ChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCreatedByInput | Prisma.ChargeCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.ChargeUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeCreateManyCreatedByInputEnvelope
+  set?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  disconnect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  delete?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  update?: Prisma.ChargeUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.ChargeUpdateManyWithWhereWithoutCreatedByInput | Prisma.ChargeUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.ChargeScalarWhereInput | Prisma.ChargeScalarWhereInput[]
+}
+
+export type ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeCreateWithoutUpdatedByInput[] | Prisma.ChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.ChargeUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeCreateManyUpdatedByInputEnvelope
+  set?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  disconnect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  delete?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  connect?: Prisma.ChargeWhereUniqueInput | Prisma.ChargeWhereUniqueInput[]
+  update?: Prisma.ChargeUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.ChargeUpdateManyWithWhereWithoutUpdatedByInput | Prisma.ChargeUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.ChargeScalarWhereInput | Prisma.ChargeScalarWhereInput[]
+}
+
 export type ChargeCreateNestedOneWithoutStudentChargesInput = {
   create?: Prisma.XOR<Prisma.ChargeCreateWithoutStudentChargesInput, Prisma.ChargeUncheckedCreateWithoutStudentChargesInput>
   connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutStudentChargesInput
@@ -686,6 +818,8 @@ export type ChargeCreateWithoutMembershipChargesInput = {
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
@@ -700,6 +834,8 @@ export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
@@ -738,6 +874,8 @@ export type ChargeUpdateWithoutMembershipChargesInput = {
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
@@ -752,6 +890,8 @@ export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
@@ -774,6 +914,8 @@ export type ChargeCreateWithoutChildChargesInput = {
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutChildChargesInput = {
@@ -788,6 +930,8 @@ export type ChargeUncheckedCreateWithoutChildChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
@@ -815,6 +959,8 @@ export type ChargeCreateWithoutParentChargeInput = {
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutParentChargeInput = {
@@ -828,6 +974,8 @@ export type ChargeUncheckedCreateWithoutParentChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
@@ -872,6 +1020,8 @@ export type ChargeUpdateWithoutChildChargesInput = {
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutChildChargesInput = {
@@ -886,6 +1036,8 @@ export type ChargeUncheckedUpdateWithoutChildChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
@@ -923,6 +1075,8 @@ export type ChargeScalarWhereInput = {
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
 }
 
 export type ChargeCreateWithoutChargeTransactionsInput = {
@@ -941,6 +1095,8 @@ export type ChargeCreateWithoutChargeTransactionsInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutChargeTransactionsInput = {
@@ -955,6 +1111,8 @@ export type ChargeUncheckedCreateWithoutChargeTransactionsInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
@@ -993,6 +1151,8 @@ export type ChargeUpdateWithoutChargeTransactionsInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutChargeTransactionsInput = {
@@ -1007,10 +1167,144 @@ export type ChargeUncheckedUpdateWithoutChargeTransactionsInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
+}
+
+export type ChargeCreateWithoutCreatedByInput = {
+  id?: string
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parentCharge?: Prisma.ChargeCreateNestedOneWithoutChildChargesInput
+  childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
+  chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
+}
+
+export type ChargeUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  parentChargeId?: string | null
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
+}
+
+export type ChargeCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput>
+}
+
+export type ChargeCreateManyCreatedByInputEnvelope = {
+  data: Prisma.ChargeCreateManyCreatedByInput | Prisma.ChargeCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type ChargeCreateWithoutUpdatedByInput = {
+  id?: string
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parentCharge?: Prisma.ChargeCreateNestedOneWithoutChildChargesInput
+  childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
+  chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+}
+
+export type ChargeUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  parentChargeId?: string | null
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
+}
+
+export type ChargeCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type ChargeCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.ChargeCreateManyUpdatedByInput | Prisma.ChargeCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type ChargeUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  update: Prisma.XOR<Prisma.ChargeUpdateWithoutCreatedByInput, Prisma.ChargeUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutCreatedByInput, Prisma.ChargeUncheckedCreateWithoutCreatedByInput>
+}
+
+export type ChargeUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  data: Prisma.XOR<Prisma.ChargeUpdateWithoutCreatedByInput, Prisma.ChargeUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type ChargeUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.ChargeScalarWhereInput
+  data: Prisma.XOR<Prisma.ChargeUpdateManyMutationInput, Prisma.ChargeUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type ChargeUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  update: Prisma.XOR<Prisma.ChargeUpdateWithoutUpdatedByInput, Prisma.ChargeUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutUpdatedByInput, Prisma.ChargeUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type ChargeUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  data: Prisma.XOR<Prisma.ChargeUpdateWithoutUpdatedByInput, Prisma.ChargeUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type ChargeUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.ChargeScalarWhereInput
+  data: Prisma.XOR<Prisma.ChargeUpdateManyMutationInput, Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type ChargeCreateWithoutStudentChargesInput = {
@@ -1029,6 +1323,8 @@ export type ChargeCreateWithoutStudentChargesInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutStudentChargesInput = {
@@ -1043,6 +1339,8 @@ export type ChargeUncheckedCreateWithoutStudentChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
@@ -1081,6 +1379,8 @@ export type ChargeUpdateWithoutStudentChargesInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
@@ -1095,6 +1395,8 @@ export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
@@ -1117,6 +1419,8 @@ export type ChargeCreateWithoutSessionBookingInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutChargeInput
   studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
 }
 
 export type ChargeUncheckedCreateWithoutSessionBookingInput = {
@@ -1131,6 +1435,8 @@ export type ChargeUncheckedCreateWithoutSessionBookingInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutChargeInput
@@ -1169,6 +1475,8 @@ export type ChargeUpdateWithoutSessionBookingInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
@@ -1183,6 +1491,8 @@ export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
@@ -1200,6 +1510,8 @@ export type ChargeCreateManyParentChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeUpdateWithoutParentChargeInput = {
@@ -1218,6 +1530,8 @@ export type ChargeUpdateWithoutParentChargeInput = {
   chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
   sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutParentChargeInput = {
@@ -1231,6 +1545,8 @@ export type ChargeUncheckedUpdateWithoutParentChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
   chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
@@ -1249,6 +1565,148 @@ export type ChargeUncheckedUpdateManyWithoutParentChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeCreateManyCreatedByInput = {
+  id?: string
+  parentChargeId?: string | null
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type ChargeCreateManyUpdatedByInput = {
+  id?: string
+  parentChargeId?: string | null
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type ChargeUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentCharge?: Prisma.ChargeUpdateOneWithoutChildChargesNestedInput
+  childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
+  chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
+}
+
+export type ChargeUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  parentChargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
+}
+
+export type ChargeUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  parentChargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentCharge?: Prisma.ChargeUpdateOneWithoutChildChargesNestedInput
+  childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
+  chargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+}
+
+export type ChargeUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  parentChargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
+  chargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
+}
+
+export type ChargeUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  parentChargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1321,12 +1779,16 @@ export type ChargeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
   childCharges?: boolean | Prisma.Charge$childChargesArgs<ExtArgs>
   membershipCharges?: boolean | Prisma.Charge$membershipChargesArgs<ExtArgs>
   chargeTransactions?: boolean | Prisma.Charge$chargeTransactionsArgs<ExtArgs>
   sessionBooking?: boolean | Prisma.Charge$sessionBookingArgs<ExtArgs>
   studentCharges?: boolean | Prisma.Charge$studentChargesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["charge"]>
 
@@ -1342,7 +1804,11 @@ export type ChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["charge"]>
 
 export type ChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1357,7 +1823,11 @@ export type ChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["charge"]>
 
 export type ChargeSelectScalar = {
@@ -1372,9 +1842,11 @@ export type ChargeSelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "discountAmount" | "discountReason" | "dueDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["charge"]>
+export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "discountAmount" | "discountReason" | "dueDate" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["charge"]>
 export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
   childCharges?: boolean | Prisma.Charge$childChargesArgs<ExtArgs>
@@ -1382,13 +1854,19 @@ export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   chargeTransactions?: boolean | Prisma.Charge$chargeTransactionsArgs<ExtArgs>
   sessionBooking?: boolean | Prisma.Charge$sessionBookingArgs<ExtArgs>
   studentCharges?: boolean | Prisma.Charge$studentChargesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
 }
 export type ChargeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parentCharge?: boolean | Prisma.Charge$parentChargeArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
 }
 
 export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1400,6 +1878,8 @@ export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     chargeTransactions: Prisma.$ChargeTransactionPayload<ExtArgs>[]
     sessionBooking: Prisma.$SessionBookingPayload<ExtArgs> | null
     studentCharges: Prisma.$StudentChargePayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1413,6 +1893,8 @@ export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: $Enums.StatusCharge
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["charge"]>
   composites: {}
 }
@@ -1813,6 +2295,8 @@ export interface Prisma__ChargeClient<T, Null = never, ExtArgs extends runtime.T
   chargeTransactions<T extends Prisma.Charge$chargeTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$chargeTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChargeTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessionBooking<T extends Prisma.Charge$sessionBookingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$sessionBookingArgs<ExtArgs>>): Prisma.Prisma__SessionBookingClient<runtime.Types.Result.GetResult<Prisma.$SessionBookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   studentCharges<T extends Prisma.Charge$studentChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$studentChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.Charge$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.Charge$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1853,6 +2337,8 @@ export interface ChargeFieldRefs {
   readonly status: Prisma.FieldRef<"Charge", 'StatusCharge'>
   readonly createdAt: Prisma.FieldRef<"Charge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Charge", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"Charge", 'String'>
+  readonly updatedById: Prisma.FieldRef<"Charge", 'String'>
 }
     
 
@@ -2380,6 +2866,44 @@ export type Charge$studentChargesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.StudentChargeScalarFieldEnum | Prisma.StudentChargeScalarFieldEnum[]
+}
+
+/**
+ * Charge.createdBy
+ */
+export type Charge$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Charge.updatedBy
+ */
+export type Charge$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

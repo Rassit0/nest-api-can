@@ -31,6 +31,8 @@ export type StudentMembershipHistoryMinAggregateOutputType = {
   newStatus: $Enums.StudentMembershipStatus | null
   reason: string | null
   createdAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type StudentMembershipHistoryMaxAggregateOutputType = {
@@ -40,6 +42,8 @@ export type StudentMembershipHistoryMaxAggregateOutputType = {
   newStatus: $Enums.StudentMembershipStatus | null
   reason: string | null
   createdAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type StudentMembershipHistoryCountAggregateOutputType = {
@@ -49,6 +53,8 @@ export type StudentMembershipHistoryCountAggregateOutputType = {
   newStatus: number
   reason: number
   createdAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -60,6 +66,8 @@ export type StudentMembershipHistoryMinAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type StudentMembershipHistoryMaxAggregateInputType = {
@@ -69,6 +77,8 @@ export type StudentMembershipHistoryMaxAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type StudentMembershipHistoryCountAggregateInputType = {
@@ -78,6 +88,8 @@ export type StudentMembershipHistoryCountAggregateInputType = {
   newStatus?: true
   reason?: true
   createdAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -160,6 +172,8 @@ export type StudentMembershipHistoryGroupByOutputType = {
   newStatus: $Enums.StudentMembershipStatus
   reason: string | null
   createdAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: StudentMembershipHistoryCountAggregateOutputType | null
   _min: StudentMembershipHistoryMinAggregateOutputType | null
   _max: StudentMembershipHistoryMaxAggregateOutputType | null
@@ -190,7 +204,11 @@ export type StudentMembershipHistoryWhereInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus
   reason?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type StudentMembershipHistoryOrderByWithRelationInput = {
@@ -200,7 +218,11 @@ export type StudentMembershipHistoryOrderByWithRelationInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type StudentMembershipHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -213,7 +235,11 @@ export type StudentMembershipHistoryWhereUniqueInput = Prisma.AtLeast<{
   newStatus?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus
   reason?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type StudentMembershipHistoryOrderByWithAggregationInput = {
@@ -223,6 +249,8 @@ export type StudentMembershipHistoryOrderByWithAggregationInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.StudentMembershipHistoryCountOrderByAggregateInput
   _max?: Prisma.StudentMembershipHistoryMaxOrderByAggregateInput
   _min?: Prisma.StudentMembershipHistoryMinOrderByAggregateInput
@@ -238,6 +266,8 @@ export type StudentMembershipHistoryScalarWhereWithAggregatesInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusWithAggregatesFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus
   reason?: Prisma.StringNullableWithAggregatesFilter<"StudentMembershipHistory"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"StudentMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"StudentMembershipHistory"> | string | null
 }
 
 export type StudentMembershipHistoryCreateInput = {
@@ -247,6 +277,8 @@ export type StudentMembershipHistoryCreateInput = {
   reason?: string | null
   createdAt?: Date | string
   studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentMembershipHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentMembershipHistoriesInput
 }
 
 export type StudentMembershipHistoryUncheckedCreateInput = {
@@ -256,6 +288,8 @@ export type StudentMembershipHistoryUncheckedCreateInput = {
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentMembershipHistoryUpdateInput = {
@@ -265,6 +299,8 @@ export type StudentMembershipHistoryUpdateInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentMembershipHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentMembershipHistoriesNestedInput
 }
 
 export type StudentMembershipHistoryUncheckedUpdateInput = {
@@ -274,6 +310,8 @@ export type StudentMembershipHistoryUncheckedUpdateInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentMembershipHistoryCreateManyInput = {
@@ -283,6 +321,8 @@ export type StudentMembershipHistoryCreateManyInput = {
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentMembershipHistoryUpdateManyMutationInput = {
@@ -300,6 +340,8 @@ export type StudentMembershipHistoryUncheckedUpdateManyInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentMembershipHistoryListRelationFilter = {
@@ -319,6 +361,8 @@ export type StudentMembershipHistoryCountOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type StudentMembershipHistoryMaxOrderByAggregateInput = {
@@ -328,6 +372,8 @@ export type StudentMembershipHistoryMaxOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type StudentMembershipHistoryMinOrderByAggregateInput = {
@@ -337,6 +383,92 @@ export type StudentMembershipHistoryMinOrderByAggregateInput = {
   newStatus?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
+}
+
+export type StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+}
+
+export type StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+}
+
+export type StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyCreatedByInputEnvelope
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+}
+
+export type StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+}
+
+export type StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
+}
+
+export type StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
+}
+
+export type StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyCreatedByInputEnvelope
+  set?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput | Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
+}
+
+export type StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput[] | Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput | Prisma.StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentMembershipHistoryCreateManyUpdatedByInputEnvelope
+  set?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  disconnect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  delete?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  connect?: Prisma.StudentMembershipHistoryWhereUniqueInput | Prisma.StudentMembershipHistoryWhereUniqueInput[]
+  update?: Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput | Prisma.StudentMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
 }
 
 export type StudentMembershipHistoryCreateNestedManyWithoutStudentMembershipInput = {
@@ -385,12 +517,120 @@ export type NullableEnumStudentMembershipStatusFieldUpdateOperationsInput = {
   set?: $Enums.StudentMembershipStatus | null
 }
 
+export type StudentMembershipHistoryCreateWithoutCreatedByInput = {
+  id?: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentMembershipHistoriesInput
+}
+
+export type StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  studentMembershipId: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  updatedById?: string | null
+}
+
+export type StudentMembershipHistoryCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type StudentMembershipHistoryCreateManyCreatedByInputEnvelope = {
+  data: Prisma.StudentMembershipHistoryCreateManyCreatedByInput | Prisma.StudentMembershipHistoryCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type StudentMembershipHistoryCreateWithoutUpdatedByInput = {
+  id?: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentMembershipHistoriesInput
+}
+
+export type StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  studentMembershipId: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  createdById?: string | null
+}
+
+export type StudentMembershipHistoryCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type StudentMembershipHistoryCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.StudentMembershipHistoryCreateManyUpdatedByInput | Prisma.StudentMembershipHistoryCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type StudentMembershipHistoryUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutCreatedByInput>
+}
+
+export type StudentMembershipHistoryUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateWithoutCreatedByInput, Prisma.StudentMembershipHistoryUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type StudentMembershipHistoryUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.StudentMembershipHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateManyMutationInput, Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type StudentMembershipHistoryScalarWhereInput = {
+  AND?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
+  OR?: Prisma.StudentMembershipHistoryScalarWhereInput[]
+  NOT?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
+  id?: Prisma.StringFilter<"StudentMembershipHistory"> | string
+  studentMembershipId?: Prisma.StringFilter<"StudentMembershipHistory"> | string
+  previousStatus?: Prisma.EnumStudentMembershipStatusNullableFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus
+  reason?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
+}
+
+export type StudentMembershipHistoryUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.StudentMembershipHistoryCreateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type StudentMembershipHistoryUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.StudentMembershipHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateWithoutUpdatedByInput, Prisma.StudentMembershipHistoryUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type StudentMembershipHistoryUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.StudentMembershipHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateManyMutationInput, Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
 export type StudentMembershipHistoryCreateWithoutStudentMembershipInput = {
   id?: string
   previousStatus?: $Enums.StudentMembershipStatus | null
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentMembershipHistoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentMembershipHistoriesInput
 }
 
 export type StudentMembershipHistoryUncheckedCreateWithoutStudentMembershipInput = {
@@ -399,6 +639,8 @@ export type StudentMembershipHistoryUncheckedCreateWithoutStudentMembershipInput
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentMembershipHistoryCreateOrConnectWithoutStudentMembershipInput = {
@@ -427,16 +669,84 @@ export type StudentMembershipHistoryUpdateManyWithWhereWithoutStudentMembershipI
   data: Prisma.XOR<Prisma.StudentMembershipHistoryUpdateManyMutationInput, Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutStudentMembershipInput>
 }
 
-export type StudentMembershipHistoryScalarWhereInput = {
-  AND?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
-  OR?: Prisma.StudentMembershipHistoryScalarWhereInput[]
-  NOT?: Prisma.StudentMembershipHistoryScalarWhereInput | Prisma.StudentMembershipHistoryScalarWhereInput[]
-  id?: Prisma.StringFilter<"StudentMembershipHistory"> | string
-  studentMembershipId?: Prisma.StringFilter<"StudentMembershipHistory"> | string
-  previousStatus?: Prisma.EnumStudentMembershipStatusNullableFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus | null
-  newStatus?: Prisma.EnumStudentMembershipStatusFilter<"StudentMembershipHistory"> | $Enums.StudentMembershipStatus
-  reason?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
+export type StudentMembershipHistoryCreateManyCreatedByInput = {
+  id?: string
+  studentMembershipId: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  updatedById?: string | null
+}
+
+export type StudentMembershipHistoryCreateManyUpdatedByInput = {
+  id?: string
+  studentMembershipId: string
+  previousStatus?: $Enums.StudentMembershipStatus | null
+  newStatus: $Enums.StudentMembershipStatus
+  reason?: string | null
+  createdAt?: Date | string
+  createdById?: string | null
+}
+
+export type StudentMembershipHistoryUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentMembershipHistoriesNestedInput
+}
+
+export type StudentMembershipHistoryUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentMembershipHistoryUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentMembershipHistoriesNestedInput
+}
+
+export type StudentMembershipHistoryUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableEnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus | null
+  newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentMembershipHistoryCreateManyStudentMembershipInput = {
@@ -445,6 +755,8 @@ export type StudentMembershipHistoryCreateManyStudentMembershipInput = {
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentMembershipHistoryUpdateWithoutStudentMembershipInput = {
@@ -453,6 +765,8 @@ export type StudentMembershipHistoryUpdateWithoutStudentMembershipInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentMembershipHistoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentMembershipHistoriesNestedInput
 }
 
 export type StudentMembershipHistoryUncheckedUpdateWithoutStudentMembershipInput = {
@@ -461,6 +775,8 @@ export type StudentMembershipHistoryUncheckedUpdateWithoutStudentMembershipInput
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentMembershipHistoryUncheckedUpdateManyWithoutStudentMembershipInput = {
@@ -469,6 +785,8 @@ export type StudentMembershipHistoryUncheckedUpdateManyWithoutStudentMembershipI
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -480,7 +798,11 @@ export type StudentMembershipHistorySelect<ExtArgs extends runtime.Types.Extensi
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
 export type StudentMembershipHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -490,7 +812,11 @@ export type StudentMembershipHistorySelectCreateManyAndReturn<ExtArgs extends ru
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
 export type StudentMembershipHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -500,7 +826,11 @@ export type StudentMembershipHistorySelectUpdateManyAndReturn<ExtArgs extends ru
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
 export type StudentMembershipHistorySelectScalar = {
@@ -510,23 +840,33 @@ export type StudentMembershipHistorySelectScalar = {
   newStatus?: boolean
   reason?: boolean
   createdAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type StudentMembershipHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "previousStatus" | "newStatus" | "reason" | "createdAt", ExtArgs["result"]["studentMembershipHistory"]>
+export type StudentMembershipHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "previousStatus" | "newStatus" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["studentMembershipHistory"]>
 export type StudentMembershipHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type StudentMembershipHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type StudentMembershipHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 
 export type $StudentMembershipHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StudentMembershipHistory"
   objects: {
     studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -535,6 +875,8 @@ export type $StudentMembershipHistoryPayload<ExtArgs extends runtime.Types.Exten
     newStatus: $Enums.StudentMembershipStatus
     reason: string | null
     createdAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["studentMembershipHistory"]>
   composites: {}
 }
@@ -930,6 +1272,8 @@ readonly fields: StudentMembershipHistoryFieldRefs;
 export interface Prisma__StudentMembershipHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.StudentMembershipHistory$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -965,6 +1309,8 @@ export interface StudentMembershipHistoryFieldRefs {
   readonly newStatus: Prisma.FieldRef<"StudentMembershipHistory", 'StudentMembershipStatus'>
   readonly reason: Prisma.FieldRef<"StudentMembershipHistory", 'String'>
   readonly createdAt: Prisma.FieldRef<"StudentMembershipHistory", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"StudentMembershipHistory", 'String'>
+  readonly updatedById: Prisma.FieldRef<"StudentMembershipHistory", 'String'>
 }
     
 
@@ -1358,6 +1704,44 @@ export type StudentMembershipHistoryDeleteManyArgs<ExtArgs extends runtime.Types
    * Limit how many StudentMembershipHistories to delete.
    */
   limit?: number
+}
+
+/**
+ * StudentMembershipHistory.createdBy
+ */
+export type StudentMembershipHistory$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * StudentMembershipHistory.updatedBy
+ */
+export type StudentMembershipHistory$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

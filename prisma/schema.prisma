@@ -50,6 +50,11 @@ model Person {
   students     Student[]
   user         User?
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("persons")
 }
 
@@ -99,25 +104,35 @@ model Discipline {
   createdAt  DateTime   @default(now()) @map("created_at")
   updatedAt  DateTime   @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("disciplines")
 }
 
 model Institution {
-  id        String   @id @default(uuid())
-  name      String
-  imageUrl  String?  @map("image_url")
-  address       String
+  id       String  @id @default(uuid())
+  name     String
+  imageUrl String? @map("image_url")
+  address  String
 
   latitude      Float?
   longitude     Float?
-  googleMapsUrl String?  @map("google_maps_url")
+  googleMapsUrl String? @map("google_maps_url")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime             @default(now()) @map("created_at")
+  updatedAt DateTime             @updatedAt @map("updated_at")
   clubs     Club[]
   seasons   Season[]
   schools   School[]
   contacts  InstitutionContact[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("institutions")
 }
@@ -126,16 +141,21 @@ model InstitutionContact {
   id            String      @id @default(uuid())
   institutionId String      @map("institution_id")
   institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
-  
-  department    String      // Ej: "Administración", "Prensa", "Secretaría"
-  contactName   String?     @map("contact_name")
-  phone         String?
-  email         String?
-  
-  isDefault     Boolean     @default(false) @map("is_default") // Contacto principal a mostrar en el footer
 
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
+  department  String // Ej: "Administración", "Prensa", "Secretaría"
+  contactName String? @map("contact_name")
+  phone       String?
+  email       String?
+
+  isDefault Boolean @default(false) @map("is_default") // Contacto principal a mostrar en el footer
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("institution_contacts")
 }
@@ -154,6 +174,11 @@ model Club {
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
   teams         Team[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([institutionId, disciplineId, name])
   @@map("clubs")
@@ -187,6 +212,11 @@ model Location {
   schedules  Schedule[]
   matches    Match[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("locations")
 }
 
@@ -212,6 +242,11 @@ model Category {
   updatedAt     DateTime       @updatedAt @map("updated_at")
   teamSeasons   TeamSeason[]
   courseSeasons CourseSeason[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([disciplineId, name])
   @@map("categories")
@@ -257,6 +292,11 @@ model Season {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([institutionId, disciplineId, name])
   @@map("seasons")
 }
@@ -273,6 +313,11 @@ model SeasonEvent {
   reason String @db.Text
 
   createdAt DateTime @default(now()) @map("created_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("season_events")
 }
@@ -301,6 +346,11 @@ model Team {
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
   teamSeasons TeamSeason[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([clubId, name])
   @@map("teams")
@@ -369,6 +419,11 @@ model TeamSeason {
   billingConfig     TeamSeasonBillingConfig?
   teamSeasonPauses  TeamSeasonPause[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([teamId, categoryId, seasonId, gender])
   @@map("team_seasons")
 }
@@ -400,6 +455,11 @@ model TeamSeasonBillingConfig {
 
   chargeGenerationDaysBefore Int @default(7) @map("charge_generation_days_before")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("team_season_billing_configs")
 }
 
@@ -430,6 +490,11 @@ model PaymentPlan {
   playerMemberships  PlayerMembership[]
   studentMemberships StudentMembership[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("payment_plans")
 }
 
@@ -452,6 +517,11 @@ model Player {
   sessionBookings     SessionBooking[]
   matchLineups        MatchLineup[]
   progressEvaluations ProgressEvaluation[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("players")
 }
@@ -494,6 +564,11 @@ model PlayerMembership {
   histories           PlayerMembershipHistory[]
   pauses              PlayerMembershipPause[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@index([nextRecurringChargeGenerationDate])
   @@map("player_membership")
 }
@@ -510,6 +585,11 @@ model PlayerMembershipHistory {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("player_membership_histories")
 }
 
@@ -524,6 +604,11 @@ model PlayerMembershipPause {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("player_membership_pauses")
 }
@@ -556,6 +641,11 @@ model MembershipDiscount {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("membership_discounts")
 }
 
@@ -585,6 +675,11 @@ model MembershipCharge {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([playerMembershipId, type, billingMonth, billingYear, billingCycle])
   @@map("membership_charges")
 }
@@ -607,6 +702,11 @@ model Staff {
   teamSeasonStaffs    TeamSeasonStaff[]
   courseSeasonStaffs  CourseSeasonStaff[]
   progressEvaluations ProgressEvaluation[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("staff")
 }
@@ -644,6 +744,11 @@ model TeamSeasonStaff {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("team_season_staff")
 }
 
@@ -670,15 +775,15 @@ model Charge {
   childCharges   Charge[] @relation("ChargeParent")
 
   description   String?
-  amount        Decimal      @db.Decimal(10, 2)
-  pendingAmount Decimal      @map("pending_amount") @db.Decimal(10, 2)
-  
-  // Descuentos aplicados específicamente a este cargo
-  discountAmount Decimal      @default(0) @map("discount_amount") @db.Decimal(10, 2)
-  discountReason String?      @map("discount_reason")
+  amount        Decimal @db.Decimal(10, 2)
+  pendingAmount Decimal @map("pending_amount") @db.Decimal(10, 2)
 
-  dueDate       DateTime     @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
-  status        StatusCharge @default(PENDING)
+  // Descuentos aplicados específicamente a este cargo
+  discountAmount Decimal @default(0) @map("discount_amount") @db.Decimal(10, 2)
+  discountReason String? @map("discount_reason")
+
+  dueDate DateTime     @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
+  status  StatusCharge @default(PENDING)
 
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
@@ -686,6 +791,11 @@ model Charge {
   chargeTransactions ChargeTransaction[]
   sessionBooking     SessionBooking?
   studentCharges     StudentCharge[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("charges")
 }
@@ -699,6 +809,11 @@ model ChargeTransaction {
   amountApplied Decimal     @map("amount_applied") @db.Decimal(10, 2)
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("charge_transactions")
 }
@@ -744,6 +859,11 @@ model Transaction {
   updatedAt          DateTime            @updatedAt @map("updated_at")
   chargeTransactions ChargeTransaction[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("transactions")
 }
 
@@ -765,6 +885,100 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdPersons                    Person[]                    @relation("CreatedBy")
+  updatedPersons                    Person[]                    @relation("UpdatedBy")
+  createdDisciplines                Discipline[]                @relation("CreatedBy")
+  updatedDisciplines                Discipline[]                @relation("UpdatedBy")
+  createdInstitutions               Institution[]               @relation("CreatedBy")
+  updatedInstitutions               Institution[]               @relation("UpdatedBy")
+  createdInstitutionContacts        InstitutionContact[]        @relation("CreatedBy")
+  updatedInstitutionContacts        InstitutionContact[]        @relation("UpdatedBy")
+  createdClubs                      Club[]                      @relation("CreatedBy")
+  updatedClubs                      Club[]                      @relation("UpdatedBy")
+  createdLocations                  Location[]                  @relation("CreatedBy")
+  updatedLocations                  Location[]                  @relation("UpdatedBy")
+  createdCategories                 Category[]                  @relation("CreatedBy")
+  updatedCategories                 Category[]                  @relation("UpdatedBy")
+  createdSeasons                    Season[]                    @relation("CreatedBy")
+  updatedSeasons                    Season[]                    @relation("UpdatedBy")
+  createdSeasonEvents               SeasonEvent[]               @relation("CreatedBy")
+  updatedSeasonEvents               SeasonEvent[]               @relation("UpdatedBy")
+  createdTeams                      Team[]                      @relation("CreatedBy")
+  updatedTeams                      Team[]                      @relation("UpdatedBy")
+  createdTeamSeasons                TeamSeason[]                @relation("CreatedBy")
+  updatedTeamSeasons                TeamSeason[]                @relation("UpdatedBy")
+  createdTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("CreatedBy")
+  updatedTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("UpdatedBy")
+  createdPaymentPlans               PaymentPlan[]               @relation("CreatedBy")
+  updatedPaymentPlans               PaymentPlan[]               @relation("UpdatedBy")
+  createdPlayers                    Player[]                    @relation("CreatedBy")
+  updatedPlayers                    Player[]                    @relation("UpdatedBy")
+  createdPlayerMemberships          PlayerMembership[]          @relation("CreatedBy")
+  updatedPlayerMemberships          PlayerMembership[]          @relation("UpdatedBy")
+  createdPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("CreatedBy")
+  updatedPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("UpdatedBy")
+  createdPlayerMembershipPauses     PlayerMembershipPause[]     @relation("CreatedBy")
+  updatedPlayerMembershipPauses     PlayerMembershipPause[]     @relation("UpdatedBy")
+  createdMembershipDiscounts        MembershipDiscount[]        @relation("CreatedBy")
+  updatedMembershipDiscounts        MembershipDiscount[]        @relation("UpdatedBy")
+  createdMembershipCharges          MembershipCharge[]          @relation("CreatedBy")
+  updatedMembershipCharges          MembershipCharge[]          @relation("UpdatedBy")
+  createdStaffs                     Staff[]                     @relation("CreatedBy")
+  updatedStaffs                     Staff[]                     @relation("UpdatedBy")
+  createdTeamSeasonStaffs           TeamSeasonStaff[]           @relation("CreatedBy")
+  updatedTeamSeasonStaffs           TeamSeasonStaff[]           @relation("UpdatedBy")
+  createdCharges                    Charge[]                    @relation("CreatedBy")
+  updatedCharges                    Charge[]                    @relation("UpdatedBy")
+  createdChargeTransactions         ChargeTransaction[]         @relation("CreatedBy")
+  updatedChargeTransactions         ChargeTransaction[]         @relation("UpdatedBy")
+  createdTransactions               Transaction[]               @relation("CreatedBy")
+  updatedTransactions               Transaction[]               @relation("UpdatedBy")
+  createdRoles                      Role[]                      @relation("CreatedBy")
+  updatedRoles                      Role[]                      @relation("UpdatedBy")
+  createdPermissions                Permission[]                @relation("CreatedBy")
+  updatedPermissions                Permission[]                @relation("UpdatedBy")
+  createdSchools                    School[]                    @relation("CreatedBy")
+  updatedSchools                    School[]                    @relation("UpdatedBy")
+  createdCourses                    Course[]                    @relation("CreatedBy")
+  updatedCourses                    Course[]                    @relation("UpdatedBy")
+  createdCourseSeasons              CourseSeason[]              @relation("CreatedBy")
+  updatedCourseSeasons              CourseSeason[]              @relation("UpdatedBy")
+  createdTeamSeasonPauses           TeamSeasonPause[]           @relation("CreatedBy")
+  updatedTeamSeasonPauses           TeamSeasonPause[]           @relation("UpdatedBy")
+  createdCourseSeasonPauses         CourseSeasonPause[]         @relation("CreatedBy")
+  updatedCourseSeasonPauses         CourseSeasonPause[]         @relation("UpdatedBy")
+  createdCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("CreatedBy")
+  updatedCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("UpdatedBy")
+  createdCourseSeasonStaffs         CourseSeasonStaff[]         @relation("CreatedBy")
+  updatedCourseSeasonStaffs         CourseSeasonStaff[]         @relation("UpdatedBy")
+  createdStudents                   Student[]                   @relation("CreatedBy")
+  updatedStudents                   Student[]                   @relation("UpdatedBy")
+  createdStudentMemberships         StudentMembership[]         @relation("CreatedBy")
+  updatedStudentMemberships         StudentMembership[]         @relation("UpdatedBy")
+  createdStudentMembershipHistories StudentMembershipHistory[]  @relation("CreatedBy")
+  updatedStudentMembershipHistories StudentMembershipHistory[]  @relation("UpdatedBy")
+  createdStudentMembershipPauses    StudentMembershipPause[]    @relation("CreatedBy")
+  updatedStudentMembershipPauses    StudentMembershipPause[]    @relation("UpdatedBy")
+  createdStudentDiscounts           StudentDiscount[]           @relation("CreatedBy")
+  updatedStudentDiscounts           StudentDiscount[]           @relation("UpdatedBy")
+  createdStudentCharges             StudentCharge[]             @relation("CreatedBy")
+  updatedStudentCharges             StudentCharge[]             @relation("UpdatedBy")
+  createdSessionIncidents           SessionIncident[]           @relation("CreatedBy")
+  updatedSessionIncidents           SessionIncident[]           @relation("UpdatedBy")
+  createdProgressEvaluations        ProgressEvaluation[]        @relation("CreatedBy")
+  updatedProgressEvaluations        ProgressEvaluation[]        @relation("UpdatedBy")
+  createdSessions                   Session[]                   @relation("CreatedBy")
+  updatedSessions                   Session[]                   @relation("UpdatedBy")
+  createdSessionBookings            SessionBooking[]            @relation("CreatedBy")
+  updatedSessionBookings            SessionBooking[]            @relation("UpdatedBy")
+  createdSchedules                  Schedule[]                  @relation("CreatedBy")
+  updatedSchedules                  Schedule[]                  @relation("UpdatedBy")
+  createdMatchs                     Match[]                     @relation("CreatedBy")
+  updatedMatchs                     Match[]                     @relation("UpdatedBy")
+  createdMatchLineups               MatchLineup[]               @relation("CreatedBy")
+  updatedMatchLineups               MatchLineup[]               @relation("UpdatedBy")
+  auditLogs                         AuditLog[]
+
   @@map("users")
 }
 
@@ -779,6 +993,11 @@ model Role {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("roles")
 }
 
@@ -792,6 +1011,11 @@ model Permission {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("permissions")
 }
@@ -821,6 +1045,11 @@ model School {
   updatedAt     DateTime    @updatedAt @map("updated_at")
   courses       Course[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([institutionId, disciplineId, name])
   @@map("schools")
 }
@@ -836,6 +1065,11 @@ model Course {
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   courseSeasons CourseSeason[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([schoolId, name])
   @@map("courses")
@@ -882,6 +1116,11 @@ model CourseSeason {
   billingConfig      CourseSeasonBillingConfig?
   pauses             CourseSeasonPause[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([courseId, categoryId, seasonId, gender])
   @@map("course_seasons")
 }
@@ -895,6 +1134,11 @@ model TeamSeasonPause {
   reason       String?    @db.Text
   createdAt    DateTime   @default(now()) @map("created_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("team_season_pauses")
 }
 
@@ -906,6 +1150,11 @@ model CourseSeasonPause {
   endDate        DateTime     @map("end_date")
   reason         String?      @db.Text
   createdAt      DateTime     @default(now()) @map("created_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("course_season_pauses")
 }
@@ -936,6 +1185,11 @@ model CourseSeasonBillingConfig {
   prorateRegistrationFee   Boolean @default(false) @map("prorate_registration_fee")
   prorateSeasonFee         Boolean @default(false) @map("prorate_season_fee")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("course_season_billing_configs")
 }
 
@@ -964,6 +1218,11 @@ model CourseSeasonStaff {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("course_season_staff")
 }
 
@@ -980,6 +1239,11 @@ model Student {
   studentMemberships  StudentMembership[]
   sessionBookings     SessionBooking[]
   progressEvaluations ProgressEvaluation[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("students")
 }
@@ -1018,6 +1282,11 @@ model StudentMembership {
   pauses           StudentMembershipPause[]
   histories        StudentMembershipHistory[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@index([nextRecurringChargeGenerationDate])
   @@map("student_memberships")
 }
@@ -1034,6 +1303,11 @@ model StudentMembershipHistory {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("student_membership_histories")
 }
 
@@ -1048,6 +1322,11 @@ model StudentMembershipPause {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("student_membership_pauses")
 }
@@ -1069,6 +1348,11 @@ model StudentDiscount {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("student_discounts")
 }
 
@@ -1088,6 +1372,11 @@ model StudentCharge {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([studentMembershipId, type, billingMonth, billingYear, billingCycle])
   @@map("student_charges")
 }
@@ -1101,6 +1390,11 @@ model SessionIncident {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("session_incidents")
 }
@@ -1131,6 +1425,11 @@ model ProgressEvaluation {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("progress_evaluations")
 }
 
@@ -1151,6 +1450,11 @@ model Session {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("sessions")
 }
@@ -1196,6 +1500,11 @@ model SessionBooking {
 
   incidents SessionIncident[]
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([sessionId, playerId])
   @@unique([sessionId, studentId])
   @@map("session_bookings")
@@ -1224,6 +1533,11 @@ model Schedule {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("schedules")
 }
@@ -1285,6 +1599,11 @@ model Match {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@map("matches")
 }
 
@@ -1305,6 +1624,27 @@ model MatchLineup {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
   @@unique([matchId, playerId])
   @@map("match_lineups")
+}
+
+model AuditLog {
+  id         String @id @default(uuid())
+  entityName String @map("entity_name")
+  entityId   String @map("entity_id")
+  action     String
+  oldValues  Json?  @map("old_values")
+  newValues  Json?  @map("new_values")
+
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("audit_logs")
 }

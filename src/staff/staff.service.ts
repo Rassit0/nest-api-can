@@ -4,6 +4,7 @@ import { UpdateStaffDto } from './dto/update-staff.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { StaffPaginationDto } from './dto/pagination.dto';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 export const PersonSelect: Prisma.PersonSelect = {
   id: true,
@@ -175,6 +176,70 @@ export class StaffService {
     return {
       message: 'Personal eliminado exitosamente',
       data: deletedStaff,
+    };
+  }
+
+  async getAvailablePersons(paginationDto: PaginationDto) {
+    const { per_page = 10, page = 1, search, orderBy = 'asc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.PersonWhereInput = {
+      staff: null,
+      ...(search
+        ? {
+            OR: [
+              { id: { equals: search } },
+              { name: { contains: search, mode: 'insensitive' } },
+              { lastName: { contains: search, mode: 'insensitive' } },
+              { secondLastName: { contains: search, mode: 'insensitive' } },
+              { documentNumber: { contains: search, mode: 'insensitive' } },
+              { phone: { contains: search, mode: 'insensitive' } },
+              { email: { contains: search, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.person.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { name: orderBy as any },
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          documentNumber: true,
+          gender: true,
+          birthDate: true,
+          imageUrl: true,
+        },
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Personas obtenidas exitosamente',
+      data: persons.map((person) => ({
+        ...person,
+        fullName:
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim(),
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
     };
   }
 }

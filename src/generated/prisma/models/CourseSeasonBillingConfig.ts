@@ -67,6 +67,8 @@ export type CourseSeasonBillingConfigMinAggregateOutputType = {
   prorateLastRecurringFee: boolean | null
   prorateRegistrationFee: boolean | null
   prorateSeasonFee: boolean | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CourseSeasonBillingConfigMaxAggregateOutputType = {
@@ -88,6 +90,8 @@ export type CourseSeasonBillingConfigMaxAggregateOutputType = {
   prorateLastRecurringFee: boolean | null
   prorateRegistrationFee: boolean | null
   prorateSeasonFee: boolean | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CourseSeasonBillingConfigCountAggregateOutputType = {
@@ -109,6 +113,8 @@ export type CourseSeasonBillingConfigCountAggregateOutputType = {
   prorateLastRecurringFee: number
   prorateRegistrationFee: number
   prorateSeasonFee: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -154,6 +160,8 @@ export type CourseSeasonBillingConfigMinAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CourseSeasonBillingConfigMaxAggregateInputType = {
@@ -175,6 +183,8 @@ export type CourseSeasonBillingConfigMaxAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CourseSeasonBillingConfigCountAggregateInputType = {
@@ -196,6 +206,8 @@ export type CourseSeasonBillingConfigCountAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -304,6 +316,8 @@ export type CourseSeasonBillingConfigGroupByOutputType = {
   prorateLastRecurringFee: boolean
   prorateRegistrationFee: boolean
   prorateSeasonFee: boolean
+  createdById: string | null
+  updatedById: string | null
   _count: CourseSeasonBillingConfigCountAggregateOutputType | null
   _avg: CourseSeasonBillingConfigAvgAggregateOutputType | null
   _sum: CourseSeasonBillingConfigSumAggregateOutputType | null
@@ -348,7 +362,11 @@ export type CourseSeasonBillingConfigWhereInput = {
   prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type CourseSeasonBillingConfigOrderByWithRelationInput = {
@@ -370,7 +388,11 @@ export type CourseSeasonBillingConfigOrderByWithRelationInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CourseSeasonBillingConfigWhereUniqueInput = Prisma.AtLeast<{
@@ -395,7 +417,11 @@ export type CourseSeasonBillingConfigWhereUniqueInput = Prisma.AtLeast<{
   prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "courseSeasonId">
 
 export type CourseSeasonBillingConfigOrderByWithAggregationInput = {
@@ -417,6 +443,8 @@ export type CourseSeasonBillingConfigOrderByWithAggregationInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CourseSeasonBillingConfigCountOrderByAggregateInput
   _avg?: Prisma.CourseSeasonBillingConfigAvgOrderByAggregateInput
   _max?: Prisma.CourseSeasonBillingConfigMaxOrderByAggregateInput
@@ -446,6 +474,8 @@ export type CourseSeasonBillingConfigScalarWhereWithAggregatesInput = {
   prorateLastRecurringFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonBillingConfig"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonBillingConfig"> | string | null
 }
 
 export type CourseSeasonBillingConfigCreateInput = {
@@ -467,6 +497,8 @@ export type CourseSeasonBillingConfigCreateInput = {
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
 }
 
 export type CourseSeasonBillingConfigUncheckedCreateInput = {
@@ -488,6 +520,8 @@ export type CourseSeasonBillingConfigUncheckedCreateInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonBillingConfigUpdateInput = {
@@ -509,6 +543,8 @@ export type CourseSeasonBillingConfigUpdateInput = {
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
 }
 
 export type CourseSeasonBillingConfigUncheckedUpdateInput = {
@@ -530,6 +566,8 @@ export type CourseSeasonBillingConfigUncheckedUpdateInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonBillingConfigCreateManyInput = {
@@ -551,6 +589,8 @@ export type CourseSeasonBillingConfigCreateManyInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonBillingConfigUpdateManyMutationInput = {
@@ -592,6 +632,18 @@ export type CourseSeasonBillingConfigUncheckedUpdateManyInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonBillingConfigListRelationFilter = {
+  every?: Prisma.CourseSeasonBillingConfigWhereInput
+  some?: Prisma.CourseSeasonBillingConfigWhereInput
+  none?: Prisma.CourseSeasonBillingConfigWhereInput
+}
+
+export type CourseSeasonBillingConfigOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type CourseSeasonBillingConfigNullableScalarRelationFilter = {
@@ -618,6 +670,8 @@ export type CourseSeasonBillingConfigCountOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonBillingConfigAvgOrderByAggregateInput = {
@@ -650,6 +704,8 @@ export type CourseSeasonBillingConfigMaxOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonBillingConfigMinOrderByAggregateInput = {
@@ -671,6 +727,8 @@ export type CourseSeasonBillingConfigMinOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonBillingConfigSumOrderByAggregateInput = {
@@ -682,6 +740,90 @@ export type CourseSeasonBillingConfigSumOrderByAggregateInput = {
   lateFeePerDay?: Prisma.SortOrder
   graceDays?: Prisma.SortOrder
   chargeGenerationDaysBefore?: Prisma.SortOrder
+}
+
+export type CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+}
+
+export type CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+}
+
+export type CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+}
+
+export type CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+}
+
+export type CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyCreatedByInputEnvelope
+  set?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  update?: Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+}
+
+export type CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  update?: Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyCreatedByInputEnvelope
+  set?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  update?: Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutCreatedByInput | Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonBillingConfigWhereUniqueInput | Prisma.CourseSeasonBillingConfigWhereUniqueInput[]
+  update?: Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CourseSeasonBillingConfigUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
 }
 
 export type CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput = {
@@ -716,6 +858,172 @@ export type CourseSeasonBillingConfigUncheckedUpdateOneWithoutCourseSeasonNested
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateToOneWithWhereWithoutCourseSeasonInput, Prisma.CourseSeasonBillingConfigUpdateWithoutCourseSeasonInput>, Prisma.CourseSeasonBillingConfigUncheckedUpdateWithoutCourseSeasonInput>
 }
 
+export type CourseSeasonBillingConfigCreateWithoutCreatedByInput = {
+  id?: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
+}
+
+export type CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  courseSeasonId: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  updatedById?: string | null
+}
+
+export type CourseSeasonBillingConfigCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CourseSeasonBillingConfigCreateManyCreatedByInputEnvelope = {
+  data: Prisma.CourseSeasonBillingConfigCreateManyCreatedByInput | Prisma.CourseSeasonBillingConfigCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseSeasonBillingConfigCreateWithoutUpdatedByInput = {
+  id?: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
+}
+
+export type CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  courseSeasonId: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  createdById?: string | null
+}
+
+export type CourseSeasonBillingConfigCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonBillingConfigCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInput | Prisma.CourseSeasonBillingConfigCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateWithoutCreatedByInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type CourseSeasonBillingConfigUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateManyMutationInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type CourseSeasonBillingConfigScalarWhereInput = {
+  AND?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+  OR?: Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+  NOT?: Prisma.CourseSeasonBillingConfigScalarWhereInput | Prisma.CourseSeasonBillingConfigScalarWhereInput[]
+  id?: Prisma.StringFilter<"CourseSeasonBillingConfig"> | string
+  courseSeasonId?: Prisma.StringFilter<"CourseSeasonBillingConfig"> | string
+  isEngineActive?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  billingDay?: Prisma.IntFilter<"CourseSeasonBillingConfig"> | number
+  registrationFee?: Prisma.DecimalNullableFilter<"CourseSeasonBillingConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.DecimalNullableFilter<"CourseSeasonBillingConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.DecimalNullableFilter<"CourseSeasonBillingConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFilter<"CourseSeasonBillingConfig"> | number
+  lateFeeEnabled?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  lateFeePerDay?: Prisma.DecimalFilter<"CourseSeasonBillingConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFilter<"CourseSeasonBillingConfig"> | number
+  chargeGenerationDaysBefore?: Prisma.IntFilter<"CourseSeasonBillingConfig"> | number
+  billingType?: Prisma.EnumSeasonBillingTypeFilter<"CourseSeasonBillingConfig"> | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFilter<"CourseSeasonBillingConfig"> | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
+}
+
+export type CourseSeasonBillingConfigUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.CourseSeasonBillingConfigCreateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonBillingConfigUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateWithoutUpdatedByInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonBillingConfigUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonBillingConfigScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonBillingConfigUpdateManyMutationInput, Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
 export type CourseSeasonBillingConfigCreateWithoutCourseSeasonInput = {
   id?: string
   isEngineActive?: boolean
@@ -734,6 +1042,8 @@ export type CourseSeasonBillingConfigCreateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
 }
 
 export type CourseSeasonBillingConfigUncheckedCreateWithoutCourseSeasonInput = {
@@ -754,6 +1064,8 @@ export type CourseSeasonBillingConfigUncheckedCreateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonBillingConfigCreateOrConnectWithoutCourseSeasonInput = {
@@ -790,6 +1102,8 @@ export type CourseSeasonBillingConfigUpdateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
 }
 
 export type CourseSeasonBillingConfigUncheckedUpdateWithoutCourseSeasonInput = {
@@ -810,6 +1124,184 @@ export type CourseSeasonBillingConfigUncheckedUpdateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonBillingConfigCreateManyCreatedByInput = {
+  id?: string
+  courseSeasonId: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  updatedById?: string | null
+}
+
+export type CourseSeasonBillingConfigCreateManyUpdatedByInput = {
+  id?: string
+  courseSeasonId: string
+  isEngineActive?: boolean
+  billingDay: number
+  registrationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: number
+  lateFeeEnabled?: boolean
+  lateFeePerDay?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: number
+  chargeGenerationDaysBefore?: number
+  billingType?: $Enums.SeasonBillingType
+  billingFrequency?: $Enums.BillingFrequency
+  prorateFirstRecurringFee?: boolean
+  prorateLastRecurringFee?: boolean
+  prorateRegistrationFee?: boolean
+  prorateSeasonFee?: boolean
+  createdById?: string | null
+}
+
+export type CourseSeasonBillingConfigUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonBillingConfigUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  isEngineActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingDay?: Prisma.IntFieldUpdateOperationsInput | number
+  registrationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  recurringFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  seasonFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  debtToleranceMonths?: Prisma.IntFieldUpdateOperationsInput | number
+  lateFeeEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lateFeePerDay?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  graceDays?: Prisma.IntFieldUpdateOperationsInput | number
+  chargeGenerationDaysBefore?: Prisma.IntFieldUpdateOperationsInput | number
+  billingType?: Prisma.EnumSeasonBillingTypeFieldUpdateOperationsInput | $Enums.SeasonBillingType
+  billingFrequency?: Prisma.EnumBillingFrequencyFieldUpdateOperationsInput | $Enums.BillingFrequency
+  prorateFirstRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -833,7 +1325,11 @@ export type CourseSeasonBillingConfigSelect<ExtArgs extends runtime.Types.Extens
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonBillingConfig"]>
 
 export type CourseSeasonBillingConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -855,7 +1351,11 @@ export type CourseSeasonBillingConfigSelectCreateManyAndReturn<ExtArgs extends r
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonBillingConfig"]>
 
 export type CourseSeasonBillingConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -877,7 +1377,11 @@ export type CourseSeasonBillingConfigSelectUpdateManyAndReturn<ExtArgs extends r
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonBillingConfig"]>
 
 export type CourseSeasonBillingConfigSelectScalar = {
@@ -899,23 +1403,33 @@ export type CourseSeasonBillingConfigSelectScalar = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type CourseSeasonBillingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "isEngineActive" | "billingDay" | "registrationFee" | "recurringFee" | "seasonFee" | "debtToleranceMonths" | "lateFeeEnabled" | "lateFeePerDay" | "graceDays" | "chargeGenerationDaysBefore" | "billingType" | "billingFrequency" | "prorateFirstRecurringFee" | "prorateLastRecurringFee" | "prorateRegistrationFee" | "prorateSeasonFee", ExtArgs["result"]["courseSeasonBillingConfig"]>
+export type CourseSeasonBillingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "isEngineActive" | "billingDay" | "registrationFee" | "recurringFee" | "seasonFee" | "debtToleranceMonths" | "lateFeeEnabled" | "lateFeePerDay" | "graceDays" | "chargeGenerationDaysBefore" | "billingType" | "billingFrequency" | "prorateFirstRecurringFee" | "prorateLastRecurringFee" | "prorateRegistrationFee" | "prorateSeasonFee" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonBillingConfig"]>
 export type CourseSeasonBillingConfigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }
 export type CourseSeasonBillingConfigIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }
 export type CourseSeasonBillingConfigIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>
 }
 
 export type $CourseSeasonBillingConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CourseSeasonBillingConfig"
   objects: {
     courseSeason: Prisma.$CourseSeasonPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -936,6 +1450,8 @@ export type $CourseSeasonBillingConfigPayload<ExtArgs extends runtime.Types.Exte
     prorateLastRecurringFee: boolean
     prorateRegistrationFee: boolean
     prorateSeasonFee: boolean
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["courseSeasonBillingConfig"]>
   composites: {}
 }
@@ -1331,6 +1847,8 @@ readonly fields: CourseSeasonBillingConfigFieldRefs;
 export interface Prisma__CourseSeasonBillingConfigClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   courseSeason<T extends Prisma.CourseSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonBillingConfig$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1378,6 +1896,8 @@ export interface CourseSeasonBillingConfigFieldRefs {
   readonly prorateLastRecurringFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
   readonly prorateRegistrationFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
   readonly prorateSeasonFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
+  readonly createdById: Prisma.FieldRef<"CourseSeasonBillingConfig", 'String'>
+  readonly updatedById: Prisma.FieldRef<"CourseSeasonBillingConfig", 'String'>
 }
     
 
@@ -1771,6 +2291,44 @@ export type CourseSeasonBillingConfigDeleteManyArgs<ExtArgs extends runtime.Type
    * Limit how many CourseSeasonBillingConfigs to delete.
    */
   limit?: number
+}
+
+/**
+ * CourseSeasonBillingConfig.createdBy
+ */
+export type CourseSeasonBillingConfig$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * CourseSeasonBillingConfig.updatedBy
+ */
+export type CourseSeasonBillingConfig$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

@@ -11,16 +11,36 @@ export const teamSeasonStaffSelect: Prisma.TeamSeasonStaffSelect = {
   staffId: true,
   role: true,
   customRole: true,
+  startedAt: true,
+  endedAt: true,
+  isPrimary: true,
   notes: true,
   createdAt: true,
   updatedAt: true,
+  staff: {
+    select: {
+      person: {
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          imageUrl: true,
+        },
+      },
+    },
+  },
 };
+
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class TeamSeasonStaffService {
-  private readonly logger = new Logger('SeasonsService');
+  private readonly logger = new Logger('TeamSeasonStaffService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly i18n: I18nService,
+  ) {}
 
   async create(createTeamSeasonStaffDto: CreateTeamSeasonStaffDto) {
     const newSeason = await this.prisma.teamSeasonStaff.create({
@@ -29,7 +49,7 @@ export class TeamSeasonStaffService {
     });
 
     return {
-      message: 'Personal agregado exitosamente',
+      message: this.i18n.t('messages.TEAM_STAFF_CREATED'),
       data: newSeason,
     };
   }
@@ -82,7 +102,7 @@ export class TeamSeasonStaffService {
     const currentPage = totalItems === 0 ? 0 : Math.floor(page / per_page) + 1;
 
     return {
-      message: 'Personal del equipo obtenido exitosamente',
+      message: this.i18n.t('messages.TEAM_STAFF_FETCHED'),
       data: teamSeasonStaffs, // Será [] si la página no existe o no hay registros
       meta: {
         totalItems, // Ej: 25
@@ -97,17 +117,103 @@ export class TeamSeasonStaffService {
     };
   }
 
+  async getAvailableStaff(paginationDto: TeamSeasonStaffPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      teamSeasonId,
+    } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.StaffWhereInput = {
+      isActive: true,
+      ...(teamSeasonId
+        ? {
+            teamSeasonStaffs: {
+              none: { teamSeasonId },
+            },
+          }
+        : {}),
+      ...(search
+        ? {
+            person: {
+              OR: [
+                { name: { contains: search, mode: 'insensitive' } },
+                { lastName: { contains: search, mode: 'insensitive' } },
+                { secondLastName: { contains: search, mode: 'insensitive' } },
+                { documentNumber: { contains: search, mode: 'insensitive' } },
+              ],
+            },
+          }
+        : {}),
+    };
+
+    const [staffs, totalItems] = await Promise.all([
+      this.prisma.staff.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { person: { name: orderBy as any } },
+        select: {
+          id: true,
+          isActive: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              documentNumber: true,
+              imageUrl: true,
+            },
+          },
+        },
+      }),
+      this.prisma.staff.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : Math.floor(page / per_page) + 1;
+
+    return {
+      message: this.i18n.t('messages.STAFF_FETCHED'),
+      data: staffs.map((staff) => ({
+        id: staff.id,
+        personId: staff.person.id,
+        name: staff.person.name,
+        lastName: staff.person.lastName,
+        secondLastName: staff.person.secondLastName,
+        fullName: `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
+        documentNumber: staff.person.documentNumber,
+        imageUrl: staff.person.imageUrl,
+        isActive: staff.isActive,
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
+  }
+
   async findOne(id: string) {
     const teamSeasonStaff = await this.prisma.teamSeasonStaff.findUnique({
       where: { id },
       select: teamSeasonStaffSelect,
     });
     if (!teamSeasonStaff) {
-      throw new NotFoundException('El personal del equipo no fue encontrado');
+      throw new NotFoundException(this.i18n.t('errors.TEAM_STAFF_NOT_FOUND'));
     }
     return {
       data: teamSeasonStaff,
-      message: 'Personal del equipo obtenido exitosamente',
+      message: this.i18n.t('messages.TEAM_STAFF_FETCHED'),
     };
   }
 
@@ -117,7 +223,7 @@ export class TeamSeasonStaffService {
       select: teamSeasonStaffSelect,
     });
     if (!teamSeasonStaff) {
-      throw new NotFoundException('El personal del equipo no fue encontrado');
+      throw new NotFoundException(this.i18n.t('errors.TEAM_STAFF_NOT_FOUND'));
     }
     const updatedTeamSeasonStaff = await this.prisma.teamSeasonStaff.update({
       where: { id },
@@ -125,7 +231,7 @@ export class TeamSeasonStaffService {
       select: teamSeasonStaffSelect,
     });
     return {
-      message: 'Personal del equipo actualizado exitosamente',
+      message: this.i18n.t('messages.TEAM_STAFF_UPDATED'),
       data: updatedTeamSeasonStaff,
     };
   }
@@ -136,14 +242,14 @@ export class TeamSeasonStaffService {
       select: teamSeasonStaffSelect,
     });
     if (!teamSeasonStaff) {
-      throw new NotFoundException('El personal del equipo no fue encontrado');
+      throw new NotFoundException(this.i18n.t('errors.TEAM_STAFF_NOT_FOUND'));
     }
     const deletedTeamSeasonStaff = await this.prisma.teamSeasonStaff.delete({
       where: { id },
       select: teamSeasonStaffSelect,
     });
     return {
-      message: 'Personal del equipo eliminado exitosamente',
+      message: this.i18n.t('messages.TEAM_STAFF_DELETED'),
       data: deletedTeamSeasonStaff,
     };
   }

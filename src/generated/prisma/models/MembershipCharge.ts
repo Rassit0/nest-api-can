@@ -49,6 +49,8 @@ export type MembershipChargeMinAggregateOutputType = {
   billingCycle: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type MembershipChargeMaxAggregateOutputType = {
@@ -62,6 +64,8 @@ export type MembershipChargeMaxAggregateOutputType = {
   billingCycle: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type MembershipChargeCountAggregateOutputType = {
@@ -75,6 +79,8 @@ export type MembershipChargeCountAggregateOutputType = {
   billingCycle: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -102,6 +108,8 @@ export type MembershipChargeMinAggregateInputType = {
   billingCycle?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type MembershipChargeMaxAggregateInputType = {
@@ -115,6 +123,8 @@ export type MembershipChargeMaxAggregateInputType = {
   billingCycle?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type MembershipChargeCountAggregateInputType = {
@@ -128,6 +138,8 @@ export type MembershipChargeCountAggregateInputType = {
   billingCycle?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -228,6 +240,8 @@ export type MembershipChargeGroupByOutputType = {
   billingCycle: number | null
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: MembershipChargeCountAggregateOutputType | null
   _avg: MembershipChargeAvgAggregateOutputType | null
   _sum: MembershipChargeSumAggregateOutputType | null
@@ -264,8 +278,12 @@ export type MembershipChargeWhereInput = {
   billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type MembershipChargeOrderByWithRelationInput = {
@@ -279,8 +297,12 @@ export type MembershipChargeOrderByWithRelationInput = {
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
   charge?: Prisma.ChargeOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type MembershipChargeWhereUniqueInput = Prisma.AtLeast<{
@@ -298,8 +320,12 @@ export type MembershipChargeWhereUniqueInput = Prisma.AtLeast<{
   billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "playerMembershipId_type_billingMonth_billingYear_billingCycle">
 
 export type MembershipChargeOrderByWithAggregationInput = {
@@ -313,6 +339,8 @@ export type MembershipChargeOrderByWithAggregationInput = {
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MembershipChargeCountOrderByAggregateInput
   _avg?: Prisma.MembershipChargeAvgOrderByAggregateInput
   _max?: Prisma.MembershipChargeMaxOrderByAggregateInput
@@ -334,6 +362,8 @@ export type MembershipChargeScalarWhereWithAggregatesInput = {
   billingCycle?: Prisma.IntNullableWithAggregatesFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipCharge"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"MembershipCharge"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"MembershipCharge"> | string | null
 }
 
 export type MembershipChargeCreateInput = {
@@ -347,6 +377,8 @@ export type MembershipChargeCreateInput = {
   updatedAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
   charge: Prisma.ChargeCreateNestedOneWithoutMembershipChargesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipChargesInput
 }
 
 export type MembershipChargeUncheckedCreateInput = {
@@ -360,6 +392,8 @@ export type MembershipChargeUncheckedCreateInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeUpdateInput = {
@@ -373,6 +407,8 @@ export type MembershipChargeUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
   charge?: Prisma.ChargeUpdateOneRequiredWithoutMembershipChargesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipChargesNestedInput
 }
 
 export type MembershipChargeUncheckedUpdateInput = {
@@ -386,6 +422,8 @@ export type MembershipChargeUncheckedUpdateInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipChargeCreateManyInput = {
@@ -399,6 +437,8 @@ export type MembershipChargeCreateManyInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeUpdateManyMutationInput = {
@@ -423,6 +463,8 @@ export type MembershipChargeUncheckedUpdateManyInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipChargeListRelationFilter = {
@@ -454,6 +496,8 @@ export type MembershipChargeCountOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipChargeAvgOrderByAggregateInput = {
@@ -473,6 +517,8 @@ export type MembershipChargeMaxOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipChargeMinOrderByAggregateInput = {
@@ -486,6 +532,8 @@ export type MembershipChargeMinOrderByAggregateInput = {
   billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipChargeSumOrderByAggregateInput = {
@@ -582,6 +630,90 @@ export type MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput = {
   deleteMany?: Prisma.MembershipChargeScalarWhereInput | Prisma.MembershipChargeScalarWhereInput[]
 }
 
+export type MembershipChargeCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipChargeCreateWithoutCreatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyCreatedByInputEnvelope
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+}
+
+export type MembershipChargeCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipChargeCreateWithoutUpdatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+}
+
+export type MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipChargeCreateWithoutCreatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyCreatedByInputEnvelope
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+}
+
+export type MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipChargeCreateWithoutUpdatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+}
+
+export type MembershipChargeUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipChargeCreateWithoutCreatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.MembershipChargeUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipChargeUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyCreatedByInputEnvelope
+  set?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  disconnect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  delete?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  update?: Prisma.MembershipChargeUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipChargeUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.MembershipChargeUpdateManyWithWhereWithoutCreatedByInput | Prisma.MembershipChargeUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.MembershipChargeScalarWhereInput | Prisma.MembershipChargeScalarWhereInput[]
+}
+
+export type MembershipChargeUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipChargeCreateWithoutUpdatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.MembershipChargeUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipChargeUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyUpdatedByInputEnvelope
+  set?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  disconnect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  delete?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  update?: Prisma.MembershipChargeUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipChargeUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.MembershipChargeUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MembershipChargeUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.MembershipChargeScalarWhereInput | Prisma.MembershipChargeScalarWhereInput[]
+}
+
+export type MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipChargeCreateWithoutCreatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.MembershipChargeUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipChargeUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyCreatedByInputEnvelope
+  set?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  disconnect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  delete?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  update?: Prisma.MembershipChargeUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipChargeUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.MembershipChargeUpdateManyWithWhereWithoutCreatedByInput | Prisma.MembershipChargeUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.MembershipChargeScalarWhereInput | Prisma.MembershipChargeScalarWhereInput[]
+}
+
+export type MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipChargeCreateWithoutUpdatedByInput[] | Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipChargeCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.MembershipChargeUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipChargeUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipChargeCreateManyUpdatedByInputEnvelope
+  set?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  disconnect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  delete?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  connect?: Prisma.MembershipChargeWhereUniqueInput | Prisma.MembershipChargeWhereUniqueInput[]
+  update?: Prisma.MembershipChargeUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipChargeUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.MembershipChargeUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MembershipChargeUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.MembershipChargeScalarWhereInput | Prisma.MembershipChargeScalarWhereInput[]
+}
+
 export type MembershipChargeCreateWithoutPlayerMembershipInput = {
   id?: string
   type: $Enums.TypeMembershipCharge
@@ -592,6 +724,8 @@ export type MembershipChargeCreateWithoutPlayerMembershipInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutMembershipChargesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipChargesInput
 }
 
 export type MembershipChargeUncheckedCreateWithoutPlayerMembershipInput = {
@@ -604,6 +738,8 @@ export type MembershipChargeUncheckedCreateWithoutPlayerMembershipInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeCreateOrConnectWithoutPlayerMembershipInput = {
@@ -646,6 +782,8 @@ export type MembershipChargeScalarWhereInput = {
   billingCycle?: Prisma.IntNullableFilter<"MembershipCharge"> | number | null
   createdAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipCharge"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipCharge"> | string | null
 }
 
 export type MembershipChargeCreateWithoutChargeInput = {
@@ -658,6 +796,8 @@ export type MembershipChargeCreateWithoutChargeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipChargesInput
 }
 
 export type MembershipChargeUncheckedCreateWithoutChargeInput = {
@@ -670,6 +810,8 @@ export type MembershipChargeUncheckedCreateWithoutChargeInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeCreateOrConnectWithoutChargeInput = {
@@ -698,6 +840,114 @@ export type MembershipChargeUpdateManyWithWhereWithoutChargeInput = {
   data: Prisma.XOR<Prisma.MembershipChargeUpdateManyMutationInput, Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeInput>
 }
 
+export type MembershipChargeCreateWithoutCreatedByInput = {
+  id?: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
+  charge: Prisma.ChargeCreateNestedOneWithoutMembershipChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipChargesInput
+}
+
+export type MembershipChargeUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  chargeId: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type MembershipChargeCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput>
+}
+
+export type MembershipChargeCreateManyCreatedByInputEnvelope = {
+  data: Prisma.MembershipChargeCreateManyCreatedByInput | Prisma.MembershipChargeCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MembershipChargeCreateWithoutUpdatedByInput = {
+  id?: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipChargesInput
+  charge: Prisma.ChargeCreateNestedOneWithoutMembershipChargesInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipChargesInput
+}
+
+export type MembershipChargeUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  chargeId: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type MembershipChargeCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type MembershipChargeCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.MembershipChargeCreateManyUpdatedByInput | Prisma.MembershipChargeCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MembershipChargeUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  update: Prisma.XOR<Prisma.MembershipChargeUpdateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.MembershipChargeCreateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutCreatedByInput>
+}
+
+export type MembershipChargeUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  data: Prisma.XOR<Prisma.MembershipChargeUpdateWithoutCreatedByInput, Prisma.MembershipChargeUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type MembershipChargeUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.MembershipChargeScalarWhereInput
+  data: Prisma.XOR<Prisma.MembershipChargeUpdateManyMutationInput, Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type MembershipChargeUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  update: Prisma.XOR<Prisma.MembershipChargeUpdateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.MembershipChargeCreateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type MembershipChargeUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.MembershipChargeWhereUniqueInput
+  data: Prisma.XOR<Prisma.MembershipChargeUpdateWithoutUpdatedByInput, Prisma.MembershipChargeUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type MembershipChargeUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.MembershipChargeScalarWhereInput
+  data: Prisma.XOR<Prisma.MembershipChargeUpdateManyMutationInput, Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
 export type MembershipChargeCreateManyPlayerMembershipInput = {
   id?: string
   chargeId: string
@@ -708,6 +958,8 @@ export type MembershipChargeCreateManyPlayerMembershipInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeUpdateWithoutPlayerMembershipInput = {
@@ -720,6 +972,8 @@ export type MembershipChargeUpdateWithoutPlayerMembershipInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutMembershipChargesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipChargesNestedInput
 }
 
 export type MembershipChargeUncheckedUpdateWithoutPlayerMembershipInput = {
@@ -732,6 +986,8 @@ export type MembershipChargeUncheckedUpdateWithoutPlayerMembershipInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipInput = {
@@ -744,6 +1000,8 @@ export type MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipChargeCreateManyChargeInput = {
@@ -756,6 +1014,8 @@ export type MembershipChargeCreateManyChargeInput = {
   billingCycle?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipChargeUpdateWithoutChargeInput = {
@@ -768,6 +1028,8 @@ export type MembershipChargeUpdateWithoutChargeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipChargesNestedInput
 }
 
 export type MembershipChargeUncheckedUpdateWithoutChargeInput = {
@@ -780,6 +1042,8 @@ export type MembershipChargeUncheckedUpdateWithoutChargeInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipChargeUncheckedUpdateManyWithoutChargeInput = {
@@ -792,6 +1056,120 @@ export type MembershipChargeUncheckedUpdateManyWithoutChargeInput = {
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipChargeCreateManyCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  chargeId: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type MembershipChargeCreateManyUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  chargeId: string
+  type: $Enums.TypeMembershipCharge
+  createdByCron?: boolean
+  billingYear?: number | null
+  billingMonth?: number | null
+  billingCycle?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type MembershipChargeUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
+  charge?: Prisma.ChargeUpdateOneRequiredWithoutMembershipChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipChargesNestedInput
+}
+
+export type MembershipChargeUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipChargeUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipChargeUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
+  charge?: Prisma.ChargeUpdateOneRequiredWithoutMembershipChargesNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipChargesNestedInput
+}
+
+export type MembershipChargeUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipChargeUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTypeMembershipChargeFieldUpdateOperationsInput | $Enums.TypeMembershipCharge
+  createdByCron?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -807,8 +1185,12 @@ export type MembershipChargeSelect<ExtArgs extends runtime.Types.Extensions.Inte
   billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipCharge"]>
 
 export type MembershipChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -822,8 +1204,12 @@ export type MembershipChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipCharge"]>
 
 export type MembershipChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -837,8 +1223,12 @@ export type MembershipChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipCharge"]>
 
 export type MembershipChargeSelectScalar = {
@@ -852,20 +1242,28 @@ export type MembershipChargeSelectScalar = {
   billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type MembershipChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "billingCycle" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipCharge"]>
+export type MembershipChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "billingCycle" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["membershipCharge"]>
 export type MembershipChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }
 export type MembershipChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }
 export type MembershipChargeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipCharge$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipCharge$updatedByArgs<ExtArgs>
 }
 
 export type $MembershipChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -873,6 +1271,8 @@ export type $MembershipChargePayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     playerMembership: Prisma.$PlayerMembershipPayload<ExtArgs>
     charge: Prisma.$ChargePayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -885,6 +1285,8 @@ export type $MembershipChargePayload<ExtArgs extends runtime.Types.Extensions.In
     billingCycle: number | null
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["membershipCharge"]>
   composites: {}
 }
@@ -1281,6 +1683,8 @@ export interface Prisma__MembershipChargeClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   playerMembership<T extends Prisma.PlayerMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerMembershipClient<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   charge<T extends Prisma.ChargeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeDefaultArgs<ExtArgs>>): Prisma.Prisma__ChargeClient<runtime.Types.Result.GetResult<Prisma.$ChargePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.MembershipCharge$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MembershipCharge$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.MembershipCharge$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MembershipCharge$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1320,6 +1724,8 @@ export interface MembershipChargeFieldRefs {
   readonly billingCycle: Prisma.FieldRef<"MembershipCharge", 'Int'>
   readonly createdAt: Prisma.FieldRef<"MembershipCharge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MembershipCharge", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"MembershipCharge", 'String'>
+  readonly updatedById: Prisma.FieldRef<"MembershipCharge", 'String'>
 }
     
 
@@ -1713,6 +2119,44 @@ export type MembershipChargeDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many MembershipCharges to delete.
    */
   limit?: number
+}
+
+/**
+ * MembershipCharge.createdBy
+ */
+export type MembershipCharge$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * MembershipCharge.updatedBy
+ */
+export type MembershipCharge$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

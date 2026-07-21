@@ -11,6 +11,7 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { TeamSeasonStaffRole } from 'src/generated/prisma/enums';
+import { IsBoolean, IsDateString } from 'class-validator';
 
 export class CreateTeamSeasonStaffDto {
   @ApiProperty({
@@ -79,11 +80,44 @@ export class CreateTeamSeasonStaffDto {
     example: '2024-01-01T00:00:00.000Z',
     description: 'Fecha de inicio de la temporada (formato ISO 8601)',
   })
-  @IsISO8601(
+  @IsDateString(
     { strict: true },
-    { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
+    {
+      message: i18nValidationMessage('validation.IS_DATE', {
+        constraint1: 'startedAt',
+      }),
+    },
   )
   startedAt: string;
+
+  @ApiProperty({
+    example: '2024-12-31T23:59:59.000Z',
+    description: 'Fecha de fin de la temporada (formato ISO 8601)',
+    required: false,
+  })
+  @IsDateString(
+    { strict: true },
+    {
+      message: i18nValidationMessage('validation.IS_DATE', {
+        constraint1: 'endedAt',
+      }),
+    },
+  )
+  @IsOptional()
+  endedAt?: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Indica si es el encargado principal',
+    required: false,
+  })
+  @IsBoolean({
+    message: i18nValidationMessage('validation.IS_BOOLEAN', {
+      constraint1: 'isPrimary',
+    }),
+  })
+  @IsOptional()
+  isPrimary?: boolean;
 
   @ApiProperty({
     example: 'Notas adicionales sobre el personal de la temporada del equipo',

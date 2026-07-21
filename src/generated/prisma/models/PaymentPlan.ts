@@ -56,6 +56,8 @@ export type PaymentPlanMinAggregateOutputType = {
   advanceCyclesDiscountPercent: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PaymentPlanMaxAggregateOutputType = {
@@ -72,6 +74,8 @@ export type PaymentPlanMaxAggregateOutputType = {
   advanceCyclesDiscountPercent: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PaymentPlanCountAggregateOutputType = {
@@ -88,6 +92,8 @@ export type PaymentPlanCountAggregateOutputType = {
   advanceCyclesDiscountPercent: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -122,6 +128,8 @@ export type PaymentPlanMinAggregateInputType = {
   advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PaymentPlanMaxAggregateInputType = {
@@ -138,6 +146,8 @@ export type PaymentPlanMaxAggregateInputType = {
   advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PaymentPlanCountAggregateInputType = {
@@ -154,6 +164,8 @@ export type PaymentPlanCountAggregateInputType = {
   advanceCyclesDiscountPercent?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -257,6 +269,8 @@ export type PaymentPlanGroupByOutputType = {
   advanceCyclesDiscountPercent: runtime.Decimal
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: PaymentPlanCountAggregateOutputType | null
   _avg: PaymentPlanAvgAggregateOutputType | null
   _sum: PaymentPlanSumAggregateOutputType | null
@@ -296,10 +310,14 @@ export type PaymentPlanWhereInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
   teamSeasons?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonNullableScalarRelationFilter, Prisma.CourseSeasonWhereInput> | null
   playerMemberships?: Prisma.PlayerMembershipListRelationFilter
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type PaymentPlanOrderByWithRelationInput = {
@@ -316,10 +334,14 @@ export type PaymentPlanOrderByWithRelationInput = {
   advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   teamSeasons?: Prisma.TeamSeasonOrderByWithRelationInput
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
   playerMemberships?: Prisma.PlayerMembershipOrderByRelationAggregateInput
   studentMemberships?: Prisma.StudentMembershipOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type PaymentPlanWhereUniqueInput = Prisma.AtLeast<{
@@ -339,10 +361,14 @@ export type PaymentPlanWhereUniqueInput = Prisma.AtLeast<{
   advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
   teamSeasons?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonNullableScalarRelationFilter, Prisma.CourseSeasonWhereInput> | null
   playerMemberships?: Prisma.PlayerMembershipListRelationFilter
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type PaymentPlanOrderByWithAggregationInput = {
@@ -359,6 +385,8 @@ export type PaymentPlanOrderByWithAggregationInput = {
   advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PaymentPlanCountOrderByAggregateInput
   _avg?: Prisma.PaymentPlanAvgOrderByAggregateInput
   _max?: Prisma.PaymentPlanMaxOrderByAggregateInput
@@ -383,6 +411,8 @@ export type PaymentPlanScalarWhereWithAggregatesInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PaymentPlan"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"PaymentPlan"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"PaymentPlan"> | string | null
 }
 
 export type PaymentPlanCreateInput = {
@@ -401,6 +431,8 @@ export type PaymentPlanCreateInput = {
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
 }
 
 export type PaymentPlanUncheckedCreateInput = {
@@ -417,6 +449,8 @@ export type PaymentPlanUncheckedCreateInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
 }
@@ -437,6 +471,8 @@ export type PaymentPlanUpdateInput = {
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
 }
 
 export type PaymentPlanUncheckedUpdateInput = {
@@ -453,6 +489,8 @@ export type PaymentPlanUncheckedUpdateInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
 }
@@ -471,6 +509,8 @@ export type PaymentPlanCreateManyInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PaymentPlanUpdateManyMutationInput = {
@@ -501,6 +541,8 @@ export type PaymentPlanUncheckedUpdateManyInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentPlanListRelationFilter = {
@@ -527,6 +569,8 @@ export type PaymentPlanCountOrderByAggregateInput = {
   advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PaymentPlanAvgOrderByAggregateInput = {
@@ -551,6 +595,8 @@ export type PaymentPlanMaxOrderByAggregateInput = {
   advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PaymentPlanMinOrderByAggregateInput = {
@@ -567,6 +613,8 @@ export type PaymentPlanMinOrderByAggregateInput = {
   advanceCyclesDiscountPercent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PaymentPlanSumOrderByAggregateInput = {
@@ -636,6 +684,90 @@ export type PaymentPlanUpdateOneRequiredWithoutPlayerMembershipsNestedInput = {
   upsert?: Prisma.PaymentPlanUpsertWithoutPlayerMembershipsInput
   connect?: Prisma.PaymentPlanWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentPlanUpdateToOneWithWhereWithoutPlayerMembershipsInput, Prisma.PaymentPlanUpdateWithoutPlayerMembershipsInput>, Prisma.PaymentPlanUncheckedUpdateWithoutPlayerMembershipsInput>
+}
+
+export type PaymentPlanCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput> | Prisma.PaymentPlanCreateWithoutCreatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+}
+
+export type PaymentPlanCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput> | Prisma.PaymentPlanCreateWithoutUpdatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+}
+
+export type PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput> | Prisma.PaymentPlanCreateWithoutCreatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+}
+
+export type PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput> | Prisma.PaymentPlanCreateWithoutUpdatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+}
+
+export type PaymentPlanUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput> | Prisma.PaymentPlanCreateWithoutCreatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PaymentPlanUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PaymentPlanUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyCreatedByInputEnvelope
+  set?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  disconnect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  delete?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  update?: Prisma.PaymentPlanUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PaymentPlanUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PaymentPlanUpdateManyWithWhereWithoutCreatedByInput | Prisma.PaymentPlanUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PaymentPlanScalarWhereInput | Prisma.PaymentPlanScalarWhereInput[]
+}
+
+export type PaymentPlanUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput> | Prisma.PaymentPlanCreateWithoutUpdatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PaymentPlanUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PaymentPlanUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  disconnect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  delete?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  update?: Prisma.PaymentPlanUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PaymentPlanUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PaymentPlanUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PaymentPlanUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PaymentPlanScalarWhereInput | Prisma.PaymentPlanScalarWhereInput[]
+}
+
+export type PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput> | Prisma.PaymentPlanCreateWithoutCreatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PaymentPlanUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PaymentPlanUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyCreatedByInputEnvelope
+  set?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  disconnect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  delete?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  update?: Prisma.PaymentPlanUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PaymentPlanUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PaymentPlanUpdateManyWithWhereWithoutCreatedByInput | Prisma.PaymentPlanUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PaymentPlanScalarWhereInput | Prisma.PaymentPlanScalarWhereInput[]
+}
+
+export type PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput> | Prisma.PaymentPlanCreateWithoutUpdatedByInput[] | Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput | Prisma.PaymentPlanCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PaymentPlanUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PaymentPlanUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PaymentPlanCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  disconnect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  delete?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  connect?: Prisma.PaymentPlanWhereUniqueInput | Prisma.PaymentPlanWhereUniqueInput[]
+  update?: Prisma.PaymentPlanUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PaymentPlanUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PaymentPlanUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PaymentPlanUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PaymentPlanScalarWhereInput | Prisma.PaymentPlanScalarWhereInput[]
 }
 
 export type PaymentPlanCreateNestedManyWithoutCourseSeasonInput = {
@@ -709,6 +841,8 @@ export type PaymentPlanCreateWithoutTeamSeasonsInput = {
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
 }
 
 export type PaymentPlanUncheckedCreateWithoutTeamSeasonsInput = {
@@ -724,6 +858,8 @@ export type PaymentPlanUncheckedCreateWithoutTeamSeasonsInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
 }
@@ -771,6 +907,8 @@ export type PaymentPlanScalarWhereInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFilter<"PaymentPlan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentPlan"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PaymentPlan"> | string | null
 }
 
 export type PaymentPlanCreateWithoutPlayerMembershipsInput = {
@@ -788,6 +926,8 @@ export type PaymentPlanCreateWithoutPlayerMembershipsInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
 }
 
 export type PaymentPlanUncheckedCreateWithoutPlayerMembershipsInput = {
@@ -804,6 +944,8 @@ export type PaymentPlanUncheckedCreateWithoutPlayerMembershipsInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
 }
 
@@ -838,6 +980,8 @@ export type PaymentPlanUpdateWithoutPlayerMembershipsInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
 }
 
 export type PaymentPlanUncheckedUpdateWithoutPlayerMembershipsInput = {
@@ -854,7 +998,137 @@ export type PaymentPlanUncheckedUpdateWithoutPlayerMembershipsInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
+}
+
+export type PaymentPlanCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
+  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
+  playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
+}
+
+export type PaymentPlanUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  teamSeasonId?: string | null
+  courseSeasonId?: string | null
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
+}
+
+export type PaymentPlanCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PaymentPlanCreateManyCreatedByInputEnvelope = {
+  data: Prisma.PaymentPlanCreateManyCreatedByInput | Prisma.PaymentPlanCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PaymentPlanCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
+  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
+  playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+}
+
+export type PaymentPlanUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  teamSeasonId?: string | null
+  courseSeasonId?: string | null
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
+}
+
+export type PaymentPlanCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PaymentPlanCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.PaymentPlanCreateManyUpdatedByInput | Prisma.PaymentPlanCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PaymentPlanUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  update: Prisma.XOR<Prisma.PaymentPlanUpdateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.PaymentPlanCreateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PaymentPlanUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  data: Prisma.XOR<Prisma.PaymentPlanUpdateWithoutCreatedByInput, Prisma.PaymentPlanUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type PaymentPlanUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.PaymentPlanScalarWhereInput
+  data: Prisma.XOR<Prisma.PaymentPlanUpdateManyMutationInput, Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type PaymentPlanUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  update: Prisma.XOR<Prisma.PaymentPlanUpdateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.PaymentPlanCreateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PaymentPlanUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PaymentPlanWhereUniqueInput
+  data: Prisma.XOR<Prisma.PaymentPlanUpdateWithoutUpdatedByInput, Prisma.PaymentPlanUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type PaymentPlanUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.PaymentPlanScalarWhereInput
+  data: Prisma.XOR<Prisma.PaymentPlanUpdateManyMutationInput, Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type PaymentPlanCreateWithoutCourseSeasonInput = {
@@ -872,6 +1146,8 @@ export type PaymentPlanCreateWithoutCourseSeasonInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
 }
 
 export type PaymentPlanUncheckedCreateWithoutCourseSeasonInput = {
@@ -887,6 +1163,8 @@ export type PaymentPlanUncheckedCreateWithoutCourseSeasonInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
 }
@@ -932,6 +1210,8 @@ export type PaymentPlanCreateWithoutStudentMembershipsInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedOneWithoutPaymentPlansInput
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutPaymentPlansInput
   playerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutPaymentPlanInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPaymentPlansInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPaymentPlansInput
 }
 
 export type PaymentPlanUncheckedCreateWithoutStudentMembershipsInput = {
@@ -948,6 +1228,8 @@ export type PaymentPlanUncheckedCreateWithoutStudentMembershipsInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutPaymentPlanInput
 }
 
@@ -982,6 +1264,8 @@ export type PaymentPlanUpdateWithoutStudentMembershipsInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
 }
 
 export type PaymentPlanUncheckedUpdateWithoutStudentMembershipsInput = {
@@ -998,6 +1282,8 @@ export type PaymentPlanUncheckedUpdateWithoutStudentMembershipsInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
 }
 
@@ -1014,6 +1300,8 @@ export type PaymentPlanCreateManyTeamSeasonsInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PaymentPlanUpdateWithoutTeamSeasonsInput = {
@@ -1031,6 +1319,8 @@ export type PaymentPlanUpdateWithoutTeamSeasonsInput = {
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
 }
 
 export type PaymentPlanUncheckedUpdateWithoutTeamSeasonsInput = {
@@ -1046,6 +1336,8 @@ export type PaymentPlanUncheckedUpdateWithoutTeamSeasonsInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
 }
@@ -1063,6 +1355,152 @@ export type PaymentPlanUncheckedUpdateManyWithoutTeamSeasonsInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PaymentPlanCreateManyCreatedByInput = {
+  id?: string
+  teamSeasonId?: string | null
+  courseSeasonId?: string | null
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type PaymentPlanCreateManyUpdatedByInput = {
+  id?: string
+  teamSeasonId?: string | null
+  courseSeasonId?: string | null
+  name: string
+  registrationDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: boolean
+  isSinglePayment?: boolean
+  advanceCycles?: number
+  advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type PaymentPlanUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
+  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
+}
+
+export type PaymentPlanUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
+}
+
+export type PaymentPlanUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PaymentPlanUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
+  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutPaymentPlansNestedInput
+  playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+}
+
+export type PaymentPlanUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
+}
+
+export type PaymentPlanUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSinglePayment?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  advanceCycles?: Prisma.IntFieldUpdateOperationsInput | number
+  advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PaymentPlanCreateManyCourseSeasonInput = {
@@ -1078,6 +1516,8 @@ export type PaymentPlanCreateManyCourseSeasonInput = {
   advanceCyclesDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PaymentPlanUpdateWithoutCourseSeasonInput = {
@@ -1095,6 +1535,8 @@ export type PaymentPlanUpdateWithoutCourseSeasonInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateOneWithoutPaymentPlansNestedInput
   playerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutPaymentPlanNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPaymentPlansNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPaymentPlansNestedInput
 }
 
 export type PaymentPlanUncheckedUpdateWithoutCourseSeasonInput = {
@@ -1110,6 +1552,8 @@ export type PaymentPlanUncheckedUpdateWithoutCourseSeasonInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutPaymentPlanNestedInput
 }
@@ -1127,6 +1571,8 @@ export type PaymentPlanUncheckedUpdateManyWithoutCourseSeasonInput = {
   advanceCyclesDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1183,10 +1629,14 @@ export type PaymentPlanSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
   playerMemberships?: boolean | Prisma.PaymentPlan$playerMembershipsArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.PaymentPlan$studentMembershipsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PaymentPlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paymentPlan"]>
 
@@ -1204,8 +1654,12 @@ export type PaymentPlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["paymentPlan"]>
 
 export type PaymentPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1222,8 +1676,12 @@ export type PaymentPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["paymentPlan"]>
 
 export type PaymentPlanSelectScalar = {
@@ -1240,23 +1698,31 @@ export type PaymentPlanSelectScalar = {
   advanceCyclesDiscountPercent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type PaymentPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "courseSeasonId" | "name" | "registrationDiscountPercent" | "recurringDiscountPercent" | "seasonFeeDiscountPercent" | "isDefault" | "isSinglePayment" | "advanceCycles" | "advanceCyclesDiscountPercent" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPlan"]>
+export type PaymentPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "courseSeasonId" | "name" | "registrationDiscountPercent" | "recurringDiscountPercent" | "seasonFeeDiscountPercent" | "isDefault" | "isSinglePayment" | "advanceCycles" | "advanceCyclesDiscountPercent" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["paymentPlan"]>
 export type PaymentPlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
   playerMemberships?: boolean | Prisma.PaymentPlan$playerMembershipsArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.PaymentPlan$studentMembershipsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PaymentPlanCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PaymentPlanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
 }
 export type PaymentPlanIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teamSeasons?: boolean | Prisma.PaymentPlan$teamSeasonsArgs<ExtArgs>
   courseSeason?: boolean | Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PaymentPlan$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PaymentPlan$updatedByArgs<ExtArgs>
 }
 
 export type $PaymentPlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1266,6 +1732,8 @@ export type $PaymentPlanPayload<ExtArgs extends runtime.Types.Extensions.Interna
     courseSeason: Prisma.$CourseSeasonPayload<ExtArgs> | null
     playerMemberships: Prisma.$PlayerMembershipPayload<ExtArgs>[]
     studentMemberships: Prisma.$StudentMembershipPayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1290,6 +1758,8 @@ export type $PaymentPlanPayload<ExtArgs extends runtime.Types.Extensions.Interna
     advanceCyclesDiscountPercent: runtime.Decimal
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["paymentPlan"]>
   composites: {}
 }
@@ -1688,6 +2158,8 @@ export interface Prisma__PaymentPlanClient<T, Null = never, ExtArgs extends runt
   courseSeason<T extends Prisma.PaymentPlan$courseSeasonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlan$courseSeasonArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   playerMemberships<T extends Prisma.PaymentPlan$playerMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlan$playerMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentMemberships<T extends Prisma.PaymentPlan$studentMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlan$studentMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.PaymentPlan$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlan$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.PaymentPlan$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentPlan$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1730,6 +2202,8 @@ export interface PaymentPlanFieldRefs {
   readonly advanceCyclesDiscountPercent: Prisma.FieldRef<"PaymentPlan", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"PaymentPlan", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PaymentPlan", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"PaymentPlan", 'String'>
+  readonly updatedById: Prisma.FieldRef<"PaymentPlan", 'String'>
 }
     
 
@@ -2209,6 +2683,44 @@ export type PaymentPlan$studentMembershipsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.StudentMembershipScalarFieldEnum | Prisma.StudentMembershipScalarFieldEnum[]
+}
+
+/**
+ * PaymentPlan.createdBy
+ */
+export type PaymentPlan$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * PaymentPlan.updatedBy
+ */
+export type PaymentPlan$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

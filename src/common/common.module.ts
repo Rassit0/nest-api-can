@@ -5,6 +5,6 @@ import { PrismaService } from 'src/prisma.service';
 @Global()
 @Module({
   providers: [ExistsConstraint, PrismaService],
-  exports: [ExistsConstraint],
+  exports: [ExistsConstraint, PrismaService],
 })
 export class CommonModule {}

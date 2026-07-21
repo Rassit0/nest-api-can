@@ -53,6 +53,30 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   status: true,
   isRegistrationOpen: true,
   billingConfig: true,
+  teamSeasonStaffs: {
+    select: {
+      id: true,
+      role: true,
+      isPrimary: true,
+      startedAt: true,
+      endedAt: true,
+      staff: {
+        select: {
+          id: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              imageUrl: true,
+              documentNumber: true,
+            },
+          },
+        },
+      },
+    },
+  },
   _count: {
     select: {
       playerMemberships: {
@@ -951,7 +975,7 @@ export class TeamSeasonService {
     });
 
     return {
-      message: 'Equipos públicos obtenidos exitosamente',
+      message: 'Equipos pï¿½blicos obtenidos exitosamente',
       data: mapped
     };
   }

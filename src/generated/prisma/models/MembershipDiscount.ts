@@ -50,6 +50,8 @@ export type MembershipDiscountMinAggregateOutputType = {
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type MembershipDiscountMaxAggregateOutputType = {
@@ -64,6 +66,8 @@ export type MembershipDiscountMaxAggregateOutputType = {
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type MembershipDiscountCountAggregateOutputType = {
@@ -78,6 +82,8 @@ export type MembershipDiscountCountAggregateOutputType = {
   reason: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -106,6 +112,8 @@ export type MembershipDiscountMinAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type MembershipDiscountMaxAggregateInputType = {
@@ -120,6 +128,8 @@ export type MembershipDiscountMaxAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type MembershipDiscountCountAggregateInputType = {
@@ -134,6 +144,8 @@ export type MembershipDiscountCountAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -235,6 +247,8 @@ export type MembershipDiscountGroupByOutputType = {
   reason: string | null
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: MembershipDiscountCountAggregateOutputType | null
   _avg: MembershipDiscountAvgAggregateOutputType | null
   _sum: MembershipDiscountSumAggregateOutputType | null
@@ -272,7 +286,11 @@ export type MembershipDiscountWhereInput = {
   reason?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type MembershipDiscountOrderByWithRelationInput = {
@@ -287,7 +305,11 @@ export type MembershipDiscountOrderByWithRelationInput = {
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type MembershipDiscountWhereUniqueInput = Prisma.AtLeast<{
@@ -305,7 +327,11 @@ export type MembershipDiscountWhereUniqueInput = Prisma.AtLeast<{
   reason?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
   playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type MembershipDiscountOrderByWithAggregationInput = {
@@ -320,6 +346,8 @@ export type MembershipDiscountOrderByWithAggregationInput = {
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MembershipDiscountCountOrderByAggregateInput
   _avg?: Prisma.MembershipDiscountAvgOrderByAggregateInput
   _max?: Prisma.MembershipDiscountMaxOrderByAggregateInput
@@ -342,6 +370,8 @@ export type MembershipDiscountScalarWhereWithAggregatesInput = {
   reason?: Prisma.StringNullableWithAggregatesFilter<"MembershipDiscount"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MembershipDiscount"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"MembershipDiscount"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"MembershipDiscount"> | string | null
 }
 
 export type MembershipDiscountCreateInput = {
@@ -356,6 +386,8 @@ export type MembershipDiscountCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipDiscountsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipDiscountsInput
 }
 
 export type MembershipDiscountUncheckedCreateInput = {
@@ -370,6 +402,8 @@ export type MembershipDiscountUncheckedCreateInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipDiscountUpdateInput = {
@@ -384,6 +418,8 @@ export type MembershipDiscountUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipDiscountsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipDiscountsNestedInput
 }
 
 export type MembershipDiscountUncheckedUpdateInput = {
@@ -398,6 +434,8 @@ export type MembershipDiscountUncheckedUpdateInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipDiscountCreateManyInput = {
@@ -412,6 +450,8 @@ export type MembershipDiscountCreateManyInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipDiscountUpdateManyMutationInput = {
@@ -439,6 +479,8 @@ export type MembershipDiscountUncheckedUpdateManyInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipDiscountListRelationFilter = {
@@ -463,6 +505,8 @@ export type MembershipDiscountCountOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipDiscountAvgOrderByAggregateInput = {
@@ -483,6 +527,8 @@ export type MembershipDiscountMaxOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipDiscountMinOrderByAggregateInput = {
@@ -497,6 +543,8 @@ export type MembershipDiscountMinOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type MembershipDiscountSumOrderByAggregateInput = {
@@ -551,6 +599,90 @@ export type EnumMembershipDiscountTypeFieldUpdateOperationsInput = {
   set?: $Enums.MembershipDiscountType
 }
 
+export type MembershipDiscountCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipDiscountCreateWithoutCreatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyCreatedByInputEnvelope
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+}
+
+export type MembershipDiscountCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipDiscountCreateWithoutUpdatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+}
+
+export type MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipDiscountCreateWithoutCreatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyCreatedByInputEnvelope
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+}
+
+export type MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipDiscountCreateWithoutUpdatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+}
+
+export type MembershipDiscountUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipDiscountCreateWithoutCreatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyCreatedByInputEnvelope
+  set?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  disconnect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  delete?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  update?: Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.MembershipDiscountUpdateManyWithWhereWithoutCreatedByInput | Prisma.MembershipDiscountUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.MembershipDiscountScalarWhereInput | Prisma.MembershipDiscountScalarWhereInput[]
+}
+
+export type MembershipDiscountUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipDiscountCreateWithoutUpdatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyUpdatedByInputEnvelope
+  set?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  disconnect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  delete?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  update?: Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.MembershipDiscountUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MembershipDiscountUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.MembershipDiscountScalarWhereInput | Prisma.MembershipDiscountScalarWhereInput[]
+}
+
+export type MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.MembershipDiscountCreateWithoutCreatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyCreatedByInputEnvelope
+  set?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  disconnect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  delete?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  update?: Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.MembershipDiscountUpdateManyWithWhereWithoutCreatedByInput | Prisma.MembershipDiscountUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.MembershipDiscountScalarWhereInput | Prisma.MembershipDiscountScalarWhereInput[]
+}
+
+export type MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.MembershipDiscountCreateWithoutUpdatedByInput[] | Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.MembershipDiscountCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipDiscountUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.MembershipDiscountCreateManyUpdatedByInputEnvelope
+  set?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  disconnect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  delete?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  connect?: Prisma.MembershipDiscountWhereUniqueInput | Prisma.MembershipDiscountWhereUniqueInput[]
+  update?: Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MembershipDiscountUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.MembershipDiscountUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MembershipDiscountUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.MembershipDiscountScalarWhereInput | Prisma.MembershipDiscountScalarWhereInput[]
+}
+
 export type MembershipDiscountCreateWithoutPlayerMembershipInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -562,6 +694,8 @@ export type MembershipDiscountCreateWithoutPlayerMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipDiscountsInput
 }
 
 export type MembershipDiscountUncheckedCreateWithoutPlayerMembershipInput = {
@@ -575,6 +709,8 @@ export type MembershipDiscountUncheckedCreateWithoutPlayerMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipDiscountCreateOrConnectWithoutPlayerMembershipInput = {
@@ -618,6 +754,120 @@ export type MembershipDiscountScalarWhereInput = {
   reason?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MembershipDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"MembershipDiscount"> | string | null
+}
+
+export type MembershipDiscountCreateWithoutCreatedByInput = {
+  id?: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMembershipDiscountsInput
+}
+
+export type MembershipDiscountUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type MembershipDiscountCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  create: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput>
+}
+
+export type MembershipDiscountCreateManyCreatedByInputEnvelope = {
+  data: Prisma.MembershipDiscountCreateManyCreatedByInput | Prisma.MembershipDiscountCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MembershipDiscountCreateWithoutUpdatedByInput = {
+  id?: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutMembershipDiscountsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMembershipDiscountsInput
+}
+
+export type MembershipDiscountUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type MembershipDiscountCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  create: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type MembershipDiscountCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.MembershipDiscountCreateManyUpdatedByInput | Prisma.MembershipDiscountCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MembershipDiscountUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  update: Prisma.XOR<Prisma.MembershipDiscountUpdateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutCreatedByInput>
+}
+
+export type MembershipDiscountUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  data: Prisma.XOR<Prisma.MembershipDiscountUpdateWithoutCreatedByInput, Prisma.MembershipDiscountUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type MembershipDiscountUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.MembershipDiscountScalarWhereInput
+  data: Prisma.XOR<Prisma.MembershipDiscountUpdateManyMutationInput, Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type MembershipDiscountUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  update: Prisma.XOR<Prisma.MembershipDiscountUpdateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.MembershipDiscountCreateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type MembershipDiscountUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.MembershipDiscountWhereUniqueInput
+  data: Prisma.XOR<Prisma.MembershipDiscountUpdateWithoutUpdatedByInput, Prisma.MembershipDiscountUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type MembershipDiscountUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.MembershipDiscountScalarWhereInput
+  data: Prisma.XOR<Prisma.MembershipDiscountUpdateManyMutationInput, Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type MembershipDiscountCreateManyPlayerMembershipInput = {
@@ -631,6 +881,8 @@ export type MembershipDiscountCreateManyPlayerMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type MembershipDiscountUpdateWithoutPlayerMembershipInput = {
@@ -644,6 +896,8 @@ export type MembershipDiscountUpdateWithoutPlayerMembershipInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipDiscountsNestedInput
 }
 
 export type MembershipDiscountUncheckedUpdateWithoutPlayerMembershipInput = {
@@ -657,6 +911,8 @@ export type MembershipDiscountUncheckedUpdateWithoutPlayerMembershipInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipInput = {
@@ -670,6 +926,128 @@ export type MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipInput = 
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipDiscountCreateManyCreatedByInput = {
+  id?: string
+  playerMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type MembershipDiscountCreateManyUpdatedByInput = {
+  id?: string
+  playerMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type MembershipDiscountUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMembershipDiscountsNestedInput
+}
+
+export type MembershipDiscountUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipDiscountUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipDiscountUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutMembershipDiscountsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMembershipDiscountsNestedInput
+}
+
+export type MembershipDiscountUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MembershipDiscountUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -686,7 +1064,11 @@ export type MembershipDiscountSelect<ExtArgs extends runtime.Types.Extensions.In
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipDiscount"]>
 
 export type MembershipDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -701,7 +1083,11 @@ export type MembershipDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipDiscount"]>
 
 export type MembershipDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -716,7 +1102,11 @@ export type MembershipDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["membershipDiscount"]>
 
 export type MembershipDiscountSelectScalar = {
@@ -731,23 +1121,33 @@ export type MembershipDiscountSelectScalar = {
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type MembershipDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "seasonFeeDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["membershipDiscount"]>
+export type MembershipDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "seasonFeeDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["membershipDiscount"]>
 export type MembershipDiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }
 export type MembershipDiscountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }
 export type MembershipDiscountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.MembershipDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.MembershipDiscount$updatedByArgs<ExtArgs>
 }
 
 export type $MembershipDiscountPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MembershipDiscount"
   objects: {
     playerMembership: Prisma.$PlayerMembershipPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -761,6 +1161,8 @@ export type $MembershipDiscountPayload<ExtArgs extends runtime.Types.Extensions.
     reason: string | null
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["membershipDiscount"]>
   composites: {}
 }
@@ -1156,6 +1558,8 @@ readonly fields: MembershipDiscountFieldRefs;
 export interface Prisma__MembershipDiscountClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   playerMembership<T extends Prisma.PlayerMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerMembershipClient<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.MembershipDiscount$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MembershipDiscount$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.MembershipDiscount$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MembershipDiscount$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1196,6 +1600,8 @@ export interface MembershipDiscountFieldRefs {
   readonly reason: Prisma.FieldRef<"MembershipDiscount", 'String'>
   readonly createdAt: Prisma.FieldRef<"MembershipDiscount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MembershipDiscount", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"MembershipDiscount", 'String'>
+  readonly updatedById: Prisma.FieldRef<"MembershipDiscount", 'String'>
 }
     
 
@@ -1589,6 +1995,44 @@ export type MembershipDiscountDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many MembershipDiscounts to delete.
    */
   limit?: number
+}
+
+/**
+ * MembershipDiscount.createdBy
+ */
+export type MembershipDiscount$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * MembershipDiscount.updatedBy
+ */
+export type MembershipDiscount$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

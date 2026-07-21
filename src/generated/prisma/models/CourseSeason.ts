@@ -57,6 +57,8 @@ export type CourseSeasonMinAggregateOutputType = {
   isRegistrationOpen: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CourseSeasonMaxAggregateOutputType = {
@@ -76,6 +78,8 @@ export type CourseSeasonMaxAggregateOutputType = {
   isRegistrationOpen: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type CourseSeasonCountAggregateOutputType = {
@@ -95,6 +99,8 @@ export type CourseSeasonCountAggregateOutputType = {
   isRegistrationOpen: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -130,6 +136,8 @@ export type CourseSeasonMinAggregateInputType = {
   isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CourseSeasonMaxAggregateInputType = {
@@ -149,6 +157,8 @@ export type CourseSeasonMaxAggregateInputType = {
   isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type CourseSeasonCountAggregateInputType = {
@@ -168,6 +178,8 @@ export type CourseSeasonCountAggregateInputType = {
   isRegistrationOpen?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -274,6 +286,8 @@ export type CourseSeasonGroupByOutputType = {
   isRegistrationOpen: boolean
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: CourseSeasonCountAggregateOutputType | null
   _avg: CourseSeasonAvgAggregateOutputType | null
   _sum: CourseSeasonSumAggregateOutputType | null
@@ -316,6 +330,8 @@ export type CourseSeasonWhereInput = {
   isRegistrationOpen?: Prisma.BoolFilter<"CourseSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
@@ -326,6 +342,8 @@ export type CourseSeasonWhereInput = {
   scheduleCourses?: Prisma.ScheduleCourseListRelationFilter
   billingConfig?: Prisma.XOR<Prisma.CourseSeasonBillingConfigNullableScalarRelationFilter, Prisma.CourseSeasonBillingConfigWhereInput> | null
   pauses?: Prisma.CourseSeasonPauseListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type CourseSeasonOrderByWithRelationInput = {
@@ -345,6 +363,8 @@ export type CourseSeasonOrderByWithRelationInput = {
   isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
   season?: Prisma.SeasonOrderByWithRelationInput
@@ -355,6 +375,8 @@ export type CourseSeasonOrderByWithRelationInput = {
   scheduleCourses?: Prisma.ScheduleCourseOrderByRelationAggregateInput
   billingConfig?: Prisma.CourseSeasonBillingConfigOrderByWithRelationInput
   pauses?: Prisma.CourseSeasonPauseOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CourseSeasonWhereUniqueInput = Prisma.AtLeast<{
@@ -378,6 +400,8 @@ export type CourseSeasonWhereUniqueInput = Prisma.AtLeast<{
   isRegistrationOpen?: Prisma.BoolFilter<"CourseSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
@@ -388,6 +412,8 @@ export type CourseSeasonWhereUniqueInput = Prisma.AtLeast<{
   scheduleCourses?: Prisma.ScheduleCourseListRelationFilter
   billingConfig?: Prisma.XOR<Prisma.CourseSeasonBillingConfigNullableScalarRelationFilter, Prisma.CourseSeasonBillingConfigWhereInput> | null
   pauses?: Prisma.CourseSeasonPauseListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "courseId_categoryId_seasonId_gender">
 
 export type CourseSeasonOrderByWithAggregationInput = {
@@ -407,6 +433,8 @@ export type CourseSeasonOrderByWithAggregationInput = {
   isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CourseSeasonCountOrderByAggregateInput
   _avg?: Prisma.CourseSeasonAvgOrderByAggregateInput
   _max?: Prisma.CourseSeasonMaxOrderByAggregateInput
@@ -434,6 +462,8 @@ export type CourseSeasonScalarWhereWithAggregatesInput = {
   isRegistrationOpen?: Prisma.BoolWithAggregatesFilter<"CourseSeason"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseSeason"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CourseSeason"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeason"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeason"> | string | null
 }
 
 export type CourseSeasonCreateInput = {
@@ -460,6 +490,8 @@ export type CourseSeasonCreateInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateInput = {
@@ -479,6 +511,8 @@ export type CourseSeasonUncheckedCreateInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -512,6 +546,8 @@ export type CourseSeasonUpdateInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateInput = {
@@ -531,6 +567,8 @@ export type CourseSeasonUncheckedUpdateInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -557,6 +595,8 @@ export type CourseSeasonCreateManyInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonUpdateManyMutationInput = {
@@ -592,6 +632,8 @@ export type CourseSeasonUncheckedUpdateManyInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonListRelationFilter = {
@@ -633,6 +675,8 @@ export type CourseSeasonCountOrderByAggregateInput = {
   isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonAvgOrderByAggregateInput = {
@@ -659,6 +703,8 @@ export type CourseSeasonMaxOrderByAggregateInput = {
   isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonMinOrderByAggregateInput = {
@@ -678,6 +724,8 @@ export type CourseSeasonMinOrderByAggregateInput = {
   isRegistrationOpen?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type CourseSeasonSumOrderByAggregateInput = {
@@ -790,6 +838,90 @@ export type CourseSeasonUpdateOneWithoutPaymentPlansNestedInput = {
   delete?: Prisma.CourseSeasonWhereInput | boolean
   connect?: Prisma.CourseSeasonWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseSeasonUpdateToOneWithWhereWithoutPaymentPlansInput, Prisma.CourseSeasonUpdateWithoutPaymentPlansInput>, Prisma.CourseSeasonUncheckedUpdateWithoutPaymentPlansInput>
+}
+
+export type CourseSeasonCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonCreateWithoutCreatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+}
+
+export type CourseSeasonCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+}
+
+export type CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonCreateWithoutCreatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyCreatedByInputEnvelope
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+}
+
+export type CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+}
+
+export type CourseSeasonUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonCreateWithoutCreatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CourseSeasonUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyCreatedByInputEnvelope
+  set?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  update?: Prisma.CourseSeasonUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CourseSeasonUpdateManyWithWhereWithoutCreatedByInput | Prisma.CourseSeasonUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CourseSeasonScalarWhereInput | Prisma.CourseSeasonScalarWhereInput[]
+}
+
+export type CourseSeasonUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CourseSeasonUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  update?: Prisma.CourseSeasonUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CourseSeasonUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CourseSeasonUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CourseSeasonScalarWhereInput | Prisma.CourseSeasonScalarWhereInput[]
+}
+
+export type CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput> | Prisma.CourseSeasonCreateWithoutCreatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.CourseSeasonUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyCreatedByInputEnvelope
+  set?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  update?: Prisma.CourseSeasonUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.CourseSeasonUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.CourseSeasonUpdateManyWithWhereWithoutCreatedByInput | Prisma.CourseSeasonUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.CourseSeasonScalarWhereInput | Prisma.CourseSeasonScalarWhereInput[]
+}
+
+export type CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.CourseSeasonCreateWithoutUpdatedByInput[] | Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput | Prisma.CourseSeasonCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.CourseSeasonUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.CourseSeasonCreateManyUpdatedByInputEnvelope
+  set?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonWhereUniqueInput | Prisma.CourseSeasonWhereUniqueInput[]
+  update?: Prisma.CourseSeasonUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.CourseSeasonUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.CourseSeasonUpdateManyWithWhereWithoutUpdatedByInput | Prisma.CourseSeasonUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.CourseSeasonScalarWhereInput | Prisma.CourseSeasonScalarWhereInput[]
 }
 
 export type CourseSeasonCreateNestedManyWithoutCourseInput = {
@@ -945,6 +1077,8 @@ export type CourseSeasonCreateWithoutCategoryInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutCategoryInput = {
@@ -963,6 +1097,8 @@ export type CourseSeasonUncheckedCreateWithoutCategoryInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1018,6 +1154,8 @@ export type CourseSeasonScalarWhereInput = {
   isRegistrationOpen?: Prisma.BoolFilter<"CourseSeason"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeason"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"CourseSeason"> | string | null
 }
 
 export type CourseSeasonCreateWithoutSeasonInput = {
@@ -1043,6 +1181,8 @@ export type CourseSeasonCreateWithoutSeasonInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutSeasonInput = {
@@ -1061,6 +1201,8 @@ export type CourseSeasonUncheckedCreateWithoutSeasonInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1119,6 +1261,8 @@ export type CourseSeasonCreateWithoutPaymentPlansInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutPaymentPlansInput = {
@@ -1138,6 +1282,8 @@ export type CourseSeasonUncheckedCreateWithoutPaymentPlansInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1185,6 +1331,8 @@ export type CourseSeasonUpdateWithoutPaymentPlansInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutPaymentPlansInput = {
@@ -1204,12 +1352,174 @@ export type CourseSeasonUncheckedUpdateWithoutPaymentPlansInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
   scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUncheckedUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+}
+
+export type CourseSeasonCreateWithoutCreatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutCourseSeasonsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonsInput
+  season: Prisma.SeasonCreateNestedOneWithoutCourseSeasonsInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCourseSeasonInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonInput
+  scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
+  pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
+}
+
+export type CourseSeasonUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  courseId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedOneWithoutCourseSeasonInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCourseSeasonInput
+}
+
+export type CourseSeasonCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CourseSeasonCreateManyCreatedByInputEnvelope = {
+  data: Prisma.CourseSeasonCreateManyCreatedByInput | Prisma.CourseSeasonCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseSeasonCreateWithoutUpdatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutCourseSeasonsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonsInput
+  season: Prisma.SeasonCreateNestedOneWithoutCourseSeasonsInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCourseSeasonInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonInput
+  scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
+  pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+}
+
+export type CourseSeasonUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  courseId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedOneWithoutCourseSeasonInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCourseSeasonInput
+}
+
+export type CourseSeasonCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.CourseSeasonCreateManyUpdatedByInput | Prisma.CourseSeasonCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseSeasonUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseSeasonUpdateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.CourseSeasonCreateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutCreatedByInput>
+}
+
+export type CourseSeasonUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseSeasonUpdateWithoutCreatedByInput, Prisma.CourseSeasonUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type CourseSeasonUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.CourseSeasonScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonUpdateManyMutationInput, Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type CourseSeasonUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseSeasonUpdateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.CourseSeasonCreateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseSeasonUpdateWithoutUpdatedByInput, Prisma.CourseSeasonUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type CourseSeasonUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.CourseSeasonScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonUpdateManyMutationInput, Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type CourseSeasonCreateWithoutCourseInput = {
@@ -1235,6 +1545,8 @@ export type CourseSeasonCreateWithoutCourseInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutCourseInput = {
@@ -1253,6 +1565,8 @@ export type CourseSeasonUncheckedCreateWithoutCourseInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1311,6 +1625,8 @@ export type CourseSeasonCreateWithoutPausesInput = {
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonInput
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutPausesInput = {
@@ -1330,6 +1646,8 @@ export type CourseSeasonUncheckedCreateWithoutPausesInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1377,6 +1695,8 @@ export type CourseSeasonUpdateWithoutPausesInput = {
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonNestedInput
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutPausesInput = {
@@ -1396,6 +1716,8 @@ export type CourseSeasonUncheckedUpdateWithoutPausesInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -1427,6 +1749,8 @@ export type CourseSeasonCreateWithoutBillingConfigInput = {
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonInput
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutBillingConfigInput = {
@@ -1446,6 +1770,8 @@ export type CourseSeasonUncheckedCreateWithoutBillingConfigInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1493,6 +1819,8 @@ export type CourseSeasonUpdateWithoutBillingConfigInput = {
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonNestedInput
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutBillingConfigInput = {
@@ -1512,6 +1840,8 @@ export type CourseSeasonUncheckedUpdateWithoutBillingConfigInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -1543,6 +1873,8 @@ export type CourseSeasonCreateWithoutCourseSeasonStaffsInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutCourseSeasonStaffsInput = {
@@ -1562,6 +1894,8 @@ export type CourseSeasonUncheckedCreateWithoutCourseSeasonStaffsInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1609,6 +1943,8 @@ export type CourseSeasonUpdateWithoutCourseSeasonStaffsInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutCourseSeasonStaffsInput = {
@@ -1628,6 +1964,8 @@ export type CourseSeasonUncheckedUpdateWithoutCourseSeasonStaffsInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -1659,6 +1997,8 @@ export type CourseSeasonCreateWithoutStudentMembershipsInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutStudentMembershipsInput = {
@@ -1678,6 +2018,8 @@ export type CourseSeasonUncheckedCreateWithoutStudentMembershipsInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1725,6 +2067,8 @@ export type CourseSeasonUpdateWithoutStudentMembershipsInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutStudentMembershipsInput = {
@@ -1744,6 +2088,8 @@ export type CourseSeasonUncheckedUpdateWithoutStudentMembershipsInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -1775,6 +2121,8 @@ export type CourseSeasonCreateWithoutSessionCoursesInput = {
   scheduleCourses?: Prisma.ScheduleCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutSessionCoursesInput = {
@@ -1794,6 +2142,8 @@ export type CourseSeasonUncheckedCreateWithoutSessionCoursesInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1841,6 +2191,8 @@ export type CourseSeasonUpdateWithoutSessionCoursesInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutSessionCoursesInput = {
@@ -1860,6 +2212,8 @@ export type CourseSeasonUncheckedUpdateWithoutSessionCoursesInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -1891,6 +2245,8 @@ export type CourseSeasonCreateWithoutScheduleCoursesInput = {
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonInput
   billingConfig?: Prisma.CourseSeasonBillingConfigCreateNestedOneWithoutCourseSeasonInput
   pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonsInput
 }
 
 export type CourseSeasonUncheckedCreateWithoutScheduleCoursesInput = {
@@ -1910,6 +2266,8 @@ export type CourseSeasonUncheckedCreateWithoutScheduleCoursesInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCourseSeasonInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonInput
@@ -1957,6 +2315,8 @@ export type CourseSeasonUpdateWithoutScheduleCoursesInput = {
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutScheduleCoursesInput = {
@@ -1976,6 +2336,8 @@ export type CourseSeasonUncheckedUpdateWithoutScheduleCoursesInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -2000,6 +2362,8 @@ export type CourseSeasonCreateManyCategoryInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonUpdateWithoutCategoryInput = {
@@ -2025,6 +2389,8 @@ export type CourseSeasonUpdateWithoutCategoryInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutCategoryInput = {
@@ -2043,6 +2409,8 @@ export type CourseSeasonUncheckedUpdateWithoutCategoryInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -2068,6 +2436,8 @@ export type CourseSeasonUncheckedUpdateManyWithoutCategoryInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonCreateManySeasonInput = {
@@ -2086,6 +2456,8 @@ export type CourseSeasonCreateManySeasonInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonUpdateWithoutSeasonInput = {
@@ -2111,6 +2483,8 @@ export type CourseSeasonUpdateWithoutSeasonInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutSeasonInput = {
@@ -2129,6 +2503,8 @@ export type CourseSeasonUncheckedUpdateWithoutSeasonInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -2154,6 +2530,196 @@ export type CourseSeasonUncheckedUpdateManyWithoutSeasonInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonCreateManyCreatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  courseId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type CourseSeasonCreateManyUpdatedByInput = {
+  id?: string
+  imageUrl?: string | null
+  description?: string | null
+  maxMembers: number
+  minMembers: number
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  courseId: string
+  categoryId: string
+  seasonId: string
+  gender: $Enums.ProgramGender
+  status?: $Enums.StatusCourseSeason
+  statusNotes?: string | null
+  isRegistrationOpen?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type CourseSeasonUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCourseSeasonNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonNestedInput
+  scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
+  pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
+}
+
+export type CourseSeasonUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUncheckedUpdateOneWithoutCourseSeasonNestedInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+}
+
+export type CourseSeasonUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutCourseSeasonsNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCourseSeasonNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonNestedInput
+  scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
+  pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+}
+
+export type CourseSeasonUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  scheduleCourses?: Prisma.ScheduleCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+  billingConfig?: Prisma.CourseSeasonBillingConfigUncheckedUpdateOneWithoutCourseSeasonNestedInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonNestedInput
+}
+
+export type CourseSeasonUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  status?: Prisma.EnumStatusCourseSeasonFieldUpdateOperationsInput | $Enums.StatusCourseSeason
+  statusNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonCreateManyCourseInput = {
@@ -2172,6 +2738,8 @@ export type CourseSeasonCreateManyCourseInput = {
   isRegistrationOpen?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type CourseSeasonUpdateWithoutCourseInput = {
@@ -2197,6 +2765,8 @@ export type CourseSeasonUpdateWithoutCourseInput = {
   scheduleCourses?: Prisma.ScheduleCourseUpdateManyWithoutCourseSeasonNestedInput
   billingConfig?: Prisma.CourseSeasonBillingConfigUpdateOneWithoutCourseSeasonNestedInput
   pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput
 }
 
 export type CourseSeasonUncheckedUpdateWithoutCourseInput = {
@@ -2215,6 +2785,8 @@ export type CourseSeasonUncheckedUpdateWithoutCourseInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCourseSeasonNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonNestedInput
@@ -2240,6 +2812,8 @@ export type CourseSeasonUncheckedUpdateManyWithoutCourseInput = {
   isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2335,6 +2909,8 @@ export type CourseSeasonSelect<ExtArgs extends runtime.Types.Extensions.Internal
   isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
@@ -2345,6 +2921,8 @@ export type CourseSeasonSelect<ExtArgs extends runtime.Types.Extensions.Internal
   scheduleCourses?: boolean | Prisma.CourseSeason$scheduleCoursesArgs<ExtArgs>
   billingConfig?: boolean | Prisma.CourseSeason$billingConfigArgs<ExtArgs>
   pauses?: boolean | Prisma.CourseSeason$pausesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.CourseSeasonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeason"]>
 
@@ -2365,9 +2943,13 @@ export type CourseSeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeason"]>
 
 export type CourseSeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2387,9 +2969,13 @@ export type CourseSeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeason"]>
 
 export type CourseSeasonSelectScalar = {
@@ -2409,9 +2995,11 @@ export type CourseSeasonSelectScalar = {
   isRegistrationOpen?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type CourseSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "courseId" | "categoryId" | "seasonId" | "gender" | "status" | "statusNotes" | "isRegistrationOpen" | "createdAt" | "updatedAt", ExtArgs["result"]["courseSeason"]>
+export type CourseSeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "description" | "maxMembers" | "minMembers" | "minBirthYear" | "maxBirthYear" | "courseId" | "categoryId" | "seasonId" | "gender" | "status" | "statusNotes" | "isRegistrationOpen" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["courseSeason"]>
 export type CourseSeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -2423,17 +3011,23 @@ export type CourseSeasonInclude<ExtArgs extends runtime.Types.Extensions.Interna
   scheduleCourses?: boolean | Prisma.CourseSeason$scheduleCoursesArgs<ExtArgs>
   billingConfig?: boolean | Prisma.CourseSeason$billingConfigArgs<ExtArgs>
   pauses?: boolean | Prisma.CourseSeason$pausesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.CourseSeasonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CourseSeasonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
 }
 export type CourseSeasonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.CourseSeason$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.CourseSeason$updatedByArgs<ExtArgs>
 }
 
 export type $CourseSeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2449,6 +3043,8 @@ export type $CourseSeasonPayload<ExtArgs extends runtime.Types.Extensions.Intern
     scheduleCourses: Prisma.$ScheduleCoursePayload<ExtArgs>[]
     billingConfig: Prisma.$CourseSeasonBillingConfigPayload<ExtArgs> | null
     pauses: Prisma.$CourseSeasonPausePayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2467,6 +3063,8 @@ export type $CourseSeasonPayload<ExtArgs extends runtime.Types.Extensions.Intern
     isRegistrationOpen: boolean
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["courseSeason"]>
   composites: {}
 }
@@ -2871,6 +3469,8 @@ export interface Prisma__CourseSeasonClient<T, Null = never, ExtArgs extends run
   scheduleCourses<T extends Prisma.CourseSeason$scheduleCoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeason$scheduleCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduleCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   billingConfig<T extends Prisma.CourseSeason$billingConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeason$billingConfigArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonBillingConfigClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonBillingConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   pauses<T extends Prisma.CourseSeason$pausesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeason$pausesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPausePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.CourseSeason$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeason$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.CourseSeason$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeason$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2916,6 +3516,8 @@ export interface CourseSeasonFieldRefs {
   readonly isRegistrationOpen: Prisma.FieldRef<"CourseSeason", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"CourseSeason", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CourseSeason", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"CourseSeason", 'String'>
+  readonly updatedById: Prisma.FieldRef<"CourseSeason", 'String'>
 }
     
 
@@ -3472,6 +4074,44 @@ export type CourseSeason$pausesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CourseSeasonPauseScalarFieldEnum | Prisma.CourseSeasonPauseScalarFieldEnum[]
+}
+
+/**
+ * CourseSeason.createdBy
+ */
+export type CourseSeason$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * CourseSeason.updatedBy
+ */
+export type CourseSeason$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

@@ -1,0 +1,11 @@
+{
+  "TEAM_STAFF_CREATED": "Team staff assigned successfully",
+  "TEAM_STAFF_FETCHED": "Team staff fetched successfully",
+  "TEAM_STAFF_UPDATED": "Team staff updated successfully",
+  "TEAM_STAFF_DELETED": "Team staff deleted successfully",
+  "COURSE_STAFF_CREATED": "Staff assigned to the course season successfully",
+  "COURSE_STAFF_FETCHED": "Course staff assignments fetched successfully",
+  "COURSE_STAFF_UPDATED": "Course staff assignment updated successfully",
+  "COURSE_STAFF_DELETED": "Course staff assignment deleted successfully",
+  "STAFF_FETCHED": "Staff fetched successfully"
+}

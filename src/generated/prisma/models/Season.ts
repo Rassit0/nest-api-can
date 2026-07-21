@@ -35,6 +35,8 @@ export type SeasonMinAggregateOutputType = {
   status: $Enums.SeasonStatus | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type SeasonMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type SeasonMaxAggregateOutputType = {
   status: $Enums.SeasonStatus | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type SeasonCountAggregateOutputType = {
@@ -61,6 +65,8 @@ export type SeasonCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -76,6 +82,8 @@ export type SeasonMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type SeasonMaxAggregateInputType = {
@@ -89,6 +97,8 @@ export type SeasonMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type SeasonCountAggregateInputType = {
@@ -102,6 +112,8 @@ export type SeasonCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -188,6 +200,8 @@ export type SeasonGroupByOutputType = {
   status: $Enums.SeasonStatus
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: SeasonCountAggregateOutputType | null
   _min: SeasonMinAggregateOutputType | null
   _max: SeasonMaxAggregateOutputType | null
@@ -222,12 +236,16 @@ export type SeasonWhereInput = {
   status?: Prisma.EnumSeasonStatusFilter<"Season"> | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Season"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Season"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
   courseSeasons?: Prisma.CourseSeasonListRelationFilter
   progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter
   events?: Prisma.SeasonEventListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type SeasonOrderByWithRelationInput = {
@@ -241,12 +259,16 @@ export type SeasonOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   institution?: Prisma.InstitutionOrderByWithRelationInput
   discipline?: Prisma.DisciplineOrderByWithRelationInput
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput
   courseSeasons?: Prisma.CourseSeasonOrderByRelationAggregateInput
   progressEvaluations?: Prisma.ProgressEvaluationOrderByRelationAggregateInput
   events?: Prisma.SeasonEventOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type SeasonWhereUniqueInput = Prisma.AtLeast<{
@@ -264,12 +286,16 @@ export type SeasonWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumSeasonStatusFilter<"Season"> | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Season"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Season"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
   courseSeasons?: Prisma.CourseSeasonListRelationFilter
   progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter
   events?: Prisma.SeasonEventListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "institutionId_disciplineId_name">
 
 export type SeasonOrderByWithAggregationInput = {
@@ -283,6 +309,8 @@ export type SeasonOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SeasonCountOrderByAggregateInput
   _max?: Prisma.SeasonMaxOrderByAggregateInput
   _min?: Prisma.SeasonMinOrderByAggregateInput
@@ -302,6 +330,8 @@ export type SeasonScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumSeasonStatusWithAggregatesFilter<"Season"> | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Season"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"Season"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"Season"> | string | null
 }
 
 export type SeasonCreateInput = {
@@ -319,6 +349,8 @@ export type SeasonCreateInput = {
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateInput = {
@@ -332,6 +364,8 @@ export type SeasonUncheckedCreateInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
@@ -353,6 +387,8 @@ export type SeasonUpdateInput = {
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateInput = {
@@ -366,6 +402,8 @@ export type SeasonUncheckedUpdateInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
@@ -383,6 +421,8 @@ export type SeasonCreateManyInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type SeasonUpdateManyMutationInput = {
@@ -407,6 +447,8 @@ export type SeasonUncheckedUpdateManyInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SeasonListRelationFilter = {
@@ -436,6 +478,8 @@ export type SeasonCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type SeasonMaxOrderByAggregateInput = {
@@ -449,6 +493,8 @@ export type SeasonMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type SeasonMinOrderByAggregateInput = {
@@ -462,6 +508,8 @@ export type SeasonMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type SeasonScalarRelationFilter = {
@@ -585,6 +633,90 @@ export type SeasonUpdateOneRequiredWithoutTeamSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SeasonUpdateToOneWithWhereWithoutTeamSeasonsInput, Prisma.SeasonUpdateWithoutTeamSeasonsInput>, Prisma.SeasonUncheckedUpdateWithoutTeamSeasonsInput>
 }
 
+export type SeasonCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput> | Prisma.SeasonCreateWithoutCreatedByInput[] | Prisma.SeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCreatedByInput | Prisma.SeasonCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.SeasonCreateManyCreatedByInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.SeasonCreateWithoutUpdatedByInput[] | Prisma.SeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutUpdatedByInput | Prisma.SeasonCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.SeasonCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput> | Prisma.SeasonCreateWithoutCreatedByInput[] | Prisma.SeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCreatedByInput | Prisma.SeasonCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.SeasonCreateManyCreatedByInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.SeasonCreateWithoutUpdatedByInput[] | Prisma.SeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutUpdatedByInput | Prisma.SeasonCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.SeasonCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+}
+
+export type SeasonUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput> | Prisma.SeasonCreateWithoutCreatedByInput[] | Prisma.SeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCreatedByInput | Prisma.SeasonCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.SeasonUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.SeasonCreateManyCreatedByInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.SeasonUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutCreatedByInput | Prisma.SeasonUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+}
+
+export type SeasonUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.SeasonCreateWithoutUpdatedByInput[] | Prisma.SeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutUpdatedByInput | Prisma.SeasonCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.SeasonUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.SeasonCreateManyUpdatedByInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.SeasonUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutUpdatedByInput | Prisma.SeasonUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+}
+
+export type SeasonUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput> | Prisma.SeasonCreateWithoutCreatedByInput[] | Prisma.SeasonUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCreatedByInput | Prisma.SeasonCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.SeasonUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.SeasonCreateManyCreatedByInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.SeasonUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutCreatedByInput | Prisma.SeasonUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+}
+
+export type SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput> | Prisma.SeasonCreateWithoutUpdatedByInput[] | Prisma.SeasonUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutUpdatedByInput | Prisma.SeasonCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.SeasonUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.SeasonUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.SeasonCreateManyUpdatedByInputEnvelope
+  set?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  disconnect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  delete?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  connect?: Prisma.SeasonWhereUniqueInput | Prisma.SeasonWhereUniqueInput[]
+  update?: Prisma.SeasonUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.SeasonUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.SeasonUpdateManyWithWhereWithoutUpdatedByInput | Prisma.SeasonUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.SeasonScalarWhereInput | Prisma.SeasonScalarWhereInput[]
+}
+
 export type SeasonCreateNestedOneWithoutCourseSeasonsInput = {
   create?: Prisma.XOR<Prisma.SeasonCreateWithoutCourseSeasonsInput, Prisma.SeasonUncheckedCreateWithoutCourseSeasonsInput>
   connectOrCreate?: Prisma.SeasonCreateOrConnectWithoutCourseSeasonsInput
@@ -627,6 +759,8 @@ export type SeasonCreateWithoutDisciplineInput = {
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutDisciplineInput = {
@@ -639,6 +773,8 @@ export type SeasonUncheckedCreateWithoutDisciplineInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
@@ -685,6 +821,8 @@ export type SeasonScalarWhereInput = {
   status?: Prisma.EnumSeasonStatusFilter<"Season"> | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFilter<"Season"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Season"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Season"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Season"> | string | null
 }
 
 export type SeasonCreateWithoutInstitutionInput = {
@@ -701,6 +839,8 @@ export type SeasonCreateWithoutInstitutionInput = {
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutInstitutionInput = {
@@ -713,6 +853,8 @@ export type SeasonUncheckedCreateWithoutInstitutionInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
@@ -759,6 +901,8 @@ export type SeasonCreateWithoutEventsInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutEventsInput = {
@@ -772,6 +916,8 @@ export type SeasonUncheckedCreateWithoutEventsInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
@@ -807,6 +953,8 @@ export type SeasonUpdateWithoutEventsInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutEventsInput = {
@@ -820,6 +968,8 @@ export type SeasonUncheckedUpdateWithoutEventsInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
@@ -839,6 +989,8 @@ export type SeasonCreateWithoutTeamSeasonsInput = {
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutTeamSeasonsInput = {
@@ -852,6 +1004,8 @@ export type SeasonUncheckedCreateWithoutTeamSeasonsInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutSeasonInput
@@ -887,6 +1041,8 @@ export type SeasonUpdateWithoutTeamSeasonsInput = {
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutTeamSeasonsInput = {
@@ -900,9 +1056,135 @@ export type SeasonUncheckedUpdateWithoutTeamSeasonsInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUncheckedUpdateManyWithoutSeasonNestedInput
+}
+
+export type SeasonCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
+  events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
+}
+
+export type SeasonUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  institutionId: string
+  disciplineId: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
+  events?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutSeasonInput
+}
+
+export type SeasonCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput>
+}
+
+export type SeasonCreateManyCreatedByInputEnvelope = {
+  data: Prisma.SeasonCreateManyCreatedByInput | Prisma.SeasonCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type SeasonCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  institution: Prisma.InstitutionCreateNestedOneWithoutSeasonsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutSeasonsInput
+  teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput
+  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
+  events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+}
+
+export type SeasonUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  institutionId: string
+  disciplineId: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
+  events?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutSeasonInput
+}
+
+export type SeasonCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type SeasonCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.SeasonCreateManyUpdatedByInput | Prisma.SeasonCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type SeasonUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  update: Prisma.XOR<Prisma.SeasonUpdateWithoutCreatedByInput, Prisma.SeasonUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutCreatedByInput, Prisma.SeasonUncheckedCreateWithoutCreatedByInput>
+}
+
+export type SeasonUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  data: Prisma.XOR<Prisma.SeasonUpdateWithoutCreatedByInput, Prisma.SeasonUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type SeasonUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.SeasonScalarWhereInput
+  data: Prisma.XOR<Prisma.SeasonUpdateManyMutationInput, Prisma.SeasonUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type SeasonUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  update: Prisma.XOR<Prisma.SeasonUpdateWithoutUpdatedByInput, Prisma.SeasonUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.SeasonCreateWithoutUpdatedByInput, Prisma.SeasonUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type SeasonUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.SeasonWhereUniqueInput
+  data: Prisma.XOR<Prisma.SeasonUpdateWithoutUpdatedByInput, Prisma.SeasonUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type SeasonUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.SeasonScalarWhereInput
+  data: Prisma.XOR<Prisma.SeasonUpdateManyMutationInput, Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type SeasonCreateWithoutCourseSeasonsInput = {
@@ -919,6 +1201,8 @@ export type SeasonCreateWithoutCourseSeasonsInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutCourseSeasonsInput = {
@@ -932,6 +1216,8 @@ export type SeasonUncheckedCreateWithoutCourseSeasonsInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutSeasonInput
@@ -967,6 +1253,8 @@ export type SeasonUpdateWithoutCourseSeasonsInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutCourseSeasonsInput = {
@@ -980,6 +1268,8 @@ export type SeasonUncheckedUpdateWithoutCourseSeasonsInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUncheckedUpdateManyWithoutSeasonNestedInput
@@ -999,6 +1289,8 @@ export type SeasonCreateWithoutProgressEvaluationsInput = {
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventCreateNestedManyWithoutSeasonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonsInput
 }
 
 export type SeasonUncheckedCreateWithoutProgressEvaluationsInput = {
@@ -1012,6 +1304,8 @@ export type SeasonUncheckedCreateWithoutProgressEvaluationsInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutSeasonInput
   courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutSeasonInput
   events?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutSeasonInput
@@ -1047,6 +1341,8 @@ export type SeasonUpdateWithoutProgressEvaluationsInput = {
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutProgressEvaluationsInput = {
@@ -1060,6 +1356,8 @@ export type SeasonUncheckedUpdateWithoutProgressEvaluationsInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUncheckedUpdateManyWithoutSeasonNestedInput
@@ -1075,6 +1373,8 @@ export type SeasonCreateManyDisciplineInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type SeasonUpdateWithoutDisciplineInput = {
@@ -1091,6 +1391,8 @@ export type SeasonUpdateWithoutDisciplineInput = {
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutDisciplineInput = {
@@ -1103,6 +1405,8 @@ export type SeasonUncheckedUpdateWithoutDisciplineInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
@@ -1119,6 +1423,8 @@ export type SeasonUncheckedUpdateManyWithoutDisciplineInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SeasonCreateManyInstitutionInput = {
@@ -1131,6 +1437,8 @@ export type SeasonCreateManyInstitutionInput = {
   status?: $Enums.SeasonStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type SeasonUpdateWithoutInstitutionInput = {
@@ -1147,6 +1455,8 @@ export type SeasonUpdateWithoutInstitutionInput = {
   courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
   events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
 }
 
 export type SeasonUncheckedUpdateWithoutInstitutionInput = {
@@ -1159,6 +1469,8 @@ export type SeasonUncheckedUpdateWithoutInstitutionInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
@@ -1175,6 +1487,136 @@ export type SeasonUncheckedUpdateManyWithoutInstitutionInput = {
   status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SeasonCreateManyCreatedByInput = {
+  id?: string
+  institutionId: string
+  disciplineId: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type SeasonCreateManyUpdatedByInput = {
+  id?: string
+  institutionId: string
+  disciplineId: string
+  name: string
+  description?: string | null
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.SeasonStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type SeasonUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
+  events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonsNestedInput
+}
+
+export type SeasonUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
+  events?: Prisma.SeasonEventUncheckedUpdateManyWithoutSeasonNestedInput
+}
+
+export type SeasonUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SeasonUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutSeasonsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSeasonsNestedInput
+  teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutSeasonNestedInput
+  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutSeasonNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutSeasonNestedInput
+  events?: Prisma.SeasonEventUpdateManyWithoutSeasonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonsNestedInput
+}
+
+export type SeasonUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutSeasonNestedInput
+  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutSeasonNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutSeasonNestedInput
+  events?: Prisma.SeasonEventUncheckedUpdateManyWithoutSeasonNestedInput
+}
+
+export type SeasonUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumSeasonStatusFieldUpdateOperationsInput | $Enums.SeasonStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1246,12 +1688,16 @@ export type SeasonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Season$teamSeasonsArgs<ExtArgs>
   courseSeasons?: boolean | Prisma.Season$courseSeasonsArgs<ExtArgs>
   progressEvaluations?: boolean | Prisma.Season$progressEvaluationsArgs<ExtArgs>
   events?: boolean | Prisma.Season$eventsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
@@ -1266,8 +1712,12 @@ export type SeasonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
 export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1281,8 +1731,12 @@ export type SeasonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["season"]>
 
 export type SeasonSelectScalar = {
@@ -1296,9 +1750,11 @@ export type SeasonSelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "institutionId" | "disciplineId" | "name" | "description" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
+export type SeasonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "institutionId" | "disciplineId" | "name" | "description" | "startDate" | "endDate" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["season"]>
 export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
@@ -1306,15 +1762,21 @@ export type SeasonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   courseSeasons?: boolean | Prisma.Season$courseSeasonsArgs<ExtArgs>
   progressEvaluations?: boolean | Prisma.Season$progressEvaluationsArgs<ExtArgs>
   events?: boolean | Prisma.Season$eventsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.SeasonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SeasonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
 }
 export type SeasonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Season$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Season$updatedByArgs<ExtArgs>
 }
 
 export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1326,6 +1788,8 @@ export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     courseSeasons: Prisma.$CourseSeasonPayload<ExtArgs>[]
     progressEvaluations: Prisma.$ProgressEvaluationPayload<ExtArgs>[]
     events: Prisma.$SeasonEventPayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1338,6 +1802,8 @@ export type $SeasonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: $Enums.SeasonStatus
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["season"]>
   composites: {}
 }
@@ -1738,6 +2204,8 @@ export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends runtime.T
   courseSeasons<T extends Prisma.Season$courseSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$courseSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   progressEvaluations<T extends Prisma.Season$progressEvaluationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$progressEvaluationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProgressEvaluationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Season$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.Season$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.Season$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Season$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1777,6 +2245,8 @@ export interface SeasonFieldRefs {
   readonly status: Prisma.FieldRef<"Season", 'SeasonStatus'>
   readonly createdAt: Prisma.FieldRef<"Season", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Season", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"Season", 'String'>
+  readonly updatedById: Prisma.FieldRef<"Season", 'String'>
 }
     
 
@@ -2266,6 +2736,44 @@ export type Season$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SeasonEventScalarFieldEnum | Prisma.SeasonEventScalarFieldEnum[]
+}
+
+/**
+ * Season.createdBy
+ */
+export type Season$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Season.updatedBy
+ */
+export type Season$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

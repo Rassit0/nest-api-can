@@ -43,11 +43,16 @@ export const courseSeasonStaffSelect: Prisma.CourseSeasonStaffSelect = {
   },
 };
 
+import { I18nService } from 'nestjs-i18n';
+
 @Injectable()
 export class CourseSeasonStaffService {
   private readonly logger = new Logger('CourseSeasonStaffService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly i18n: I18nService,
+  ) {}
 
   async create(createCourseSeasonStaffDto: CreateCourseSeasonStaffDto) {
     const { courseSeasonId, isPrimary } = createCourseSeasonStaffDto;
@@ -68,7 +73,7 @@ export class CourseSeasonStaffService {
     });
 
     return {
-      message: 'Personal asignado al curso escolar exitosamente',
+      message: this.i18n.t('messages.COURSE_STAFF_CREATED'),
       data: newStaffAssoc,
     };
   }
@@ -124,7 +129,85 @@ export class CourseSeasonStaffService {
       totalItems,
       page,
       per_page,
-      'Asignaciones de personal de cursos obtenidas exitosamente',
+      this.i18n.t('messages.COURSE_STAFF_FETCHED'),
+    );
+  }
+
+  async getAvailableStaff(paginationDto: CourseSeasonStaffPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      courseSeasonId,
+    } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const where: Prisma.StaffWhereInput = {
+      isActive: true,
+      ...(courseSeasonId
+        ? {
+            courseSeasonStaffs: {
+              none: { courseSeasonId },
+            },
+          }
+        : {}),
+      ...(search
+        ? {
+            person: {
+              OR: [
+                { name: { contains: search, mode: 'insensitive' } },
+                { lastName: { contains: search, mode: 'insensitive' } },
+                { secondLastName: { contains: search, mode: 'insensitive' } },
+                { documentNumber: { contains: search, mode: 'insensitive' } },
+              ],
+            },
+          }
+        : {}),
+    };
+
+    const [staffs, totalItems] = await Promise.all([
+      this.prisma.staff.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { person: { name: orderBy as any } },
+        select: {
+          id: true,
+          isActive: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              documentNumber: true,
+              imageUrl: true,
+            },
+          },
+        },
+      }),
+      this.prisma.staff.count({ where }),
+    ]);
+
+    const mappedStaff = staffs.map((staff) => ({
+      id: staff.id,
+      personId: staff.person.id,
+      name: staff.person.name,
+      lastName: staff.person.lastName,
+      secondLastName: staff.person.secondLastName,
+      fullName: `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
+      documentNumber: staff.person.documentNumber,
+      imageUrl: staff.person.imageUrl,
+      isActive: staff.isActive,
+    }));
+
+    return createPaginationResult(
+      mappedStaff,
+      totalItems,
+      page,
+      per_page,
+      this.i18n.t('messages.STAFF_FETCHED'),
     );
   }
 
@@ -135,11 +218,11 @@ export class CourseSeasonStaffService {
     });
     if (!staffAssoc) {
       throw new NotFoundException(
-        'La asignación de personal solicitada no fue encontrada',
+        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
       );
     }
     return {
-      message: 'Asignación de personal obtenida exitosamente',
+      message: this.i18n.t('messages.COURSE_STAFF_FETCHED'),
       data: staffAssoc,
     };
   }
@@ -153,7 +236,7 @@ export class CourseSeasonStaffService {
     });
     if (!staffAssoc) {
       throw new NotFoundException(
-        'La asignación de personal solicitada no fue encontrada',
+        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
       );
     }
 
@@ -177,7 +260,7 @@ export class CourseSeasonStaffService {
     });
 
     return {
-      message: 'Asignación de personal actualizada exitosamente',
+      message: this.i18n.t('messages.COURSE_STAFF_UPDATED'),
       data: updatedStaffAssoc,
     };
   }
@@ -188,7 +271,7 @@ export class CourseSeasonStaffService {
     });
     if (!staffAssoc) {
       throw new NotFoundException(
-        'La asignación de personal solicitada no fue encontrada',
+        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
       );
     }
 
@@ -198,7 +281,7 @@ export class CourseSeasonStaffService {
     });
 
     return {
-      message: 'Asignación de personal eliminada de la temporada exitosamente',
+      message: this.i18n.t('messages.COURSE_STAFF_DELETED'),
       data: deletedStaffAssoc,
     };
   }

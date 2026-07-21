@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from 'src/generated/prisma/client';
+import { PrismaClient } from '../src/generated/prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -83,6 +84,116 @@ async function main() {
   }
 
   console.log('✅ Institution seeded:', defaultOrganization.name);
+
+  console.log('🔒 Seeding permissions and roles...');
+  const modules = [
+    'INSTITUTIONS', 'LOCATIONS', 'DISCIPLINES', 'CATEGORIES', 'ROLES', 'PERMISSIONS',
+    'USERS', 'PERSONS', 'CLUBS', 'TEAMS', 'PLAYERS', 'TEAM_SEASONS', 'STAFF',
+    'TEAM_SEASON_STAFF', 'SEASONS', 'SCHOOLS', 'COURSES', 'COURSE_SEASONS',
+    'COURSE_SEASON_STAFF', 'STUDENTS', 'PAYMENT_PLANS', 'MEMBERSHIPS',
+    'STUDENT_MEMBERSHIPS', 'PLAYER_MEMBERSHIPS', 'MEMBERSHIP_DISCOUNTS',
+    'MEMBERSHIP_CHARGES', 'STUDENT_CHARGES', 'TRANSACTIONS', 'SCHEDULES',
+    'SESSIONS', 'SESSION_BOOKINGS', 'MATCHES', 'MATCH_LINEUPS',
+    'SESSION_INCIDENTS', 'PROGRESS_EVALUATIONS', 'AUDIT_LOGS', 'DASHBOARD'
+  ];
+
+  const actions = ['CREATE', 'READ', 'UPDATE', 'DELETE'];
+
+  const permissionsData: { name: string; module: string; description: string }[] = [];
+  for (const module of modules) {
+    for (const action of actions) {
+      permissionsData.push({
+        name: `${action}_${module}`,
+        module,
+        description: `Permiso para ${action.toLowerCase()} en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`,
+      });
+    }
+  }
+
+  // Agregamos un permiso adicional para MANAGE_ALL si es necesario o permisos extra
+  permissionsData.push({
+    name: 'MANAGE_ALL',
+    module: 'SYSTEM',
+    description: 'Acceso irrestricto a todo el sistema',
+  });
+
+  // 1. Creamos todos los permisos faltantes sin duplicar
+  await prisma.permission.createMany({
+    data: permissionsData,
+    skipDuplicates: true,
+  });
+
+  // 2. Traemos todos los permisos
+  const allPermissions = await prisma.permission.findMany();
+
+  // 3. Upsert del rol SUPER_ADMIN
+  const superAdminRole = await prisma.role.upsert({
+    where: { name: 'SUPER_ADMIN' },
+    update: { description: 'Administrador con acceso total al sistema' },
+    create: {
+      name: 'SUPER_ADMIN',
+      description: 'Administrador con acceso total al sistema',
+    },
+  });
+
+  // 4. Asignamos todos los permisos al rol SUPER_ADMIN
+  const rolePermissionsData = allPermissions.map((p) => ({
+    roleId: superAdminRole.id,
+    permissionId: p.id,
+  }));
+
+  await prisma.rolePermission.createMany({
+    data: rolePermissionsData,
+    skipDuplicates: true,
+  });
+
+  console.log(`✅ SUPER_ADMIN role seeded with ${allPermissions.length} permissions`);
+
+  // 5. Upsert del usuario Super Admin
+  const adminEmail = 'admin@can.edu.bo';
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+
+  const superAdminUser = await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: {
+      roleId: superAdminRole.id,
+      // No actualizamos la contraseña si ya existe, para no pisar la del usuario real si la cambió
+    },
+    create: {
+      email: adminEmail,
+      password: hashedPassword,
+      roleId: superAdminRole.id,
+    },
+  });
+
+  console.log(`✅ Super Admin user seeded: ${superAdminUser.email}`);
+
+  // 6. Rellenar los campos de auditoría (created_by_id y updated_by_id) vacíos en toda la base de datos
+  console.log('🔄 Backfilling auditing fields for existing records...');
+  
+  const tablesWithCreatedBy = await prisma.$queryRaw<Array<{ table_name: string }>>`
+    SELECT table_name 
+    FROM information_schema.columns 
+    WHERE column_name = 'created_by_id' AND table_schema = 'public'
+  `;
+
+  for (const row of tablesWithCreatedBy) {
+    const tableName = row.table_name;
+    await prisma.$executeRawUnsafe(`UPDATE "${tableName}" SET "created_by_id" = $1 WHERE "created_by_id" IS NULL`, superAdminUser.id);
+  }
+
+  const tablesWithUpdatedBy = await prisma.$queryRaw<Array<{ table_name: string }>>`
+    SELECT table_name 
+    FROM information_schema.columns 
+    WHERE column_name = 'updated_by_id' AND table_schema = 'public'
+  `;
+
+  for (const row of tablesWithUpdatedBy) {
+    const tableName = row.table_name;
+    await prisma.$executeRawUnsafe(`UPDATE "${tableName}" SET "updated_by_id" = $1 WHERE "updated_by_id" IS NULL`, superAdminUser.id);
+  }
+
+  console.log('✅ Auditing fields backfill completed successfully');
 }
 main()
   .then(async () => {

@@ -46,6 +46,8 @@ export type InstitutionMinAggregateOutputType = {
   googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type InstitutionMaxAggregateOutputType = {
@@ -58,6 +60,8 @@ export type InstitutionMaxAggregateOutputType = {
   googleMapsUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type InstitutionCountAggregateOutputType = {
@@ -70,6 +74,8 @@ export type InstitutionCountAggregateOutputType = {
   googleMapsUrl: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -94,6 +100,8 @@ export type InstitutionMinAggregateInputType = {
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type InstitutionMaxAggregateInputType = {
@@ -106,6 +114,8 @@ export type InstitutionMaxAggregateInputType = {
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type InstitutionCountAggregateInputType = {
@@ -118,6 +128,8 @@ export type InstitutionCountAggregateInputType = {
   googleMapsUrl?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -217,6 +229,8 @@ export type InstitutionGroupByOutputType = {
   googleMapsUrl: string | null
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: InstitutionCountAggregateOutputType | null
   _avg: InstitutionAvgAggregateOutputType | null
   _sum: InstitutionSumAggregateOutputType | null
@@ -252,10 +266,14 @@ export type InstitutionWhereInput = {
   googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
   clubs?: Prisma.ClubListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
   contacts?: Prisma.InstitutionContactListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type InstitutionOrderByWithRelationInput = {
@@ -268,10 +286,14 @@ export type InstitutionOrderByWithRelationInput = {
   googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   clubs?: Prisma.ClubOrderByRelationAggregateInput
   seasons?: Prisma.SeasonOrderByRelationAggregateInput
   schools?: Prisma.SchoolOrderByRelationAggregateInput
   contacts?: Prisma.InstitutionContactOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
@@ -287,10 +309,14 @@ export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
   googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
   clubs?: Prisma.ClubListRelationFilter
   seasons?: Prisma.SeasonListRelationFilter
   schools?: Prisma.SchoolListRelationFilter
   contacts?: Prisma.InstitutionContactListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type InstitutionOrderByWithAggregationInput = {
@@ -303,6 +329,8 @@ export type InstitutionOrderByWithAggregationInput = {
   googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InstitutionCountOrderByAggregateInput
   _avg?: Prisma.InstitutionAvgOrderByAggregateInput
   _max?: Prisma.InstitutionMaxOrderByAggregateInput
@@ -323,6 +351,8 @@ export type InstitutionScalarWhereWithAggregatesInput = {
   googleMapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
 }
 
 export type InstitutionCreateInput = {
@@ -339,6 +369,8 @@ export type InstitutionCreateInput = {
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
 export type InstitutionUncheckedCreateInput = {
@@ -351,6 +383,8 @@ export type InstitutionUncheckedCreateInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
@@ -371,6 +405,8 @@ export type InstitutionUpdateInput = {
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
 export type InstitutionUncheckedUpdateInput = {
@@ -383,6 +419,8 @@ export type InstitutionUncheckedUpdateInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -399,6 +437,8 @@ export type InstitutionCreateManyInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type InstitutionUpdateManyMutationInput = {
@@ -423,6 +463,8 @@ export type InstitutionUncheckedUpdateManyInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InstitutionCountOrderByAggregateInput = {
@@ -435,6 +477,8 @@ export type InstitutionCountOrderByAggregateInput = {
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type InstitutionAvgOrderByAggregateInput = {
@@ -452,6 +496,8 @@ export type InstitutionMaxOrderByAggregateInput = {
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type InstitutionMinOrderByAggregateInput = {
@@ -464,6 +510,8 @@ export type InstitutionMinOrderByAggregateInput = {
   googleMapsUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type InstitutionSumOrderByAggregateInput = {
@@ -474,6 +522,16 @@ export type InstitutionSumOrderByAggregateInput = {
 export type InstitutionScalarRelationFilter = {
   is?: Prisma.InstitutionWhereInput
   isNot?: Prisma.InstitutionWhereInput
+}
+
+export type InstitutionListRelationFilter = {
+  every?: Prisma.InstitutionWhereInput
+  some?: Prisma.InstitutionWhereInput
+  none?: Prisma.InstitutionWhereInput
+}
+
+export type InstitutionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type NullableFloatFieldUpdateOperationsInput = {
@@ -526,6 +584,90 @@ export type InstitutionUpdateOneRequiredWithoutSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InstitutionUpdateToOneWithWhereWithoutSeasonsInput, Prisma.InstitutionUpdateWithoutSeasonsInput>, Prisma.InstitutionUncheckedUpdateWithoutSeasonsInput>
 }
 
+export type InstitutionCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput> | Prisma.InstitutionCreateWithoutCreatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutCreatedByInput | Prisma.InstitutionCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyCreatedByInputEnvelope
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+}
+
+export type InstitutionCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput> | Prisma.InstitutionCreateWithoutUpdatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput | Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+}
+
+export type InstitutionUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput> | Prisma.InstitutionCreateWithoutCreatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutCreatedByInput | Prisma.InstitutionCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyCreatedByInputEnvelope
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+}
+
+export type InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput> | Prisma.InstitutionCreateWithoutUpdatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput | Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+}
+
+export type InstitutionUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput> | Prisma.InstitutionCreateWithoutCreatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutCreatedByInput | Prisma.InstitutionCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.InstitutionUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.InstitutionUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyCreatedByInputEnvelope
+  set?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  disconnect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  delete?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  update?: Prisma.InstitutionUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.InstitutionUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.InstitutionUpdateManyWithWhereWithoutCreatedByInput | Prisma.InstitutionUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+}
+
+export type InstitutionUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput> | Prisma.InstitutionCreateWithoutUpdatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput | Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.InstitutionUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.InstitutionUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyUpdatedByInputEnvelope
+  set?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  disconnect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  delete?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  update?: Prisma.InstitutionUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.InstitutionUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.InstitutionUpdateManyWithWhereWithoutUpdatedByInput | Prisma.InstitutionUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+}
+
+export type InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput> | Prisma.InstitutionCreateWithoutCreatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutCreatedByInput | Prisma.InstitutionCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.InstitutionUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.InstitutionUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyCreatedByInputEnvelope
+  set?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  disconnect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  delete?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  update?: Prisma.InstitutionUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.InstitutionUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.InstitutionUpdateManyWithWhereWithoutCreatedByInput | Prisma.InstitutionUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+}
+
+export type InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput> | Prisma.InstitutionCreateWithoutUpdatedByInput[] | Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput | Prisma.InstitutionCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.InstitutionUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.InstitutionUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.InstitutionCreateManyUpdatedByInputEnvelope
+  set?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  disconnect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  delete?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  connect?: Prisma.InstitutionWhereUniqueInput | Prisma.InstitutionWhereUniqueInput[]
+  update?: Prisma.InstitutionUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.InstitutionUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.InstitutionUpdateManyWithWhereWithoutUpdatedByInput | Prisma.InstitutionUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+}
+
 export type InstitutionCreateNestedOneWithoutSchoolsInput = {
   create?: Prisma.XOR<Prisma.InstitutionCreateWithoutSchoolsInput, Prisma.InstitutionUncheckedCreateWithoutSchoolsInput>
   connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutSchoolsInput
@@ -553,6 +695,8 @@ export type InstitutionCreateWithoutContactsInput = {
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
 export type InstitutionUncheckedCreateWithoutContactsInput = {
@@ -565,6 +709,8 @@ export type InstitutionUncheckedCreateWithoutContactsInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
@@ -599,6 +745,8 @@ export type InstitutionUpdateWithoutContactsInput = {
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutContactsInput = {
@@ -611,6 +759,8 @@ export type InstitutionUncheckedUpdateWithoutContactsInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -629,6 +779,8 @@ export type InstitutionCreateWithoutClubsInput = {
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
 export type InstitutionUncheckedCreateWithoutClubsInput = {
@@ -641,6 +793,8 @@ export type InstitutionUncheckedCreateWithoutClubsInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
@@ -675,6 +829,8 @@ export type InstitutionUpdateWithoutClubsInput = {
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutClubsInput = {
@@ -687,6 +843,8 @@ export type InstitutionUncheckedUpdateWithoutClubsInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -705,6 +863,8 @@ export type InstitutionCreateWithoutSeasonsInput = {
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
 export type InstitutionUncheckedCreateWithoutSeasonsInput = {
@@ -717,6 +877,8 @@ export type InstitutionUncheckedCreateWithoutSeasonsInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
@@ -751,6 +913,8 @@ export type InstitutionUpdateWithoutSeasonsInput = {
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
@@ -763,9 +927,148 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
+}
+
+export type InstitutionUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
+}
+
+export type InstitutionCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput>
+}
+
+export type InstitutionCreateManyCreatedByInputEnvelope = {
+  data: Prisma.InstitutionCreateManyCreatedByInput | Prisma.InstitutionCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type InstitutionCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+}
+
+export type InstitutionUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
+}
+
+export type InstitutionCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type InstitutionCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.InstitutionCreateManyUpdatedByInput | Prisma.InstitutionCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type InstitutionUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  update: Prisma.XOR<Prisma.InstitutionUpdateWithoutCreatedByInput, Prisma.InstitutionUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutCreatedByInput, Prisma.InstitutionUncheckedCreateWithoutCreatedByInput>
+}
+
+export type InstitutionUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateWithoutCreatedByInput, Prisma.InstitutionUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type InstitutionUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.InstitutionScalarWhereInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateManyMutationInput, Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type InstitutionScalarWhereInput = {
+  AND?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+  OR?: Prisma.InstitutionScalarWhereInput[]
+  NOT?: Prisma.InstitutionScalarWhereInput | Prisma.InstitutionScalarWhereInput[]
+  id?: Prisma.StringFilter<"Institution"> | string
+  name?: Prisma.StringFilter<"Institution"> | string
+  imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
+  address?: Prisma.StringFilter<"Institution"> | string
+  latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
+}
+
+export type InstitutionUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  update: Prisma.XOR<Prisma.InstitutionUpdateWithoutUpdatedByInput, Prisma.InstitutionUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutUpdatedByInput, Prisma.InstitutionUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type InstitutionUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateWithoutUpdatedByInput, Prisma.InstitutionUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type InstitutionUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.InstitutionScalarWhereInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateManyMutationInput, Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type InstitutionCreateWithoutSchoolsInput = {
@@ -781,6 +1084,8 @@ export type InstitutionCreateWithoutSchoolsInput = {
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
 export type InstitutionUncheckedCreateWithoutSchoolsInput = {
@@ -793,6 +1098,8 @@ export type InstitutionUncheckedCreateWithoutSchoolsInput = {
   googleMapsUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
@@ -827,6 +1134,8 @@ export type InstitutionUpdateWithoutSchoolsInput = {
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
 export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
@@ -839,9 +1148,131 @@ export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
   googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionCreateManyCreatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type InstitutionCreateManyUpdatedByInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type InstitutionUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
+}
+
+export type InstitutionUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type InstitutionUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+}
+
+export type InstitutionUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -912,10 +1343,14 @@ export type InstitutionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
   seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
   contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["institution"]>
 
@@ -929,6 +1364,10 @@ export type InstitutionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["institution"]>
 
 export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -941,6 +1380,10 @@ export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["institution"]>
 
 export type InstitutionSelectScalar = {
@@ -953,18 +1396,28 @@ export type InstitutionSelectScalar = {
   googleMapsUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "latitude" | "longitude" | "googleMapsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["institution"]>
+export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "latitude" | "longitude" | "googleMapsUrl" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["institution"]>
 export type InstitutionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
   seasons?: boolean | Prisma.Institution$seasonsArgs<ExtArgs>
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
   contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type InstitutionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type InstitutionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type InstitutionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
+}
+export type InstitutionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
+}
 
 export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Institution"
@@ -973,6 +1426,8 @@ export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     seasons: Prisma.$SeasonPayload<ExtArgs>[]
     schools: Prisma.$SchoolPayload<ExtArgs>[]
     contacts: Prisma.$InstitutionContactPayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -984,6 +1439,8 @@ export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     googleMapsUrl: string | null
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["institution"]>
   composites: {}
 }
@@ -1382,6 +1839,8 @@ export interface Prisma__InstitutionClient<T, Null = never, ExtArgs extends runt
   seasons<T extends Prisma.Institution$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   schools<T extends Prisma.Institution$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contacts<T extends Prisma.Institution$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.Institution$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.Institution$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1420,6 +1879,8 @@ export interface InstitutionFieldRefs {
   readonly googleMapsUrl: Prisma.FieldRef<"Institution", 'String'>
   readonly createdAt: Prisma.FieldRef<"Institution", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Institution", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"Institution", 'String'>
+  readonly updatedById: Prisma.FieldRef<"Institution", 'String'>
 }
     
 
@@ -1669,6 +2130,10 @@ export type InstitutionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    */
   data: Prisma.InstitutionCreateManyInput | Prisma.InstitutionCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstitutionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1739,6 +2204,10 @@ export type InstitutionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many Institutions to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstitutionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1901,6 +2370,44 @@ export type Institution$contactsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.InstitutionContactScalarFieldEnum | Prisma.InstitutionContactScalarFieldEnum[]
+}
+
+/**
+ * Institution.createdBy
+ */
+export type Institution$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Institution.updatedBy
+ */
+export type Institution$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

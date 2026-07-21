@@ -58,9 +58,14 @@ import { TransactionsModule } from './transactions/transactions.module';
 
 import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
+import { ClsModule } from 'nestjs-cls';
 
 @Module({
   imports: [
+    ClsModule.forRoot({
+      global: true,
+      middleware: { mount: true },
+    }),
     ScheduleModule.forRoot(),
     CommonModule,
     PersonsModule,

@@ -13,4 +13,10 @@ export class CourseSeasonStaffPaginationDto extends PaginationDto {
     message: 'Columnas permitidas: startedAt, role, id',
   })
   sortField?: string = 'startedAt';
+
+  @ApiPropertyOptional({
+    description: 'ID de la temporada del curso para excluir el personal ya asignado',
+  })
+  @IsOptional()
+  courseSeasonId?: string;
 }

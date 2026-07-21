@@ -55,6 +55,15 @@ export class TeamSeasonStaffController {
     return await this.teamSeasonStaffService.findAll(paginationDto);
   }
 
+  @Get('available')
+  @ApiOperation({
+    summary: 'Listar opciones de personal disponible',
+    description: 'Retorna una lista paginada de personal que no está asignado a la temporada de equipo especificada.',
+  })
+  async getAvailableStaff(@Query() paginationDto: TeamSeasonStaffPaginationDto) {
+    return await this.teamSeasonStaffService.getAvailableStaff(paginationDto);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener asignación de profesor por ID',

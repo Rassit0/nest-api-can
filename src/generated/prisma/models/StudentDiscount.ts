@@ -50,6 +50,8 @@ export type StudentDiscountMinAggregateOutputType = {
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type StudentDiscountMaxAggregateOutputType = {
@@ -64,6 +66,8 @@ export type StudentDiscountMaxAggregateOutputType = {
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type StudentDiscountCountAggregateOutputType = {
@@ -78,6 +82,8 @@ export type StudentDiscountCountAggregateOutputType = {
   reason: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -106,6 +112,8 @@ export type StudentDiscountMinAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type StudentDiscountMaxAggregateInputType = {
@@ -120,6 +128,8 @@ export type StudentDiscountMaxAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type StudentDiscountCountAggregateInputType = {
@@ -134,6 +144,8 @@ export type StudentDiscountCountAggregateInputType = {
   reason?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -235,6 +247,8 @@ export type StudentDiscountGroupByOutputType = {
   reason: string | null
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: StudentDiscountCountAggregateOutputType | null
   _avg: StudentDiscountAvgAggregateOutputType | null
   _sum: StudentDiscountSumAggregateOutputType | null
@@ -272,7 +286,11 @@ export type StudentDiscountWhereInput = {
   reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type StudentDiscountOrderByWithRelationInput = {
@@ -287,7 +305,11 @@ export type StudentDiscountOrderByWithRelationInput = {
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type StudentDiscountWhereUniqueInput = Prisma.AtLeast<{
@@ -305,7 +327,11 @@ export type StudentDiscountWhereUniqueInput = Prisma.AtLeast<{
   reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type StudentDiscountOrderByWithAggregationInput = {
@@ -320,6 +346,8 @@ export type StudentDiscountOrderByWithAggregationInput = {
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.StudentDiscountCountOrderByAggregateInput
   _avg?: Prisma.StudentDiscountAvgOrderByAggregateInput
   _max?: Prisma.StudentDiscountMaxOrderByAggregateInput
@@ -342,6 +370,8 @@ export type StudentDiscountScalarWhereWithAggregatesInput = {
   reason?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
 }
 
 export type StudentDiscountCreateInput = {
@@ -356,6 +386,8 @@ export type StudentDiscountCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
 }
 
 export type StudentDiscountUncheckedCreateInput = {
@@ -370,6 +402,8 @@ export type StudentDiscountUncheckedCreateInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentDiscountUpdateInput = {
@@ -384,6 +418,8 @@ export type StudentDiscountUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
 }
 
 export type StudentDiscountUncheckedUpdateInput = {
@@ -398,6 +434,8 @@ export type StudentDiscountUncheckedUpdateInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentDiscountCreateManyInput = {
@@ -412,6 +450,8 @@ export type StudentDiscountCreateManyInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentDiscountUpdateManyMutationInput = {
@@ -439,6 +479,8 @@ export type StudentDiscountUncheckedUpdateManyInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentDiscountListRelationFilter = {
@@ -463,6 +505,8 @@ export type StudentDiscountCountOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type StudentDiscountAvgOrderByAggregateInput = {
@@ -483,6 +527,8 @@ export type StudentDiscountMaxOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type StudentDiscountMinOrderByAggregateInput = {
@@ -497,12 +543,98 @@ export type StudentDiscountMinOrderByAggregateInput = {
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type StudentDiscountSumOrderByAggregateInput = {
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
   seasonFeeDiscountPercent?: Prisma.SortOrder
+}
+
+export type StudentDiscountCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.StudentDiscountCreateWithoutCreatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyCreatedByInputEnvelope
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+}
+
+export type StudentDiscountCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentDiscountCreateWithoutUpdatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+}
+
+export type StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.StudentDiscountCreateWithoutCreatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyCreatedByInputEnvelope
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+}
+
+export type StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentDiscountCreateWithoutUpdatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+}
+
+export type StudentDiscountUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.StudentDiscountCreateWithoutCreatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.StudentDiscountUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.StudentDiscountUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyCreatedByInputEnvelope
+  set?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  disconnect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  delete?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  update?: Prisma.StudentDiscountUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.StudentDiscountUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.StudentDiscountUpdateManyWithWhereWithoutCreatedByInput | Prisma.StudentDiscountUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
+}
+
+export type StudentDiscountUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentDiscountCreateWithoutUpdatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.StudentDiscountUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentDiscountUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyUpdatedByInputEnvelope
+  set?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  disconnect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  delete?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  update?: Prisma.StudentDiscountUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentDiscountUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.StudentDiscountUpdateManyWithWhereWithoutUpdatedByInput | Prisma.StudentDiscountUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
+}
+
+export type StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput> | Prisma.StudentDiscountCreateWithoutCreatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.StudentDiscountUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.StudentDiscountUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyCreatedByInputEnvelope
+  set?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  disconnect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  delete?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  update?: Prisma.StudentDiscountUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.StudentDiscountUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.StudentDiscountUpdateManyWithWhereWithoutCreatedByInput | Prisma.StudentDiscountUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
+}
+
+export type StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput> | Prisma.StudentDiscountCreateWithoutUpdatedByInput[] | Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput | Prisma.StudentDiscountCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.StudentDiscountUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentDiscountUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.StudentDiscountCreateManyUpdatedByInputEnvelope
+  set?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  disconnect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  delete?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  connect?: Prisma.StudentDiscountWhereUniqueInput | Prisma.StudentDiscountWhereUniqueInput[]
+  update?: Prisma.StudentDiscountUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.StudentDiscountUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.StudentDiscountUpdateManyWithWhereWithoutUpdatedByInput | Prisma.StudentDiscountUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
 }
 
 export type StudentDiscountCreateNestedManyWithoutStudentMembershipInput = {
@@ -547,6 +679,137 @@ export type StudentDiscountUncheckedUpdateManyWithoutStudentMembershipNestedInpu
   deleteMany?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
 }
 
+export type StudentDiscountCreateWithoutCreatedByInput = {
+  id?: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
+}
+
+export type StudentDiscountUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  studentMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type StudentDiscountCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput>
+}
+
+export type StudentDiscountCreateManyCreatedByInputEnvelope = {
+  data: Prisma.StudentDiscountCreateManyCreatedByInput | Prisma.StudentDiscountCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type StudentDiscountCreateWithoutUpdatedByInput = {
+  id?: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
+}
+
+export type StudentDiscountUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  studentMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type StudentDiscountCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type StudentDiscountCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.StudentDiscountCreateManyUpdatedByInput | Prisma.StudentDiscountCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type StudentDiscountUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentDiscountUpdateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.StudentDiscountCreateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutCreatedByInput>
+}
+
+export type StudentDiscountUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentDiscountUpdateWithoutCreatedByInput, Prisma.StudentDiscountUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type StudentDiscountUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.StudentDiscountScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentDiscountUpdateManyMutationInput, Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type StudentDiscountScalarWhereInput = {
+  AND?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
+  OR?: Prisma.StudentDiscountScalarWhereInput[]
+  NOT?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
+  id?: Prisma.StringFilter<"StudentDiscount"> | string
+  studentMembershipId?: Prisma.StringFilter<"StudentDiscount"> | string
+  recurringDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  endDate?: Prisma.DateTimeNullableFilter<"StudentDiscount"> | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
+  reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
+}
+
+export type StudentDiscountUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentDiscountUpdateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.StudentDiscountCreateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type StudentDiscountUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.StudentDiscountWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentDiscountUpdateWithoutUpdatedByInput, Prisma.StudentDiscountUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type StudentDiscountUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.StudentDiscountScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentDiscountUpdateManyMutationInput, Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
 export type StudentDiscountCreateWithoutStudentMembershipInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -558,6 +821,8 @@ export type StudentDiscountCreateWithoutStudentMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
 }
 
 export type StudentDiscountUncheckedCreateWithoutStudentMembershipInput = {
@@ -571,6 +836,8 @@ export type StudentDiscountUncheckedCreateWithoutStudentMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentDiscountCreateOrConnectWithoutStudentMembershipInput = {
@@ -599,21 +866,124 @@ export type StudentDiscountUpdateManyWithWhereWithoutStudentMembershipInput = {
   data: Prisma.XOR<Prisma.StudentDiscountUpdateManyMutationInput, Prisma.StudentDiscountUncheckedUpdateManyWithoutStudentMembershipInput>
 }
 
-export type StudentDiscountScalarWhereInput = {
-  AND?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
-  OR?: Prisma.StudentDiscountScalarWhereInput[]
-  NOT?: Prisma.StudentDiscountScalarWhereInput | Prisma.StudentDiscountScalarWhereInput[]
-  id?: Prisma.StringFilter<"StudentDiscount"> | string
-  studentMembershipId?: Prisma.StringFilter<"StudentDiscount"> | string
-  recurringDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  registrationDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
-  endDate?: Prisma.DateTimeNullableFilter<"StudentDiscount"> | Date | string | null
-  type?: Prisma.EnumMembershipDiscountTypeFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
-  reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+export type StudentDiscountCreateManyCreatedByInput = {
+  id?: string
+  studentMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type StudentDiscountCreateManyUpdatedByInput = {
+  id?: string
+  studentMembershipId: string
+  recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate: Date | string
+  endDate?: Date | string | null
+  type: $Enums.MembershipDiscountType
+  reason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type StudentDiscountUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
+}
+
+export type StudentDiscountUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentDiscountUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentDiscountUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
+}
+
+export type StudentDiscountUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StudentDiscountUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
+  recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentDiscountCreateManyStudentMembershipInput = {
@@ -627,6 +997,8 @@ export type StudentDiscountCreateManyStudentMembershipInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type StudentDiscountUpdateWithoutStudentMembershipInput = {
@@ -640,6 +1012,8 @@ export type StudentDiscountUpdateWithoutStudentMembershipInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
 }
 
 export type StudentDiscountUncheckedUpdateWithoutStudentMembershipInput = {
@@ -653,6 +1027,8 @@ export type StudentDiscountUncheckedUpdateWithoutStudentMembershipInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudentDiscountUncheckedUpdateManyWithoutStudentMembershipInput = {
@@ -666,6 +1042,8 @@ export type StudentDiscountUncheckedUpdateManyWithoutStudentMembershipInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -682,7 +1060,11 @@ export type StudentDiscountSelect<ExtArgs extends runtime.Types.Extensions.Inter
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
 export type StudentDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -697,7 +1079,11 @@ export type StudentDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
 export type StudentDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -712,7 +1098,11 @@ export type StudentDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
 export type StudentDiscountSelectScalar = {
@@ -727,23 +1117,33 @@ export type StudentDiscountSelectScalar = {
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type StudentDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "seasonFeeDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["studentDiscount"]>
+export type StudentDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "seasonFeeDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["studentDiscount"]>
 export type StudentDiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 export type StudentDiscountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 export type StudentDiscountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 
 export type $StudentDiscountPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StudentDiscount"
   objects: {
     studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -757,6 +1157,8 @@ export type $StudentDiscountPayload<ExtArgs extends runtime.Types.Extensions.Int
     reason: string | null
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["studentDiscount"]>
   composites: {}
 }
@@ -1152,6 +1554,8 @@ readonly fields: StudentDiscountFieldRefs;
 export interface Prisma__StudentDiscountClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.StudentDiscount$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDiscount$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.StudentDiscount$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDiscount$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1192,6 +1596,8 @@ export interface StudentDiscountFieldRefs {
   readonly reason: Prisma.FieldRef<"StudentDiscount", 'String'>
   readonly createdAt: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"StudentDiscount", 'String'>
+  readonly updatedById: Prisma.FieldRef<"StudentDiscount", 'String'>
 }
     
 
@@ -1585,6 +1991,44 @@ export type StudentDiscountDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many StudentDiscounts to delete.
    */
   limit?: number
+}
+
+/**
+ * StudentDiscount.createdBy
+ */
+export type StudentDiscount$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * StudentDiscount.updatedBy
+ */
+export type StudentDiscount$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

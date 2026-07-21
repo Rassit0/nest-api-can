@@ -307,3 +307,8 @@ export type Match = Prisma.MatchModel
  * 
  */
 export type MatchLineup = Prisma.MatchLineupModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

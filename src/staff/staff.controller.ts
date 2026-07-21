@@ -23,8 +23,13 @@ import { StaffService } from './staff.service';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
 import { StaffPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { StaffResponseDto } from '../common/dto/responses/entities.dto';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 @ApiTags('Staff')
 @Controller('staff')
@@ -37,7 +42,10 @@ export class StaffController {
     description:
       'Crea la vinculación de personal (entrenador, auxiliar, etc.) a partir de un perfil de persona preexistente.',
   })
-  @ApiStandardCreatedResponse(StaffResponseDto, 'Miembro del personal registrado exitosamente.')
+  @ApiStandardCreatedResponse(
+    StaffResponseDto,
+    'Miembro del personal registrado exitosamente.',
+  )
   async create(@Body() createStaffDto: CreateStaffDto) {
     return await this.staffService.create(createStaffDto);
   }
@@ -48,9 +56,22 @@ export class StaffController {
     description:
       'Retorna una lista paginada y filtrable de todos los entrenadores/auxiliares.',
   })
-  @ApiPaginatedResponse(StaffResponseDto, 'Lista del personal obtenida correctamente.')
+  @ApiPaginatedResponse(
+    StaffResponseDto,
+    'Lista del personal obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: StaffPaginationDto) {
     return this.staffService.findAll(paginationDto);
+  }
+
+  @Get('persons/available')
+  @ApiOperation({
+    summary: 'Listar opciones de personal disponible',
+    description:
+      'Retorna una lista paginada de personas que no están registradas como staff.',
+  })
+  async getAvailablePersons(@Query() paginationDto: PaginationDto) {
+    return this.staffService.getAvailablePersons(paginationDto);
   }
 
   @Get(':id')
@@ -64,7 +85,10 @@ export class StaffController {
     description: 'ID del personal (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(StaffResponseDto, 'Miembro del personal encontrado exitosamente.')
+  @ApiStandardResponse(
+    StaffResponseDto,
+    'Miembro del personal encontrado exitosamente.',
+  )
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.staffService.findOne(id);
   }
@@ -80,7 +104,10 @@ export class StaffController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateStaffDto })
-  @ApiStandardResponse(StaffResponseDto, 'Miembro del personal actualizado exitosamente.')
+  @ApiStandardResponse(
+    StaffResponseDto,
+    'Miembro del personal actualizado exitosamente.',
+  )
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStaffDto: UpdateStaffDto,
@@ -98,7 +125,10 @@ export class StaffController {
     description: 'ID del personal a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(StaffResponseDto, 'Miembro del personal eliminado exitosamente.')
+  @ApiStandardResponse(
+    StaffResponseDto,
+    'Miembro del personal eliminado exitosamente.',
+  )
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.staffService.remove(id);
   }

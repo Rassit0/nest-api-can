@@ -41,6 +41,8 @@ export type ChargeTransactionMinAggregateOutputType = {
   amountApplied: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type ChargeTransactionMaxAggregateOutputType = {
@@ -50,6 +52,8 @@ export type ChargeTransactionMaxAggregateOutputType = {
   amountApplied: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type ChargeTransactionCountAggregateOutputType = {
@@ -59,6 +63,8 @@ export type ChargeTransactionCountAggregateOutputType = {
   amountApplied: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -78,6 +84,8 @@ export type ChargeTransactionMinAggregateInputType = {
   amountApplied?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type ChargeTransactionMaxAggregateInputType = {
@@ -87,6 +95,8 @@ export type ChargeTransactionMaxAggregateInputType = {
   amountApplied?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type ChargeTransactionCountAggregateInputType = {
@@ -96,6 +106,8 @@ export type ChargeTransactionCountAggregateInputType = {
   amountApplied?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -192,6 +204,8 @@ export type ChargeTransactionGroupByOutputType = {
   amountApplied: runtime.Decimal
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: ChargeTransactionCountAggregateOutputType | null
   _avg: ChargeTransactionAvgAggregateOutputType | null
   _sum: ChargeTransactionSumAggregateOutputType | null
@@ -224,8 +238,12 @@ export type ChargeTransactionWhereInput = {
   amountApplied?: Prisma.DecimalFilter<"ChargeTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
   transaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ChargeTransactionOrderByWithRelationInput = {
@@ -235,8 +253,12 @@ export type ChargeTransactionOrderByWithRelationInput = {
   amountApplied?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   charge?: Prisma.ChargeOrderByWithRelationInput
   transaction?: Prisma.TransactionOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ChargeTransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -249,8 +271,12 @@ export type ChargeTransactionWhereUniqueInput = Prisma.AtLeast<{
   amountApplied?: Prisma.DecimalFilter<"ChargeTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
   transaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type ChargeTransactionOrderByWithAggregationInput = {
@@ -260,6 +286,8 @@ export type ChargeTransactionOrderByWithAggregationInput = {
   amountApplied?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChargeTransactionCountOrderByAggregateInput
   _avg?: Prisma.ChargeTransactionAvgOrderByAggregateInput
   _max?: Prisma.ChargeTransactionMaxOrderByAggregateInput
@@ -277,6 +305,8 @@ export type ChargeTransactionScalarWhereWithAggregatesInput = {
   amountApplied?: Prisma.DecimalWithAggregatesFilter<"ChargeTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChargeTransaction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChargeTransaction"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"ChargeTransaction"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"ChargeTransaction"> | string | null
 }
 
 export type ChargeTransactionCreateInput = {
@@ -286,6 +316,8 @@ export type ChargeTransactionCreateInput = {
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutChargeTransactionsInput
   transaction: Prisma.TransactionCreateNestedOneWithoutChargeTransactionsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargeTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargeTransactionsInput
 }
 
 export type ChargeTransactionUncheckedCreateInput = {
@@ -295,6 +327,8 @@ export type ChargeTransactionUncheckedCreateInput = {
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionUpdateInput = {
@@ -304,6 +338,8 @@ export type ChargeTransactionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput
   transaction?: Prisma.TransactionUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargeTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargeTransactionsNestedInput
 }
 
 export type ChargeTransactionUncheckedUpdateInput = {
@@ -313,6 +349,8 @@ export type ChargeTransactionUncheckedUpdateInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeTransactionCreateManyInput = {
@@ -322,6 +360,8 @@ export type ChargeTransactionCreateManyInput = {
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionUpdateManyMutationInput = {
@@ -338,6 +378,8 @@ export type ChargeTransactionUncheckedUpdateManyInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeTransactionListRelationFilter = {
@@ -357,6 +399,8 @@ export type ChargeTransactionCountOrderByAggregateInput = {
   amountApplied?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeTransactionAvgOrderByAggregateInput = {
@@ -370,6 +414,8 @@ export type ChargeTransactionMaxOrderByAggregateInput = {
   amountApplied?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeTransactionMinOrderByAggregateInput = {
@@ -379,6 +425,8 @@ export type ChargeTransactionMinOrderByAggregateInput = {
   amountApplied?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type ChargeTransactionSumOrderByAggregateInput = {
@@ -469,12 +517,98 @@ export type ChargeTransactionUncheckedUpdateManyWithoutTransactionNestedInput = 
   deleteMany?: Prisma.ChargeTransactionScalarWhereInput | Prisma.ChargeTransactionScalarWhereInput[]
 }
 
+export type ChargeTransactionCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeTransactionCreateWithoutCreatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyCreatedByInputEnvelope
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+}
+
+export type ChargeTransactionCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeTransactionCreateWithoutUpdatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+}
+
+export type ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeTransactionCreateWithoutCreatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyCreatedByInputEnvelope
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+}
+
+export type ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeTransactionCreateWithoutUpdatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+}
+
+export type ChargeTransactionUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeTransactionCreateWithoutCreatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyCreatedByInputEnvelope
+  set?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  disconnect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  delete?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  update?: Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.ChargeTransactionUpdateManyWithWhereWithoutCreatedByInput | Prisma.ChargeTransactionUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.ChargeTransactionScalarWhereInput | Prisma.ChargeTransactionScalarWhereInput[]
+}
+
+export type ChargeTransactionUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeTransactionCreateWithoutUpdatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyUpdatedByInputEnvelope
+  set?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  disconnect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  delete?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  update?: Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.ChargeTransactionUpdateManyWithWhereWithoutUpdatedByInput | Prisma.ChargeTransactionUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.ChargeTransactionScalarWhereInput | Prisma.ChargeTransactionScalarWhereInput[]
+}
+
+export type ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput> | Prisma.ChargeTransactionCreateWithoutCreatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyCreatedByInputEnvelope
+  set?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  disconnect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  delete?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  update?: Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.ChargeTransactionUpdateManyWithWhereWithoutCreatedByInput | Prisma.ChargeTransactionUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.ChargeTransactionScalarWhereInput | Prisma.ChargeTransactionScalarWhereInput[]
+}
+
+export type ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput> | Prisma.ChargeTransactionCreateWithoutUpdatedByInput[] | Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput | Prisma.ChargeTransactionCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeTransactionUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.ChargeTransactionCreateManyUpdatedByInputEnvelope
+  set?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  disconnect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  delete?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  connect?: Prisma.ChargeTransactionWhereUniqueInput | Prisma.ChargeTransactionWhereUniqueInput[]
+  update?: Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.ChargeTransactionUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.ChargeTransactionUpdateManyWithWhereWithoutUpdatedByInput | Prisma.ChargeTransactionUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.ChargeTransactionScalarWhereInput | Prisma.ChargeTransactionScalarWhereInput[]
+}
+
 export type ChargeTransactionCreateWithoutChargeInput = {
   id?: string
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
   transaction: Prisma.TransactionCreateNestedOneWithoutChargeTransactionsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargeTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargeTransactionsInput
 }
 
 export type ChargeTransactionUncheckedCreateWithoutChargeInput = {
@@ -483,6 +617,8 @@ export type ChargeTransactionUncheckedCreateWithoutChargeInput = {
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionCreateOrConnectWithoutChargeInput = {
@@ -521,6 +657,8 @@ export type ChargeTransactionScalarWhereInput = {
   amountApplied?: Prisma.DecimalFilter<"ChargeTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChargeTransaction"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"ChargeTransaction"> | string | null
 }
 
 export type ChargeTransactionCreateWithoutTransactionInput = {
@@ -529,6 +667,8 @@ export type ChargeTransactionCreateWithoutTransactionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutChargeTransactionsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargeTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargeTransactionsInput
 }
 
 export type ChargeTransactionUncheckedCreateWithoutTransactionInput = {
@@ -537,6 +677,8 @@ export type ChargeTransactionUncheckedCreateWithoutTransactionInput = {
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionCreateOrConnectWithoutTransactionInput = {
@@ -565,12 +707,106 @@ export type ChargeTransactionUpdateManyWithWhereWithoutTransactionInput = {
   data: Prisma.XOR<Prisma.ChargeTransactionUpdateManyMutationInput, Prisma.ChargeTransactionUncheckedUpdateManyWithoutTransactionInput>
 }
 
+export type ChargeTransactionCreateWithoutCreatedByInput = {
+  id?: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  charge: Prisma.ChargeCreateNestedOneWithoutChargeTransactionsInput
+  transaction: Prisma.TransactionCreateNestedOneWithoutChargeTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargeTransactionsInput
+}
+
+export type ChargeTransactionUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  chargeId: string
+  transactionId: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type ChargeTransactionCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput>
+}
+
+export type ChargeTransactionCreateManyCreatedByInputEnvelope = {
+  data: Prisma.ChargeTransactionCreateManyCreatedByInput | Prisma.ChargeTransactionCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type ChargeTransactionCreateWithoutUpdatedByInput = {
+  id?: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  charge: Prisma.ChargeCreateNestedOneWithoutChargeTransactionsInput
+  transaction: Prisma.TransactionCreateNestedOneWithoutChargeTransactionsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargeTransactionsInput
+}
+
+export type ChargeTransactionUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  chargeId: string
+  transactionId: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type ChargeTransactionCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type ChargeTransactionCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.ChargeTransactionCreateManyUpdatedByInput | Prisma.ChargeTransactionCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type ChargeTransactionUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ChargeTransactionUpdateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutCreatedByInput>
+}
+
+export type ChargeTransactionUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ChargeTransactionUpdateWithoutCreatedByInput, Prisma.ChargeTransactionUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type ChargeTransactionUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.ChargeTransactionScalarWhereInput
+  data: Prisma.XOR<Prisma.ChargeTransactionUpdateManyMutationInput, Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type ChargeTransactionUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  update: Prisma.XOR<Prisma.ChargeTransactionUpdateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.ChargeTransactionCreateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type ChargeTransactionUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.ChargeTransactionWhereUniqueInput
+  data: Prisma.XOR<Prisma.ChargeTransactionUpdateWithoutUpdatedByInput, Prisma.ChargeTransactionUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type ChargeTransactionUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.ChargeTransactionScalarWhereInput
+  data: Prisma.XOR<Prisma.ChargeTransactionUpdateManyMutationInput, Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByInput>
+}
+
 export type ChargeTransactionCreateManyChargeInput = {
   id?: string
   transactionId: string
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionUpdateWithoutChargeInput = {
@@ -579,6 +815,8 @@ export type ChargeTransactionUpdateWithoutChargeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transaction?: Prisma.TransactionUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargeTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargeTransactionsNestedInput
 }
 
 export type ChargeTransactionUncheckedUpdateWithoutChargeInput = {
@@ -587,6 +825,8 @@ export type ChargeTransactionUncheckedUpdateWithoutChargeInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeTransactionUncheckedUpdateManyWithoutChargeInput = {
@@ -595,6 +835,8 @@ export type ChargeTransactionUncheckedUpdateManyWithoutChargeInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeTransactionCreateManyTransactionInput = {
@@ -603,6 +845,8 @@ export type ChargeTransactionCreateManyTransactionInput = {
   amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type ChargeTransactionUpdateWithoutTransactionInput = {
@@ -611,6 +855,8 @@ export type ChargeTransactionUpdateWithoutTransactionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargeTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargeTransactionsNestedInput
 }
 
 export type ChargeTransactionUncheckedUpdateWithoutTransactionInput = {
@@ -619,6 +865,8 @@ export type ChargeTransactionUncheckedUpdateWithoutTransactionInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChargeTransactionUncheckedUpdateManyWithoutTransactionInput = {
@@ -627,6 +875,88 @@ export type ChargeTransactionUncheckedUpdateManyWithoutTransactionInput = {
   amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeTransactionCreateManyCreatedByInput = {
+  id?: string
+  chargeId: string
+  transactionId: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type ChargeTransactionCreateManyUpdatedByInput = {
+  id?: string
+  chargeId: string
+  transactionId: string
+  amountApplied: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type ChargeTransactionUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  charge?: Prisma.ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  transaction?: Prisma.TransactionUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargeTransactionsNestedInput
+}
+
+export type ChargeTransactionUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeTransactionUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeTransactionUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  charge?: Prisma.ChargeUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  transaction?: Prisma.TransactionUpdateOneRequiredWithoutChargeTransactionsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargeTransactionsNestedInput
+}
+
+export type ChargeTransactionUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ChargeTransactionUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  amountApplied?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -638,8 +968,12 @@ export type ChargeTransactionSelect<ExtArgs extends runtime.Types.Extensions.Int
   amountApplied?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["chargeTransaction"]>
 
 export type ChargeTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -649,8 +983,12 @@ export type ChargeTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.T
   amountApplied?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["chargeTransaction"]>
 
 export type ChargeTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -660,8 +998,12 @@ export type ChargeTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   amountApplied?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["chargeTransaction"]>
 
 export type ChargeTransactionSelectScalar = {
@@ -671,20 +1013,28 @@ export type ChargeTransactionSelectScalar = {
   amountApplied?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type ChargeTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chargeId" | "transactionId" | "amountApplied" | "createdAt" | "updatedAt", ExtArgs["result"]["chargeTransaction"]>
+export type ChargeTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chargeId" | "transactionId" | "amountApplied" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["chargeTransaction"]>
 export type ChargeTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }
 export type ChargeTransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }
 export type ChargeTransactionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.ChargeTransaction$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.ChargeTransaction$updatedByArgs<ExtArgs>
 }
 
 export type $ChargeTransactionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -692,6 +1042,8 @@ export type $ChargeTransactionPayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     charge: Prisma.$ChargePayload<ExtArgs>
     transaction: Prisma.$TransactionPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -700,6 +1052,8 @@ export type $ChargeTransactionPayload<ExtArgs extends runtime.Types.Extensions.I
     amountApplied: runtime.Decimal
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["chargeTransaction"]>
   composites: {}
 }
@@ -1096,6 +1450,8 @@ export interface Prisma__ChargeTransactionClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   charge<T extends Prisma.ChargeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeDefaultArgs<ExtArgs>>): Prisma.Prisma__ChargeClient<runtime.Types.Result.GetResult<Prisma.$ChargePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.ChargeTransaction$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeTransaction$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.ChargeTransaction$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeTransaction$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1131,6 +1487,8 @@ export interface ChargeTransactionFieldRefs {
   readonly amountApplied: Prisma.FieldRef<"ChargeTransaction", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"ChargeTransaction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ChargeTransaction", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"ChargeTransaction", 'String'>
+  readonly updatedById: Prisma.FieldRef<"ChargeTransaction", 'String'>
 }
     
 
@@ -1524,6 +1882,44 @@ export type ChargeTransactionDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many ChargeTransactions to delete.
    */
   limit?: number
+}
+
+/**
+ * ChargeTransaction.createdBy
+ */
+export type ChargeTransaction$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * ChargeTransaction.updatedBy
+ */
+export type ChargeTransaction$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

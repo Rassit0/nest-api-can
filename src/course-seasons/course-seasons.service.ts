@@ -61,7 +61,30 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   status: true,
   billingConfig: true,
   isRegistrationOpen: true,
-  courseSeasonStaffs: true,
+  courseSeasonStaffs: {
+    select: {
+      id: true,
+      role: true,
+      isPrimary: true,
+      startedAt: true,
+      endedAt: true,
+      staff: {
+        select: {
+          id: true,
+          person: {
+            select: {
+              id: true,
+              name: true,
+              lastName: true,
+              secondLastName: true,
+              imageUrl: true,
+              documentNumber: true,
+            },
+          },
+        },
+      },
+    },
+  },
   _count: {
     select: {
       studentMemberships: {

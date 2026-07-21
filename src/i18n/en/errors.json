@@ -31,5 +31,6 @@
   "INVALID_DATE_FOR_SEASON": "The membership start date must be within the season date range",
   "PLAN_NOT_BELONGS": "The payment plan does not belong to the selected course",
   "BIRTHDATE_NOT_FOUND": "The student's birth date was not found",
-  "DISCIPLINE_NOT_FOUND": "The requested discipline was not found"
+  "DISCIPLINE_NOT_FOUND": "The requested discipline was not found",
+  "COURSE_STAFF_NOT_FOUND": "The requested course staff assignment was not found"
 }

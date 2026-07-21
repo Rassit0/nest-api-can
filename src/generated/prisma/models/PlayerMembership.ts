@@ -37,6 +37,8 @@ export type PlayerMembershipMinAggregateOutputType = {
   isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PlayerMembershipMaxAggregateOutputType = {
@@ -52,6 +54,8 @@ export type PlayerMembershipMaxAggregateOutputType = {
   isMigrated: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: string | null
+  updatedById: string | null
 }
 
 export type PlayerMembershipCountAggregateOutputType = {
@@ -67,6 +71,8 @@ export type PlayerMembershipCountAggregateOutputType = {
   isMigrated: number
   createdAt: number
   updatedAt: number
+  createdById: number
+  updatedById: number
   _all: number
 }
 
@@ -84,6 +90,8 @@ export type PlayerMembershipMinAggregateInputType = {
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PlayerMembershipMaxAggregateInputType = {
@@ -99,6 +107,8 @@ export type PlayerMembershipMaxAggregateInputType = {
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
 }
 
 export type PlayerMembershipCountAggregateInputType = {
@@ -114,6 +124,8 @@ export type PlayerMembershipCountAggregateInputType = {
   isMigrated?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
+  updatedById?: true
   _all?: true
 }
 
@@ -202,6 +214,8 @@ export type PlayerMembershipGroupByOutputType = {
   isMigrated: boolean
   createdAt: Date
   updatedAt: Date
+  createdById: string | null
+  updatedById: string | null
   _count: PlayerMembershipCountAggregateOutputType | null
   _min: PlayerMembershipMinAggregateOutputType | null
   _max: PlayerMembershipMaxAggregateOutputType | null
@@ -238,6 +252,8 @@ export type PlayerMembershipWhereInput = {
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
   teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanScalarRelationFilter, Prisma.PaymentPlanWhereInput>
@@ -245,6 +261,8 @@ export type PlayerMembershipWhereInput = {
   membershipCharges?: Prisma.MembershipChargeListRelationFilter
   histories?: Prisma.PlayerMembershipHistoryListRelationFilter
   pauses?: Prisma.PlayerMembershipPauseListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type PlayerMembershipOrderByWithRelationInput = {
@@ -260,6 +278,8 @@ export type PlayerMembershipOrderByWithRelationInput = {
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   player?: Prisma.PlayerOrderByWithRelationInput
   teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
   paymentPlan?: Prisma.PaymentPlanOrderByWithRelationInput
@@ -267,6 +287,8 @@ export type PlayerMembershipOrderByWithRelationInput = {
   membershipCharges?: Prisma.MembershipChargeOrderByRelationAggregateInput
   histories?: Prisma.PlayerMembershipHistoryOrderByRelationAggregateInput
   pauses?: Prisma.PlayerMembershipPauseOrderByRelationAggregateInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type PlayerMembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -285,6 +307,8 @@ export type PlayerMembershipWhereUniqueInput = Prisma.AtLeast<{
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
   teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanScalarRelationFilter, Prisma.PaymentPlanWhereInput>
@@ -292,6 +316,8 @@ export type PlayerMembershipWhereUniqueInput = Prisma.AtLeast<{
   membershipCharges?: Prisma.MembershipChargeListRelationFilter
   histories?: Prisma.PlayerMembershipHistoryListRelationFilter
   pauses?: Prisma.PlayerMembershipPauseListRelationFilter
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type PlayerMembershipOrderByWithAggregationInput = {
@@ -307,6 +333,8 @@ export type PlayerMembershipOrderByWithAggregationInput = {
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PlayerMembershipCountOrderByAggregateInput
   _max?: Prisma.PlayerMembershipMaxOrderByAggregateInput
   _min?: Prisma.PlayerMembershipMinOrderByAggregateInput
@@ -328,6 +356,8 @@ export type PlayerMembershipScalarWhereWithAggregatesInput = {
   isMigrated?: Prisma.BoolWithAggregatesFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PlayerMembership"> | Date | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembership"> | string | null
+  updatedById?: Prisma.StringNullableWithAggregatesFilter<"PlayerMembership"> | string | null
 }
 
 export type PlayerMembershipCreateInput = {
@@ -347,6 +377,8 @@ export type PlayerMembershipCreateInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateInput = {
@@ -362,6 +394,8 @@ export type PlayerMembershipUncheckedCreateInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -385,6 +419,8 @@ export type PlayerMembershipUpdateInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateInput = {
@@ -400,6 +436,8 @@ export type PlayerMembershipUncheckedUpdateInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -419,6 +457,8 @@ export type PlayerMembershipCreateManyInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipUpdateManyMutationInput = {
@@ -446,6 +486,8 @@ export type PlayerMembershipUncheckedUpdateManyInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipListRelationFilter = {
@@ -471,6 +513,8 @@ export type PlayerMembershipCountOrderByAggregateInput = {
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipMaxOrderByAggregateInput = {
@@ -486,6 +530,8 @@ export type PlayerMembershipMaxOrderByAggregateInput = {
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipMinOrderByAggregateInput = {
@@ -501,6 +547,8 @@ export type PlayerMembershipMinOrderByAggregateInput = {
   isMigrated?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  updatedById?: Prisma.SortOrder
 }
 
 export type PlayerMembershipScalarRelationFilter = {
@@ -694,6 +742,90 @@ export type PlayerMembershipUpdateOneRequiredWithoutMembershipChargesNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PlayerMembershipUpdateToOneWithWhereWithoutMembershipChargesInput, Prisma.PlayerMembershipUpdateWithoutMembershipChargesInput>, Prisma.PlayerMembershipUncheckedUpdateWithoutMembershipChargesInput>
 }
 
+export type PlayerMembershipCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+}
+
+export type PlayerMembershipCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+}
+
+export type PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyCreatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+}
+
+export type PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+}
+
+export type PlayerMembershipUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyCreatedByInputEnvelope
+  set?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PlayerMembershipUpdateManyWithWhereWithoutCreatedByInput | Prisma.PlayerMembershipUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipScalarWhereInput | Prisma.PlayerMembershipScalarWhereInput[]
+}
+
+export type PlayerMembershipUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PlayerMembershipUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PlayerMembershipUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipScalarWhereInput | Prisma.PlayerMembershipScalarWhereInput[]
+}
+
+export type PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput> | Prisma.PlayerMembershipCreateWithoutCreatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyCreatedByInputEnvelope
+  set?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.PlayerMembershipUpdateManyWithWhereWithoutCreatedByInput | Prisma.PlayerMembershipUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipScalarWhereInput | Prisma.PlayerMembershipScalarWhereInput[]
+}
+
+export type PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput> | Prisma.PlayerMembershipCreateWithoutUpdatedByInput[] | Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput[]
+  connectOrCreate?: Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput | Prisma.PlayerMembershipCreateOrConnectWithoutUpdatedByInput[]
+  upsert?: Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipUpsertWithWhereUniqueWithoutUpdatedByInput[]
+  createMany?: Prisma.PlayerMembershipCreateManyUpdatedByInputEnvelope
+  set?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  disconnect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  delete?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  connect?: Prisma.PlayerMembershipWhereUniqueInput | Prisma.PlayerMembershipWhereUniqueInput[]
+  update?: Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.PlayerMembershipUpdateWithWhereUniqueWithoutUpdatedByInput[]
+  updateMany?: Prisma.PlayerMembershipUpdateManyWithWhereWithoutUpdatedByInput | Prisma.PlayerMembershipUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.PlayerMembershipScalarWhereInput | Prisma.PlayerMembershipScalarWhereInput[]
+}
+
 export type PlayerMembershipCreateWithoutTeamSeasonInput = {
   id?: string
   startedAt: Date | string
@@ -710,6 +842,8 @@ export type PlayerMembershipCreateWithoutTeamSeasonInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutTeamSeasonInput = {
@@ -724,6 +858,8 @@ export type PlayerMembershipUncheckedCreateWithoutTeamSeasonInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -772,6 +908,8 @@ export type PlayerMembershipScalarWhereInput = {
   isMigrated?: Prisma.BoolFilter<"PlayerMembership"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembership"> | Date | string
+  createdById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
+  updatedById?: Prisma.StringNullableFilter<"PlayerMembership"> | string | null
 }
 
 export type PlayerMembershipCreateWithoutPaymentPlanInput = {
@@ -790,6 +928,8 @@ export type PlayerMembershipCreateWithoutPaymentPlanInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutPaymentPlanInput = {
@@ -804,6 +944,8 @@ export type PlayerMembershipUncheckedCreateWithoutPaymentPlanInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -852,6 +994,8 @@ export type PlayerMembershipCreateWithoutPlayerInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutPlayerInput = {
@@ -866,6 +1010,8 @@ export type PlayerMembershipUncheckedCreateWithoutPlayerInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -914,6 +1060,8 @@ export type PlayerMembershipCreateWithoutHistoriesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutHistoriesInput = {
@@ -929,6 +1077,8 @@ export type PlayerMembershipUncheckedCreateWithoutHistoriesInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -966,6 +1116,8 @@ export type PlayerMembershipUpdateWithoutHistoriesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutHistoriesInput = {
@@ -981,6 +1133,8 @@ export type PlayerMembershipUncheckedUpdateWithoutHistoriesInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1002,6 +1156,8 @@ export type PlayerMembershipCreateWithoutPausesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutPausesInput = {
@@ -1017,6 +1173,8 @@ export type PlayerMembershipUncheckedCreateWithoutPausesInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -1054,6 +1212,8 @@ export type PlayerMembershipUpdateWithoutPausesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutPausesInput = {
@@ -1069,6 +1229,8 @@ export type PlayerMembershipUncheckedUpdateWithoutPausesInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1090,6 +1252,8 @@ export type PlayerMembershipCreateWithoutMembershipDiscountsInput = {
   membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutMembershipDiscountsInput = {
@@ -1105,6 +1269,8 @@ export type PlayerMembershipUncheckedCreateWithoutMembershipDiscountsInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -1142,6 +1308,8 @@ export type PlayerMembershipUpdateWithoutMembershipDiscountsInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutMembershipDiscountsInput = {
@@ -1157,6 +1325,8 @@ export type PlayerMembershipUncheckedUpdateWithoutMembershipDiscountsInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1178,6 +1348,8 @@ export type PlayerMembershipCreateWithoutMembershipChargesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
 }
 
 export type PlayerMembershipUncheckedCreateWithoutMembershipChargesInput = {
@@ -1193,6 +1365,8 @@ export type PlayerMembershipUncheckedCreateWithoutMembershipChargesInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutPlayerMembershipInput
@@ -1230,6 +1404,8 @@ export type PlayerMembershipUpdateWithoutMembershipChargesInput = {
   membershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutMembershipChargesInput = {
@@ -1245,9 +1421,143 @@ export type PlayerMembershipUncheckedUpdateWithoutMembershipChargesInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+}
+
+export type PlayerMembershipCreateWithoutCreatedByInput = {
+  id?: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  player: Prisma.PlayerCreateNestedOneWithoutPlayerMembershipsInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutPlayerMembershipsInput
+  paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutPlayerMembershipsInput
+  membershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutPlayerMembershipInput
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
+  histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
+  pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipsInput
+}
+
+export type PlayerMembershipUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  playerId: string
+  teamSeasonId: string
+  paymentPlanId: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+  membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  pauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutPlayerMembershipInput
+}
+
+export type PlayerMembershipCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipCreateManyCreatedByInputEnvelope = {
+  data: Prisma.PlayerMembershipCreateManyCreatedByInput | Prisma.PlayerMembershipCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerMembershipCreateWithoutUpdatedByInput = {
+  id?: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  player: Prisma.PlayerCreateNestedOneWithoutPlayerMembershipsInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutPlayerMembershipsInput
+  paymentPlan: Prisma.PaymentPlanCreateNestedOneWithoutPlayerMembershipsInput
+  membershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutPlayerMembershipInput
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutPlayerMembershipInput
+  histories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutPlayerMembershipInput
+  pauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutPlayerMembershipInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipsInput
+}
+
+export type PlayerMembershipUncheckedCreateWithoutUpdatedByInput = {
+  id?: string
+  playerId: string
+  teamSeasonId: string
+  paymentPlanId: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  membershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  histories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutPlayerMembershipInput
+  pauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutPlayerMembershipInput
+}
+
+export type PlayerMembershipCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.PlayerMembershipCreateManyUpdatedByInput | Prisma.PlayerMembershipCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerMembershipUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerMembershipUpdateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerMembershipUpdateWithoutCreatedByInput, Prisma.PlayerMembershipUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type PlayerMembershipUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.PlayerMembershipScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerMembershipUpdateManyMutationInput, Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type PlayerMembershipUpsertWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerMembershipUpdateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedUpdateWithoutUpdatedByInput>
+  create: Prisma.XOR<Prisma.PlayerMembershipCreateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipUpdateWithWhereUniqueWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerMembershipUpdateWithoutUpdatedByInput, Prisma.PlayerMembershipUncheckedUpdateWithoutUpdatedByInput>
+}
+
+export type PlayerMembershipUpdateManyWithWhereWithoutUpdatedByInput = {
+  where: Prisma.PlayerMembershipScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerMembershipUpdateManyMutationInput, Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
 export type PlayerMembershipCreateManyTeamSeasonInput = {
@@ -1262,6 +1572,8 @@ export type PlayerMembershipCreateManyTeamSeasonInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipUpdateWithoutTeamSeasonInput = {
@@ -1280,6 +1592,8 @@ export type PlayerMembershipUpdateWithoutTeamSeasonInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutTeamSeasonInput = {
@@ -1294,6 +1608,8 @@ export type PlayerMembershipUncheckedUpdateWithoutTeamSeasonInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1312,6 +1628,8 @@ export type PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipCreateManyPaymentPlanInput = {
@@ -1326,6 +1644,8 @@ export type PlayerMembershipCreateManyPaymentPlanInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipUpdateWithoutPaymentPlanInput = {
@@ -1344,6 +1664,8 @@ export type PlayerMembershipUpdateWithoutPaymentPlanInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutPaymentPlanInput = {
@@ -1358,6 +1680,8 @@ export type PlayerMembershipUncheckedUpdateWithoutPaymentPlanInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1376,6 +1700,8 @@ export type PlayerMembershipUncheckedUpdateManyWithoutPaymentPlanInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PlayerMembershipCreateManyPlayerInput = {
@@ -1390,6 +1716,8 @@ export type PlayerMembershipCreateManyPlayerInput = {
   isMigrated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
 }
 
 export type PlayerMembershipUpdateWithoutPlayerInput = {
@@ -1408,6 +1736,8 @@ export type PlayerMembershipUpdateWithoutPlayerInput = {
   membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
   pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
 }
 
 export type PlayerMembershipUncheckedUpdateWithoutPlayerInput = {
@@ -1422,6 +1752,8 @@ export type PlayerMembershipUncheckedUpdateWithoutPlayerInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
   histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
@@ -1440,6 +1772,152 @@ export type PlayerMembershipUncheckedUpdateManyWithoutPlayerInput = {
   isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipCreateManyCreatedByInput = {
+  id?: string
+  playerId: string
+  teamSeasonId: string
+  paymentPlanId: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  updatedById?: string | null
+}
+
+export type PlayerMembershipCreateManyUpdatedByInput = {
+  id?: string
+  playerId: string
+  teamSeasonId: string
+  paymentPlanId: string
+  startedAt: Date | string
+  endedAt?: Date | string | null
+  status?: $Enums.PlayerMembershipStatus
+  notes?: string | null
+  nextRecurringChargeGenerationDate?: Date | string | null
+  isMigrated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+}
+
+export type PlayerMembershipUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  membershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutPlayerMembershipNestedInput
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
+  histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
+  pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipsNestedInput
+}
+
+export type PlayerMembershipUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  pauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+}
+
+export type PlayerMembershipUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PlayerMembershipUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  player?: Prisma.PlayerUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  paymentPlan?: Prisma.PaymentPlanUpdateOneRequiredWithoutPlayerMembershipsNestedInput
+  membershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutPlayerMembershipNestedInput
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutPlayerMembershipNestedInput
+  histories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutPlayerMembershipNestedInput
+  pauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutPlayerMembershipNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipsNestedInput
+}
+
+export type PlayerMembershipUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  membershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  histories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+  pauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutPlayerMembershipNestedInput
+}
+
+export type PlayerMembershipUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumPlayerMembershipStatusFieldUpdateOperationsInput | $Enums.PlayerMembershipStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextRecurringChargeGenerationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isMigrated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1513,6 +1991,8 @@ export type PlayerMembershipSelect<ExtArgs extends runtime.Types.Extensions.Inte
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
@@ -1520,6 +2000,8 @@ export type PlayerMembershipSelect<ExtArgs extends runtime.Types.Extensions.Inte
   membershipCharges?: boolean | Prisma.PlayerMembership$membershipChargesArgs<ExtArgs>
   histories?: boolean | Prisma.PlayerMembership$historiesArgs<ExtArgs>
   pauses?: boolean | Prisma.PlayerMembership$pausesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PlayerMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembership"]>
 
@@ -1536,9 +2018,13 @@ export type PlayerMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembership"]>
 
 export type PlayerMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1554,9 +2040,13 @@ export type PlayerMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembership"]>
 
 export type PlayerMembershipSelectScalar = {
@@ -1572,9 +2062,11 @@ export type PlayerMembershipSelectScalar = {
   isMigrated?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  updatedById?: boolean
 }
 
-export type PlayerMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextRecurringChargeGenerationDate" | "isMigrated" | "createdAt" | "updatedAt", ExtArgs["result"]["playerMembership"]>
+export type PlayerMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "teamSeasonId" | "paymentPlanId" | "startedAt" | "endedAt" | "status" | "notes" | "nextRecurringChargeGenerationDate" | "isMigrated" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["playerMembership"]>
 export type PlayerMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
@@ -1583,17 +2075,23 @@ export type PlayerMembershipInclude<ExtArgs extends runtime.Types.Extensions.Int
   membershipCharges?: boolean | Prisma.PlayerMembership$membershipChargesArgs<ExtArgs>
   histories?: boolean | Prisma.PlayerMembership$historiesArgs<ExtArgs>
   pauses?: boolean | Prisma.PlayerMembership$pausesArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PlayerMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PlayerMembershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
 }
 export type PlayerMembershipIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.PaymentPlanDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.PlayerMembership$createdByArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.PlayerMembership$updatedByArgs<ExtArgs>
 }
 
 export type $PlayerMembershipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1606,6 +2104,8 @@ export type $PlayerMembershipPayload<ExtArgs extends runtime.Types.Extensions.In
     membershipCharges: Prisma.$MembershipChargePayload<ExtArgs>[]
     histories: Prisma.$PlayerMembershipHistoryPayload<ExtArgs>[]
     pauses: Prisma.$PlayerMembershipPausePayload<ExtArgs>[]
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1620,6 +2120,8 @@ export type $PlayerMembershipPayload<ExtArgs extends runtime.Types.Extensions.In
     isMigrated: boolean
     createdAt: Date
     updatedAt: Date
+    createdById: string | null
+    updatedById: string | null
   }, ExtArgs["result"]["playerMembership"]>
   composites: {}
 }
@@ -2021,6 +2523,8 @@ export interface Prisma__PlayerMembershipClient<T, Null = never, ExtArgs extends
   membershipCharges<T extends Prisma.PlayerMembership$membershipChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembership$membershipChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   histories<T extends Prisma.PlayerMembership$historiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembership$historiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pauses<T extends Prisma.PlayerMembership$pausesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembership$pausesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPausePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdBy<T extends Prisma.PlayerMembership$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembership$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.PlayerMembership$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembership$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2062,6 +2566,8 @@ export interface PlayerMembershipFieldRefs {
   readonly isMigrated: Prisma.FieldRef<"PlayerMembership", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PlayerMembership", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"PlayerMembership", 'String'>
+  readonly updatedById: Prisma.FieldRef<"PlayerMembership", 'String'>
 }
     
 
@@ -2551,6 +3057,44 @@ export type PlayerMembership$pausesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PlayerMembershipPauseScalarFieldEnum | Prisma.PlayerMembershipPauseScalarFieldEnum[]
+}
+
+/**
+ * PlayerMembership.createdBy
+ */
+export type PlayerMembership$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * PlayerMembership.updatedBy
+ */
+export type PlayerMembership$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
