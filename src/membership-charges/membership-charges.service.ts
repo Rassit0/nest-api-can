@@ -1,23 +1,20 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { PreviewMembershipChargesDto } from './dto/preview-membership-charges.dto';
 import { CreateManualChargeDto } from './dto/create-manual-charge.dto';
 import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
 import { PrismaService } from 'src/prisma.service';
-import {
-  Prisma,
-  SeasonStatus,
-  StatusTeamSeason,
-  TypeMembershipCharge,
-} from 'src/generated/prisma/client';
+import { Prisma, TypeMembershipCharge } from 'src/generated/prisma/client';
 import { DateUtils } from 'src/utils/date.utils';
-import { MembershipChargeFactory } from './membership-charge.factory';
 import { MembershipPreviewService } from './services/membership-preview.service';
 import { MembershipGenerationService } from './services/membership-generation.service';
 import { PreviewMembershipFactory } from './factories/preview-membership.factory';
-import { PlayerMembershipWithRelations } from './membership-financial.calculator';
 import { MembershipRepository } from './repositories/membership.repository';
 import { MembershipChargeRepository } from './repositories/membership-charge.repository';
+import { MembershipTeamSeasonValidator } from './validators/membership-team-season.validator';
+import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
+import { MembershipChargeRecalculationService } from './services/membership-recalculation.service';
+import { MembershipManualChargeService } from './services/membership-manual-charge.service';
+import { MembershipAdvanceChargeService } from './services/membership-advance-charge.service';
 
 /**
  * Servicio central orquestador de cargos (charges) para membresías de jugadores.
@@ -34,6 +31,9 @@ export class MembershipChargesService {
     private readonly generationService: MembershipGenerationService,
     private readonly membershipRepo: MembershipRepository,
     private readonly chargeRepo: MembershipChargeRepository,
+    private readonly recalculationService: MembershipChargeRecalculationService,
+    private readonly manualChargeService: MembershipManualChargeService,
+    private readonly advanceChargeService: MembershipAdvanceChargeService,
   ) {}
 
   /**
@@ -57,16 +57,10 @@ export class MembershipChargesService {
     const teamSeason =
       await this.membershipRepo.getTeamSeasonOrThrow(teamSeasonId);
 
-    if (
-      teamSeason.season.status === SeasonStatus.CANCELLED ||
-      teamSeason.season.status === SeasonStatus.FINISHED ||
-      teamSeason.status === StatusTeamSeason.CANCELLED ||
-      teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden previsualizar cargos de una temporada o equipo inactivo (cancelado o finalizado)',
-      );
-    }
+    MembershipTeamSeasonValidator.assertIsActive(
+      teamSeason,
+      'No se pueden previsualizar cargos de una temporada o equipo inactivo (cancelado o finalizado)',
+    );
 
     const paymentPlan =
       await this.membershipRepo.getPaymentPlanOrThrow(paymentPlanId);
@@ -77,32 +71,14 @@ export class MembershipChargesService {
       teamSeason.season.endDate,
     );
 
-    if (mockStartedAt < seasonStart || mockStartedAt > seasonEndValidation) {
-      throw new BadRequestException(
-        'La fecha de inicio debe estar dentro de la duración de la temporada',
-      );
-    }
+    MembershipTeamSeasonValidator.assertDateWithinSeason(
+      mockStartedAt,
+      seasonStart,
+      seasonEndValidation,
+    );
 
-    const parsedDiscounts = membershipDiscounts.map((d) => ({
-      ...d,
-      id: 'preview-discount',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      playerMembershipId: 'preview-id',
-      type: 'CUSTOM' as const,
-      reason: 'Preview',
-      registrationDiscountPercent: new Prisma.Decimal(
-        d.registrationDiscountPercent || 0,
-      ),
-      recurringDiscountPercent: new Prisma.Decimal(
-        d.recurringDiscountPercent || 0,
-      ),
-      seasonFeeDiscountPercent: new Prisma.Decimal(
-        d.seasonFeeDiscountPercent || 0,
-      ),
-      startDate: new Date(d.startDate),
-      endDate: d.endDate ? new Date(d.endDate) : null,
-    })) as unknown as PlayerMembershipWithRelations['membershipDiscounts'];
+    const parsedDiscounts =
+      PreviewMembershipFactory.parseDiscounts(membershipDiscounts);
 
     const mockMembership = PreviewMembershipFactory.createMockMembership(
       mockStartedAt,
@@ -110,6 +86,8 @@ export class MembershipChargesService {
       paymentPlan,
       parsedDiscounts,
       isMigrated || false,
+      data.chargeRegistrationOnMigration,
+      data.chargeCurrentMonthOnMigration,
     );
 
     return this.previewService.extractPreviewChargesFromCycles(
@@ -175,10 +153,7 @@ export class MembershipChargesService {
             );
           });
         } catch (error) {
-          if (
-            error instanceof Prisma.PrismaClientKnownRequestError &&
-            error.code === 'P2002'
-          ) {
+          if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
             this.logger.warn(
               `Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`,
             );
@@ -204,16 +179,10 @@ export class MembershipChargesService {
     const membership =
       await this.membershipRepo.getMembershipOrThrow(membershipId);
 
-    if (
-      membership.teamSeason.season.status === SeasonStatus.CANCELLED ||
-      membership.teamSeason.season.status === SeasonStatus.FINISHED ||
-      membership.teamSeason.status === StatusTeamSeason.CANCELLED ||
-      membership.teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden generar cargos para una temporada o equipo que ha finalizado o fue cancelada',
-      );
-    }
+    MembershipTeamSeasonValidator.assertIsActive(
+      membership.teamSeason,
+      'No se pueden generar cargos para una temporada o equipo que ha finalizado o fue cancelada',
+    );
 
     if (!membership.nextRecurringChargeGenerationDate) {
       throw new BadRequestException(
@@ -225,14 +194,23 @@ export class MembershipChargesService {
       membership.nextRecurringChargeGenerationDate,
     );
 
-    await this.prisma.$transaction(async (tx) => {
-      await this.generationService.ensureRecurringCharges(
-        tx,
-        membership,
-        evaluationDate,
-      );
-    });
-    return { message: 'Próxima cuota generada por adelantado exitosamente' };
+    try {
+      await this.prisma.$transaction(async (tx) => {
+        await this.generationService.ensureRecurringCharges(
+          tx,
+          membership,
+          evaluationDate,
+        );
+      });
+      return { message: 'Próxima cuota generada por adelantado exitosamente' };
+    } catch (error) {
+      if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
+        throw new BadRequestException(
+          'La cuota que intentas generar ya fue creada recientemente por otro proceso.',
+        );
+      }
+      throw error;
+    }
   }
 
   /**
@@ -240,10 +218,27 @@ export class MembershipChargesService {
    * compra o inscribe una membresía. Fuerza la creación del cobro inicial
    * (matrícula y primera cuota) en tiempo real.
    */
-  async generateChargesForNewMembership(membershipId: string) {
+  async generateChargesForNewMembership(
+    membershipId: string,
+    options?: {
+      chargeRegistrationOnMigration?: boolean;
+      chargeCurrentMonthOnMigration?: boolean;
+    },
+  ) {
     const membership =
       await this.membershipRepo.getMembershipById(membershipId);
     if (!membership) return;
+    if (!membership.teamSeason.billingConfig?.isEngineActive) return;
+
+    const generationMembership = {
+      ...membership,
+      chargeRegistrationOnMigration:
+        options?.chargeRegistrationOnMigration ??
+        membership.chargeRegistrationOnMigration,
+      chargeCurrentMonthOnMigration:
+        options?.chargeCurrentMonthOnMigration ??
+        membership.chargeCurrentMonthOnMigration,
+    } as typeof membership;
 
     const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
 
@@ -251,7 +246,7 @@ export class MembershipChargesService {
       await this.prisma.$transaction(async (tx) => {
         await this.generationService.ensureMembershipCharges(
           tx,
-          membership,
+          generationMembership,
           evaluationDate,
         );
       });
@@ -259,10 +254,7 @@ export class MembershipChargesService {
         `Cargos generados/actualizados para nueva membresía ${membershipId}`,
       );
     } catch (error) {
-      if (
-        error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === 'P2002'
-      ) {
+      if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
         this.logger.warn(
           `Colisión de cargos prevenida (idempotencia) al generar cargos de nueva membresía ${membershipId}`,
         );
@@ -282,118 +274,14 @@ export class MembershipChargesService {
    * miles de usuarios instantáneamente.
    */
   async createMassiveManualCharge(dto: CreateMassiveManualChargeDto) {
-    const { teamSeasonId, description, amount, dueDate } = dto;
-    const due = DateUtils.getEndOfUTCDay(dueDate);
-
-    const teamSeason =
-      await this.membershipRepo.getTeamSeasonOrThrow(teamSeasonId);
-    if (
-      teamSeason.season.status === SeasonStatus.CANCELLED ||
-      teamSeason.season.status === SeasonStatus.FINISHED ||
-      teamSeason.status === StatusTeamSeason.CANCELLED ||
-      teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden generar cargos masivos para una temporada o equipo que ha finalizado o fue cancelada',
-      );
-    }
-
-    const activeMemberships =
-      await this.membershipRepo.getActiveMembershipsIdsBySeason(teamSeasonId);
-
-    if (activeMemberships.length === 0) {
-      throw new BadRequestException(
-        'No hay miembros activos para generar el cargo.',
-      );
-    }
-
-    const chargesData: Prisma.ChargeCreateManyInput[] = [];
-    const membershipChargesData: Prisma.MembershipChargeCreateManyInput[] = [];
-
-    for (const membership of activeMemberships) {
-      const chargeId = randomUUID();
-      const payload = MembershipChargeFactory.buildManualChargePayload(
-        membership.id,
-        amount,
-        description,
-        due,
-      );
-
-      const chargeFields = { ...payload };
-      delete chargeFields.membershipCharges;
-
-      chargesData.push({
-        id: chargeId,
-        ...chargeFields,
-      } as Prisma.ChargeCreateManyInput);
-
-      const mcCreate = payload.membershipCharges?.create;
-      if (mcCreate && !Array.isArray(mcCreate)) {
-        membershipChargesData.push({
-          chargeId,
-          ...mcCreate,
-        } as Prisma.MembershipChargeCreateManyInput);
-      }
-    }
-
-    const chunkSize = 1000;
-
-    await this.prisma.$transaction(async (tx) => {
-      for (let i = 0; i < chargesData.length; i += chunkSize) {
-        const chargesChunk = chargesData.slice(i, i + chunkSize);
-        await this.chargeRepo.bulkCreateCharges(tx, chargesChunk);
-      }
-
-      for (let i = 0; i < membershipChargesData.length; i += chunkSize) {
-        const membershipChargesChunk = membershipChargesData.slice(
-          i,
-          i + chunkSize,
-        );
-        await this.chargeRepo.bulkCreateMembershipCharges(
-          tx,
-          membershipChargesChunk,
-        );
-      }
-    });
-
-    return {
-      message: `Cargos generados exitosamente para ${activeMemberships.length} miembros.`,
-    };
+    return this.manualChargeService.createMassiveManualCharge(dto);
   }
 
   /**
    * Crea un cargo extraordinario manual para un único jugador específico.
    */
   async createManualCharge(dto: CreateManualChargeDto) {
-    const membership = await this.membershipRepo.getMembershipOrThrow(
-      dto.membershipId,
-    );
-
-    if (
-      membership.teamSeason.season.status === SeasonStatus.CANCELLED ||
-      membership.teamSeason.season.status === SeasonStatus.FINISHED ||
-      membership.teamSeason.status === StatusTeamSeason.CANCELLED ||
-      membership.teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden generar cargos manuales para una temporada o equipo que ha finalizado o fue cancelada',
-      );
-    }
-
-    const dueDate = DateUtils.getStartOfUTCDay(dto.dueDate);
-
-    await this.prisma.$transaction(async (tx) => {
-      await tx.charge.create({
-        data: MembershipChargeFactory.buildManualChargePayload(
-          membership.id,
-          dto.amount,
-          dto.description,
-          dueDate,
-        ),
-      });
-    });
-
-    return { message: 'Cargo manual creado exitosamente' };
+    return this.manualChargeService.createManualCharge(dto);
   }
 
   /**
@@ -403,104 +291,14 @@ export class MembershipChargesService {
    * Lógica crítica:
    * 1. Descubre todos los cargos recurrentes pendientes a futuro.
    * 2. (PROTECCIÓN FINANCIERA): Solo selecciona aquellos donde (PendingAmount === Amount).
-   *    Si el usuario ya pagó $1 de una cuota de $100, la cuota está bloqueada y NO se borra.
    * 3. Borra las cuotas elegibles.
    * 4. Retrasa el 'nextRecurringChargeGenerationDate' para simular que retrocedimos en el tiempo.
    * 5. Fuerza un recalculo para que nazcan nuevas cuotas con los beneficios del nuevo plan.
    */
   async recalculatePendingFutureCharges(playerMembershipId: string) {
-    // 1. Tomamos el momento actual como base para buscar cargos futuros
-    const evaluationDate = DateUtils.getStartOfUTCDay(new Date());
-
-    const pendingMembershipCharges =
-      await this.chargeRepo.fetchPendingFutureMembershipCharges(
-        playerMembershipId,
-        evaluationDate,
-      );
-    if (pendingMembershipCharges.length === 0) return;
-
-    // 2. Filtro estricto: Solo tocamos cuotas que no tengan pagos parciales (pendingAmount === amount)
-    const fullyPendingChargeIds = pendingMembershipCharges
-      .filter(
-        (mc) => Number(mc.charge.pendingAmount) === Number(mc.charge.amount),
-      )
-      .map((mc) => mc.chargeId);
-
-    if (fullyPendingChargeIds.length === 0) return;
-
-    const membership =
-      await this.membershipRepo.getMembershipById(playerMembershipId);
-
-    // Filtramos cuáles de los cargos eliminables son cuotas recurrentes
-    const recurringCharges = pendingMembershipCharges.filter(
-      (mc) =>
-        fullyPendingChargeIds.includes(mc.chargeId) &&
-        mc.type === TypeMembershipCharge.RECURRING_FEE,
+    return this.recalculationService.recalculatePendingFutureCharges(
+      playerMembershipId,
     );
-
-    let resetDate = membership?.nextRecurringChargeGenerationDate || null;
-    let oldNextDate = membership?.nextRecurringChargeGenerationDate || null;
-
-    // 3. Retrocedemos el reloj (nextRecurringChargeGenerationDate) basándonos en el cargo más antiguo que vamos a borrar
-    if (recurringCharges.length > 0 && membership?.teamSeason) {
-      const earliestDueDate = new Date(
-        Math.min(...recurringCharges.map((mc) => mc.charge.dueDate.getTime())),
-      );
-
-      // Ajustamos la fecha restando los días de anticipación de cobro configurados
-      const calculatedResetDate = new Date(earliestDueDate);
-      calculatedResetDate.setUTCDate(
-        calculatedResetDate.getUTCDate() -
-          (membership.teamSeason.billingConfig?.chargeGenerationDaysBefore ??
-            0),
-      );
-
-      // Solo retrocedemos si la fecha calculada es anterior a la actual
-      if (!resetDate || calculatedResetDate < resetDate) {
-        resetDate = calculatedResetDate;
-      }
-    }
-
-    // 4. Eliminación física de los cargos obsoletos e inmaculados
-    await this.prisma.$transaction(async (tx) => {
-      await this.chargeRepo.deletePendingCharges(tx, fullyPendingChargeIds);
-
-      // Guardamos el nuevo puntero de generación de tiempo si hubo cambios
-      if (
-        membership &&
-        resetDate &&
-        resetDate.getTime() !== oldNextDate?.getTime()
-      ) {
-        await this.membershipRepo.updateNextGenerationPointer(
-          tx,
-          playerMembershipId,
-          resetDate,
-        );
-      }
-    });
-
-    // 5. Autosanación: Simulamos que es de noche para forzar la regeneración inmediata de los cargos
-    try {
-      if (membership) {
-        const fakeToday = DateUtils.getEndOfUTCDay(new Date());
-        const fullMembership =
-          await this.membershipRepo.getMembershipById(playerMembershipId);
-
-        if (fullMembership) {
-          await this.prisma.$transaction(async (tx) => {
-            await this.generationService.ensureMembershipCharges(
-              tx,
-              fullMembership,
-              fakeToday,
-            );
-          });
-        }
-      }
-    } catch (error) {
-      this.logger.warn(
-        `No se pudo regenerar los cargos tras recálculo para ${playerMembershipId}: ${error.message}`,
-      );
-    }
   }
 
   /**
@@ -508,34 +306,10 @@ export class MembershipChargesService {
    * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
    */
   async previewAdvanceCharges(membershipId: string, quantity: number) {
-    const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
-
-    if (
-      membership.teamSeason.season.status === SeasonStatus.CANCELLED ||
-      membership.teamSeason.season.status === SeasonStatus.FINISHED ||
-      membership.teamSeason.status === StatusTeamSeason.CANCELLED ||
-      membership.teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden previsualizar cuotas adelantadas para una temporada o equipo inactivo',
-      );
-    }
-
-    const nextCycles = await this.generationService.findNextUngeneratedCycles(
-      this.prisma,
-      membership,
+    return this.advanceChargeService.previewAdvanceCharges(
+      membershipId,
       quantity,
     );
-
-    if (nextCycles.length === 0) {
-      return {
-        charges: [],
-        breakdown: this.previewService.buildChargesBreakdown([]),
-      };
-    }
-
-    return this.previewService.extractAdvanceChargesFromCycles(nextCycles);
   }
 
   /**
@@ -543,42 +317,9 @@ export class MembershipChargesService {
    * bajo el contexto de un solo agrupamiento transaccional.
    */
   async generateAdvanceCharges(membershipId: string, quantity: number) {
-    const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
-
-    if (
-      membership.teamSeason.season.status === SeasonStatus.CANCELLED ||
-      membership.teamSeason.season.status === SeasonStatus.FINISHED ||
-      membership.teamSeason.status === StatusTeamSeason.CANCELLED ||
-      membership.teamSeason.status === StatusTeamSeason.FINISHED
-    ) {
-      throw new BadRequestException(
-        'No se pueden generar cuotas adelantadas para una temporada o equipo inactivo',
-      );
-    }
-
-    const nextCycles = await this.generationService.findNextUngeneratedCycles(
-      this.prisma,
-      membership,
+    return this.advanceChargeService.generateAdvanceCharges(
+      membershipId,
       quantity,
     );
-
-    if (nextCycles.length === 0) {
-      return {
-        message: 'No hay más cuotas disponibles para generar en la temporada.',
-      };
-    }
-
-    await this.prisma.$transaction(async (tx) => {
-      await this.generationService.generateAdvanceCharges(
-        tx,
-        membership,
-        nextCycles,
-      );
-    });
-
-    return {
-      message: `Se generaron exitosamente ${nextCycles.length} cuotas por adelantado.`,
-    };
   }
 }

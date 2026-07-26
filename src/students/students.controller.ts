@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,17 +19,27 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { StudentsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { StudentResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Students')
 @Controller('students')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
@@ -38,7 +49,11 @@ export class StudentsController {
     description:
       'Crea el perfil de un estudiante a partir de un perfil de persona preexistente.',
   })
-  @ApiStandardCreatedResponse(StudentResponseDto, 'Estudiante registrado exitosamente.')
+  @ApiStandardCreatedResponse(
+    StudentResponseDto,
+    'Estudiante registrado exitosamente.',
+  )
+  @RequirePermissions('CREATE_STUDENTS')
   async create(@Body() createStudentDto: CreateStudentDto) {
     return await this.studentsService.create(createStudentDto);
   }
@@ -49,7 +64,11 @@ export class StudentsController {
     description:
       'Retorna una lista paginada y filtrable de todos los estudiantes registrados.',
   })
-  @ApiPaginatedResponse(StudentResponseDto, 'Lista de estudiantes obtenida correctamente.')
+  @ApiPaginatedResponse(
+    StudentResponseDto,
+    'Lista de estudiantes obtenida correctamente.',
+  )
+  @RequirePermissions('READ_STUDENTS')
   async findAll(@Query() paginationDto: StudentsPaginationDto) {
     return await this.studentsService.findAll(paginationDto);
   }
@@ -57,9 +76,13 @@ export class StudentsController {
   @Get('available-persons-options')
   @ApiOperation({
     summary: 'Listar opciones de personas disponibles',
-    description: 'Retorna una lista paginada de personas que aún no son estudiantes.',
+    description:
+      'Retorna una lista paginada de personas que aún no son estudiantes.',
   })
-  async getAvailablePersons(@Query() paginationDto: import('src/common/dto/pagination').PaginationDto) {
+  @RequirePermissions('READ_STUDENTS')
+  async getAvailablePersons(
+    @Query() paginationDto: import('src/common/dto/pagination').PaginationDto,
+  ) {
     return await this.studentsService.getAvailablePersons(paginationDto);
   }
 
@@ -74,7 +97,11 @@ export class StudentsController {
     description: 'ID del estudiante a consultar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(StudentResponseDto, 'Estudiante encontrado exitosamente.')
+  @ApiStandardResponse(
+    StudentResponseDto,
+    'Estudiante encontrado exitosamente.',
+  )
+  @RequirePermissions('READ_STUDENTS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentsService.findOne(id);
   }
@@ -92,7 +119,11 @@ export class StudentsController {
   })
   @ApiBody({ type: UpdateStudentDto })
   @FormDataRequest()
-  @ApiStandardResponse(StudentResponseDto, 'Estudiante actualizado exitosamente.')
+  @ApiStandardResponse(
+    StudentResponseDto,
+    'Estudiante actualizado exitosamente.',
+  )
+  @RequirePermissions('UPDATE_STUDENTS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -111,6 +142,7 @@ export class StudentsController {
     format: 'uuid',
   })
   @ApiStandardResponse(StudentResponseDto, 'Estudiante eliminado con éxito.')
+  @RequirePermissions('DELETE_STUDENTS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentsService.remove(id);
   }

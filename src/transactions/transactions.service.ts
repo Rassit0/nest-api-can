@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -6,6 +11,7 @@ import { TransactionsPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { PaymentStrategyFactory } from './strategies/payment-strategy.factory';
+import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dto';
 
 export const transactionSelect: Prisma.TransactionSelect = {
   id: true,
@@ -78,84 +84,94 @@ export class TransactionsService {
     const receiptUrls = [];
 
     // 3. Ejecutar todo en una transacción de BD
-    const createdTransaction = await this.prisma.$transaction(async (prisma) => {
-      // 3.1. Crear la transacción base
-      const transaction = await prisma.transaction.create({
-        data: {
-          ...rest,
-          amount,
-          paymentMethod,
-          status: paymentResult.transactionStatus,
-          receiptUrls,
-        },
-      });
+    const createdTransaction = await this.prisma.$transaction(
+      async (prisma) => {
+        // 3.1. Crear la transacción base
+        const transaction = await prisma.transaction.create({
+          data: {
+            ...rest,
+            amount,
+            paymentMethod,
+            status: paymentResult.transactionStatus,
+            receiptUrls,
+          },
+        });
 
-      // 3.2. Si hay cargos a los que aplicar
-      if (chargeTransactions && chargeTransactions.length > 0) {
-        for (const ct of chargeTransactions) {
-          // Obtener el cargo
-          const charge = await prisma.charge.findUnique({
-            where: { id: ct.chargeId },
-          });
+        // 3.2. Si hay cargos a los que aplicar
+        if (chargeTransactions && chargeTransactions.length > 0) {
+          for (const ct of chargeTransactions) {
+            // Obtener el cargo
+            const charge = await prisma.charge.findUnique({
+              where: { id: ct.chargeId },
+            });
 
-          if (!charge) {
-            throw new NotFoundException(`Cargo con ID ${ct.chargeId} no encontrado`);
-          }
+            if (!charge) {
+              throw new NotFoundException(
+                `Cargo con ID ${ct.chargeId} no encontrado`,
+              );
+            }
 
-          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
-          const applied = Number(ct.amountApplied.toFixed(2));
-
-          if (currentPending < applied) {
-            throw new BadRequestException(
-              `El monto aplicado (${applied}) supera el saldo pendiente (${currentPending}) del cargo ${charge.id}`,
+            const currentPending = Number(
+              charge.pendingAmount.toNumber().toFixed(2),
             );
-          }
+            const applied = Number(ct.amountApplied.toFixed(2));
 
-          if (applied === 0 && currentPending > 0) {
-            throw new BadRequestException(
-              `Solo se permiten recibos de monto 0 si el cargo tiene un saldo pendiente de 0.`,
+            if (currentPending < applied) {
+              throw new BadRequestException(
+                `El monto aplicado (${applied}) supera el saldo pendiente (${currentPending}) del cargo ${charge.id}`,
+              );
+            }
+
+            if (applied === 0 && currentPending > 0) {
+              throw new BadRequestException(
+                `Solo se permiten recibos de monto 0 si el cargo tiene un saldo pendiente de 0.`,
+              );
+            }
+
+            // Crear pivote
+            await prisma.chargeTransaction.create({
+              data: {
+                chargeId: ct.chargeId,
+                transactionId: transaction.id,
+                amountApplied: applied,
+              },
+            });
+
+            const newPendingAmount = Number(
+              (currentPending - applied).toFixed(2),
             );
+            const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
+            const discountAmount = Number(
+              charge.discountAmount?.toNumber() || 0,
+            );
+            const expectedTotal = chargeAmount - discountAmount;
+
+            let newStatus = charge.status;
+
+            if (newPendingAmount <= 0) {
+              newStatus = StatusCharge.PAID;
+            } else if (newPendingAmount < expectedTotal) {
+              newStatus = StatusCharge.PARTIAL;
+            } else {
+              newStatus = StatusCharge.PENDING;
+            }
+
+            await prisma.charge.update({
+              where: { id: charge.id },
+              data: {
+                pendingAmount: newPendingAmount,
+                status: newStatus,
+              },
+            });
           }
-
-          // Crear pivote
-          await prisma.chargeTransaction.create({
-            data: {
-              chargeId: ct.chargeId,
-              transactionId: transaction.id,
-              amountApplied: applied,
-            },
-          });
-
-          const newPendingAmount = Number((currentPending - applied).toFixed(2));
-          const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
-          const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-          const expectedTotal = chargeAmount - discountAmount;
-          
-          let newStatus = charge.status;
-
-          if (newPendingAmount <= 0) {
-            newStatus = StatusCharge.PAID;
-          } else if (newPendingAmount < expectedTotal) {
-            newStatus = StatusCharge.PARTIAL;
-          } else {
-            newStatus = StatusCharge.PENDING;
-          }
-
-          await prisma.charge.update({
-            where: { id: charge.id },
-            data: {
-              pendingAmount: newPendingAmount,
-              status: newStatus,
-            },
-          });
         }
-      }
 
-      return await prisma.transaction.findUnique({
-        where: { id: transaction.id },
-        select: transactionSelect,
-      });
-    });
+        return await prisma.transaction.findUnique({
+          where: { id: transaction.id },
+          select: transactionSelect,
+        });
+      },
+    );
 
     return {
       transaction: createdTransaction,
@@ -180,8 +196,8 @@ export class TransactionsService {
       ...(payerPersonId && { payerPersonId }),
       ...(chargeId && {
         chargeTransactions: {
-          some: { chargeId }
-        }
+          some: { chargeId },
+        },
       }),
       ...(search && {
         OR: [
@@ -257,14 +273,18 @@ export class TransactionsService {
           where: { id: ct.chargeId },
         });
         if (charge) {
-          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
+          const currentPending = Number(
+            charge.pendingAmount.toNumber().toFixed(2),
+          );
           const applied = Number(ct.amountApplied.toNumber().toFixed(2));
           const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
           const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-          
+
           const expectedTotal = chargeAmount - discountAmount;
 
-          const newPendingAmount = Number((currentPending + applied).toFixed(2));
+          const newPendingAmount = Number(
+            (currentPending + applied).toFixed(2),
+          );
           let newStatus = charge.status;
 
           // Si el pending es igual o mayor al expectedTotal, vuelve a PENDING
@@ -297,5 +317,76 @@ export class TransactionsService {
 
       return deletedTransaction;
     });
+  }
+
+  async getPersonsOptions(paginationDto: PersonsOptionsPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      gender,
+    } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const searchTerms = search ? search.trim().split(/\s+/) : [];
+
+    const where: Prisma.PersonWhereInput = {
+      ...(searchTerms.length > 0
+        ? {
+            AND: searchTerms.map((term) => ({
+              OR: [
+                { name: { contains: term, mode: 'insensitive' } },
+                { lastName: { contains: term, mode: 'insensitive' } },
+                { secondLastName: { contains: term, mode: 'insensitive' } },
+                { documentNumber: { contains: term, mode: 'insensitive' } },
+              ],
+            })),
+          }
+        : {}),
+      ...(gender && { gender }),
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.person.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { name: orderBy },
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          documentNumber: true,
+          gender: true,
+          birthDate: true,
+          imageUrl: true,
+        },
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Miembros obtenidos exitosamente',
+      data: persons.map((person) => ({
+        ...person,
+        fullName:
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim(),
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
   }
 }

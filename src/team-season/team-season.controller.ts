@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,6 +20,7 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiConsumes,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { TeamSeasonService } from './team-season.service';
 import { CreateTeamSeasonDto } from './dto/create-team-season.dto';
@@ -34,13 +36,19 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { TeamSeasonResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Team Seasons')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 @Controller('team-seasons')
 export class TeamSeasonsController {
   constructor(private readonly teamSeasonsService: TeamSeasonService) {}
 
   @Post()
+  @RequirePermissions('CREATE_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Instanciar un equipo en una temporada',
     description:
@@ -59,17 +67,18 @@ export class TeamSeasonsController {
   @Get('public/list')
   @ApiOperation({
     summary: 'Listar equipos públicos',
-    description: 'Retorna una lista adaptada para el portal web con información pública de los equipos.',
+    description:
+      'Retorna una lista adaptada para el portal web con información pública de los equipos.',
   })
   @ApiOkResponse({ description: 'Equipos públicos obtenidos correctamente.' })
-  async findPublic(
-    @Query('isHistorical') isHistorical?: string,
-  ) {
+  @RequirePermissions('READ_TEAM_SEASONS')
+  async findPublic(@Query('isHistorical') isHistorical?: string) {
     const historical = isHistorical === 'true';
     return await this.teamSeasonsService.findPublic(historical);
   }
 
   @Get()
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Listar equipos instanciados en temporadas',
     description:
@@ -81,6 +90,7 @@ export class TeamSeasonsController {
   }
 
   @Get('categories-by-discipline/options/:disciplineId')
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Listar categorías por disciplina para selectores',
     description: 'Retorna las categorías asociadas a una disciplina deportiva.',
@@ -100,6 +110,7 @@ export class TeamSeasonsController {
   }
 
   @Get('seasons-by-discipline/options/:disciplineId')
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Listar temporadas por disciplina para selectores',
     description: 'Retorna las temporadas de una disciplina deportiva.',
@@ -119,6 +130,7 @@ export class TeamSeasonsController {
   }
 
   @Delete('pauses/:pauseId')
+  @RequirePermissions('PAUSE_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Eliminar una pausa de temporada',
   })
@@ -127,6 +139,7 @@ export class TeamSeasonsController {
   }
 
   @Get(':id')
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Obtener temporada de equipo por ID',
     description: 'Retorna los detalles de un equipo instanciado en temporada.',
@@ -145,6 +158,7 @@ export class TeamSeasonsController {
   }
 
   @Get(':id/summary')
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Obtener resumen de la temporada',
     description: 'Retorna un resumen de métricas y cobranzas.',
@@ -160,6 +174,7 @@ export class TeamSeasonsController {
   }
 
   @Patch(':id')
+  @RequirePermissions('UPDATE_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Actualizar instancia de equipo por ID',
     description:
@@ -185,6 +200,7 @@ export class TeamSeasonsController {
   }
 
   @Delete(':id')
+  @RequirePermissions('DELETE_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Eliminar instancia de equipo por ID',
     description:
@@ -204,6 +220,7 @@ export class TeamSeasonsController {
   }
 
   @Patch(':id/finish')
+  @RequirePermissions('FINISH_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Finalizar una temporada de equipo por ID',
     description: 'Marca la temporada de equipo como FINALIZADA.',
@@ -226,6 +243,7 @@ export class TeamSeasonsController {
   }
 
   @Patch(':id/cancel')
+  @RequirePermissions('CANCEL_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Cancelar una temporada de equipo por ID',
     description: 'Marca la temporada de equipo como CANCELADA.',
@@ -248,6 +266,7 @@ export class TeamSeasonsController {
   }
 
   @Patch(':id/toggle-billing-engine')
+  @RequirePermissions('BILLING_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Activar/Desactivar motor de cobros por ID',
     description:
@@ -281,6 +300,7 @@ export class TeamSeasonsController {
   }
 
   @Get(':id/pauses')
+  @RequirePermissions('READ_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Obtener las pausas de la temporada',
   })
@@ -289,6 +309,7 @@ export class TeamSeasonsController {
   }
 
   @Post(':id/pauses')
+  @RequirePermissions('PAUSE_TEAM_SEASONS')
   @ApiOperation({
     summary: 'Agregar una pausa a la temporada (vacaciones/receso)',
   })
@@ -297,5 +318,53 @@ export class TeamSeasonsController {
     @Body() createPauseDto: CreateTeamSeasonPauseDto,
   ) {
     return await this.teamSeasonsService.addPause(id, createPauseDto);
+  }
+
+  @Get('disciplines/options')
+  @RequirePermissions('READ_TEAM_SEASONS')
+  @ApiOperation({
+    summary: 'Obtener opciones de disciplinas',
+    description:
+      'Retorna las disciplinas para selectores de la temporada de equipos.',
+  })
+  @ApiOkResponse({
+    description: 'Lista de opciones de disciplinas obtenida correctamente.',
+  })
+  async getDisciplinesOptions() {
+    return await this.teamSeasonsService.getDisciplinesOptions();
+  }
+
+  @Get('club/context/:clubId')
+  @RequirePermissions('READ_TEAM_SEASONS')
+  @ApiOperation({
+    summary: 'Obtener contexto básico del club',
+    description:
+      'Retorna información básica (nombre, id) de un club para usar de contexto en la vista de temporadas',
+  })
+  @ApiParam({
+    name: 'clubId',
+    description: 'ID del club (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Contexto del club obtenido correctamente.' })
+  async getClubContext(@Param('clubId', ParseUUIDPipe) clubId: string) {
+    return await this.teamSeasonsService.getClubContext(clubId);
+  }
+
+  @Get('team/context/:teamId')
+  @RequirePermissions('READ_TEAM_SEASONS')
+  @ApiOperation({
+    summary: 'Obtener contexto básico del equipo',
+    description:
+      'Retorna información básica (nombre, id) de un equipo para usar de contexto en la vista de temporadas',
+  })
+  @ApiParam({
+    name: 'teamId',
+    description: 'ID del equipo (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Contexto del equipo obtenido correctamente.' })
+  async getTeamContext(@Param('teamId', ParseUUIDPipe) teamId: string) {
+    return await this.teamSeasonsService.getTeamContext(teamId);
   }
 }

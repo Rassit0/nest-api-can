@@ -23,6 +23,12 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   id: true,
   imageUrl: true,
   gender: true,
+  shift: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
   course: {
     select: {
       id: true,
@@ -410,11 +416,13 @@ export class CourseSeasonsService {
         (courseId && courseId !== courseSeason.course.id) ||
         (seasonId && seasonId !== courseSeason.season.id) ||
         (categoryId && categoryId !== courseSeason.category.id) ||
+        (updateCourseSeasonDto.shiftId &&
+          updateCourseSeasonDto.shiftId !== courseSeason.shift?.id) ||
         (updateCourseSeasonDto.gender &&
           updateCourseSeasonDto.gender !== courseSeason.gender)
       ) {
         throw new BadRequestException(
-          'No se puede modificar el curso, la temporada, la categoría ni el género una vez que la temporada de curso está activa',
+          'No se puede modificar el curso, la temporada, la categoría, el turno ni el género una vez que la temporada de curso está activa',
         );
       }
 
@@ -615,6 +623,21 @@ export class CourseSeasonsService {
     };
   }
 
+  async getShiftsByInstitutionOptions(institutionId: string) {
+    const shifts = await this.prisma.shift.findMany({
+      where: { institutionId },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return {
+      data: shifts,
+      message: 'Turnos obtenidos exitosamente',
+    };
+  }
+
   async getCategoriesByDisciplineOptions(disciplineId: string) {
     const categories = await this.prisma.category.findMany({
       where: { disciplineId },
@@ -631,6 +654,7 @@ export class CourseSeasonsService {
       message: 'Categorias obtenidas exitosamente',
     };
   }
+
   async getSeasonsByDisciplineOptions(disciplineId: string) {
     const seasons = await this.prisma.season.findMany({
       where: {

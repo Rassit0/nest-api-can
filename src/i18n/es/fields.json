@@ -21,5 +21,13 @@
     "Activity_categoryId_fkey": "Categoría",
     "startDate": "Fecha de inicio",
     "endDate": "Fecha de fin",
-    "documentNumber": "Número de documento"
+    "documentNumber": "Número de documento",
+    "paymentMethods": {
+        "CASH": "Efectivo",
+        "BANK_TRANSFER": "Transferencia Bancaria",
+        "CREDIT_CARD": "Tarjeta de Crédito",
+        "DEBIT_CARD": "Tarjeta de Débito",
+        "CHECK": "Cheque",
+        "OTHER": "Otro"
+    }
 }

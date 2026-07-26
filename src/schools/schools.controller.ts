@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { SchoolsService } from './schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
 import { SchoolsPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { SchoolResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Schools')
 @Controller('schools')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 
@@ -38,6 +49,7 @@ export class SchoolsController {
       'Registra una escuela de formación asociada a una institución y una disciplina deportiva.',
   })
   @ApiStandardCreatedResponse(SchoolResponseDto, 'Escuela creada exitosamente.')
+  @RequirePermissions('CREATE_SCHOOLS')
   async create(@Body() createSchoolDto: CreateSchoolDto) {
     return await this.schoolsService.create(createSchoolDto);
   }
@@ -48,7 +60,11 @@ export class SchoolsController {
     description:
       'Retorna una lista paginada y filtrable de todas las escuelas registradas.',
   })
-  @ApiPaginatedResponse(SchoolResponseDto, 'Lista de escuelas obtenida correctamente.')
+  @ApiPaginatedResponse(
+    SchoolResponseDto,
+    'Lista de escuelas obtenida correctamente.',
+  )
+  @RequirePermissions('READ_SCHOOLS')
   async findAll(@Query() paginationDto: SchoolsPaginationDto) {
     return await this.schoolsService.findAll(paginationDto);
   }
@@ -65,6 +81,7 @@ export class SchoolsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SchoolResponseDto, 'Escuela encontrada exitosamente.')
+  @RequirePermissions('READ_SCHOOLS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schoolsService.findOne(id);
   }
@@ -82,6 +99,7 @@ export class SchoolsController {
   })
   @ApiBody({ type: UpdateSchoolDto })
   @ApiStandardResponse(SchoolResponseDto, 'Escuela actualizada exitosamente.')
+  @RequirePermissions('UPDATE_SCHOOLS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSchoolDto: UpdateSchoolDto,
@@ -101,6 +119,7 @@ export class SchoolsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SchoolResponseDto, 'Escuela eliminada exitosamente.')
+  @RequirePermissions('DELETE_SCHOOLS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schoolsService.remove(id);
   }
@@ -114,6 +133,7 @@ export class SchoolsController {
   @ApiOkResponse({
     description: 'Lista de opciones de escuelas obtenida correctamente.',
   })
+  @RequirePermissions('READ_SCHOOLS')
   async getSchoolsOptions() {
     return await this.schoolsService.getSchoolsOptions();
   }
@@ -121,11 +141,13 @@ export class SchoolsController {
   @Get('disciplines/options')
   @ApiOperation({
     summary: 'Obtener opciones de disciplinas de escuelas',
-    description: 'Retorna las disciplinas asociadas a escuelas para selectores.',
+    description:
+      'Retorna las disciplinas asociadas a escuelas para selectores.',
   })
   @ApiOkResponse({
     description: 'Lista de opciones de disciplinas obtenida correctamente.',
   })
+  @RequirePermissions('READ_SCHOOLS')
   async getDisciplinesOptions() {
     return await this.schoolsService.getDisciplinesOptions();
   }
@@ -138,6 +160,7 @@ export class SchoolsController {
   @ApiOkResponse({
     description: 'Lista de opciones de instituciones obtenida correctamente.',
   })
+  @RequirePermissions('READ_SCHOOLS')
   async getOrganizationsOptions() {
     return await this.schoolsService.getOrganizationsOptions();
   }

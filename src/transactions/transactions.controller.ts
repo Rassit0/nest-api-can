@@ -8,12 +8,14 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiBody,
   ApiParam,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -24,9 +26,15 @@ import {
   ApiStandardCreatedResponse,
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
+import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Transactions')
 @Controller('transactions')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
@@ -38,6 +46,7 @@ export class TransactionsController {
   })
   // Usamos Object genérico temporalmente hasta definir un ResponseDto estricto, o puedes crear un TransactionResponseDto
   @ApiStandardCreatedResponse(Object, 'Transacción procesada correctamente.')
+  @RequirePermissions('CREATE_TRANSACTIONS')
   async create(@Body() createTransactionDto: CreateTransactionDto) {
     return await this.transactionsService.create(createTransactionDto);
   }
@@ -48,9 +57,25 @@ export class TransactionsController {
     description:
       'Retorna una lista paginada y filtrable de todas las transacciones realizadas.',
   })
-  @ApiPaginatedResponse(Object, 'Lista de transacciones obtenida correctamente.')
+  @ApiPaginatedResponse(
+    Object,
+    'Lista de transacciones obtenida correctamente.',
+  )
+  @RequirePermissions('READ_TRANSACTIONS')
   async findAll(@Query() paginationDto: TransactionsPaginationDto) {
     return await this.transactionsService.findAll(paginationDto);
+  }
+
+  @Get('persons-options')
+  @ApiOperation({
+    summary: 'Listar opciones de personas',
+    description: 'Retorna una lista paginada y filtrable de personas.',
+  })
+  @RequirePermissions('READ_TRANSACTIONS')
+  async getAvailablePersons(
+    @Query() paginationDto: PersonsOptionsPaginationDto,
+  ) {
+    return await this.transactionsService.getPersonsOptions(paginationDto);
   }
 
   @Get(':id')
@@ -65,6 +90,7 @@ export class TransactionsController {
     format: 'uuid',
   })
   @ApiStandardResponse(Object, 'Transacción encontrada exitosamente.')
+  @RequirePermissions('READ_TRANSACTIONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.transactionsService.findOne(id);
   }
@@ -81,6 +107,7 @@ export class TransactionsController {
   })
   @ApiBody({ type: UpdateTransactionDto })
   @ApiStandardResponse(Object, 'Transacción actualizada exitosamente.')
+  @RequirePermissions('UPDATE_TRANSACTIONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
@@ -100,6 +127,7 @@ export class TransactionsController {
     format: 'uuid',
   })
   @ApiStandardResponse(Object, 'Transacción anulada exitosamente.')
+  @RequirePermissions('DELETE_TRANSACTIONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.transactionsService.remove(id);
   }

@@ -168,7 +168,12 @@ export class StudentMembershipsService {
       );
     }
 
-    const { studentDiscounts, ...createData } = createDto;
+    const {
+      studentDiscounts,
+      chargeRegistrationOnMigration,
+      chargeCurrentMonthOnMigration,
+      ...createData
+    } = createDto;
 
     const membership = await this.prisma.studentMembership.create({
       data: {
@@ -198,6 +203,10 @@ export class StudentMembershipsService {
     // Generar cargos inmediatamente después de crear la membresía
     await this.studentChargesService.generateChargesForNewMembership(
       membership.id,
+      {
+        chargeRegistrationOnMigration: createDto.chargeRegistrationOnMigration,
+        chargeCurrentMonthOnMigration: createDto.chargeCurrentMonthOnMigration,
+      },
     );
 
     return {
@@ -214,7 +223,7 @@ export class StudentMembershipsService {
     birthDate: Date,
     referenceDate: Date,
     minAge?: number,
-    maxAge?: number,
+    maxAge?: number | null,
   ) {
     const studentAge = this.calculateAge(birthDate, referenceDate);
 
@@ -1096,25 +1105,29 @@ export class StudentMembershipsService {
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
+    const searchTerms = search ? search.trim().split(/\s+/) : [];
+
     const where: Prisma.StudentWhereInput = {
-      ...(search
+      ...(searchTerms.length > 0
         ? {
-            OR: [
-              { person: { name: { contains: search, mode: 'insensitive' } } },
-              {
-                person: { lastName: { contains: search, mode: 'insensitive' } },
-              },
-              {
-                person: {
-                  secondLastName: { contains: search, mode: 'insensitive' },
+            AND: searchTerms.map((term) => ({
+              OR: [
+                { person: { name: { contains: term, mode: 'insensitive' } } },
+                {
+                  person: { lastName: { contains: term, mode: 'insensitive' } },
                 },
-              },
-              {
-                person: {
-                  documentNumber: { contains: search, mode: 'insensitive' },
+                {
+                  person: {
+                    secondLastName: { contains: term, mode: 'insensitive' },
+                  },
                 },
-              },
-            ],
+                {
+                  person: {
+                    documentNumber: { contains: term, mode: 'insensitive' },
+                  },
+                },
+              ],
+            })),
           }
         : {}),
       isActive: true,

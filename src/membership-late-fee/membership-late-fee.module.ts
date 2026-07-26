@@ -5,7 +5,12 @@ import { LateFeeRepository } from './repositories/late-fee.repository';
 import { MembershipLateFeeCron } from './membership-late-fee.cron';
 
 @Module({
-  providers: [MembershipLateFeeService, PrismaService, LateFeeRepository, MembershipLateFeeCron],
+  providers: [
+    MembershipLateFeeService,
+    PrismaService,
+    LateFeeRepository,
+    MembershipLateFeeCron,
+  ],
   exports: [MembershipLateFeeService],
 })
 export class MembershipLateFeeModule {}

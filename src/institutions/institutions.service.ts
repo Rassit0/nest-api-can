@@ -161,7 +161,7 @@ export class InstitutionsService {
         longitude: true,
       },
     });
-    
+
     return {
       message: 'Institución principal obtenida exitosamente',
       data: {

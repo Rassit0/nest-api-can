@@ -3,6 +3,7 @@ import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import * as bcrypt from 'bcrypt';
+import { SystemModules, ModulePermissions } from '../src/common/config/permissions.config';
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -86,38 +87,78 @@ async function main() {
   console.log('✅ Institution seeded:', defaultOrganization.name);
 
   console.log('🔒 Seeding permissions and roles...');
-  const modules = [
-    'INSTITUTIONS', 'LOCATIONS', 'DISCIPLINES', 'CATEGORIES', 'ROLES', 'PERMISSIONS',
-    'USERS', 'PERSONS', 'CLUBS', 'TEAMS', 'PLAYERS', 'TEAM_SEASONS', 'STAFF',
-    'TEAM_SEASON_STAFF', 'SEASONS', 'SCHOOLS', 'COURSES', 'COURSE_SEASONS',
-    'COURSE_SEASON_STAFF', 'STUDENTS', 'PAYMENT_PLANS', 'MEMBERSHIPS',
-    'STUDENT_MEMBERSHIPS', 'PLAYER_MEMBERSHIPS', 'MEMBERSHIP_DISCOUNTS',
-    'MEMBERSHIP_CHARGES', 'STUDENT_CHARGES', 'TRANSACTIONS', 'SCHEDULES',
-    'SESSIONS', 'SESSION_BOOKINGS', 'MATCHES', 'MATCH_LINEUPS',
-    'SESSION_INCIDENTS', 'PROGRESS_EVALUATIONS', 'AUDIT_LOGS', 'DASHBOARD'
-  ];
 
-  const actions = ['CREATE', 'READ', 'UPDATE', 'DELETE'];
+  // 0. Crear o actualizar los módulos
+  const moduleMap: Record<string, string> = {};
+  for (let i = 0; i < SystemModules.length; i++) {
+    const modName = SystemModules[i];
+    const createdModule = await prisma.module.upsert({
+      where: { name: modName },
+      update: {
+        sortOrder: i,
+        displayName: modName.charAt(0).toUpperCase() + modName.slice(1).toLowerCase().replace(/_/g, ' '),
+      },
+      create: {
+        name: modName,
+        sortOrder: i,
+        displayName: modName.charAt(0).toUpperCase() + modName.slice(1).toLowerCase().replace(/_/g, ' '),
+      },
+    });
+    moduleMap[modName] = createdModule.id;
+  }
 
-  const permissionsData: { name: string; module: string; description: string }[] = [];
-  for (const module of modules) {
-    for (const action of actions) {
-      permissionsData.push({
-        name: `${action}_${module}`,
-        module,
-        description: `Permiso para ${action.toLowerCase()} en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`,
-      });
+  const permissionsData: {
+    name: string;
+    moduleId: string;
+    description: string;
+  }[] = [];
+  
+  for (const module of SystemModules) {
+    const modulePerms = ModulePermissions[module];
+    if (modulePerms) {
+      for (const permName of modulePerms) {
+        let description = `Permiso específico para ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('CREATE_')) description = `Permiso para crear en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('READ_')) description = `Permiso para leer en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('UPDATE_')) description = `Permiso para actualizar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('DELETE_')) description = `Permiso para eliminar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName === 'MANAGE_ALL') description = 'Acceso irrestricto a todo el sistema';
+
+        permissionsData.push({
+          name: permName,
+          moduleId: moduleMap[module],
+          description,
+        });
+      }
     }
   }
 
-  // Agregamos un permiso adicional para MANAGE_ALL si es necesario o permisos extra
-  permissionsData.push({
-    name: 'MANAGE_ALL',
-    module: 'SYSTEM',
-    description: 'Acceso irrestricto a todo el sistema',
+  // 1. Eliminamos permisos "basura" que ya no existen en la configuración actual
+  const validPermissionNames = permissionsData.map((p) => p.name);
+  
+  // Limpiamos las relaciones en roles primero para evitar errores de Foreign Key
+  await prisma.rolePermission.deleteMany({
+    where: {
+      permission: {
+        name: {
+          notIn: validPermissionNames,
+        },
+      },
+    },
   });
 
-  // 1. Creamos todos los permisos faltantes sin duplicar
+  const deletedPermissions = await prisma.permission.deleteMany({
+    where: {
+      name: {
+        notIn: validPermissionNames,
+      },
+    },
+  });
+  if (deletedPermissions.count > 0) {
+    console.log(`🗑️  Deleted ${deletedPermissions.count} outdated permissions.`);
+  }
+
+  // 2. Creamos todos los permisos faltantes sin duplicar
   await prisma.permission.createMany({
     data: permissionsData,
     skipDuplicates: true,
@@ -147,7 +188,9 @@ async function main() {
     skipDuplicates: true,
   });
 
-  console.log(`✅ SUPER_ADMIN role seeded with ${allPermissions.length} permissions`);
+  console.log(
+    `✅ SUPER_ADMIN role seeded with ${allPermissions.length} permissions`,
+  );
 
   // 5. Upsert del usuario Super Admin
   const adminEmail = 'admin@can.edu.bo';
@@ -170,19 +213,27 @@ async function main() {
 
   // 6. Rellenar los campos de auditoría (created_by_id y updated_by_id) vacíos en toda la base de datos
   console.log('🔄 Backfilling auditing fields for existing records...');
-  
-  const tablesWithCreatedBy = await prisma.$queryRaw<Array<{ table_name: string }>>`
+
+  const tablesWithCreatedBy = await prisma.$queryRaw<
+    Array<{ table_name: string }>
+  >`
     SELECT table_name 
     FROM information_schema.columns 
+    
     WHERE column_name = 'created_by_id' AND table_schema = 'public'
   `;
 
   for (const row of tablesWithCreatedBy) {
     const tableName = row.table_name;
-    await prisma.$executeRawUnsafe(`UPDATE "${tableName}" SET "created_by_id" = $1 WHERE "created_by_id" IS NULL`, superAdminUser.id);
+    await prisma.$executeRawUnsafe(
+      `UPDATE "${tableName}" SET "created_by_id" = $1 WHERE "created_by_id" IS NULL`,
+      superAdminUser.id,
+    );
   }
 
-  const tablesWithUpdatedBy = await prisma.$queryRaw<Array<{ table_name: string }>>`
+  const tablesWithUpdatedBy = await prisma.$queryRaw<
+    Array<{ table_name: string }>
+  >`
     SELECT table_name 
     FROM information_schema.columns 
     WHERE column_name = 'updated_by_id' AND table_schema = 'public'
@@ -190,7 +241,10 @@ async function main() {
 
   for (const row of tablesWithUpdatedBy) {
     const tableName = row.table_name;
-    await prisma.$executeRawUnsafe(`UPDATE "${tableName}" SET "updated_by_id" = $1 WHERE "updated_by_id" IS NULL`, superAdminUser.id);
+    await prisma.$executeRawUnsafe(
+      `UPDATE "${tableName}" SET "updated_by_id" = $1 WHERE "updated_by_id" IS NULL`,
+      superAdminUser.id,
+    );
   }
 
   console.log('✅ Auditing fields backfill completed successfully');

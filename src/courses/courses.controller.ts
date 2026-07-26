@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -29,9 +31,14 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { CourseResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Courses')
 @Controller('courses')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
@@ -45,6 +52,7 @@ export class CoursesController {
     CourseResponseDto,
     'Curso escolar creado exitosamente.',
   )
+  @RequirePermissions('CREATE_COURSES')
   async create(@Body() createCourseDto: CreateCourseDto) {
     return await this.coursesService.create(createCourseDto);
   }
@@ -59,6 +67,7 @@ export class CoursesController {
     CourseResponseDto,
     'Lista de cursos obtenida correctamente.',
   )
+  @RequirePermissions('READ_COURSES')
   async findAll(@Query() paginationDto: CoursesPaginationDto) {
     return await this.coursesService.findAll(paginationDto);
   }
@@ -75,6 +84,7 @@ export class CoursesController {
     format: 'uuid',
   })
   @ApiStandardResponse(CourseResponseDto, 'Curso encontrado exitosamente.')
+  @RequirePermissions('READ_COURSES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.coursesService.findOne(id);
   }
@@ -92,6 +102,7 @@ export class CoursesController {
   })
   @ApiBody({ type: UpdateCourseDto })
   @ApiStandardResponse(CourseResponseDto, 'Curso actualizado exitosamente.')
+  @RequirePermissions('UPDATE_COURSES')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCourseDto: UpdateCourseDto,
@@ -110,6 +121,7 @@ export class CoursesController {
     format: 'uuid',
   })
   @ApiStandardResponse(CourseResponseDto, 'Curso eliminado exitosamente.')
+  @RequirePermissions('DELETE_COURSES')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.coursesService.remove(id);
   }
@@ -126,6 +138,7 @@ export class CoursesController {
     format: 'uuid',
   })
   @ApiOkResponse({ description: 'Opciones de clubes obtenidas correctamente.' })
+  @RequirePermissions('READ_COURSES')
   async getSchoolsByDisciplineOptions(
     @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
   ) {
@@ -142,6 +155,7 @@ export class CoursesController {
   @ApiOkResponse({
     description: 'Opciones de disciplinas obtenidas correctamente.',
   })
+  @RequirePermissions('READ_COURSES')
   async getDisciplinesOptions() {
     return await this.coursesService.getDisciplinesOptions();
   }

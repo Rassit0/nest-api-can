@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PermissionsService } from './permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { PermissionsPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { PermissionResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Permissions')
 @Controller('permissions')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class PermissionsController {
   constructor(private readonly permissionsService: PermissionsService) {}
 
@@ -37,7 +48,11 @@ export class PermissionsController {
     description:
       'Registra un permiso de seguridad en el sistema para asociar a roles.',
   })
-  @ApiStandardCreatedResponse(PermissionResponseDto, 'Permiso creado exitosamente.')
+  @ApiStandardCreatedResponse(
+    PermissionResponseDto,
+    'Permiso creado exitosamente.',
+  )
+  @RequirePermissions('CREATE_PERMISSIONS')
   async create(@Body() createPermissionDto: CreatePermissionDto) {
     return await this.permissionsService.create(createPermissionDto);
   }
@@ -48,7 +63,11 @@ export class PermissionsController {
     description:
       'Retorna una lista paginada y filtrable de permisos de seguridad.',
   })
-  @ApiPaginatedResponse(PermissionResponseDto, 'Lista de permisos obtenida correctamente.')
+  @ApiPaginatedResponse(
+    PermissionResponseDto,
+    'Lista de permisos obtenida correctamente.',
+  )
+  @RequirePermissions('READ_PERMISSIONS')
   async findAll(@Query() paginationDto: PermissionsPaginationDto) {
     return await this.permissionsService.findAll(paginationDto);
   }
@@ -64,7 +83,11 @@ export class PermissionsController {
     description: 'ID único del permiso (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(PermissionResponseDto, 'Permiso encontrado y retornado exitosamente.')
+  @ApiStandardResponse(
+    PermissionResponseDto,
+    'Permiso encontrado y retornado exitosamente.',
+  )
+  @RequirePermissions('READ_PERMISSIONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.permissionsService.findOne(id);
   }
@@ -81,7 +104,11 @@ export class PermissionsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePermissionDto })
-  @ApiStandardResponse(PermissionResponseDto, 'Permiso actualizado exitosamente.')
+  @ApiStandardResponse(
+    PermissionResponseDto,
+    'Permiso actualizado exitosamente.',
+  )
+  @RequirePermissions('UPDATE_PERMISSIONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePermissionDto: UpdatePermissionDto,
@@ -100,6 +127,7 @@ export class PermissionsController {
     format: 'uuid',
   })
   @ApiStandardResponse(PermissionResponseDto, 'Permiso eliminado exitosamente.')
+  @RequirePermissions('DELETE_PERMISSIONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.permissionsService.remove(id);
   }

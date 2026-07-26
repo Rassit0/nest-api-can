@@ -14,3 +14,22 @@ export class RolesPaginationDto extends PaginationDto {
   })
   sortField?: string = 'name';
 }
+
+export class PermissionsPaginationDto extends PaginationDto {
+  @ApiPropertyOptional({
+    description: 'Filtrar por ID de rol',
+  })
+  @IsOptional()
+  roleId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Campo por el cual ordenar los resultados',
+    default: 'module',
+    enum: ['name', 'module', 'id'],
+  })
+  @IsOptional()
+  @IsIn(['name', 'module', 'id'], {
+    message: 'Columnas permitidas: name, module, id',
+  })
+  sortField?: string = 'module';
+}

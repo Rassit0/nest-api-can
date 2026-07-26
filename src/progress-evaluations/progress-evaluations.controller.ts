@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ProgressEvaluationsService } from './progress-evaluations.service';
 import { CreateProgressEvaluationDto } from './dto/create-progress-evaluation.dto';
 import { UpdateProgressEvaluationDto } from './dto/update-progress-evaluation.dto';
 import { ProgressEvaluationsPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { ProgressEvaluationResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Progress Evaluations')
 @Controller('progress-evaluations')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class ProgressEvaluationsController {
   constructor(
     private readonly progressEvaluationsService: ProgressEvaluationsService,
@@ -39,7 +50,11 @@ export class ProgressEvaluationsController {
     description:
       'Registra un reporte periódico de aptitud (técnica, táctica, física, conductual) para un jugador del club o estudiante de las escuelas.',
   })
-  @ApiStandardCreatedResponse(ProgressEvaluationResponseDto, 'Evaluación de progreso registrada exitosamente.')
+  @ApiStandardCreatedResponse(
+    ProgressEvaluationResponseDto,
+    'Evaluación de progreso registrada exitosamente.',
+  )
+  @RequirePermissions('CREATE_PROGRESS_EVALUATIONS')
   async create(
     @Body() createProgressEvaluationDto: CreateProgressEvaluationDto,
   ) {
@@ -54,7 +69,11 @@ export class ProgressEvaluationsController {
     description:
       'Retorna una lista paginada y filtrable de todos los reportes de progreso registrados.',
   })
-  @ApiPaginatedResponse(ProgressEvaluationResponseDto, 'Lista de evaluaciones obtenida correctamente.')
+  @ApiPaginatedResponse(
+    ProgressEvaluationResponseDto,
+    'Lista de evaluaciones obtenida correctamente.',
+  )
+  @RequirePermissions('READ_PROGRESS_EVALUATIONS')
   async findAll(@Query() paginationDto: ProgressEvaluationsPaginationDto) {
     return await this.progressEvaluationsService.findAll(paginationDto);
   }
@@ -70,7 +89,11 @@ export class ProgressEvaluationsController {
     description: 'ID de la evaluación (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(ProgressEvaluationResponseDto, 'Evaluación encontrada exitosamente.')
+  @ApiStandardResponse(
+    ProgressEvaluationResponseDto,
+    'Evaluación encontrada exitosamente.',
+  )
+  @RequirePermissions('READ_PROGRESS_EVALUATIONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.progressEvaluationsService.findOne(id);
   }
@@ -87,7 +110,11 @@ export class ProgressEvaluationsController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateProgressEvaluationDto })
-  @ApiStandardResponse(ProgressEvaluationResponseDto, 'Evaluación de progreso actualizada con éxito.')
+  @ApiStandardResponse(
+    ProgressEvaluationResponseDto,
+    'Evaluación de progreso actualizada con éxito.',
+  )
+  @RequirePermissions('UPDATE_PROGRESS_EVALUATIONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateProgressEvaluationDto: UpdateProgressEvaluationDto,
@@ -109,7 +136,11 @@ export class ProgressEvaluationsController {
     description: 'ID de la evaluación a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(ProgressEvaluationResponseDto, 'Evaluación eliminada exitosamente.')
+  @ApiStandardResponse(
+    ProgressEvaluationResponseDto,
+    'Evaluación eliminada exitosamente.',
+  )
+  @RequirePermissions('DELETE_PROGRESS_EVALUATIONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.progressEvaluationsService.remove(id);
   }

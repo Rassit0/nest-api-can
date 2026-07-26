@@ -9,6 +9,7 @@ import {
   Query,
   ParseUUIDPipe,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,6 +20,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PlayerMembershipsService } from './player-memberships.service';
 import { CreatePlayerMembershipDto } from './dto/create-player-membership.dto';
@@ -33,9 +35,15 @@ import {
 import { PlayerMembershipResponseDto } from '../common/dto/responses/entities.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { ChangeActivateStatusDto } from './dto/change-activate-status.dto';
+import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
+import { PlayersOptionsPaginationDto } from './dto/players-options-pagination.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 
 @ApiTags('Player Memberships')
 @Controller('player-memberships')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class PlayerMembershipsController {
   constructor(
     private readonly playerMembershipsService: PlayerMembershipsService,
@@ -51,6 +59,7 @@ export class PlayerMembershipsController {
     PlayerMembershipResponseDto,
     'Membresía/inscripción de jugador creada con éxito.',
   )
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async create(@Body() createPlayerMembershipDto: CreatePlayerMembershipDto) {
     return await this.playerMembershipsService.create(
       createPlayerMembershipDto,
@@ -67,6 +76,7 @@ export class PlayerMembershipsController {
     PlayerMembershipResponseDto,
     'Lista de inscripciones obtenida correctamente.',
   )
+  @RequirePermissions('READ_PLAYER_MEMBERSHIPS')
   async findAll(@Query() paginationDto: PlayerMembershipsPaginationDto) {
     return await this.playerMembershipsService.findAll(paginationDto);
   }
@@ -76,7 +86,10 @@ export class PlayerMembershipsController {
     summary: 'Listar opciones de jugadores',
     description: 'Retorna una lista paginada y filtrable de jugadores.',
   })
-  async getAvailablePersons(@Query() paginationDto: PaginationDto) {
+  @RequirePermissions('READ_PLAYER_MEMBERSHIPS')
+  async getAvailablePersons(
+    @Query() paginationDto: PlayersOptionsPaginationDto,
+  ) {
     return await this.playerMembershipsService.getPlayersOptions(paginationDto);
   }
 
@@ -95,6 +108,7 @@ export class PlayerMembershipsController {
     PlayerMembershipResponseDto,
     'Inscripción encontrada exitosamente.',
   )
+  @RequirePermissions('READ_PLAYER_MEMBERSHIPS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playerMembershipsService.findOne(id);
   }
@@ -114,6 +128,7 @@ export class PlayerMembershipsController {
     PlayerMembershipResponseDto,
     'Inscripción actualizada exitosamente.',
   )
+  @RequirePermissions('UPDATE_PLAYER_MEMBERSHIPS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerMembershipDto: UpdatePlayerMembershipDto,
@@ -125,6 +140,7 @@ export class PlayerMembershipsController {
   }
 
   @Delete(':id')
+  @RequirePermissions('DELETE_PLAYER_MEMBERSHIPS')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.playerMembershipsService.remove(id);
   }
@@ -144,6 +160,7 @@ export class PlayerMembershipsController {
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede finalizar en su estado actual.',
   })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async finish(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -169,6 +186,7 @@ export class PlayerMembershipsController {
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede suspender.',
   })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async suspend(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -194,6 +212,7 @@ export class PlayerMembershipsController {
     description: 'Inscripción marcada como retiro voluntario exitosamente.',
   })
   @ApiBadRequestResponse({ description: 'La inscripción no se puede retirar.' })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async withdraw(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -219,6 +238,7 @@ export class PlayerMembershipsController {
   @ApiBadRequestResponse({
     description: 'Solo membresías suspendidas pueden reactivarse.',
   })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async reactivate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -244,6 +264,7 @@ export class PlayerMembershipsController {
   @ApiBadRequestResponse({
     description: 'Solo membresías pendientes pueden activarse.',
   })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async activate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeActivateStatusDto,
@@ -256,12 +277,14 @@ export class PlayerMembershipsController {
 
   @Get(':id/pauses')
   @ApiOperation({ summary: 'Obtener las pausas de una membresía' })
+  @RequirePermissions('READ_PLAYER_MEMBERSHIPS')
   async getPauses(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playerMembershipsService.getPauses(id);
   }
 
   @Post(':id/pauses')
   @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async createPause(
     @Param('id', ParseUUIDPipe) id: string,
     @Body()
@@ -272,10 +295,32 @@ export class PlayerMembershipsController {
 
   @Delete(':id/pauses/:pauseId')
   @ApiOperation({ summary: 'Eliminar una pausa de la membresía' })
+  @RequirePermissions('DELETE_PLAYER_MEMBERSHIPS')
   async removePause(
     @Param('id', ParseUUIDPipe) id: string,
     @Param('pauseId', ParseUUIDPipe) pauseId: string,
   ) {
     return await this.playerMembershipsService.removePause(id, pauseId);
+  }
+
+  @Get('team-season/context/:teamSeasonId')
+  @ApiOperation({
+    summary: 'Obtener contexto básico del equipo',
+    description:
+      'Retorna información básica (nombre, id) de un equipo para usar de contexto en la vista de temporadas',
+  })
+  @ApiParam({
+    name: 'teamSeasonId',
+    description: 'ID de la temporada del equipo (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Contexto del equipo obtenido correctamente.' })
+  @RequirePermissions('READ_PLAYER_MEMBERSHIPS')
+  async getTeamContext(
+    @Param('teamSeasonId', ParseUUIDPipe) teamSeasonId: string,
+  ) {
+    return await this.playerMembershipsService.getTeamSeasonContext(
+      teamSeasonId,
+    );
   }
 }

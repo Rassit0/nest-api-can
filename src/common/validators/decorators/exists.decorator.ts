@@ -6,7 +6,7 @@ export function Exists(
   field: string = 'id',
   validationOptions?: ValidationOptions,
 ) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       name: 'Exists',
       target: object.constructor,

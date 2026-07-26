@@ -1,4 +1,8 @@
-import { Prisma, StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
+import {
+  Prisma,
+  StatusCharge,
+  TypeMembershipCharge,
+} from 'src/generated/prisma/client';
 
 export class MembershipChargeFactory {
   static createChargePayload(
@@ -9,12 +13,15 @@ export class MembershipChargeFactory {
     dueDate: Date,
     billingYear: number,
     billingMonth: number,
-    billingCycle?: number | null
+    billingCycle?: number | null,
   ): Prisma.ChargeCreateInput {
     // Protección contra Race Conditions en Postgres (null != null)
     let safeBillingCycle = billingCycle;
     if (safeBillingCycle == null) {
-      if (type !== TypeMembershipCharge.MANUAL && type !== TypeMembershipCharge.LATE_FEE) {
+      if (
+        type !== TypeMembershipCharge.MANUAL &&
+        type !== TypeMembershipCharge.LATE_FEE
+      ) {
         safeBillingCycle = 0; // Usar 0 para activar la protección de @@unique
       } else {
         safeBillingCycle = null; // Manual y Multas sí permiten múltiples en un mes
@@ -43,7 +50,7 @@ export class MembershipChargeFactory {
     membershipId: string,
     amount: number,
     description: string,
-    dueDate: Date
+    dueDate: Date,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
@@ -52,7 +59,7 @@ export class MembershipChargeFactory {
       description,
       dueDate,
       dueDate.getUTCFullYear(),
-      dueDate.getUTCMonth() + 1
+      dueDate.getUTCMonth() + 1,
     );
   }
 
@@ -62,7 +69,7 @@ export class MembershipChargeFactory {
     description: string,
     dueDate: Date,
     startBillingYear: number,
-    startBillingMonth: number
+    startBillingMonth: number,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
@@ -71,7 +78,7 @@ export class MembershipChargeFactory {
       description,
       dueDate,
       startBillingYear,
-      startBillingMonth
+      startBillingMonth,
     );
   }
 
@@ -79,7 +86,7 @@ export class MembershipChargeFactory {
     membershipId: string,
     amount: number,
     description: string,
-    dueDate: Date
+    dueDate: Date,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
@@ -88,7 +95,7 @@ export class MembershipChargeFactory {
       description,
       dueDate,
       dueDate.getUTCFullYear(),
-      dueDate.getUTCMonth() + 1
+      dueDate.getUTCMonth() + 1,
     );
   }
 
@@ -99,7 +106,7 @@ export class MembershipChargeFactory {
     groupDueDate: Date,
     billingYear: number,
     billingMonth: number,
-    billingCycle?: number | null
+    billingCycle?: number | null,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
@@ -109,7 +116,7 @@ export class MembershipChargeFactory {
       groupDueDate,
       billingYear,
       billingMonth,
-      billingCycle
+      billingCycle,
     );
   }
 }

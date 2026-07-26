@@ -1,4 +1,7 @@
-import { TypeMembershipCharge , StatusCourseSeason } from 'src/generated/prisma/client';
+import {
+  TypeMembershipCharge,
+  StatusCourseSeason,
+} from 'src/generated/prisma/client';
 import { SimulatedCycle } from '../student-cycles.engine';
 
 export interface PreviewCharge {
@@ -38,4 +41,3 @@ export interface CycleBatch {
   groupDueDate: Date;
   lastCycleNextDueDate: Date;
 }
-

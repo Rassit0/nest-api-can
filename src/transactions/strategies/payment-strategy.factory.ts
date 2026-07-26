@@ -14,7 +14,9 @@ export class PaymentStrategyFactory {
       case PaymentMethod.QR:
         return new QrPaymentStrategy();
       default:
-        throw new Error(`Strategy for payment method ${method} not implemented.`);
+        throw new Error(
+          `Strategy for payment method ${method} not implemented.`,
+        );
     }
   }
 }

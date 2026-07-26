@@ -24,9 +24,7 @@ export class I18nValidationFilter implements ExceptionFilter {
             formattedErrors[currentPath] = [];
           }
 
-          formattedErrors[currentPath].push(
-            ...(Object.values(err.constraints) as string[]),
-          );
+          formattedErrors[currentPath].push(...(Object.values(err.constraints) as string[]));
         }
 
         // 🔁 seguir recorriendo hijos

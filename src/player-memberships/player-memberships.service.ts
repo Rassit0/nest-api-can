@@ -35,6 +35,25 @@ export const playerMembershipSelect = {
     },
   },
   teamSeasonId: true,
+  teamSeason: {
+    select: {
+      team: {
+        select: {
+          name: true,
+        },
+      },
+      category: {
+        select: {
+          name: true,
+        },
+      },
+      season: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  },
   paymentPlanId: true,
   paymentPlan: true,
   startedAt: true,
@@ -171,7 +190,12 @@ export class PlayerMembershipsService {
       );
     }
 
-    const { membershipDiscounts, ...createData } = createDto;
+    const {
+      membershipDiscounts,
+      chargeRegistrationOnMigration,
+      chargeCurrentMonthOnMigration,
+      ...createData
+    } = createDto;
 
     const membership = await this.prisma.playerMembership.create({
       data: {
@@ -201,6 +225,10 @@ export class PlayerMembershipsService {
     // Generar cargos inmediatamente después de crear la membresía
     await this.membershipChargesService.generateChargesForNewMembership(
       membership.id,
+      {
+        chargeRegistrationOnMigration: createDto.chargeRegistrationOnMigration,
+        chargeCurrentMonthOnMigration: createDto.chargeCurrentMonthOnMigration,
+      },
     );
 
     return {
@@ -217,7 +245,7 @@ export class PlayerMembershipsService {
     birthDate: Date,
     referenceDate: Date,
     minAge?: number,
-    maxAge?: number,
+    maxAge?: number | null,
   ) {
     const playerAge = this.calculateAge(birthDate, referenceDate);
 
@@ -1017,25 +1045,29 @@ export class PlayerMembershipsService {
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
+    const searchTerms = search ? search.trim().split(/\s+/) : [];
+
     const where: Prisma.PlayerWhereInput = {
-      ...(search
+      ...(searchTerms.length > 0
         ? {
-            OR: [
-              { person: { name: { contains: search, mode: 'insensitive' } } },
-              {
-                person: { lastName: { contains: search, mode: 'insensitive' } },
-              },
-              {
-                person: {
-                  secondLastName: { contains: search, mode: 'insensitive' },
+            AND: searchTerms.map((term) => ({
+              OR: [
+                { person: { name: { contains: term, mode: 'insensitive' } } },
+                {
+                  person: { lastName: { contains: term, mode: 'insensitive' } },
                 },
-              },
-              {
-                person: {
-                  documentNumber: { contains: search, mode: 'insensitive' },
+                {
+                  person: {
+                    secondLastName: { contains: term, mode: 'insensitive' },
+                  },
                 },
-              },
-            ],
+                {
+                  person: {
+                    documentNumber: { contains: term, mode: 'insensitive' },
+                  },
+                },
+              ],
+            })),
           }
         : {}),
       isActive: true,
@@ -1291,5 +1323,44 @@ export class PlayerMembershipsService {
     });
 
     return { message: 'Pausa eliminada exitosamente' };
+  }
+
+  async getTeamSeasonContext(teamSeasonId: string) {
+    const teamSeason = await this.prisma.teamSeason.findUnique({
+      where: { id: teamSeasonId },
+      select: {
+        id: true,
+        gender: true,
+        season: {
+          select: {
+            id: true,
+            name: true,
+            startDate: true,
+            endDate: true,
+          },
+        },
+        description: true,
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        team: {
+          select: {
+            name: true,
+            shortName: true,
+          },
+        },
+      },
+    });
+
+    if (!teamSeason) {
+      throw new NotFoundException('La temporada no fue encontrada');
+    }
+
+    return {
+      data: teamSeason,
+      message: 'Temporada obtenida exitosamente',
+    };
   }
 }

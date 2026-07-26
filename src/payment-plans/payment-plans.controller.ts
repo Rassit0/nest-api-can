@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PaymentPlansService } from './payment-plans.service';
 import { CreatePaymentPlanDto } from './dto/create-payment-plan.dto';
 import { UpdatePaymentPlanDto } from './dto/update-payment-plan.dto';
 import { PaymentPlansPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { PaymentPlanResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Payment Plans')
 @Controller('payment-plans')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class PaymentPlansController {
   constructor(private readonly paymentPlansService: PaymentPlansService) {}
 
@@ -37,7 +48,11 @@ export class PaymentPlansController {
     description:
       'Registra un plan de pago para equipos o cursos (cuotas, recargos, días de gracia).',
   })
-  @ApiStandardCreatedResponse(PaymentPlanResponseDto, 'Plan de pago creado exitosamente.')
+  @ApiStandardCreatedResponse(
+    PaymentPlanResponseDto,
+    'Plan de pago creado exitosamente.',
+  )
+  @RequirePermissions('CREATE_PAYMENT_PLANS')
   async create(@Body() createPaymentPlanDto: CreatePaymentPlanDto) {
     return await this.paymentPlansService.create(createPaymentPlanDto);
   }
@@ -48,7 +63,11 @@ export class PaymentPlansController {
     description:
       'Retorna una lista paginada y filtrable de todos los planes de pago.',
   })
-  @ApiPaginatedResponse(PaymentPlanResponseDto, 'Lista de planes obtenida correctamente.')
+  @ApiPaginatedResponse(
+    PaymentPlanResponseDto,
+    'Lista de planes obtenida correctamente.',
+  )
+  @RequirePermissions('READ_PAYMENT_PLANS')
   async findAll(@Query() paginationDto: PaymentPlansPaginationDto) {
     return await this.paymentPlansService.findAll(paginationDto);
   }
@@ -64,7 +83,11 @@ export class PaymentPlansController {
     description: 'ID del plan de pago (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago encontrado exitosamente.')
+  @ApiStandardResponse(
+    PaymentPlanResponseDto,
+    'Plan de pago encontrado exitosamente.',
+  )
+  @RequirePermissions('READ_PAYMENT_PLANS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.findOne(id);
   }
@@ -81,7 +104,11 @@ export class PaymentPlansController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdatePaymentPlanDto })
-  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago actualizado con éxito.')
+  @ApiStandardResponse(
+    PaymentPlanResponseDto,
+    'Plan de pago actualizado con éxito.',
+  )
+  @RequirePermissions('UPDATE_PAYMENT_PLANS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePaymentPlanDto: UpdatePaymentPlanDto,
@@ -99,7 +126,11 @@ export class PaymentPlansController {
     description: 'ID del plan de pago a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(PaymentPlanResponseDto, 'Plan de pago eliminado exitosamente.')
+  @ApiStandardResponse(
+    PaymentPlanResponseDto,
+    'Plan de pago eliminado exitosamente.',
+  )
+  @RequirePermissions('DELETE_PAYMENT_PLANS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.paymentPlansService.remove(id);
   }

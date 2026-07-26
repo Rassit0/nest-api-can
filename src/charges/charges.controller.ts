@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ChargesService } from './charges.service';
 import { CreateChargeDto } from './dto/create-charge.dto';
@@ -30,8 +32,13 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { ChargeResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Charges')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 @Controller('charges')
 export class ChargesController {
   constructor(private readonly chargesService: ChargesService) {}
@@ -46,6 +53,7 @@ export class ChargesController {
     ChargeResponseDto,
     'Cargo base registrado con éxito.',
   )
+  @RequirePermissions('CREATE_CHARGES')
   async create(@Body() createChargeDto: CreateChargeDto) {
     return await this.chargesService.create(createChargeDto);
   }
@@ -60,6 +68,7 @@ export class ChargesController {
     ChargeResponseDto,
     'Lista de cargos obtenida correctamente.',
   )
+  @RequirePermissions('READ_CHARGES')
   async findAll(@Query() paginationDto: ChargesPaginationDto) {
     return await this.chargesService.findAll(paginationDto);
   }
@@ -76,6 +85,7 @@ export class ChargesController {
   })
   @ApiBody({ type: AddDiscountDto })
   @ApiStandardResponse(ChargeResponseDto, 'Descuento agregado exitosamente.')
+  @RequirePermissions('UPDATE_CHARGES')
   async addDiscount(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() addDiscountDto: AddDiscountDto,
@@ -94,6 +104,7 @@ export class ChargesController {
     format: 'uuid',
   })
   @ApiStandardResponse(ChargeResponseDto, 'Descuento eliminado exitosamente.')
+  @RequirePermissions('DELETE_CHARGES')
   async removeDiscount(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.removeDiscount(id);
   }
@@ -110,6 +121,7 @@ export class ChargesController {
     format: 'uuid',
   })
   @ApiStandardResponse(ChargeResponseDto, 'Cargo encontrado exitosamente.')
+  @RequirePermissions('READ_CHARGES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.findOne(id);
   }
@@ -127,6 +139,7 @@ export class ChargesController {
   })
   @ApiBody({ type: UpdateChargeDto })
   @ApiStandardResponse(ChargeResponseDto, 'Cargo actualizado exitosamente.')
+  @RequirePermissions('UPDATE_CHARGES')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateChargeDto: UpdateChargeDto,
@@ -146,6 +159,7 @@ export class ChargesController {
     format: 'uuid',
   })
   @ApiStandardResponse(ChargeResponseDto, 'Cargo eliminado exitosamente.')
+  @RequirePermissions('DELETE_CHARGES')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.remove(id);
   }

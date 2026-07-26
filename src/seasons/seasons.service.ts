@@ -264,7 +264,9 @@ export class SeasonsService {
   }
 
   async autoFinalizeExpiredSeasons() {
-    this.logger.log('Iniciando proceso de finalización automática de temporadas...');
+    this.logger.log(
+      'Iniciando proceso de finalización automática de temporadas...',
+    );
     const now = new Date();
 
     const expiredSeasons = await this.prisma.season.findMany({
@@ -292,7 +294,8 @@ export class SeasonsService {
             data: {
               seasonId: season.id,
               eventType: 'FINALIZATION',
-              reason: 'Finalización automática por el sistema al cumplirse la fecha de cierre.',
+              reason:
+                'Finalización automática por el sistema al cumplirse la fecha de cierre.',
             },
           });
         });

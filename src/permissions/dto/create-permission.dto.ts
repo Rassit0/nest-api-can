@@ -20,20 +20,20 @@ export class CreatePermissionDto {
   name: string;
 
   @ApiProperty({
-    example: 'SESSIONS',
-    description: 'Módulo al que pertenece el permiso',
+    example: 'uuid-del-modulo',
+    description: 'ID del Módulo al que pertenece el permiso',
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'module',
+      constraint1: 'moduleId',
     }),
   })
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {
-      constraint1: 'module',
+      constraint1: 'moduleId',
     }),
   })
-  module: string;
+  moduleId: string;
 
   @ApiPropertyOptional({
     example: 'Permite registrar la asistencia de una sesión',

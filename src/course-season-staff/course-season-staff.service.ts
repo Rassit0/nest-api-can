@@ -196,7 +196,8 @@ export class CourseSeasonStaffService {
       name: staff.person.name,
       lastName: staff.person.lastName,
       secondLastName: staff.person.secondLastName,
-      fullName: `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
+      fullName:
+        `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
       documentNumber: staff.person.documentNumber,
       imageUrl: staff.person.imageUrl,
       isActive: staff.isActive,
@@ -217,9 +218,7 @@ export class CourseSeasonStaffService {
       select: courseSeasonStaffSelect,
     });
     if (!staffAssoc) {
-      throw new NotFoundException(
-        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
-      );
+      throw new NotFoundException(this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'));
     }
     return {
       message: this.i18n.t('messages.COURSE_STAFF_FETCHED'),
@@ -235,9 +234,7 @@ export class CourseSeasonStaffService {
       where: { id },
     });
     if (!staffAssoc) {
-      throw new NotFoundException(
-        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
-      );
+      throw new NotFoundException(this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'));
     }
 
     const { courseSeasonId, isPrimary } = updateCourseSeasonStaffDto;
@@ -270,9 +267,7 @@ export class CourseSeasonStaffService {
       where: { id },
     });
     if (!staffAssoc) {
-      throw new NotFoundException(
-        this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'),
-      );
+      throw new NotFoundException(this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'));
     }
 
     const deletedStaffAssoc = await this.prisma.courseSeasonStaff.delete({

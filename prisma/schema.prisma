@@ -128,6 +128,7 @@ model Institution {
   seasons   Season[]
   schools   School[]
   contacts  InstitutionContact[]
+  shifts    Shift[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -158,6 +159,29 @@ model InstitutionContact {
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("institution_contacts")
+}
+
+// ============================
+// TURNOS (SHIFTS)
+// ============================
+model Shift {
+  id            String      @id @default(uuid())
+  name          String // Ej: "Mañana", "Tarde", "Noche"
+  institutionId String      @map("institution_id")
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+
+  courseSeasons CourseSeason[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([institutionId, name])
+  @@map("shifts")
 }
 
 // ============================
@@ -232,7 +256,7 @@ model Category {
   id          String  @id @default(uuid())
   name        String
   description String?
-  maxAge      Int     @map("max_age")
+  maxAge      Int?    @map("max_age")
   minAge      Int     @map("min_age")
 
   disciplineId String     @map("discipline_id")
@@ -424,7 +448,7 @@ model TeamSeason {
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([teamId, categoryId, seasonId, gender])
+  @@unique([teamId, categoryId, seasonId, gender, status])
   @@map("team_seasons")
 }
 
@@ -844,6 +868,7 @@ enum TransactionStatus {
 
 model Transaction {
   id                 String              @id @default(uuid())
+  receiptNumber      Int                 @unique @default(autoincrement()) @map("receipt_number")
   payerPersonId      String?             @map("payer_person_id")
   payerPerson        Person?             @relation(fields: [payerPersonId], references: [id])
   amount             Decimal             @db.Decimal(10, 2)
@@ -977,6 +1002,8 @@ model User {
   updatedMatchs                     Match[]                     @relation("UpdatedBy")
   createdMatchLineups               MatchLineup[]               @relation("CreatedBy")
   updatedMatchLineups               MatchLineup[]               @relation("UpdatedBy")
+  createdShifts                     Shift[]                     @relation("CreatedBy")
+  updatedShifts                     Shift[]                     @relation("UpdatedBy")
   auditLogs                         AuditLog[]
 
   @@map("users")
@@ -1001,11 +1028,29 @@ model Role {
   @@map("roles")
 }
 
+model Module {
+  id          String  @id @default(uuid())
+  name        String  @unique // Ej: "BILLING", "TEAMS", "SESSIONS"
+  displayName String  @map("display_name") // Ej: "Facturación y Cobranza"
+  icon        String? // Ej: "FiDollarSign" para el menú del frontend
+  sortOrder   Int     @default(0) @map("sort_order")
+  description String?
+
+  permissions Permission[] // Relación 1:N con los permisos
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("modules")
+}
+
 model Permission {
   id          String  @id @default(uuid())
   name        String  @unique // Ej: "TAKE_ATTENDANCE", "CREATE_INCIDENT", "VIEW_PAYMENTS"
-  module      String // Ej: "SESSIONS", "BILLING", "TEAMS"
   description String?
+
+  moduleId String @map("module_id")
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Restrict)
 
   roles RolePermission[]
 
@@ -1084,6 +1129,8 @@ enum StatusCourseSeason {
 
 model CourseSeason {
   id          String  @id @default(uuid())
+  shiftId     String  @map("shift_id")
+  shift       Shift   @relation(fields: [shiftId], references: [id], onDelete: Restrict)
   imageUrl    String? @map("image_url")
   description String?
   maxMembers  Int     @map("max_members")
@@ -1121,7 +1168,7 @@ model CourseSeason {
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([courseId, categoryId, seasonId, gender])
+  @@unique([courseId, categoryId, seasonId, gender, shiftId, status])
   @@map("course_seasons")
 }
 
@@ -1637,7 +1684,15 @@ model AuditLog {
   id         String @id @default(uuid())
   entityName String @map("entity_name")
   entityId   String @map("entity_id")
-  action     String
+  action     String // CREATE, UPDATE, DELETE
+
+  // === Campos para el Dashboard e i18n ===
+  type          String? // Ej: "SUCCESS", "INFO", "WARNING" o módulos
+  titleKey      String? @map("title_key") // Ej: "audit.title.enrollment"
+  messageKey    String? @map("message_key") // Ej: "audit.message.enrollment"
+  messageParams Json?   @map("message_params") // Ej: { "player": "Facundo", "team": "Básquet U17" }
+
+  // === Campos de auditoría ===
   oldValues  Json?  @map("old_values")
   newValues  Json?  @map("new_values")
 

@@ -9,7 +9,15 @@ import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 export const permissionSelect: Prisma.PermissionSelect = {
   id: true,
   name: true,
-  module: true,
+  module: {
+    select: {
+      id: true,
+      name: true,
+      displayName: true,
+      icon: true,
+      sortOrder: true,
+    },
+  },
   description: true,
   createdAt: true,
   updatedAt: true,
@@ -48,7 +56,7 @@ export class PermissionsService {
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
-        { module: { contains: search, mode: 'insensitive' } },
+        { module: { displayName: { contains: search, mode: 'insensitive' } } },
         { description: { contains: search, mode: 'insensitive' } },
       ];
     }

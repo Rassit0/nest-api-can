@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { MembershipDiscountService } from './membership-discount.service';
 import { CreateMembershipDiscountDto } from './dto/create-membership-discount.dto';
 import { UpdateMembershipDiscountDto } from './dto/update-membership-discount.dto';
 import { PlayerMembershipDiscountsPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { MembershipDiscountResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Player Membership Discounts')
 @Controller('membership-discount')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class MembershipDiscountController {
   constructor(
     private readonly membershipDiscountService: MembershipDiscountService,
@@ -38,8 +49,14 @@ export class MembershipDiscountController {
     summary: 'Asignar un descuento a una membresía de jugador',
     description: 'Registra y aplica un descuento a la membresía de un jugador.',
   })
-  @ApiStandardCreatedResponse(MembershipDiscountResponseDto, 'Descuento de membresía registrado exitosamente.')
-  async create(@Body() createMembershipDiscountDto: CreateMembershipDiscountDto) {
+  @ApiStandardCreatedResponse(
+    MembershipDiscountResponseDto,
+    'Descuento de membresía registrado exitosamente.',
+  )
+  @RequirePermissions('CREATE_MEMBERSHIP_DISCOUNTS')
+  async create(
+    @Body() createMembershipDiscountDto: CreateMembershipDiscountDto,
+  ) {
     return this.membershipDiscountService.create(createMembershipDiscountDto);
   }
 
@@ -49,7 +66,11 @@ export class MembershipDiscountController {
     description:
       'Retorna una lista paginada y filtrable de todos los descuentos aplicados a membresías de jugadores.',
   })
-  @ApiPaginatedResponse(MembershipDiscountResponseDto, 'Lista de descuentos obtenida correctamente.')
+  @ApiPaginatedResponse(
+    MembershipDiscountResponseDto,
+    'Lista de descuentos obtenida correctamente.',
+  )
+  @RequirePermissions('READ_MEMBERSHIP_DISCOUNTS')
   async findAll(
     @Query() paginationDto: PlayerMembershipDiscountsPaginationDto,
   ) {
@@ -67,7 +88,11 @@ export class MembershipDiscountController {
     description: 'ID del descuento (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento encontrado exitosamente.')
+  @ApiStandardResponse(
+    MembershipDiscountResponseDto,
+    'Descuento encontrado exitosamente.',
+  )
+  @RequirePermissions('READ_MEMBERSHIP_DISCOUNTS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.membershipDiscountService.findOne(id);
   }
@@ -83,7 +108,11 @@ export class MembershipDiscountController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateMembershipDiscountDto })
-  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento actualizado exitosamente.')
+  @ApiStandardResponse(
+    MembershipDiscountResponseDto,
+    'Descuento actualizado exitosamente.',
+  )
+  @RequirePermissions('UPDATE_MEMBERSHIP_DISCOUNTS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateMembershipDiscountDto: UpdateMembershipDiscountDto,
@@ -105,7 +134,11 @@ export class MembershipDiscountController {
     description: 'ID del descuento a eliminar (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(MembershipDiscountResponseDto, 'Descuento eliminado con éxito.')
+  @ApiStandardResponse(
+    MembershipDiscountResponseDto,
+    'Descuento eliminado con éxito.',
+  )
+  @RequirePermissions('DELETE_MEMBERSHIP_DISCOUNTS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.membershipDiscountService.remove(id);
   }
@@ -127,6 +160,7 @@ export class MembershipDiscountController {
   @ApiBadRequestResponse({
     description: 'No se puede finalizar el descuento en su estado actual.',
   })
+  @RequirePermissions('CREATE_MEMBERSHIP_DISCOUNTS')
   async finish(@Param('id', ParseUUIDPipe) id: string) {
     return await this.membershipDiscountService.finish(id);
   }

@@ -1,10 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsString, IsUUID, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsUUID,
+  Min,
+} from 'class-validator';
 
 export class CreateMassiveManualChargeDto {
   @ApiProperty({
     description: 'El ID de la temporada del equipo (CourseSeason)',
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
   @IsNotEmpty()
@@ -12,7 +19,7 @@ export class CreateMassiveManualChargeDto {
 
   @ApiProperty({
     description: 'Descripción que justificará el cargo manual masivo',
-    example: 'Inscripción a Torneo Relámpago'
+    example: 'Inscripción a Torneo Relámpago',
   })
   @IsString()
   @IsNotEmpty()
@@ -20,7 +27,7 @@ export class CreateMassiveManualChargeDto {
 
   @ApiProperty({
     description: 'Monto a cobrar por el cargo a cada jugador',
-    example: 50.00
+    example: 50.0,
   })
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
@@ -29,7 +36,7 @@ export class CreateMassiveManualChargeDto {
 
   @ApiProperty({
     description: 'Fecha límite de pago (Due Date) para todos',
-    example: '2026-07-20T00:00:00Z'
+    example: '2026-07-20T00:00:00Z',
   })
   @IsDateString()
   @IsNotEmpty()

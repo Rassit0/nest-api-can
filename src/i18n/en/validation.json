@@ -39,5 +39,6 @@
   "RELATION_ERROR": "{entity} is not registered",
   "IS_AFTER_START_DATE": "End date must be after start date",
   "MAX_FILE_SIZE": "File size must be less than {constraint1}",
-  "WRONG_FILE_TYPE": "File must be of type {constraint1}"
+  "WRONG_FILE_TYPE": "File must be of type {constraint1}",
+  "STRONG_PASSWORD": "The password must have an uppercase letter, lowercase letter, and a number"
 }

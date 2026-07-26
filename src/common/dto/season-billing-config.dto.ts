@@ -11,12 +11,16 @@ import {
   Min,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { SeasonBillingType, BillingFrequency } from 'src/generated/prisma/enums';
+import {
+  SeasonBillingType,
+  BillingFrequency,
+} from 'src/generated/prisma/enums';
 
 export class SeasonBillingConfigDto {
   @ApiPropertyOptional({
     example: true,
-    description: 'Indica si el motor de generación de cargos está activo para esta temporada',
+    description:
+      'Indica si el motor de generación de cargos está activo para esta temporada',
     default: true,
   })
   @Transform(({ value }) => value === 'true' || value === true)

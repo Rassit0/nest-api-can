@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { SeasonsService } from './seasons.service';
 import { CreateSeasonDto } from './dto/create-season.dto';
@@ -26,11 +28,20 @@ import { SeasonsPaginationDto } from './dto/pagination.dto';
 import { ExtendSeasonDto } from './dto/extend.dto';
 import { FinalizeSeasonDto } from './dto/finalize.dto';
 import { CancelSeasonDto } from './dto/cancel.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { SeasonResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Seasons')
 @Controller('seasons')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class SeasonsController {
   constructor(private readonly seasonsService: SeasonsService) {}
 
@@ -40,7 +51,11 @@ export class SeasonsController {
     description:
       'Registra un periodo deportivo activo (año/fase/curso) con rango de fechas en el sistema.',
   })
-  @ApiStandardCreatedResponse(SeasonResponseDto, 'Temporada creada exitosamente.')
+  @ApiStandardCreatedResponse(
+    SeasonResponseDto,
+    'Temporada creada exitosamente.',
+  )
+  @RequirePermissions('CREATE_SEASONS')
   async create(@Body() createSeasonDto: CreateSeasonDto) {
     return await this.seasonsService.create(createSeasonDto);
   }
@@ -51,7 +66,11 @@ export class SeasonsController {
     description:
       'Retorna una lista paginada y filtrable de todas las temporadas deportivas.',
   })
-  @ApiPaginatedResponse(SeasonResponseDto, 'Lista de temporadas obtenida correctamente.')
+  @ApiPaginatedResponse(
+    SeasonResponseDto,
+    'Lista de temporadas obtenida correctamente.',
+  )
+  @RequirePermissions('READ_SEASONS')
   async findAll(@Query() paginationDto: SeasonsPaginationDto) {
     return await this.seasonsService.findAll(paginationDto);
   }
@@ -68,6 +87,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada encontrada exitosamente.')
+  @RequirePermissions('READ_SEASONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.seasonsService.findOne(id);
   }
@@ -84,6 +104,7 @@ export class SeasonsController {
   })
   @ApiBody({ type: UpdateSeasonDto })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada actualizada con éxito.')
+  @RequirePermissions('UPDATE_SEASONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
@@ -102,6 +123,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada eliminada con éxito.')
+  @RequirePermissions('DELETE_SEASONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.seasonsService.remove(id);
   }
@@ -109,7 +131,8 @@ export class SeasonsController {
   @Patch(':id/extend')
   @ApiOperation({
     summary: 'Extender temporada',
-    description: 'Extiende la fecha de finalización de una temporada y guarda el evento.',
+    description:
+      'Extiende la fecha de finalización de una temporada y guarda el evento.',
   })
   @ApiParam({
     name: 'id',
@@ -117,6 +140,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada extendida con éxito.')
+  @RequirePermissions('UPDATE_SEASONS')
   async extend(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() extendSeasonDto: ExtendSeasonDto,
@@ -127,7 +151,8 @@ export class SeasonsController {
   @Patch(':id/finish')
   @ApiOperation({
     summary: 'Finalizar temporada',
-    description: 'Marca la temporada como FINALIZADA y guarda el evento con el motivo.',
+    description:
+      'Marca la temporada como FINALIZADA y guarda el evento con el motivo.',
   })
   @ApiParam({
     name: 'id',
@@ -135,6 +160,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada finalizada con éxito.')
+  @RequirePermissions('UPDATE_SEASONS')
   async finish(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() finalizeSeasonDto: FinalizeSeasonDto,
@@ -145,7 +171,8 @@ export class SeasonsController {
   @Patch(':id/cancel')
   @ApiOperation({
     summary: 'Cancelar temporada',
-    description: 'Marca la temporada como CANCELADA y guarda el evento con el motivo.',
+    description:
+      'Marca la temporada como CANCELADA y guarda el evento con el motivo.',
   })
   @ApiParam({
     name: 'id',
@@ -153,6 +180,7 @@ export class SeasonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(SeasonResponseDto, 'Temporada cancelada con éxito.')
+  @RequirePermissions('UPDATE_SEASONS')
   async cancel(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() cancelSeasonDto: CancelSeasonDto,
@@ -166,6 +194,7 @@ export class SeasonsController {
     description:
       'Busca todas las temporadas activas cuya fecha de fin ya pasó y las marca como FINISHED.',
   })
+  @RequirePermissions('CREATE_SEASONS')
   async autoFinalize() {
     return await this.seasonsService.autoFinalizeExpiredSeasons();
   }

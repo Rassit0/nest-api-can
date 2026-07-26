@@ -1,4 +1,12 @@
-import { IsString, IsDateString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean } from 'class-validator';
+import {
+  IsString,
+  IsDateString,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+  IsNumber,
+  IsBoolean,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -75,11 +83,29 @@ export class PreviewStudentChargesDto {
   studentDiscounts?: PreviewMembershipDiscountDto[];
 
   @ApiPropertyOptional({
-    description: 'Indica si esta membresía proviene de una migración de datos previos, omitiendo cobros iniciales.',
+    description:
+      'Indica si esta membresía proviene de una migración de datos previos, omitiendo cobros iniciales.',
     example: true,
   })
   @IsOptional()
   @IsBoolean()
   isMigrated?: boolean;
-}
 
+  @ApiPropertyOptional({
+    description:
+      'Si es una migración, indica si se debe forzar el cobro de la matrícula',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeRegistrationOnMigration?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Si es una migración, indica si se debe forzar la generación de la cuota del mes actual',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeCurrentMonthOnMigration?: boolean;
+}

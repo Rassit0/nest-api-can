@@ -1,8 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma, StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
+import {
+  Prisma,
+  StatusCharge,
+  TypeMembershipCharge,
+} from 'src/generated/prisma/client';
 import { DateUtils } from 'src/utils/date.utils';
-import { LateFeeRepository, ChargeWithLateFeeRelations } from './repositories/late-fee.repository';
+import {
+  LateFeeRepository,
+  ChargeWithLateFeeRelations,
+} from './repositories/late-fee.repository';
 
 @Injectable()
 export class MembershipLateFeeService {
@@ -22,7 +29,8 @@ export class MembershipLateFeeService {
 
     const evaluationDate = DateUtils.getStartOfUTCDay(new Date());
 
-    const overdueCharges = await this.lateFeeRepo.findOverdueCharges(evaluationDate);
+    const overdueCharges =
+      await this.lateFeeRepo.findOverdueCharges(evaluationDate);
 
     this.logger.log(
       `Se encontraron ${overdueCharges.length} cargos vencidos base.`,
@@ -31,7 +39,7 @@ export class MembershipLateFeeService {
     const chunkSize = 50;
     for (let i = 0; i < overdueCharges.length; i += chunkSize) {
       const chunk = overdueCharges.slice(i, i + chunkSize);
-      
+
       await Promise.all(
         chunk.map(async (baseCharge) => {
           try {
@@ -44,7 +52,7 @@ export class MembershipLateFeeService {
               error,
             );
           }
-        })
+        }),
       );
     }
 
@@ -63,29 +71,57 @@ export class MembershipLateFeeService {
     if (!membershipChargeRelation) return;
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
-    if (!teamSeason || !teamSeason.billingConfig?.lateFeeEnabled || teamSeason.billingConfig?.isEngineActive === false) return;
+    if (
+      !teamSeason ||
+      !teamSeason.billingConfig?.lateFeeEnabled ||
+      teamSeason.billingConfig?.isEngineActive === false
+    )
+      return;
 
     const dueDate = DateUtils.getStartOfUTCDay(baseCharge.dueDate);
 
-    
     const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
+    const individualPauses =
+      membershipChargeRelation.playerMembership?.pauses || [];
+
+    const allPauses = [...teamSeasonPauses, ...individualPauses];
     let pausedDays = 0;
 
-    for (const p of teamSeasonPauses) {
-      const pStart = DateUtils.getStartOfUTCDay(p.startDate);
-      const pEnd = DateUtils.getStartOfUTCDay(p.endDate);
+    if (allPauses.length > 0) {
+      const intervals = allPauses
+        .map((p) => {
+          const pStart = DateUtils.getStartOfUTCDay(p.startDate);
+          const pEnd = DateUtils.getStartOfUTCDay(p.endDate);
+          return {
+            start: pStart < dueDate ? dueDate.getTime() : pStart.getTime(),
+            end:
+              pEnd > evaluationDate ? evaluationDate.getTime() : pEnd.getTime(),
+          };
+        })
+        .filter((i) => i.start <= i.end);
 
-      if (pStart > evaluationDate || pEnd < dueDate) continue;
+      if (intervals.length > 0) {
+        intervals.sort((a, b) => a.start - b.start);
+        const merged = [intervals[0]];
+        for (let i = 1; i < intervals.length; i++) {
+          const current = intervals[i];
+          const last = merged[merged.length - 1];
+          if (current.start <= last.end) {
+            last.end = Math.max(last.end, current.end);
+          } else {
+            merged.push(current);
+          }
+        }
 
-      const pauseStart = pStart < dueDate ? dueDate : pStart;
-      const pauseEnd = pEnd > evaluationDate ? evaluationDate : pEnd;
-
-      if (pauseStart <= pauseEnd) {
-        pausedDays += this.calculateElapsedDays(pauseStart, pauseEnd) + 1;
+        for (const m of merged) {
+          pausedDays +=
+            Math.round((m.end - m.start) / (1000 * 60 * 60 * 24)) + 1;
+        }
       }
     }
 
-    const elapsedDays = this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays;
+    const elapsedDays =
+      this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays;
 
     const graceDays = Number(teamSeason.billingConfig?.graceDays || 0);
 
@@ -97,7 +133,8 @@ export class MembershipLateFeeService {
 
     if (targetLateFeeAmount <= 0) return;
 
-    const existingLateFeeCharge = await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
+    const existingLateFeeCharge =
+      await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
 
     if (existingLateFeeCharge) {
       if (
@@ -109,15 +146,20 @@ export class MembershipLateFeeService {
         const difference = targetLateFeeAmount - previousAmount;
 
         if (difference > 0) {
-          await this.lateFeeRepo.updateLateFeeCharge(tx, existingLateFeeCharge.id, {
-            amount: targetLateFeeAmount,
-            pendingAmount: Number(existingLateFeeCharge.pendingAmount) + difference,
-            status:
-              existingLateFeeCharge.status === StatusCharge.PAID
-                ? StatusCharge.PARTIAL
-                : existingLateFeeCharge.status,
-            description: `Recargo por Mora - ${penaltyDays} x ${lateFeePerDay}/día`,
-          });
+          await this.lateFeeRepo.updateLateFeeCharge(
+            tx,
+            existingLateFeeCharge.id,
+            {
+              amount: targetLateFeeAmount,
+              pendingAmount:
+                Number(existingLateFeeCharge.pendingAmount) + difference,
+              status:
+                existingLateFeeCharge.status === StatusCharge.PAID
+                  ? StatusCharge.PARTIAL
+                  : existingLateFeeCharge.status,
+              description: `Recargo por Mora - ${penaltyDays} x ${lateFeePerDay}/día`,
+            },
+          );
         }
       }
     } else {

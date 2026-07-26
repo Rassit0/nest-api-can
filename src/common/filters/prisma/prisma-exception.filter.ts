@@ -85,9 +85,10 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         const fields = [normalizeField(field)];
 
         const requestMethod = ctx.getRequest<Request>().method;
-        const i18nKey = requestMethod === 'DELETE' 
-          ? 'validation.RELATION_DEPENDENCY' 
-          : 'validation.NOT_FOUND_RELATION';
+        const i18nKey =
+          requestMethod === 'DELETE'
+            ? 'validation.RELATION_DEPENDENCY'
+            : 'validation.NOT_FOUND_RELATION';
 
         const errors = fields.reduce(
           (acc, f) => {

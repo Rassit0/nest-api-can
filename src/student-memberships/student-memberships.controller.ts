@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { StudentMembershipsService } from './student-memberships.service';
 import { CreateStudentMembershipDto } from './dto/create-student-membership.dto';
@@ -32,9 +34,14 @@ import {
 import { StudentMembershipResponseDto } from '../common/dto/responses/entities.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { ChangeActivateStatusDto } from './dto/change-activate-status.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Student Memberships')
 @Controller('student-memberships')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class StudentMembershipsController {
   constructor(
     private readonly studentMembershipsService: StudentMembershipsService,
@@ -50,6 +57,7 @@ export class StudentMembershipsController {
     StudentMembershipResponseDto,
     'Estudiante inscrito exitosamente.',
   )
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async create(@Body() createStudentMembershipDto: CreateStudentMembershipDto) {
     return await this.studentMembershipsService.create(
       createStudentMembershipDto,
@@ -66,6 +74,7 @@ export class StudentMembershipsController {
     StudentMembershipResponseDto,
     'Lista de inscripciones obtenida correctamente.',
   )
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async findAll(@Query() paginationDto: StudentMembershipsPaginationDto) {
     return await this.studentMembershipsService.findAll(paginationDto);
   }
@@ -75,6 +84,7 @@ export class StudentMembershipsController {
     summary: 'Listar opciones de estudiantes',
     description: 'Retorna una lista paginada y filtrable de estudiantes.',
   })
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async getAvailableStudents(@Query() paginationDto: PaginationDto) {
     return await this.studentMembershipsService.getStudentsOptions(
       paginationDto,
@@ -87,6 +97,7 @@ export class StudentMembershipsController {
     description:
       'Retorna una lista paginada y filtrable de temporadas de cursos.',
   })
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async getAvailableCourseSeasons(@Query() paginationDto: PaginationDto) {
     return await this.studentMembershipsService.getCourseSeasonsOptions(
       paginationDto,
@@ -108,6 +119,7 @@ export class StudentMembershipsController {
     StudentMembershipResponseDto,
     'Inscripción escolar encontrada exitosamente.',
   )
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.findOne(id);
   }
@@ -128,6 +140,7 @@ export class StudentMembershipsController {
     StudentMembershipResponseDto,
     'Inscripción escolar actualizada exitosamente.',
   )
+  @RequirePermissions('UPDATE_STUDENT_MEMBERSHIPS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStudentMembershipDto: UpdateStudentMembershipDto,
@@ -153,6 +166,7 @@ export class StudentMembershipsController {
     StudentMembershipResponseDto,
     'Inscripción escolar eliminada exitosamente.',
   )
+  @RequirePermissions('DELETE_STUDENT_MEMBERSHIPS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.remove(id);
   }
@@ -173,6 +187,7 @@ export class StudentMembershipsController {
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede finalizar en su estado actual.',
   })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async finish(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -199,6 +214,7 @@ export class StudentMembershipsController {
   @ApiBadRequestResponse({
     description: 'La inscripción no se puede suspender en su estado actual.',
   })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async suspend(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -224,6 +240,7 @@ export class StudentMembershipsController {
     description: 'Inscripción retirada voluntariamente con éxito.',
   })
   @ApiBadRequestResponse({ description: 'La inscripción no se puede retirar.' })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async withdraw(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -250,6 +267,7 @@ export class StudentMembershipsController {
   @ApiBadRequestResponse({
     description: 'Solo inscripciones suspendidas pueden ser reactivadas.',
   })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async reactivate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeStatusDto,
@@ -275,6 +293,7 @@ export class StudentMembershipsController {
   @ApiBadRequestResponse({
     description: 'Solo inscripciones pendientes pueden ser activadas.',
   })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async activate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() changeStatusDto: ChangeActivateStatusDto,
@@ -287,12 +306,14 @@ export class StudentMembershipsController {
 
   @Get(':id/pauses')
   @ApiOperation({ summary: 'Obtener las pausas de una membresía' })
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async getPauses(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.getPauses(id);
   }
 
   @Post(':id/pauses')
   @ApiOperation({ summary: 'Crear una nueva pausa para la membresía' })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async createPause(
     @Param('id', ParseUUIDPipe) id: string,
     @Body()
@@ -303,6 +324,7 @@ export class StudentMembershipsController {
 
   @Delete(':id/pauses/:pauseId')
   @ApiOperation({ summary: 'Eliminar una pausa de la membresía' })
+  @RequirePermissions('DELETE_STUDENT_MEMBERSHIPS')
   async removePause(
     @Param('id', ParseUUIDPipe) id: string,
     @Param('pauseId', ParseUUIDPipe) pauseId: string,

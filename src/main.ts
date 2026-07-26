@@ -17,6 +17,7 @@ async function bootstrap() {
     .setTitle('API Gestión 360')
     .setDescription('Documentación de la API')
     .setVersion('1.0')
+    .addTag('Authentication')
     .addBearerAuth()
     .build();
 

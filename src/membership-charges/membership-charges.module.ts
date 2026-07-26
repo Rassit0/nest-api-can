@@ -7,17 +7,25 @@ import { MembershipGenerationService } from './services/membership-generation.se
 import { MembershipRepository } from './repositories/membership.repository';
 import { MembershipChargeRepository } from './repositories/membership-charge.repository';
 import { MembershipChargesCron } from './membership-charges.cron';
+import { MembershipChargeRecalculationService } from './services/membership-recalculation.service';
+import { MembershipManualChargeService } from './services/membership-manual-charge.service';
+import { MembershipAdvanceChargeService } from './services/membership-advance-charge.service';
+import { MembershipRecalibrationDateCalculator } from './domain/membership-recalibration-date.calculator';
 
 @Module({
   controllers: [MembershipChargesController],
   providers: [
-    MembershipChargesService, 
-    PrismaService, 
-    MembershipPreviewService, 
+    MembershipChargesService,
+    PrismaService,
+    MembershipPreviewService,
     MembershipGenerationService,
     MembershipRepository,
     MembershipChargeRepository,
-    MembershipChargesCron
+    MembershipChargesCron,
+    MembershipChargeRecalculationService,
+    MembershipManualChargeService,
+    MembershipAdvanceChargeService,
+    MembershipRecalibrationDateCalculator,
   ],
   exports: [MembershipChargesService],
 })

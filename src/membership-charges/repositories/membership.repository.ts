@@ -7,7 +7,9 @@ export const playerMembershipInclude = {
   paymentPlan: true,
   membershipDiscounts: true,
   pauses: true,
-  teamSeason: { include: { season: true, billingConfig: true, teamSeasonPauses: true } },
+  teamSeason: {
+    include: { season: true, billingConfig: true, teamSeasonPauses: true },
+  },
 } as const;
 
 @Injectable()
@@ -52,16 +54,29 @@ export class MembershipRepository {
   ): Promise<PlayerMembershipWithRelations[]> {
     return this.prisma.playerMembership.findMany({
       where: {
-        status: {
-          in: [
-            PlayerMembershipStatus.ACTIVE,
-            PlayerMembershipStatus.PENDING_ACTIVE,
-            PlayerMembershipStatus.SUSPENDED,
-          ],
-        },
         OR: [
-          { nextRecurringChargeGenerationDate: { lte: evaluationDate } },
-          { nextRecurringChargeGenerationDate: null },
+          {
+            status: {
+              in: [
+                PlayerMembershipStatus.ACTIVE,
+                PlayerMembershipStatus.PENDING_ACTIVE,
+                PlayerMembershipStatus.SUSPENDED,
+              ],
+            },
+            OR: [
+              { nextRecurringChargeGenerationDate: { lte: evaluationDate } },
+              { nextRecurringChargeGenerationDate: null },
+            ],
+          },
+          {
+            status: {
+              in: [
+                PlayerMembershipStatus.WITHDRAWN,
+                PlayerMembershipStatus.FINISHED,
+              ],
+            },
+            nextRecurringChargeGenerationDate: { lte: evaluationDate },
+          },
         ],
         teamSeason: {
           status: 'ACTIVE',

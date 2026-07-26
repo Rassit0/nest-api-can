@@ -18,10 +18,7 @@ import { HasMimeType, IsFile, MaxFileSize } from 'nestjs-form-data';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { IsAfter } from 'src/common/validators/decorators/is-after.decorator';
-import {
-  ProgramGender,
-  StatusTeamSeason,
-} from 'src/generated/prisma/enums';
+import { ProgramGender, StatusTeamSeason } from 'src/generated/prisma/enums';
 import { ValidateNested } from 'class-validator';
 import { SeasonBillingConfigDto } from 'src/common/dto/season-billing-config.dto';
 
@@ -88,7 +85,8 @@ export class CreateTeamSeasonDto {
 
   @ApiPropertyOptional({
     example: 2015,
-    description: 'Año mínimo de nacimiento permitido (sobreescribe la edad de la categoría)',
+    description:
+      'Año mínimo de nacimiento permitido (sobreescribe la edad de la categoría)',
   })
   @Type(() => Number)
   @IsInt({
@@ -106,7 +104,8 @@ export class CreateTeamSeasonDto {
 
   @ApiPropertyOptional({
     example: 2016,
-    description: 'Año máximo de nacimiento permitido (sobreescribe la edad de la categoría)',
+    description:
+      'Año máximo de nacimiento permitido (sobreescribe la edad de la categoría)',
   })
   @Type(() => Number)
   @IsInt({
@@ -231,5 +230,4 @@ export class CreateTeamSeasonDto {
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   isRegistrationOpen?: boolean;
-
 }

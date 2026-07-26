@@ -92,7 +92,8 @@ export class CreateStudentDiscountDto {
 
   @ApiPropertyOptional({
     example: 0.0,
-    description: 'Porcentaje de descuento en el pago de la temporada completa (0.00 a 100.00)',
+    description:
+      'Porcentaje de descuento en el pago de la temporada completa (0.00 a 100.00)',
     nullable: true,
   })
   @IsOptional()

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { StudentChargesService } from './student-charges.service';
 import { CreateStudentChargeDto } from './dto/create-student-charge.dto';
@@ -23,17 +24,21 @@ import {
   ApiResponse,
   ApiBody,
   ApiParam,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
 import { PreviewAdvanceChargesDto } from './dto/preview-advance-charges.dto';
 import { GenerateAdvanceChargesDto } from './dto/generate-advance-charges.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Membership Charges')
 @Controller('student-charges')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class StudentChargesController {
-  constructor(
-    private readonly studentChargesService: StudentChargesService,
-  ) {}
+  constructor(private readonly studentChargesService: StudentChargesService) {}
 
   @Post('preview')
   @ApiOperation({
@@ -51,6 +56,7 @@ export class StudentChargesController {
     description:
       'Error de validación (por ejemplo, fecha de inicio fuera de temporada).',
   })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async previewCharges(@Body() previewData: PreviewStudentChargesDto) {
     const charges =
       await this.studentChargesService.previewCharges(previewData);
@@ -73,6 +79,7 @@ export class StudentChargesController {
     description: 'Previsualización de cargos faltantes generada.',
   })
   @ApiResponse({ status: 404, description: 'Membresía no encontrada.' })
+  @RequirePermissions('READ_STUDENT_CHARGES')
   async previewExistingCharges(@Param('membershipId') membershipId: string) {
     const charges =
       await this.studentChargesService.previewExistingCharges(membershipId);
@@ -90,6 +97,7 @@ export class StudentChargesController {
       'Inicia el proceso (típicamente programado por Cron) para calcular y generar las cuotas mensuales para todas las membresías activas que les toque cobro.',
   })
   @ApiResponse({ status: 201, description: 'Proceso ejecutado.' })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async applyCharges() {
     await this.studentChargesService.applyDailyStudentCharges();
 
@@ -113,6 +121,7 @@ export class StudentChargesController {
     status: 400,
     description: 'Membresía no encontrada o datos inválidos.',
   })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async createManualCharge(@Body() dto: CreateManualChargeDto) {
     return await this.studentChargesService.createManualCharge(dto);
   }
@@ -125,6 +134,7 @@ export class StudentChargesController {
   })
   @ApiBody({ type: CreateMassiveManualChargeDto })
   @ApiResponse({ status: 201, description: 'Cargos generados exitosamente.' })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async createMassiveManualCharge(@Body() dto: CreateMassiveManualChargeDto) {
     return await this.studentChargesService.createMassiveManualCharge(dto);
   }
@@ -137,8 +147,12 @@ export class StudentChargesController {
   })
   @ApiParam({ name: 'membershipId', description: 'ID de la membresía' })
   @ApiBody({ type: PreviewAdvanceChargesDto })
-  @ApiResponse({ status: 200, description: 'Previsualización de cuotas adelantadas generada.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Previsualización de cuotas adelantadas generada.',
+  })
   @ApiResponse({ status: 404, description: 'Membresía no encontrada.' })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async previewAdvanceCharges(
     @Param('membershipId') membershipId: string,
     @Body() dto: PreviewAdvanceChargesDto,
@@ -157,8 +171,12 @@ export class StudentChargesController {
   })
   @ApiParam({ name: 'membershipId', description: 'ID de la membresía' })
   @ApiBody({ type: GenerateAdvanceChargesDto })
-  @ApiResponse({ status: 201, description: 'Cuotas adelantadas generadas exitosamente.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Cuotas adelantadas generadas exitosamente.',
+  })
   @ApiResponse({ status: 404, description: 'Membresía no encontrada.' })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
   async generateAdvanceCharges(
     @Param('membershipId') membershipId: string,
     @Body() dto: GenerateAdvanceChargesDto,

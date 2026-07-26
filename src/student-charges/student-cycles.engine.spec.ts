@@ -28,7 +28,7 @@ describe('MembershipCyclesEngine', () => {
         advanceCyclesDiscountPercent: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
-        active: true
+        active: true,
       },
       courseSeason: {
         id: 'course-season-1',
@@ -67,46 +67,48 @@ describe('MembershipCyclesEngine', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           active: true,
-          clubId: 'club-1'
-        }
-      }
+          clubId: 'club-1',
+        },
+      },
     } as unknown as StudentMembershipWithRelations;
   };
 
   it('should generate all valid cycles for a standard season', () => {
     const membership = getMockMembership();
     const cycles = simulateAllCycles(membership);
-    
+
     expect(cycles.length).toBeGreaterThan(0);
-    
+
     // First cycle
     expect(cycles[0].cycleCounter).toBe(1);
     expect(cycles[0].isFirstCycle).toBe(true);
     expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 0, 15))); // startedAt because it's first cycle
     expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 1, 1))); // Feb 1
-    
+
     // Check if descriptions mark prorating
     expect(cycles[0].description).toContain('Prorrateado');
 
     // Last cycle
     const lastCycle = cycles[cycles.length - 1];
-    expect(lastCycle.nextDueDate.getTime()).toBeGreaterThan(membership.courseSeason.season.endDate.getTime());
+    expect(lastCycle.nextDueDate.getTime()).toBeGreaterThan(
+      membership.courseSeason.season.endDate.getTime(),
+    );
   });
 
   it('should handle single payment plans with 1 cycle', () => {
     const membership = getMockMembership();
     membership.paymentPlan.isSinglePayment = true;
-    
+
     const cycles = simulateAllCycles(membership);
     expect(cycles.length).toBe(12); // It generates all theoretical cycles, but handles them as single in generation service
   });
 
   it('should respect custom billing frequencies (WEEKLY)', () => {
     const membership = getMockMembership();
-    membership.courseSeason.billingConfig!.billingFrequency = 'WEEKLY';
-    
+    membership.courseSeason.billingConfig.billingFrequency = 'WEEKLY';
+
     const cycles = simulateAllCycles(membership);
-    
+
     expect(cycles.length).toBeGreaterThan(12); // Should be roughly 50 weeks
     expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 0, 15)));
     expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 0, 22)));
@@ -115,10 +117,12 @@ describe('MembershipCyclesEngine', () => {
 
   it('should cap out at MAX_BILLING_CYCLES', () => {
     const membership = getMockMembership();
-    membership.courseSeason.billingConfig!.billingFrequency = 'WEEKLY';
+    membership.courseSeason.billingConfig.billingFrequency = 'WEEKLY';
     // Very long season to hit max cycles
-    membership.courseSeason.season.endDate = new Date(Date.UTC(2030, 11, 31, 23, 59, 59, 999));
-    
+    membership.courseSeason.season.endDate = new Date(
+      Date.UTC(2030, 11, 31, 23, 59, 59, 999),
+    );
+
     const cycles = simulateAllCycles(membership);
     expect(cycles.length).toBeLessThanOrEqual(60); // MAX_BILLING_CYCLES
   });
@@ -126,15 +130,49 @@ describe('MembershipCyclesEngine', () => {
   it('should appropriately end generation after season end date', () => {
     const membership = getMockMembership();
     // Short season (3 months)
-    membership.courseSeason.season.endDate = new Date(Date.UTC(2024, 2, 31, 23, 59, 59, 999));
-    
+    membership.courseSeason.season.endDate = new Date(
+      Date.UTC(2024, 2, 31, 23, 59, 59, 999),
+    );
+
     const cycles = simulateAllCycles(membership);
-    
+
     // Starts Jan 15. Due dates: Jan 15, Feb 1, Mar 1. Next cycle is Apr 1 (> end date)
     expect(cycles.length).toBe(3);
     expect(cycles[0].dueDate.getUTCMonth()).toBe(0); // Jan
     expect(cycles[1].dueDate.getUTCMonth()).toBe(1); // Feb
     expect(cycles[2].dueDate.getUTCMonth()).toBe(2); // Mar
   });
-});
 
+  describe('Extreme Edge Cases (Status & Boundaries)', () => {
+    it('should calculate one single day charge if membership ends on the first day of the cycle', () => {
+      const membership = getMockMembership();
+      // Starts Jan 15. Due dates: Jan 15, Feb 1, Mar 1...
+      // Let's end the membership exactly on Feb 1.
+      membership.endedAt = new Date(Date.UTC(2024, 1, 1)); // Feb 1
+
+      const cycles = simulateAllCycles(membership);
+
+      // Should generate Jan 15 and Feb 1.
+      expect(cycles.length).toBe(2);
+      expect(cycles[1].dueDate.getUTCMonth()).toBe(1); // Feb 1
+      expect(cycles[1].nextDueDate.getTime()).toBe(
+        new Date(Date.UTC(2024, 2, 1)).getTime(),
+      ); // Mar 1
+    });
+
+    it('should generate up to cancellation date if Season is CANCELLED', () => {
+      const membership = getMockMembership();
+      // Suppose the season is cancelled on Feb 10
+      membership.courseSeason.season.status = 'CANCELLED';
+      membership.courseSeason.season.endDate = new Date(Date.UTC(2024, 1, 10)); // Feb 10
+
+      const cycles = simulateAllCycles(membership);
+
+      // Cycles: Jan 15, Feb 1. Next is Mar 1 which is after Feb 10.
+      expect(cycles.length).toBe(2);
+      expect(cycles[1].nextDueDate.getTime()).toBe(
+        new Date(Date.UTC(2024, 2, 1)).getTime(),
+      ); // Mar 1
+    });
+  });
+});

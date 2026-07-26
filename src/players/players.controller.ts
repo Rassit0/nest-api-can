@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
@@ -31,9 +33,14 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { PlayerResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Players')
 @Controller('players')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
@@ -46,6 +53,7 @@ export class PlayersController {
     PlayerResponseDto,
     'Jugador registrado exitosamente.',
   )
+  @RequirePermissions('CREATE_PLAYERS')
   async create(@Body() createPlayerDto: CreatePlayerDto) {
     return await this.playersService.create(createPlayerDto);
   }
@@ -60,6 +68,7 @@ export class PlayersController {
     PlayerResponseDto,
     'Lista de jugadores obtenida correctamente.',
   )
+  @RequirePermissions('READ_PLAYERS')
   async findAll(@Query() paginationDto: PlayerPaginationDto) {
     return await this.playersService.findAll(paginationDto);
   }
@@ -70,6 +79,7 @@ export class PlayersController {
     description:
       'Retorna una lista paginada y filtrable de personas que no están registradas como jugadores.',
   })
+  @RequirePermissions('READ_PLAYERS')
   async getAvailablePersons(@Query() paginationDto: PaginationDto) {
     return await this.playersService.getAvailablePersons(paginationDto);
   }
@@ -86,6 +96,7 @@ export class PlayersController {
     format: 'uuid',
   })
   @ApiStandardResponse(PlayerResponseDto, 'Jugador encontrado exitosamente.')
+  @RequirePermissions('READ_PLAYERS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playersService.findOne(id);
   }
@@ -107,6 +118,7 @@ export class PlayersController {
     PlayerResponseDto,
     'Ficha de jugador actualizada exitosamente.',
   )
+  @RequirePermissions('UPDATE_PLAYERS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePlayerDto: UpdatePlayerDto,
@@ -125,6 +137,7 @@ export class PlayersController {
     format: 'uuid',
   })
   @ApiStandardResponse(PlayerResponseDto, 'Jugador desvinculado exitosamente.')
+  @RequirePermissions('DELETE_PLAYERS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playersService.remove(id);
   }

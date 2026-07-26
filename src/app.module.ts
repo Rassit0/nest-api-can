@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
@@ -50,6 +51,7 @@ import { StudentsModule } from './students/students.module';
 import { StudentMembershipsModule } from './student-memberships/student-memberships.module';
 import { StudentDiscountsModule } from './student-discounts/student-discounts.module';
 import { StudentChargesModule } from './student-charges/student-charges.module';
+import { StudentLateFeeModule } from './student-late-fee/student-late-fee.module';
 
 // Nuevos módulos de Evaluaciones e Incidencias de conducta
 import { SessionIncidentsModule } from './session-incidents/session-incidents.module';
@@ -59,9 +61,13 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
 import { ClsModule } from 'nestjs-cls';
+import { ShiftsModule } from './shifts/shifts.module';
+import { PrinterModule } from './printer/printer.module';
+import { TransactionReportModule } from './transaction-report/transaction-report.module';
 
 @Module({
   imports: [
+    CacheModule.register({ isGlobal: true }),
     ClsModule.forRoot({
       global: true,
       middleware: { mount: true },
@@ -114,10 +120,14 @@ import { ClsModule } from 'nestjs-cls';
     StudentMembershipsModule,
     StudentDiscountsModule,
     StudentChargesModule,
+    StudentLateFeeModule,
     SessionIncidentsModule,
     ProgressEvaluationsModule,
     TransactionsModule,
     AuthModule,
+    ShiftsModule,
+    PrinterModule,
+    TransactionReportModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

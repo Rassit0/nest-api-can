@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreatePaymentPlanDto } from './dto/create-payment-plan.dto';
 import { UpdatePaymentPlanDto } from './dto/update-payment-plan.dto';
 import { Prisma } from 'src/generated/prisma/client';
@@ -30,10 +35,19 @@ export class PaymentPlansService {
 
   private async validateAndSanitizeDiscounts(
     data: CreatePaymentPlanDto | UpdatePaymentPlanDto,
-    existingPlan?: { teamSeasonId?: string | null; courseSeasonId?: string | null }
+    existingPlan?: {
+      teamSeasonId?: string | null;
+      courseSeasonId?: string | null;
+    },
   ) {
-    const teamSeasonId = data.teamSeasonId !== undefined ? data.teamSeasonId : existingPlan?.teamSeasonId;
-    const courseSeasonId = data.courseSeasonId !== undefined ? data.courseSeasonId : existingPlan?.courseSeasonId;
+    const teamSeasonId =
+      data.teamSeasonId !== undefined
+        ? data.teamSeasonId
+        : existingPlan?.teamSeasonId;
+    const courseSeasonId =
+      data.courseSeasonId !== undefined
+        ? data.courseSeasonId
+        : existingPlan?.courseSeasonId;
 
     if (!teamSeasonId && !courseSeasonId) {
       return;
@@ -45,42 +59,59 @@ export class PaymentPlansService {
     let endDate: Date | null = null;
 
     if (teamSeasonId) {
-      const ts = await this.prisma.teamSeason.findUnique({ where: { id: teamSeasonId }, include: { season: true, billingConfig: true } });
+      const ts = await this.prisma.teamSeason.findUnique({
+        where: { id: teamSeasonId },
+        include: { season: true, billingConfig: true },
+      });
       if (!ts) throw new NotFoundException('TeamSeason no encontrado');
       billingType = ts.billingConfig?.billingType || 'MONTHLY_ONLY';
       billingFrequency = ts.billingConfig?.billingFrequency || 'MONTHLY';
-      if (ts.season) { startDate = ts.season.startDate; endDate = ts.season.endDate; }
+      if (ts.season) {
+        startDate = ts.season.startDate;
+        endDate = ts.season.endDate;
+      }
     } else if (courseSeasonId) {
-      const cs = await this.prisma.courseSeason.findUnique({ where: { id: courseSeasonId }, include: { season: true, billingConfig: true } });
+      const cs = await this.prisma.courseSeason.findUnique({
+        where: { id: courseSeasonId },
+        include: { season: true, billingConfig: true },
+      });
       if (!cs) throw new NotFoundException('CourseSeason no encontrado');
       billingType = cs.billingConfig?.billingType || 'MONTHLY_ONLY';
       billingFrequency = cs.billingConfig?.billingFrequency || 'MONTHLY';
-      if (cs.season) { startDate = cs.season.startDate; endDate = cs.season.endDate; }
+      if (cs.season) {
+        startDate = cs.season.startDate;
+        endDate = cs.season.endDate;
+      }
     }
 
     let maxCycles = 120; // fallback para evitar bloqueos si faltan fechas
     if (startDate && endDate) {
-       const days = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
-       if (billingFrequency === 'MONTHLY') {
-          maxCycles = Math.ceil(days / 30) + 1;
-       } else if (billingFrequency === 'BIWEEKLY') {
-          maxCycles = Math.ceil(days / 14) + 1;
-       } else if (billingFrequency === 'WEEKLY') {
-          maxCycles = Math.ceil(days / 7) + 1;
-       } else if (billingFrequency === 'SINGLE') {
-          maxCycles = 1;
-       }
+      const days =
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+      if (billingFrequency === 'MONTHLY') {
+        maxCycles = Math.ceil(days / 30) + 1;
+      } else if (billingFrequency === 'BIWEEKLY') {
+        maxCycles = Math.ceil(days / 14) + 1;
+      } else if (billingFrequency === 'WEEKLY') {
+        maxCycles = Math.ceil(days / 7) + 1;
+      } else if (billingFrequency === 'SINGLE') {
+        maxCycles = 1;
+      }
     }
-    
+
     const advance = (data as any).advanceCycles || 1;
-    
+
     if (advance > maxCycles) {
-       throw new BadRequestException(`El número de cuotas adelantadas (${advance}) no puede superar la duración máxima de la temporada (${maxCycles} ciclos).`);
+      throw new BadRequestException(
+        `El número de cuotas adelantadas (${advance}) no puede superar la duración máxima de la temporada (${maxCycles} ciclos).`,
+      );
     }
 
     if (billingType === 'SINGLE_ONLY') {
       if (advance > 1) {
-          throw new BadRequestException(`No se pueden configurar ciclos por adelantado en temporadas de pago único.`);
+        throw new BadRequestException(
+          `No se pueden configurar ciclos por adelantado en temporadas de pago único.`,
+        );
       }
       data.recurringDiscountPercent = '0.00';
       data.registrationDiscountPercent = '0.00';
@@ -181,7 +212,11 @@ export class PaymentPlansService {
   async update(id: string, updatePaymentPlanDto: UpdatePaymentPlanDto) {
     const paymentPlan = await this.prisma.paymentPlan.findUnique({
       where: { id },
-      select: { ...paymentPlanSelect, teamSeasonId: true, courseSeasonId: true },
+      select: {
+        ...paymentPlanSelect,
+        teamSeasonId: true,
+        courseSeasonId: true,
+      },
     });
     if (!paymentPlan) {
       throw new NotFoundException('El plan de pago no fue encontrado');

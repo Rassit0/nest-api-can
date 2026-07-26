@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { CourseSeasonsService } from './course-seasons.service';
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
@@ -32,9 +34,14 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { CourseSeasonResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Course Seasons')
 @Controller('course-seasons')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class CourseSeasonsController {
   constructor(private readonly courseSeasonsService: CourseSeasonsService) {}
 
@@ -48,6 +55,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Periodo de curso escolar creado y configurado exitosamente.',
   )
+  @RequirePermissions('CREATE_COURSE_SEASONS')
   async create(@Body() createCourseSeasonDto: CreateCourseSeasonDto) {
     return await this.courseSeasonsService.create(createCourseSeasonDto);
   }
@@ -62,12 +70,14 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Lista de periodos de cursos obtenida correctamente.',
   )
+  @RequirePermissions('READ_COURSE_SEASONS')
   async findAll(@Query() paginationDto: CourseSeasonsPaginationDto) {
     return await this.courseSeasonsService.findAll(paginationDto);
   }
 
   @Get('categories-by-discipline/options/:disciplineId')
   @ApiOperation({ summary: 'Obtener categorias por disciplina' })
+  @RequirePermissions('READ_COURSE_SEASONS')
   async getCategoriesByDisciplineOptions(
     @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
   ) {
@@ -75,9 +85,20 @@ export class CourseSeasonsController {
       disciplineId,
     );
   }
+  @Get('shifts-by-institution/options/:institutionId')
+  @ApiOperation({ summary: 'Obtener opciones de turnos' })
+  @RequirePermissions('READ_COURSE_SEASONS')
+  async getShiftsOptions(
+    @Param('institutionId', ParseUUIDPipe) institutionId: string,
+  ) {
+    return await this.courseSeasonsService.getShiftsByInstitutionOptions(
+      institutionId,
+    );
+  }
 
   @Get('seasons-by-discipline/options/:disciplineId')
   @ApiOperation({ summary: 'Obtener temporadas por disciplina' })
+  @RequirePermissions('READ_COURSE_SEASONS')
   async getSeasonsByDisciplineOptions(
     @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
   ) {
@@ -90,6 +111,7 @@ export class CourseSeasonsController {
   @ApiOperation({
     summary: 'Eliminar una pausa de curso',
   })
+  @RequirePermissions('DELETE_COURSE_SEASONS')
   async removePause(@Param('pauseId', ParseUUIDPipe) pauseId: string) {
     return await this.courseSeasonsService.removePause(pauseId);
   }
@@ -109,6 +131,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Periodo de curso encontrado y retornado exitosamente.',
   )
+  @RequirePermissions('READ_COURSE_SEASONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.findOne(id);
   }
@@ -124,6 +147,7 @@ export class CourseSeasonsController {
     format: 'uuid',
   })
   @ApiOkResponse({ description: 'Resumen de periodo de curso.' })
+  @RequirePermissions('READ_COURSE_SEASONS')
   async getSummary(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.getSummary(id);
   }
@@ -144,6 +168,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Configuración de periodo de curso actualizada exitosamente.',
   )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCourseSeasonDto: UpdateCourseSeasonDto,
@@ -165,6 +190,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Periodo de curso eliminado con éxito.',
   )
+  @RequirePermissions('DELETE_COURSE_SEASONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.remove(id);
   }
@@ -192,6 +218,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Motor de cobros actualizado exitosamente.',
   )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
   async toggleBillingEngine(
     @Param('id', ParseUUIDPipe) id: string,
     @Body('isEngineActive') isEngineActive: boolean,
@@ -218,6 +245,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Periodo de curso finalizado exitosamente.',
   )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
   async finish(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() finalizeCourseSeasonDto: FinalizeCourseSeasonDto,
@@ -241,6 +269,7 @@ export class CourseSeasonsController {
     CourseSeasonResponseDto,
     'Periodo de curso cancelado exitosamente.',
   )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
   async cancel(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() cancelCourseSeasonDto: CancelCourseSeasonDto,
@@ -252,6 +281,7 @@ export class CourseSeasonsController {
   @ApiOperation({
     summary: 'Obtener las pausas del curso',
   })
+  @RequirePermissions('READ_COURSE_SEASONS')
   async getPauses(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.getPauses(id);
   }
@@ -260,6 +290,7 @@ export class CourseSeasonsController {
   @ApiOperation({
     summary: 'Agregar una pausa al curso (vacaciones/receso)',
   })
+  @RequirePermissions('CREATE_COURSE_SEASONS')
   async addPause(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() createPauseDto: CreateCourseSeasonPauseDto,

@@ -406,7 +406,8 @@ export class TeamSeasonService {
         (teamId && teamId !== teamSeason.team.id) ||
         (seasonId && seasonId !== teamSeason.season.id) ||
         (categoryId && categoryId !== teamSeason.category.id) ||
-        (updateTeamSeasonDto.gender && updateTeamSeasonDto.gender !== teamSeason.gender)
+        (updateTeamSeasonDto.gender &&
+          updateTeamSeasonDto.gender !== teamSeason.gender)
       ) {
         throw new BadRequestException(
           'No se puede modificar el equipo, la temporada, la categoría ni el género una vez que la temporada de equipo está activa',
@@ -416,13 +417,25 @@ export class TeamSeasonService {
       const billing = updateTeamSeasonDto.billingConfig;
       if (billing && teamSeason.billingConfig) {
         if (
-          (billing.billingType !== undefined && billing.billingType !== teamSeason.billingConfig.billingType) ||
-          (billing.billingFrequency !== undefined && billing.billingFrequency !== teamSeason.billingConfig.billingFrequency) ||
-          (billing.billingDay !== undefined && billing.billingDay !== teamSeason.billingConfig.billingDay) ||
-          (billing.prorateRegistrationFee !== undefined && billing.prorateRegistrationFee !== teamSeason.billingConfig.prorateRegistrationFee) ||
-          (billing.prorateFirstRecurringFee !== undefined && billing.prorateFirstRecurringFee !== teamSeason.billingConfig.prorateFirstRecurringFee) ||
-          (billing.prorateLastRecurringFee !== undefined && billing.prorateLastRecurringFee !== teamSeason.billingConfig.prorateLastRecurringFee) ||
-          (billing.prorateSeasonFee !== undefined && billing.prorateSeasonFee !== teamSeason.billingConfig.prorateSeasonFee)
+          (billing.billingType !== undefined &&
+            billing.billingType !== teamSeason.billingConfig.billingType) ||
+          (billing.billingFrequency !== undefined &&
+            billing.billingFrequency !==
+              teamSeason.billingConfig.billingFrequency) ||
+          (billing.billingDay !== undefined &&
+            billing.billingDay !== teamSeason.billingConfig.billingDay) ||
+          (billing.prorateRegistrationFee !== undefined &&
+            billing.prorateRegistrationFee !==
+              teamSeason.billingConfig.prorateRegistrationFee) ||
+          (billing.prorateFirstRecurringFee !== undefined &&
+            billing.prorateFirstRecurringFee !==
+              teamSeason.billingConfig.prorateFirstRecurringFee) ||
+          (billing.prorateLastRecurringFee !== undefined &&
+            billing.prorateLastRecurringFee !==
+              teamSeason.billingConfig.prorateLastRecurringFee) ||
+          (billing.prorateSeasonFee !== undefined &&
+            billing.prorateSeasonFee !==
+              teamSeason.billingConfig.prorateSeasonFee)
         ) {
           throw new BadRequestException(
             'No se puede modificar la configuración base del motor de cobros (tipo, frecuencia, día y prorrateos) en una temporada activa. Solo se permite actualizar montos para nuevas inscripciones.',
@@ -897,12 +910,14 @@ export class TeamSeasonService {
   }
 
   async findPublic(isHistorical?: boolean) {
-    const status = isHistorical ? StatusTeamSeason.FINISHED : StatusTeamSeason.ACTIVE;
-    
+    const status = isHistorical
+      ? StatusTeamSeason.FINISHED
+      : StatusTeamSeason.ACTIVE;
+
     const teamSeasons = await this.prisma.teamSeason.findMany({
       where: {
         status,
-        ...(isHistorical ? {} : { isRegistrationOpen: true })
+        ...(isHistorical ? {} : { isRegistrationOpen: true }),
       },
       select: {
         id: true,
@@ -915,37 +930,37 @@ export class TeamSeasonService {
           select: {
             name: true,
             club: { select: { name: true } },
-          }
+          },
         },
-        category: { 
-          select: { 
-            name: true, 
-            minAge: true, 
+        category: {
+          select: {
+            name: true,
+            minAge: true,
             maxAge: true,
-            discipline: { select: { name: true } }
-          } 
+            discipline: { select: { name: true } },
+          },
         },
-        billingConfig: { 
-          select: { 
-            registrationFee: true, 
-            recurringFee: true, 
-            seasonFee: true, 
-            billingType: true 
-          } 
+        billingConfig: {
+          select: {
+            registrationFee: true,
+            recurringFee: true,
+            seasonFee: true,
+            billingType: true,
+          },
         },
         _count: {
           select: {
             playerMemberships: {
               where: {
-                status: { in: ['ACTIVE', 'SUSPENDED'] }
-              }
-            }
-          }
-        }
-      }
+                status: { in: ['ACTIVE', 'SUSPENDED'] },
+              },
+            },
+          },
+        },
+      },
     });
 
-    const mapped = teamSeasons.map(ts => {
+    const mapped = teamSeasons.map((ts) => {
       let regFee = 0;
       let monthFee = 0;
       if (ts.billingConfig) {
@@ -962,7 +977,12 @@ export class TeamSeasonService {
         name: ts.team.name,
         discipline: ts.category.discipline.name,
         club: ts.team.club.name,
-        gender: ts.gender === 'MALE' ? 'Masculino' : ts.gender === 'FEMALE' ? 'Femenino' : 'Mixto',
+        gender:
+          ts.gender === 'MALE'
+            ? 'Masculino'
+            : ts.gender === 'FEMALE'
+              ? 'Femenino'
+              : 'Mixto',
         minAge: ts.category.minAge,
         maxAge: ts.category.maxAge,
         category: ts.category.name,
@@ -976,7 +996,81 @@ export class TeamSeasonService {
 
     return {
       message: 'Equipos p�blicos obtenidos exitosamente',
-      data: mapped
+      data: mapped,
+    };
+  }
+
+  async getDisciplinesOptions() {
+    const disciplines = await this.prisma.discipline.findMany({
+      select: {
+        id: true,
+        name: true,
+        icon: true,
+      },
+    });
+
+    return {
+      data: disciplines,
+      message: 'Disciplinas obtenidas exitosamente',
+    };
+  }
+
+  async getClubContext(clubId: string) {
+    const club = await this.prisma.club.findUnique({
+      where: { id: clubId },
+      select: {
+        id: true,
+        name: true,
+        discipline: {
+          select: {
+            name: true,
+            icon: true,
+          },
+        },
+      },
+    });
+
+    if (!club) {
+      throw new NotFoundException('El club no fue encontrado');
+    }
+
+    return {
+      data: club,
+      message: 'Club obtenido exitosamente',
+    };
+  }
+
+  async getTeamContext(teamId: string) {
+    const team = await this.prisma.team.findUnique({
+      where: { id: teamId },
+      select: {
+        id: true,
+        name: true,
+        shortName: true,
+        description: true,
+        club: {
+          select: {
+            id: true,
+            name: true,
+            discipline: {
+              select: {
+                id: true,
+                name: true,
+                icon: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!team) {
+      throw new NotFoundException('El equipo no fue encontrado');
+    }
+
+    return {
+      data: team,
+      message: 'Equipo obtenido exitosamente',
     };
   }
 }

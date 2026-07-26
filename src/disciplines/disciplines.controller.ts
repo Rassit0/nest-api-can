@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,16 +19,26 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { DisciplinesService } from './disciplines.service';
 import { CreateDisciplineDto } from './dto/create-discipline.dto';
 import { UpdateDisciplineDto } from './dto/update-discipline.dto';
 import { DisciplinePaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { DisciplineResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Disciplines')
 @Controller('disciplines')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class DisciplinesController {
   constructor(private readonly disciplinesService: DisciplinesService) {}
 
@@ -37,7 +48,11 @@ export class DisciplinesController {
     description:
       'Registra una nueva disciplina (ej: Fútbol, Baloncesto) con su correspondiente ícono representativo.',
   })
-  @ApiStandardCreatedResponse(DisciplineResponseDto, 'Disciplina creada exitosamente.')
+  @ApiStandardCreatedResponse(
+    DisciplineResponseDto,
+    'Disciplina creada exitosamente.',
+  )
+  @RequirePermissions('CREATE_DISCIPLINES')
   async create(@Body() createDisciplineDto: CreateDisciplineDto) {
     return await this.disciplinesService.create(createDisciplineDto);
   }
@@ -48,7 +63,11 @@ export class DisciplinesController {
     description:
       'Retorna una lista paginada y filtrable de todas las disciplinas deportivas.',
   })
-  @ApiPaginatedResponse(DisciplineResponseDto, 'Lista de disciplinas obtenida correctamente.')
+  @ApiPaginatedResponse(
+    DisciplineResponseDto,
+    'Lista de disciplinas obtenida correctamente.',
+  )
+  @RequirePermissions('READ_DISCIPLINES')
   async findAll(@Query() paginationDto: DisciplinePaginationDto) {
     return await this.disciplinesService.findAll(paginationDto);
   }
@@ -59,7 +78,11 @@ export class DisciplinesController {
     description:
       'Retorna una lista completa sin paginación de todas las disciplinas, ideal para listas desplegables (dropdowns) en el portal web.',
   })
-  @ApiStandardResponse(DisciplineResponseDto, 'Disciplinas obtenidas exitosamente.')
+  @ApiStandardResponse(
+    DisciplineResponseDto,
+    'Disciplinas obtenidas exitosamente.',
+  )
+  @RequirePermissions('READ_DISCIPLINES')
   async findAllUnpaginated() {
     return await this.disciplinesService.findAllUnpaginated();
   }
@@ -75,7 +98,11 @@ export class DisciplinesController {
     description: 'ID de la disciplina (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(DisciplineResponseDto, 'Disciplina encontrada exitosamente.')
+  @ApiStandardResponse(
+    DisciplineResponseDto,
+    'Disciplina encontrada exitosamente.',
+  )
+  @RequirePermissions('READ_DISCIPLINES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.disciplinesService.findOne(id);
   }
@@ -92,7 +119,11 @@ export class DisciplinesController {
     format: 'uuid',
   })
   @ApiBody({ type: UpdateDisciplineDto })
-  @ApiStandardResponse(DisciplineResponseDto, 'Disciplina actualizada exitosamente.')
+  @ApiStandardResponse(
+    DisciplineResponseDto,
+    'Disciplina actualizada exitosamente.',
+  )
+  @RequirePermissions('UPDATE_DISCIPLINES')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDisciplineDto: UpdateDisciplineDto,
@@ -112,6 +143,7 @@ export class DisciplinesController {
     format: 'uuid',
   })
   @ApiStandardResponse(DisciplineResponseDto, 'Disciplina eliminada con éxito.')
+  @RequirePermissions('DELETE_DISCIPLINES')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.disciplinesService.remove(id);
   }

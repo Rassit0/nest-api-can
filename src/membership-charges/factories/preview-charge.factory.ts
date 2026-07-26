@@ -8,7 +8,7 @@ export class PreviewChargeFactory {
     description: string,
     discountAmount: number,
     discountPercent: number,
-    dueDate: Date
+    dueDate: Date,
   ): PreviewCharge {
     return {
       type: TypeMembershipCharge.REGISTRATION,
@@ -32,7 +32,7 @@ export class PreviewChargeFactory {
     dueDate: Date,
     billingYear: number,
     billingMonth: number,
-    billingCycle?: number | null
+    billingCycle?: number | null,
   ): PreviewCharge {
     return {
       type: TypeMembershipCharge.RECURRING_FEE,
@@ -54,7 +54,7 @@ export class PreviewChargeFactory {
     description: string,
     discountAmount: number,
     discountPercent: number,
-    dueDate: Date
+    dueDate: Date,
   ): PreviewCharge {
     return {
       type: TypeMembershipCharge.SEASON_FEE,

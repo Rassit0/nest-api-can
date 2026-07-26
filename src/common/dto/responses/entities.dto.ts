@@ -118,7 +118,6 @@ export class PersonResponseDto {
     example: 'any',
   })
   user?: any;
-
 }
 
 export class PersonContactResponseDto {
@@ -166,7 +165,6 @@ export class PersonContactResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   createdAt: Date;
-
 }
 
 export class DisciplineResponseDto {
@@ -218,7 +216,6 @@ export class DisciplineResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class InstitutionResponseDto {
@@ -282,7 +279,6 @@ export class InstitutionResponseDto {
     example: 'any',
   })
   schools: any[];
-
 }
 
 export class ClubResponseDto {
@@ -331,7 +327,6 @@ export class ClubResponseDto {
     example: 'any',
   })
   teams: any[];
-
 }
 
 export class LocationResponseDto {
@@ -417,7 +412,6 @@ export class LocationResponseDto {
     example: 'any',
   })
   matches: any[];
-
 }
 
 export class CategoryResponseDto {
@@ -478,7 +472,6 @@ export class CategoryResponseDto {
     example: 'any',
   })
   courseSeasons: any[];
-
 }
 
 export class SeasonResponseDto {
@@ -555,7 +548,6 @@ export class SeasonResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class TeamResponseDto {
@@ -606,7 +598,6 @@ export class TeamResponseDto {
     example: 'any',
   })
   teamSeasons: any[];
-
 }
 
 export class TeamSeasonResponseDto {
@@ -762,7 +753,6 @@ export class TeamSeasonResponseDto {
     example: 'any',
   })
   matches: any[];
-
 }
 
 export class PaymentPlanResponseDto {
@@ -836,7 +826,6 @@ export class PaymentPlanResponseDto {
     example: 'any',
   })
   studentMemberships: any[];
-
 }
 
 export class PlayerResponseDto {
@@ -893,7 +882,6 @@ export class PlayerResponseDto {
     example: 'any',
   })
   progressEvaluations: any[];
-
 }
 
 export class PlayerMembershipResponseDto {
@@ -981,7 +969,6 @@ export class PlayerMembershipResponseDto {
     example: 'any',
   })
   membershipCharges: any[];
-
 }
 
 export class MembershipDiscountResponseDto {
@@ -1041,7 +1028,6 @@ export class MembershipDiscountResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class MembershipChargeResponseDto {
@@ -1101,7 +1087,6 @@ export class MembershipChargeResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class StaffResponseDto {
@@ -1152,7 +1137,6 @@ export class StaffResponseDto {
     example: 'any',
   })
   progressEvaluations: any[];
-
 }
 
 export class TeamSeasonStaffResponseDto {
@@ -1223,7 +1207,6 @@ export class TeamSeasonStaffResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class ChargeResponseDto {
@@ -1320,7 +1303,6 @@ export class ChargeResponseDto {
     example: 'any',
   })
   studentCharges: any[];
-
 }
 
 export class ChargeTransactionResponseDto {
@@ -1363,7 +1345,6 @@ export class ChargeTransactionResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class TransactionResponseDto {
@@ -1437,7 +1418,6 @@ export class TransactionResponseDto {
     example: 'any',
   })
   chargeTransactions: any[];
-
 }
 
 export class UserResponseDto {
@@ -1492,7 +1472,6 @@ export class UserResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class RoleResponseDto {
@@ -1533,7 +1512,6 @@ export class RoleResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class PermissionResponseDto {
@@ -1573,7 +1551,6 @@ export class PermissionResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class RolePermissionResponseDto {
@@ -1596,7 +1573,6 @@ export class RolePermissionResponseDto {
     example: 'any',
   })
   permission: any;
-
 }
 
 export class SchoolResponseDto {
@@ -1645,7 +1621,6 @@ export class SchoolResponseDto {
     example: 'any',
   })
   courses: any[];
-
 }
 
 export class CourseResponseDto {
@@ -1696,7 +1671,6 @@ export class CourseResponseDto {
     example: 'any',
   })
   courseSeasons: any[];
-
 }
 
 export class CourseSeasonResponseDto {
@@ -1846,7 +1820,6 @@ export class CourseSeasonResponseDto {
     example: 'any',
   })
   scheduleCourses: any[];
-
 }
 
 export class CourseSeasonStaffResponseDto {
@@ -1917,7 +1890,6 @@ export class CourseSeasonStaffResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class StudentResponseDto {
@@ -1968,7 +1940,6 @@ export class StudentResponseDto {
     example: 'any',
   })
   progressEvaluations: any[];
-
 }
 
 export class StudentMembershipResponseDto {
@@ -2056,7 +2027,6 @@ export class StudentMembershipResponseDto {
     example: 'any',
   })
   studentCharges: any[];
-
 }
 
 export class StudentDiscountResponseDto {
@@ -2116,7 +2086,6 @@ export class StudentDiscountResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class StudentChargeResponseDto {
@@ -2176,7 +2145,6 @@ export class StudentChargeResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class SessionIncidentResponseDto {
@@ -2209,7 +2177,6 @@ export class SessionIncidentResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class ProgressEvaluationResponseDto {
@@ -2306,7 +2273,6 @@ export class ProgressEvaluationResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class SessionResponseDto {
@@ -2370,7 +2336,6 @@ export class SessionResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class SessionTeamResponseDto {
@@ -2393,7 +2358,6 @@ export class SessionTeamResponseDto {
     example: 'any',
   })
   teamSeason: any;
-
 }
 
 export class SessionCourseResponseDto {
@@ -2416,7 +2380,6 @@ export class SessionCourseResponseDto {
     example: 'any',
   })
   courseSeason: any;
-
 }
 
 export class SessionBookingResponseDto {
@@ -2496,7 +2459,6 @@ export class SessionBookingResponseDto {
     example: 'any',
   })
   incidents: any[];
-
 }
 
 export class ScheduleResponseDto {
@@ -2553,7 +2515,6 @@ export class ScheduleResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class ScheduleTeamResponseDto {
@@ -2576,7 +2537,6 @@ export class ScheduleTeamResponseDto {
     example: 'any',
   })
   teamSeason: any;
-
 }
 
 export class ScheduleCourseResponseDto {
@@ -2599,7 +2559,6 @@ export class ScheduleCourseResponseDto {
     example: 'any',
   })
   courseSeason: any;
-
 }
 
 export class MatchResponseDto {
@@ -2677,7 +2636,6 @@ export class MatchResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
 export class MatchLineupResponseDto {
@@ -2745,6 +2703,36 @@ export class MatchLineupResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
-
 }
 
+export class ShiftResponseDto {
+  @ApiProperty({
+    example: 'string',
+  })
+  id: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  name: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  institutionId: string;
+
+  @ApiProperty({
+    example: 'any',
+  })
+  institution: any;
+
+  @ApiProperty({
+    example: '2024-01-01T00:00:00Z',
+  })
+  createdAt: Date;
+
+  @ApiProperty({
+    example: '2024-01-01T00:00:00Z',
+  })
+  updatedAt: Date;
+}

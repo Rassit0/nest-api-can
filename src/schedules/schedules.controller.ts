@@ -8,34 +8,46 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { SchedulesService } from './schedules.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { SchedulesPaginationDto } from './dto/pagination.dto';
-import { ApiStandardResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { ScheduleResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Schedules')
 @Controller('schedules')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class SchedulesController {
   constructor(private readonly schedulesService: SchedulesService) {}
 
   @Post()
   @ApiOperation({ summary: 'Programar un nuevo horario de entrenamiento' })
+  @RequirePermissions('CREATE_SCHEDULES')
   async create(@Body() createScheduleDto: CreateScheduleDto) {
     return await this.schedulesService.create(createScheduleDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Obtener lista de horarios paginada y filtrada' })
+  @RequirePermissions('READ_SCHEDULES')
   async findAll(@Query() paginationDto: SchedulesPaginationDto) {
     return await this.schedulesService.findAll(paginationDto);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Obtener detalles de un horario específico por ID' })
+  @RequirePermissions('READ_SCHEDULES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schedulesService.findOne(id);
   }
@@ -43,6 +55,7 @@ export class SchedulesController {
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar un horario específico' })
   @ApiBody({ type: UpdateScheduleDto })
+  @RequirePermissions('UPDATE_SCHEDULES')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateScheduleDto: UpdateScheduleDto,
@@ -52,6 +65,7 @@ export class SchedulesController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un horario de la programación' })
+  @RequirePermissions('DELETE_SCHEDULES')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.schedulesService.remove(id);
   }

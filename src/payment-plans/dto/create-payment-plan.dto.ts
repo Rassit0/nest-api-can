@@ -97,7 +97,8 @@ export class CreatePaymentPlanDto {
 
   @ApiPropertyOptional({
     example: '20.00',
-    description: 'Porcentaje de descuento para la tarifa mensual. Si el plan es de pago mensual, descuenta a la mensualidad.',
+    description:
+      'Porcentaje de descuento para la tarifa mensual. Si el plan es de pago mensual, descuenta a la mensualidad.',
   })
   @IsOptional()
   @IsDecimal(
@@ -121,7 +122,8 @@ export class CreatePaymentPlanDto {
 
   @ApiPropertyOptional({
     example: '15.00',
-    description: 'Porcentaje de descuento aplicado a la tarifa de la temporada completa cuando es un plan de pago único.',
+    description:
+      'Porcentaje de descuento aplicado a la tarifa de la temporada completa cuando es un plan de pago único.',
   })
   @IsOptional()
   @IsDecimal(
@@ -145,7 +147,8 @@ export class CreatePaymentPlanDto {
 
   @ApiPropertyOptional({
     example: true,
-    description: 'Si es true, este plan agrupa toda la temporada en un solo cobro adelantado',
+    description:
+      'Si es true, este plan agrupa toda la temporada en un solo cobro adelantado',
     default: false,
   })
   @IsBoolean({
@@ -158,7 +161,8 @@ export class CreatePaymentPlanDto {
 
   @ApiPropertyOptional({
     example: false,
-    description: 'Si es true, este plan serA! seleccionado por defecto en el formulario',
+    description:
+      'Si es true, este plan serA! seleccionado por defecto en el formulario',
     default: false,
   })
   @IsBoolean({
@@ -185,7 +189,8 @@ export class CreatePaymentPlanDto {
 
   @ApiPropertyOptional({
     example: '15.00',
-    description: 'Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas',
+    description:
+      'Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas',
   })
   @IsOptional()
   @IsDecimal(
@@ -206,5 +211,4 @@ export class CreatePaymentPlanDto {
     message: 'El porcentaje debe estar entre 0 y 100',
   })
   advanceCyclesDiscountPercent?: string;
-
 }

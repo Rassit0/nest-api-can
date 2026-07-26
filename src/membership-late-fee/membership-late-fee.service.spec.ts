@@ -1,7 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MembershipLateFeeService } from './membership-late-fee.service';
 import { PrismaService } from 'src/prisma.service';
-import { StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
+import {
+  StatusCharge,
+  TypeMembershipCharge,
+  Charge,
+} from 'src/generated/prisma/client';
 import { LateFeeRepository } from './repositories/late-fee.repository';
 import { DateUtils } from 'src/utils/date.utils';
 
@@ -14,7 +18,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
     const mockPrisma = {
       $transaction: jest.fn(async (cb) => cb(mockPrisma)),
     };
-    
+
     const mockLateFeeRepo = {
       findOverdueCharges: jest.fn(),
       findExistingLateFeeCharge: jest.fn(),
@@ -58,11 +62,17 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-01T00:00:00.000Z'),
-        membershipCharges: [{
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: false }
-          }
-        }]
+        membershipCharges: [
+          {
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: false,
+                },
+              },
+            },
+          },
+        ],
       };
 
       lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
@@ -77,11 +87,19 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-05T00:00:00.000Z'), // 5 días vencido
-        membershipCharges: [{
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: true, graceDays: 5, lateFeePerDay: 10 }
-          }
-        }]
+        membershipCharges: [
+          {
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 5,
+                  lateFeePerDay: 10,
+                },
+              },
+            },
+          },
+        ],
       };
 
       lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
@@ -97,12 +115,20 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-04T00:00:00.000Z'), // 6 días vencido respecto a 2026-08-10
-        membershipCharges: [{
-          playerMembershipId: 'mem-1',
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: true, graceDays: 5, lateFeePerDay: 10 }
-          }
-        }]
+        membershipCharges: [
+          {
+            playerMembershipId: 'mem-1',
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 5,
+                  lateFeePerDay: 10,
+                },
+              },
+            },
+          },
+        ],
       };
 
       lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
@@ -117,7 +143,57 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
           parentChargeId: 'charge-1',
           amount: 10,
           pendingAmount: 10,
-        })
+        }),
+      );
+    });
+    it('Caso Pausas: Superposición de pausa individual y global (Merged Intervals)', async () => {
+      const mockCharge = {
+        id: 'charge-pause',
+        dueDate: new Date('2026-08-01T00:00:00.000Z'), // 9 días vencido (del 1 al 10)
+        membershipCharges: [
+          {
+            playerMembershipId: 'mem-1',
+            playerMembership: {
+              pauses: [
+                {
+                  startDate: new Date('2026-08-02T00:00:00.000Z'),
+                  endDate: new Date('2026-08-06T00:00:00.000Z'), // 5 días individuales
+                },
+              ],
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 0,
+                  lateFeePerDay: 10,
+                },
+                teamSeasonPauses: [
+                  {
+                    startDate: new Date('2026-08-05T00:00:00.000Z'),
+                    endDate: new Date('2026-08-07T00:00:00.000Z'), // 3 días globales
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      };
+
+      // Explicación de pausas:
+      // Ind: 2, 3, 4, 5, 6
+      // Glo:          5, 6, 7
+      // Merged: 2, 3, 4, 5, 6, 7 (6 días inactivos totales)
+      // Días transcurridos = 9. Días activos = 3. Target mora = 30.
+
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(null);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          amount: 30, // 3 * 10
+        }),
       );
     });
   });
@@ -137,11 +213,19 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-01T00:00:00.000Z'), // 9 días vencido
-        membershipCharges: [{
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 5 } // Mora objetivo = 45
-          }
-        }]
+        membershipCharges: [
+          {
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 0,
+                  lateFeePerDay: 5,
+                },
+              }, // Mora objetivo = 45
+            },
+          },
+        ],
       };
 
       const existingLateFee = {
@@ -152,7 +236,9 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       };
 
       lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
-      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(existingLateFee as any);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(
+        existingLateFee as any,
+      );
 
       await service.applyDailyLateFees();
 
@@ -163,8 +249,8 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.objectContaining({
           amount: 45,
           pendingAmount: 45,
-          status: StatusCharge.PENDING
-        })
+          status: StatusCharge.PENDING,
+        }),
       );
     });
 
@@ -172,22 +258,32 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-01T00:00:00.000Z'), // 9 días vencido. Target mora = 90
-        membershipCharges: [{
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 } 
-          }
-        }]
+        membershipCharges: [
+          {
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 0,
+                  lateFeePerDay: 10,
+                },
+              },
+            },
+          },
+        ],
       };
 
       const existingLateFee = {
         id: 'late-1',
         status: StatusCharge.PAID, // Ayer el alumno pagó su mora acumulada (80)
-        amount: 80, 
+        amount: 80,
         pendingAmount: 0,
       };
 
       lateFeeRepo.findOverdueCharges.mockResolvedValue([mockCharge as any]);
-      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(existingLateFee as any);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(
+        existingLateFee as any,
+      );
 
       await service.applyDailyLateFees();
 
@@ -199,8 +295,8 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.objectContaining({
           amount: 90,
           pendingAmount: 10,
-          status: StatusCharge.PARTIAL // ¡Reapertura por nueva mora!
-        })
+          status: StatusCharge.PARTIAL, // ¡Reapertura por nueva mora!
+        }),
       );
     });
   });
@@ -220,15 +316,25 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       // Simular 125 cargos vencidos
       const massiveOverdueCharges = Array.from({ length: 125 }, (_, i) => ({
         id: `charge-${i}`,
-        dueDate: new Date('2026-08-01T00:00:00.000Z'), 
-        membershipCharges: [{
-          playerMembership: {
-            teamSeason: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }
-          }
-        }]
+        dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        membershipCharges: [
+          {
+            playerMembership: {
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 0,
+                  lateFeePerDay: 10,
+                },
+              },
+            },
+          },
+        ],
       }));
 
-      lateFeeRepo.findOverdueCharges.mockResolvedValue(massiveOverdueCharges as any);
+      lateFeeRepo.findOverdueCharges.mockResolvedValue(
+        massiveOverdueCharges as any,
+      );
       lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(null); // Para que intente crear
 
       await service.applyDailyLateFees();

@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,6 +20,7 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiConsumes,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -31,8 +33,13 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { PersonResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Persons')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 @Controller('persons')
 export class PersonsController {
   constructor(private readonly personsService: PersonsService) {}
@@ -46,6 +53,7 @@ export class PersonsController {
   @ApiConsumes('multipart/form-data')
   @FormDataRequest()
   @ApiStandardCreatedResponse(PersonResponseDto, 'Persona creada exitosamente.')
+  @RequirePermissions('CREATE_PERSONS')
   async create(@Body() createPersonDto: CreatePersonDto) {
     return await this.personsService.create(createPersonDto);
   }
@@ -60,6 +68,7 @@ export class PersonsController {
     PersonResponseDto,
     'Lista de personas obtenida correctamente.',
   )
+  @RequirePermissions('READ_PERSONS')
   async findAll(@Query() paginationDto: PersonPaginationDto) {
     return await this.personsService.findAll(paginationDto);
   }
@@ -76,6 +85,7 @@ export class PersonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(PersonResponseDto, 'Persona encontrada exitosamente.')
+  @RequirePermissions('READ_PERSONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.personsService.findOne(id);
   }
@@ -97,6 +107,7 @@ export class PersonsController {
     PersonResponseDto,
     'Datos de persona actualizados con éxito.',
   )
+  @RequirePermissions('UPDATE_PERSONS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePersonDto: UpdatePersonDto,
@@ -115,6 +126,7 @@ export class PersonsController {
     format: 'uuid',
   })
   @ApiStandardResponse(PersonResponseDto, 'Persona eliminada exitosamente.')
+  @RequirePermissions('DELETE_PERSONS')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.personsService.remove(id);
   }

@@ -70,9 +70,16 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService.recalculatePendingFutureCharges(createStudentDiscountDto.studentMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras asignar descuento escolar a membresía ${createStudentDiscountDto.studentMembershipId}`, e.stack);
-    });
+    this.studentChargesService
+      .recalculatePendingFutureCharges(
+        createStudentDiscountDto.studentMembershipId,
+      )
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras asignar descuento escolar a membresía ${createStudentDiscountDto.studentMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento escolar registrado exitosamente',
@@ -212,9 +219,14 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService.recalculatePendingFutureCharges(discount.studentMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras actualizar descuento escolar en membresía ${discount.studentMembershipId}`, e.stack);
-    });
+    this.studentChargesService
+      .recalculatePendingFutureCharges(discount.studentMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras actualizar descuento escolar en membresía ${discount.studentMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento actualizado exitosamente',
@@ -230,9 +242,14 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService.recalculatePendingFutureCharges(discount.studentMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras eliminar descuento escolar en membresía ${discount.studentMembershipId}`, e.stack);
-    });
+    this.studentChargesService
+      .recalculatePendingFutureCharges(discount.studentMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras eliminar descuento escolar en membresía ${discount.studentMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento eliminado de la membresía exitosamente',
@@ -255,16 +272,20 @@ export class StudentDiscountsService {
       );
     }
 
-    const finishedStudentDiscount =
-      await this.prisma.studentDiscount.update({
-        where: { id },
-        data: { endDate: now },
-        select: studentDiscountSelect,
-      });
-
-    this.studentChargesService.recalculatePendingFutureCharges(discount.studentMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras finalizar descuento en membresía ${discount.studentMembershipId}`, e.stack);
+    const finishedStudentDiscount = await this.prisma.studentDiscount.update({
+      where: { id },
+      data: { endDate: now },
+      select: studentDiscountSelect,
     });
+
+    this.studentChargesService
+      .recalculatePendingFutureCharges(discount.studentMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras finalizar descuento en membresía ${discount.studentMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento finalizado exitosamente',

@@ -14,10 +14,7 @@ import {
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import {
-  ProgramGender,
-  StatusCourseSeason,
-} from 'src/generated/prisma/client';
+import { ProgramGender, StatusCourseSeason } from 'src/generated/prisma/client';
 import { ValidateNested } from 'class-validator';
 import { SeasonBillingConfigDto } from 'src/common/dto/season-billing-config.dto';
 
@@ -69,6 +66,22 @@ export class CreateCourseSeasonDto {
     }),
   })
   seasonId: string;
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del turno (Shift)',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'shiftId',
+    }),
+  })
+  @Exists('shift', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'shiftId',
+    }),
+  })
+  shiftId: string;
 
   @ApiPropertyOptional({
     example: 'Curso escolar nocturno',
@@ -144,7 +157,8 @@ export class CreateCourseSeasonDto {
 
   @ApiPropertyOptional({
     example: 2015,
-    description: 'Año mínimo de nacimiento permitido (sobreescribe la edad de la categoría)',
+    description:
+      'Año mínimo de nacimiento permitido (sobreescribe la edad de la categoría)',
   })
   @Type(() => Number)
   @IsInt({
@@ -163,7 +177,8 @@ export class CreateCourseSeasonDto {
 
   @ApiPropertyOptional({
     example: 2016,
-    description: 'Año máximo de nacimiento permitido (sobreescribe la edad de la categoría)',
+    description:
+      'Año máximo de nacimiento permitido (sobreescribe la edad de la categoría)',
   })
   @Type(() => Number)
   @IsInt({
@@ -224,6 +239,4 @@ export class CreateCourseSeasonDto {
   @Type(() => Boolean)
   @IsBoolean()
   isRegistrationOpen?: boolean;
-
-
 }

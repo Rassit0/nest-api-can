@@ -13,6 +13,14 @@ type AuditableResult = {
   id?: string;
 };
 
+function getModuleKeyFromModel(model: string): string {
+  const snakeCase = model.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
+  if (snakeCase.endsWith('Y')) return `MODULE_${snakeCase.slice(0, -1)}IES`;
+  if (snakeCase.endsWith('STAFF')) return `MODULE_${snakeCase}`;
+  if (snakeCase.endsWith('CH')) return `MODULE_${snakeCase}ES`;
+  return `MODULE_${snakeCase}S`;
+}
+
 @Injectable()
 export class PrismaService extends PrismaClient {
   constructor(private readonly cls: ClsService) {
@@ -24,7 +32,7 @@ export class PrismaService extends PrismaClient {
 
     // Modelos que NO queremos auditar para evitar bucles infinitos o ruido en la BD
     const ignoreModels = ['AuditLog', 'User'];
-    
+
     // Guardamos la referencia a la instancia original (PrismaClient)
     // porque dentro de la extensión '$extends', 'this' cambia de contexto.
     const self = this;
@@ -36,18 +44,18 @@ export class PrismaService extends PrismaClient {
           // Intercepta todas las creaciones (prisma.model.create)
           async create({ model, args, query }) {
             // 1. Obtenemos el ID del usuario logueado usando ClsService (Thread Local Storage)
-            const userId = cls.get('userId') as string | undefined;
-            
+            const userId = cls.get('userId');
+
             // 2. Si hay usuario y estamos enviando datos, rellenamos quién lo creó y actualizó
             if (userId && args.data) {
               const data = args.data as AuditableData;
               if (data.createdById === undefined) data.createdById = userId;
               if (data.updatedById === undefined) data.updatedById = userId;
             }
-            
+
             // 3. Ejecutamos la consulta real en la base de datos
             const result = await query(args);
-            
+
             // 4. Si el modelo no está ignorado, creamos el log de auditoría
             if (!ignoreModels.includes(model)) {
               self.auditLog
@@ -56,7 +64,11 @@ export class PrismaService extends PrismaClient {
                     entityName: model, // Ej: "Player", "Course"
                     entityId: (result as AuditableResult)?.id || 'unknown',
                     action: 'CREATE',
-                    newValues: result as Prisma.InputJsonValue, // Guardamos el registro completo que se creó
+                    type: 'CREATE',
+                    titleKey: 'TITLE_CREATE',
+                    messageKey: 'MSG_CREATE_GENERIC',
+                    messageParams: { module: getModuleKeyFromModel(model) },
+                    newValues: result, // Guardamos el registro completo que se creó
                     userId: userId || null,
                   },
                 })
@@ -67,8 +79,8 @@ export class PrismaService extends PrismaClient {
 
           // Intercepta todas las actualizaciones (prisma.model.update)
           async update({ model, args, query }) {
-            const userId = cls.get('userId') as string | undefined;
-            
+            const userId = cls.get('userId');
+
             // 1. Inyectamos quién está actualizando el registro
             if (userId && args.data) {
               const data = args.data as AuditableData;
@@ -102,8 +114,12 @@ export class PrismaService extends PrismaClient {
                     entityName: model,
                     entityId: (result as AuditableResult)?.id || 'unknown',
                     action: 'UPDATE',
+                    type: 'UPDATE',
+                    titleKey: 'TITLE_UPDATE',
+                    messageKey: 'MSG_UPDATE_GENERIC',
+                    messageParams: { module: getModuleKeyFromModel(model) },
                     oldValues, // El estado anterior
-                    newValues: result as Prisma.InputJsonValue, // El estado nuevo modificado
+                    newValues: result, // El estado nuevo modificado
                     userId: userId || null,
                   },
                 })
@@ -114,8 +130,8 @@ export class PrismaService extends PrismaClient {
 
           // Intercepta todos los borrados (prisma.model.delete)
           async delete({ model, args, query }) {
-            const userId = cls.get('userId') as string | undefined;
-            
+            const userId = cls.get('userId');
+
             // 1. Buscamos el registro ANTES de borrarlo para guardar qué fue lo que se eliminó
             let oldValues: Prisma.InputJsonValue | undefined;
             if (!ignoreModels.includes(model)) {
@@ -142,6 +158,10 @@ export class PrismaService extends PrismaClient {
                     entityName: model,
                     entityId: (result as AuditableResult)?.id || 'unknown',
                     action: 'DELETE',
+                    type: 'DELETE',
+                    titleKey: 'TITLE_DELETE',
+                    messageKey: 'MSG_DELETE_GENERIC',
+                    messageParams: { module: getModuleKeyFromModel(model) },
                     oldValues, // Aquí guardamos qué contenía la fila que borramos
                     userId: userId || null,
                   },
@@ -153,8 +173,8 @@ export class PrismaService extends PrismaClient {
 
           // Intercepta los upserts (insertar si no existe, actualizar si existe)
           async upsert({ model, args, query }) {
-            const userId = cls.get('userId') as string | undefined;
-            
+            const userId = cls.get('userId');
+
             // 1. Inyectamos los campos de auditoría tanto para la parte de create como de update
             if (userId) {
               if (args.create) {
@@ -170,10 +190,10 @@ export class PrismaService extends PrismaClient {
                   updateData.updatedById = userId;
               }
             }
-            
+
             // 2. Ejecutamos el upsert
             const result = await query(args);
-            
+
             // 3. Registramos en el log
             if (!ignoreModels.includes(model)) {
               self.auditLog
@@ -182,7 +202,11 @@ export class PrismaService extends PrismaClient {
                     entityName: model,
                     entityId: (result as AuditableResult)?.id || 'unknown',
                     action: 'UPSERT',
-                    newValues: result as Prisma.InputJsonValue,
+                    type: 'UPDATE', // Visualmente lo trataremos como UPDATE genérico
+                    titleKey: 'TITLE_UPDATE',
+                    messageKey: 'MSG_UPDATE_GENERIC',
+                    messageParams: { module: getModuleKeyFromModel(model) },
+                    newValues: result,
                     userId: userId || null,
                   },
                 })

@@ -1,13 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { StudentMembershipStatus, Prisma, StatusCourseSeason } from 'src/generated/prisma/client';
+import {
+  StudentMembershipStatus,
+  Prisma,
+  StatusCourseSeason,
+} from 'src/generated/prisma/client';
 import { StudentMembershipWithRelations } from '../student-financial.calculator';
 
 export const studentMembershipInclude = {
   paymentPlan: true,
   studentDiscounts: true,
   pauses: true,
-  courseSeason: { include: { season: true, billingConfig: true, pauses: true } },
+  courseSeason: {
+    include: { season: true, billingConfig: true, pauses: true },
+  },
 } as const;
 
 @Injectable()
@@ -42,7 +48,7 @@ export class StudentMembershipRepository {
     courseSeasonId: string,
   ): Promise<{ id: string }[]> {
     return this.prisma.studentMembership.findMany({
-      where: { courseSeasonId, status: StatusCourseSeason.ACTIVE },
+      where: { courseSeasonId, status: StudentMembershipStatus.ACTIVE },
       select: { id: true },
     });
   }
@@ -52,16 +58,29 @@ export class StudentMembershipRepository {
   ): Promise<StudentMembershipWithRelations[]> {
     return this.prisma.studentMembership.findMany({
       where: {
-        status: {
-          in: [
-            StatusCourseSeason.ACTIVE,
-            StudentMembershipStatus.ACTIVE,
-            StudentMembershipStatus.SUSPENDED,
-          ],
-        },
         OR: [
-          { nextRecurringChargeGenerationDate: { lte: evaluationDate } },
-          { nextRecurringChargeGenerationDate: null },
+          {
+            status: {
+              in: [
+                StudentMembershipStatus.PENDING_ACTIVE,
+                StudentMembershipStatus.ACTIVE,
+                StudentMembershipStatus.SUSPENDED,
+              ],
+            },
+            OR: [
+              { nextRecurringChargeGenerationDate: { lte: evaluationDate } },
+              { nextRecurringChargeGenerationDate: null },
+            ],
+          },
+          {
+            status: {
+              in: [
+                StudentMembershipStatus.WITHDRAWN,
+                StudentMembershipStatus.FINISHED,
+              ],
+            },
+            nextRecurringChargeGenerationDate: { lte: evaluationDate },
+          },
         ],
         courseSeason: {
           status: 'ACTIVE',
@@ -95,7 +114,7 @@ export class StudentMembershipRepository {
       include: { season: true, billingConfig: true, pauses: true },
     });
     if (!courseSeason)
-      throw new BadRequestException('Temporada de equipo no encontrada');
+      throw new BadRequestException('Temporada de curso no encontrada');
     return courseSeason;
   }
 
@@ -108,5 +127,3 @@ export class StudentMembershipRepository {
     return paymentPlan;
   }
 }
-
-

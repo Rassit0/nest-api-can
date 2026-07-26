@@ -149,6 +149,22 @@ export class CreatePlayerMembershipDto {
   isMigrated: boolean;
 
   @ApiPropertyOptional({
+    description:
+      'Si es una migración, indica si se debe forzar el cobro de la matrícula',
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeRegistrationOnMigration?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Si es una migración, indica si se debe forzar la generación de la cuota del mes actual',
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeCurrentMonthOnMigration?: boolean;
+
+  @ApiPropertyOptional({
     description: 'Lista de descuentos excepcionales aplicables a la membresía',
     type: () => [MembershipDiscountDto],
   })

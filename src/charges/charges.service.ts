@@ -340,7 +340,7 @@ export class ChargesService {
         'Solo se pueden eliminar cargos creados de forma manual.',
       );
     }
-    
+
     if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
       throw new BadRequestException(
         'No se puede eliminar el cargo porque tiene transacciones (pagos) asociadas.',

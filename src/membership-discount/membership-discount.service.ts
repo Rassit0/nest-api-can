@@ -78,9 +78,16 @@ export class MembershipDiscountService {
       });
 
     // Recalcular cargos pendientes tras asignar descuento
-    this.membershipChargesService.recalculatePendingFutureCharges(createMembershipDiscountDto.playerMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras asignar descuento a membresía ${createMembershipDiscountDto.playerMembershipId}`, e.stack);
-    });
+    this.membershipChargesService
+      .recalculatePendingFutureCharges(
+        createMembershipDiscountDto.playerMembershipId,
+      )
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras asignar descuento a membresía ${createMembershipDiscountDto.playerMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento de membresia asignada exitosamente',
@@ -217,9 +224,14 @@ export class MembershipDiscountService {
       });
 
     // Recalcular cargos pendientes
-    this.membershipChargesService.recalculatePendingFutureCharges(membershipDiscount.playerMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras actualizar descuento en membresía ${membershipDiscount.playerMembershipId}`, e.stack);
-    });
+    this.membershipChargesService
+      .recalculatePendingFutureCharges(membershipDiscount.playerMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras actualizar descuento en membresía ${membershipDiscount.playerMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento de membresía actualizado exitosamente',
@@ -237,9 +249,14 @@ export class MembershipDiscountService {
     });
 
     // Recalcular cargos pendientes
-    this.membershipChargesService.recalculatePendingFutureCharges(discount.playerMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras eliminar descuento en membresía ${discount.playerMembershipId}`, e.stack);
-    });
+    this.membershipChargesService
+      .recalculatePendingFutureCharges(discount.playerMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras eliminar descuento en membresía ${discount.playerMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento eliminado exitosamente',
@@ -269,9 +286,14 @@ export class MembershipDiscountService {
       });
 
     // Recalcular cargos pendientes
-    this.membershipChargesService.recalculatePendingFutureCharges(discount.playerMembershipId).catch(e => {
-      this.logger.error(`Error al recalcular cargos tras finalizar descuento en membresía ${discount.playerMembershipId}`, e.stack);
-    });
+    this.membershipChargesService
+      .recalculatePendingFutureCharges(discount.playerMembershipId)
+      .catch((e) => {
+        this.logger.error(
+          `Error al recalcular cargos tras finalizar descuento en membresía ${discount.playerMembershipId}`,
+          e.stack,
+        );
+      });
 
     return {
       message: 'Descuento finalizado exitosamente',

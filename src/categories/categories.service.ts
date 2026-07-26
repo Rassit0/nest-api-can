@@ -141,4 +141,19 @@ export class CategoriesService {
       data: deletedCategory,
     };
   }
+
+  async getDisciplinesOptions() {
+    const disciplines = await this.prisma.discipline.findMany({
+      select: {
+        id: true,
+        name: true,
+        icon: true,
+      },
+    });
+
+    return {
+      data: disciplines,
+      message: 'Disciplinas obtenidas exitosamente',
+    };
+  }
 }

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNumber,
   IsOptional,
@@ -46,10 +46,11 @@ export class CreateCategoryDto {
   @IsOptional()
   description: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 13,
     description: 'Edad máxima permitida',
   })
+  @IsOptional()
   @IsNumber(
     {},
     {
@@ -58,7 +59,7 @@ export class CreateCategoryDto {
       }),
     },
   )
-  maxAge: number;
+  maxAge?: number;
 
   @ApiProperty({
     example: 10,

@@ -8,6 +8,8 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,21 +21,32 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiConsumes,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamsPaginationDto } from './dto/pagination.dto';
 import { FormDataRequest } from 'nestjs-form-data';
-import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
+import {
+  ApiStandardResponse,
+  ApiStandardCreatedResponse,
+  ApiPaginatedResponse,
+} from '../common/decorators/api-responses.decorator';
 import { TeamResponseDto } from '../common/dto/responses/entities.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @ApiTags('Teams')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
 
   @Post()
+  @RequirePermissions('CREATE_TEAMS')
   @ApiOperation({
     summary: 'Crear un equipo deportivo',
     description:
@@ -47,17 +60,22 @@ export class TeamsController {
   }
 
   @Get()
+  @RequirePermissions('READ_TEAMS')
   @ApiOperation({
     summary: 'Listar equipos',
     description:
       'Retorna una lista paginada y filtrable de todos los equipos del sistema.',
   })
-  @ApiPaginatedResponse(TeamResponseDto, 'Lista de equipos obtenida correctamente.')
+  @ApiPaginatedResponse(
+    TeamResponseDto,
+    'Lista de equipos obtenida correctamente.',
+  )
   async findAll(@Query() paginationDto: TeamsPaginationDto) {
     return this.teamsService.findAll(paginationDto);
   }
 
   @Get(':id')
+  @RequirePermissions('READ_TEAMS')
   @ApiOperation({
     summary: 'Obtener equipo por ID',
     description:
@@ -70,6 +88,7 @@ export class TeamsController {
   }
 
   @Patch(':id')
+  @RequirePermissions('UPDATE_TEAMS')
   @ApiOperation({
     summary: 'Actualizar equipo por ID',
     description: 'Modifica datos y/o logo del equipo por su ID.',
@@ -91,6 +110,7 @@ export class TeamsController {
   }
 
   @Delete(':id')
+  @RequirePermissions('DELETE_TEAMS')
   @ApiOperation({
     summary: 'Eliminar equipo por ID',
     description:
@@ -107,6 +127,7 @@ export class TeamsController {
   }
 
   @Get('clubs-by-discipline/options/:disciplineId')
+  @RequirePermissions('READ_TEAMS')
   @ApiOperation({
     summary: 'Obtener clubes por disciplina',
     description:
@@ -125,6 +146,7 @@ export class TeamsController {
   }
 
   @Get('disciplines/options')
+  @RequirePermissions('READ_TEAMS')
   @ApiOperation({
     summary: 'Obtener disciplinas disponibles para equipos',
     description: 'Retorna selectores de disciplinas deportivas.',
@@ -134,5 +156,23 @@ export class TeamsController {
   })
   async getDisciplinesOptions() {
     return await this.teamsService.getDisciplinesOptions();
+  }
+
+  @Get('clubs/context/:clubId')
+  @RequirePermissions('READ_TEAMS')
+  @ApiOperation({
+    summary: 'Obtener contexto básico del club',
+    description:
+      'Retorna información básica (nombre, id) de un club para usar de contexto en la vista de equipos, ' +
+      'sin requerir permisos sobre el módulo de Clubes.',
+  })
+  @ApiParam({
+    name: 'clubId',
+    description: 'ID del club (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Contexto del club obtenido correctamente.' })
+  async getClubContext(@Param('clubId', ParseUUIDPipe) clubId: string) {
+    return await this.teamsService.getClubContext(clubId);
   }
 }

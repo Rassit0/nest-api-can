@@ -174,4 +174,29 @@ export class TeamsService {
       message: 'Disciplinas obtenidas exitosamente',
     };
   }
+
+  async getClubContext(clubId: string) {
+    const club = await this.prisma.club.findUnique({
+      where: { id: clubId },
+      select: {
+        id: true,
+        name: true,
+        discipline: {
+          select: {
+            name: true,
+            icon: true,
+          },
+        },
+      },
+    });
+
+    if (!club) {
+      throw new NotFoundException('El club no fue encontrado');
+    }
+
+    return {
+      data: club,
+      message: 'Club obtenido exitosamente',
+    };
+  }
 }

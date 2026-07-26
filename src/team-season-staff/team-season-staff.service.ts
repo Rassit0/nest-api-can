@@ -185,7 +185,8 @@ export class TeamSeasonStaffService {
         name: staff.person.name,
         lastName: staff.person.lastName,
         secondLastName: staff.person.secondLastName,
-        fullName: `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
+        fullName:
+          `${staff.person.name} ${staff.person.lastName} ${staff.person.secondLastName || ''}`.trim(),
         documentNumber: staff.person.documentNumber,
         imageUrl: staff.person.imageUrl,
         isActive: staff.isActive,

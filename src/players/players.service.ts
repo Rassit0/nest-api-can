@@ -217,6 +217,7 @@ export class PlayersService {
           lastName: true,
           secondLastName: true,
           documentNumber: true,
+          documentType: true,
           gender: true,
           birthDate: true,
           imageUrl: true,

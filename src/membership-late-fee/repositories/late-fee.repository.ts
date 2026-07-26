@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { PlayerMembershipStatus, Prisma, StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
+import {
+  PlayerMembershipStatus,
+  Prisma,
+  StatusCharge,
+  TypeMembershipCharge,
+} from 'src/generated/prisma/client';
 
 export type ChargeWithLateFeeRelations = Prisma.ChargeGetPayload<{
   include: {
@@ -8,6 +13,7 @@ export type ChargeWithLateFeeRelations = Prisma.ChargeGetPayload<{
       include: {
         playerMembership: {
           include: {
+            pauses: true;
             teamSeason: {
               include: {
                 billingConfig: true;
@@ -26,6 +32,7 @@ const chargeInclude = {
     include: {
       playerMembership: {
         include: {
+          pauses: true,
           teamSeason: {
             include: {
               billingConfig: true,
@@ -42,7 +49,9 @@ const chargeInclude = {
 export class LateFeeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findOverdueCharges(evaluationDate: Date): Promise<ChargeWithLateFeeRelations[]> {
+  async findOverdueCharges(
+    evaluationDate: Date,
+  ): Promise<ChargeWithLateFeeRelations[]> {
     return this.prisma.charge.findMany({
       where: {
         status: {
@@ -51,13 +60,16 @@ export class LateFeeRepository {
         membershipCharges: {
           some: {
             type: {
-              in: [TypeMembershipCharge.RECURRING_FEE, TypeMembershipCharge.SEASON_FEE],
+              in: [
+                TypeMembershipCharge.RECURRING_FEE,
+                TypeMembershipCharge.SEASON_FEE,
+              ],
             },
             playerMembership: {
               status: {
                 in: [
                   PlayerMembershipStatus.ACTIVE,
-                  
+
                   PlayerMembershipStatus.SUSPENDED,
                 ],
               },
@@ -78,7 +90,10 @@ export class LateFeeRepository {
     });
   }
 
-  async findExistingLateFeeCharge(tx: Prisma.TransactionClient, parentChargeId: string) {
+  async findExistingLateFeeCharge(
+    tx: Prisma.TransactionClient,
+    parentChargeId: string,
+  ) {
     return tx.charge.findFirst({
       where: {
         parentChargeId,
@@ -91,14 +106,21 @@ export class LateFeeRepository {
     });
   }
 
-  async updateLateFeeCharge(tx: Prisma.TransactionClient, chargeId: string, data: Prisma.ChargeUpdateInput) {
+  async updateLateFeeCharge(
+    tx: Prisma.TransactionClient,
+    chargeId: string,
+    data: Prisma.ChargeUpdateInput,
+  ) {
     await tx.charge.update({
       where: { id: chargeId },
       data,
     });
   }
 
-  async createLateFeeCharge(tx: Prisma.TransactionClient, data: Prisma.ChargeUncheckedCreateInput) {
+  async createLateFeeCharge(
+    tx: Prisma.TransactionClient,
+    data: Prisma.ChargeUncheckedCreateInput,
+  ) {
     await tx.charge.create({
       data,
     });

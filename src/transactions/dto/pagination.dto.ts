@@ -12,7 +12,8 @@ export class TransactionsPaginationDto extends PaginationDto {
   })
   @IsOptional()
   @IsIn(['createdAt', 'transactionDate', 'amount', 'type', 'status', 'id'], {
-    message: 'Columnas permitidas: createdAt, transactionDate, amount, type, status, id',
+    message:
+      'Columnas permitidas: createdAt, transactionDate, amount, type, status, id',
   })
   sortField?: string = 'createdAt';
 

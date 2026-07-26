@@ -39,8 +39,12 @@ export class I18nHttpExceptionFilter implements ExceptionFilter {
         const translation = this.i18n.translate(message, {
           lang,
           defaultValue: message,
-        }) as string;
-        if (translation && translation !== message) {
+        });
+        if (
+          translation &&
+          translation !== message &&
+          typeof translation === 'string'
+        ) {
           translatedMessage = translation;
         }
       } catch (e) {
