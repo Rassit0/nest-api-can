@@ -86,7 +86,7 @@ export class RolesController {
     description: 'Array de nombres de permisos obtenidos exitosamente.',
     type: [String],
   })
-  @RequirePermissions('READ_ROLES')
+  // @RequirePermissions('READ_ROLES')
   async getAllPermissions(
     @Query('roleId', ParseUUIDPipe) roleId: string,
     @Query('moduleName') moduleName?: string,
