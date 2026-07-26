@@ -227,6 +227,10 @@ export function calculateRecurringFeeForDate(
     membership.paymentPlan?.advanceCyclesDiscountPercent || 0,
   );
 
+  // REGLA DE NEGOCIO: Los descuentos por adelanto aplican ÚNICAMENTE a los 
+  // primeros N ciclos iniciales de la temporada (definidos por advanceCycles).
+  // Si un usuario adelanta cuotas manualmente a mitad de temporada, 
+  // NO recibirá descuento por adelanto.
   if (currentCycleCounter <= advanceCycles && advanceDiscount > 0) {
     appliedDiscounts.push({
       percent: advanceDiscount,

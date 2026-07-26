@@ -5,6 +5,7 @@ import { MembershipTeamSeasonValidator } from '../validators/membership-team-sea
 import { MembershipGenerationService } from './membership-generation.service';
 import { MembershipPreviewService } from './membership-preview.service';
 import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
+import { BillingValidator } from 'src/common/validators/billing.validator';
 
 @Injectable()
 export class MembershipAdvanceChargeService {
@@ -15,18 +16,33 @@ export class MembershipAdvanceChargeService {
     private readonly previewService: MembershipPreviewService,
   ) {}
 
+  private async validateAndGetMembershipForAdvance(membershipId: string) {
+    const membership =
+      await this.membershipRepo.getMembershipOrThrow(membershipId);
+
+    MembershipTeamSeasonValidator.assertIsActive(
+      membership.teamSeason,
+      'errors.INACTIVE_TEAM_SEASON',
+    );
+
+    if (membership.status === 'SUSPENDED') {
+      throw new BadRequestException('errors.MEMBERSHIP_SUSPENDED');
+    }
+    BillingValidator.assertNotSinglePayment(
+      membership.teamSeason.billingConfig,
+      membership.paymentPlan,
+    );
+
+    return membership;
+  }
+
   /**
    * Simula N ciclos hacia adelante sin guardarlos en la base de datos.
    * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
    */
   async previewAdvanceCharges(membershipId: string, quantity: number) {
     const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
-
-    MembershipTeamSeasonValidator.assertIsActive(
-      membership.teamSeason,
-      'No se pueden previsualizar cuotas adelantadas para una temporada o equipo inactivo',
-    );
+      await this.validateAndGetMembershipForAdvance(membershipId);
 
     const nextCycles = await this.generationService.findNextUngeneratedCycles(
       this.prisma,
@@ -41,6 +57,12 @@ export class MembershipAdvanceChargeService {
       };
     }
 
+    if (nextCycles.length < quantity) {
+      throw new BadRequestException(
+        `Solo quedan ${nextCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
+      );
+    }
+
     return this.previewService.extractAdvanceChargesFromCycles(nextCycles);
   }
 
@@ -50,12 +72,7 @@ export class MembershipAdvanceChargeService {
    */
   async generateAdvanceCharges(membershipId: string, quantity: number) {
     const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
-
-    MembershipTeamSeasonValidator.assertIsActive(
-      membership.teamSeason,
-      'No se pueden generar cuotas adelantadas para una temporada o equipo inactivo',
-    );
+      await this.validateAndGetMembershipForAdvance(membershipId);
 
     try {
       let generatedCount = 0;
@@ -71,13 +88,17 @@ export class MembershipAdvanceChargeService {
           return;
         }
 
-        await this.generationService.generateAdvanceCharges(
+        if (nextCycles.length < quantity) {
+          throw new BadRequestException(
+            `Solo quedan ${nextCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
+          );
+        }
+
+        generatedCount = await this.generationService.generateAdvanceCharges(
           tx,
           membership,
           nextCycles,
         );
-
-        generatedCount = nextCycles.length;
       });
 
       if (generatedCount === 0) {

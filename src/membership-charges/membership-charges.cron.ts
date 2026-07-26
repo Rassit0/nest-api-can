@@ -10,7 +10,7 @@ export class MembershipChargesCron {
 
   // Se ejecutará todos los días a la 1:00 AM
   // @Cron(CronExpression.EVERY_DAY_AT_1AM)
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
   async handleDailyCharges() {
     this.logger.log(
       'Iniciando tarea programada: Generación de cargos de Club...',

@@ -142,8 +142,8 @@ export class StudentGenerationService {
     membership: StudentMembershipWithRelations,
     cyclesToGenerate: SimulatedCycle[],
     existingChargesSet?: Set<string>,
-  ) {
-    const lastGeneratedCycle = await this.createRecurringChargesFromCycles(
+  ): Promise<number> {
+    const { lastGeneratedCycle, count } = await this.createRecurringChargesFromCycles(
       tx,
       membership,
       cyclesToGenerate,
@@ -161,6 +161,7 @@ export class StudentGenerationService {
         nextPointer,
       );
     }
+    return count;
   }
 
   private async processSinglePaymentGeneration(
@@ -458,10 +459,11 @@ export class StudentGenerationService {
     cycles: SimulatedCycle[],
     existingChargesSet?: Set<string>,
     groupDueDate?: Date,
-  ): Promise<SimulatedCycle | null> {
+  ): Promise<{ lastGeneratedCycle: SimulatedCycle | null; count: number }> {
     const billingFrequency =
       membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
     let lastGeneratedCycle: SimulatedCycle | null = null;
+    let count = 0;
 
     for (const cycle of cycles) {
       if (cycle.netAmount >= 0) {
@@ -483,9 +485,10 @@ export class StudentGenerationService {
         }
       }
       lastGeneratedCycle = cycle;
+      count++;
     }
 
-    return lastGeneratedCycle;
+    return { lastGeneratedCycle, count };
   }
 
   public async findNextUngeneratedCycles(

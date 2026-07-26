@@ -175,4 +175,86 @@ describe('MembershipCyclesEngine', () => {
       ); // Mar 1
     });
   });
+
+  /**
+   * IMPORTANT BUSINESS RULES - Extreme Configurations
+   * The following scenarios are explicitly validated business edge cases, not accidental behavior.
+   * Future engine modifications MUST ensure these configurations continue passing to maintain billing integrity.
+   * - BIWEEKLY/WEEKLY spanning leap years must correctly land on the precise date mathematically.
+   * - Billing day 31 must adjust exactly to end-of-month for shorter months (Feb 28/29, Apr 30, etc).
+   * - SINGLE billing must halt generation on the very first cycle regardless of remaining season time.
+   * - Disabled Prorating must avoid partial charging and prorate descriptions.
+   */
+  describe('More Extreme Configurations', () => {
+    it('should handle BIWEEKLY frequency correctly across leap year boundaries', () => {
+      const membership = getMockMembership();
+      membership.startedAt = new Date(Date.UTC(2024, 1, 26)); // Feb 26, 2024 (Leap year)
+      membership.courseSeason.season.endDate = new Date(Date.UTC(2024, 2, 31, 23, 59, 59, 999));
+      membership.courseSeason.billingConfig.billingFrequency = 'BIWEEKLY';
+
+      const cycles = simulateAllCycles(membership);
+      
+      expect(cycles.length).toBeGreaterThan(0);
+      expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 1, 26)));
+      // Next due date for BIWEEKLY should be exactly 14 days later: Feb 26 + 14 days
+      // 2024 is a leap year (29 days in Feb). Feb 26 + 3 days = Feb 29. Remaining 11 days = Mar 11.
+      expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 2, 11)));
+      expect(cycles[1].dueDate).toEqual(new Date(Date.UTC(2024, 2, 11)));
+    });
+
+    it('should generate exactly 1 cycle if membership starts very close to season end', () => {
+      const membership = getMockMembership();
+      // Starts 2 days before the end
+      membership.startedAt = new Date(Date.UTC(2024, 11, 29));
+      membership.courseSeason.season.endDate = new Date(Date.UTC(2024, 11, 31, 23, 59, 59, 999));
+
+      const cycles = simulateAllCycles(membership);
+
+      expect(cycles.length).toBe(1);
+      expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 11, 29)));
+      expect(cycles[0].nextDueDate.getTime()).toBeGreaterThan(membership.courseSeason.season.endDate.getTime());
+    });
+
+    it('should handle extreme billingDay (31st) across different month lengths', () => {
+      const membership = getMockMembership();
+      membership.startedAt = new Date(Date.UTC(2024, 0, 15)); // Jan 15
+      membership.courseSeason.season.endDate = new Date(Date.UTC(2024, 4, 10, 23, 59, 59, 999)); // May 10
+      membership.courseSeason.billingConfig.billingDay = 31;
+
+      const cycles = simulateAllCycles(membership);
+
+      // Cycle 1: Jan 15 to Jan 31
+      expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 0, 15)));
+      expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 0, 31))); 
+
+      // Cycle 2: Jan 31 to Feb 29
+      expect(cycles[1].dueDate).toEqual(new Date(Date.UTC(2024, 0, 31)));
+      expect(cycles[1].nextDueDate).toEqual(new Date(Date.UTC(2024, 1, 29))); 
+
+      // Cycle 3: Feb 29 to Mar 31
+      expect(cycles[2].dueDate).toEqual(new Date(Date.UTC(2024, 1, 29)));
+      expect(cycles[2].nextDueDate).toEqual(new Date(Date.UTC(2024, 2, 31)));
+    });
+
+    it('should apply no prorating description if prorating is disabled', () => {
+      const membership = getMockMembership();
+      membership.startedAt = new Date(Date.UTC(2024, 0, 15));
+      membership.courseSeason.billingConfig.prorateFirstRecurringFee = false;
+      membership.courseSeason.billingConfig.prorateLastRecurringFee = false;
+
+      const cycles = simulateAllCycles(membership);
+
+      expect(cycles[0].description).not.toContain('Prorrateado');
+    });
+
+    it('should correctly process SINGLE billing frequency and stop generation immediately', () => {
+      const membership = getMockMembership();
+      membership.courseSeason.billingConfig.billingFrequency = 'SINGLE';
+
+      const cycles = simulateAllCycles(membership);
+
+      expect(cycles.length).toBe(1);
+      expect(cycles[0].billingCycle).toBe(1);
+    });
+  });
 });
