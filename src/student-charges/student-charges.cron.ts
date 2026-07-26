@@ -8,8 +8,8 @@ export class StudentChargesCron {
 
   constructor(private readonly chargesService: StudentChargesService) {}
 
-  // Se ejecutará todos los días a la 1:00 AM
-  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  // Se ejecutará todos los días a la 1:30 AM
+  @Cron('30 1 * * *')
   async handleDailyCharges() {
     this.logger.log(
       'Iniciando tarea programada: Generación de cargos de Escuela...',

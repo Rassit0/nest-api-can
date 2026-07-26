@@ -9,7 +9,7 @@ export class StudentMembershipsCron {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @Cron('30 0 * * *')
   async handleMembershipPauses() {
     this.logger.log('Verificando pausas de membresías de estudiantes...');
     const today = new Date();

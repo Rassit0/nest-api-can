@@ -40,20 +40,18 @@ export class MembershipLateFeeService {
     for (let i = 0; i < overdueCharges.length; i += chunkSize) {
       const chunk = overdueCharges.slice(i, i + chunkSize);
 
-      await Promise.all(
-        chunk.map(async (baseCharge) => {
-          try {
-            await this.prisma.$transaction(async (tx) => {
-              await this.processChargeLateFee(tx, baseCharge, evaluationDate);
-            });
-          } catch (error) {
-            this.logger.error(
-              `Error procesando recargos para el cargo ID ${baseCharge.id}:`,
-              error,
-            );
-          }
-        }),
-      );
+      for (const baseCharge of chunk) {
+        try {
+          await this.prisma.$transaction(async (tx) => {
+            await this.processChargeLateFee(tx, baseCharge, evaluationDate);
+          });
+        } catch (error) {
+          this.logger.error(
+            `Error procesando recargos para el cargo ID ${baseCharge.id}:`,
+            error,
+          );
+        }
+      }
     }
 
     this.logger.log('Proceso de recargos finalizado.');

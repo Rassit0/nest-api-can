@@ -8,8 +8,8 @@ export class StudentLateFeeCron {
 
   constructor(private readonly lateFeeService: StudentLateFeeService) {}
 
-  // Se ejecutará todos los días a la 1:30 AM
-  @Cron('30 1 * * *')
+  // Se ejecutará todos los días a la 2:30 AM
+  @Cron('30 2 * * *')
   async handleDailyLateFees() {
     this.logger.log(
       'Iniciando tarea programada: Generación de mora de Estudiantes...',
