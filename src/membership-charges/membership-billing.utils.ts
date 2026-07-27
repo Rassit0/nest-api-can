@@ -1,3 +1,5 @@
+import { DateUtils } from 'src/utils/date.utils';
+
 export const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
 export const MAX_BILLING_CYCLES = 120;
 
@@ -35,9 +37,9 @@ export function calculateCycleDates(
     const billingYear = theoreticalDueDate.getUTCFullYear();
     const billingMonth = theoreticalDueDate.getUTCMonth() + 1;
     return {
-      dueDate,
-      theoreticalDueDate,
-      nextDueDate,
+      dueDate: DateUtils.getEndOfLocalDayInUTC(dueDate),
+      theoreticalDueDate: DateUtils.getEndOfLocalDayInUTC(theoreticalDueDate),
+      nextDueDate: DateUtils.getEndOfLocalDayInUTC(nextDueDate),
       billingYear,
       billingMonth,
       billingCycle: cycleCounter,
@@ -49,9 +51,9 @@ export function calculateCycleDates(
     const billingYear = theoreticalDueDate.getUTCFullYear();
     const billingMonth = theoreticalDueDate.getUTCMonth() + 1;
     return {
-      dueDate,
-      theoreticalDueDate,
-      nextDueDate,
+      dueDate: DateUtils.getEndOfLocalDayInUTC(dueDate),
+      theoreticalDueDate: DateUtils.getEndOfLocalDayInUTC(theoreticalDueDate),
+      nextDueDate: DateUtils.getEndOfLocalDayInUTC(nextDueDate),
       billingYear,
       billingMonth,
       billingCycle: cycleCounter,
@@ -114,9 +116,9 @@ export function calculateCycleDates(
     const billingMonthNum = theoreticalDueDate.getUTCMonth() + 1;
 
     return {
-      dueDate,
-      theoreticalDueDate,
-      nextDueDate,
+      dueDate: DateUtils.getEndOfLocalDayInUTC(dueDate),
+      theoreticalDueDate: DateUtils.getEndOfLocalDayInUTC(theoreticalDueDate),
+      nextDueDate: DateUtils.getEndOfLocalDayInUTC(nextDueDate),
       billingYear,
       billingMonth: billingMonthNum,
       billingCycle: cycleCounter,

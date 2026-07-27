@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { envs } from '../config/envs';
 import { PlayerMembershipStatus } from 'src/generated/prisma/client';
 
 @Injectable()
@@ -9,7 +10,9 @@ export class PlayerMembershipsCron {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT, {
+    timeZone: envs.appTimezone,
+  })
   async handleMembershipPauses() {
     this.logger.log('Verificando pausas de membresías de jugadores...');
     const today = new Date();

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from 'src/prisma.service';
+import { Cron } from '@nestjs/schedule';
+import { envs } from '../config/envs';
 import { StudentMembershipStatus } from 'src/generated/prisma/client';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class StudentMembershipsCron {
@@ -9,7 +10,9 @@ export class StudentMembershipsCron {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  @Cron('30 0 * * *')
+  @Cron('30 0 * * *', {
+    timeZone: envs.appTimezone,
+  })
   async handleMembershipPauses() {
     this.logger.log('Verificando pausas de membresías de estudiantes...');
     const today = new Date();

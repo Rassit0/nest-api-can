@@ -25,7 +25,7 @@ export class MembershipManualChargeService {
    */
   async createMassiveManualCharge(dto: CreateMassiveManualChargeDto) {
     const { teamSeasonId, description, amount, dueDate } = dto;
-    const due = DateUtils.getEndOfUTCDay(dueDate);
+    const due = DateUtils.getEndOfLocalDayInUTC(dueDate);
 
     const teamSeason =
       await this.membershipRepo.getTeamSeasonOrThrow(teamSeasonId);
@@ -82,7 +82,7 @@ export class MembershipManualChargeService {
       'No se pueden generar cargos manuales para una temporada o equipo que ha finalizado o fue cancelada',
     );
 
-    const dueDate = DateUtils.getStartOfUTCDay(dto.dueDate);
+    const dueDate = DateUtils.getEndOfLocalDayInUTC(dto.dueDate);
 
     await this.prisma.$transaction(async (tx) => {
       await tx.charge.create({

@@ -5,6 +5,7 @@ interface EnvVars {
   PORT: number;
   DATABASE_URL: string;
   JWT_SECRET: string;
+  APP_TIMEZONE: string;
 }
 
 const envsSchema = joi
@@ -13,6 +14,7 @@ const envsSchema = joi
     PORT: joi.number().required(),
     DATABASE_URL: joi.string().required(),
     JWT_SECRET: joi.string().required(),
+    APP_TIMEZONE: joi.string().default('America/La_Paz'),
   })
   .unknown(true);
 
@@ -34,4 +36,5 @@ export const envs = {
   port: envVars.PORT,
   databaseUrl: envVars.DATABASE_URL,
   jwtSecret: envVars.JWT_SECRET,
+  appTimezone: envVars.APP_TIMEZONE,
 };

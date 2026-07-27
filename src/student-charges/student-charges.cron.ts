@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { StudentChargesService } from './student-charges.service';
+import { envs } from '../config/envs';
 
 @Injectable()
 export class StudentChargesCron {
@@ -9,7 +10,9 @@ export class StudentChargesCron {
   constructor(private readonly chargesService: StudentChargesService) {}
 
   // Se ejecutará todos los días a la 1:30 AM
-  @Cron('30 1 * * *')
+  @Cron('30 1 * * *', {
+    timeZone: envs.appTimezone,
+  })
   async handleDailyCharges() {
     this.logger.log(
       'Iniciando tarea programada: Generación de cargos de Escuela...',
