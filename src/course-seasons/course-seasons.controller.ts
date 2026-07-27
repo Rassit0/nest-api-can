@@ -85,15 +85,11 @@ export class CourseSeasonsController {
       disciplineId,
     );
   }
-  @Get('shifts-by-institution/options/:institutionId')
+  @Get('shifts-by-institution/options')
   @ApiOperation({ summary: 'Obtener opciones de turnos' })
   @RequirePermissions('READ_COURSE_SEASONS')
-  async getShiftsOptions(
-    @Param('institutionId', ParseUUIDPipe) institutionId: string,
-  ) {
-    return await this.courseSeasonsService.getShiftsByInstitutionOptions(
-      institutionId,
-    );
+  async getShiftsOptions() {
+    return await this.courseSeasonsService.getShiftsByInstitutionOptions();
   }
 
   @Get('seasons-by-discipline/options/:disciplineId')

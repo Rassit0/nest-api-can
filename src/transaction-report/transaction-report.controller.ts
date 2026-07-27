@@ -26,7 +26,7 @@ export class TransactionReportController {
   ) {}
 
   @Get('transaction/:transactionId')
-  @RequirePermissions('READ_TRANSACTIONS')
+  @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
   async getTransactionReport(
     @Res() response: Response,
     @Param('transactionId') transactionId: string,

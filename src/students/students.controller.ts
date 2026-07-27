@@ -35,6 +35,7 @@ import { StudentResponseDto } from '../common/dto/responses/entities.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { PaginationDto } from 'src/common/dto/pagination';
 
 @ApiTags('Students')
 @Controller('students')
@@ -80,9 +81,7 @@ export class StudentsController {
       'Retorna una lista paginada de personas que aún no son estudiantes.',
   })
   @RequirePermissions('READ_STUDENTS')
-  async getAvailablePersons(
-    @Query() paginationDto: import('src/common/dto/pagination').PaginationDto,
-  ) {
+  async getAvailablePersons(@Query() paginationDto: PaginationDto) {
     return await this.studentsService.getAvailablePersons(paginationDto);
   }
 

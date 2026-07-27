@@ -37,6 +37,30 @@ export const studentMembershipSelect = {
     },
   },
   courseSeasonId: true,
+  courseSeason: {
+    select: {
+      course: {
+        select: {
+          name: true,
+        },
+      },
+      category: {
+        select: {
+          name: true,
+        },
+      },
+      season: {
+        select: {
+          name: true,
+        },
+      },
+      shift: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  },
   paymentPlanId: true,
   paymentPlan: true,
   startedAt: true,

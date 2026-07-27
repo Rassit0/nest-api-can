@@ -623,9 +623,18 @@ export class CourseSeasonsService {
     };
   }
 
-  async getShiftsByInstitutionOptions(institutionId: string) {
+  async getShiftsByInstitutionOptions() {
+    const institution = await this.prisma.institution.findFirst({
+      select: {
+        id: true,
+      },
+    });
+    if (!institution) {
+      throw new NotFoundException('La organización no fue encontrada');
+    }
+
     const shifts = await this.prisma.shift.findMany({
-      where: { institutionId },
+      where: { institutionId: institution.id },
       select: {
         id: true,
         name: true,
