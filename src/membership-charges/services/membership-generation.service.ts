@@ -6,7 +6,10 @@ import {
   calculateRegistrationFee,
   calculateSinglePaymentFee,
 } from '../membership-financial.calculator';
-import { formatDiscountsDescription } from '../membership-billing.utils';
+import {
+  formatDiscountsDescription,
+  extractDiscountReason,
+} from '../membership-billing.utils';
 import { simulateAllCycles, SimulatedCycle } from '../membership-cycles.engine';
 import { MembershipChargeFactory } from '../membership-charge.factory';
 import { TypeMembershipCharge } from 'src/generated/prisma/client';
@@ -59,9 +62,11 @@ export class MembershipGenerationService {
     await tx.charge.create({
       data: MembershipChargeFactory.buildRegistrationChargePayload(
         membership.id,
-        netAmount,
+        baseAmount,
+        baseAmount - netAmount,
         description,
         membership.startedAt,
+        extractDiscountReason(appliedDiscounts),
       ),
     });
   }
@@ -206,11 +211,13 @@ export class MembershipGenerationService {
         await tx.charge.create({
           data: MembershipChargeFactory.buildSeasonChargePayload(
             membership.id,
-            singlePayment.netAmount,
+            singlePayment.baseAmount,
+            singlePayment.baseAmount - singlePayment.netAmount,
             singlePayment.description,
             membership.startedAt,
             startBillingYear,
             startBillingMonth,
+            extractDiscountReason(singlePayment.appliedDiscounts),
           ),
         });
       }
@@ -237,11 +244,7 @@ export class MembershipGenerationService {
         membership,
         c.dueDate,
       );
-      if (cycleGenDate && c.isFirstCycle && !membership.isMigrated) {
-        if (cycleGenDate < membership.startedAt) {
-          cycleGenDate = new Date(membership.startedAt);
-        }
-      }
+      // Removed cycleGenDate override to allow generation if within the generation window
       return cycleGenDate && cycleGenDate <= evaluationDate;
     });
 
@@ -277,11 +280,7 @@ export class MembershipGenerationService {
         membership,
         cycle.dueDate,
       );
-      if (cycleGenDate && cycle.isFirstCycle && !membership.isMigrated) {
-        if (cycleGenDate < membership.startedAt) {
-          cycleGenDate = new Date(membership.startedAt);
-        }
-      }
+      // Removed cycleGenDate override to allow generation if within the generation window
 
       if (!cycleGenDate || cycleGenDate > evaluationDate) {
         break;
@@ -469,12 +468,14 @@ export class MembershipGenerationService {
         await tx.charge.create({
           data: MembershipChargeFactory.buildRecurringChargePayload(
             membership.id,
-            cycle.netAmount,
+            cycle.baseAmount,
+            cycle.baseAmount - cycle.netAmount,
             cycle.description,
             groupDueDate || cycle.dueDate,
             cycle.billingYear,
             cycle.billingMonth,
             billingFrequency === 'MONTHLY' ? null : cycle.billingCycle,
+            extractDiscountReason(cycle.appliedDiscounts),
           ),
         });
         if (existingChargesSet) {

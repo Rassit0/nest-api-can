@@ -214,13 +214,12 @@ export class MembershipPreviewService {
             cycleGenDate.getUTCDate() - chargeGenerationDaysBefore,
           );
 
-          if (cycleGenDate && cycle.isFirstCycle && !membership.isMigrated) {
-            if (cycleGenDate < membership.startedAt) {
-              cycleGenDate = new Date(membership.startedAt);
-            }
-          }
+          // Removed cycleGenDate override to allow generation if within the generation window
 
-          const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
+          const evaluationDate = isFullPaymentPlan 
+            ? DateUtils.getEndOfUTCDay(membership.teamSeason.season.endDate) 
+            : DateUtils.getEndOfUTCDay(new Date());
+
           if (cycleGenDate > evaluationDate) {
             break;
           }
@@ -242,7 +241,27 @@ export class MembershipPreviewService {
           ),
         );
 
-        if (charges.length >= advanceCycles) break;
+        // Only break if we've reached advanceCycles AND the next cycle isn't already due to be generated
+        if (charges.length >= advanceCycles && existingCharges === null) {
+           const nextCycle = allCycles[allCycles.indexOf(cycle) + 1];
+           if (nextCycle) {
+              const chargeGenerationDaysBefore = membership.teamSeason.billingConfig?.chargeGenerationDaysBefore || 7;
+              let nextCycleGenDate = new Date(nextCycle.dueDate);
+              nextCycleGenDate.setUTCDate(nextCycleGenDate.getUTCDate() - chargeGenerationDaysBefore);
+              
+              const evaluationDate = isFullPaymentPlan 
+                ? DateUtils.getEndOfUTCDay(membership.teamSeason.season.endDate) 
+                : DateUtils.getEndOfUTCDay(new Date());
+
+              if (nextCycleGenDate > evaluationDate) {
+                 break;
+              }
+           } else {
+              break;
+           }
+        } else if (charges.length >= advanceCycles && existingCharges !== null) {
+           break;
+        }
       }
     }
 

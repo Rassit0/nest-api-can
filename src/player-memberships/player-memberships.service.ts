@@ -74,6 +74,7 @@ export const playerMembershipSelect = {
         select: {
           pendingAmount: true,
           amount: true,
+          discountAmount: true,
         },
       },
     },
@@ -100,7 +101,8 @@ const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
         (sum, current) =>
           sum +
           (Number(current.charge.amount) -
-            Number(current.charge.pendingAmount)),
+            Number(current.charge.pendingAmount) -
+            Number(current.charge.discountAmount || 0)),
         0,
       ) || 0
     ).toFixed(2),
@@ -374,6 +376,7 @@ export class PlayerMembershipsService {
             select: {
               amount: true,
               pendingAmount: true,
+              discountAmount: true,
             },
           },
         },
@@ -411,7 +414,9 @@ export class PlayerMembershipsService {
         .reduce(
           (sum, mc) =>
             sum +
-            (Number(mc.charge.amount) - (Number(mc.charge.pendingAmount) || 0)),
+            (Number(mc.charge.amount) -
+              (Number(mc.charge.pendingAmount) || 0) -
+              (Number(mc.charge.discountAmount) || 0)),
           0,
         )
         .toFixed(2),
@@ -794,7 +799,7 @@ export class PlayerMembershipsService {
       (mc) =>
         (mc.charge.status !== StatusCharge.PENDING &&
           mc.charge.status !== StatusCharge.CANCELLED) ||
-        Number(mc.charge.amount) > Number(mc.charge.pendingAmount) ||
+        (Number(mc.charge.amount) - Number(mc.charge.discountAmount)) > Number(mc.charge.pendingAmount) ||
         mc.charge.chargeTransactions.length > 0 ||
         mc.charge.childCharges.length > 0,
     );

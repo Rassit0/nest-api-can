@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/prisma.service';
 import { envs } from '../config/envs';
 import { PlayerMembershipStatus } from 'src/generated/prisma/client';
 

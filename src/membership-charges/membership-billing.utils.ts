@@ -69,13 +69,14 @@ export function calculateCycleDates(
       Date.UTC(currentBillingYear, currentBillingMonth, safeStartBillingDay),
     );
 
-    if (startDate < thisMonthBillingDate) {
-      currentBillingMonth -= 1;
-      if (currentBillingMonth < 0) {
-        currentBillingMonth = 11;
-        currentBillingYear -= 1;
-      }
-    }
+    // Removed logic that shifts the first billing cycle to the previous month
+    // if (startDate < thisMonthBillingDate) {
+    //   currentBillingMonth -= 1;
+    //   if (currentBillingMonth < 0) {
+    //     currentBillingMonth = 11;
+    //     currentBillingYear -= 1;
+    //   }
+    // }
 
     let targetMonth = currentBillingMonth + (cycleCounter - 1);
     let targetYear = currentBillingYear;
@@ -216,4 +217,17 @@ export function formatDiscountsDescription(
     return text;
   });
   return ' (' + descParts.join(', ') + ')';
+}
+
+export function extractDiscountReason(
+  appliedDiscounts: {
+    percent: number;
+    reason?: string;
+  }[],
+): string | null {
+  if (appliedDiscounts.length === 0) return null;
+  const reasons = appliedDiscounts
+    .map((d) => (d.reason ? DISCOUNT_TYPE_TRANSLATIONS[d.reason] || d.reason : 'Plan de pago'))
+    .filter(Boolean);
+  return reasons.length > 0 ? reasons.join(', ') : null;
 }

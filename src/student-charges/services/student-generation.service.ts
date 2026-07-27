@@ -6,7 +6,10 @@ import {
   calculateRegistrationFee,
   calculateSinglePaymentFee,
 } from '../student-financial.calculator';
-import { formatDiscountsDescription } from '../student-billing.utils';
+import {
+  formatDiscountsDescription,
+  extractDiscountReason,
+} from '../student-billing.utils';
 import { simulateAllCycles, SimulatedCycle } from '../student-cycles.engine';
 import { StudentChargeFactory } from '../student-charge.factory';
 import { TypeMembershipCharge } from 'src/generated/prisma/client';
@@ -59,9 +62,11 @@ export class StudentGenerationService {
     await tx.charge.create({
       data: StudentChargeFactory.buildRegistrationChargePayload(
         membership.id,
-        netAmount,
+        baseAmount,
+        baseAmount - netAmount,
         description,
         membership.startedAt,
+        extractDiscountReason(appliedDiscounts),
       ),
     });
   }
@@ -206,11 +211,13 @@ export class StudentGenerationService {
         await tx.charge.create({
           data: StudentChargeFactory.buildSeasonChargePayload(
             membership.id,
-            singlePayment.netAmount,
+            singlePayment.baseAmount,
+            singlePayment.baseAmount - singlePayment.netAmount,
             singlePayment.description,
             membership.startedAt,
             startBillingYear,
             startBillingMonth,
+            extractDiscountReason(singlePayment.appliedDiscounts),
           ),
         });
       }
@@ -237,11 +244,7 @@ export class StudentGenerationService {
         membership,
         c.dueDate,
       );
-      if (cycleGenDate && c.isFirstCycle && !membership.isMigrated) {
-        if (cycleGenDate < membership.startedAt) {
-          cycleGenDate = new Date(membership.startedAt);
-        }
-      }
+      // Removed cycleGenDate override to allow generation if within the generation window
       return cycleGenDate && cycleGenDate <= evaluationDate;
     });
 
@@ -277,11 +280,7 @@ export class StudentGenerationService {
         membership,
         cycle.dueDate,
       );
-      if (cycleGenDate && cycle.isFirstCycle && !membership.isMigrated) {
-        if (cycleGenDate < membership.startedAt) {
-          cycleGenDate = new Date(membership.startedAt);
-        }
-      }
+      // Removed cycleGenDate override to allow generation if within the generation window
 
       if (!cycleGenDate || cycleGenDate > evaluationDate) {
         break;
@@ -470,12 +469,14 @@ export class StudentGenerationService {
         await tx.charge.create({
           data: StudentChargeFactory.buildRecurringChargePayload(
             membership.id,
-            cycle.netAmount,
+            cycle.baseAmount,
+            cycle.baseAmount - cycle.netAmount,
             cycle.description,
             groupDueDate || cycle.dueDate,
             cycle.billingYear,
             cycle.billingMonth,
             billingFrequency === 'MONTHLY' ? null : cycle.billingCycle,
+            extractDiscountReason(cycle.appliedDiscounts),
           ),
         });
         if (existingChargesSet) {

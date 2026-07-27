@@ -1,3 +1,4 @@
+import { DateUtils } from '../utils/date.utils';
 import {
   PlayerMembershipWithRelations,
   calculateRecurringFeeForDate,
@@ -96,7 +97,7 @@ export function simulateAllCycles(
       const activeDays = Math.max(
         0,
         Math.round(
-          (periodEnd.getTime() - membership.startedAt.getTime()) /
+          (periodEnd.getTime() - DateUtils.getEndOfLocalDayInUTC(membership.startedAt).getTime()) /
             MILLISECONDS_IN_DAY,
         ),
       );

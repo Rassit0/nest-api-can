@@ -49,6 +49,7 @@ export class StudentManualChargeService {
       const payload = StudentChargeFactory.buildManualChargePayload(
         membership.id,
         amount,
+        0,
         description,
         due,
       );
@@ -89,6 +90,7 @@ export class StudentManualChargeService {
         data: StudentChargeFactory.buildManualChargePayload(
           membership.id,
           dto.amount,
+          0,
           dto.description,
           dueDate,
         ),

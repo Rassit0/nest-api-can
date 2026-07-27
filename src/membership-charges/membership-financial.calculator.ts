@@ -1,4 +1,5 @@
-import { Prisma } from 'src/generated/prisma/client';
+import { DateUtils } from '../utils/date.utils';
+import { Prisma, StatusTeamSeason } from 'src/generated/prisma/client';
 import { MILLISECONDS_IN_DAY } from './membership-billing.utils';
 
 export type PlayerMembershipWithRelations = Prisma.PlayerMembershipGetPayload<{
@@ -154,7 +155,7 @@ export function calculateRecurringFeeForDate(
       membership.teamSeason.billingConfig?.prorateFirstRecurringFee === true
     ) {
       const activeDays = Math.round(
-        (periodEnd.getTime() - membership.startedAt.getTime()) /
+        (periodEnd.getTime() - DateUtils.getEndOfLocalDayInUTC(membership.startedAt).getTime()) /
           MILLISECONDS_IN_DAY,
       );
       activeDaysInCycle = activeDays;
