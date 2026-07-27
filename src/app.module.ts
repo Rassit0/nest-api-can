@@ -52,6 +52,7 @@ import { StudentMembershipsModule } from './student-memberships/student-membersh
 import { StudentDiscountsModule } from './student-discounts/student-discounts.module';
 import { StudentChargesModule } from './student-charges/student-charges.module';
 import { StudentLateFeeModule } from './student-late-fee/student-late-fee.module';
+import { MembershipsModule } from './memberships/memberships.module';
 
 // Nuevos módulos de Evaluaciones e Incidencias de conducta
 import { SessionIncidentsModule } from './session-incidents/session-incidents.module';
@@ -128,6 +129,7 @@ import { TransactionReportModule } from './transaction-report/transaction-report
     ShiftsModule,
     PrinterModule,
     TransactionReportModule,
+    MembershipsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],
