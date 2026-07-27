@@ -7,6 +7,7 @@ import { useContainer } from 'class-validator';
 import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
 import { I18nHttpExceptionFilter } from './common/filters/i18n-http-exception/i18n-http-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { envs } from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -51,6 +52,6 @@ async function bootstrap() {
     new I18nValidationFilter(),
   );
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(envs.port ?? 3000);
 }
 bootstrap();
