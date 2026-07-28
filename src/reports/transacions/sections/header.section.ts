@@ -10,7 +10,7 @@ export const headerSection = (options: HeaderOptions): Content => {
   const title = 'APORTE VOLUNTARIO';
 
   const logo: Content = {
-    image: 'src/assets/logo-can.png',
+    image: path.join(process.cwd(), 'dist', 'assets', 'logo-can.png'),
     width: 40,
     margin: [0, 0, 10, 0],
   };
