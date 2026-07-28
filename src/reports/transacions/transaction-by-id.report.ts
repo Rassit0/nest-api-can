@@ -5,7 +5,7 @@ import type {
 } from 'pdfmake/interfaces';
 import { headerSection } from './sections/header.section';
 import { footerSection } from './sections/footer.section';
-
+import * as path from 'path';
 import { TransactionReceiptData } from './interfaces/transaction-receipt-data.interface';
 
 interface ReportOptions {
@@ -82,7 +82,12 @@ export const transactionByIdReport = (
                   },
                   // Insertamos la marca de agua aquí para que se dibuje SOBRE la caja gris pero DEBAJO del texto
                   {
-                    image: 'src/assets/logo-can-negro.png',
+                    image: path.join(
+                      process.cwd(),
+                      'dist',
+                      'assets',
+                      'logo-can-negro.png',
+                    ),
                     width: 190,
                     opacity: 0.1,
                     absolutePosition: { x: 180, y: 20 },
