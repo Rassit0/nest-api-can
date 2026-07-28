@@ -174,8 +174,11 @@ export class TransactionsService {
     );
 
     return {
-      transaction: createdTransaction,
-      paymentData: paymentResult.providerResponse, // Datos del QR si aplica
+      message: 'Transacción registrada con éxito',
+      data: {
+        transaction: createdTransaction,
+        paymentData: paymentResult.providerResponse, // Datos del QR si aplica
+      },
     };
   }
 
