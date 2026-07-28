@@ -1,3 +1,4 @@
+import * as path from 'path';
 import type { Content, Column } from 'pdfmake/interfaces';
 
 interface HeaderOptions {
