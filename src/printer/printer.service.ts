@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import PdfPrinter from 'pdfmake';
 import type { BufferOptions, TDocumentDefinitions } from 'pdfmake/interfaces';
+import * as path from 'path';
 
 const fonts = {
   OpenSans: {
-    normal: 'fonts/OpenSans-Regular.ttf',
-    bold: 'fonts/OpenSans-ExtraBold.ttf',
-    italics: 'fonts/OpenSans-Italic.ttf',
-    bolditalics: 'fonts/OpenSans-ExtraBoldItalic.ttf',
+    normal: path.join(process.cwd(), 'dist', 'fonts', 'OpenSans-Regular.ttf'),
+    bold: path.join(process.cwd(), 'dist', 'fonts', 'OpenSans-ExtraBold.ttf'),
+    italics: path.join(process.cwd(), 'dist', 'fonts', 'OpenSans-Italic.ttf'),
+    bolditalics: path.join(
+      process.cwd(),
+      'dist',
+      'fonts',
+      'OpenSans-ExtraBoldItalic.ttf',
+    ),
   },
 };
 

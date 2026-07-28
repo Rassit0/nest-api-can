@@ -12,6 +12,10 @@
       {
         "include": "assets/**/*",
         "watchAssets": true
+      },
+      {
+        "include": "fonts/**/*",
+        "watchAssets": true
       }
     ]
   }
