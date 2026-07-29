@@ -248,6 +248,16 @@ export type SessionIncident = Prisma.SessionIncidentModel
  */
 export type ProgressEvaluation = Prisma.ProgressEvaluationModel
 /**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel
+/**
+ * Model GeneralEvent
+ * 
+ */
+export type GeneralEvent = Prisma.GeneralEventModel
+/**
  * Model Session
  * 
  */
@@ -267,21 +277,6 @@ export type SessionCourse = Prisma.SessionCourseModel
  * 
  */
 export type SessionBooking = Prisma.SessionBookingModel
-/**
- * Model Schedule
- * 
- */
-export type Schedule = Prisma.ScheduleModel
-/**
- * Model ScheduleTeam
- * 
- */
-export type ScheduleTeam = Prisma.ScheduleTeamModel
-/**
- * Model ScheduleCourse
- * 
- */
-export type ScheduleCourse = Prisma.ScheduleCourseModel
 /**
  * Model Match
  * 

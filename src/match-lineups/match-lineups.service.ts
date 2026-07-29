@@ -20,7 +20,7 @@ export const matchLineupSelect: Prisma.MatchLineupSelect = {
     select: {
       id: true,
       opponentName: true,
-      matchDate: true,
+      event: { select: { startDate: true } },
       type: true,
     },
   },

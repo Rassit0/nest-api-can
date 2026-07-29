@@ -16,8 +16,12 @@ export const sessionBookingSelect: Prisma.SessionBookingSelect = {
   session: {
     select: {
       id: true,
-      title: true,
-      dateTime: true,
+      event: {
+        select: {
+          title: true,
+          startDate: true,
+        },
+      },
       durationMin: true,
     },
   },
@@ -89,11 +93,7 @@ export class SessionBookingsService {
             },
           },
         },
-        {
-          session: {
-            title: { contains: search, mode: 'insensitive' },
-          },
-        },
+        { session: { event: { title: { contains: search, mode: 'insensitive' } } } },
       ];
     }
 

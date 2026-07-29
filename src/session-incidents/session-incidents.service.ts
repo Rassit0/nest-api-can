@@ -18,8 +18,12 @@ export const sessionIncidentSelect: Prisma.SessionIncidentSelect = {
       session: {
         select: {
           id: true,
-          dateTime: true,
-          title: true,
+          event: {
+            select: {
+              title: true,
+              startDate: true,
+            },
+          },
         },
       },
       player: {

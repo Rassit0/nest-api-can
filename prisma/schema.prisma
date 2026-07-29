@@ -25,20 +25,20 @@ enum Gender {
 }
 
 model Person {
-  id             String       @id @default(uuid())
+  id             String        @id @default(uuid())
   name           String
-  lastName       String       @map("last_name")
-  secondLastName String?      @map("second_last_name")
-  birthDate      DateTime?    @map("birth_date")
-  imageUrl       String?      @map("image_url")
-  documentType   DocumentType @map("document_type")
-  documentNumber String       @unique @map("document_number")
+  lastName       String        @map("last_name")
+  secondLastName String?       @map("second_last_name")
+  birthDate      DateTime?     @map("birth_date")
+  imageUrl       String?       @map("image_url")
+  documentType   DocumentType? @map("document_type")
+  documentNumber String?       @unique @map("document_number")
   phone          String?
-  email          String?      @unique
+  email          String?       @unique
   address        String?
-  gender         Gender
-  createdAt      DateTime     @default(now()) @map("created_at")
-  updatedAt      DateTime     @updatedAt @map("updated_at")
+  gender         Gender?
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
 
   // Contactos de la persona
   contacts     PersonContact[] @relation("PersonContacts")
@@ -122,13 +122,14 @@ model Institution {
   longitude     Float?
   googleMapsUrl String? @map("google_maps_url")
 
-  createdAt DateTime             @default(now()) @map("created_at")
-  updatedAt DateTime             @updatedAt @map("updated_at")
-  clubs     Club[]
-  seasons   Season[]
-  schools   School[]
-  contacts  InstitutionContact[]
-  shifts    Shift[]
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @updatedAt @map("updated_at")
+  clubs         Club[]
+  seasons       Season[]
+  schools       School[]
+  contacts      InstitutionContact[]
+  shifts        Shift[]
+  generalEvents GeneralEvent[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -227,14 +228,19 @@ model Location {
 
   // Si es true, es una instalación interna (club, escuela, etc.)
   // Si es false, es una instalación externa
-  isInternal Boolean    @default(false) @map("is_internal")
+  isInternal Boolean  @default(false) @map("is_internal")
   // Si es true, es una instalación que se puede rentar O ALQUILAR dependiendo si es interna o externa
-  isRentable Boolean    @default(false) @map("is_rentable")
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @updatedAt @map("updated_at")
-  sessions   Session[]
-  schedules  Schedule[]
-  matches    Match[]
+  isRentable Boolean  @default(false) @map("is_rentable")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  parentId     String?    @map("parent_id")
+  parent       Location?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  subLocations Location[] @relation("LocationHierarchy")
+
+  maxConcurrentEvents Int? @default(1) @map("max_concurrent_events")
+
+  events Event[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -416,6 +422,8 @@ model TeamSeason {
   minBirthYear Int? @map("min_birth_year")
   maxBirthYear Int? @map("max_birth_year")
 
+  validateAge Boolean @default(true) @map("validate_age")
+
   teamId String @map("team_id")
   team   Team   @relation(fields: [teamId], references: [id], onDelete: Restrict)
 
@@ -438,8 +446,8 @@ model TeamSeason {
   paymentPlans      PaymentPlan[]
   playerMemberships PlayerMembership[]
   sessionTeams      SessionTeam[]
-  scheduleTeams     ScheduleTeam[]
   matches           Match[]
+  generalEvents     GeneralEvent[]
   billingConfig     TeamSeasonBillingConfig?
   teamSeasonPauses  TeamSeasonPause[]
 
@@ -506,8 +514,11 @@ model PaymentPlan {
   /// Cantidad de cuotas que este plan adelanta/agrupa en un solo recibo. Por defecto 1 (cobro normal). Si es 6, cobra 6 ciclos juntos.
   advanceCycles Int @default(1) @map("advance_cycles")
 
-  /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas. Reemplaza a freeInitialCycles.
+  /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas.
   advanceCyclesDiscountPercent Decimal @default(0) @map("advance_cycles_discount_percent") @db.Decimal(5, 2)
+
+  /// Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.
+  promotionalCycles Int @default(0) @map("promotional_cycles")
 
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
@@ -992,19 +1003,15 @@ model User {
   updatedSessionIncidents           SessionIncident[]           @relation("UpdatedBy")
   createdProgressEvaluations        ProgressEvaluation[]        @relation("CreatedBy")
   updatedProgressEvaluations        ProgressEvaluation[]        @relation("UpdatedBy")
-  createdSessions                   Session[]                   @relation("CreatedBy")
-  updatedSessions                   Session[]                   @relation("UpdatedBy")
   createdSessionBookings            SessionBooking[]            @relation("CreatedBy")
   updatedSessionBookings            SessionBooking[]            @relation("UpdatedBy")
-  createdSchedules                  Schedule[]                  @relation("CreatedBy")
-  updatedSchedules                  Schedule[]                  @relation("UpdatedBy")
-  createdMatchs                     Match[]                     @relation("CreatedBy")
-  updatedMatchs                     Match[]                     @relation("UpdatedBy")
   createdMatchLineups               MatchLineup[]               @relation("CreatedBy")
   updatedMatchLineups               MatchLineup[]               @relation("UpdatedBy")
   createdShifts                     Shift[]                     @relation("CreatedBy")
   updatedShifts                     Shift[]                     @relation("UpdatedBy")
   auditLogs                         AuditLog[]
+  createdEvents                     Event[]                     @relation("EventCreatedBy")
+  updatedEvents                     Event[]                     @relation("EventUpdatedBy")
 
   @@map("users")
 }
@@ -1139,6 +1146,8 @@ model CourseSeason {
   minBirthYear Int? @map("min_birth_year")
   maxBirthYear Int? @map("max_birth_year")
 
+  validateAge Boolean @default(true) @map("validate_age")
+
   courseId   String        @map("course_id")
   course     Course        @relation(fields: [courseId], references: [id], onDelete: Restrict)
   categoryId String        @map("category_id")
@@ -1159,7 +1168,7 @@ model CourseSeason {
   paymentPlans       PaymentPlan[]
   courseSeasonStaffs CourseSeasonStaff[]
   sessionCourses     SessionCourse[]
-  scheduleCourses    ScheduleCourse[]
+  generalEvents      GeneralEvent[]
   billingConfig      CourseSeasonBillingConfig?
   pauses             CourseSeasonPause[]
 
@@ -1481,27 +1490,88 @@ model ProgressEvaluation {
 }
 
 // =================================
-// ENTRENAMIENTOS Y SESIONES (UNIFICADOS M:N)
+// MOTOR DE DISPONIBILIDAD Y CALENDARIO
 // =================================
-model Session {
-  id          String    @id @default(uuid())
-  locationId  String?   @map("location_id")
-  location    Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
-  title       String?
-  dateTime    DateTime  @map("date_time")
-  durationMin Int       @default(90) @map("duration_min")
+enum EventType {
+  SESSION
+  MATCH
+  GENERAL
+  UNAVAILABLE // Bloqueos operativos
+}
 
-  sessionTeams   SessionTeam[]
-  sessionCourses SessionCourse[]
-  bookings       SessionBooking[]
+enum EventStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String?
+  description String?
+  startDate   DateTime @map("start_date")
+  endDate     DateTime @map("end_date")
+
+  locationId String?   @map("location_id")
+  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
+
+  eventType EventType   @map("event_type")
+  status    EventStatus @default(SCHEDULED)
+
+  // Metadatos UI y Recurrencia Materializada
+  color             String?
+  recurrenceRule    String? @map("recurrence_rule")
+  recurrenceGroupId String? @map("recurrence_group_id")
+
+  // Relaciones hacia los contextos (Exclusive Arcs)
+  session      Session?
+  match        Match?
+  generalEvent GeneralEvent?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  createdBy   User?   @relation("EventCreatedBy", fields: [createdById], references: [id])
   updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+  updatedBy   User?   @relation("EventUpdatedBy", fields: [updatedById], references: [id])
+
+  // Índices para O(1)
+  @@index([locationId, startDate, endDate])
+  @@index([startDate, endDate])
+  @@index([recurrenceGroupId])
+  @@map("events")
+}
+
+// =================================
+// CONTEXTOS DE EVENTOS
+// =================================
+model GeneralEvent {
+  id      String @id @default(uuid())
+  eventId String @unique @map("event_id")
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  // Integridad referencial con contextos
+  institutionId  String?       @map("institution_id")
+  institution    Institution?  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  teamSeasonId   String?       @map("team_season_id")
+  teamSeason     TeamSeason?   @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonId String?       @map("course_season_id")
+  courseSeason   CourseSeason? @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+
+  @@map("general_events")
+}
+
+model Session {
+  id      String @id @default(uuid())
+  eventId String @unique @map("event_id")
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  durationMin Int @default(90) @map("duration_min")
+
+  sessionTeams   SessionTeam[]
+  sessionCourses SessionCourse[]
+  bookings       SessionBooking[]
 
   @@map("sessions")
 }
@@ -1557,61 +1627,6 @@ model SessionBooking {
   @@map("session_bookings")
 }
 
-enum DayOfWeek {
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
-  SUNDAY
-}
-
-model Schedule {
-  id         String    @id @default(uuid())
-  locationId String?   @map("location_id")
-  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
-  dayOfWeek  DayOfWeek @map("day_of_week")
-  startTime  String    @map("start_time")
-  endTime    String    @map("end_time")
-
-  scheduleTeams   ScheduleTeam[]
-  scheduleCourses ScheduleCourse[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("schedules")
-}
-
-model ScheduleTeam {
-  scheduleId   String
-  schedule     Schedule   @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-
-  @@id([scheduleId, teamSeasonId])
-  @@map("schedule_teams")
-}
-
-model ScheduleCourse {
-  scheduleId     String
-  schedule       Schedule     @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-
-  @@id([scheduleId, courseSeasonId])
-  @@map("schedule_courses")
-}
-
-// =================================
-// COMPETENCIAS Y PARTIDOS
-// =================================
 enum MatchType {
   FRIENDLY
   LEAGUE
@@ -1627,14 +1642,14 @@ enum MatchResult {
 }
 
 model Match {
-  id           String     @id @default(uuid())
+  id      String @id @default(uuid())
+  eventId String @unique @map("event_id")
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
   teamSeasonId String     @map("team_season_id")
   teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-  locationId   String?    @map("location_id")
-  location     Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
 
   opponentName String    @map("opponent_name")
-  matchDate    DateTime  @map("match_date")
   type         MatchType @default(LEAGUE)
 
   ourScore   Int?        @map("our_score")
@@ -1642,14 +1657,6 @@ model Match {
   result     MatchResult @default(PENDING)
 
   lineups MatchLineup[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("matches")
 }
@@ -1693,8 +1700,8 @@ model AuditLog {
   messageParams Json?   @map("message_params") // Ej: { "player": "Facundo", "team": "Básquet U17" }
 
   // === Campos de auditoría ===
-  oldValues  Json?  @map("old_values")
-  newValues  Json?  @map("new_values")
+  oldValues Json? @map("old_values")
+  newValues Json? @map("new_values")
 
   userId String? @map("user_id")
   user   User?   @relation(fields: [userId], references: [id])

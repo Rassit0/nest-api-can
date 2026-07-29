@@ -51,16 +51,25 @@ export class CreateSessionDto {
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'dateTime',
+      constraint1: 'startDate',
     }),
   })
   @IsDate({
     message: i18nValidationMessage('validation.IS_DATE', {
-      constraint1: 'dateTime',
+      constraint1: 'startDate',
     }),
   })
   @Type(() => Date)
-  dateTime: Date;
+  startDate: Date;
+
+  @ApiProperty({
+    example: '2026-06-30T17:00:00.000Z',
+    description: 'Fecha y hora de fin de la sesion',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
+  endDate: Date;
 
   @ApiPropertyOptional({
     example: 90,

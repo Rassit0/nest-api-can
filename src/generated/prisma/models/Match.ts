@@ -38,50 +38,35 @@ export type MatchSumAggregateOutputType = {
 
 export type MatchMinAggregateOutputType = {
   id: string | null
+  eventId: string | null
   teamSeasonId: string | null
-  locationId: string | null
   opponentName: string | null
-  matchDate: Date | null
   type: $Enums.MatchType | null
   ourScore: number | null
   theirScore: number | null
   result: $Enums.MatchResult | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  createdById: string | null
-  updatedById: string | null
 }
 
 export type MatchMaxAggregateOutputType = {
   id: string | null
+  eventId: string | null
   teamSeasonId: string | null
-  locationId: string | null
   opponentName: string | null
-  matchDate: Date | null
   type: $Enums.MatchType | null
   ourScore: number | null
   theirScore: number | null
   result: $Enums.MatchResult | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  createdById: string | null
-  updatedById: string | null
 }
 
 export type MatchCountAggregateOutputType = {
   id: number
+  eventId: number
   teamSeasonId: number
-  locationId: number
   opponentName: number
-  matchDate: number
   type: number
   ourScore: number
   theirScore: number
   result: number
-  createdAt: number
-  updatedAt: number
-  createdById: number
-  updatedById: number
   _all: number
 }
 
@@ -98,50 +83,35 @@ export type MatchSumAggregateInputType = {
 
 export type MatchMinAggregateInputType = {
   id?: true
+  eventId?: true
   teamSeasonId?: true
-  locationId?: true
   opponentName?: true
-  matchDate?: true
   type?: true
   ourScore?: true
   theirScore?: true
   result?: true
-  createdAt?: true
-  updatedAt?: true
-  createdById?: true
-  updatedById?: true
 }
 
 export type MatchMaxAggregateInputType = {
   id?: true
+  eventId?: true
   teamSeasonId?: true
-  locationId?: true
   opponentName?: true
-  matchDate?: true
   type?: true
   ourScore?: true
   theirScore?: true
   result?: true
-  createdAt?: true
-  updatedAt?: true
-  createdById?: true
-  updatedById?: true
 }
 
 export type MatchCountAggregateInputType = {
   id?: true
+  eventId?: true
   teamSeasonId?: true
-  locationId?: true
   opponentName?: true
-  matchDate?: true
   type?: true
   ourScore?: true
   theirScore?: true
   result?: true
-  createdAt?: true
-  updatedAt?: true
-  createdById?: true
-  updatedById?: true
   _all?: true
 }
 
@@ -233,18 +203,13 @@ export type MatchGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type MatchGroupByOutputType = {
   id: string
+  eventId: string
   teamSeasonId: string
-  locationId: string | null
   opponentName: string
-  matchDate: Date
   type: $Enums.MatchType
   ourScore: number | null
   theirScore: number | null
   result: $Enums.MatchResult
-  createdAt: Date
-  updatedAt: Date
-  createdById: string | null
-  updatedById: string | null
   _count: MatchCountAggregateOutputType | null
   _avg: MatchAvgAggregateOutputType | null
   _sum: MatchSumAggregateOutputType | null
@@ -272,84 +237,58 @@ export type MatchWhereInput = {
   OR?: Prisma.MatchWhereInput[]
   NOT?: Prisma.MatchWhereInput | Prisma.MatchWhereInput[]
   id?: Prisma.StringFilter<"Match"> | string
+  eventId?: Prisma.StringFilter<"Match"> | string
   teamSeasonId?: Prisma.StringFilter<"Match"> | string
-  locationId?: Prisma.StringNullableFilter<"Match"> | string | null
   opponentName?: Prisma.StringFilter<"Match"> | string
-  matchDate?: Prisma.DateTimeFilter<"Match"> | Date | string
   type?: Prisma.EnumMatchTypeFilter<"Match"> | $Enums.MatchType
   ourScore?: Prisma.IntNullableFilter<"Match"> | number | null
   theirScore?: Prisma.IntNullableFilter<"Match"> | number | null
   result?: Prisma.EnumMatchResultFilter<"Match"> | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  createdById?: Prisma.StringNullableFilter<"Match"> | string | null
-  updatedById?: Prisma.StringNullableFilter<"Match"> | string | null
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   lineups?: Prisma.MatchLineupListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type MatchOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   teamSeasonId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrderInput | Prisma.SortOrder
   opponentName?: Prisma.SortOrder
-  matchDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   ourScore?: Prisma.SortOrderInput | Prisma.SortOrder
   theirScore?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  event?: Prisma.EventOrderByWithRelationInput
   teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
-  location?: Prisma.LocationOrderByWithRelationInput
   lineups?: Prisma.MatchLineupOrderByRelationAggregateInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
-  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type MatchWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  eventId?: string
   AND?: Prisma.MatchWhereInput | Prisma.MatchWhereInput[]
   OR?: Prisma.MatchWhereInput[]
   NOT?: Prisma.MatchWhereInput | Prisma.MatchWhereInput[]
   teamSeasonId?: Prisma.StringFilter<"Match"> | string
-  locationId?: Prisma.StringNullableFilter<"Match"> | string | null
   opponentName?: Prisma.StringFilter<"Match"> | string
-  matchDate?: Prisma.DateTimeFilter<"Match"> | Date | string
   type?: Prisma.EnumMatchTypeFilter<"Match"> | $Enums.MatchType
   ourScore?: Prisma.IntNullableFilter<"Match"> | number | null
   theirScore?: Prisma.IntNullableFilter<"Match"> | number | null
   result?: Prisma.EnumMatchResultFilter<"Match"> | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  createdById?: Prisma.StringNullableFilter<"Match"> | string | null
-  updatedById?: Prisma.StringNullableFilter<"Match"> | string | null
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   lineups?: Prisma.MatchLineupListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id">
+}, "id" | "eventId">
 
 export type MatchOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   teamSeasonId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrderInput | Prisma.SortOrder
   opponentName?: Prisma.SortOrder
-  matchDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   ourScore?: Prisma.SortOrderInput | Prisma.SortOrder
   theirScore?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MatchCountOrderByAggregateInput
   _avg?: Prisma.MatchAvgOrderByAggregateInput
   _max?: Prisma.MatchMaxOrderByAggregateInput
@@ -362,130 +301,92 @@ export type MatchScalarWhereWithAggregatesInput = {
   OR?: Prisma.MatchScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MatchScalarWhereWithAggregatesInput | Prisma.MatchScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Match"> | string
+  eventId?: Prisma.StringWithAggregatesFilter<"Match"> | string
   teamSeasonId?: Prisma.StringWithAggregatesFilter<"Match"> | string
-  locationId?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
   opponentName?: Prisma.StringWithAggregatesFilter<"Match"> | string
-  matchDate?: Prisma.DateTimeWithAggregatesFilter<"Match"> | Date | string
   type?: Prisma.EnumMatchTypeWithAggregatesFilter<"Match"> | $Enums.MatchType
   ourScore?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   theirScore?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   result?: Prisma.EnumMatchResultWithAggregatesFilter<"Match"> | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Match"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Match"> | Date | string
-  createdById?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
-  updatedById?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
 }
 
 export type MatchCreateInput = {
   id?: string
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutMatchInput
   teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutMatchesInput
   lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchsInput
 }
 
 export type MatchUncheckedCreateInput = {
   id?: string
+  eventId: string
   teamSeasonId: string
-  locationId?: string | null
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
   lineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutMatchesNestedInput
   lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchsNestedInput
 }
 
 export type MatchUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchCreateManyInput = {
   id?: string
+  eventId: string
   teamSeasonId: string
-  locationId?: string | null
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
 }
 
 export type MatchUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MatchUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MatchListRelationFilter = {
@@ -498,20 +399,20 @@ export type MatchOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type MatchNullableScalarRelationFilter = {
+  is?: Prisma.MatchWhereInput | null
+  isNot?: Prisma.MatchWhereInput | null
+}
+
 export type MatchCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   teamSeasonId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
   opponentName?: Prisma.SortOrder
-  matchDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   ourScore?: Prisma.SortOrder
   theirScore?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
-  updatedById?: Prisma.SortOrder
 }
 
 export type MatchAvgOrderByAggregateInput = {
@@ -521,34 +422,24 @@ export type MatchAvgOrderByAggregateInput = {
 
 export type MatchMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   teamSeasonId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
   opponentName?: Prisma.SortOrder
-  matchDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   ourScore?: Prisma.SortOrder
   theirScore?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
-  updatedById?: Prisma.SortOrder
 }
 
 export type MatchMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   teamSeasonId?: Prisma.SortOrder
-  locationId?: Prisma.SortOrder
   opponentName?: Prisma.SortOrder
-  matchDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   ourScore?: Prisma.SortOrder
   theirScore?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
-  updatedById?: Prisma.SortOrder
 }
 
 export type MatchSumOrderByAggregateInput = {
@@ -559,48 +450,6 @@ export type MatchSumOrderByAggregateInput = {
 export type MatchScalarRelationFilter = {
   is?: Prisma.MatchWhereInput
   isNot?: Prisma.MatchWhereInput
-}
-
-export type MatchCreateNestedManyWithoutLocationInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput> | Prisma.MatchCreateWithoutLocationInput[] | Prisma.MatchUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutLocationInput | Prisma.MatchCreateOrConnectWithoutLocationInput[]
-  createMany?: Prisma.MatchCreateManyLocationInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-}
-
-export type MatchUncheckedCreateNestedManyWithoutLocationInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput> | Prisma.MatchCreateWithoutLocationInput[] | Prisma.MatchUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutLocationInput | Prisma.MatchCreateOrConnectWithoutLocationInput[]
-  createMany?: Prisma.MatchCreateManyLocationInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-}
-
-export type MatchUpdateManyWithoutLocationNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput> | Prisma.MatchCreateWithoutLocationInput[] | Prisma.MatchUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutLocationInput | Prisma.MatchCreateOrConnectWithoutLocationInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutLocationInput | Prisma.MatchUpsertWithWhereUniqueWithoutLocationInput[]
-  createMany?: Prisma.MatchCreateManyLocationInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutLocationInput | Prisma.MatchUpdateWithWhereUniqueWithoutLocationInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutLocationInput | Prisma.MatchUpdateManyWithWhereWithoutLocationInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-}
-
-export type MatchUncheckedUpdateManyWithoutLocationNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput> | Prisma.MatchCreateWithoutLocationInput[] | Prisma.MatchUncheckedCreateWithoutLocationInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutLocationInput | Prisma.MatchCreateOrConnectWithoutLocationInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutLocationInput | Prisma.MatchUpsertWithWhereUniqueWithoutLocationInput[]
-  createMany?: Prisma.MatchCreateManyLocationInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutLocationInput | Prisma.MatchUpdateWithWhereUniqueWithoutLocationInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutLocationInput | Prisma.MatchUpdateManyWithWhereWithoutLocationInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
 }
 
 export type MatchCreateNestedManyWithoutTeamSeasonInput = {
@@ -645,88 +494,36 @@ export type MatchUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
   deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
 }
 
-export type MatchCreateNestedManyWithoutCreatedByInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput> | Prisma.MatchCreateWithoutCreatedByInput[] | Prisma.MatchUncheckedCreateWithoutCreatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutCreatedByInput | Prisma.MatchCreateOrConnectWithoutCreatedByInput[]
-  createMany?: Prisma.MatchCreateManyCreatedByInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+export type MatchCreateNestedOneWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutEventInput
+  connect?: Prisma.MatchWhereUniqueInput
 }
 
-export type MatchCreateNestedManyWithoutUpdatedByInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput> | Prisma.MatchCreateWithoutUpdatedByInput[] | Prisma.MatchUncheckedCreateWithoutUpdatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutUpdatedByInput | Prisma.MatchCreateOrConnectWithoutUpdatedByInput[]
-  createMany?: Prisma.MatchCreateManyUpdatedByInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+export type MatchUncheckedCreateNestedOneWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutEventInput
+  connect?: Prisma.MatchWhereUniqueInput
 }
 
-export type MatchUncheckedCreateNestedManyWithoutCreatedByInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput> | Prisma.MatchCreateWithoutCreatedByInput[] | Prisma.MatchUncheckedCreateWithoutCreatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutCreatedByInput | Prisma.MatchCreateOrConnectWithoutCreatedByInput[]
-  createMany?: Prisma.MatchCreateManyCreatedByInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+export type MatchUpdateOneWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutEventInput
+  upsert?: Prisma.MatchUpsertWithoutEventInput
+  disconnect?: Prisma.MatchWhereInput | boolean
+  delete?: Prisma.MatchWhereInput | boolean
+  connect?: Prisma.MatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MatchUpdateToOneWithWhereWithoutEventInput, Prisma.MatchUpdateWithoutEventInput>, Prisma.MatchUncheckedUpdateWithoutEventInput>
 }
 
-export type MatchUncheckedCreateNestedManyWithoutUpdatedByInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput> | Prisma.MatchCreateWithoutUpdatedByInput[] | Prisma.MatchUncheckedCreateWithoutUpdatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutUpdatedByInput | Prisma.MatchCreateOrConnectWithoutUpdatedByInput[]
-  createMany?: Prisma.MatchCreateManyUpdatedByInputEnvelope
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-}
-
-export type MatchUpdateManyWithoutCreatedByNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput> | Prisma.MatchCreateWithoutCreatedByInput[] | Prisma.MatchUncheckedCreateWithoutCreatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutCreatedByInput | Prisma.MatchCreateOrConnectWithoutCreatedByInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MatchUpsertWithWhereUniqueWithoutCreatedByInput[]
-  createMany?: Prisma.MatchCreateManyCreatedByInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MatchUpdateWithWhereUniqueWithoutCreatedByInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutCreatedByInput | Prisma.MatchUpdateManyWithWhereWithoutCreatedByInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-}
-
-export type MatchUpdateManyWithoutUpdatedByNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput> | Prisma.MatchCreateWithoutUpdatedByInput[] | Prisma.MatchUncheckedCreateWithoutUpdatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutUpdatedByInput | Prisma.MatchCreateOrConnectWithoutUpdatedByInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MatchUpsertWithWhereUniqueWithoutUpdatedByInput[]
-  createMany?: Prisma.MatchCreateManyUpdatedByInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MatchUpdateWithWhereUniqueWithoutUpdatedByInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MatchUpdateManyWithWhereWithoutUpdatedByInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-}
-
-export type MatchUncheckedUpdateManyWithoutCreatedByNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput> | Prisma.MatchCreateWithoutCreatedByInput[] | Prisma.MatchUncheckedCreateWithoutCreatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutCreatedByInput | Prisma.MatchCreateOrConnectWithoutCreatedByInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.MatchUpsertWithWhereUniqueWithoutCreatedByInput[]
-  createMany?: Prisma.MatchCreateManyCreatedByInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MatchUpdateWithWhereUniqueWithoutCreatedByInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutCreatedByInput | Prisma.MatchUpdateManyWithWhereWithoutCreatedByInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-}
-
-export type MatchUncheckedUpdateManyWithoutUpdatedByNestedInput = {
-  create?: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput> | Prisma.MatchCreateWithoutUpdatedByInput[] | Prisma.MatchUncheckedCreateWithoutUpdatedByInput[]
-  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutUpdatedByInput | Prisma.MatchCreateOrConnectWithoutUpdatedByInput[]
-  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutUpdatedByInput | Prisma.MatchUpsertWithWhereUniqueWithoutUpdatedByInput[]
-  createMany?: Prisma.MatchCreateManyUpdatedByInputEnvelope
-  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
-  update?: Prisma.MatchUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.MatchUpdateWithWhereUniqueWithoutUpdatedByInput[]
-  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutUpdatedByInput | Prisma.MatchUpdateManyWithWhereWithoutUpdatedByInput[]
-  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+export type MatchUncheckedUpdateOneWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutEventInput
+  upsert?: Prisma.MatchUpsertWithoutEventInput
+  disconnect?: Prisma.MatchWhereInput | boolean
+  delete?: Prisma.MatchWhereInput | boolean
+  connect?: Prisma.MatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MatchUpdateToOneWithWhereWithoutEventInput, Prisma.MatchUpdateWithoutEventInput>, Prisma.MatchUncheckedUpdateWithoutEventInput>
 }
 
 export type EnumMatchTypeFieldUpdateOperationsInput = {
@@ -751,112 +548,25 @@ export type MatchUpdateOneRequiredWithoutLineupsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MatchUpdateToOneWithWhereWithoutLineupsInput, Prisma.MatchUpdateWithoutLineupsInput>, Prisma.MatchUncheckedUpdateWithoutLineupsInput>
 }
 
-export type MatchCreateWithoutLocationInput = {
-  id?: string
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
-  lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchsInput
-}
-
-export type MatchUncheckedCreateWithoutLocationInput = {
-  id?: string
-  teamSeasonId: string
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
-  lineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutMatchInput
-}
-
-export type MatchCreateOrConnectWithoutLocationInput = {
-  where: Prisma.MatchWhereUniqueInput
-  create: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput>
-}
-
-export type MatchCreateManyLocationInputEnvelope = {
-  data: Prisma.MatchCreateManyLocationInput | Prisma.MatchCreateManyLocationInput[]
-  skipDuplicates?: boolean
-}
-
-export type MatchUpsertWithWhereUniqueWithoutLocationInput = {
-  where: Prisma.MatchWhereUniqueInput
-  update: Prisma.XOR<Prisma.MatchUpdateWithoutLocationInput, Prisma.MatchUncheckedUpdateWithoutLocationInput>
-  create: Prisma.XOR<Prisma.MatchCreateWithoutLocationInput, Prisma.MatchUncheckedCreateWithoutLocationInput>
-}
-
-export type MatchUpdateWithWhereUniqueWithoutLocationInput = {
-  where: Prisma.MatchWhereUniqueInput
-  data: Prisma.XOR<Prisma.MatchUpdateWithoutLocationInput, Prisma.MatchUncheckedUpdateWithoutLocationInput>
-}
-
-export type MatchUpdateManyWithWhereWithoutLocationInput = {
-  where: Prisma.MatchScalarWhereInput
-  data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutLocationInput>
-}
-
-export type MatchScalarWhereInput = {
-  AND?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-  OR?: Prisma.MatchScalarWhereInput[]
-  NOT?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-  id?: Prisma.StringFilter<"Match"> | string
-  teamSeasonId?: Prisma.StringFilter<"Match"> | string
-  locationId?: Prisma.StringNullableFilter<"Match"> | string | null
-  opponentName?: Prisma.StringFilter<"Match"> | string
-  matchDate?: Prisma.DateTimeFilter<"Match"> | Date | string
-  type?: Prisma.EnumMatchTypeFilter<"Match"> | $Enums.MatchType
-  ourScore?: Prisma.IntNullableFilter<"Match"> | number | null
-  theirScore?: Prisma.IntNullableFilter<"Match"> | number | null
-  result?: Prisma.EnumMatchResultFilter<"Match"> | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
-  createdById?: Prisma.StringNullableFilter<"Match"> | string | null
-  updatedById?: Prisma.StringNullableFilter<"Match"> | string | null
-}
-
 export type MatchCreateWithoutTeamSeasonInput = {
   id?: string
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutMatchesInput
+  event: Prisma.EventCreateNestedOneWithoutMatchInput
   lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchsInput
 }
 
 export type MatchUncheckedCreateWithoutTeamSeasonInput = {
   id?: string
-  locationId?: string | null
+  eventId: string
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
   lineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutMatchInput
 }
 
@@ -886,152 +596,100 @@ export type MatchUpdateManyWithWhereWithoutTeamSeasonInput = {
   data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonInput>
 }
 
-export type MatchCreateWithoutCreatedByInput = {
-  id?: string
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutMatchesInput
-  lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchsInput
+export type MatchScalarWhereInput = {
+  AND?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+  OR?: Prisma.MatchScalarWhereInput[]
+  NOT?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+  id?: Prisma.StringFilter<"Match"> | string
+  eventId?: Prisma.StringFilter<"Match"> | string
+  teamSeasonId?: Prisma.StringFilter<"Match"> | string
+  opponentName?: Prisma.StringFilter<"Match"> | string
+  type?: Prisma.EnumMatchTypeFilter<"Match"> | $Enums.MatchType
+  ourScore?: Prisma.IntNullableFilter<"Match"> | number | null
+  theirScore?: Prisma.IntNullableFilter<"Match"> | number | null
+  result?: Prisma.EnumMatchResultFilter<"Match"> | $Enums.MatchResult
 }
 
-export type MatchUncheckedCreateWithoutCreatedByInput = {
+export type MatchCreateWithoutEventInput = {
   id?: string
-  teamSeasonId: string
-  locationId?: string | null
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  updatedById?: string | null
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
+  lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
+}
+
+export type MatchUncheckedCreateWithoutEventInput = {
+  id?: string
+  teamSeasonId: string
+  opponentName: string
+  type?: $Enums.MatchType
+  ourScore?: number | null
+  theirScore?: number | null
+  result?: $Enums.MatchResult
   lineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutMatchInput
 }
 
-export type MatchCreateOrConnectWithoutCreatedByInput = {
+export type MatchCreateOrConnectWithoutEventInput = {
   where: Prisma.MatchWhereUniqueInput
-  create: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
 }
 
-export type MatchCreateManyCreatedByInputEnvelope = {
-  data: Prisma.MatchCreateManyCreatedByInput | Prisma.MatchCreateManyCreatedByInput[]
-  skipDuplicates?: boolean
+export type MatchUpsertWithoutEventInput = {
+  update: Prisma.XOR<Prisma.MatchUpdateWithoutEventInput, Prisma.MatchUncheckedUpdateWithoutEventInput>
+  create: Prisma.XOR<Prisma.MatchCreateWithoutEventInput, Prisma.MatchUncheckedCreateWithoutEventInput>
+  where?: Prisma.MatchWhereInput
 }
 
-export type MatchCreateWithoutUpdatedByInput = {
-  id?: string
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutMatchesInput
-  lineups?: Prisma.MatchLineupCreateNestedManyWithoutMatchInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchsInput
+export type MatchUpdateToOneWithWhereWithoutEventInput = {
+  where?: Prisma.MatchWhereInput
+  data: Prisma.XOR<Prisma.MatchUpdateWithoutEventInput, Prisma.MatchUncheckedUpdateWithoutEventInput>
 }
 
-export type MatchUncheckedCreateWithoutUpdatedByInput = {
-  id?: string
-  teamSeasonId: string
-  locationId?: string | null
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  lineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutMatchInput
+export type MatchUpdateWithoutEventInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
+  lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
 }
 
-export type MatchCreateOrConnectWithoutUpdatedByInput = {
-  where: Prisma.MatchWhereUniqueInput
-  create: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput>
-}
-
-export type MatchCreateManyUpdatedByInputEnvelope = {
-  data: Prisma.MatchCreateManyUpdatedByInput | Prisma.MatchCreateManyUpdatedByInput[]
-  skipDuplicates?: boolean
-}
-
-export type MatchUpsertWithWhereUniqueWithoutCreatedByInput = {
-  where: Prisma.MatchWhereUniqueInput
-  update: Prisma.XOR<Prisma.MatchUpdateWithoutCreatedByInput, Prisma.MatchUncheckedUpdateWithoutCreatedByInput>
-  create: Prisma.XOR<Prisma.MatchCreateWithoutCreatedByInput, Prisma.MatchUncheckedCreateWithoutCreatedByInput>
-}
-
-export type MatchUpdateWithWhereUniqueWithoutCreatedByInput = {
-  where: Prisma.MatchWhereUniqueInput
-  data: Prisma.XOR<Prisma.MatchUpdateWithoutCreatedByInput, Prisma.MatchUncheckedUpdateWithoutCreatedByInput>
-}
-
-export type MatchUpdateManyWithWhereWithoutCreatedByInput = {
-  where: Prisma.MatchScalarWhereInput
-  data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutCreatedByInput>
-}
-
-export type MatchUpsertWithWhereUniqueWithoutUpdatedByInput = {
-  where: Prisma.MatchWhereUniqueInput
-  update: Prisma.XOR<Prisma.MatchUpdateWithoutUpdatedByInput, Prisma.MatchUncheckedUpdateWithoutUpdatedByInput>
-  create: Prisma.XOR<Prisma.MatchCreateWithoutUpdatedByInput, Prisma.MatchUncheckedCreateWithoutUpdatedByInput>
-}
-
-export type MatchUpdateWithWhereUniqueWithoutUpdatedByInput = {
-  where: Prisma.MatchWhereUniqueInput
-  data: Prisma.XOR<Prisma.MatchUpdateWithoutUpdatedByInput, Prisma.MatchUncheckedUpdateWithoutUpdatedByInput>
-}
-
-export type MatchUpdateManyWithWhereWithoutUpdatedByInput = {
-  where: Prisma.MatchScalarWhereInput
-  data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutUpdatedByInput>
+export type MatchUncheckedUpdateWithoutEventInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
+  lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchCreateWithoutLineupsInput = {
   id?: string
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutMatchInput
   teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutMatchesInput
-  location?: Prisma.LocationCreateNestedOneWithoutMatchesInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchsInput
 }
 
 export type MatchUncheckedCreateWithoutLineupsInput = {
   id?: string
+  eventId: string
   teamSeasonId: string
-  locationId?: string | null
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
 }
 
 export type MatchCreateOrConnectWithoutLineupsInput = {
@@ -1053,281 +711,65 @@ export type MatchUpdateToOneWithWhereWithoutLineupsInput = {
 export type MatchUpdateWithoutLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutMatchesNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchsNestedInput
 }
 
 export type MatchUncheckedUpdateWithoutLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MatchCreateManyLocationInput = {
-  id?: string
-  teamSeasonId: string
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
-}
-
-export type MatchUpdateWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
-  lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchsNestedInput
-}
-
-export type MatchUncheckedUpdateWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
-}
-
-export type MatchUncheckedUpdateManyWithoutLocationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MatchCreateManyTeamSeasonInput = {
   id?: string
-  locationId?: string | null
+  eventId: string
   opponentName: string
-  matchDate: Date | string
   type?: $Enums.MatchType
   ourScore?: number | null
   theirScore?: number | null
   result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-  updatedById?: string | null
 }
 
 export type MatchUpdateWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutMatchesNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchsNestedInput
 }
 
 export type MatchUncheckedUpdateWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutTeamSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
   ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MatchCreateManyCreatedByInput = {
-  id?: string
-  teamSeasonId: string
-  locationId?: string | null
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  updatedById?: string | null
-}
-
-export type MatchCreateManyUpdatedByInput = {
-  id?: string
-  teamSeasonId: string
-  locationId?: string | null
-  opponentName: string
-  matchDate: Date | string
-  type?: $Enums.MatchType
-  ourScore?: number | null
-  theirScore?: number | null
-  result?: $Enums.MatchResult
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdById?: string | null
-}
-
-export type MatchUpdateWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutMatchesNestedInput
-  lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchsNestedInput
-}
-
-export type MatchUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
-}
-
-export type MatchUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MatchUpdateWithoutUpdatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutMatchesNestedInput
-  location?: Prisma.LocationUpdateOneWithoutMatchesNestedInput
-  lineups?: Prisma.MatchLineupUpdateManyWithoutMatchNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchsNestedInput
-}
-
-export type MatchUncheckedUpdateWithoutUpdatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutMatchNestedInput
-}
-
-export type MatchUncheckedUpdateManyWithoutUpdatedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  locationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  opponentName?: Prisma.StringFieldUpdateOperationsInput | string
-  matchDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
-  ourScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  theirScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1363,127 +805,88 @@ export type MatchCountOutputTypeCountLineupsArgs<ExtArgs extends runtime.Types.E
 
 export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  eventId?: boolean
   teamSeasonId?: boolean
-  locationId?: boolean
   opponentName?: boolean
-  matchDate?: boolean
   type?: boolean
   ourScore?: boolean
   theirScore?: boolean
   result?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  createdById?: boolean
-  updatedById?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
   lineups?: boolean | Prisma.Match$lineupsArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.MatchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["match"]>
 
 export type MatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  eventId?: boolean
   teamSeasonId?: boolean
-  locationId?: boolean
   opponentName?: boolean
-  matchDate?: boolean
   type?: boolean
   ourScore?: boolean
   theirScore?: boolean
   result?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  createdById?: boolean
-  updatedById?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["match"]>
 
 export type MatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  eventId?: boolean
   teamSeasonId?: boolean
-  locationId?: boolean
   opponentName?: boolean
-  matchDate?: boolean
   type?: boolean
   ourScore?: boolean
   theirScore?: boolean
   result?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  createdById?: boolean
-  updatedById?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["match"]>
 
 export type MatchSelectScalar = {
   id?: boolean
+  eventId?: boolean
   teamSeasonId?: boolean
-  locationId?: boolean
   opponentName?: boolean
-  matchDate?: boolean
   type?: boolean
   ourScore?: boolean
   theirScore?: boolean
   result?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  createdById?: boolean
-  updatedById?: boolean
 }
 
-export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "locationId" | "opponentName" | "matchDate" | "type" | "ourScore" | "theirScore" | "result" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["match"]>
+export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "teamSeasonId" | "opponentName" | "type" | "ourScore" | "theirScore" | "result", ExtArgs["result"]["match"]>
 export type MatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
   lineups?: boolean | Prisma.Match$lineupsArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.MatchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
 }
 export type MatchIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Match$locationArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Match$createdByArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Match$updatedByArgs<ExtArgs>
 }
 
 export type $MatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Match"
   objects: {
+    event: Prisma.$EventPayload<ExtArgs>
     teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>
-    location: Prisma.$LocationPayload<ExtArgs> | null
     lineups: Prisma.$MatchLineupPayload<ExtArgs>[]
-    createdBy: Prisma.$UserPayload<ExtArgs> | null
-    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    eventId: string
     teamSeasonId: string
-    locationId: string | null
     opponentName: string
-    matchDate: Date
     type: $Enums.MatchType
     ourScore: number | null
     theirScore: number | null
     result: $Enums.MatchResult
-    createdAt: Date
-    updatedAt: Date
-    createdById: string | null
-    updatedById: string | null
   }, ExtArgs["result"]["match"]>
   composites: {}
 }
@@ -1878,11 +1281,9 @@ readonly fields: MatchFieldRefs;
  */
 export interface Prisma__MatchClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  location<T extends Prisma.Match$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$locationArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lineups<T extends Prisma.Match$lineupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$lineupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchLineupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  createdBy<T extends Prisma.Match$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  updatedBy<T extends Prisma.Match$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1913,18 +1314,13 @@ export interface Prisma__MatchClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface MatchFieldRefs {
   readonly id: Prisma.FieldRef<"Match", 'String'>
+  readonly eventId: Prisma.FieldRef<"Match", 'String'>
   readonly teamSeasonId: Prisma.FieldRef<"Match", 'String'>
-  readonly locationId: Prisma.FieldRef<"Match", 'String'>
   readonly opponentName: Prisma.FieldRef<"Match", 'String'>
-  readonly matchDate: Prisma.FieldRef<"Match", 'DateTime'>
   readonly type: Prisma.FieldRef<"Match", 'MatchType'>
   readonly ourScore: Prisma.FieldRef<"Match", 'Int'>
   readonly theirScore: Prisma.FieldRef<"Match", 'Int'>
   readonly result: Prisma.FieldRef<"Match", 'MatchResult'>
-  readonly createdAt: Prisma.FieldRef<"Match", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Match", 'DateTime'>
-  readonly createdById: Prisma.FieldRef<"Match", 'String'>
-  readonly updatedById: Prisma.FieldRef<"Match", 'String'>
 }
     
 
@@ -2321,25 +1717,6 @@ export type MatchDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Match.location
- */
-export type Match$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Location
-   */
-  select?: Prisma.LocationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Location
-   */
-  omit?: Prisma.LocationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LocationInclude<ExtArgs> | null
-  where?: Prisma.LocationWhereInput
-}
-
-/**
  * Match.lineups
  */
 export type Match$lineupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2361,44 +1738,6 @@ export type Match$lineupsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MatchLineupScalarFieldEnum | Prisma.MatchLineupScalarFieldEnum[]
-}
-
-/**
- * Match.createdBy
- */
-export type Match$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * Match.updatedBy
- */
-export type Match$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

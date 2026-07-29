@@ -215,17 +215,23 @@ export const StudentMembershipStatus = {
 export type StudentMembershipStatus = (typeof StudentMembershipStatus)[keyof typeof StudentMembershipStatus]
 
 
-export const DayOfWeek = {
-  MONDAY: 'MONDAY',
-  TUESDAY: 'TUESDAY',
-  WEDNESDAY: 'WEDNESDAY',
-  THURSDAY: 'THURSDAY',
-  FRIDAY: 'FRIDAY',
-  SATURDAY: 'SATURDAY',
-  SUNDAY: 'SUNDAY'
+export const EventType = {
+  SESSION: 'SESSION',
+  MATCH: 'MATCH',
+  GENERAL: 'GENERAL',
+  UNAVAILABLE: 'UNAVAILABLE'
 } as const
 
-export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+export type EventType = (typeof EventType)[keyof typeof EventType]
+
+
+export const EventStatus = {
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
 
 
 export const MatchType = {

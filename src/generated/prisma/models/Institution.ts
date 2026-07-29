@@ -273,6 +273,7 @@ export type InstitutionWhereInput = {
   schools?: Prisma.SchoolListRelationFilter
   contacts?: Prisma.InstitutionContactListRelationFilter
   shifts?: Prisma.ShiftListRelationFilter
+  generalEvents?: Prisma.GeneralEventListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -294,6 +295,7 @@ export type InstitutionOrderByWithRelationInput = {
   schools?: Prisma.SchoolOrderByRelationAggregateInput
   contacts?: Prisma.InstitutionContactOrderByRelationAggregateInput
   shifts?: Prisma.ShiftOrderByRelationAggregateInput
+  generalEvents?: Prisma.GeneralEventOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -318,6 +320,7 @@ export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
   schools?: Prisma.SchoolListRelationFilter
   contacts?: Prisma.InstitutionContactListRelationFilter
   shifts?: Prisma.ShiftListRelationFilter
+  generalEvents?: Prisma.GeneralEventListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
@@ -373,6 +376,7 @@ export type InstitutionCreateInput = {
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -394,6 +398,7 @@ export type InstitutionUncheckedCreateInput = {
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionUpdateInput = {
@@ -411,6 +416,7 @@ export type InstitutionUpdateInput = {
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -432,6 +438,7 @@ export type InstitutionUncheckedUpdateInput = {
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateManyInput = {
@@ -539,6 +546,11 @@ export type InstitutionListRelationFilter = {
 
 export type InstitutionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type InstitutionNullableScalarRelationFilter = {
+  is?: Prisma.InstitutionWhereInput | null
+  isNot?: Prisma.InstitutionWhereInput | null
 }
 
 export type NullableFloatFieldUpdateOperationsInput = {
@@ -703,6 +715,22 @@ export type InstitutionUpdateOneRequiredWithoutSchoolsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InstitutionUpdateToOneWithWhereWithoutSchoolsInput, Prisma.InstitutionUpdateWithoutSchoolsInput>, Prisma.InstitutionUncheckedUpdateWithoutSchoolsInput>
 }
 
+export type InstitutionCreateNestedOneWithoutGeneralEventsInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedCreateWithoutGeneralEventsInput>
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutGeneralEventsInput
+  connect?: Prisma.InstitutionWhereUniqueInput
+}
+
+export type InstitutionUpdateOneWithoutGeneralEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.InstitutionCreateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedCreateWithoutGeneralEventsInput>
+  connectOrCreate?: Prisma.InstitutionCreateOrConnectWithoutGeneralEventsInput
+  upsert?: Prisma.InstitutionUpsertWithoutGeneralEventsInput
+  disconnect?: Prisma.InstitutionWhereInput | boolean
+  delete?: Prisma.InstitutionWhereInput | boolean
+  connect?: Prisma.InstitutionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstitutionUpdateToOneWithWhereWithoutGeneralEventsInput, Prisma.InstitutionUpdateWithoutGeneralEventsInput>, Prisma.InstitutionUncheckedUpdateWithoutGeneralEventsInput>
+}
+
 export type InstitutionCreateWithoutContactsInput = {
   id?: string
   name: string
@@ -717,6 +745,7 @@ export type InstitutionCreateWithoutContactsInput = {
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -737,6 +766,7 @@ export type InstitutionUncheckedCreateWithoutContactsInput = {
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutContactsInput = {
@@ -769,6 +799,7 @@ export type InstitutionUpdateWithoutContactsInput = {
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -789,6 +820,7 @@ export type InstitutionUncheckedUpdateWithoutContactsInput = {
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutShiftsInput = {
@@ -805,6 +837,7 @@ export type InstitutionCreateWithoutShiftsInput = {
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -825,6 +858,7 @@ export type InstitutionUncheckedCreateWithoutShiftsInput = {
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutShiftsInput = {
@@ -857,6 +891,7 @@ export type InstitutionUpdateWithoutShiftsInput = {
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -877,6 +912,7 @@ export type InstitutionUncheckedUpdateWithoutShiftsInput = {
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutClubsInput = {
@@ -893,6 +929,7 @@ export type InstitutionCreateWithoutClubsInput = {
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -913,6 +950,7 @@ export type InstitutionUncheckedCreateWithoutClubsInput = {
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutClubsInput = {
@@ -945,6 +983,7 @@ export type InstitutionUpdateWithoutClubsInput = {
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -965,6 +1004,7 @@ export type InstitutionUncheckedUpdateWithoutClubsInput = {
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutSeasonsInput = {
@@ -981,6 +1021,7 @@ export type InstitutionCreateWithoutSeasonsInput = {
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -1001,6 +1042,7 @@ export type InstitutionUncheckedCreateWithoutSeasonsInput = {
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutSeasonsInput = {
@@ -1033,6 +1075,7 @@ export type InstitutionUpdateWithoutSeasonsInput = {
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -1053,6 +1096,7 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionCreateWithoutCreatedByInput = {
@@ -1070,6 +1114,7 @@ export type InstitutionCreateWithoutCreatedByInput = {
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
 
@@ -1089,6 +1134,7 @@ export type InstitutionUncheckedCreateWithoutCreatedByInput = {
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutCreatedByInput = {
@@ -1116,6 +1162,7 @@ export type InstitutionCreateWithoutUpdatedByInput = {
   schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
 }
 
@@ -1135,6 +1182,7 @@ export type InstitutionUncheckedCreateWithoutUpdatedByInput = {
   schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutUpdatedByInput = {
@@ -1210,6 +1258,7 @@ export type InstitutionCreateWithoutSchoolsInput = {
   seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
 }
@@ -1230,6 +1279,7 @@ export type InstitutionUncheckedCreateWithoutSchoolsInput = {
   seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
   shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
 }
 
 export type InstitutionCreateOrConnectWithoutSchoolsInput = {
@@ -1262,6 +1312,7 @@ export type InstitutionUpdateWithoutSchoolsInput = {
   seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
@@ -1280,6 +1331,99 @@ export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
+  shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
+}
+
+export type InstitutionCreateWithoutGeneralEventsInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
+  shifts?: Prisma.ShiftCreateNestedManyWithoutInstitutionInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionsInput
+}
+
+export type InstitutionUncheckedCreateWithoutGeneralEventsInput = {
+  id?: string
+  name: string
+  imageUrl?: string | null
+  address: string
+  latitude?: number | null
+  longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
+  seasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutInstitutionInput
+  contacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutInstitutionInput
+  shifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutInstitutionInput
+}
+
+export type InstitutionCreateOrConnectWithoutGeneralEventsInput = {
+  where: Prisma.InstitutionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedCreateWithoutGeneralEventsInput>
+}
+
+export type InstitutionUpsertWithoutGeneralEventsInput = {
+  update: Prisma.XOR<Prisma.InstitutionUpdateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedUpdateWithoutGeneralEventsInput>
+  create: Prisma.XOR<Prisma.InstitutionCreateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedCreateWithoutGeneralEventsInput>
+  where?: Prisma.InstitutionWhereInput
+}
+
+export type InstitutionUpdateToOneWithWhereWithoutGeneralEventsInput = {
+  where?: Prisma.InstitutionWhereInput
+  data: Prisma.XOR<Prisma.InstitutionUpdateWithoutGeneralEventsInput, Prisma.InstitutionUncheckedUpdateWithoutGeneralEventsInput>
+}
+
+export type InstitutionUpdateWithoutGeneralEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
+  contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
+  shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
+}
+
+export type InstitutionUncheckedUpdateWithoutGeneralEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
+  seasons?: Prisma.SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
 }
@@ -1325,6 +1469,7 @@ export type InstitutionUpdateWithoutCreatedByInput = {
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionsNestedInput
 }
 
@@ -1344,6 +1489,7 @@ export type InstitutionUncheckedUpdateWithoutCreatedByInput = {
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1374,6 +1520,7 @@ export type InstitutionUpdateWithoutUpdatedByInput = {
   schools?: Prisma.SchoolUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
 }
 
@@ -1393,6 +1540,7 @@ export type InstitutionUncheckedUpdateWithoutUpdatedByInput = {
   schools?: Prisma.SchoolUncheckedUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutInstitutionNestedInput
   shifts?: Prisma.ShiftUncheckedUpdateManyWithoutInstitutionNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
 }
 
 export type InstitutionUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1419,6 +1567,7 @@ export type InstitutionCountOutputType = {
   schools: number
   contacts: number
   shifts: number
+  generalEvents: number
 }
 
 export type InstitutionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1427,6 +1576,7 @@ export type InstitutionCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   schools?: boolean | InstitutionCountOutputTypeCountSchoolsArgs
   contacts?: boolean | InstitutionCountOutputTypeCountContactsArgs
   shifts?: boolean | InstitutionCountOutputTypeCountShiftsArgs
+  generalEvents?: boolean | InstitutionCountOutputTypeCountGeneralEventsArgs
 }
 
 /**
@@ -1474,6 +1624,13 @@ export type InstitutionCountOutputTypeCountShiftsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.ShiftWhereInput
 }
 
+/**
+ * InstitutionCountOutputType without action
+ */
+export type InstitutionCountOutputTypeCountGeneralEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GeneralEventWhereInput
+}
+
 
 export type InstitutionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1492,6 +1649,7 @@ export type InstitutionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
   contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
   shifts?: boolean | Prisma.Institution$shiftsArgs<ExtArgs>
+  generalEvents?: boolean | Prisma.Institution$generalEventsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
@@ -1550,6 +1708,7 @@ export type InstitutionInclude<ExtArgs extends runtime.Types.Extensions.Internal
   schools?: boolean | Prisma.Institution$schoolsArgs<ExtArgs>
   contacts?: boolean | Prisma.Institution$contactsArgs<ExtArgs>
   shifts?: boolean | Prisma.Institution$shiftsArgs<ExtArgs>
+  generalEvents?: boolean | Prisma.Institution$generalEventsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Institution$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.InstitutionCountOutputTypeDefaultArgs<ExtArgs>
@@ -1571,6 +1730,7 @@ export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     schools: Prisma.$SchoolPayload<ExtArgs>[]
     contacts: Prisma.$InstitutionContactPayload<ExtArgs>[]
     shifts: Prisma.$ShiftPayload<ExtArgs>[]
+    generalEvents: Prisma.$GeneralEventPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
@@ -1985,6 +2145,7 @@ export interface Prisma__InstitutionClient<T, Null = never, ExtArgs extends runt
   schools<T extends Prisma.Institution$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contacts<T extends Prisma.Institution$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shifts<T extends Prisma.Institution$shiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  generalEvents<T extends Prisma.Institution$generalEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$generalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GeneralEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Institution$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Institution$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Institution$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -2540,6 +2701,30 @@ export type Institution$shiftsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.ShiftScalarFieldEnum | Prisma.ShiftScalarFieldEnum[]
+}
+
+/**
+ * Institution.generalEvents
+ */
+export type Institution$generalEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GeneralEvent
+   */
+  select?: Prisma.GeneralEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GeneralEvent
+   */
+  omit?: Prisma.GeneralEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GeneralEventInclude<ExtArgs> | null
+  where?: Prisma.GeneralEventWhereInput
+  orderBy?: Prisma.GeneralEventOrderByWithRelationInput | Prisma.GeneralEventOrderByWithRelationInput[]
+  cursor?: Prisma.GeneralEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GeneralEventScalarFieldEnum | Prisma.GeneralEventScalarFieldEnum[]
 }
 
 /**

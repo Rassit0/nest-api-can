@@ -95,13 +95,12 @@ export const ModelName = {
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
   ProgressEvaluation: 'ProgressEvaluation',
+  Event: 'Event',
+  GeneralEvent: 'GeneralEvent',
   Session: 'Session',
   SessionTeam: 'SessionTeam',
   SessionCourse: 'SessionCourse',
   SessionBooking: 'SessionBooking',
-  Schedule: 'Schedule',
-  ScheduleTeam: 'ScheduleTeam',
-  ScheduleCourse: 'ScheduleCourse',
   Match: 'Match',
   MatchLineup: 'MatchLineup',
   AuditLog: 'AuditLog'
@@ -246,6 +245,8 @@ export const LocationScalarFieldEnum = {
   isRentable: 'isRentable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  parentId: 'parentId',
+  maxConcurrentEvents: 'maxConcurrentEvents',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -326,6 +327,7 @@ export const TeamSeasonScalarFieldEnum = {
   minMembers: 'minMembers',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
+  validateAge: 'validateAge',
   teamId: 'teamId',
   categoryId: 'categoryId',
   seasonId: 'seasonId',
@@ -380,6 +382,7 @@ export const PaymentPlanScalarFieldEnum = {
   isSinglePayment: 'isSinglePayment',
   advanceCycles: 'advanceCycles',
   advanceCyclesDiscountPercent: 'advanceCyclesDiscountPercent',
+  promotionalCycles: 'promotionalCycles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -678,6 +681,7 @@ export const CourseSeasonScalarFieldEnum = {
   minMembers: 'minMembers',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
+  validateAge: 'validateAge',
   courseId: 'courseId',
   categoryId: 'categoryId',
   seasonId: 'seasonId',
@@ -900,16 +904,42 @@ export const ProgressEvaluationScalarFieldEnum = {
 export type ProgressEvaluationScalarFieldEnum = (typeof ProgressEvaluationScalarFieldEnum)[keyof typeof ProgressEvaluationScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const EventScalarFieldEnum = {
   id: 'id',
-  locationId: 'locationId',
   title: 'title',
-  dateTime: 'dateTime',
-  durationMin: 'durationMin',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  locationId: 'locationId',
+  eventType: 'eventType',
+  status: 'status',
+  color: 'color',
+  recurrenceRule: 'recurrenceRule',
+  recurrenceGroupId: 'recurrenceGroupId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const GeneralEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  institutionId: 'institutionId',
+  teamSeasonId: 'teamSeasonId',
+  courseSeasonId: 'courseSeasonId'
+} as const
+
+export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[keyof typeof GeneralEventScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  durationMin: 'durationMin'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -948,51 +978,15 @@ export const SessionBookingScalarFieldEnum = {
 export type SessionBookingScalarFieldEnum = (typeof SessionBookingScalarFieldEnum)[keyof typeof SessionBookingScalarFieldEnum]
 
 
-export const ScheduleScalarFieldEnum = {
-  id: 'id',
-  locationId: 'locationId',
-  dayOfWeek: 'dayOfWeek',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById'
-} as const
-
-export type ScheduleScalarFieldEnum = (typeof ScheduleScalarFieldEnum)[keyof typeof ScheduleScalarFieldEnum]
-
-
-export const ScheduleTeamScalarFieldEnum = {
-  scheduleId: 'scheduleId',
-  teamSeasonId: 'teamSeasonId'
-} as const
-
-export type ScheduleTeamScalarFieldEnum = (typeof ScheduleTeamScalarFieldEnum)[keyof typeof ScheduleTeamScalarFieldEnum]
-
-
-export const ScheduleCourseScalarFieldEnum = {
-  scheduleId: 'scheduleId',
-  courseSeasonId: 'courseSeasonId'
-} as const
-
-export type ScheduleCourseScalarFieldEnum = (typeof ScheduleCourseScalarFieldEnum)[keyof typeof ScheduleCourseScalarFieldEnum]
-
-
 export const MatchScalarFieldEnum = {
   id: 'id',
+  eventId: 'eventId',
   teamSeasonId: 'teamSeasonId',
-  locationId: 'locationId',
   opponentName: 'opponentName',
-  matchDate: 'matchDate',
   type: 'type',
   ourScore: 'ourScore',
   theirScore: 'theirScore',
-  result: 'result',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById'
+  result: 'result'
 } as const
 
 export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]

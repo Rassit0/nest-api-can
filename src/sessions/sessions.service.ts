@@ -1,24 +1,30 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { UpdateSessionDto } from './dto/update-session.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
+import { AvailabilityEngine } from 'src/events/engines/availability.engine';
 import { SessionsPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 
 export const sessionSelect: Prisma.SessionSelect = {
   id: true,
-  title: true,
-  dateTime: true,
   durationMin: true,
-  createdAt: true,
-  updatedAt: true,
-  location: {
+  event: {
     select: {
-      id: true,
-      name: true,
-      address: true,
-    },
+      title: true,
+      startDate: true,
+      endDate: true,
+      createdAt: true,
+      updatedAt: true,
+      location: {
+        select: {
+          id: true,
+          name: true,
+          address: true,
+        },
+      },
+    }
   },
   sessionTeams: {
     select: {
@@ -84,7 +90,10 @@ export const sessionSelect: Prisma.SessionSelect = {
 export class SessionsService {
   private readonly logger = new Logger('SessionsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly availabilityEngine: AvailabilityEngine,
+  ) {}
 
   async create(createSessionDto: CreateSessionDto) {
     const {
@@ -92,16 +101,35 @@ export class SessionsService {
       courseSeasonIds,
       locationId,
       title,
-      dateTime,
+      startDate,
+      endDate,
       durationMin,
     } = createSessionDto;
 
+    if (locationId) {
+      const isAvailable = await this.availabilityEngine.checkAvailability({
+        locationId,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+      });
+
+      if (isAvailable !== true) {
+        throw new BadRequestException(`El horario no está disponible: ${isAvailable.reason}`);
+      }
+    }
+
     const newSession = await this.prisma.session.create({
       data: {
-        title,
-        dateTime,
         durationMin,
-        locationId,
+        event: {
+          create: {
+            title,
+            startDate,
+            endDate,
+            eventType: 'SESSION',
+            ...(locationId && { locationId }),
+          },
+        },
         sessionTeams: teamSeasonIds
           ? {
               create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
@@ -128,7 +156,7 @@ export class SessionsService {
       page = 1,
       search,
       orderBy = 'asc',
-      sortField = 'dateTime',
+      sortField = 'startDate',
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
@@ -136,12 +164,7 @@ export class SessionsService {
 
     if (search) {
       where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        {
-          location: {
-            name: { contains: search, mode: 'insensitive' },
-          },
-        },
+        { event: { title: { contains: search, mode: 'insensitive' } } },
         {
           sessionTeams: {
             some: {
@@ -164,6 +187,13 @@ export class SessionsService {
             },
           },
         },
+        {
+          event: {
+            location: {
+              name: { contains: search, mode: 'insensitive' },
+            },
+          },
+        },
       ];
     }
 
@@ -172,7 +202,7 @@ export class SessionsService {
         where,
         take: per_page,
         skip,
-        orderBy: { [sortField]: orderBy },
+        orderBy: sortField === 'startDate' ? { event: { startDate: orderBy } } : { [sortField]: orderBy },
         select: sessionSelect,
       }),
       this.prisma.session.count({ where }),
@@ -192,9 +222,11 @@ export class SessionsService {
       where: { id },
       select: sessionSelect,
     });
+
     if (!session) {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }
+
     return {
       message: 'Sesión obtenida exitosamente',
       data: session,
@@ -204,7 +236,9 @@ export class SessionsService {
   async update(id: string, updateSessionDto: UpdateSessionDto) {
     const session = await this.prisma.session.findUnique({
       where: { id },
+      select: { eventId: true }
     });
+
     if (!session) {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }
@@ -214,47 +248,71 @@ export class SessionsService {
       courseSeasonIds,
       locationId,
       title,
-      dateTime,
+      startDate,
+      endDate,
       durationMin,
     } = updateSessionDto;
 
-    const updatedSession = await this.prisma.$transaction(async (tx) => {
-      // Si se provee teamSeasonIds, limpiar y regenerar
-      if (teamSeasonIds !== undefined) {
-        await tx.sessionTeam.deleteMany({ where: { sessionId: id } });
-        if (teamSeasonIds) {
-          await tx.sessionTeam.createMany({
-            data: teamSeasonIds.map((teamSeasonId) => ({
-              sessionId: id,
-              teamSeasonId,
-            })),
-          });
-        }
+    if (locationId || startDate || endDate) {
+      // Recalculate based on existing data if some are missing
+      let checkStartDate = startDate ? new Date(startDate) : undefined;
+      let checkEndDate = endDate ? new Date(endDate) : undefined;
+      let checkLocationId = locationId;
+
+      if (!checkStartDate || !checkEndDate || !checkLocationId) {
+        const existingEvent = await this.prisma.event.findUnique({
+          where: { id: session.eventId },
+          select: { startDate: true, endDate: true, locationId: true }
+        });
+        checkStartDate = checkStartDate || existingEvent?.startDate;
+        checkEndDate = checkEndDate || existingEvent?.endDate;
+        checkLocationId = checkLocationId || existingEvent?.locationId;
       }
 
-      // Si se provee courseSeasonIds, limpiar y regenerar
-      if (courseSeasonIds !== undefined) {
-        await tx.sessionCourse.deleteMany({ where: { sessionId: id } });
-        if (courseSeasonIds) {
-          await tx.sessionCourse.createMany({
-            data: courseSeasonIds.map((courseSeasonId) => ({
-              sessionId: id,
-              courseSeasonId,
-            })),
-          });
+      if (checkLocationId && checkStartDate && checkEndDate) {
+        const isAvailable = await this.availabilityEngine.checkAvailability({
+          locationId: checkLocationId,
+          startDate: checkStartDate,
+          endDate: checkEndDate,
+          excludeEventId: session.eventId,
+        });
+
+        if (isAvailable !== true) {
+          throw new BadRequestException(`El horario no está disponible: ${isAvailable.reason}`);
         }
       }
+    }
 
-      return await tx.session.update({
-        where: { id },
-        data: {
-          title,
-          dateTime,
-          durationMin,
-          locationId,
-        },
-        select: sessionSelect,
-      });
+    const sessionData: Prisma.SessionUpdateInput = {
+      durationMin,
+      event: {
+        update: {
+          ...(title !== undefined && { title }),
+          ...(startDate !== undefined && { startDate }),
+          ...(endDate !== undefined && { endDate }),
+          ...(locationId !== undefined ? { locationId } : {}),
+        }
+      }
+    };
+
+    if (teamSeasonIds) {
+      sessionData.sessionTeams = {
+        deleteMany: {},
+        create: teamSeasonIds.map((tid) => ({ teamSeasonId: tid })),
+      };
+    }
+
+    if (courseSeasonIds) {
+      sessionData.sessionCourses = {
+        deleteMany: {},
+        create: courseSeasonIds.map((cid) => ({ courseSeasonId: cid })),
+      };
+    }
+
+    const updatedSession = await this.prisma.session.update({
+      where: { id },
+      data: sessionData,
+      select: sessionSelect,
     });
 
     return {
@@ -267,6 +325,7 @@ export class SessionsService {
     const session = await this.prisma.session.findUnique({
       where: { id },
     });
+
     if (!session) {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }

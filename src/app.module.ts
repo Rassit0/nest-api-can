@@ -29,7 +29,6 @@ import { TeamSeasonStaffModule } from './team-season-staff/team-season-staff.mod
 import { ChargesModule } from './charges/charges.module';
 import { MembershipChargesModule } from './membership-charges/membership-charges.module';
 import { MembershipLateFeeModule } from './membership-late-fee/membership-late-fee.module';
-import { SchedulesModule } from './schedules/schedules.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { SessionBookingsModule } from './session-bookings/session-bookings.module';
 import { MatchesModule } from './matches/matches.module';
@@ -103,7 +102,6 @@ import { TransactionReportModule } from './transaction-report/transaction-report
     ChargesModule,
     MembershipChargesModule,
     MembershipLateFeeModule,
-    SchedulesModule,
     SessionsModule,
     SessionBookingsModule,
     MatchesModule,

@@ -71,16 +71,25 @@ export class CreateMatchDto {
   })
   @IsNotEmpty({
     message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'matchDate',
+      constraint1: 'startDate',
     }),
   })
   @IsDate({
     message: i18nValidationMessage('validation.IS_DATE', {
-      constraint1: 'matchDate',
+      constraint1: 'startDate',
     }),
   })
   @Type(() => Date)
-  matchDate: Date;
+  startDate: Date;
+
+  @ApiProperty({
+    example: '2026-06-30T17:00:00.000Z',
+    description: 'Fecha y hora de fin del partido',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
+  endDate: Date;
 
   @ApiProperty({
     enum: MatchType,
