@@ -347,9 +347,17 @@ export class TransactionsService {
       throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
     }
 
+    // Proteger campos inmutables del Ledger
+    const { amount, type, financialAccountId, ...safeUpdateData } = updateTransactionDto as any;
+
+    if (amount !== undefined || type !== undefined || financialAccountId !== undefined) {
+      // Idealmente podríamos lanzar un error, pero para no romper el frontend si envía el DTO completo,
+      // simplemente ignoramos estos campos financieros clave.
+    }
+
     return await this.prisma.transaction.update({
       where: { id },
-      data: updateTransactionDto,
+      data: safeUpdateData,
       select: transactionSelect,
     });
   }
@@ -410,6 +418,16 @@ export class TransactionsService {
       await prisma.chargeTransaction.deleteMany({
         where: { transactionId: id },
       });
+
+      // Revertir el saldo de la caja / banco asociada
+      if (transaction.financialAccountId && transaction.status === 'COMPLETED') {
+        await this.financialAccountsService.applyMovement(
+          transaction.financialAccountId,
+          -Number(transaction.amount),
+          transaction.type,
+          prisma,
+        );
+      }
 
       // Eliminar transacción
       const deletedTransaction = await prisma.transaction.delete({

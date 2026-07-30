@@ -41,14 +41,14 @@ model Person {
   updatedAt      DateTime      @updatedAt @map("updated_at")
 
   // Contactos de la persona
-  contacts     PersonContact[] @relation("PersonContacts")
+  contacts       PersonContact[] @relation("PersonContacts")
   // Personas que son contactos de la persona
-  contactOf    PersonContact[] @relation("ContactPerson")
-  players      Player[]
-  staff        Staff?
-  transactions Transaction[]
-  students     Student[]
-  user         User?
+  contactOf      PersonContact[] @relation("ContactPerson")
+  players        Player[]
+  staff          Staff?
+  transactions   Transaction[]
+  students       Student[]
+  user           User?
   accountCharges AccountCharge[] @relation("PersonAccountCharges")
 
   createdById String? @map("created_by_id")
@@ -823,8 +823,8 @@ model Charge {
   discountAmount Decimal @default(0) @map("discount_amount") @db.Decimal(10, 2)
   discountReason String? @map("discount_reason")
 
-  dueDate DateTime     @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
-  status  StatusCharge @default(PENDING)
+  dueDate   DateTime        @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
+  status    StatusCharge    @default(PENDING)
   direction ChargeDirection @default(RECEIVABLE)
 
   createdAt          DateTime            @default(now()) @map("created_at")
@@ -875,20 +875,23 @@ enum FinancialAccountType {
 }
 
 model FinancialAccount {
-  id              String               @id @default(uuid())
-  name            String
-  description     String?
-  type            FinancialAccountType
-  currency        String               @default("BOB")
-  
-  initialBalance  Decimal              @default(0) @map("initial_balance") @db.Decimal(10, 2)
-  cachedBalance   Decimal              @default(0) @map("cached_balance") @db.Decimal(10, 2)
-  
-  isActive        Boolean              @default(true) @map("is_active")
-  createdAt       DateTime             @default(now()) @map("created_at")
-  updatedAt       DateTime             @updatedAt @map("updated_at")
+  id          String               @id @default(uuid())
+  name        String
+  description String?
+  type        FinancialAccountType
+  currency    String               @default("BOB")
 
-  transactions    Transaction[]
+  cachedBalance    Decimal   @default(0) @map("cached_balance") @db.Decimal(10, 2)
+  isDefault        Boolean   @default(false) @map("is_default")
+  accountNumber    String?   @map("account_number")
+  lastReconciledAt DateTime? @map("last_reconciled_at")
+
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  transactions Transaction[]
+  cashClosures CashClosure[]
 
   @@map("financial_accounts")
 }
@@ -896,6 +899,12 @@ model FinancialAccount {
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+enum TransferStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
 }
 
 enum PaymentMethod {
@@ -912,29 +921,34 @@ enum TransactionStatus {
 }
 
 model Transaction {
-  id                 String              @id @default(uuid())
-  receiptSeries      String              @default("GEN") @map("receipt_series")
-  receiptNumber      Int                 @map("receipt_number")
-  payerPersonId      String?             @map("payer_person_id")
-  payerPerson        Person?             @relation(fields: [payerPersonId], references: [id])
-  amount             Decimal             @db.Decimal(10, 2)
-  transactionDate    DateTime            @map("transaction_date")
-  description        String?
-  type               TransactionType
-  paymentMethod      PaymentMethod       @map("payment_method")
-  reference          String?             @map("reference_number")
-  notes              String?
+  id              String          @id @default(uuid())
+  receiptSeries   String          @default("GEN") @map("receipt_series")
+  receiptNumber   Int             @map("receipt_number")
+  payerPersonId   String?         @map("payer_person_id")
+  payerPerson     Person?         @relation(fields: [payerPersonId], references: [id])
+  amount          Decimal         @db.Decimal(10, 2)
+  transactionDate DateTime        @map("transaction_date")
+  description     String?
+  type            TransactionType
+  paymentMethod   PaymentMethod   @map("payment_method")
+  reference       String?         @map("reference_number")
+  notes           String?
 
   // Financial Account Relation
   financialAccountId String           @map("financial_account_id")
   financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id])
-  
+
   // Transfers & Reconciliations
-  referenceGroupId   String?          @map("reference_group_id")
-  isReconciled       Boolean          @default(false) @map("is_reconciled")
-  reconciledAt       DateTime?        @map("reconciled_at")
-  status             TransactionStatus   @default(COMPLETED)
-  receiptUrls        String[]            @map("receipt_urls")
+  referenceGroupId String?           @map("reference_group_id")
+  isReconciled     Boolean           @default(false) @map("is_reconciled")
+  reconciledAt     DateTime?         @map("reconciled_at")
+  status           TransactionStatus @default(COMPLETED)
+  receiptUrls      String[]          @map("receipt_urls")
+
+  isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
+  internalTransferSource InternalTransfer? @relation("TransferSource")
+  internalTransferDest   InternalTransfer? @relation("TransferDestination")
+
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
   chargeTransactions ChargeTransaction[]
@@ -946,6 +960,34 @@ model Transaction {
 
   @@unique([receiptSeries, receiptNumber])
   @@map("transactions")
+}
+
+// =================================
+// TRANSFERENCIAS INTERNAS
+// =================================
+
+model InternalTransfer {
+  id          String         @id @default(uuid())
+  amount      Decimal        @db.Decimal(10, 2)
+  description String?
+  reference   String?
+  status      TransferStatus @default(COMPLETED)
+  date        DateTime       @default(now())
+
+  // Relaciones
+  sourceTransactionId      String @unique @map("source_transaction_id")
+  destinationTransactionId String @unique @map("destination_transaction_id")
+
+  sourceTransaction      Transaction @relation("TransferSource", fields: [sourceTransactionId], references: [id], onDelete: Restrict)
+  destinationTransaction Transaction @relation("TransferDestination", fields: [destinationTransactionId], references: [id], onDelete: Restrict)
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedByTransfer", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("internal_transfers")
 }
 
 // =================================
@@ -988,6 +1030,8 @@ model User {
   updatedInstitutions               Institution[]               @relation("UpdatedBy")
   createdInstitutionContacts        InstitutionContact[]        @relation("CreatedBy")
   updatedInstitutionContacts        InstitutionContact[]        @relation("UpdatedBy")
+  cashClosuresCreated               CashClosure[]               @relation("CreatedByCashClosure")
+  cashClosuresUpdated               CashClosure[]               @relation("UpdatedByCashClosure")
   createdClubs                      Club[]                      @relation("CreatedBy")
   updatedClubs                      Club[]                      @relation("UpdatedBy")
   createdLocations                  Location[]                  @relation("CreatedBy")
@@ -1028,6 +1072,7 @@ model User {
   updatedChargeTransactions         ChargeTransaction[]         @relation("UpdatedBy")
   createdTransactions               Transaction[]               @relation("CreatedBy")
   updatedTransactions               Transaction[]               @relation("UpdatedBy")
+  createdInternalTransfers          InternalTransfer[]          @relation("CreatedByTransfer")
   createdRoles                      Role[]                      @relation("CreatedBy")
   updatedRoles                      Role[]                      @relation("UpdatedBy")
   createdPermissions                Permission[]                @relation("CreatedBy")
@@ -1582,23 +1627,23 @@ enum EventExceptionType {
 }
 
 model EventSeries {
-  id                  String   @id @default(uuid())
-  recurrenceRule      String   @map("recurrence_rule")
-  timezone            String
-  
-  eventType           EventType @map("event_type")
-  templateData        Json      @map("template_data")
-  templateVersion     Int       @default(1) @map("template_version")
-  
-  materializedUntil   DateTime  @map("materialized_until")
-  lastMaterializedAt  DateTime? @map("last_materialized_at")
-  status              EventSeriesStatus @default(ACTIVE)
-  lockedUntil         DateTime?    @map("locked_until")
-  
-  createdAt           DateTime @default(now()) @map("created_at")
-  updatedAt           DateTime @updatedAt @map("updated_at")
-  createdById         String?  @map("created_by_id")
-  updatedById         String?  @map("updated_by_id")
+  id             String @id @default(uuid())
+  recurrenceRule String @map("recurrence_rule")
+  timezone       String
+
+  eventType       EventType @map("event_type")
+  templateData    Json      @map("template_data")
+  templateVersion Int       @default(1) @map("template_version")
+
+  materializedUntil  DateTime          @map("materialized_until")
+  lastMaterializedAt DateTime?         @map("last_materialized_at")
+  status             EventSeriesStatus @default(ACTIVE)
+  lockedUntil        DateTime?         @map("locked_until")
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdById String?  @map("created_by_id")
+  updatedById String?  @map("updated_by_id")
 
   events Event[]
 
@@ -1619,11 +1664,11 @@ model Event {
   status    EventStatus @default(SCHEDULED)
 
   // Metadatos UI y Recurrencia Materializada
-  color             String?
-  
-  eventSeriesId     String?      @map("event_series_id")
-  eventSeries       EventSeries? @relation(fields: [eventSeriesId], references: [id], onDelete: Cascade)
-  originalStartDate DateTime?    @map("original_start_date")
+  color String?
+
+  eventSeriesId     String?            @map("event_series_id")
+  eventSeries       EventSeries?       @relation(fields: [eventSeriesId], references: [id], onDelete: Cascade)
+  originalStartDate DateTime?          @map("original_start_date")
   exceptionType     EventExceptionType @default(NONE) @map("exception_type")
 
   // Relaciones hacia los contextos (Exclusive Arcs)
@@ -1639,11 +1684,11 @@ model Event {
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("EventUpdatedBy", fields: [updatedById], references: [id])
 
+  @@unique([eventSeriesId, originalStartDate])
   // Índices para O(1)
   @@index([locationId, startDate, endDate])
   @@index([startDate, endDate])
   @@index([eventSeriesId])
-  @@unique([eventSeriesId, originalStartDate])
   @@map("events")
 }
 
@@ -1816,14 +1861,14 @@ model AuditLog {
 }
 
 model EventMaterializationLog {
-  id              String   @id @default(uuid())
-  eventSeriesId   String   @map("event_series_id")
-  generatedDate   DateTime @map("generated_date")
-  status          String
-  errorCode       String?  @map("error_code")
-  metadata        Json?
+  id            String   @id @default(uuid())
+  eventSeriesId String   @map("event_series_id")
+  generatedDate DateTime @map("generated_date")
+  status        String
+  errorCode     String?  @map("error_code")
+  metadata      Json?
 
-  createdAt       DateTime @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("event_materialization_logs")
 }
@@ -1841,17 +1886,17 @@ enum AccountReferenceType {
 }
 
 model AccountCategory {
-  id          String      @id @default(uuid())
-  name        String      
+  id          String  @id @default(uuid())
+  name        String
   description String?
-  
+
   // Para saber si la categoría es mayormente de gastos o ingresos (opcional)
-  type        ChargeDirection 
-  
+  type ChargeDirection
+
   accountCharges AccountCharge[]
 
-  createdAt   DateTime    @default(now()) @map("created_at")
-  updatedAt   DateTime    @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1862,29 +1907,29 @@ model AccountCategory {
 }
 
 model AccountCharge {
-  id              String          @id @default(uuid())
-  
+  id String @id @default(uuid())
+
   // Relación 1 a 1 con Charge
-  chargeId        String          @unique @map("charge_id")
-  charge          Charge          @relation(fields: [chargeId], references: [id], onDelete: Cascade)
-  
-  title           String          
-  
-  categoryId      String?         @map("category_id")
-  category        AccountCategory? @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  chargeId String @unique @map("charge_id")
+  charge   Charge @relation(fields: [chargeId], references: [id], onDelete: Cascade)
+
+  title String
+
+  categoryId String?          @map("category_id")
+  category   AccountCategory? @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
   referenceType   AccountReferenceType? @map("reference_type")
-  referenceId     String?         @map("reference_id")
-  referenceNumber String?         @map("reference_number")
+  referenceId     String?               @map("reference_id")
+  referenceNumber String?               @map("reference_number")
 
   // A quién se le debe o quién nos debe
-  personId        String?         @map("person_id")
-  person          Person?         @relation("PersonAccountCharges", fields: [personId], references: [id])
-  
-  externalEntity  String?         @map("external_entity")
+  personId String? @map("person_id")
+  person   Person? @relation("PersonAccountCharges", fields: [personId], references: [id])
 
-  createdAt       DateTime        @default(now()) @map("created_at")
-  updatedAt       DateTime        @updatedAt @map("updated_at")
+  externalEntity String? @map("external_entity")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1894,4 +1939,25 @@ model AccountCharge {
   @@index([personId])
   @@index([categoryId])
   @@map("account_charges")
+}
+
+model CashClosure {
+  id                 String           @id @default(uuid())
+  financialAccountId String           @map("financial_account_id")
+  financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id], onDelete: Restrict)
+
+  closedAt        DateTime @default(now()) @map("closed_at")
+  expectedBalance Decimal  @map("expected_balance") @db.Decimal(12, 2)
+  actualBalance   Decimal  @map("actual_balance") @db.Decimal(12, 2)
+  difference      Decimal  @map("difference") @db.Decimal(12, 2)
+
+  observations String? @db.Text
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedByCashClosure", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedByCashClosure", fields: [updatedById], references: [id])
+
+  @@map("cash_closures")
+  @@index([financialAccountId, closedAt(sort: Desc)])
 }

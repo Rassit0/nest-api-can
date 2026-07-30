@@ -76,6 +76,7 @@ export const ModelName = {
   ChargeTransaction: 'ChargeTransaction',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
+  InternalTransfer: 'InternalTransfer',
   ReceiptSequence: 'ReceiptSequence',
   User: 'User',
   Role: 'Role',
@@ -109,7 +110,8 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
   AccountCategory: 'AccountCategory',
-  AccountCharge: 'AccountCharge'
+  AccountCharge: 'AccountCharge',
+  CashClosure: 'CashClosure'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -569,8 +571,10 @@ export const FinancialAccountScalarFieldEnum = {
   description: 'description',
   type: 'type',
   currency: 'currency',
-  initialBalance: 'initialBalance',
   cachedBalance: 'cachedBalance',
+  isDefault: 'isDefault',
+  accountNumber: 'accountNumber',
+  lastReconciledAt: 'lastReconciledAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -597,6 +601,7 @@ export const TransactionScalarFieldEnum = {
   reconciledAt: 'reconciledAt',
   status: 'status',
   receiptUrls: 'receiptUrls',
+  isInternalTransfer: 'isInternalTransfer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -604,6 +609,23 @@ export const TransactionScalarFieldEnum = {
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const InternalTransferScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  description: 'description',
+  reference: 'reference',
+  status: 'status',
+  date: 'date',
+  sourceTransactionId: 'sourceTransactionId',
+  destinationTransactionId: 'destinationTransactionId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InternalTransferScalarFieldEnum = (typeof InternalTransferScalarFieldEnum)[keyof typeof InternalTransferScalarFieldEnum]
 
 
 export const ReceiptSequenceScalarFieldEnum = {
@@ -1134,6 +1156,21 @@ export const AccountChargeScalarFieldEnum = {
 } as const
 
 export type AccountChargeScalarFieldEnum = (typeof AccountChargeScalarFieldEnum)[keyof typeof AccountChargeScalarFieldEnum]
+
+
+export const CashClosureScalarFieldEnum = {
+  id: 'id',
+  financialAccountId: 'financialAccountId',
+  closedAt: 'closedAt',
+  expectedBalance: 'expectedBalance',
+  actualBalance: 'actualBalance',
+  difference: 'difference',
+  observations: 'observations',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CashClosureScalarFieldEnum = (typeof CashClosureScalarFieldEnum)[keyof typeof CashClosureScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -40,6 +40,9 @@ export const SystemModules = [
   'CHARGES',
   'ACCOUNT_CATEGORIES',
   'ACCOUNT_CHARGES',
+  'FINANCIAL_ACCOUNTS',
+  'INTERNAL_TRANSFERS',
+  'CASH_CLOSURES',
   'SYSTEM',
 ] as const;
 
@@ -100,6 +103,9 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   CHARGES: crud('CHARGES'),
   ACCOUNT_CATEGORIES: crud('ACCOUNT_CATEGORIES'),
   ACCOUNT_CHARGES: crud('ACCOUNT_CHARGES'),
+  FINANCIAL_ACCOUNTS: crud('FINANCIAL_ACCOUNTS'),
+  INTERNAL_TRANSFERS: crud('INTERNAL_TRANSFERS'),
+  CASH_CLOSURES: crud('CASH_CLOSURES'),
 
   // Módulos especiales que no tienen CRUD completo
   AUDIT_LOGS: ['READ_AUDIT_LOGS'],

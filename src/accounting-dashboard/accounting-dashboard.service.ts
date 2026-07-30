@@ -92,6 +92,7 @@ export class AccountingDashboardService {
     const transactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: { gte: startOfYear, lte: endOfYear },
+        isInternalTransfer: false, // EXCLUIR TRANSFERENCIAS
       },
       select: {
         amount: true,
@@ -150,20 +151,62 @@ export class AccountingDashboardService {
       value: expensesMap[name]
     })).sort((a, b) => b.value - a.value);
 
+    const totalReceivables = Number(receivables._sum.pendingAmount || 0);
+    const totalPayables = Number(payables._sum.pendingAmount || 0);
+    const liquidity = await this.getLiquidityMetrics();
+    const netPosition = liquidity.totalInCash + liquidity.totalInBanks + totalReceivables - totalPayables;
+
     return {
       data: {
         kpis: {
-          totalReceivables: receivables._sum.pendingAmount || 0,
-          totalPayables: payables._sum.pendingAmount || 0,
+          totalReceivables,
+          totalPayables,
           receivablesTrend: 5,
           payablesTrend: -2,
           monthlyIncome: currentMonthIncome,
           monthlyExpenses: currentMonthExpenses,
+          totalInCash: liquidity.totalInCash,
+          totalInBanks: liquidity.totalInBanks,
+          netPosition,
         },
         alerts,
         cashFlow,
         expensesByCategory,
       }
+    };
+  }
+
+  /**
+   * Encapsula la lógica de cálculo de liquidez, considerando futuras 
+   * evoluciones como multimoneda. Por ahora, se asume moneda base (BOB).
+   */
+  private async getLiquidityMetrics() {
+    const accounts = await this.prisma.financialAccount.groupBy({
+      by: ['type'],
+      where: {
+        isActive: true,
+        currency: 'BOB', // TODO: Soporte multimoneda en el futuro
+      },
+      _sum: {
+        cachedBalance: true,
+      }
+    });
+
+    let totalInCash = 0;
+    let totalInBanks = 0;
+
+    for (const acc of accounts) {
+      const balance = acc._sum.cachedBalance?.toNumber() || 0;
+      if (acc.type === 'CASH') {
+        totalInCash += balance;
+      } else if (acc.type === 'BANK' || acc.type === 'DIGITAL_WALLET') {
+        totalInBanks += balance;
+      }
+    }
+
+    return {
+      totalInCash,
+      totalInBanks
     };
   }
 }

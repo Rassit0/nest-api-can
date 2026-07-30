@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CashClosuresModule } from './cash-closures/cash-closures.module';
 import { CommonModule } from './common/common.module';
 import { PersonsModule } from './persons/persons.module';
 import { DisciplinesModule } from './disciplines/disciplines.module';
@@ -70,6 +71,7 @@ import { TransactionReportModule } from './transaction-report/transaction-report
 import { AccountCategoriesModule } from './account-categories/account-categories.module';
 import { AccountChargesModule } from './account-charges/account-charges.module';
 import { FinancialAccountsModule } from './financial-accounts/financial-accounts.module';
+import { InternalTransfersModule } from './internal-transfers/internal-transfers.module';
 
 @Module({
   imports: [
@@ -137,7 +139,9 @@ import { FinancialAccountsModule } from './financial-accounts/financial-accounts
     CalendarModule,
     AccountCategoriesModule,
     AccountChargesModule,
+    CashClosuresModule,
     FinancialAccountsModule,
+    InternalTransfersModule,
     AccountingDashboardModule,
   ],
   controllers: [AppController],

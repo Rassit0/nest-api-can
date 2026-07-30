@@ -417,6 +417,7 @@ export const ModelName = {
   ChargeTransaction: 'ChargeTransaction',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
+  InternalTransfer: 'InternalTransfer',
   ReceiptSequence: 'ReceiptSequence',
   User: 'User',
   Role: 'Role',
@@ -450,7 +451,8 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
   AccountCategory: 'AccountCategory',
-  AccountCharge: 'AccountCharge'
+  AccountCharge: 'AccountCharge',
+  CashClosure: 'CashClosure'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -466,7 +468,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "financialAccount" | "transaction" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2465,6 +2467,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TransactionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    InternalTransfer: {
+      payload: Prisma.$InternalTransferPayload<ExtArgs>
+      fields: Prisma.InternalTransferFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InternalTransferFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InternalTransferFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        findFirst: {
+          args: Prisma.InternalTransferFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InternalTransferFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        findMany: {
+          args: Prisma.InternalTransferFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>[]
+        }
+        create: {
+          args: Prisma.InternalTransferCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        createMany: {
+          args: Prisma.InternalTransferCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InternalTransferCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>[]
+        }
+        delete: {
+          args: Prisma.InternalTransferDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        update: {
+          args: Prisma.InternalTransferUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        deleteMany: {
+          args: Prisma.InternalTransferDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InternalTransferUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InternalTransferUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>[]
+        }
+        upsert: {
+          args: Prisma.InternalTransferUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InternalTransferPayload>
+        }
+        aggregate: {
+          args: Prisma.InternalTransferAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInternalTransfer>
+        }
+        groupBy: {
+          args: Prisma.InternalTransferGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InternalTransferGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InternalTransferCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InternalTransferCountAggregateOutputType> | number
         }
       }
     }
@@ -4984,6 +5060,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CashClosure: {
+      payload: Prisma.$CashClosurePayload<ExtArgs>
+      fields: Prisma.CashClosureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CashClosureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CashClosureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        findFirst: {
+          args: Prisma.CashClosureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CashClosureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        findMany: {
+          args: Prisma.CashClosureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>[]
+        }
+        create: {
+          args: Prisma.CashClosureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        createMany: {
+          args: Prisma.CashClosureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CashClosureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>[]
+        }
+        delete: {
+          args: Prisma.CashClosureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        update: {
+          args: Prisma.CashClosureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        deleteMany: {
+          args: Prisma.CashClosureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CashClosureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CashClosureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>[]
+        }
+        upsert: {
+          args: Prisma.CashClosureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashClosurePayload>
+        }
+        aggregate: {
+          args: Prisma.CashClosureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCashClosure>
+        }
+        groupBy: {
+          args: Prisma.CashClosureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashClosureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CashClosureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashClosureCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5464,8 +5614,10 @@ export const FinancialAccountScalarFieldEnum = {
   description: 'description',
   type: 'type',
   currency: 'currency',
-  initialBalance: 'initialBalance',
   cachedBalance: 'cachedBalance',
+  isDefault: 'isDefault',
+  accountNumber: 'accountNumber',
+  lastReconciledAt: 'lastReconciledAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -5492,6 +5644,7 @@ export const TransactionScalarFieldEnum = {
   reconciledAt: 'reconciledAt',
   status: 'status',
   receiptUrls: 'receiptUrls',
+  isInternalTransfer: 'isInternalTransfer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -5499,6 +5652,23 @@ export const TransactionScalarFieldEnum = {
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const InternalTransferScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  description: 'description',
+  reference: 'reference',
+  status: 'status',
+  date: 'date',
+  sourceTransactionId: 'sourceTransactionId',
+  destinationTransactionId: 'destinationTransactionId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InternalTransferScalarFieldEnum = (typeof InternalTransferScalarFieldEnum)[keyof typeof InternalTransferScalarFieldEnum]
 
 
 export const ReceiptSequenceScalarFieldEnum = {
@@ -6031,6 +6201,21 @@ export const AccountChargeScalarFieldEnum = {
 export type AccountChargeScalarFieldEnum = (typeof AccountChargeScalarFieldEnum)[keyof typeof AccountChargeScalarFieldEnum]
 
 
+export const CashClosureScalarFieldEnum = {
+  id: 'id',
+  financialAccountId: 'financialAccountId',
+  closedAt: 'closedAt',
+  expectedBalance: 'expectedBalance',
+  actualBalance: 'actualBalance',
+  difference: 'difference',
+  observations: 'observations',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CashClosureScalarFieldEnum = (typeof CashClosureScalarFieldEnum)[keyof typeof CashClosureScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6429,6 +6614,20 @@ export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'TransferStatus'
+ */
+export type EnumTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransferStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TransferStatus[]'
+ */
+export type ListEnumTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransferStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'StatusCourseSeason'
  */
 export type EnumStatusCourseSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusCourseSeason'>
@@ -6695,6 +6894,7 @@ export type GlobalOmitConfig = {
   chargeTransaction?: Prisma.ChargeTransactionOmit
   financialAccount?: Prisma.FinancialAccountOmit
   transaction?: Prisma.TransactionOmit
+  internalTransfer?: Prisma.InternalTransferOmit
   receiptSequence?: Prisma.ReceiptSequenceOmit
   user?: Prisma.UserOmit
   role?: Prisma.RoleOmit
@@ -6729,6 +6929,7 @@ export type GlobalOmitConfig = {
   eventMaterializationLog?: Prisma.EventMaterializationLogOmit
   accountCategory?: Prisma.AccountCategoryOmit
   accountCharge?: Prisma.AccountChargeOmit
+  cashClosure?: Prisma.CashClosureOmit
 }
 
 /* Types for Logging */

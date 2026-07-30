@@ -216,6 +216,8 @@ export type UserWhereInput = {
   updatedInstitutions?: Prisma.InstitutionListRelationFilter
   createdInstitutionContacts?: Prisma.InstitutionContactListRelationFilter
   updatedInstitutionContacts?: Prisma.InstitutionContactListRelationFilter
+  cashClosuresCreated?: Prisma.CashClosureListRelationFilter
+  cashClosuresUpdated?: Prisma.CashClosureListRelationFilter
   createdClubs?: Prisma.ClubListRelationFilter
   updatedClubs?: Prisma.ClubListRelationFilter
   createdLocations?: Prisma.LocationListRelationFilter
@@ -256,6 +258,7 @@ export type UserWhereInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionListRelationFilter
   createdTransactions?: Prisma.TransactionListRelationFilter
   updatedTransactions?: Prisma.TransactionListRelationFilter
+  createdInternalTransfers?: Prisma.InternalTransferListRelationFilter
   createdRoles?: Prisma.RoleListRelationFilter
   updatedRoles?: Prisma.RoleListRelationFilter
   createdPermissions?: Prisma.PermissionListRelationFilter
@@ -324,6 +327,8 @@ export type UserOrderByWithRelationInput = {
   updatedInstitutions?: Prisma.InstitutionOrderByRelationAggregateInput
   createdInstitutionContacts?: Prisma.InstitutionContactOrderByRelationAggregateInput
   updatedInstitutionContacts?: Prisma.InstitutionContactOrderByRelationAggregateInput
+  cashClosuresCreated?: Prisma.CashClosureOrderByRelationAggregateInput
+  cashClosuresUpdated?: Prisma.CashClosureOrderByRelationAggregateInput
   createdClubs?: Prisma.ClubOrderByRelationAggregateInput
   updatedClubs?: Prisma.ClubOrderByRelationAggregateInput
   createdLocations?: Prisma.LocationOrderByRelationAggregateInput
@@ -364,6 +369,7 @@ export type UserOrderByWithRelationInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionOrderByRelationAggregateInput
   createdTransactions?: Prisma.TransactionOrderByRelationAggregateInput
   updatedTransactions?: Prisma.TransactionOrderByRelationAggregateInput
+  createdInternalTransfers?: Prisma.InternalTransferOrderByRelationAggregateInput
   createdRoles?: Prisma.RoleOrderByRelationAggregateInput
   updatedRoles?: Prisma.RoleOrderByRelationAggregateInput
   createdPermissions?: Prisma.PermissionOrderByRelationAggregateInput
@@ -435,6 +441,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedInstitutions?: Prisma.InstitutionListRelationFilter
   createdInstitutionContacts?: Prisma.InstitutionContactListRelationFilter
   updatedInstitutionContacts?: Prisma.InstitutionContactListRelationFilter
+  cashClosuresCreated?: Prisma.CashClosureListRelationFilter
+  cashClosuresUpdated?: Prisma.CashClosureListRelationFilter
   createdClubs?: Prisma.ClubListRelationFilter
   updatedClubs?: Prisma.ClubListRelationFilter
   createdLocations?: Prisma.LocationListRelationFilter
@@ -475,6 +483,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedChargeTransactions?: Prisma.ChargeTransactionListRelationFilter
   createdTransactions?: Prisma.TransactionListRelationFilter
   updatedTransactions?: Prisma.TransactionListRelationFilter
+  createdInternalTransfers?: Prisma.InternalTransferListRelationFilter
   createdRoles?: Prisma.RoleListRelationFilter
   updatedRoles?: Prisma.RoleListRelationFilter
   createdPermissions?: Prisma.PermissionListRelationFilter
@@ -569,6 +578,8 @@ export type UserCreateInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -609,6 +620,7 @@ export type UserCreateInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -675,6 +687,8 @@ export type UserUncheckedCreateInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -715,6 +729,7 @@ export type UserUncheckedCreateInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -781,6 +796,8 @@ export type UserUpdateInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -821,6 +838,7 @@ export type UserUpdateInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -887,6 +905,8 @@ export type UserUncheckedUpdateInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -927,6 +947,7 @@ export type UserUncheckedUpdateInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1887,6 +1908,22 @@ export type UserUpdateOneWithoutUpdatedTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedTransactionsInput, Prisma.UserUpdateWithoutUpdatedTransactionsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedTransactionsInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedInternalTransfersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedCreateWithoutCreatedInternalTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedInternalTransfersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedInternalTransfersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedCreateWithoutCreatedInternalTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedInternalTransfersInput
+  upsert?: Prisma.UserUpsertWithoutCreatedInternalTransfersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedInternalTransfersInput, Prisma.UserUpdateWithoutCreatedInternalTransfersInput>, Prisma.UserUncheckedUpdateWithoutCreatedInternalTransfersInput>
+}
+
 export type UserCreateNestedManyWithoutRoleInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput> | Prisma.UserCreateWithoutRoleInput[] | Prisma.UserUncheckedCreateWithoutRoleInput[]
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleInput | Prisma.UserCreateOrConnectWithoutRoleInput[]
@@ -2649,6 +2686,38 @@ export type UserUpdateOneWithoutUpdatedAccountChargesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedAccountChargesInput, Prisma.UserUpdateWithoutUpdatedAccountChargesInput>, Prisma.UserUncheckedUpdateWithoutUpdatedAccountChargesInput>
 }
 
+export type UserCreateNestedOneWithoutCashClosuresCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCashClosuresCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutCashClosuresUpdatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresUpdatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCashClosuresUpdatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCashClosuresCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCashClosuresCreatedInput
+  upsert?: Prisma.UserUpsertWithoutCashClosuresCreatedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCashClosuresCreatedInput, Prisma.UserUpdateWithoutCashClosuresCreatedInput>, Prisma.UserUncheckedUpdateWithoutCashClosuresCreatedInput>
+}
+
+export type UserUpdateOneWithoutCashClosuresUpdatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresUpdatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCashClosuresUpdatedInput
+  upsert?: Prisma.UserUpsertWithoutCashClosuresUpdatedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCashClosuresUpdatedInput, Prisma.UserUpdateWithoutCashClosuresUpdatedInput>, Prisma.UserUncheckedUpdateWithoutCashClosuresUpdatedInput>
+}
+
 export type UserCreateWithoutPersonInput = {
   id?: string
   email: string
@@ -2665,6 +2734,8 @@ export type UserCreateWithoutPersonInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -2705,6 +2776,7 @@ export type UserCreateWithoutPersonInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -2770,6 +2842,8 @@ export type UserUncheckedCreateWithoutPersonInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -2810,6 +2884,7 @@ export type UserUncheckedCreateWithoutPersonInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -2880,6 +2955,8 @@ export type UserCreateWithoutCreatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -2920,6 +2997,7 @@ export type UserCreateWithoutCreatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -2985,6 +3063,8 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3025,6 +3105,7 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3095,6 +3176,8 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -3135,6 +3218,7 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -3200,6 +3284,8 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3240,6 +3326,7 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3321,6 +3408,8 @@ export type UserUpdateWithoutPersonInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -3361,6 +3450,7 @@ export type UserUpdateWithoutPersonInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -3426,6 +3516,8 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3466,6 +3558,7 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3542,6 +3635,8 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -3582,6 +3677,7 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -3647,6 +3743,8 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3687,6 +3785,7 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3763,6 +3862,8 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -3803,6 +3904,7 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -3868,6 +3970,8 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3908,6 +4012,7 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3973,6 +4078,8 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -4013,6 +4120,7 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -4078,6 +4186,8 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4118,6 +4228,7 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4188,6 +4299,8 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -4228,6 +4341,7 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -4293,6 +4407,8 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4333,6 +4449,7 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4414,6 +4531,8 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -4454,6 +4573,7 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -4519,6 +4639,8 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4559,6 +4681,7 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4635,6 +4758,8 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -4675,6 +4800,7 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -4740,6 +4866,8 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4780,6 +4908,7 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4845,6 +4974,8 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -4885,6 +5016,7 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -4950,6 +5082,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4990,6 +5124,7 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5060,6 +5195,8 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -5100,6 +5237,7 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -5165,6 +5303,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5205,6 +5345,7 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5286,6 +5427,8 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -5326,6 +5469,7 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -5391,6 +5535,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5431,6 +5577,7 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5507,6 +5654,8 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -5547,6 +5696,7 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -5612,6 +5762,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5652,6 +5804,7 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5717,6 +5870,8 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -5757,6 +5912,7 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -5822,6 +5978,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5862,6 +6020,7 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5932,6 +6091,8 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -5972,6 +6133,7 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -6037,6 +6199,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6077,6 +6241,7 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6158,6 +6323,8 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -6198,6 +6365,7 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -6263,6 +6431,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6303,6 +6473,7 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6379,6 +6550,8 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -6419,6 +6592,7 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -6484,6 +6658,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6524,6 +6700,7 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6590,6 +6767,8 @@ export type UserCreateWithoutCreatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -6630,6 +6809,7 @@ export type UserCreateWithoutCreatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -6695,6 +6875,8 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6735,6 +6917,7 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6805,6 +6988,8 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -6845,6 +7030,7 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -6910,6 +7096,8 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6950,6 +7138,7 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7031,6 +7220,8 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -7071,6 +7262,7 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -7136,6 +7328,8 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7176,6 +7370,7 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7252,6 +7447,8 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -7292,6 +7489,7 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -7357,6 +7555,8 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7397,6 +7597,7 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7462,6 +7663,8 @@ export type UserCreateWithoutCreatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
   updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
@@ -7501,6 +7704,7 @@ export type UserCreateWithoutCreatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -7567,6 +7771,8 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
   updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -7606,6 +7812,7 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7677,6 +7884,8 @@ export type UserCreateWithoutUpdatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
   updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
@@ -7716,6 +7925,7 @@ export type UserCreateWithoutUpdatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -7782,6 +7992,8 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
   updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -7821,6 +8033,7 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7903,6 +8116,8 @@ export type UserUpdateWithoutCreatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
   updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
@@ -7942,6 +8157,7 @@ export type UserUpdateWithoutCreatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -8008,6 +8224,8 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8047,6 +8265,7 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8124,6 +8343,8 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
   updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
@@ -8163,6 +8384,7 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -8229,6 +8451,8 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8268,6 +8492,7 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8334,6 +8559,8 @@ export type UserCreateWithoutCreatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
@@ -8373,6 +8600,7 @@ export type UserCreateWithoutCreatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -8439,6 +8667,8 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -8478,6 +8708,7 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8549,6 +8780,8 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -8588,6 +8821,7 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -8654,6 +8888,8 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8693,6 +8929,7 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8775,6 +9012,8 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
@@ -8814,6 +9053,7 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -8880,6 +9120,8 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8919,6 +9161,7 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8996,6 +9239,8 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -9035,6 +9280,7 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -9101,6 +9347,8 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9140,6 +9388,7 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9206,6 +9455,8 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -9245,6 +9496,7 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -9311,6 +9563,8 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9350,6 +9604,7 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9421,6 +9676,8 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -9460,6 +9717,7 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -9526,6 +9784,8 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9565,6 +9825,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9647,6 +9908,8 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -9686,6 +9949,7 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -9752,6 +10016,8 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9791,6 +10057,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9868,6 +10135,8 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -9907,6 +10176,7 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -9973,6 +10243,8 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10012,6 +10284,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10078,6 +10351,8 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -10117,6 +10392,7 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -10183,6 +10459,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10222,6 +10500,7 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10293,6 +10572,8 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -10332,6 +10613,7 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -10398,6 +10680,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10437,6 +10721,7 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10519,6 +10804,8 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -10558,6 +10845,7 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -10624,6 +10912,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10663,6 +10953,7 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10740,6 +11031,8 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -10779,6 +11072,7 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -10845,6 +11139,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10884,6 +11180,7 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10950,6 +11247,8 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -10989,6 +11288,7 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -11055,6 +11355,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11094,6 +11396,7 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11165,6 +11468,8 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -11204,6 +11509,7 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -11270,6 +11576,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11309,6 +11617,7 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11391,6 +11700,8 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -11430,6 +11741,7 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -11496,6 +11808,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11535,6 +11849,7 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11612,6 +11927,8 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -11651,6 +11968,7 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -11717,6 +12035,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11756,6 +12076,7 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11822,6 +12143,8 @@ export type UserCreateWithoutCreatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -11861,6 +12184,7 @@ export type UserCreateWithoutCreatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -11927,6 +12251,8 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11966,6 +12292,7 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12037,6 +12364,8 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -12076,6 +12405,7 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -12142,6 +12472,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12181,6 +12513,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12263,6 +12596,8 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -12302,6 +12637,7 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -12368,6 +12704,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12407,6 +12745,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12484,6 +12823,8 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -12523,6 +12864,7 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -12589,6 +12931,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12628,6 +12972,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12694,6 +13039,8 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -12733,6 +13080,7 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -12799,6 +13147,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12838,6 +13188,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12909,6 +13260,8 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -12948,6 +13301,7 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -13014,6 +13368,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13053,6 +13409,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13135,6 +13492,8 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -13174,6 +13533,7 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -13240,6 +13600,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13279,6 +13641,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13356,6 +13719,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -13395,6 +13760,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -13461,6 +13827,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13500,6 +13868,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13566,6 +13935,8 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -13605,6 +13976,7 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -13671,6 +14043,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13710,6 +14084,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13781,6 +14156,8 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -13820,6 +14197,7 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -13886,6 +14264,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13925,6 +14305,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14007,6 +14388,8 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -14046,6 +14429,7 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -14112,6 +14496,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14151,6 +14537,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14228,6 +14615,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -14267,6 +14656,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -14333,6 +14723,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14372,6 +14764,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14438,6 +14831,8 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -14477,6 +14872,7 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -14543,6 +14939,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14582,6 +14980,7 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14653,6 +15052,8 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -14692,6 +15093,7 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -14758,6 +15160,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14797,6 +15201,7 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14879,6 +15284,8 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -14918,6 +15325,7 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -14984,6 +15392,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15023,6 +15433,7 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15100,6 +15511,8 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -15139,6 +15552,7 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -15205,6 +15619,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15244,6 +15660,7 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15310,6 +15727,8 @@ export type UserCreateWithoutCreatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -15349,6 +15768,7 @@ export type UserCreateWithoutCreatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -15415,6 +15835,8 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15454,6 +15876,7 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15525,6 +15948,8 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -15564,6 +15989,7 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -15630,6 +16056,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15669,6 +16097,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15751,6 +16180,8 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -15790,6 +16221,7 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -15856,6 +16288,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15895,6 +16329,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15972,6 +16407,8 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -16011,6 +16448,7 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -16077,6 +16515,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16116,6 +16556,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16182,6 +16623,8 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -16221,6 +16664,7 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -16287,6 +16731,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16326,6 +16772,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16397,6 +16844,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -16436,6 +16885,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -16502,6 +16952,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16541,6 +16993,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16623,6 +17076,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -16662,6 +17117,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -16728,6 +17184,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16767,6 +17225,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16844,6 +17303,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -16883,6 +17344,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -16949,6 +17411,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16988,6 +17452,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17054,6 +17519,8 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -17093,6 +17560,7 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -17159,6 +17627,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17198,6 +17668,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17269,6 +17740,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -17308,6 +17781,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -17374,6 +17848,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17413,6 +17889,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17495,6 +17972,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -17534,6 +18013,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -17600,6 +18080,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17639,6 +18121,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17716,6 +18199,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -17755,6 +18240,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -17821,6 +18307,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17860,6 +18348,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17926,6 +18415,8 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -17965,6 +18456,7 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -18031,6 +18523,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18070,6 +18564,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18141,6 +18636,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -18180,6 +18677,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -18246,6 +18744,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18285,6 +18785,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18367,6 +18868,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -18406,6 +18909,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -18472,6 +18976,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18511,6 +19017,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18588,6 +19095,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -18627,6 +19136,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -18693,6 +19203,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18732,6 +19244,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18798,6 +19311,8 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -18837,6 +19352,7 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -18903,6 +19419,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18942,6 +19460,7 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19013,6 +19532,8 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -19052,6 +19573,7 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -19118,6 +19640,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19157,6 +19681,7 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19239,6 +19764,8 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -19278,6 +19805,7 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -19344,6 +19872,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19383,6 +19913,7 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19460,6 +19991,8 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -19499,6 +20032,7 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -19565,6 +20099,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19604,6 +20140,7 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19670,6 +20207,8 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -19709,6 +20248,7 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -19775,6 +20315,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19814,6 +20356,7 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19885,6 +20428,8 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -19924,6 +20469,7 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -19990,6 +20536,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20029,6 +20577,7 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20111,6 +20660,8 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -20150,6 +20701,7 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -20216,6 +20768,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20255,6 +20809,7 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20332,6 +20887,8 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -20371,6 +20928,7 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -20437,6 +20995,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20476,6 +21036,7 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20542,6 +21103,8 @@ export type UserCreateWithoutCreatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -20581,6 +21144,7 @@ export type UserCreateWithoutCreatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -20647,6 +21211,8 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20686,6 +21252,7 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20757,6 +21324,8 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -20796,6 +21365,7 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -20862,6 +21432,8 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20901,6 +21473,7 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20983,6 +21556,8 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -21022,6 +21597,7 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -21088,6 +21664,8 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21127,6 +21705,7 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21204,6 +21783,8 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -21243,6 +21824,7 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -21309,6 +21891,8 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21348,6 +21932,7 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21414,6 +21999,8 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -21453,6 +22040,7 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -21519,6 +22107,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21558,6 +22148,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21629,6 +22220,8 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -21668,6 +22261,7 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -21734,6 +22328,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21773,6 +22369,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21855,6 +22452,8 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -21894,6 +22493,7 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -21960,6 +22560,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21999,6 +22601,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22076,6 +22679,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -22115,6 +22720,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -22181,6 +22787,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22220,6 +22828,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22286,6 +22895,8 @@ export type UserCreateWithoutCreatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -22325,6 +22936,7 @@ export type UserCreateWithoutCreatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -22391,6 +23003,8 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22430,6 +23044,7 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22501,6 +23116,8 @@ export type UserCreateWithoutUpdatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -22540,6 +23157,7 @@ export type UserCreateWithoutUpdatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -22606,6 +23224,8 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22645,6 +23265,7 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22727,6 +23348,8 @@ export type UserUpdateWithoutCreatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -22766,6 +23389,7 @@ export type UserUpdateWithoutCreatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -22832,6 +23456,8 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22871,6 +23497,7 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22948,6 +23575,8 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -22987,6 +23616,7 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -23053,6 +23683,8 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23092,6 +23724,7 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23158,6 +23791,8 @@ export type UserCreateWithoutCreatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -23197,6 +23832,7 @@ export type UserCreateWithoutCreatedChargeTransactionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -23263,6 +23899,8 @@ export type UserUncheckedCreateWithoutCreatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23302,6 +23940,7 @@ export type UserUncheckedCreateWithoutCreatedChargeTransactionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23373,6 +24012,8 @@ export type UserCreateWithoutUpdatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -23412,6 +24053,7 @@ export type UserCreateWithoutUpdatedChargeTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -23478,6 +24120,8 @@ export type UserUncheckedCreateWithoutUpdatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23517,6 +24161,7 @@ export type UserUncheckedCreateWithoutUpdatedChargeTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23599,6 +24244,8 @@ export type UserUpdateWithoutCreatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -23638,6 +24285,7 @@ export type UserUpdateWithoutCreatedChargeTransactionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -23704,6 +24352,8 @@ export type UserUncheckedUpdateWithoutCreatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23743,6 +24393,7 @@ export type UserUncheckedUpdateWithoutCreatedChargeTransactionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23820,6 +24471,8 @@ export type UserUpdateWithoutUpdatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -23859,6 +24512,7 @@ export type UserUpdateWithoutUpdatedChargeTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -23925,6 +24579,8 @@ export type UserUncheckedUpdateWithoutUpdatedChargeTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23964,6 +24620,7 @@ export type UserUncheckedUpdateWithoutUpdatedChargeTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24030,6 +24687,8 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -24069,6 +24728,7 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -24135,6 +24795,8 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24174,6 +24836,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24245,6 +24908,8 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -24284,6 +24949,7 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -24350,6 +25016,8 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24389,6 +25057,7 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24471,6 +25140,8 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -24510,6 +25181,7 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -24576,6 +25248,8 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24615,6 +25289,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24692,6 +25367,8 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -24731,6 +25408,7 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -24797,6 +25475,8 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24836,6 +25516,7 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24885,7 +25566,7 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
-export type UserCreateWithoutRoleInput = {
+export type UserCreateWithoutCreatedInternalTransfersInput = {
   id?: string
   email: string
   password: string
@@ -24893,6 +25574,7 @@ export type UserCreateWithoutRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
   createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
   updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
   createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
@@ -24901,6 +25583,8 @@ export type UserCreateWithoutRoleInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -24990,11 +25674,12 @@ export type UserCreateWithoutRoleInput = {
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
 }
 
-export type UserUncheckedCreateWithoutRoleInput = {
+export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   id?: string
   email: string
   password: string
   personId?: string | null
+  roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -25006,6 +25691,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25095,17 +25782,239 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
-export type UserCreateOrConnectWithoutRoleInput = {
+export type UserCreateOrConnectWithoutCreatedInternalTransfersInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedCreateWithoutCreatedInternalTransfersInput>
 }
 
-export type UserCreateManyRoleInputEnvelope = {
-  data: Prisma.UserCreateManyRoleInput | Prisma.UserCreateManyRoleInput[]
-  skipDuplicates?: boolean
+export type UserUpsertWithoutCreatedInternalTransfersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedUpdateWithoutCreatedInternalTransfersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedCreateWithoutCreatedInternalTransfersInput>
+  where?: Prisma.UserWhereInput
 }
 
-export type UserCreateWithoutCreatedRolesInput = {
+export type UserUpdateToOneWithWhereWithoutCreatedInternalTransfersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedInternalTransfersInput, Prisma.UserUncheckedUpdateWithoutCreatedInternalTransfersInput>
+}
+
+export type UserUpdateWithoutCreatedInternalTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateWithoutRoleInput = {
   id?: string
   email: string
   password: string
@@ -25113,7 +26022,6 @@ export type UserCreateWithoutCreatedRolesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
-  role: Prisma.RoleCreateNestedOneWithoutUsersInput
   createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
   updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
   createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
@@ -25122,6 +26030,8 @@ export type UserCreateWithoutCreatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -25162,6 +26072,234 @@ export type UserCreateWithoutCreatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutRoleInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutRoleInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput>
+}
+
+export type UserCreateManyRoleInputEnvelope = {
+  data: Prisma.UserCreateManyRoleInput | Prisma.UserCreateManyRoleInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserCreateWithoutCreatedRolesInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -25227,6 +26365,8 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25267,6 +26407,7 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -25337,6 +26478,8 @@ export type UserCreateWithoutUpdatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -25377,6 +26520,7 @@ export type UserCreateWithoutUpdatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -25442,6 +26586,8 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25482,6 +26628,7 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -25593,6 +26740,8 @@ export type UserUpdateWithoutCreatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -25633,6 +26782,7 @@ export type UserUpdateWithoutCreatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -25698,6 +26848,8 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25738,6 +26890,7 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -25814,6 +26967,8 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -25854,6 +27009,7 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -25919,6 +27075,8 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25959,6 +27117,7 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -26024,6 +27183,8 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -26064,6 +27225,7 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -26129,6 +27291,8 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26169,6 +27333,7 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -26239,6 +27404,8 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -26279,6 +27446,7 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -26344,6 +27512,8 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26384,6 +27554,7 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26465,6 +27636,8 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -26505,6 +27678,7 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -26570,6 +27744,8 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26610,6 +27786,7 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -26686,6 +27863,8 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -26726,6 +27905,7 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -26791,6 +27971,8 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26831,6 +28013,7 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26896,6 +28079,8 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -26936,6 +28121,7 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -27001,6 +28187,8 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27041,6 +28229,7 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27111,6 +28300,8 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -27151,6 +28342,7 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -27216,6 +28408,8 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27256,6 +28450,7 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27337,6 +28532,8 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -27377,6 +28574,7 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -27442,6 +28640,8 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27482,6 +28682,7 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27558,6 +28759,8 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -27598,6 +28801,7 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -27663,6 +28867,8 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27703,6 +28909,7 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27768,6 +28975,8 @@ export type UserCreateWithoutCreatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -27808,6 +29017,7 @@ export type UserCreateWithoutCreatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -27873,6 +29083,8 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27913,6 +29125,7 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27983,6 +29196,8 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -28023,6 +29238,7 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -28088,6 +29304,8 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28128,6 +29346,7 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28209,6 +29428,8 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -28249,6 +29470,7 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -28314,6 +29536,8 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28354,6 +29578,7 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28430,6 +29655,8 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -28470,6 +29697,7 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -28535,6 +29763,8 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28575,6 +29805,7 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28640,6 +29871,8 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -28680,6 +29913,7 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -28745,6 +29979,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28785,6 +30021,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28855,6 +30092,8 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -28895,6 +30134,7 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -28960,6 +30200,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29000,6 +30242,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29081,6 +30324,8 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -29121,6 +30366,7 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -29186,6 +30432,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29226,6 +30474,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29302,6 +30551,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -29342,6 +30593,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -29407,6 +30659,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29447,6 +30701,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29512,6 +30767,8 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -29552,6 +30809,7 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -29617,6 +30875,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29657,6 +30917,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29727,6 +30988,8 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -29767,6 +31030,7 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -29832,6 +31096,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29872,6 +31138,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29953,6 +31220,8 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -29993,6 +31262,7 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -30058,6 +31328,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30098,6 +31370,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30174,6 +31447,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -30214,6 +31489,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -30279,6 +31555,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30319,6 +31597,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30384,6 +31663,8 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -30424,6 +31705,7 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -30489,6 +31771,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30529,6 +31813,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30599,6 +31884,8 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -30639,6 +31926,7 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -30704,6 +31992,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30744,6 +32034,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30825,6 +32116,8 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -30865,6 +32158,7 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -30930,6 +32224,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30970,6 +32266,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31046,6 +32343,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -31086,6 +32385,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -31151,6 +32451,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31191,6 +32493,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31256,6 +32559,8 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -31296,6 +32601,7 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -31361,6 +32667,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31401,6 +32709,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31471,6 +32780,8 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -31511,6 +32822,7 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -31576,6 +32888,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31616,6 +32930,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31697,6 +33012,8 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -31737,6 +33054,7 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -31802,6 +33120,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31842,6 +33162,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31918,6 +33239,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -31958,6 +33281,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -32023,6 +33347,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32063,6 +33389,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32128,6 +33455,8 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -32168,6 +33497,7 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -32233,6 +33563,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32273,6 +33605,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32343,6 +33676,8 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -32383,6 +33718,7 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -32448,6 +33784,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32488,6 +33826,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32569,6 +33908,8 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -32609,6 +33950,7 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -32674,6 +34016,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32714,6 +34058,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32790,6 +34135,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -32830,6 +34177,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -32895,6 +34243,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32935,6 +34285,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33000,6 +34351,8 @@ export type UserCreateWithoutCreatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -33040,6 +34393,7 @@ export type UserCreateWithoutCreatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -33105,6 +34459,8 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33145,6 +34501,7 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33215,6 +34572,8 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -33255,6 +34614,7 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -33320,6 +34680,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33360,6 +34722,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33441,6 +34804,8 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -33481,6 +34846,7 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -33546,6 +34912,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33586,6 +34954,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33662,6 +35031,8 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -33702,6 +35073,7 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -33767,6 +35139,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33807,6 +35181,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33872,6 +35247,8 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -33912,6 +35289,7 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -33977,6 +35355,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34017,6 +35397,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34087,6 +35468,8 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -34127,6 +35510,7 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -34192,6 +35576,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34232,6 +35618,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34313,6 +35700,8 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -34353,6 +35742,7 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -34418,6 +35808,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34458,6 +35850,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34534,6 +35927,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -34574,6 +35969,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -34639,6 +36035,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34679,6 +36077,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34744,6 +36143,8 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -34784,6 +36185,7 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -34849,6 +36251,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34889,6 +36293,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34959,6 +36364,8 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -34999,6 +36406,7 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -35064,6 +36472,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35104,6 +36514,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35185,6 +36596,8 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -35225,6 +36638,7 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -35290,6 +36704,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35330,6 +36746,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35406,6 +36823,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -35446,6 +36865,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -35511,6 +36931,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35551,6 +36973,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35616,6 +37039,8 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -35656,6 +37081,7 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -35721,6 +37147,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35761,6 +37189,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35831,6 +37260,8 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -35871,6 +37302,7 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -35936,6 +37368,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35976,6 +37410,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36057,6 +37492,8 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -36097,6 +37534,7 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -36162,6 +37600,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36202,6 +37642,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36278,6 +37719,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -36318,6 +37761,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -36383,6 +37827,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36423,6 +37869,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36488,6 +37935,8 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -36528,6 +37977,7 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -36593,6 +38043,8 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36633,6 +38085,7 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36703,6 +38156,8 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -36743,6 +38198,7 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -36808,6 +38264,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36848,6 +38306,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36929,6 +38388,8 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -36969,6 +38430,7 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -37034,6 +38496,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37074,6 +38538,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37150,6 +38615,8 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -37190,6 +38657,7 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -37255,6 +38723,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37295,6 +38765,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37360,6 +38831,8 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -37400,6 +38873,7 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -37465,6 +38939,8 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37505,6 +38981,7 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37575,6 +39052,8 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -37615,6 +39094,7 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -37680,6 +39160,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37720,6 +39202,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37801,6 +39284,8 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -37841,6 +39326,7 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -37906,6 +39392,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37946,6 +39434,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38022,6 +39511,8 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -38062,6 +39553,7 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -38127,6 +39619,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38167,6 +39661,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38232,6 +39727,8 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -38272,6 +39769,7 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -38337,6 +39835,8 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38377,6 +39877,7 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38447,6 +39948,8 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -38487,6 +39990,7 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -38552,6 +40056,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38592,6 +40098,7 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38673,6 +40180,8 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -38713,6 +40222,7 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -38778,6 +40288,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38818,6 +40330,7 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38894,6 +40407,8 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -38934,6 +40449,7 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -38999,6 +40515,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39039,6 +40557,7 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39104,6 +40623,8 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -39144,6 +40665,7 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -39209,6 +40731,8 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39249,6 +40773,7 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39319,6 +40844,8 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -39359,6 +40886,7 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -39424,6 +40952,8 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39464,6 +40994,7 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39545,6 +41076,8 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -39585,6 +41118,7 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -39650,6 +41184,8 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39690,6 +41226,7 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39766,6 +41303,8 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -39806,6 +41345,7 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -39871,6 +41411,8 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39911,6 +41453,7 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39976,6 +41519,8 @@ export type UserCreateWithoutCreatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -40016,6 +41561,7 @@ export type UserCreateWithoutCreatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -40081,6 +41627,8 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40121,6 +41669,7 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40191,6 +41740,8 @@ export type UserCreateWithoutUpdatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -40231,6 +41782,7 @@ export type UserCreateWithoutUpdatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -40296,6 +41848,8 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40336,6 +41890,7 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40417,6 +41972,8 @@ export type UserUpdateWithoutCreatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -40457,6 +42014,7 @@ export type UserUpdateWithoutCreatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -40522,6 +42080,8 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40562,6 +42122,7 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40638,6 +42199,8 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -40678,6 +42241,7 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -40743,6 +42307,8 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40783,6 +42349,7 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40848,6 +42415,8 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -40888,6 +42457,7 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -40953,6 +42523,8 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40993,6 +42565,7 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41063,6 +42636,8 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -41103,6 +42678,7 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -41168,6 +42744,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41208,6 +42786,7 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41289,6 +42868,8 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -41329,6 +42910,7 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -41394,6 +42976,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41434,6 +43018,7 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41510,6 +43095,8 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -41550,6 +43137,7 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -41615,6 +43203,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41655,6 +43245,7 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41720,6 +43311,8 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -41760,6 +43353,7 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -41825,6 +43419,8 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41865,6 +43461,7 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41935,6 +43532,8 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -41975,6 +43574,7 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -42040,6 +43640,8 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42080,6 +43682,7 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42161,6 +43764,8 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -42201,6 +43806,7 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -42266,6 +43872,8 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42306,6 +43914,7 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42382,6 +43991,8 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -42422,6 +44033,7 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -42487,6 +44099,8 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42527,6 +44141,7 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42592,6 +44207,8 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -42632,6 +44249,7 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -42697,6 +44315,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42737,6 +44357,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42818,6 +44439,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -42858,6 +44481,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -42923,6 +44547,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42963,6 +44589,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43028,6 +44655,8 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -43068,6 +44697,7 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -43133,6 +44763,8 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43173,6 +44805,7 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43243,6 +44876,8 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -43283,6 +44918,7 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -43348,6 +44984,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43388,6 +45026,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43469,6 +45108,8 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -43509,6 +45150,7 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -43574,6 +45216,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43614,6 +45258,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43690,6 +45335,8 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -43730,6 +45377,7 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -43795,6 +45443,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43835,6 +45485,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43900,6 +45551,8 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -43940,6 +45593,7 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -44005,6 +45659,8 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44045,6 +45701,7 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44115,6 +45772,8 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
@@ -44155,6 +45814,7 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
@@ -44220,6 +45880,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
   createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
   updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
   createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44260,6 +45922,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
   createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
   updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44341,6 +46004,8 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -44381,6 +46046,7 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -44446,6 +46112,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44486,6 +46154,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44562,6 +46231,8 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -44602,6 +46273,7 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -44667,6 +46339,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44707,6 +46381,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44755,17 +46430,460 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
-export type UserCreateManyRoleInput = {
+export type UserCreateWithoutCashClosuresCreatedInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   id?: string
   email: string
   password: string
   personId?: string | null
+  roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
-export type UserUpdateWithoutRoleInput = {
+export type UserCreateOrConnectWithoutCashClosuresCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresCreatedInput>
+}
+
+export type UserCreateWithoutCashClosuresUpdatedInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutCashClosuresUpdatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresUpdatedInput>
+}
+
+export type UserUpsertWithoutCashClosuresCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedUpdateWithoutCashClosuresCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCashClosuresCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCashClosuresCreatedInput, Prisma.UserUncheckedUpdateWithoutCashClosuresCreatedInput>
+}
+
+export type UserUpdateWithoutCashClosuresCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
@@ -44773,6 +46891,7 @@ export type UserUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
   updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
   createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
@@ -44781,6 +46900,7 @@ export type UserUpdateWithoutRoleInput = {
   updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
@@ -44821,6 +46941,460 @@ export type UserUpdateWithoutRoleInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUpsertWithoutCashClosuresUpdatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedUpdateWithoutCashClosuresUpdatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedCreateWithoutCashClosuresUpdatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCashClosuresUpdatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCashClosuresUpdatedInput, Prisma.UserUncheckedUpdateWithoutCashClosuresUpdatedInput>
+}
+
+export type UserUpdateWithoutCashClosuresUpdatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateManyRoleInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutRoleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
@@ -44886,6 +47460,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44926,6 +47502,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
   createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44999,6 +47576,8 @@ export type UserCountOutputType = {
   updatedInstitutions: number
   createdInstitutionContacts: number
   updatedInstitutionContacts: number
+  cashClosuresCreated: number
+  cashClosuresUpdated: number
   createdClubs: number
   updatedClubs: number
   createdLocations: number
@@ -45039,6 +47618,7 @@ export type UserCountOutputType = {
   updatedChargeTransactions: number
   createdTransactions: number
   updatedTransactions: number
+  createdInternalTransfers: number
   createdRoles: number
   updatedRoles: number
   createdPermissions: number
@@ -45097,6 +47677,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedInstitutions?: boolean | UserCountOutputTypeCountUpdatedInstitutionsArgs
   createdInstitutionContacts?: boolean | UserCountOutputTypeCountCreatedInstitutionContactsArgs
   updatedInstitutionContacts?: boolean | UserCountOutputTypeCountUpdatedInstitutionContactsArgs
+  cashClosuresCreated?: boolean | UserCountOutputTypeCountCashClosuresCreatedArgs
+  cashClosuresUpdated?: boolean | UserCountOutputTypeCountCashClosuresUpdatedArgs
   createdClubs?: boolean | UserCountOutputTypeCountCreatedClubsArgs
   updatedClubs?: boolean | UserCountOutputTypeCountUpdatedClubsArgs
   createdLocations?: boolean | UserCountOutputTypeCountCreatedLocationsArgs
@@ -45137,6 +47719,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedChargeTransactions?: boolean | UserCountOutputTypeCountUpdatedChargeTransactionsArgs
   createdTransactions?: boolean | UserCountOutputTypeCountCreatedTransactionsArgs
   updatedTransactions?: boolean | UserCountOutputTypeCountUpdatedTransactionsArgs
+  createdInternalTransfers?: boolean | UserCountOutputTypeCountCreatedInternalTransfersArgs
   createdRoles?: boolean | UserCountOutputTypeCountCreatedRolesArgs
   updatedRoles?: boolean | UserCountOutputTypeCountUpdatedRolesArgs
   createdPermissions?: boolean | UserCountOutputTypeCountCreatedPermissionsArgs
@@ -45250,6 +47833,20 @@ export type UserCountOutputTypeCountCreatedInstitutionContactsArgs<ExtArgs exten
  */
 export type UserCountOutputTypeCountUpdatedInstitutionContactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InstitutionContactWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCashClosuresCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CashClosureWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCashClosuresUpdatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CashClosureWhereInput
 }
 
 /**
@@ -45530,6 +48127,13 @@ export type UserCountOutputTypeCountCreatedTransactionsArgs<ExtArgs extends runt
  */
 export type UserCountOutputTypeCountUpdatedTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TransactionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedInternalTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InternalTransferWhereInput
 }
 
 /**
@@ -45881,6 +48485,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedInstitutions?: boolean | Prisma.User$updatedInstitutionsArgs<ExtArgs>
   createdInstitutionContacts?: boolean | Prisma.User$createdInstitutionContactsArgs<ExtArgs>
   updatedInstitutionContacts?: boolean | Prisma.User$updatedInstitutionContactsArgs<ExtArgs>
+  cashClosuresCreated?: boolean | Prisma.User$cashClosuresCreatedArgs<ExtArgs>
+  cashClosuresUpdated?: boolean | Prisma.User$cashClosuresUpdatedArgs<ExtArgs>
   createdClubs?: boolean | Prisma.User$createdClubsArgs<ExtArgs>
   updatedClubs?: boolean | Prisma.User$updatedClubsArgs<ExtArgs>
   createdLocations?: boolean | Prisma.User$createdLocationsArgs<ExtArgs>
@@ -45921,6 +48527,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedChargeTransactions?: boolean | Prisma.User$updatedChargeTransactionsArgs<ExtArgs>
   createdTransactions?: boolean | Prisma.User$createdTransactionsArgs<ExtArgs>
   updatedTransactions?: boolean | Prisma.User$updatedTransactionsArgs<ExtArgs>
+  createdInternalTransfers?: boolean | Prisma.User$createdInternalTransfersArgs<ExtArgs>
   createdRoles?: boolean | Prisma.User$createdRolesArgs<ExtArgs>
   updatedRoles?: boolean | Prisma.User$updatedRolesArgs<ExtArgs>
   createdPermissions?: boolean | Prisma.User$createdPermissionsArgs<ExtArgs>
@@ -46020,6 +48627,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedInstitutions?: boolean | Prisma.User$updatedInstitutionsArgs<ExtArgs>
   createdInstitutionContacts?: boolean | Prisma.User$createdInstitutionContactsArgs<ExtArgs>
   updatedInstitutionContacts?: boolean | Prisma.User$updatedInstitutionContactsArgs<ExtArgs>
+  cashClosuresCreated?: boolean | Prisma.User$cashClosuresCreatedArgs<ExtArgs>
+  cashClosuresUpdated?: boolean | Prisma.User$cashClosuresUpdatedArgs<ExtArgs>
   createdClubs?: boolean | Prisma.User$createdClubsArgs<ExtArgs>
   updatedClubs?: boolean | Prisma.User$updatedClubsArgs<ExtArgs>
   createdLocations?: boolean | Prisma.User$createdLocationsArgs<ExtArgs>
@@ -46060,6 +48669,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedChargeTransactions?: boolean | Prisma.User$updatedChargeTransactionsArgs<ExtArgs>
   createdTransactions?: boolean | Prisma.User$createdTransactionsArgs<ExtArgs>
   updatedTransactions?: boolean | Prisma.User$updatedTransactionsArgs<ExtArgs>
+  createdInternalTransfers?: boolean | Prisma.User$createdInternalTransfersArgs<ExtArgs>
   createdRoles?: boolean | Prisma.User$createdRolesArgs<ExtArgs>
   updatedRoles?: boolean | Prisma.User$updatedRolesArgs<ExtArgs>
   createdPermissions?: boolean | Prisma.User$createdPermissionsArgs<ExtArgs>
@@ -46131,6 +48741,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedInstitutions: Prisma.$InstitutionPayload<ExtArgs>[]
     createdInstitutionContacts: Prisma.$InstitutionContactPayload<ExtArgs>[]
     updatedInstitutionContacts: Prisma.$InstitutionContactPayload<ExtArgs>[]
+    cashClosuresCreated: Prisma.$CashClosurePayload<ExtArgs>[]
+    cashClosuresUpdated: Prisma.$CashClosurePayload<ExtArgs>[]
     createdClubs: Prisma.$ClubPayload<ExtArgs>[]
     updatedClubs: Prisma.$ClubPayload<ExtArgs>[]
     createdLocations: Prisma.$LocationPayload<ExtArgs>[]
@@ -46171,6 +48783,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedChargeTransactions: Prisma.$ChargeTransactionPayload<ExtArgs>[]
     createdTransactions: Prisma.$TransactionPayload<ExtArgs>[]
     updatedTransactions: Prisma.$TransactionPayload<ExtArgs>[]
+    createdInternalTransfers: Prisma.$InternalTransferPayload<ExtArgs>[]
     createdRoles: Prisma.$RolePayload<ExtArgs>[]
     updatedRoles: Prisma.$RolePayload<ExtArgs>[]
     createdPermissions: Prisma.$PermissionPayload<ExtArgs>[]
@@ -46632,6 +49245,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedInstitutions<T extends Prisma.User$updatedInstitutionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedInstitutionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdInstitutionContacts<T extends Prisma.User$createdInstitutionContactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdInstitutionContactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedInstitutionContacts<T extends Prisma.User$updatedInstitutionContactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedInstitutionContactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstitutionContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cashClosuresCreated<T extends Prisma.User$cashClosuresCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cashClosuresCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CashClosurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cashClosuresUpdated<T extends Prisma.User$cashClosuresUpdatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cashClosuresUpdatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CashClosurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdClubs<T extends Prisma.User$createdClubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdClubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedClubs<T extends Prisma.User$updatedClubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedClubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdLocations<T extends Prisma.User$createdLocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdLocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -46672,6 +49287,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedChargeTransactions<T extends Prisma.User$updatedChargeTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedChargeTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChargeTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdTransactions<T extends Prisma.User$createdTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedTransactions<T extends Prisma.User$updatedTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdInternalTransfers<T extends Prisma.User$createdInternalTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdInternalTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternalTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdRoles<T extends Prisma.User$createdRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedRoles<T extends Prisma.User$updatedRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdPermissions<T extends Prisma.User$createdPermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -47360,6 +49976,54 @@ export type User$updatedInstitutionContactsArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.InstitutionContactScalarFieldEnum | Prisma.InstitutionContactScalarFieldEnum[]
+}
+
+/**
+ * User.cashClosuresCreated
+ */
+export type User$cashClosuresCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CashClosure
+   */
+  select?: Prisma.CashClosureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CashClosure
+   */
+  omit?: Prisma.CashClosureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CashClosureInclude<ExtArgs> | null
+  where?: Prisma.CashClosureWhereInput
+  orderBy?: Prisma.CashClosureOrderByWithRelationInput | Prisma.CashClosureOrderByWithRelationInput[]
+  cursor?: Prisma.CashClosureWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CashClosureScalarFieldEnum | Prisma.CashClosureScalarFieldEnum[]
+}
+
+/**
+ * User.cashClosuresUpdated
+ */
+export type User$cashClosuresUpdatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CashClosure
+   */
+  select?: Prisma.CashClosureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CashClosure
+   */
+  omit?: Prisma.CashClosureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CashClosureInclude<ExtArgs> | null
+  where?: Prisma.CashClosureWhereInput
+  orderBy?: Prisma.CashClosureOrderByWithRelationInput | Prisma.CashClosureOrderByWithRelationInput[]
+  cursor?: Prisma.CashClosureWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CashClosureScalarFieldEnum | Prisma.CashClosureScalarFieldEnum[]
 }
 
 /**
@@ -48320,6 +50984,30 @@ export type User$updatedTransactionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
+}
+
+/**
+ * User.createdInternalTransfers
+ */
+export type User$createdInternalTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InternalTransfer
+   */
+  select?: Prisma.InternalTransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InternalTransfer
+   */
+  omit?: Prisma.InternalTransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InternalTransferInclude<ExtArgs> | null
+  where?: Prisma.InternalTransferWhereInput
+  orderBy?: Prisma.InternalTransferOrderByWithRelationInput | Prisma.InternalTransferOrderByWithRelationInput[]
+  cursor?: Prisma.InternalTransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InternalTransferScalarFieldEnum | Prisma.InternalTransferScalarFieldEnum[]
 }
 
 /**

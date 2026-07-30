@@ -153,6 +153,11 @@ export type FinancialAccount = Prisma.FinancialAccountModel
  */
 export type Transaction = Prisma.TransactionModel
 /**
+ * Model InternalTransfer
+ * 
+ */
+export type InternalTransfer = Prisma.InternalTransferModel
+/**
  * Model ReceiptSequence
  * 
  */
@@ -322,3 +327,8 @@ export type AccountCategory = Prisma.AccountCategoryModel
  * 
  */
 export type AccountCharge = Prisma.AccountChargeModel
+/**
+ * Model CashClosure
+ * 
+ */
+export type CashClosure = Prisma.CashClosureModel

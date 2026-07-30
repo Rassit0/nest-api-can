@@ -10,11 +10,12 @@ import { TransactionReportService } from './transaction-report.service';
 import { PrinterService } from 'src/printer/printer.service';
 import { PrismaService } from 'src/prisma.service';
 import { Response } from 'express';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiParam, ApiProduces } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
+@ApiTags('Transaction Reports')
 @Controller('transaction-report')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'), UserRoleGuard)
@@ -26,6 +27,9 @@ export class TransactionReportController {
   ) {}
 
   @Get('transaction/:transactionId')
+  @ApiOperation({ summary: 'Generar recibo de transacción', description: 'Genera un PDF con el recibo de la transacción (formato estándar con 2 copias).' })
+  @ApiParam({ name: 'transactionId', description: 'UUID de la transacción' })
+  @ApiProduces('application/pdf')
   @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
   async getTransactionReport(
     @Res() response: Response,
@@ -49,6 +53,9 @@ export class TransactionReportController {
   }
 
   @Get('transaction/:transactionId/single')
+  @ApiOperation({ summary: 'Generar recibo de transacción (Versión Móvil)', description: 'Genera un PDF con el recibo de la transacción en formato pequeño optimizado para compartir por WhatsApp.' })
+  @ApiParam({ name: 'transactionId', description: 'UUID de la transacción' })
+  @ApiProduces('application/pdf')
   @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
   async getSingleTransactionReport(
     @Res() response: Response,
