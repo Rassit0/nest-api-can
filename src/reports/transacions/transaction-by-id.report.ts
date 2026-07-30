@@ -10,258 +10,369 @@ import { TransactionReceiptData } from './interfaces/transaction-receipt-data.in
 
 interface ReportOptions {
   data: TransactionReceiptData;
-  pageSize?: PageSize;
+  isSingle?: boolean;
 }
 
 export const transactionByIdReport = (
   options: ReportOptions,
 ): TDocumentDefinitions => {
-  const { data, pageSize = { width: 396, height: 306 } } = options;
+  const { data, isSingle = false } = options;
 
-  return {
-    pageSize,
-    pageMargins: [20, 85, 20, 30], // [izq, arriba, der, abajo] - Reducido el margen superior a 85 para dar más espacio
-
-    // Fondo y borde redondeado
-    background: [
+  const buildReceiptContent = (startY: number): Content[] => {
+    return [
+      // 1. HEADER
       {
-        canvas: [
-          // 1. Caja gris redondeada para el fondo del footer
+        absolutePosition: { x: 20, y: startY - 5 },
+        columns: [
           {
-            type: 'rect',
-            x: 11, // 1 punto adentro del borde negro
-            y: 277, // A la altura exacta del footer
-            w: 374, // Ancho interior exacto
-            h: 18, // Alto para llegar hasta el borde inferior
-            r: 4, // Radio ligeramente menor para que encaje perfecto en las esquinas
-            color: '#EBEBEB',
-          },
-          // 2. Borde exterior negro redondeado
-          {
-            type: 'rect',
-            x: 10,
-            y: 10,
-            w: 376,
-            h: 286,
-            r: 5,
-            lineWidth: 1,
-            lineColor: '#000000',
+            width: 356,
+            stack: [
+              headerSection({
+                receiptSeries: data.receiptSeries,
+                receiptNumber: data.receiptNumber,
+                date: data.date,
+              }),
+            ],
           },
         ],
       },
-    ],
-
-    header: headerSection({
-      receiptNumber: data.receiptNumber,
-      date: data.date,
-    }),
-
-    content: [
-      // Caja gris del medio (Descripción y Monto)
+      // 2. Fondo Gris del Medio
       {
-        table: {
-          widths: ['*', 130],
-          body: [
-            [
-              // Columna Izquierda: Descripción
+        canvas: [
+          {
+            type: 'rect',
+            x: 0,
+            y: 0,
+            w: 226,
+            h: data.beneficiaryName ? 130 : 110,
+            r: 4,
+            color: '#EBEBEB',
+          },
+        ],
+        absolutePosition: { x: 30, y: startY + 55 },
+      },
+      // 3. Marca de agua
+      {
+        image: path.join(process.cwd(), 'dist', 'assets', 'logo-can-negro.png'),
+        width: 160,
+        opacity: 0.1,
+        absolutePosition: { x: 180, y: startY + 30 },
+      },
+      // 4. CONTENT (Textos)
+      {
+        absolutePosition: { x: 20, y: startY + 55 },
+        columns: [
+          {
+            width: 356,
+            stack: [
               {
-                stack: [
-                  {
-                    canvas: [
-                      // El ancho es ~226px (356 total - 130 columna derecha)
+                table: {
+                  widths: ['*', 110], // Reducido col derecha
+                  body: [
+                    [
+                      // Columna Izquierda: Descripción
                       {
-                        type: 'rect',
-                        x: 0,
-                        y: 0,
-                        w: 226,
-                        h: 115,
-                        r: 4,
-                        color: '#EBEBEB',
+                        stack: [
+                          {
+                            text: 'DESCRIPCIÓN',
+                            bold: true,
+                            fontSize: 9,
+                            margin: [0, 0, 0, 6],
+                          },
+                          { text: 'Recibí de:', fontSize: 7, bold: true },
+                          {
+                            text: data.payerName,
+                            fontSize: 8,
+                            margin: [0, 0, 0, 5],
+                          },
+                          ...(data.beneficiaryName
+                            ? ([
+                                {
+                                  text: 'A favor de (Alumno/Jugador):',
+                                  fontSize: 7,
+                                  bold: true,
+                                },
+                                {
+                                  text: data.beneficiaryName,
+                                  fontSize: 8,
+                                  margin: [0, 0, 0, 5],
+                                },
+                              ] as Content[])
+                            : []),
+                          { text: 'La suma de:', fontSize: 7, bold: true },
+                          {
+                            text: data.amountLiteral,
+                            fontSize: 8,
+                            margin: [0, 0, 0, 5],
+                          },
+                          { text: 'Por concepto de:', fontSize: 7, bold: true },
+                          { text: data.concept, fontSize: 8 },
+                        ],
+                        margin: [10, 8, 10, 8] as [
+                          number,
+                          number,
+                          number,
+                          number,
+                        ],
+                        border: [false, false, false, false],
+                      },
+                      // Columna Derecha: Monto y Forma de Pago
+                      {
+                        stack: [
+                          {
+                            text: 'MONTO:',
+                            bold: true,
+                            fontSize: 9,
+                            alignment: 'right',
+                            margin: [0, 0, 0, 3],
+                          },
+                          {
+                            stack: [
+                              {
+                                canvas: [
+                                  {
+                                    type: 'rect',
+                                    x: 20,
+                                    y: 0,
+                                    w: 80,
+                                    h: 18,
+                                    r: 4,
+                                    lineWidth: 0.5,
+                                  },
+                                ],
+                              },
+                              {
+                                text: `${data.amountNumeric} Bs.`,
+                                alignment: 'right',
+                                fontSize: 10,
+                                bold: true,
+                                margin: [0, -13.5, 10, 0],
+                              },
+                            ],
+                            margin: [0, 0, 0, 15],
+                          },
+                          {
+                            text: 'FORMA DE PAGO:',
+                            fontSize: 7,
+                            bold: true,
+                            alignment: 'right',
+                          },
+                          {
+                            text: data.paymentMethod,
+                            fontSize: 8,
+                            bold: true,
+                            alignment: 'right',
+                          },
+                          {
+                            qr: data.validationUrl,
+                            fit: 60,
+                            alignment: 'right',
+                            margin: [0, 8, 5, 0],
+                          },
+                        ],
+                        margin: [10, 8, 10, 8],
+                        border: [false, false, false, false],
                       },
                     ],
-                  },
-                  // Insertamos la marca de agua aquí para que se dibuje SOBRE la caja gris pero DEBAJO del texto
-                  {
-                    image: path.join(
-                      process.cwd(),
-                      'dist',
-                      'assets',
-                      'logo-can-negro.png',
-                    ),
-                    width: 190,
-                    opacity: 0.1,
-                    absolutePosition: { x: 180, y: 20 },
-                  },
-                  {
-                    stack: [
-                      {
-                        text: 'DESCRIPCIÓN',
-                        bold: true,
-                        fontSize: 10,
-                        margin: [0, 0, 0, 3],
-                      },
-                      { text: 'Recibí de:', fontSize: 8, bold: true },
-                      {
-                        text: data.payerName,
-                        fontSize: 9,
-                        margin: [0, 0, 0, 3],
-                      },
-                      { text: 'La suma de:', fontSize: 8, bold: true },
-                      {
-                        text: data.amountLiteral,
-                        fontSize: 9,
-                        margin: [0, 0, 0, 3],
-                      },
-                      { text: 'Por concepto de:', fontSize: 8, bold: true },
-                      {
-                        text: data.concept,
-                        fontSize: 9,
-                      },
-                    ],
-                    // Tiramos el texto hacia arriba para que quede sobre el canvas gris
-                    margin: [10, -105, 10, 5],
-                  },
-                ],
-                border: [false, false, false, false],
+                  ],
+                },
+                layout: 'noBorders',
+                margin: [20, 0, 20, 5],
               },
-
-              // Columna Derecha: Monto y Forma de Pago
+              // 5. FIRMAS
               {
-                stack: [
+                columns: [
                   {
-                    text: 'MONTO:',
-                    bold: true,
-                    fontSize: 10,
-                    alignment: 'right',
-                    margin: [0, 0, 0, 3],
-                  },
-                  {
-                    // Caja de monto con bordes redondeados usando canvas
+                    width: 100, // reducido
                     stack: [
-                      // Dibujamos la caja alineada a la derecha. El ancho total disponible es ~110px.
                       {
                         canvas: [
                           {
-                            type: 'rect',
-                            x: 20,
-                            y: 0,
-                            w: 90,
-                            h: 20,
-                            r: 4,
-                            lineWidth: 0.5,
+                            type: 'line',
+                            x1: 0,
+                            y1: 0,
+                            x2: 100,
+                            y2: 0,
+                            lineWidth: 1,
                           },
                         ],
                       },
                       {
-                        text: `${data.amountNumeric} Bs.`,
-                        alignment: 'right',
-                        fontSize: 11,
+                        text: 'ENTREGUÉ CONFORME',
+                        fontSize: 6,
                         bold: true,
-                        margin: [0, -15, 10, 0],
+                        alignment: 'center',
+                        margin: [0, 2, 0, 0],
+                      },
+                      {
+                        text: data.payerName,
+                        fontSize: 5,
+                        alignment: 'center',
+                      },
+                      {
+                        text: `C.I. ${data.payerDocument}`,
+                        fontSize: 5,
+                        alignment: 'center',
                       },
                     ],
-                    margin: [0, 0, 0, 8],
                   },
+                  { width: '*', text: '' },
                   {
-                    text: 'FORMA DE PAGO:',
-                    fontSize: 8,
-                    bold: true,
-                    alignment: 'right',
-                  },
-                  {
-                    text: data.paymentMethod,
-                    fontSize: 9,
-                    bold: true,
-                    alignment: 'right',
-                  },
-                  {
-                    qr: data.validationUrl,
-                    fit: 65,
-                    alignment: 'right',
-                    margin: [0, 10, 5, 0],
+                    width: 100, // reducido
+                    stack: [
+                      {
+                        canvas: [
+                          {
+                            type: 'line',
+                            x1: 0,
+                            y1: 0,
+                            x2: 100,
+                            y2: 0,
+                            lineWidth: 1,
+                          },
+                        ],
+                      },
+                      {
+                        text: 'RECIBÍ CONFORME',
+                        fontSize: 6,
+                        bold: true,
+                        alignment: 'center',
+                        margin: [0, 2, 0, 0],
+                      },
+                      {
+                        text: data.receiverName,
+                        fontSize: 5,
+                        alignment: 'center',
+                      },
+                      {
+                        text: `C.I. ${data.receiverDocument}`,
+                        fontSize: 5,
+                        alignment: 'center',
+                      },
+                    ],
                   },
                 ],
-                margin: [10, 5, 10, 5],
-                border: [false, false, false, false],
-              },
-            ],
-          ],
-        },
-        layout: 'noBorders',
-        margin: [0, 0, 0, 5], // Reducido el espacio vertical
-      },
-
-      // Firmas
-      {
-        columns: [
-          {
-            // Firma Izquierda
-            width: 120,
-            stack: [
-              {
-                canvas: [
-                  { type: 'line', x1: 0, y1: 0, x2: 120, y2: 0, lineWidth: 1 },
-                ],
-              },
-              {
-                text: 'ENTREGUÉ CONFORME',
-                fontSize: 7,
-                bold: true,
-                alignment: 'center',
-                margin: [0, 2, 0, 0],
-              },
-              {
-                text: data.payerName,
-                fontSize: 6,
-                alignment: 'center',
-              },
-              {
-                text: `C.I. ${data.payerDocument}`,
-                fontSize: 6,
-                alignment: 'center',
-              },
-            ],
-          },
-          {
-            // Espaciador flexible al centro
-            width: '*',
-            text: '',
-          },
-          {
-            // Firma Derecha
-            width: 120,
-            stack: [
-              {
-                canvas: [
-                  { type: 'line', x1: 0, y1: 0, x2: 120, y2: 0, lineWidth: 1 },
-                ],
-              },
-              {
-                text: 'RECIBÍ CONFORME',
-                fontSize: 7,
-                bold: true,
-                alignment: 'center',
-                margin: [0, 2, 0, 0],
-              },
-              {
-                text: data.receiverName,
-                fontSize: 6,
-                alignment: 'center',
-              },
-              {
-                text: `C.I. ${data.receiverDocument}`,
-                fontSize: 6,
-                alignment: 'center',
+                margin: [30, 25, 30, 0], // Margen superior aumentado para llenar la altura extra
               },
             ],
           },
         ],
-        // Ajustamos márgenes para que todo el bloque quede simétrico y bien posicionado
-        margin: [30, 25, 30, 0],
       },
-    ],
-
-    // Delegamos la sección inferior a nuestro nuevo footer.section.ts
-    footer: footerSection,
+      // 6. FOOTER
+      {
+        absolutePosition: { x: 20, y: startY + 244 },
+        columns: [
+          {
+            width: 356,
+            stack: [footerSection()],
+          },
+        ],
+      },
+    ];
   };
+
+  if (!isSingle) {
+    // Hoja vertical (13.97 x 21.59 cm) -> 396 x 612 puntos
+    // Un recibo arriba y uno abajo
+    return {
+      pageSize: { width: 396, height: 612 },
+      pageMargins: [0, 0, 0, 0],
+
+      background: [
+        {
+          canvas: [
+            // RECIBO 1 (Arriba) startY = 20
+            {
+              type: 'rect',
+              x: 21,
+              y: 20 + 242,
+              w: 354,
+              h: 17,
+              r: 4,
+              color: '#EBEBEB',
+            },
+            {
+              type: 'rect',
+              x: 20,
+              y: 20,
+              w: 356,
+              h: 260,
+              r: 5,
+              lineWidth: 1,
+              lineColor: '#000000',
+            },
+
+            // RECIBO 2 (Abajo) startY = 326
+            {
+              type: 'rect',
+              x: 21,
+              y: 326 + 242,
+              w: 354,
+              h: 17,
+              r: 4,
+              color: '#EBEBEB',
+            },
+            {
+              type: 'rect',
+              x: 20,
+              y: 326,
+              w: 356,
+              h: 260,
+              r: 5,
+              lineWidth: 1,
+              lineColor: '#000000',
+            },
+
+            // Línea punteada divisoria horizontal en el medio de la hoja
+            {
+              type: 'line',
+              x1: 0,
+              y1: 306,
+              x2: 396,
+              y2: 306,
+              lineWidth: 0.5,
+              dash: { length: 5, space: 5 },
+              lineColor: '#999999',
+            },
+          ],
+        },
+      ],
+
+      content: [...buildReceiptContent(20), ...buildReceiptContent(326)],
+    };
+  } else {
+    // Modo único (1 recibo) para descargar digitalmente
+    return {
+      pageSize: { width: 396, height: 306 },
+      pageMargins: [0, 0, 0, 0],
+
+      background: [
+        {
+          canvas: [
+            {
+              type: 'rect',
+              x: 21,
+              y: 23 + 242,
+              w: 354,
+              h: 17,
+              r: 4,
+              color: '#EBEBEB',
+            },
+            {
+              type: 'rect',
+              x: 20,
+              y: 23,
+              w: 356,
+              h: 260,
+              r: 5,
+              lineWidth: 1,
+              lineColor: '#000000',
+            },
+          ],
+        },
+      ],
+
+      content: [...buildReceiptContent(23)],
+    };
+  }
 };

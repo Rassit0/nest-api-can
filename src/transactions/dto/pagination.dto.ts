@@ -1,8 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsUUID } from 'class-validator';
+import { IsIn, IsOptional, IsUUID, IsEnum, IsDateString } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
+import { TransactionType, PaymentMethod } from 'src/generated/prisma/client';
 
 export class TransactionsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
@@ -46,4 +47,39 @@ export class TransactionsPaginationDto extends PaginationDto {
   })
   @IsOptional()
   chargeId?: string;
+
+  @ApiPropertyOptional({ enum: TransactionType })
+  @IsEnum(TransactionType)
+  @IsOptional()
+  type?: TransactionType;
+
+  @ApiPropertyOptional({ enum: PaymentMethod })
+  @IsEnum(PaymentMethod)
+  @IsOptional()
+  paymentMethod?: PaymentMethod;
+
+  @ApiPropertyOptional()
+  @IsDateString()
+  @IsOptional()
+  startDate?: string;
+
+  @ApiPropertyOptional()
+  @IsDateString()
+  @IsOptional()
+  endDate?: string;
+
+  @ApiPropertyOptional({ enum: ['ACCOUNT_CHARGE', 'MEMBERSHIP', 'STUDENT', 'BOOKING'] })
+  @IsIn(['ACCOUNT_CHARGE', 'MEMBERSHIP', 'STUDENT', 'BOOKING'])
+  @IsOptional()
+  origin?: 'ACCOUNT_CHARGE' | 'MEMBERSHIP' | 'STUDENT' | 'BOOKING';
+
+  @ApiPropertyOptional()
+  @IsUUID('4')
+  @IsOptional()
+  categoryId?: string;
+
+  @ApiPropertyOptional()
+  @IsUUID('4')
+  @IsOptional()
+  createdById?: string;
 }

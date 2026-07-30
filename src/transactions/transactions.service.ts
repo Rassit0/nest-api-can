@@ -12,9 +12,13 @@ import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { PaymentStrategyFactory } from './strategies/payment-strategy.factory';
 import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dto';
+import { TransactionsMapper } from './transactions.mapper';
+import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
 
-export const transactionSelect: Prisma.TransactionSelect = {
+export const transactionSelect = {
   id: true,
+  receiptSeries: true,
+  receiptNumber: true,
   amount: true,
   transactionDate: true,
   description: true,
@@ -26,6 +30,9 @@ export const transactionSelect: Prisma.TransactionSelect = {
   receiptUrls: true,
   createdAt: true,
   updatedAt: true,
+  financialAccount: {
+    select: { name: true },
+  },
   payerPerson: {
     select: {
       id: true,
@@ -45,20 +52,32 @@ export const transactionSelect: Prisma.TransactionSelect = {
           amount: true,
           pendingAmount: true,
           status: true,
+          accountCharge: {
+            select: {
+              title: true,
+              category: { select: { name: true } },
+            },
+          },
+          membershipCharges: { select: { id: true } },
+          studentCharges: { select: { id: true } },
+          sessionBooking: { select: { id: true } },
         },
       },
     },
   },
-};
+} satisfies Prisma.TransactionSelect;
 
 @Injectable()
 export class TransactionsService {
   private readonly logger = new Logger('TransactionsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly financialAccountsService: FinancialAccountsService,
+  ) {}
 
-  async create(createTransactionDto: CreateTransactionDto) {
-    const { amount, chargeTransactions, paymentMethod, ...rest } =
+  async create(createTransactionDto: CreateTransactionDto, tx?: Prisma.TransactionClient) {
+    const { amount, chargeTransactions, paymentMethod, financialAccountId, ...rest } =
       createTransactionDto;
 
     // Validación: La suma de lo que se aplica a los cargos no debe superar el amount
@@ -84,18 +103,60 @@ export class TransactionsService {
     const receiptUrls = [];
 
     // 3. Ejecutar todo en una transacción de BD
-    const createdTransaction = await this.prisma.$transaction(
-      async (prisma) => {
+    const execute = async (prisma: Prisma.TransactionClient) => {
+        
+        // --- NUEVA LÓGICA DE SECUENCIAS ---
+        let determinedSeries = 'GEN'; // Serie por defecto
+
+        if (chargeTransactions && chargeTransactions.length > 0) {
+          // Buscamos el primer cargo para determinar su origen según reglas de negocio
+          const firstCharge = await prisma.charge.findUnique({
+            where: { id: chargeTransactions[0].chargeId },
+            include: { membershipCharges: true, studentCharges: true },
+          });
+          
+          if (firstCharge?.membershipCharges?.length > 0) {
+            determinedSeries = 'EQ'; // Es un cargo de Equipo
+          } else if (firstCharge?.studentCharges?.length > 0) {
+            determinedSeries = 'CU'; // Es un cargo de Curso
+          }
+        }
+
+        // Incrementamos la secuencia de forma atómica (si no existe, la crea empezando en 1)
+        const sequence = await prisma.receiptSequence.upsert({
+          where: { series: determinedSeries },
+          update: { lastValue: { increment: 1 } },
+          create: { 
+            series: determinedSeries, 
+            lastValue: 1, 
+            description: `Secuencia autogenerada para ${determinedSeries}` 
+          },
+        });
+        // -----------------------------------
+
         // 3.1. Crear la transacción base
         const transaction = await prisma.transaction.create({
           data: {
             ...rest,
+            receiptSeries: sequence.series,
+            receiptNumber: sequence.lastValue,
             amount,
             paymentMethod,
             status: paymentResult.transactionStatus,
             receiptUrls,
+            financialAccountId,
           },
         });
+
+        // 3.1.5. Aplicar el movimiento a la caja/banco
+        if (financialAccountId) {
+          await this.financialAccountsService.applyMovement(
+            financialAccountId,
+            amount,
+            rest.type,
+            prisma,
+          );
+        }
 
         // 3.2. Si hay cargos a los que aplicar
         if (chargeTransactions && chargeTransactions.length > 0) {
@@ -170,13 +231,14 @@ export class TransactionsService {
           where: { id: transaction.id },
           select: transactionSelect,
         });
-      },
-    );
+    };
+
+    const createdTransaction = tx ? await execute(tx) : await this.prisma.$transaction(execute);
 
     return {
       message: 'Transacción registrada con éxito',
       data: {
-        transaction: createdTransaction,
+        transaction: TransactionsMapper.toDomain(createdTransaction as any),
         paymentData: paymentResult.providerResponse, // Datos del QR si aplica
       },
     };
@@ -191,16 +253,49 @@ export class TransactionsService {
       orderBy,
       payerPersonId,
       chargeId,
+      type,
+      paymentMethod,
+      startDate,
+      endDate,
+      origin,
+      categoryId,
+      createdById,
     } = paginationDto;
 
     const skip = (page - 1) * per_page;
 
     const where: Prisma.TransactionWhereInput = {
       ...(payerPersonId && { payerPersonId }),
+      ...(type && { type }),
+      ...(paymentMethod && { paymentMethod }),
+      ...(createdById && { createdById }),
+      ...((startDate || endDate) && {
+        transactionDate: {
+          ...(startDate && { gte: new Date(startDate) }),
+          ...(endDate && { lte: new Date(endDate) }),
+        },
+      }),
       ...(chargeId && {
         chargeTransactions: {
           some: { chargeId },
         },
+      }),
+      ...(categoryId && {
+        chargeTransactions: {
+          some: { charge: { accountCharge: { categoryId } } },
+        },
+      }),
+      ...(origin === 'ACCOUNT_CHARGE' && {
+        chargeTransactions: { some: { charge: { accountCharge: { isNot: null } } } },
+      }),
+      ...(origin === 'MEMBERSHIP' && {
+        chargeTransactions: { some: { charge: { membershipCharges: { some: {} } } } },
+      }),
+      ...(origin === 'STUDENT' && {
+        chargeTransactions: { some: { charge: { studentCharges: { some: {} } } } },
+      }),
+      ...(origin === 'BOOKING' && {
+        chargeTransactions: { some: { charge: { sessionBooking: { isNot: null } } } },
       }),
       ...(search && {
         OR: [
@@ -223,7 +318,11 @@ export class TransactionsService {
       this.prisma.transaction.count({ where }),
     ]);
 
-    return createPaginationResult(items, totalItems, page, per_page);
+    const mappedItems = items.map((item) =>
+      TransactionsMapper.toDomain(item as any),
+    );
+
+    return createPaginationResult(mappedItems, totalItems, page, per_page);
   }
 
   async findOne(id: string) {
@@ -236,7 +335,7 @@ export class TransactionsService {
       throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
     }
 
-    return transaction;
+    return TransactionsMapper.toDomain(transaction as any);
   }
 
   async update(id: string, updateTransactionDto: UpdateTransactionDto) {

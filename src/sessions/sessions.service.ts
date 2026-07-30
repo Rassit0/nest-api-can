@@ -1,11 +1,14 @@
-import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { UpdateSessionDto } from './dto/update-session.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma } from 'src/generated/prisma/client';
-import { AvailabilityEngine } from 'src/events/engines/availability.engine';
+import { Prisma, EventType } from 'src/generated/prisma/client';
 import { SessionsPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
+import { EventsService } from 'src/events/events.service';
+import { BaseEventCreateDto, BaseEventUpdateDto } from 'src/events/dto/base-event.dto';
+import { EventSeriesService } from 'src/events/event-series.service';
+import { EventMaterializationService, IEventOccurrenceHandler } from 'src/events/event-materialization.service';
 
 export const sessionSelect: Prisma.SessionSelect = {
   id: true,
@@ -87,15 +90,46 @@ export const sessionSelect: Prisma.SessionSelect = {
 };
 
 @Injectable()
-export class SessionsService {
-  private readonly logger = new Logger('SessionsService');
+export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
+  private readonly logger = new Logger(SessionsService.name);
+  readonly eventType = EventType.SESSION;
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly availabilityEngine: AvailabilityEngine,
+    private readonly eventsService: EventsService,
+    private readonly eventSeriesService: EventSeriesService,
+    private readonly eventMaterializationService: EventMaterializationService
   ) {}
 
-  async create(createSessionDto: CreateSessionDto) {
+  onModuleInit() {
+    this.eventMaterializationService.registerHandler(this);
+  }
+
+  async createOccurrence(tx: Prisma.TransactionClient, eventId: string, templateData: any): Promise<any> {
+    const sessionData: Prisma.SessionCreateInput = {
+      event: { connect: { id: eventId } },
+      ...(templateData.durationMin !== undefined && { durationMin: templateData.durationMin }),
+    };
+
+    if (templateData.teamSeasonIds && templateData.teamSeasonIds.length > 0) {
+      sessionData.sessionTeams = {
+        create: templateData.teamSeasonIds.map((tid: string) => ({ teamSeasonId: tid })),
+      };
+    }
+
+    if (templateData.courseSeasonIds && templateData.courseSeasonIds.length > 0) {
+      sessionData.sessionCourses = {
+        create: templateData.courseSeasonIds.map((cid: string) => ({ courseSeasonId: cid })),
+      };
+    }
+
+    return tx.session.create({
+      data: sessionData,
+      select: sessionSelect,
+    });
+  }
+
+  async create(createSessionDto: CreateSessionDto, userId?: string) {
     const {
       teamSeasonIds,
       courseSeasonIds,
@@ -104,49 +138,53 @@ export class SessionsService {
       startDate,
       endDate,
       durationMin,
+      recurrenceRule,
     } = createSessionDto;
 
-    if (locationId) {
-      const isAvailable = await this.availabilityEngine.checkAvailability({
-        locationId,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-      });
+    const baseData: BaseEventCreateDto = {
+      eventType: EventType.SESSION,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      locationId,
+      title,
+      recurrenceRule,
+      timezone: createSessionDto.timezone,
+    };
 
-      if (isAvailable !== true) {
-        throw new BadRequestException(`El horario no está disponible: ${isAvailable.reason}`);
-      }
+    const createSpecific = async (tx: Prisma.TransactionClient, eventId: string) => {
+      return tx.session.create({
+        data: {
+          eventId,
+          durationMin,
+          sessionTeams: teamSeasonIds
+            ? {
+                create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
+              }
+            : undefined,
+          sessionCourses: courseSeasonIds
+            ? {
+                create: courseSeasonIds.map((id) => ({ courseSeasonId: id })),
+              }
+            : undefined,
+        },
+        select: sessionSelect,
+      });
+    };
+
+    let data;
+    if (recurrenceRule) {
+      const { results } = await this.eventSeriesService.createSeries(baseData, createSessionDto, userId, createSpecific);
+      data = results.map((r: any) => r.specific);
+    } else {
+      const result = await this.eventsService.executeEventCreation(baseData, userId, createSpecific);
+      data = result.specific;
     }
 
-    const newSession = await this.prisma.session.create({
-      data: {
-        durationMin,
-        event: {
-          create: {
-            title,
-            startDate,
-            endDate,
-            eventType: 'SESSION',
-            ...(locationId && { locationId }),
-          },
-        },
-        sessionTeams: teamSeasonIds
-          ? {
-              create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
-            }
-          : undefined,
-        sessionCourses: courseSeasonIds
-          ? {
-              create: courseSeasonIds.map((id) => ({ courseSeasonId: id })),
-            }
-          : undefined,
-      },
-      select: sessionSelect,
-    });
-
     return {
-      message: 'Sesión de entrenamiento/clase programada exitosamente',
-      data: newSession,
+      message: recurrenceRule 
+        ? 'Serie de sesiones programada exitosamente'
+        : 'Sesión de entrenamiento/clase programada exitosamente',
+      data, // Returns array if series, object if single
     };
   }
 
@@ -233,10 +271,10 @@ export class SessionsService {
     };
   }
 
-  async update(id: string, updateSessionDto: UpdateSessionDto) {
+  async update(id: string, updateSessionDto: UpdateSessionDto, userId?: string, scope: 'single' | 'following' | 'all' = 'single') {
     const session = await this.prisma.session.findUnique({
       where: { id },
-      select: { eventId: true }
+      select: { eventId: true, event: { select: { eventSeriesId: true } } }
     });
 
     if (!session) {
@@ -251,93 +289,114 @@ export class SessionsService {
       startDate,
       endDate,
       durationMin,
+      recurrenceRule,
+      timezone,
     } = updateSessionDto;
 
-    if (locationId || startDate || endDate) {
-      // Recalculate based on existing data if some are missing
-      let checkStartDate = startDate ? new Date(startDate) : undefined;
-      let checkEndDate = endDate ? new Date(endDate) : undefined;
-      let checkLocationId = locationId;
-
-      if (!checkStartDate || !checkEndDate || !checkLocationId) {
-        const existingEvent = await this.prisma.event.findUnique({
-          where: { id: session.eventId },
-          select: { startDate: true, endDate: true, locationId: true }
-        });
-        checkStartDate = checkStartDate || existingEvent?.startDate;
-        checkEndDate = checkEndDate || existingEvent?.endDate;
-        checkLocationId = checkLocationId || existingEvent?.locationId;
-      }
-
-      if (checkLocationId && checkStartDate && checkEndDate) {
-        const isAvailable = await this.availabilityEngine.checkAvailability({
-          locationId: checkLocationId,
-          startDate: checkStartDate,
-          endDate: checkEndDate,
-          excludeEventId: session.eventId,
-        });
-
-        if (isAvailable !== true) {
-          throw new BadRequestException(`El horario no está disponible: ${isAvailable.reason}`);
-        }
-      }
-    }
-
-    const sessionData: Prisma.SessionUpdateInput = {
-      durationMin,
-      event: {
-        update: {
-          ...(title !== undefined && { title }),
-          ...(startDate !== undefined && { startDate }),
-          ...(endDate !== undefined && { endDate }),
-          ...(locationId !== undefined ? { locationId } : {}),
-        }
-      }
+    const baseDataUpdate: Partial<BaseEventCreateDto> = {
+      ...(startDate && { startDate: new Date(startDate) }),
+      ...(endDate && { endDate: new Date(endDate) }),
+      ...(locationId !== undefined && { locationId }),
+      ...(title !== undefined && { title }),
+      ...(recurrenceRule !== undefined && { recurrenceRule }),
+      ...(timezone !== undefined && { timezone }),
     };
 
-    if (teamSeasonIds) {
-      sessionData.sessionTeams = {
-        deleteMany: {},
-        create: teamSeasonIds.map((tid) => ({ teamSeasonId: tid })),
+    if (session.event.eventSeriesId && scope !== 'single') {
+      const mergeTemplate = (oldTemplate: any) => ({
+        ...oldTemplate,
+        ...(teamSeasonIds !== undefined && { teamSeasonIds }),
+        ...(courseSeasonIds !== undefined && { courseSeasonIds }),
+        ...(durationMin !== undefined && { durationMin }),
+      });
+
+      const occurrenceHandler = async (tx: Prisma.TransactionClient, newEventId: string, mergedTemplate: any) => {
+        const sessionData: Prisma.SessionCreateInput = {
+          event: { connect: { id: newEventId } },
+          ...(mergedTemplate.durationMin !== undefined && { durationMin: mergedTemplate.durationMin }),
+        };
+
+        if (mergedTemplate.teamSeasonIds && mergedTemplate.teamSeasonIds.length > 0) {
+          sessionData.sessionTeams = {
+            create: mergedTemplate.teamSeasonIds.map((tid: string) => ({ teamSeasonId: tid })),
+          };
+        }
+
+        if (mergedTemplate.courseSeasonIds && mergedTemplate.courseSeasonIds.length > 0) {
+          sessionData.sessionCourses = {
+            create: mergedTemplate.courseSeasonIds.map((cid: string) => ({ courseSeasonId: cid })),
+          };
+        }
+
+        return tx.session.create({
+          data: sessionData,
+          select: sessionSelect,
+        });
       };
+
+      return await this.eventSeriesService.updateSeries(id, baseDataUpdate, userId, scope, mergeTemplate, occurrenceHandler);
     }
 
-    if (courseSeasonIds) {
-      sessionData.sessionCourses = {
-        deleteMany: {},
-        create: courseSeasonIds.map((cid) => ({ courseSeasonId: cid })),
-      };
-    }
+    const baseData: BaseEventUpdateDto = {
+      ...(startDate && { startDate: new Date(startDate) }),
+      ...(endDate && { endDate: new Date(endDate) }),
+      ...(locationId !== undefined && { locationId }),
+      ...(title !== undefined && { title }),
+    };
 
-    const updatedSession = await this.prisma.session.update({
-      where: { id },
-      data: sessionData,
-      select: sessionSelect,
+    const result = await this.eventsService.executeEventUpdate(session.eventId, baseData, userId, async (tx) => {
+      const sessionData: Prisma.SessionUpdateInput = {
+        ...(durationMin !== undefined && { durationMin }),
+      };
+
+      if (teamSeasonIds) {
+        sessionData.sessionTeams = {
+          deleteMany: {},
+          create: teamSeasonIds.map((tid) => ({ teamSeasonId: tid })),
+        };
+      }
+
+      if (courseSeasonIds) {
+        sessionData.sessionCourses = {
+          deleteMany: {},
+          create: courseSeasonIds.map((cid) => ({ courseSeasonId: cid })),
+        };
+      }
+
+      return tx.session.update({
+        where: { id },
+        data: sessionData,
+        select: sessionSelect,
+      });
     });
 
     return {
       message: 'Sesión actualizada exitosamente',
-      data: updatedSession,
+      data: result.specific,
     };
   }
 
-  async remove(id: string) {
+  async remove(id: string, scope: 'single' | 'following' | 'all' = 'single') {
     const session = await this.prisma.session.findUnique({
       where: { id },
+      select: { eventId: true, event: { select: { eventSeriesId: true } } }
     });
 
     if (!session) {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }
 
-    const deletedSession = await this.prisma.session.delete({
-      where: { id },
-      select: sessionSelect,
-    });
+    if (session.event.eventSeriesId && scope !== 'single') {
+      return await this.eventSeriesService.deleteSeries(id, scope);
+    }
 
+    const result = await this.eventsService.executeEventDeletion(session.eventId);
+
+    // After cascading delete from event, return deleted success.
+    // We cannot query the session since it was deleted by cascade, so we just return success.
     return {
       message: 'Sesión eliminada exitosamente',
-      data: deletedSession,
+      data: { id },
     };
   }
 }

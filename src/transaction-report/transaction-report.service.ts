@@ -14,13 +14,35 @@ export class TransactionReportService {
     private readonly i18n: I18nService,
   ) {}
 
-  async getTransactionByIdReport(transactionId: string, pageSize?: PageSize) {
+  async getTransactionByIdReport(transactionId: string, isSingle: boolean = false) {
     const transaction = await this.prisma.transaction.findUnique({
       where: { id: transactionId },
       include: {
         payerPerson: true,
         createdBy: {
           include: { person: true },
+        },
+        chargeTransactions: {
+          include: {
+            charge: {
+              include: {
+                membershipCharges: {
+                  include: {
+                    playerMembership: {
+                      include: { player: { include: { person: true } } },
+                    },
+                  },
+                },
+                studentCharges: {
+                  include: {
+                    studentMembership: {
+                      include: { student: { include: { person: true } } },
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
     });
@@ -57,6 +79,26 @@ export class TransactionReportService {
       ? receiverPerson.documentNumber
       : 'S/N';
 
+    // Determinar si hay un beneficiario (jugador o estudiante)
+    let beneficiaryName: string | undefined;
+    if (
+      transaction.chargeTransactions &&
+      transaction.chargeTransactions.length > 0
+    ) {
+      const charge = transaction.chargeTransactions[0].charge;
+      if (charge.membershipCharges && charge.membershipCharges.length > 0) {
+        const person =
+          charge.membershipCharges[0].playerMembership.player.person;
+        beneficiaryName =
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+      } else if (charge.studentCharges && charge.studentCharges.length > 0) {
+        const person =
+          charge.studentCharges[0].studentMembership.student.person;
+        beneficiaryName =
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+      }
+    }
+
     const lang = I18nContext.current()?.lang || 'es';
     const translatedPaymentMethod = this.i18n.translate(
       `fields.paymentMethods.${transaction.paymentMethod}`,
@@ -64,10 +106,12 @@ export class TransactionReportService {
     );
 
     const data = {
+      receiptSeries: transaction.receiptSeries,
       receiptNumber,
       date: transaction.transactionDate,
       payerName,
       payerDocument,
+      beneficiaryName,
       amountLiteral,
       amountNumeric: numericAmount.toFixed(2),
       concept: transaction.description || 'Sin concepto',
@@ -77,7 +121,7 @@ export class TransactionReportService {
       validationUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${transaction.id}`,
     };
 
-    const docDefinition = transactionByIdReport({ data, pageSize });
+    const docDefinition = transactionByIdReport({ data, isSingle });
 
     const doc = this.printerService.createPdf(docDefinition);
 

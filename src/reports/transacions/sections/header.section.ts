@@ -2,44 +2,36 @@ import * as path from 'path';
 import type { Content, Column } from 'pdfmake/interfaces';
 
 interface HeaderOptions {
+  receiptSeries: string;
   receiptNumber: string;
   date: Date;
 }
 
 export const headerSection = (options: HeaderOptions): Content => {
-  const { receiptNumber, date } = options;
+  const { receiptSeries, receiptNumber, date } = options;
   const title = 'APORTE VOLUNTARIO';
 
   const logo: Content = {
     image: path.join(process.cwd(), 'dist', 'assets', 'logo-can.png'),
-    width: 40,
+    width: 35, // reducido
     margin: [0, 0, 10, 0],
   };
 
   const clubInfo: Content = {
     stack: [
-      { text: 'CLUB ATLÉTICO NACIONAL', bold: true, fontSize: 9 },
+      { text: 'CLUB ATLÉTICO NACIONAL', bold: true, fontSize: 8 }, // reducido
       {
         text: 'FUNDADO EL 17 DE OCTUBRE DE 1935',
-        fontSize: 6,
+        fontSize: 5, // reducido
         margin: [0, 2, 0, 1],
       },
       {
-        text: 'DIR: 6 de octubre y Rodriguez\n(Parque de la Unión Naciona)\nORURO - BOLIVIA',
-        fontSize: 6,
+        text: 'DIR: 6 de octubre y Rodriguez\n(Parque de la Unión Nacional)\nORURO - BOLIVIA',
+        fontSize: 5, // reducido
         lineHeight: 1.1,
       },
     ],
     margin: [10, 5, 0, 0],
-  };
-
-  const boxLayout = {
-    hLineWidth: () => 0.5,
-    vLineWidth: () => 0.5,
-    hLineColor: () => '#000000',
-    vLineColor: () => '#000000',
-    paddingTop: () => 3,
-    paddingBottom: () => 3,
   };
 
   const receiptInfo: Content = {
@@ -47,9 +39,9 @@ export const headerSection = (options: HeaderOptions): Content => {
       {
         text: title,
         bold: true,
-        fontSize: 12,
+        fontSize: 10, // reducido
         alignment: 'right',
-        margin: [0, 0, 30, 5],
+        margin: [0, 0, 30, 3],
       },
       {
         columns: [
@@ -57,7 +49,7 @@ export const headerSection = (options: HeaderOptions): Content => {
             stack: [
               {
                 text: 'No.:',
-                fontSize: 7,
+                fontSize: 6, // reducido
                 bold: true,
                 alignment: 'center',
                 margin: [0, 0, 0, 2],
@@ -70,18 +62,18 @@ export const headerSection = (options: HeaderOptions): Content => {
                         type: 'rect',
                         x: 0,
                         y: 0,
-                        w: 92,
-                        h: 14,
+                        w: 75, // reducido
+                        h: 12, // reducido
                         r: 4,
                         lineWidth: 0.5,
                       },
                     ],
                   },
                   {
-                    text: receiptNumber,
+                    text: `${receiptSeries}-${receiptNumber}`,
                     alignment: 'center',
-                    fontSize: 8,
-                    margin: [0, -11, 0, 0],
+                    fontSize: 7, // reducido
+                    margin: [0, -9.5, 0, 0], // ajustado para h=12
                   },
                 ],
               },
@@ -93,7 +85,7 @@ export const headerSection = (options: HeaderOptions): Content => {
             stack: [
               {
                 text: 'FECHA DE EMISIÓN:',
-                fontSize: 7,
+                fontSize: 6, // reducido
                 bold: true,
                 alignment: 'center',
                 margin: [0, 0, 0, 2],
@@ -106,8 +98,8 @@ export const headerSection = (options: HeaderOptions): Content => {
                         type: 'rect',
                         x: 0,
                         y: 0,
-                        w: 92,
-                        h: 14,
+                        w: 75, // reducido
+                        h: 12, // reducido
                         r: 4,
                         lineWidth: 0.5,
                       },
@@ -116,8 +108,8 @@ export const headerSection = (options: HeaderOptions): Content => {
                   {
                     text: date.toLocaleDateString('es-BO'),
                     alignment: 'center',
-                    fontSize: 8,
-                    margin: [0, -11, 0, 0],
+                    fontSize: 7, // reducido
+                    margin: [0, -9.5, 0, 0], // ajustado para h=12
                   },
                 ],
               },
@@ -134,7 +126,7 @@ export const headerSection = (options: HeaderOptions): Content => {
   return {
     columns: [
       {
-        width: 50,
+        width: 45, // reducido
         ...logo,
       },
       {
@@ -142,10 +134,10 @@ export const headerSection = (options: HeaderOptions): Content => {
         ...clubInfo,
       },
       {
-        width: 180,
+        width: 150, // reducido
         ...receiptInfo,
       },
     ],
-    margin: [20, 15, 25, 10],
+    margin: [20, 10, 25, 5], // márgenes reducidos
   };
 };

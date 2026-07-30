@@ -96,7 +96,7 @@ export class ChargesService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createChargeDto: CreateChargeDto) {
+  async create(createChargeDto: CreateChargeDto, tx?: Prisma.TransactionClient) {
     const { amount, pendingAmount } = createChargeDto;
 
     // Si pendingAmount no es proveído, por defecto es igual a amount
@@ -108,7 +108,8 @@ export class ChargesService {
           : amount,
     };
 
-    const newCharge = await this.prisma.charge.create({
+    const prismaClient = tx || this.prisma;
+    const newCharge = await prismaClient.charge.create({
       data: chargeData,
       select: chargeSelect,
     });

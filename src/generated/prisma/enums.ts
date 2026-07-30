@@ -155,6 +155,23 @@ export const StatusCharge = {
 export type StatusCharge = (typeof StatusCharge)[keyof typeof StatusCharge]
 
 
+export const ChargeDirection = {
+  RECEIVABLE: 'RECEIVABLE',
+  PAYABLE: 'PAYABLE'
+} as const
+
+export type ChargeDirection = (typeof ChargeDirection)[keyof typeof ChargeDirection]
+
+
+export const FinancialAccountType = {
+  CASH: 'CASH',
+  BANK: 'BANK',
+  DIGITAL_WALLET: 'DIGITAL_WALLET'
+} as const
+
+export type FinancialAccountType = (typeof FinancialAccountType)[keyof typeof FinancialAccountType]
+
+
 export const TransactionType = {
   INCOME: 'INCOME',
   EXPENSE: 'EXPENSE'
@@ -234,6 +251,25 @@ export const EventStatus = {
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
 
 
+export const EventSeriesStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  FINISHED: 'FINISHED'
+} as const
+
+export type EventSeriesStatus = (typeof EventSeriesStatus)[keyof typeof EventSeriesStatus]
+
+
+export const EventExceptionType = {
+  NONE: 'NONE',
+  MOVED: 'MOVED',
+  MODIFIED: 'MODIFIED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type EventExceptionType = (typeof EventExceptionType)[keyof typeof EventExceptionType]
+
+
 export const MatchType = {
   FRIENDLY: 'FRIENDLY',
   LEAGUE: 'LEAGUE',
@@ -252,3 +288,14 @@ export const MatchResult = {
 } as const
 
 export type MatchResult = (typeof MatchResult)[keyof typeof MatchResult]
+
+
+export const AccountReferenceType = {
+  PURCHASE_ORDER: 'PURCHASE_ORDER',
+  CONTRACT: 'CONTRACT',
+  EVENT: 'EVENT',
+  EQUIPMENT: 'EQUIPMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type AccountReferenceType = (typeof AccountReferenceType)[keyof typeof AccountReferenceType]

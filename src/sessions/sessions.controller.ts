@@ -9,6 +9,7 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { SessionsService } from './sessions.service';
@@ -34,8 +35,9 @@ export class SessionsController {
   @Post()
   @ApiOperation({ summary: 'Programar una nueva sesión de entrenamiento' })
   @RequirePermissions('CREATE_SESSIONS')
-  async create(@Body() createSessionDto: CreateSessionDto) {
-    return await this.sessionsService.create(createSessionDto);
+  async create(@Body() createSessionDto: CreateSessionDto, @Req() req: any) {
+    const userId = req.user?.id;
+    return await this.sessionsService.create(createSessionDto, userId);
   }
 
   @Get()
@@ -59,14 +61,20 @@ export class SessionsController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSessionDto: UpdateSessionDto,
+    @Req() req: any,
+    @Query('scope') scope: 'single' | 'following' | 'all' = 'single',
   ) {
-    return await this.sessionsService.update(id, updateSessionDto);
+    const userId = req.user?.id;
+    return await this.sessionsService.update(id, updateSessionDto, userId, scope);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar una sesión de entrenamiento' })
   @RequirePermissions('DELETE_SESSIONS')
-  async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.sessionsService.remove(id);
+  async remove(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query('scope') scope: 'single' | 'following' | 'all' = 'single',
+  ) {
+    return await this.sessionsService.remove(id, scope);
   }
 }

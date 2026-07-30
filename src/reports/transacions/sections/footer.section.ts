@@ -8,8 +8,8 @@ export const footerSection = (
   return {
     text: '¡Gracias por confiar en nosotros!  #SOMOSCAN #SOMOSORURO',
     alignment: 'center',
-    fontSize: 8,
+    fontSize: 7, // reducido de 8
     bold: true,
-    margin: [0, 4, 0, 0], // Pequeño margen para centrar verticalmente sobre el fondo gris dibujado
+    margin: [0, 3, 0, 0], // reducido de 4
   };
 };

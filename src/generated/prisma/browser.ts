@@ -143,10 +143,20 @@ export type Charge = Prisma.ChargeModel
  */
 export type ChargeTransaction = Prisma.ChargeTransactionModel
 /**
+ * Model FinancialAccount
+ * 
+ */
+export type FinancialAccount = Prisma.FinancialAccountModel
+/**
  * Model Transaction
  * 
  */
 export type Transaction = Prisma.TransactionModel
+/**
+ * Model ReceiptSequence
+ * 
+ */
+export type ReceiptSequence = Prisma.ReceiptSequenceModel
 /**
  * Model User
  * 
@@ -248,6 +258,11 @@ export type SessionIncident = Prisma.SessionIncidentModel
  */
 export type ProgressEvaluation = Prisma.ProgressEvaluationModel
 /**
+ * Model EventSeries
+ * 
+ */
+export type EventSeries = Prisma.EventSeriesModel
+/**
  * Model Event
  * 
  */
@@ -292,3 +307,18 @@ export type MatchLineup = Prisma.MatchLineupModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model EventMaterializationLog
+ * 
+ */
+export type EventMaterializationLog = Prisma.EventMaterializationLogModel
+/**
+ * Model AccountCategory
+ * 
+ */
+export type AccountCategory = Prisma.AccountCategoryModel
+/**
+ * Model AccountCharge
+ * 
+ */
+export type AccountCharge = Prisma.AccountChargeModel

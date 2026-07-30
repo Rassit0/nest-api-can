@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { StatusCharge } from 'src/generated/prisma/client';
+import { ChargeDirection, StatusCharge } from 'src/generated/prisma/client';
 
 export class CreateChargeDto {
   @ApiPropertyOptional({
@@ -107,6 +107,20 @@ export class CreateChargeDto {
     }),
   })
   status?: StatusCharge = StatusCharge.PENDING;
+
+  @ApiPropertyOptional({
+    enum: ChargeDirection,
+    example: ChargeDirection.RECEIVABLE,
+    description: 'Dirección del cargo (cobrar o pagar)',
+    default: ChargeDirection.RECEIVABLE,
+  })
+  @IsOptional()
+  @IsEnum(ChargeDirection, {
+    message: i18nValidationMessage('validation.IS_ENUM', {
+      constraint1: 'direction',
+    }),
+  })
+  direction?: ChargeDirection = ChargeDirection.RECEIVABLE;
 
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',

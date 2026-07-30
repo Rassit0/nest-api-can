@@ -29,6 +29,7 @@ import { TeamSeasonStaffModule } from './team-season-staff/team-season-staff.mod
 import { ChargesModule } from './charges/charges.module';
 import { MembershipChargesModule } from './membership-charges/membership-charges.module';
 import { MembershipLateFeeModule } from './membership-late-fee/membership-late-fee.module';
+
 import { SessionsModule } from './sessions/sessions.module';
 import { SessionBookingsModule } from './session-bookings/session-bookings.module';
 import { MatchesModule } from './matches/matches.module';
@@ -38,6 +39,7 @@ import { MatchLineupsModule } from './match-lineups/match-lineups.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
+import { AccountingDashboardModule } from './accounting-dashboard/accounting-dashboard.module';
 
 // Nuevos módulos Escolares
 import { SchoolsModule } from './schools/schools.module';
@@ -57,6 +59,7 @@ import { MembershipsModule } from './memberships/memberships.module';
 import { SessionIncidentsModule } from './session-incidents/session-incidents.module';
 import { ProgressEvaluationsModule } from './progress-evaluations/progress-evaluations.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { CalendarModule } from './calendar/calendar.module';
 
 import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
@@ -64,6 +67,9 @@ import { ClsModule } from 'nestjs-cls';
 import { ShiftsModule } from './shifts/shifts.module';
 import { PrinterModule } from './printer/printer.module';
 import { TransactionReportModule } from './transaction-report/transaction-report.module';
+import { AccountCategoriesModule } from './account-categories/account-categories.module';
+import { AccountChargesModule } from './account-charges/account-charges.module';
+import { FinancialAccountsModule } from './financial-accounts/financial-accounts.module';
 
 @Module({
   imports: [
@@ -128,6 +134,11 @@ import { TransactionReportModule } from './transaction-report/transaction-report
     PrinterModule,
     TransactionReportModule,
     MembershipsModule,
+    CalendarModule,
+    AccountCategoriesModule,
+    AccountChargesModule,
+    FinancialAccountsModule,
+    AccountingDashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

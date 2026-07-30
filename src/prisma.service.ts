@@ -37,6 +37,24 @@ export class PrismaService extends PrismaClient {
     // porque dentro de la extensión '$extends', 'this' cambia de contexto.
     const self = this;
 
+    // Caché para no evaluar los campos de un modelo en cada consulta
+    const modelAuditFieldsCache = new Map<string, { hasCreatedBy: boolean; hasUpdatedBy: boolean }>();
+    
+    const getAuditFields = (modelName: string) => {
+      if (modelAuditFieldsCache.has(modelName)) return modelAuditFieldsCache.get(modelName)!;
+      
+      // Prisma genera un enum {Model}ScalarFieldEnum con todos los campos del modelo
+      const enumName = `${modelName}ScalarFieldEnum` as keyof typeof Prisma;
+      const modelFields = Prisma[enumName] as Record<string, string> | undefined;
+      
+      const hasCreatedBy = !!modelFields?.['createdById'];
+      const hasUpdatedBy = !!modelFields?.['updatedById'];
+      const result = { hasCreatedBy, hasUpdatedBy };
+      
+      modelAuditFieldsCache.set(modelName, result);
+      return result;
+    };
+
     // Creamos un cliente extendido que intercepta TODAS las operaciones de la base de datos
     const extended = this.$extends({
       query: {
@@ -48,9 +66,10 @@ export class PrismaService extends PrismaClient {
 
             // 2. Si hay usuario y estamos enviando datos, rellenamos quién lo creó y actualizó
             if (userId && args.data) {
+              const { hasCreatedBy, hasUpdatedBy } = getAuditFields(model);
               const data = args.data as AuditableData;
-              if (data.createdById === undefined) data.createdById = userId;
-              if (data.updatedById === undefined) data.updatedById = userId;
+              if (hasCreatedBy && data.createdById === undefined) data.createdById = userId;
+              if (hasUpdatedBy && data.updatedById === undefined) data.updatedById = userId;
             }
 
             // 3. Ejecutamos la consulta real en la base de datos
@@ -83,8 +102,9 @@ export class PrismaService extends PrismaClient {
 
             // 1. Inyectamos quién está actualizando el registro
             if (userId && args.data) {
+              const { hasUpdatedBy } = getAuditFields(model);
               const data = args.data as AuditableData;
-              if (data.updatedById === undefined) data.updatedById = userId;
+              if (hasUpdatedBy && data.updatedById === undefined) data.updatedById = userId;
             }
 
             // 2. Antes de actualizar, buscamos los valores antiguos para el log
@@ -177,16 +197,17 @@ export class PrismaService extends PrismaClient {
 
             // 1. Inyectamos los campos de auditoría tanto para la parte de create como de update
             if (userId) {
+              const { hasCreatedBy, hasUpdatedBy } = getAuditFields(model);
               if (args.create) {
                 const createData = args.create as AuditableData;
-                if (createData.createdById === undefined)
+                if (hasCreatedBy && createData.createdById === undefined)
                   createData.createdById = userId;
-                if (createData.updatedById === undefined)
+                if (hasUpdatedBy && createData.updatedById === undefined)
                   createData.updatedById = userId;
               }
               if (args.update) {
                 const updateData = args.update as AuditableData;
-                if (updateData.updatedById === undefined)
+                if (hasUpdatedBy && updateData.updatedById === undefined)
                   updateData.updatedById = userId;
               }
             }

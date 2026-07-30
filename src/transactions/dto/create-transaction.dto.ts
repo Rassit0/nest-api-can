@@ -209,4 +209,25 @@ export class CreateTransactionDto {
   @ValidateNested({ each: true })
   @Type(() => CreateChargeTransactionDto)
   chargeTransactions?: CreateChargeTransactionDto[];
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID de la cuenta financiera a la que ingresa o sale el dinero',
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
+      constraint1: 'financialAccountId',
+    }),
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'financialAccountId',
+    }),
+  })
+  @Exists('financialAccount', 'id', {
+    message: i18nValidationMessage('validation.EXISTS', {
+      constraint1: 'financialAccount',
+    }),
+  })
+  financialAccountId: string;
 }

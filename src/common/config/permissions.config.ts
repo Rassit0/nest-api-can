@@ -38,6 +38,8 @@ export const SystemModules = [
   'DASHBOARD',
   'SHIFTS',
   'CHARGES',
+  'ACCOUNT_CATEGORIES',
+  'ACCOUNT_CHARGES',
   'SYSTEM',
 ] as const;
 
@@ -96,6 +98,8 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   PROGRESS_EVALUATIONS: crud('PROGRESS_EVALUATIONS'),
   SHIFTS: crud('SHIFTS'),
   CHARGES: crud('CHARGES'),
+  ACCOUNT_CATEGORIES: crud('ACCOUNT_CATEGORIES'),
+  ACCOUNT_CHARGES: crud('ACCOUNT_CHARGES'),
 
   // Módulos especiales que no tienen CRUD completo
   AUDIT_LOGS: ['READ_AUDIT_LOGS'],

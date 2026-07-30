@@ -1,8 +1,10 @@
 export interface TransactionReceiptData {
+  receiptSeries: string;
   receiptNumber: string;
   date: Date;
   payerName: string;
   payerDocument: string;
+  beneficiaryName?: string;
   amountLiteral: string;
   amountNumeric: string;
   concept: string;

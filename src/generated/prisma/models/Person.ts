@@ -277,6 +277,7 @@ export type PersonWhereInput = {
   transactions?: Prisma.TransactionListRelationFilter
   students?: Prisma.StudentListRelationFilter
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  accountCharges?: Prisma.AccountChargeListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -305,6 +306,7 @@ export type PersonOrderByWithRelationInput = {
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   students?: Prisma.StudentOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
+  accountCharges?: Prisma.AccountChargeOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -336,6 +338,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   transactions?: Prisma.TransactionListRelationFilter
   students?: Prisma.StudentListRelationFilter
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  accountCharges?: Prisma.AccountChargeListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "documentNumber" | "email">
@@ -406,6 +409,7 @@ export type PersonCreateInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -434,6 +438,7 @@ export type PersonUncheckedCreateInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -458,6 +463,7 @@ export type PersonUpdateInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -486,6 +492,7 @@ export type PersonUncheckedUpdateInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -830,6 +837,22 @@ export type PersonUpdateOneRequiredWithoutStudentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutStudentsInput, Prisma.PersonUpdateWithoutStudentsInput>, Prisma.PersonUncheckedUpdateWithoutStudentsInput>
 }
 
+export type PersonCreateNestedOneWithoutAccountChargesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutAccountChargesInput, Prisma.PersonUncheckedCreateWithoutAccountChargesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutAccountChargesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutAccountChargesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutAccountChargesInput, Prisma.PersonUncheckedCreateWithoutAccountChargesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutAccountChargesInput
+  upsert?: Prisma.PersonUpsertWithoutAccountChargesInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutAccountChargesInput, Prisma.PersonUpdateWithoutAccountChargesInput>, Prisma.PersonUncheckedUpdateWithoutAccountChargesInput>
+}
+
 export type PersonCreateWithoutContactsInput = {
   id?: string
   name: string
@@ -851,6 +874,7 @@ export type PersonCreateWithoutContactsInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -878,6 +902,7 @@ export type PersonUncheckedCreateWithoutContactsInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactsInput = {
@@ -906,6 +931,7 @@ export type PersonCreateWithoutContactOfInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -933,6 +959,7 @@ export type PersonUncheckedCreateWithoutContactOfInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutContactOfInput = {
@@ -972,6 +999,7 @@ export type PersonUpdateWithoutContactsInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -999,6 +1027,7 @@ export type PersonUncheckedUpdateWithoutContactsInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithoutContactOfInput = {
@@ -1033,6 +1062,7 @@ export type PersonUpdateWithoutContactOfInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1060,6 +1090,7 @@ export type PersonUncheckedUpdateWithoutContactOfInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutPlayersInput = {
@@ -1083,6 +1114,7 @@ export type PersonCreateWithoutPlayersInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -1110,6 +1142,7 @@ export type PersonUncheckedCreateWithoutPlayersInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutPlayersInput = {
@@ -1149,6 +1182,7 @@ export type PersonUpdateWithoutPlayersInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1176,6 +1210,7 @@ export type PersonUncheckedUpdateWithoutPlayersInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutStaffInput = {
@@ -1199,6 +1234,7 @@ export type PersonCreateWithoutStaffInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -1226,6 +1262,7 @@ export type PersonUncheckedCreateWithoutStaffInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutStaffInput = {
@@ -1265,6 +1302,7 @@ export type PersonUpdateWithoutStaffInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1292,6 +1330,7 @@ export type PersonUncheckedUpdateWithoutStaffInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutTransactionsInput = {
@@ -1315,6 +1354,7 @@ export type PersonCreateWithoutTransactionsInput = {
   staff?: Prisma.StaffCreateNestedOneWithoutPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -1342,6 +1382,7 @@ export type PersonUncheckedCreateWithoutTransactionsInput = {
   staff?: Prisma.StaffUncheckedCreateNestedOneWithoutPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutTransactionsInput = {
@@ -1381,6 +1422,7 @@ export type PersonUpdateWithoutTransactionsInput = {
   staff?: Prisma.StaffUpdateOneWithoutPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1408,6 +1450,7 @@ export type PersonUncheckedUpdateWithoutTransactionsInput = {
   staff?: Prisma.StaffUncheckedUpdateOneWithoutPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutUserInput = {
@@ -1431,6 +1474,7 @@ export type PersonCreateWithoutUserInput = {
   staff?: Prisma.StaffCreateNestedOneWithoutPersonInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -1458,6 +1502,7 @@ export type PersonUncheckedCreateWithoutUserInput = {
   staff?: Prisma.StaffUncheckedCreateNestedOneWithoutPersonInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUserInput = {
@@ -1487,6 +1532,7 @@ export type PersonCreateWithoutCreatedByInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
 
@@ -1513,6 +1559,7 @@ export type PersonUncheckedCreateWithoutCreatedByInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCreatedByInput = {
@@ -1547,6 +1594,7 @@ export type PersonCreateWithoutUpdatedByInput = {
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentCreateNestedManyWithoutPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
 }
 
@@ -1573,6 +1621,7 @@ export type PersonUncheckedCreateWithoutUpdatedByInput = {
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUpdatedByInput = {
@@ -1617,6 +1666,7 @@ export type PersonUpdateWithoutUserInput = {
   staff?: Prisma.StaffUpdateOneWithoutPersonNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1644,6 +1694,7 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   staff?: Prisma.StaffUncheckedUpdateOneWithoutPersonNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithWhereUniqueWithoutCreatedByInput = {
@@ -1721,6 +1772,7 @@ export type PersonCreateWithoutStudentsInput = {
   staff?: Prisma.StaffCreateNestedOneWithoutPersonInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutPersonInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
 }
@@ -1748,6 +1800,7 @@ export type PersonUncheckedCreateWithoutStudentsInput = {
   staff?: Prisma.StaffUncheckedCreateNestedOneWithoutPersonInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutStudentsInput = {
@@ -1787,6 +1840,7 @@ export type PersonUpdateWithoutStudentsInput = {
   staff?: Prisma.StaffUpdateOneWithoutPersonNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
@@ -1813,6 +1867,127 @@ export type PersonUncheckedUpdateWithoutStudentsInput = {
   players?: Prisma.PlayerUncheckedUpdateManyWithoutPersonNestedInput
   staff?: Prisma.StaffUncheckedUpdateOneWithoutPersonNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutAccountChargesInput = {
+  id?: string
+  name: string
+  lastName: string
+  secondLastName?: string | null
+  birthDate?: Date | string | null
+  imageUrl?: string | null
+  documentType?: $Enums.DocumentType | null
+  documentNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  gender?: $Enums.Gender | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.PersonContactCreateNestedManyWithoutPersonInput
+  contactOf?: Prisma.PersonContactCreateNestedManyWithoutContactPersonInput
+  players?: Prisma.PlayerCreateNestedManyWithoutPersonInput
+  staff?: Prisma.StaffCreateNestedOneWithoutPersonInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutPayerPersonInput
+  students?: Prisma.StudentCreateNestedManyWithoutPersonInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPersonsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPersonsInput
+}
+
+export type PersonUncheckedCreateWithoutAccountChargesInput = {
+  id?: string
+  name: string
+  lastName: string
+  secondLastName?: string | null
+  birthDate?: Date | string | null
+  imageUrl?: string | null
+  documentType?: $Enums.DocumentType | null
+  documentNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  gender?: $Enums.Gender | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  contacts?: Prisma.PersonContactUncheckedCreateNestedManyWithoutPersonInput
+  contactOf?: Prisma.PersonContactUncheckedCreateNestedManyWithoutContactPersonInput
+  players?: Prisma.PlayerUncheckedCreateNestedManyWithoutPersonInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutPersonInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutPayerPersonInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutPersonInput
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutAccountChargesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutAccountChargesInput, Prisma.PersonUncheckedCreateWithoutAccountChargesInput>
+}
+
+export type PersonUpsertWithoutAccountChargesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutAccountChargesInput, Prisma.PersonUncheckedUpdateWithoutAccountChargesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutAccountChargesInput, Prisma.PersonUncheckedCreateWithoutAccountChargesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutAccountChargesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutAccountChargesInput, Prisma.PersonUncheckedUpdateWithoutAccountChargesInput>
+}
+
+export type PersonUpdateWithoutAccountChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentType?: Prisma.NullableEnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType | null
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.PersonContactUpdateManyWithoutPersonNestedInput
+  contactOf?: Prisma.PersonContactUpdateManyWithoutContactPersonNestedInput
+  players?: Prisma.PlayerUpdateManyWithoutPersonNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutPersonNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
+  students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutAccountChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  secondLastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentType?: Prisma.NullableEnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType | null
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacts?: Prisma.PersonContactUncheckedUpdateManyWithoutPersonNestedInput
+  contactOf?: Prisma.PersonContactUncheckedUpdateManyWithoutContactPersonNestedInput
+  players?: Prisma.PlayerUncheckedUpdateManyWithoutPersonNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutPersonNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
 }
 
@@ -1874,6 +2049,7 @@ export type PersonUpdateWithoutCreatedByInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPersonsNestedInput
 }
 
@@ -1900,6 +2076,7 @@ export type PersonUncheckedUpdateWithoutCreatedByInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1942,6 +2119,7 @@ export type PersonUpdateWithoutUpdatedByInput = {
   transactions?: Prisma.TransactionUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutPersonNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPersonsNestedInput
 }
 
@@ -1968,6 +2146,7 @@ export type PersonUncheckedUpdateWithoutUpdatedByInput = {
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutPayerPersonNestedInput
   students?: Prisma.StudentUncheckedUpdateManyWithoutPersonNestedInput
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1999,6 +2178,7 @@ export type PersonCountOutputType = {
   players: number
   transactions: number
   students: number
+  accountCharges: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2007,6 +2187,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   players?: boolean | PersonCountOutputTypeCountPlayersArgs
   transactions?: boolean | PersonCountOutputTypeCountTransactionsArgs
   students?: boolean | PersonCountOutputTypeCountStudentsArgs
+  accountCharges?: boolean | PersonCountOutputTypeCountAccountChargesArgs
 }
 
 /**
@@ -2054,6 +2235,13 @@ export type PersonCountOutputTypeCountStudentsArgs<ExtArgs extends runtime.Types
   where?: Prisma.StudentWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountAccountChargesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountChargeWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2079,6 +2267,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   transactions?: boolean | Prisma.Person$transactionsArgs<ExtArgs>
   students?: boolean | Prisma.Person$studentsArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
+  accountCharges?: boolean | Prisma.Person$accountChargesArgs<ExtArgs>
   createdBy?: boolean | Prisma.Person$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Person$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
@@ -2154,6 +2343,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   transactions?: boolean | Prisma.Person$transactionsArgs<ExtArgs>
   students?: boolean | Prisma.Person$studentsArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
+  accountCharges?: boolean | Prisma.Person$accountChargesArgs<ExtArgs>
   createdBy?: boolean | Prisma.Person$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Person$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
@@ -2177,6 +2367,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
     students: Prisma.$StudentPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs> | null
+    accountCharges: Prisma.$AccountChargePayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
@@ -2598,6 +2789,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   transactions<T extends Prisma.Person$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   students<T extends Prisma.Person$studentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.Person$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  accountCharges<T extends Prisma.Person$accountChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$accountChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Person$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Person$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -3196,6 +3388,30 @@ export type Person$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Person.accountCharges
+ */
+export type Person$accountChargesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountCharge
+   */
+  select?: Prisma.AccountChargeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountCharge
+   */
+  omit?: Prisma.AccountChargeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountChargeInclude<ExtArgs> | null
+  where?: Prisma.AccountChargeWhereInput
+  orderBy?: Prisma.AccountChargeOrderByWithRelationInput | Prisma.AccountChargeOrderByWithRelationInput[]
+  cursor?: Prisma.AccountChargeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountChargeScalarFieldEnum | Prisma.AccountChargeScalarFieldEnum[]
 }
 
 /**

@@ -9,6 +9,7 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { MatchesService } from './matches.service';
@@ -34,8 +35,9 @@ export class MatchesController {
   @Post()
   @ApiOperation({ summary: 'Registrar/programar un partido' })
   @RequirePermissions('CREATE_MATCHES')
-  async create(@Body() createMatchDto: CreateMatchDto) {
-    return await this.matchesService.create(createMatchDto);
+  async create(@Body() createMatchDto: CreateMatchDto, @Req() req: any) {
+    const userId = req.user?.id;
+    return await this.matchesService.create(createMatchDto, userId);
   }
 
   @Get()
@@ -59,8 +61,10 @@ export class MatchesController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateMatchDto: UpdateMatchDto,
+    @Req() req: any,
   ) {
-    return await this.matchesService.update(id, updateMatchDto);
+    const userId = req.user?.id;
+    return await this.matchesService.update(id, updateMatchDto, userId);
   }
 
   @Delete(':id')

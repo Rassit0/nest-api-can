@@ -34,6 +34,7 @@ export class TransactionReportController {
     const pdfDoc =
       await this.transactionReportService.getTransactionByIdReport(
         transactionId,
+        false // No es single (imprime la hoja con 2 copias a la izquierda)
       );
 
     // Establece el encabezado de la respuesta para indicar que el contenido es un PDF
@@ -44,6 +45,25 @@ export class TransactionReportController {
     pdfDoc.pipe(response);
 
     // Finaliza la generación del PDF y cierra el flujo
+    pdfDoc.end();
+  }
+
+  @Get('transaction/:transactionId/single')
+  @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
+  async getSingleTransactionReport(
+    @Res() response: Response,
+    @Param('transactionId') transactionId: string,
+  ) {
+    const pdfDoc =
+      await this.transactionReportService.getTransactionByIdReport(
+        transactionId,
+        true // Es single (imprime un PDF pequeño solo para mandar por WhatsApp)
+      );
+
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Transaction-Report-Single';
+
+    pdfDoc.pipe(response);
     pdfDoc.end();
   }
 }

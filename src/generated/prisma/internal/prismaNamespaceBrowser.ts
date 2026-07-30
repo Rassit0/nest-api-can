@@ -74,7 +74,9 @@ export const ModelName = {
   TeamSeasonStaff: 'TeamSeasonStaff',
   Charge: 'Charge',
   ChargeTransaction: 'ChargeTransaction',
+  FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
+  ReceiptSequence: 'ReceiptSequence',
   User: 'User',
   Role: 'Role',
   Module: 'Module',
@@ -95,6 +97,7 @@ export const ModelName = {
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
   ProgressEvaluation: 'ProgressEvaluation',
+  EventSeries: 'EventSeries',
   Event: 'Event',
   GeneralEvent: 'GeneralEvent',
   Session: 'Session',
@@ -103,7 +106,10 @@ export const ModelName = {
   SessionBooking: 'SessionBooking',
   Match: 'Match',
   MatchLineup: 'MatchLineup',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  EventMaterializationLog: 'EventMaterializationLog',
+  AccountCategory: 'AccountCategory',
+  AccountCharge: 'AccountCharge'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -533,6 +539,7 @@ export const ChargeScalarFieldEnum = {
   discountReason: 'discountReason',
   dueDate: 'dueDate',
   status: 'status',
+  direction: 'direction',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -556,8 +563,25 @@ export const ChargeTransactionScalarFieldEnum = {
 export type ChargeTransactionScalarFieldEnum = (typeof ChargeTransactionScalarFieldEnum)[keyof typeof ChargeTransactionScalarFieldEnum]
 
 
+export const FinancialAccountScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  currency: 'currency',
+  initialBalance: 'initialBalance',
+  cachedBalance: 'cachedBalance',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
+
+
 export const TransactionScalarFieldEnum = {
   id: 'id',
+  receiptSeries: 'receiptSeries',
   receiptNumber: 'receiptNumber',
   payerPersonId: 'payerPersonId',
   amount: 'amount',
@@ -567,6 +591,10 @@ export const TransactionScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   reference: 'reference',
   notes: 'notes',
+  financialAccountId: 'financialAccountId',
+  referenceGroupId: 'referenceGroupId',
+  isReconciled: 'isReconciled',
+  reconciledAt: 'reconciledAt',
   status: 'status',
   receiptUrls: 'receiptUrls',
   createdAt: 'createdAt',
@@ -576,6 +604,18 @@ export const TransactionScalarFieldEnum = {
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const ReceiptSequenceScalarFieldEnum = {
+  id: 'id',
+  series: 'series',
+  description: 'description',
+  lastValue: 'lastValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReceiptSequenceScalarFieldEnum = (typeof ReceiptSequenceScalarFieldEnum)[keyof typeof ReceiptSequenceScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -904,6 +944,26 @@ export const ProgressEvaluationScalarFieldEnum = {
 export type ProgressEvaluationScalarFieldEnum = (typeof ProgressEvaluationScalarFieldEnum)[keyof typeof ProgressEvaluationScalarFieldEnum]
 
 
+export const EventSeriesScalarFieldEnum = {
+  id: 'id',
+  recurrenceRule: 'recurrenceRule',
+  timezone: 'timezone',
+  eventType: 'eventType',
+  templateData: 'templateData',
+  templateVersion: 'templateVersion',
+  materializedUntil: 'materializedUntil',
+  lastMaterializedAt: 'lastMaterializedAt',
+  status: 'status',
+  lockedUntil: 'lockedUntil',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type EventSeriesScalarFieldEnum = (typeof EventSeriesScalarFieldEnum)[keyof typeof EventSeriesScalarFieldEnum]
+
+
 export const EventScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -914,8 +974,9 @@ export const EventScalarFieldEnum = {
   eventType: 'eventType',
   status: 'status',
   color: 'color',
-  recurrenceRule: 'recurrenceRule',
-  recurrenceGroupId: 'recurrenceGroupId',
+  eventSeriesId: 'eventSeriesId',
+  originalStartDate: 'originalStartDate',
+  exceptionType: 'exceptionType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -1029,12 +1090,65 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const EventMaterializationLogScalarFieldEnum = {
+  id: 'id',
+  eventSeriesId: 'eventSeriesId',
+  generatedDate: 'generatedDate',
+  status: 'status',
+  errorCode: 'errorCode',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type EventMaterializationLogScalarFieldEnum = (typeof EventMaterializationLogScalarFieldEnum)[keyof typeof EventMaterializationLogScalarFieldEnum]
+
+
+export const AccountCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type AccountCategoryScalarFieldEnum = (typeof AccountCategoryScalarFieldEnum)[keyof typeof AccountCategoryScalarFieldEnum]
+
+
+export const AccountChargeScalarFieldEnum = {
+  id: 'id',
+  chargeId: 'chargeId',
+  title: 'title',
+  categoryId: 'categoryId',
+  referenceType: 'referenceType',
+  referenceId: 'referenceId',
+  referenceNumber: 'referenceNumber',
+  personId: 'personId',
+  externalEntity: 'externalEntity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type AccountChargeScalarFieldEnum = (typeof AccountChargeScalarFieldEnum)[keyof typeof AccountChargeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
