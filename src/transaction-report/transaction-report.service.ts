@@ -119,6 +119,7 @@ export class TransactionReportService {
       receiverName,
       receiverDocument,
       validationUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify/${transaction.id}`,
+      type: transaction.type,
     };
 
     const docDefinition = transactionByIdReport({ data, isSingle });

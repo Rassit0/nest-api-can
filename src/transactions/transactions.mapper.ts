@@ -18,6 +18,18 @@ export interface MappedTransaction {
   receiptNumber: number;
   reference: string | null;
   financialAccountName: string | null;
+  thirdParty: {
+    id: string;
+    name: string;
+    documentNumber: string | null;
+  } | null;
+  attachments: {
+    id: string;
+    originalName: string;
+    url: string | null;
+    mimeType: string;
+    sizeBytes: number;
+  }[];
   createdAt: Date;
 }
 
@@ -69,6 +81,8 @@ export class TransactionsMapper {
       receiptNumber: transaction.receiptNumber,
       reference: transaction.reference,
       financialAccountName: (transaction as any).financialAccount?.name || null,
+      thirdParty: transaction.thirdParty || null,
+      attachments: transaction.attachments || [],
       createdAt: transaction.createdAt,
     };
   }

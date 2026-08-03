@@ -31,6 +31,7 @@ export const transactionByIdReport = (
                 receiptSeries: data.receiptSeries,
                 receiptNumber: data.receiptNumber,
                 date: data.date,
+                type: data.type,
               }),
             ],
           },
@@ -79,7 +80,7 @@ export const transactionByIdReport = (
                             fontSize: 9,
                             margin: [0, 0, 0, 6],
                           },
-                          { text: 'Recibí de:', fontSize: 7, bold: true },
+                          { text: data.type === 'EXPENSE' ? 'Pagado a:' : 'Recibí de:', fontSize: 7, bold: true },
                           {
                             text: data.payerName,
                             fontSize: 8,
@@ -88,7 +89,7 @@ export const transactionByIdReport = (
                           ...(data.beneficiaryName
                             ? ([
                                 {
-                                  text: 'A favor de (Alumno/Jugador):',
+                                  text: data.type === 'EXPENSE' ? 'Concepto detallado (Alumno/Jugador):' : 'A favor de (Alumno/Jugador):',
                                   fontSize: 7,
                                   bold: true,
                                 },
@@ -205,12 +206,12 @@ export const transactionByIdReport = (
                         margin: [0, 2, 0, 0],
                       },
                       {
-                        text: data.payerName,
+                        text: data.type === 'EXPENSE' ? data.receiverName : data.payerName,
                         fontSize: 5,
                         alignment: 'center',
                       },
                       {
-                        text: `C.I. ${data.payerDocument}`,
+                        text: `C.I. ${data.type === 'EXPENSE' ? data.receiverDocument : data.payerDocument}`,
                         fontSize: 5,
                         alignment: 'center',
                       },
@@ -240,12 +241,12 @@ export const transactionByIdReport = (
                         margin: [0, 2, 0, 0],
                       },
                       {
-                        text: data.receiverName,
+                        text: data.type === 'EXPENSE' ? data.payerName : data.receiverName,
                         fontSize: 5,
                         alignment: 'center',
                       },
                       {
-                        text: `C.I. ${data.receiverDocument}`,
+                        text: `C.I. ${data.type === 'EXPENSE' ? data.payerDocument : data.receiverDocument}`,
                         fontSize: 5,
                         alignment: 'center',
                       },

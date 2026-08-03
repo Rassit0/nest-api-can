@@ -111,7 +111,9 @@ export const ModelName = {
   EventMaterializationLog: 'EventMaterializationLog',
   AccountCategory: 'AccountCategory',
   AccountCharge: 'AccountCharge',
-  CashClosure: 'CashClosure'
+  CashClosure: 'CashClosure',
+  ThirdParty: 'ThirdParty',
+  Attachment: 'Attachment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -600,7 +602,7 @@ export const TransactionScalarFieldEnum = {
   isReconciled: 'isReconciled',
   reconciledAt: 'reconciledAt',
   status: 'status',
-  receiptUrls: 'receiptUrls',
+  thirdPartyId: 'thirdPartyId',
   isInternalTransfer: 'isInternalTransfer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -1171,6 +1173,40 @@ export const CashClosureScalarFieldEnum = {
 } as const
 
 export type CashClosureScalarFieldEnum = (typeof CashClosureScalarFieldEnum)[keyof typeof CashClosureScalarFieldEnum]
+
+
+export const ThirdPartyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  documentType: 'documentType',
+  documentNumber: 'documentNumber',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ThirdPartyScalarFieldEnum = (typeof ThirdPartyScalarFieldEnum)[keyof typeof ThirdPartyScalarFieldEnum]
+
+
+export const AttachmentScalarFieldEnum = {
+  id: 'id',
+  originalName: 'originalName',
+  internalName: 'internalName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  url: 'url',
+  path: 'path',
+  status: 'status',
+  transactionId: 'transactionId',
+  uploadedById: 'uploadedById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
 
 
 export const SortOrder = {

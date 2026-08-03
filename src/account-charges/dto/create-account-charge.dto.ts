@@ -19,6 +19,10 @@ export class ImmediatePaymentDto {
   @IsString()
   @IsNotEmpty()
   financialAccountId: string;
+
+  @IsOptional()
+  @IsUUID('4', { each: true })
+  attachmentIds?: string[];
 }
 
 export class CreateAccountChargeDto {

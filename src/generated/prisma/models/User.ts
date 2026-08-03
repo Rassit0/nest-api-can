@@ -306,6 +306,7 @@ export type UserWhereInput = {
   updatedAccountCategories?: Prisma.AccountCategoryListRelationFilter
   createdAccountCharges?: Prisma.AccountChargeListRelationFilter
   updatedAccountCharges?: Prisma.AccountChargeListRelationFilter
+  attachments?: Prisma.AttachmentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -417,6 +418,7 @@ export type UserOrderByWithRelationInput = {
   updatedAccountCategories?: Prisma.AccountCategoryOrderByRelationAggregateInput
   createdAccountCharges?: Prisma.AccountChargeOrderByRelationAggregateInput
   updatedAccountCharges?: Prisma.AccountChargeOrderByRelationAggregateInput
+  attachments?: Prisma.AttachmentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -531,6 +533,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAccountCategories?: Prisma.AccountCategoryListRelationFilter
   createdAccountCharges?: Prisma.AccountChargeListRelationFilter
   updatedAccountCharges?: Prisma.AccountChargeListRelationFilter
+  attachments?: Prisma.AttachmentListRelationFilter
 }, "id" | "email" | "personId">
 
 export type UserOrderByWithAggregationInput = {
@@ -668,6 +671,7 @@ export type UserCreateInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -777,6 +781,7 @@ export type UserUncheckedCreateInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUpdateInput = {
@@ -886,6 +891,7 @@ export type UserUpdateInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -995,6 +1001,7 @@ export type UserUncheckedUpdateInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -2718,6 +2725,22 @@ export type UserUpdateOneWithoutCashClosuresUpdatedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCashClosuresUpdatedInput, Prisma.UserUpdateWithoutCashClosuresUpdatedInput>, Prisma.UserUncheckedUpdateWithoutCashClosuresUpdatedInput>
 }
 
+export type UserCreateNestedOneWithoutAttachmentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttachmentsInput, Prisma.UserUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttachmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAttachmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttachmentsInput, Prisma.UserUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttachmentsInput
+  upsert?: Prisma.UserUpsertWithoutAttachmentsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.UserUpdateWithoutAttachmentsInput>, Prisma.UserUncheckedUpdateWithoutAttachmentsInput>
+}
+
 export type UserCreateWithoutPersonInput = {
   id?: string
   email: string
@@ -2824,6 +2847,7 @@ export type UserCreateWithoutPersonInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutPersonInput = {
@@ -2932,6 +2956,7 @@ export type UserUncheckedCreateWithoutPersonInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutPersonInput = {
@@ -3045,6 +3070,7 @@ export type UserCreateWithoutCreatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPersonsInput = {
@@ -3153,6 +3179,7 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPersonsInput = {
@@ -3266,6 +3293,7 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
@@ -3374,6 +3402,7 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPersonsInput = {
@@ -3498,6 +3527,7 @@ export type UserUpdateWithoutPersonInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPersonInput = {
@@ -3606,6 +3636,7 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedPersonsInput = {
@@ -3725,6 +3756,7 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
@@ -3833,6 +3865,7 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPersonsInput = {
@@ -3952,6 +3985,7 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
@@ -4060,6 +4094,7 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedDisciplinesInput = {
@@ -4168,6 +4203,7 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
@@ -4276,6 +4312,7 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDisciplinesInput = {
@@ -4389,6 +4426,7 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
@@ -4497,6 +4535,7 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedDisciplinesInput = {
@@ -4621,6 +4660,7 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
@@ -4729,6 +4769,7 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedDisciplinesInput = {
@@ -4848,6 +4889,7 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
@@ -4956,6 +4998,7 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionsInput = {
@@ -5064,6 +5107,7 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
@@ -5172,6 +5216,7 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionsInput = {
@@ -5285,6 +5330,7 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
@@ -5393,6 +5439,7 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionsInput = {
@@ -5517,6 +5564,7 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
@@ -5625,6 +5673,7 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionsInput = {
@@ -5744,6 +5793,7 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
@@ -5852,6 +5902,7 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionContactsInput = {
@@ -5960,6 +6011,7 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
@@ -6068,6 +6120,7 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionContactsInput = {
@@ -6181,6 +6234,7 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
@@ -6289,6 +6343,7 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionContactsInput = {
@@ -6413,6 +6468,7 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
@@ -6521,6 +6577,7 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionContactsInput = {
@@ -6640,6 +6697,7 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
@@ -6748,6 +6806,7 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedShiftsInput = {
@@ -6856,6 +6915,7 @@ export type UserCreateWithoutCreatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedShiftsInput = {
@@ -6964,6 +7024,7 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedShiftsInput = {
@@ -7077,6 +7138,7 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
@@ -7185,6 +7247,7 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedShiftsInput = {
@@ -7309,6 +7372,7 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
@@ -7417,6 +7481,7 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedShiftsInput = {
@@ -7536,6 +7601,7 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
@@ -7644,6 +7710,7 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedClubsInput = {
@@ -7752,6 +7819,7 @@ export type UserCreateWithoutCreatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedClubsInput = {
@@ -7860,6 +7928,7 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedClubsInput = {
@@ -7973,6 +8042,7 @@ export type UserCreateWithoutUpdatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedClubsInput = {
@@ -8081,6 +8151,7 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedClubsInput = {
@@ -8205,6 +8276,7 @@ export type UserUpdateWithoutCreatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedClubsInput = {
@@ -8313,6 +8385,7 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedClubsInput = {
@@ -8432,6 +8505,7 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
@@ -8540,6 +8614,7 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedLocationsInput = {
@@ -8648,6 +8723,7 @@ export type UserCreateWithoutCreatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLocationsInput = {
@@ -8756,6 +8832,7 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLocationsInput = {
@@ -8869,6 +8946,7 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
@@ -8977,6 +9055,7 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLocationsInput = {
@@ -9101,6 +9180,7 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
@@ -9209,6 +9289,7 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLocationsInput = {
@@ -9328,6 +9409,7 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
@@ -9436,6 +9518,7 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCategoriesInput = {
@@ -9544,6 +9627,7 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
@@ -9652,6 +9736,7 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCategoriesInput = {
@@ -9765,6 +9850,7 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
@@ -9873,6 +9959,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCategoriesInput = {
@@ -9997,6 +10084,7 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
@@ -10105,6 +10193,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCategoriesInput = {
@@ -10224,6 +10313,7 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
@@ -10332,6 +10422,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonsInput = {
@@ -10440,6 +10531,7 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
@@ -10548,6 +10640,7 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonsInput = {
@@ -10661,6 +10754,7 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
@@ -10769,6 +10863,7 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonsInput = {
@@ -10893,6 +10988,7 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
@@ -11001,6 +11097,7 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonsInput = {
@@ -11120,6 +11217,7 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
@@ -11228,6 +11326,7 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonEventsInput = {
@@ -11336,6 +11435,7 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
@@ -11444,6 +11544,7 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonEventsInput = {
@@ -11557,6 +11658,7 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
@@ -11665,6 +11767,7 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonEventsInput = {
@@ -11789,6 +11892,7 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
@@ -11897,6 +12001,7 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonEventsInput = {
@@ -12016,6 +12121,7 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
@@ -12124,6 +12230,7 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamsInput = {
@@ -12232,6 +12339,7 @@ export type UserCreateWithoutCreatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamsInput = {
@@ -12340,6 +12448,7 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamsInput = {
@@ -12453,6 +12562,7 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
@@ -12561,6 +12671,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamsInput = {
@@ -12685,6 +12796,7 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
@@ -12793,6 +12905,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamsInput = {
@@ -12912,6 +13025,7 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
@@ -13020,6 +13134,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonsInput = {
@@ -13128,6 +13243,7 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
@@ -13236,6 +13352,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonsInput = {
@@ -13349,6 +13466,7 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
@@ -13457,6 +13575,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonsInput = {
@@ -13581,6 +13700,7 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
@@ -13689,6 +13809,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonsInput = {
@@ -13808,6 +13929,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
@@ -13916,6 +14038,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14024,6 +14147,7 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14132,6 +14256,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14245,6 +14370,7 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14353,6 +14479,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14477,6 +14604,7 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14585,6 +14713,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14704,6 +14833,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14812,6 +14942,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPaymentPlansInput = {
@@ -14920,6 +15051,7 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
@@ -15028,6 +15160,7 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPaymentPlansInput = {
@@ -15141,6 +15274,7 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
@@ -15249,6 +15383,7 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPaymentPlansInput = {
@@ -15373,6 +15508,7 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
@@ -15481,6 +15617,7 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPaymentPlansInput = {
@@ -15600,6 +15737,7 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
@@ -15708,6 +15846,7 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayersInput = {
@@ -15816,6 +15955,7 @@ export type UserCreateWithoutCreatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayersInput = {
@@ -15924,6 +16064,7 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayersInput = {
@@ -16037,6 +16178,7 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
@@ -16145,6 +16287,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayersInput = {
@@ -16269,6 +16412,7 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
@@ -16377,6 +16521,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayersInput = {
@@ -16496,6 +16641,7 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
@@ -16604,6 +16750,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipsInput = {
@@ -16712,6 +16859,7 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
@@ -16820,6 +16968,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipsInput = {
@@ -16933,6 +17082,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
@@ -17041,6 +17191,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipsInput = {
@@ -17165,6 +17316,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
@@ -17273,6 +17425,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipsInput = {
@@ -17392,6 +17545,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
@@ -17500,6 +17654,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -17608,6 +17763,7 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -17716,6 +17872,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -17829,6 +17986,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -17937,6 +18095,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18061,6 +18220,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18169,6 +18329,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18288,6 +18449,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18396,6 +18558,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -18504,6 +18667,7 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -18612,6 +18776,7 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipPausesInput = {
@@ -18725,6 +18890,7 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -18833,6 +18999,7 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipPausesInput = {
@@ -18957,6 +19124,7 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19065,6 +19233,7 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19184,6 +19353,7 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19292,6 +19462,7 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipDiscountsInput = {
@@ -19400,6 +19571,7 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
@@ -19508,6 +19680,7 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipDiscountsInput = {
@@ -19621,6 +19794,7 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
@@ -19729,6 +19903,7 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipDiscountsInput = {
@@ -19853,6 +20028,7 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
@@ -19961,6 +20137,7 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipDiscountsInput = {
@@ -20080,6 +20257,7 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
@@ -20188,6 +20366,7 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipChargesInput = {
@@ -20296,6 +20475,7 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
@@ -20404,6 +20584,7 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipChargesInput = {
@@ -20517,6 +20698,7 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
@@ -20625,6 +20807,7 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipChargesInput = {
@@ -20749,6 +20932,7 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
@@ -20857,6 +21041,7 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipChargesInput = {
@@ -20976,6 +21161,7 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
@@ -21084,6 +21270,7 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStaffsInput = {
@@ -21192,6 +21379,7 @@ export type UserCreateWithoutCreatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStaffsInput = {
@@ -21300,6 +21488,7 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStaffsInput = {
@@ -21413,6 +21602,7 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
@@ -21521,6 +21711,7 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStaffsInput = {
@@ -21645,6 +21836,7 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
@@ -21753,6 +21945,7 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStaffsInput = {
@@ -21872,6 +22065,7 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
@@ -21980,6 +22174,7 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -22088,6 +22283,7 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -22196,6 +22392,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonStaffsInput = {
@@ -22309,6 +22506,7 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -22417,6 +22615,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonStaffsInput = {
@@ -22541,6 +22740,7 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
@@ -22649,6 +22849,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonStaffsInput = {
@@ -22768,6 +22969,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -22876,6 +23078,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedChargesInput = {
@@ -22984,6 +23187,7 @@ export type UserCreateWithoutCreatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedChargesInput = {
@@ -23092,6 +23296,7 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedChargesInput = {
@@ -23205,6 +23410,7 @@ export type UserCreateWithoutUpdatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedChargesInput = {
@@ -23313,6 +23519,7 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedChargesInput = {
@@ -23437,6 +23644,7 @@ export type UserUpdateWithoutCreatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedChargesInput = {
@@ -23545,6 +23753,7 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedChargesInput = {
@@ -23664,6 +23873,7 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
@@ -23772,6 +23982,7 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedChargeTransactionsInput = {
@@ -23880,6 +24091,7 @@ export type UserCreateWithoutCreatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedChargeTransactionsInput = {
@@ -23988,6 +24200,7 @@ export type UserUncheckedCreateWithoutCreatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedChargeTransactionsInput = {
@@ -24101,6 +24314,7 @@ export type UserCreateWithoutUpdatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedChargeTransactionsInput = {
@@ -24209,6 +24423,7 @@ export type UserUncheckedCreateWithoutUpdatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedChargeTransactionsInput = {
@@ -24333,6 +24548,7 @@ export type UserUpdateWithoutCreatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedChargeTransactionsInput = {
@@ -24441,6 +24657,7 @@ export type UserUncheckedUpdateWithoutCreatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedChargeTransactionsInput = {
@@ -24560,6 +24777,7 @@ export type UserUpdateWithoutUpdatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedChargeTransactionsInput = {
@@ -24668,6 +24886,7 @@ export type UserUncheckedUpdateWithoutUpdatedChargeTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -24776,6 +24995,7 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -24884,6 +25104,7 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -24997,6 +25218,7 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
@@ -25105,6 +25327,7 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTransactionsInput = {
@@ -25229,6 +25452,7 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -25337,6 +25561,7 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTransactionsInput = {
@@ -25456,6 +25681,7 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
@@ -25564,6 +25790,7 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInternalTransfersInput = {
@@ -25672,6 +25899,7 @@ export type UserCreateWithoutCreatedInternalTransfersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
@@ -25780,6 +26008,7 @@ export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInternalTransfersInput = {
@@ -25904,6 +26133,7 @@ export type UserUpdateWithoutCreatedInternalTransfersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
@@ -26012,6 +26242,7 @@ export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -26120,6 +26351,7 @@ export type UserCreateWithoutRoleInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -26228,6 +26460,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -26346,6 +26579,7 @@ export type UserCreateWithoutCreatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRolesInput = {
@@ -26454,6 +26688,7 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRolesInput = {
@@ -26567,6 +26802,7 @@ export type UserCreateWithoutUpdatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedRolesInput = {
@@ -26675,6 +26911,7 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedRolesInput = {
@@ -26829,6 +27066,7 @@ export type UserUpdateWithoutCreatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRolesInput = {
@@ -26937,6 +27175,7 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedRolesInput = {
@@ -27056,6 +27295,7 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
@@ -27164,6 +27404,7 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPermissionsInput = {
@@ -27272,6 +27513,7 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
@@ -27380,6 +27622,7 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPermissionsInput = {
@@ -27493,6 +27736,7 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
@@ -27601,6 +27845,7 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPermissionsInput = {
@@ -27725,6 +27970,7 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
@@ -27833,6 +28079,7 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPermissionsInput = {
@@ -27952,6 +28199,7 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
@@ -28060,6 +28308,7 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSchoolsInput = {
@@ -28168,6 +28417,7 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
@@ -28276,6 +28526,7 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSchoolsInput = {
@@ -28389,6 +28640,7 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
@@ -28497,6 +28749,7 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSchoolsInput = {
@@ -28621,6 +28874,7 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
@@ -28729,6 +28983,7 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSchoolsInput = {
@@ -28848,6 +29103,7 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
@@ -28956,6 +29212,7 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCoursesInput = {
@@ -29064,6 +29321,7 @@ export type UserCreateWithoutCreatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCoursesInput = {
@@ -29172,6 +29430,7 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCoursesInput = {
@@ -29285,6 +29544,7 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
@@ -29393,6 +29653,7 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCoursesInput = {
@@ -29517,6 +29778,7 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
@@ -29625,6 +29887,7 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCoursesInput = {
@@ -29744,6 +30007,7 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
@@ -29852,6 +30116,7 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonsInput = {
@@ -29960,6 +30225,7 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
@@ -30068,6 +30334,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonsInput = {
@@ -30181,6 +30448,7 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
@@ -30289,6 +30557,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonsInput = {
@@ -30413,6 +30682,7 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
@@ -30521,6 +30791,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonsInput = {
@@ -30640,6 +30911,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
@@ -30748,6 +31020,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -30856,6 +31129,7 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -30964,6 +31238,7 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonPausesInput = {
@@ -31077,6 +31352,7 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
@@ -31185,6 +31461,7 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonPausesInput = {
@@ -31309,6 +31586,7 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
@@ -31417,6 +31695,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonPausesInput = {
@@ -31536,6 +31815,7 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
@@ -31644,6 +31924,7 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -31752,6 +32033,7 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -31860,6 +32142,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonPausesInput = {
@@ -31973,6 +32256,7 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
@@ -32081,6 +32365,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonPausesInput = {
@@ -32205,6 +32490,7 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
@@ -32313,6 +32599,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonPausesInput = {
@@ -32432,6 +32719,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
@@ -32540,6 +32828,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -32648,6 +32937,7 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -32756,6 +33046,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -32869,6 +33160,7 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -32977,6 +33269,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -33101,6 +33394,7 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -33209,6 +33503,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -33328,6 +33623,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -33436,6 +33732,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -33544,6 +33841,7 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -33652,6 +33950,7 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonStaffsInput = {
@@ -33765,6 +34064,7 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -33873,6 +34173,7 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonStaffsInput = {
@@ -33997,6 +34298,7 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
@@ -34105,6 +34407,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonStaffsInput = {
@@ -34224,6 +34527,7 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -34332,6 +34636,7 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentsInput = {
@@ -34440,6 +34745,7 @@ export type UserCreateWithoutCreatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentsInput = {
@@ -34548,6 +34854,7 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentsInput = {
@@ -34661,6 +34968,7 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
@@ -34769,6 +35077,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentsInput = {
@@ -34893,6 +35202,7 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
@@ -35001,6 +35311,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentsInput = {
@@ -35120,6 +35431,7 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
@@ -35228,6 +35540,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipsInput = {
@@ -35336,6 +35649,7 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
@@ -35444,6 +35758,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipsInput = {
@@ -35557,6 +35872,7 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
@@ -35665,6 +35981,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipsInput = {
@@ -35789,6 +36106,7 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
@@ -35897,6 +36215,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipsInput = {
@@ -36016,6 +36335,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
@@ -36124,6 +36444,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -36232,6 +36553,7 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -36340,6 +36662,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipHistoriesInput = {
@@ -36453,6 +36776,7 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -36561,6 +36885,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -36685,6 +37010,7 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -36793,6 +37119,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -36912,6 +37239,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -37020,6 +37348,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -37128,6 +37457,7 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -37236,6 +37566,7 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipPausesInput = {
@@ -37349,6 +37680,7 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
@@ -37457,6 +37789,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipPausesInput = {
@@ -37581,6 +37914,7 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
@@ -37689,6 +38023,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipPausesInput = {
@@ -37808,6 +38143,7 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
@@ -37916,6 +38252,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentDiscountsInput = {
@@ -38024,6 +38361,7 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
@@ -38132,6 +38470,7 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentDiscountsInput = {
@@ -38245,6 +38584,7 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
@@ -38353,6 +38693,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentDiscountsInput = {
@@ -38477,6 +38818,7 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
@@ -38585,6 +38927,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentDiscountsInput = {
@@ -38704,6 +39047,7 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
@@ -38812,6 +39156,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentChargesInput = {
@@ -38920,6 +39265,7 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
@@ -39028,6 +39374,7 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentChargesInput = {
@@ -39141,6 +39488,7 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
@@ -39249,6 +39597,7 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentChargesInput = {
@@ -39373,6 +39722,7 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
@@ -39481,6 +39831,7 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentChargesInput = {
@@ -39600,6 +39951,7 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
@@ -39708,6 +40060,7 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionIncidentsInput = {
@@ -39816,6 +40169,7 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
@@ -39924,6 +40278,7 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionIncidentsInput = {
@@ -40037,6 +40392,7 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
@@ -40145,6 +40501,7 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionIncidentsInput = {
@@ -40269,6 +40626,7 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
@@ -40377,6 +40735,7 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionIncidentsInput = {
@@ -40496,6 +40855,7 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
@@ -40604,6 +40964,7 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedProgressEvaluationsInput = {
@@ -40712,6 +41073,7 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
@@ -40820,6 +41182,7 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProgressEvaluationsInput = {
@@ -40933,6 +41296,7 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
@@ -41041,6 +41405,7 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProgressEvaluationsInput = {
@@ -41165,6 +41530,7 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
@@ -41273,6 +41639,7 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProgressEvaluationsInput = {
@@ -41392,6 +41759,7 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
@@ -41500,6 +41868,7 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedEventsInput = {
@@ -41608,6 +41977,7 @@ export type UserCreateWithoutCreatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -41716,6 +42086,7 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -41829,6 +42200,7 @@ export type UserCreateWithoutUpdatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEventsInput = {
@@ -41937,6 +42309,7 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEventsInput = {
@@ -42061,6 +42434,7 @@ export type UserUpdateWithoutCreatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -42169,6 +42543,7 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedEventsInput = {
@@ -42288,6 +42663,7 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
@@ -42396,6 +42772,7 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionBookingsInput = {
@@ -42504,6 +42881,7 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
@@ -42612,6 +42990,7 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionBookingsInput = {
@@ -42725,6 +43104,7 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
@@ -42833,6 +43213,7 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionBookingsInput = {
@@ -42957,6 +43338,7 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
@@ -43065,6 +43447,7 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionBookingsInput = {
@@ -43184,6 +43567,7 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
@@ -43292,6 +43676,7 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMatchLineupsInput = {
@@ -43400,6 +43785,7 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
@@ -43508,6 +43894,7 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMatchLineupsInput = {
@@ -43621,6 +44008,7 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
@@ -43729,6 +44117,7 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMatchLineupsInput = {
@@ -43853,6 +44242,7 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
@@ -43961,6 +44351,7 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMatchLineupsInput = {
@@ -44080,6 +44471,7 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
@@ -44188,6 +44580,7 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -44296,6 +44689,7 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -44404,6 +44798,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -44528,6 +44923,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -44636,6 +45032,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountCategoriesInput = {
@@ -44744,6 +45141,7 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
@@ -44852,6 +45250,7 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountCategoriesInput = {
@@ -44965,6 +45364,7 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
@@ -45073,6 +45473,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountCategoriesInput = {
@@ -45197,6 +45598,7 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
@@ -45305,6 +45707,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountCategoriesInput = {
@@ -45424,6 +45827,7 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
@@ -45532,6 +45936,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountChargesInput = {
@@ -45640,6 +46045,7 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
@@ -45748,6 +46154,7 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountChargesInput = {
@@ -45861,6 +46268,7 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
@@ -45969,6 +46377,7 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountChargesInput = {
@@ -46093,6 +46502,7 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
@@ -46201,6 +46611,7 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountChargesInput = {
@@ -46320,6 +46731,7 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
@@ -46428,6 +46840,7 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserCreateWithoutCashClosuresCreatedInput = {
@@ -46536,6 +46949,7 @@ export type UserCreateWithoutCashClosuresCreatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
@@ -46644,6 +47058,7 @@ export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresCreatedInput = {
@@ -46757,6 +47172,7 @@ export type UserCreateWithoutCashClosuresUpdatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
@@ -46865,6 +47281,7 @@ export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresUpdatedInput = {
@@ -46989,6 +47406,7 @@ export type UserUpdateWithoutCashClosuresCreatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
@@ -47097,6 +47515,7 @@ export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUpsertWithoutCashClosuresUpdatedInput = {
@@ -47216,6 +47635,7 @@ export type UserUpdateWithoutCashClosuresUpdatedInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
@@ -47236,6 +47656,459 @@ export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
   createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
   cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+}
+
+export type UserCreateWithoutAttachmentsInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutAttachmentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttachmentsInput, Prisma.UserUncheckedCreateWithoutAttachmentsInput>
+}
+
+export type UserUpsertWithoutAttachmentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAttachmentsInput, Prisma.UserUncheckedUpdateWithoutAttachmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttachmentsInput, Prisma.UserUncheckedCreateWithoutAttachmentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAttachmentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAttachmentsInput, Prisma.UserUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type UserUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutCreatedByNestedInput
+  updatedChargeTransactions?: Prisma.ChargeTransactionUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -47442,6 +48315,7 @@ export type UserUpdateWithoutRoleInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -47550,6 +48424,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -47666,6 +48541,7 @@ export type UserCountOutputType = {
   updatedAccountCategories: number
   createdAccountCharges: number
   updatedAccountCharges: number
+  attachments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -47767,6 +48643,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedAccountCategories?: boolean | UserCountOutputTypeCountUpdatedAccountCategoriesArgs
   createdAccountCharges?: boolean | UserCountOutputTypeCountCreatedAccountChargesArgs
   updatedAccountCharges?: boolean | UserCountOutputTypeCountUpdatedAccountChargesArgs
+  attachments?: boolean | UserCountOutputTypeCountAttachmentsArgs
 }
 
 /**
@@ -48465,6 +49342,13 @@ export type UserCountOutputTypeCountUpdatedAccountChargesArgs<ExtArgs extends ru
   where?: Prisma.AccountChargeWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttachmentWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -48575,6 +49459,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAccountCategories?: boolean | Prisma.User$updatedAccountCategoriesArgs<ExtArgs>
   createdAccountCharges?: boolean | Prisma.User$createdAccountChargesArgs<ExtArgs>
   updatedAccountCharges?: boolean | Prisma.User$updatedAccountChargesArgs<ExtArgs>
+  attachments?: boolean | Prisma.User$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -48717,6 +49602,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAccountCategories?: boolean | Prisma.User$updatedAccountCategoriesArgs<ExtArgs>
   createdAccountCharges?: boolean | Prisma.User$createdAccountChargesArgs<ExtArgs>
   updatedAccountCharges?: boolean | Prisma.User$updatedAccountChargesArgs<ExtArgs>
+  attachments?: boolean | Prisma.User$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -48831,6 +49717,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedAccountCategories: Prisma.$AccountCategoryPayload<ExtArgs>[]
     createdAccountCharges: Prisma.$AccountChargePayload<ExtArgs>[]
     updatedAccountCharges: Prisma.$AccountChargePayload<ExtArgs>[]
+    attachments: Prisma.$AttachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -49335,6 +50222,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedAccountCategories<T extends Prisma.User$updatedAccountCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedAccountCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdAccountCharges<T extends Prisma.User$createdAccountChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdAccountChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedAccountCharges<T extends Prisma.User$updatedAccountChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedAccountChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attachments<T extends Prisma.User$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -52136,6 +53024,30 @@ export type User$updatedAccountChargesArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.AccountChargeScalarFieldEnum | Prisma.AccountChargeScalarFieldEnum[]
+}
+
+/**
+ * User.attachments
+ */
+export type User$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attachment
+   */
+  select?: Prisma.AttachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attachment
+   */
+  omit?: Prisma.AttachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttachmentInclude<ExtArgs> | null
+  where?: Prisma.AttachmentWhereInput
+  orderBy?: Prisma.AttachmentOrderByWithRelationInput | Prisma.AttachmentOrderByWithRelationInput[]
+  cursor?: Prisma.AttachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttachmentScalarFieldEnum | Prisma.AttachmentScalarFieldEnum[]
 }
 
 /**

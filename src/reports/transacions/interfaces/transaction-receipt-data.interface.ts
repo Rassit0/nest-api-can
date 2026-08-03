@@ -12,4 +12,5 @@ export interface TransactionReceiptData {
   receiverName: string;
   receiverDocument: string;
   validationUrl: string;
+  type: 'INCOME' | 'EXPENSE';
 }

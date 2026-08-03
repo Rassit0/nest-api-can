@@ -27,7 +27,6 @@ export const transactionSelect = {
   reference: true,
   notes: true,
   status: true,
-  receiptUrls: true,
   createdAt: true,
   updatedAt: true,
   financialAccount: {
@@ -65,6 +64,22 @@ export const transactionSelect = {
       },
     },
   },
+  attachments: {
+    select: {
+      id: true,
+      originalName: true,
+      url: true,
+      mimeType: true,
+      sizeBytes: true,
+    },
+  },
+  thirdParty: {
+    select: {
+      id: true,
+      name: true,
+      documentNumber: true,
+    },
+  },
 } satisfies Prisma.TransactionSelect;
 
 @Injectable()
@@ -77,7 +92,7 @@ export class TransactionsService {
   ) {}
 
   async create(createTransactionDto: CreateTransactionDto, tx?: Prisma.TransactionClient) {
-    const { amount, chargeTransactions, paymentMethod, financialAccountId, ...rest } =
+    const { amount, chargeTransactions, paymentMethod, financialAccountId, attachmentIds, ...rest } =
       createTransactionDto;
 
     // Validación: La suma de lo que se aplica a los cargos no debe superar el amount
@@ -143,7 +158,6 @@ export class TransactionsService {
             amount,
             paymentMethod,
             status: paymentResult.transactionStatus,
-            receiptUrls,
             financialAccountId,
           },
         });
@@ -225,6 +239,33 @@ export class TransactionsService {
               },
             });
           }
+        }
+
+        // 3.3. Enlazar archivos adjuntos si existen
+        if (attachmentIds && attachmentIds.length > 0) {
+          // Verificar que existan
+          const attachments = await prisma.attachment.findMany({
+            where: { id: { in: attachmentIds } }
+          });
+          
+          if (attachments.length !== attachmentIds.length) {
+             throw new BadRequestException('Uno o más archivos adjuntos no existen.');
+          }
+
+          // Verificar que estén PENDING
+          const invalidAttachments = attachments.filter(a => a.status !== 'PENDING');
+          if (invalidAttachments.length > 0) {
+             throw new BadRequestException('Uno o más archivos adjuntos ya han sido enlazados previamente o son inválidos.');
+          }
+
+          // Vincular
+          await prisma.attachment.updateMany({
+            where: { id: { in: attachmentIds } },
+            data: { 
+              transactionId: transaction.id,
+              status: 'LINKED',
+            }
+          });
         }
 
         return await prisma.transaction.findUnique({

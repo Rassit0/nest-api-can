@@ -82,6 +82,23 @@ export class CreateTransactionDto {
     }),
   })
   payerPersonId?: string;
+  
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440001',
+    description: 'ID de la entidad/proveedor (ThirdParty) asociado a la transacción',
+  })
+  @IsOptional()
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'thirdPartyId',
+    }),
+  })
+  @Exists('thirdParty', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'thirdPartyId',
+    }),
+  })
+  thirdPartyId?: string;
 
   @ApiProperty({
     example: 150.0,
@@ -209,6 +226,19 @@ export class CreateTransactionDto {
   @ValidateNested({ each: true })
   @Type(() => CreateChargeTransactionDto)
   chargeTransactions?: CreateChargeTransactionDto[];
+
+  @ApiPropertyOptional({
+    type: [String],
+    description: 'Lista de IDs de archivos temporales (previamente subidos) para enlazar a esta transacción',
+  })
+  @IsOptional()
+  @IsArray({
+    message: i18nValidationMessage('validation.IS_ARRAY', {
+      constraint1: 'attachmentIds',
+    }),
+  })
+  @IsUUID('4', { each: true, message: 'Cada attachmentId debe ser un UUID válido' })
+  attachmentIds?: string[];
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

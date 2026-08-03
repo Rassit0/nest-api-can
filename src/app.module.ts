@@ -72,6 +72,8 @@ import { AccountCategoriesModule } from './account-categories/account-categories
 import { AccountChargesModule } from './account-charges/account-charges.module';
 import { FinancialAccountsModule } from './financial-accounts/financial-accounts.module';
 import { InternalTransfersModule } from './internal-transfers/internal-transfers.module';
+import { StorageModule } from './storage/storage.module';
+import { ThirdPartiesModule } from './third-parties/third-parties.module';
 
 @Module({
   imports: [
@@ -143,6 +145,8 @@ import { InternalTransfersModule } from './internal-transfers/internal-transfers
     FinancialAccountsModule,
     InternalTransfersModule,
     AccountingDashboardModule,
+    StorageModule,
+    ThirdPartiesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

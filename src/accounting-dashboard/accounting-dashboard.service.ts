@@ -6,13 +6,32 @@ import { StatusCharge, TransactionType } from 'src/generated/prisma/client';
 export class AccountingDashboardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getSummary() {
+  async getSummary(params?: { start?: string; end?: string }) {
+    const today = new Date();
+    
+    // 1. Determinar el rango de fechas
+    let periodStart: Date;
+    let periodEnd: Date;
+
+    if (params?.start && params?.end) {
+      periodStart = new Date(params.start);
+      periodEnd = new Date(params.end);
+      periodEnd.setHours(23, 59, 59, 999);
+    } else {
+      periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
+      periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
+    }
+
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
     
-    // 1. KPIs Globales
-    const [receivables, payables] = await Promise.all([
+    // 2. KPIs Globales de Deuda Viva (No se filtran por fecha porque es la deuda actual)
+    const [accountReceivables, membershipReceivables, payables] = await Promise.all([
       this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses } },
+        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, accountCharge: { isNot: null } },
+        _sum: { pendingAmount: true },
+      }),
+      this.prisma.charge.aggregate({
+        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, membershipCharges: { some: {} } },
         _sum: { pendingAmount: true },
       }),
       this.prisma.charge.aggregate({
@@ -22,7 +41,6 @@ export class AccountingDashboardService {
     ]);
 
     // 2. Alertas Agrupadas Extensibles
-    const today = new Date();
     const nextWeek = new Date();
     nextWeek.setDate(today.getDate() + 7);
 
@@ -84,14 +102,10 @@ export class AccountingDashboardService {
       });
     }
 
-    // 3. Gráficos: Flujo de Caja (Transacciones del año actual)
-    const currentYear = today.getFullYear();
-    const startOfYear = new Date(currentYear, 0, 1);
-    const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
-
+    // 3. Gráficos: Flujo de Caja (Transacciones filtradas por rango)
     const transactions = await this.prisma.transaction.findMany({
       where: {
-        transactionDate: { gte: startOfYear, lte: endOfYear },
+        transactionDate: { gte: periodStart, lte: periodEnd },
         isInternalTransfer: false, // EXCLUIR TRANSFERENCIAS
       },
       select: {
@@ -101,33 +115,63 @@ export class AccountingDashboardService {
       }
     });
 
-    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const cashFlow = Array.from({ length: 12 }, (_, i) => ({
-      name: monthNames[i],
-      ingresos: 0,
-      egresos: 0,
-    }));
-
-    let currentMonthIncome = 0;
-    let currentMonthExpenses = 0;
-    const currentMonth = today.getMonth();
-
-    transactions.forEach(t => {
-      const month = t.transactionDate.getMonth();
-      const amount = Number(t.amount);
-      if (t.type === TransactionType.INCOME) {
-        cashFlow[month].ingresos += amount;
-        if (month === currentMonth) currentMonthIncome += amount;
-      } else if (t.type === TransactionType.EXPENSE) {
-        cashFlow[month].egresos += amount;
-        if (month === currentMonth) currentMonthExpenses += amount;
+    let periodIncome = 0;
+    let periodExpenses = 0;
+    
+    const diffDays = Math.ceil((periodEnd.getTime() - periodStart.getTime()) / (1000 * 60 * 60 * 24));
+    const isDaily = diffDays <= 31;
+    
+    let cashFlow = [];
+    if (isDaily) {
+      const daysMap: Record<string, { ingresos: number, egresos: number, name: string }> = {};
+      for (let d = new Date(periodStart); d <= periodEnd; d.setDate(d.getDate() + 1)) {
+        const dateString = d.toISOString().split('T')[0];
+        const dayNum = d.getDate();
+        daysMap[dateString] = { ingresos: 0, egresos: 0, name: `${dayNum}` };
       }
-    });
 
-    // 4. Gráficos: Gastos por Categoría (AccountCharges PAYABLE)
+      transactions.forEach(t => {
+        const dateString = t.transactionDate.toISOString().split('T')[0];
+        const amount = Number(t.amount);
+        if (t.type === TransactionType.INCOME) {
+          periodIncome += amount;
+          if (daysMap[dateString]) daysMap[dateString].ingresos += amount;
+        } else if (t.type === TransactionType.EXPENSE) {
+          periodExpenses += amount;
+          if (daysMap[dateString]) daysMap[dateString].egresos += amount;
+        }
+      });
+      cashFlow = Object.values(daysMap);
+    } else {
+      const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const monthsMap: Record<string, { ingresos: number, egresos: number, name: string }> = {};
+      
+      for (let m = new Date(periodStart); m <= periodEnd; m.setMonth(m.getMonth() + 1)) {
+        const key = `${m.getFullYear()}-${m.getMonth()}`;
+        monthsMap[key] = { ingresos: 0, egresos: 0, name: monthNames[m.getMonth()] };
+      }
+      
+      transactions.forEach(t => {
+        const key = `${t.transactionDate.getFullYear()}-${t.transactionDate.getMonth()}`;
+        const amount = Number(t.amount);
+        if (t.type === TransactionType.INCOME) {
+          periodIncome += amount;
+          if (monthsMap[key]) monthsMap[key].ingresos += amount;
+        } else if (t.type === TransactionType.EXPENSE) {
+          periodExpenses += amount;
+          if (monthsMap[key]) monthsMap[key].egresos += amount;
+        }
+      });
+      cashFlow = Object.values(monthsMap);
+    }
+
+    // 4. Gráficos: Gastos por Categoría (AccountCharges PAYABLE en el periodo)
     const payablesForCategories = await this.prisma.accountCharge.findMany({
       where: {
-        charge: { direction: 'PAYABLE' },
+        charge: { 
+          direction: 'PAYABLE',
+          createdAt: { gte: periodStart, lte: periodEnd }
+        },
         category: { isNot: null }
       },
       select: {
@@ -151,20 +195,22 @@ export class AccountingDashboardService {
       value: expensesMap[name]
     })).sort((a, b) => b.value - a.value);
 
-    const totalReceivables = Number(receivables._sum.pendingAmount || 0);
+    const totalAccountReceivables = Number(accountReceivables._sum.pendingAmount || 0);
+    const totalMembershipReceivables = Number(membershipReceivables._sum.pendingAmount || 0);
     const totalPayables = Number(payables._sum.pendingAmount || 0);
     const liquidity = await this.getLiquidityMetrics();
-    const netPosition = liquidity.totalInCash + liquidity.totalInBanks + totalReceivables - totalPayables;
+    const netPosition = liquidity.totalInCash + liquidity.totalInBanks + totalAccountReceivables + totalMembershipReceivables - totalPayables;
 
     return {
       data: {
         kpis: {
-          totalReceivables,
+          totalAccountReceivables,
+          totalMembershipReceivables,
           totalPayables,
-          receivablesTrend: 5,
-          payablesTrend: -2,
-          monthlyIncome: currentMonthIncome,
-          monthlyExpenses: currentMonthExpenses,
+          receivablesTrend: 5, // TODO: comparar con periodo anterior
+          payablesTrend: -2,   // TODO: comparar con periodo anterior
+          monthlyIncome: periodIncome,
+          monthlyExpenses: periodExpenses,
           totalInCash: liquidity.totalInCash,
           totalInBanks: liquidity.totalInBanks,
           netPosition,

@@ -5,11 +5,12 @@ interface HeaderOptions {
   receiptSeries: string;
   receiptNumber: string;
   date: Date;
+  type?: 'INCOME' | 'EXPENSE';
 }
 
 export const headerSection = (options: HeaderOptions): Content => {
-  const { receiptSeries, receiptNumber, date } = options;
-  const title = 'APORTE VOLUNTARIO';
+  const { receiptSeries, receiptNumber, date, type } = options;
+  const title = type === 'EXPENSE' ? 'COMPROBANTE DE EGRESO' : 'APORTE VOLUNTARIO';
 
   const logo: Content = {
     image: path.join(process.cwd(), 'dist', 'assets', 'logo-can.png'),

@@ -332,3 +332,13 @@ export type AccountCharge = Prisma.AccountChargeModel
  * 
  */
 export type CashClosure = Prisma.CashClosureModel
+/**
+ * Model ThirdParty
+ * 
+ */
+export type ThirdParty = Prisma.ThirdPartyModel
+/**
+ * Model Attachment
+ * 
+ */
+export type Attachment = Prisma.AttachmentModel

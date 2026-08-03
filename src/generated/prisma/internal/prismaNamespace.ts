@@ -452,7 +452,9 @@ export const ModelName = {
   EventMaterializationLog: 'EventMaterializationLog',
   AccountCategory: 'AccountCategory',
   AccountCharge: 'AccountCharge',
-  CashClosure: 'CashClosure'
+  CashClosure: 'CashClosure',
+  ThirdParty: 'ThirdParty',
+  Attachment: 'Attachment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -468,7 +470,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5134,6 +5136,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ThirdParty: {
+      payload: Prisma.$ThirdPartyPayload<ExtArgs>
+      fields: Prisma.ThirdPartyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ThirdPartyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ThirdPartyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        findFirst: {
+          args: Prisma.ThirdPartyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ThirdPartyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        findMany: {
+          args: Prisma.ThirdPartyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>[]
+        }
+        create: {
+          args: Prisma.ThirdPartyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        createMany: {
+          args: Prisma.ThirdPartyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ThirdPartyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>[]
+        }
+        delete: {
+          args: Prisma.ThirdPartyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        update: {
+          args: Prisma.ThirdPartyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        deleteMany: {
+          args: Prisma.ThirdPartyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ThirdPartyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ThirdPartyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>[]
+        }
+        upsert: {
+          args: Prisma.ThirdPartyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThirdPartyPayload>
+        }
+        aggregate: {
+          args: Prisma.ThirdPartyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateThirdParty>
+        }
+        groupBy: {
+          args: Prisma.ThirdPartyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ThirdPartyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ThirdPartyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ThirdPartyCountAggregateOutputType> | number
+        }
+      }
+    }
+    Attachment: {
+      payload: Prisma.$AttachmentPayload<ExtArgs>
+      fields: Prisma.AttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.AttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.AttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.AttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.AttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AttachmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>[]
+        }
+        delete: {
+          args: Prisma.AttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        update: {
+          args: Prisma.AttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.AttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AttachmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.AttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.AttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAttachment>
+        }
+        groupBy: {
+          args: Prisma.AttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttachmentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5643,7 +5793,7 @@ export const TransactionScalarFieldEnum = {
   isReconciled: 'isReconciled',
   reconciledAt: 'reconciledAt',
   status: 'status',
-  receiptUrls: 'receiptUrls',
+  thirdPartyId: 'thirdPartyId',
   isInternalTransfer: 'isInternalTransfer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -6216,6 +6366,40 @@ export const CashClosureScalarFieldEnum = {
 export type CashClosureScalarFieldEnum = (typeof CashClosureScalarFieldEnum)[keyof typeof CashClosureScalarFieldEnum]
 
 
+export const ThirdPartyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  documentType: 'documentType',
+  documentNumber: 'documentNumber',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ThirdPartyScalarFieldEnum = (typeof ThirdPartyScalarFieldEnum)[keyof typeof ThirdPartyScalarFieldEnum]
+
+
+export const AttachmentScalarFieldEnum = {
+  id: 'id',
+  originalName: 'originalName',
+  internalName: 'internalName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  url: 'url',
+  path: 'path',
+  status: 'status',
+  transactionId: 'transactionId',
+  uploadedById: 'uploadedById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6780,6 +6964,34 @@ export type EnumAccountReferenceTypeFieldRefInput<$PrismaModel> = FieldRefInputT
 export type ListEnumAccountReferenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccountReferenceType[]'>
     
 
+
+/**
+ * Reference to a field of type 'ThirdPartyType'
+ */
+export type EnumThirdPartyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ThirdPartyType'>
+    
+
+
+/**
+ * Reference to a field of type 'ThirdPartyType[]'
+ */
+export type ListEnumThirdPartyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ThirdPartyType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AttachmentStatus'
+ */
+export type EnumAttachmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AttachmentStatus[]'
+ */
+export type ListEnumAttachmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -6930,6 +7142,8 @@ export type GlobalOmitConfig = {
   accountCategory?: Prisma.AccountCategoryOmit
   accountCharge?: Prisma.AccountChargeOmit
   cashClosure?: Prisma.CashClosureOmit
+  thirdParty?: Prisma.ThirdPartyOmit
+  attachment?: Prisma.AttachmentOmit
 }
 
 /* Types for Logging */

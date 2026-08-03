@@ -88,6 +88,7 @@ export class AccountChargesService {
                 amountApplied: amount,
               },
             ],
+            attachmentIds: immediatePayment.attachmentIds,
           },
           tx,
         );

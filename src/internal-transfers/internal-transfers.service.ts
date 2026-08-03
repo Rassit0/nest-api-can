@@ -32,10 +32,10 @@ export class InternalTransfersService {
       if (!sourceAccount.isActive) throw new BadRequestException('La cuenta de origen está inactiva');
       if (!destAccount.isActive) throw new BadRequestException('La cuenta de destino está inactiva');
 
-      // (Opcional) Validar saldo suficiente en la cuenta de origen
-      // if (sourceAccount.cachedBalance.toNumber() < amount) {
-      //   throw new BadRequestException('Saldo insuficiente en la cuenta de origen');
-      // }
+      // Validar saldo suficiente en la cuenta de origen
+      if (sourceAccount.cachedBalance.toNumber() < amount) {
+        throw new BadRequestException('Saldo insuficiente en la cuenta de origen');
+      }
 
       const transactionDate = date ? new Date(date) : new Date();
 
