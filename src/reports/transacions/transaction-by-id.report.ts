@@ -50,7 +50,7 @@ export const transactionByIdReport = (
             color: '#EBEBEB',
           },
         ],
-        absolutePosition: { x: 30, y: startY + 55 },
+        absolutePosition: { x: 30, y: startY + 70 },
       },
       // 3. Marca de agua
       {
@@ -61,7 +61,7 @@ export const transactionByIdReport = (
       },
       // 4. CONTENT (Textos)
       {
-        absolutePosition: { x: 20, y: startY + 55 },
+        absolutePosition: { x: 20, y: startY + 70 },
         columns: [
           {
             width: 356,
@@ -253,7 +253,7 @@ export const transactionByIdReport = (
                     ],
                   },
                 ],
-                margin: [30, 25, 30, 0], // Margen superior aumentado para llenar la altura extra
+                margin: [30, 10, 30, 0], // Compensación por haber bajado el bloque de contenido
               },
             ],
           },

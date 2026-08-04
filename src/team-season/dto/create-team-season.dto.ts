@@ -121,6 +121,16 @@ export class CreateTeamSeasonDto {
   @IsOptional()
   maxBirthYear?: number;
 
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
+    default: true,
+  })
+  @Type(() => Boolean)
+  @IsBoolean()
+  @IsOptional()
+  validateAge?: boolean;
+
   @ApiProperty({
     type: 'string',
     format: 'binary',

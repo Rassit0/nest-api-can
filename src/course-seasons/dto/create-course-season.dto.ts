@@ -195,6 +195,16 @@ export class CreateCourseSeasonDto {
   @IsOptional()
   maxBirthYear?: number;
 
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
+    default: true,
+  })
+  @Type(() => Boolean)
+  @IsBoolean()
+  @IsOptional()
+  validateAge?: boolean;
+
   @ApiProperty({
     enum: ProgramGender,
     example: ProgramGender.MIXED,

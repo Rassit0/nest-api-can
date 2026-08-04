@@ -64,6 +64,7 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   minMembers: true,
   minBirthYear: true,
   maxBirthYear: true,
+  validateAge: true,
   status: true,
   billingConfig: true,
   isRegistrationOpen: true,

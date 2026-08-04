@@ -50,6 +50,7 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   minMembers: true,
   minBirthYear: true,
   maxBirthYear: true,
+  validateAge: true,
   status: true,
   isRegistrationOpen: true,
   billingConfig: true,
