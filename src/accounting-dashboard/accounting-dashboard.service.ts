@@ -14,9 +14,8 @@ export class AccountingDashboardService {
     let periodEnd: Date;
 
     if (params?.start && params?.end) {
-      periodStart = new Date(params.start);
-      periodEnd = new Date(params.end);
-      periodEnd.setHours(23, 59, 59, 999);
+      periodStart = new Date(`${params.start}T00:00:00`);
+      periodEnd = new Date(`${params.end}T23:59:59.999`);
     } else {
       periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
       periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
@@ -125,13 +124,14 @@ export class AccountingDashboardService {
     if (isDaily) {
       const daysMap: Record<string, { ingresos: number, egresos: number, name: string }> = {};
       for (let d = new Date(periodStart); d <= periodEnd; d.setDate(d.getDate() + 1)) {
-        const dateString = d.toISOString().split('T')[0];
+        const dateString = `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
         const dayNum = d.getDate();
         daysMap[dateString] = { ingresos: 0, egresos: 0, name: `${dayNum}` };
       }
 
       transactions.forEach(t => {
-        const dateString = t.transactionDate.toISOString().split('T')[0];
+        const localDate = new Date(t.transactionDate);
+        const dateString = `${localDate.getFullYear()}-${(localDate.getMonth()+1).toString().padStart(2, '0')}-${localDate.getDate().toString().padStart(2, '0')}`;
         const amount = Number(t.amount);
         if (t.type === TransactionType.INCOME) {
           periodIncome += amount;

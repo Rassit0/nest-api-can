@@ -137,9 +137,9 @@ export function buildRecurringDescription(
     billingYear === startedAt.getUTCFullYear() &&
     billingMonth - 1 === startedAt.getUTCMonth();
   if (isEnrollmentMonth) {
-    return 'Primera Mensualidad - ' + monthName + ' ' + billingYear;
+    return 'Primer Mes - ' + monthName + ' ' + billingYear;
   }
-  return 'Mensualidad - ' + monthName + ' ' + billingYear;
+  return 'Mes - ' + monthName + ' ' + billingYear;
 }
 
 export function buildCycleDescription(
