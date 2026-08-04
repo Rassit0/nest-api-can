@@ -157,13 +157,17 @@ export class StudentChargesController {
     @Param('membershipId') membershipId: string,
     @Body() dto: PreviewAdvanceChargesDto,
   ) {
-    return await this.studentChargesService.previewAdvanceCharges(
+    const data = await this.studentChargesService.previewAdvanceCharges(
       membershipId,
       dto.quantity,
     );
+    return {
+      message: 'Previsualización de cuotas adelantadas obtenida',
+      data,
+    };
   }
 
-  @Post('advance/:membershipId')
+  @Post('advance/:membershipId/generate')
   @ApiOperation({
     summary: 'Generar cuotas adelantadas',
     description:
@@ -181,9 +185,13 @@ export class StudentChargesController {
     @Param('membershipId') membershipId: string,
     @Body() dto: GenerateAdvanceChargesDto,
   ) {
-    return await this.studentChargesService.generateAdvanceCharges(
+    const data = await this.studentChargesService.generateAdvanceCharges(
       membershipId,
       dto.quantity,
     );
+    return {
+      message: data.message,
+      data,
+    };
   }
 }

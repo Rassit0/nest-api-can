@@ -224,12 +224,20 @@ export function calculateRecurringFeeForDate(
   const advanceDiscount = Number(
     membership.paymentPlan?.advanceCyclesDiscountPercent || 0,
   );
+  
+  const promotionalCycles = membership.paymentPlan?.promotionalCycles || 0;
+  const effectivePromotionalCycles = promotionalCycles > 0 
+    ? Math.min(promotionalCycles, advanceCycles) 
+    : advanceCycles;
 
   // REGLA DE NEGOCIO: Los descuentos por adelanto aplican ÚNICAMENTE a los 
-  // primeros N ciclos iniciales de la temporada (definidos por advanceCycles).
+  // PRIMEROS N ciclos promocionales dentro del bloque inicial de advanceCycles.
   // Si un usuario adelanta cuotas manualmente a mitad de temporada, 
   // NO recibirá descuento por adelanto.
-  if (currentCycleCounter <= advanceCycles && advanceDiscount > 0) {
+  if (
+    currentCycleCounter <= effectivePromotionalCycles && 
+    advanceDiscount > 0
+  ) {
     appliedDiscounts.push({
       percent: advanceDiscount,
       reason: 'Descuento Pago Adelantado',

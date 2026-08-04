@@ -1,43 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { StatusCharge, TransactionType } from 'src/generated/prisma/client';
+import { AccountingAnalyticsService } from 'src/accounting-analytics/accounting-analytics.service';
 
 @Injectable()
 export class AccountingDashboardService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly analytics: AccountingAnalyticsService
+  ) {}
 
   async getSummary(params?: { start?: string; end?: string }) {
     const today = new Date();
     
-    // 1. Determinar el rango de fechas
-    let periodStart: Date;
-    let periodEnd: Date;
-
-    if (params?.start && params?.end) {
-      periodStart = new Date(`${params.start}T00:00:00`);
-      periodEnd = new Date(`${params.end}T23:59:59.999`);
-    } else {
-      periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
-      periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
-    }
+    // 1. Determinar el rango de fechas usando el nuevo servicio analítico
+    const { periodStart, periodEnd } = this.analytics.getPeriodDates(params);
 
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
     
     // 2. KPIs Globales de Deuda Viva (No se filtran por fecha porque es la deuda actual)
-    const [accountReceivables, membershipReceivables, payables] = await Promise.all([
-      this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, accountCharge: { isNot: null } },
-        _sum: { pendingAmount: true },
-      }),
-      this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, membershipCharges: { some: {} } },
-        _sum: { pendingAmount: true },
-      }),
-      this.prisma.charge.aggregate({
-        where: { direction: 'PAYABLE', status: { in: pendingStatuses } },
-        _sum: { pendingAmount: true },
-      }),
-    ]);
+    const { totalAccountReceivables, totalMembershipReceivables, totalPayables } = await this.analytics.getDebtMetrics();
 
     // 2. Alertas Agrupadas Extensibles
     const nextWeek = new Date();
@@ -195,11 +177,8 @@ export class AccountingDashboardService {
       value: expensesMap[name]
     })).sort((a, b) => b.value - a.value);
 
-    const totalAccountReceivables = Number(accountReceivables._sum.pendingAmount || 0);
-    const totalMembershipReceivables = Number(membershipReceivables._sum.pendingAmount || 0);
-    const totalPayables = Number(payables._sum.pendingAmount || 0);
-    const liquidity = await this.getLiquidityMetrics();
-    const netPosition = liquidity.totalInCash + liquidity.totalInBanks + totalAccountReceivables + totalMembershipReceivables - totalPayables;
+    const liquidity = await this.analytics.getLiquidityMetrics();
+    const netPosition = liquidity.totalLiquidity + totalAccountReceivables + totalMembershipReceivables - totalPayables;
 
     return {
       data: {
@@ -222,37 +201,4 @@ export class AccountingDashboardService {
     };
   }
 
-  /**
-   * Encapsula la lógica de cálculo de liquidez, considerando futuras 
-   * evoluciones como multimoneda. Por ahora, se asume moneda base (BOB).
-   */
-  private async getLiquidityMetrics() {
-    const accounts = await this.prisma.financialAccount.groupBy({
-      by: ['type'],
-      where: {
-        isActive: true,
-        currency: 'BOB', // TODO: Soporte multimoneda en el futuro
-      },
-      _sum: {
-        cachedBalance: true,
-      }
-    });
-
-    let totalInCash = 0;
-    let totalInBanks = 0;
-
-    for (const acc of accounts) {
-      const balance = acc._sum.cachedBalance?.toNumber() || 0;
-      if (acc.type === 'CASH') {
-        totalInCash += balance;
-      } else if (acc.type === 'BANK' || acc.type === 'DIGITAL_WALLET') {
-        totalInBanks += balance;
-      }
-    }
-
-    return {
-      totalInCash,
-      totalInBanks
-    };
-  }
 }

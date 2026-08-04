@@ -139,7 +139,7 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
       };
     };
   };
-}> & { minBirthYear: number | null; maxBirthYear: number | null };
+}> & { minBirthYear: number | null; maxBirthYear: number | null; validateAge: boolean };
 
 import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 import { PaginationDto } from 'src/common/dto/pagination';
@@ -988,25 +988,27 @@ export class PlayerMembershipsService {
       );
     }
 
-    if (offering.minBirthYear || offering.maxBirthYear) {
-      const birthYear = player.person.birthDate.getFullYear();
-      if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
-        throw new BadRequestException(
-          `El año de nacimiento del jugador (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+    if (offering.validateAge !== false) {
+      if (offering.minBirthYear || offering.maxBirthYear) {
+        const birthYear = player.person.birthDate.getFullYear();
+        if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
+          throw new BadRequestException(
+            `El año de nacimiento del jugador (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+          );
+        }
+        if (offering.minBirthYear && birthYear < offering.minBirthYear) {
+          throw new BadRequestException(
+            `El año de nacimiento del jugador (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
+          );
+        }
+      } else {
+        this.validatePlayerAge(
+          player.person.birthDate,
+          offering.season.startDate,
+          offering.category.minAge,
+          offering.category.maxAge,
         );
       }
-      if (offering.minBirthYear && birthYear < offering.minBirthYear) {
-        throw new BadRequestException(
-          `El año de nacimiento del jugador (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
-        );
-      }
-    } else {
-      this.validatePlayerAge(
-        player.person.birthDate,
-        offering.season.startDate,
-        offering.category.minAge,
-        offering.category.maxAge,
-      );
     }
 
     if (

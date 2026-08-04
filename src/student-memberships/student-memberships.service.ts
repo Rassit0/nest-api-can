@@ -146,7 +146,7 @@ type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
       };
     };
   };
-}> & { minBirthYear: number | null; maxBirthYear: number | null };
+}> & { minBirthYear: number | null; maxBirthYear: number | null; validateAge: boolean };
 
 import { StudentChargesService } from 'src/student-charges/student-charges.service';
 import { StudentsOptionsPaginationDto } from './dto/students-options-pagination.dto';
@@ -946,25 +946,27 @@ export class StudentMembershipsService {
         'La fecha de nacimiento del estudiante no fue encontrada',
       );
     }
-    if (offering.minBirthYear || offering.maxBirthYear) {
-      const birthYear = student.person.birthDate.getFullYear();
-      if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
-        throw new BadRequestException(
-          `El año de nacimiento del estudiante (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+    if (offering.validateAge !== false) {
+      if (offering.minBirthYear || offering.maxBirthYear) {
+        const birthYear = student.person.birthDate.getFullYear();
+        if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
+          throw new BadRequestException(
+            `El año de nacimiento del estudiante (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+          );
+        }
+        if (offering.minBirthYear && birthYear < offering.minBirthYear) {
+          throw new BadRequestException(
+            `El año de nacimiento del estudiante (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
+          );
+        }
+      } else {
+        this.validateStudentAge(
+          student.person.birthDate,
+          offering.season.startDate,
+          offering.category.minAge,
+          offering.category.maxAge,
         );
       }
-      if (offering.minBirthYear && birthYear < offering.minBirthYear) {
-        throw new BadRequestException(
-          `El año de nacimiento del estudiante (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
-        );
-      }
-    } else {
-      this.validateStudentAge(
-        student.person.birthDate,
-        offering.season.startDate,
-        offering.category.minAge,
-        offering.category.maxAge,
-      );
     }
     if (
       offering.gender !== 'MIXED' &&

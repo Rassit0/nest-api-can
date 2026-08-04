@@ -41,6 +41,8 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
 import { AccountingDashboardModule } from './accounting-dashboard/accounting-dashboard.module';
+import { AccountingAnalyticsModule } from './accounting-analytics/accounting-analytics.module';
+import { ReportsModule } from './reports/reports.module';
 
 // Nuevos módulos Escolares
 import { SchoolsModule } from './schools/schools.module';
@@ -136,6 +138,7 @@ import { ThirdPartiesModule } from './third-parties/third-parties.module';
     AuthModule,
     ShiftsModule,
     PrinterModule,
+    ReportsModule,
     TransactionReportModule,
     MembershipsModule,
     CalendarModule,
@@ -145,6 +148,7 @@ import { ThirdPartiesModule } from './third-parties/third-parties.module';
     FinancialAccountsModule,
     InternalTransfersModule,
     AccountingDashboardModule,
+    AccountingAnalyticsModule,
     StorageModule,
     ThirdPartiesModule,
   ],

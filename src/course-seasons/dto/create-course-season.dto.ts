@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -14,6 +14,7 @@ import {
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
+import { IsAfter } from 'src/common/validators/decorators/is-after.decorator';
 import { ProgramGender, StatusCourseSeason } from 'src/generated/prisma/client';
 import { ValidateNested } from 'class-validator';
 import { SeasonBillingConfigDto } from 'src/common/dto/season-billing-config.dto';
@@ -129,6 +130,11 @@ export class CreateCourseSeasonDto {
       constraint2: 1,
     }),
   })
+  @IsAfter('minMembers', {
+    message: i18nValidationMessage('validation.IS_AFTER', {
+      constraint1: 'minMembers',
+    }),
+  })
   @Type(() => Number)
   maxMembers: number;
 
@@ -200,7 +206,7 @@ export class CreateCourseSeasonDto {
     description: 'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
     default: true,
   })
-  @Type(() => Boolean)
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   @IsOptional()
   validateAge?: boolean;
@@ -246,7 +252,7 @@ export class CreateCourseSeasonDto {
     description: 'Indica si las inscripciones están abiertas',
   })
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   isRegistrationOpen?: boolean;
 }

@@ -126,7 +126,7 @@ export class CreateTeamSeasonDto {
     description: 'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
     default: true,
   })
-  @Type(() => Boolean)
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   @IsOptional()
   validateAge?: boolean;

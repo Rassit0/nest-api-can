@@ -211,4 +211,18 @@ export class CreatePaymentPlanDto {
     message: 'El porcentaje debe estar entre 0 y 100',
   })
   advanceCyclesDiscountPercent?: string;
+
+  @ApiPropertyOptional({
+    example: 0,
+    description: 'Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.',
+    default: 0,
+  })
+  @IsInt({
+    message: i18nValidationMessage('validation.IS_INT'),
+  })
+  @Min(0, {
+    message: i18nValidationMessage('validation.MIN'),
+  })
+  @IsOptional()
+  promotionalCycles?: number;
 }
