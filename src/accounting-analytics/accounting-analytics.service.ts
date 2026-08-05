@@ -31,11 +31,11 @@ export class AccountingAnalyticsService {
   }
 
   /**
-   * Obtiene métricas de deuda (Cuentas por cobrar y pagar) globales
+   * Obtiene métricas de deuda a favor (Por Cobrar)
    */
-  async getDebtMetrics() {
+  private async getReceivableMetrics() {
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
-    const [accountReceivables, membershipReceivables, payables] = await Promise.all([
+    const [accountReceivables, membershipReceivables] = await Promise.all([
       this.prisma.charge.aggregate({
         where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, accountCharge: { isNot: null } },
         _sum: { pendingAmount: true },
@@ -44,50 +44,101 @@ export class AccountingAnalyticsService {
         where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, membershipCharges: { some: {} } },
         _sum: { pendingAmount: true },
       }),
-      this.prisma.charge.aggregate({
-        where: { direction: 'PAYABLE', status: { in: pendingStatuses } },
-        _sum: { pendingAmount: true },
-      }),
     ]);
 
+    const totalAccountReceivables = Number(accountReceivables._sum.pendingAmount || 0);
+    const totalMembershipReceivables = Number(membershipReceivables._sum.pendingAmount || 0);
+
     return {
-      totalAccountReceivables: Number(accountReceivables._sum.pendingAmount || 0),
-      totalMembershipReceivables: Number(membershipReceivables._sum.pendingAmount || 0),
+      totalAccountReceivables,
+      totalMembershipReceivables,
+      totalReceivables: totalAccountReceivables + totalMembershipReceivables,
+    };
+  }
+
+  /**
+   * Obtiene métricas de deuda en contra (Por Pagar)
+   */
+  private async getPayableMetrics() {
+    const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
+    const payables = await this.prisma.charge.aggregate({
+      where: { direction: 'PAYABLE', status: { in: pendingStatuses } },
+      _sum: { pendingAmount: true },
+    });
+
+    return {
       totalPayables: Number(payables._sum.pendingAmount || 0),
     };
   }
 
   /**
-   * Encapsula la lógica de cálculo de liquidez actual
+   * Encapsula la lógica de cálculo de liquidez actual y el detalle de cuentas (Tesorería)
    */
-  async getLiquidityMetrics() {
-    const accounts = await this.prisma.financialAccount.groupBy({
-      by: ['type'],
+  private async getTreasuryMetrics() {
+    const accountsDetail = await this.prisma.financialAccount.findMany({
       where: {
         isActive: true,
-        currency: 'BOB', // TODO: Soporte multimoneda en el futuro
       },
-      _sum: {
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        currency: true,
+        isActive: true,
         cachedBalance: true,
-      }
+      },
+      orderBy: {
+        name: 'asc',
+      },
     });
 
     let totalInCash = 0;
     let totalInBanks = 0;
 
-    for (const acc of accounts) {
-      const balance = acc._sum.cachedBalance?.toNumber() || 0;
+    const formattedAccounts = accountsDetail.map(acc => {
+      const balance = acc.cachedBalance?.toNumber() || 0;
       if (acc.type === 'CASH') {
         totalInCash += balance;
       } else if (acc.type === 'BANK' || acc.type === 'DIGITAL_WALLET') {
         totalInBanks += balance;
       }
-    }
+
+      return {
+        id: acc.id,
+        name: acc.name,
+        type: acc.type,
+        currency: acc.currency,
+        isActive: acc.isActive,
+        balance,
+      };
+    });
 
     return {
+      availableBalance: totalInCash + totalInBanks,
       totalInCash,
       totalInBanks,
-      totalLiquidity: totalInCash + totalInBanks,
+      accounts: formattedAccounts,
+    };
+  }
+
+  /**
+   * Única fuente de verdad para la posición financiera global.
+   * Orquesta la recolección de Tesorería y Finanzas.
+   */
+  async getGlobalFinancialPosition() {
+    const treasury = await this.getTreasuryMetrics();
+    const receivables = await this.getReceivableMetrics();
+    const payables = await this.getPayableMetrics();
+
+    const netPosition = treasury.availableBalance + receivables.totalReceivables - payables.totalPayables;
+
+    return {
+      treasury,
+      financial: {
+        ...receivables,
+        ...payables,
+        netPosition,
+      }
     };
   }
 

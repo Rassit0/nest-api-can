@@ -30,9 +30,8 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
     const { periodStart, periodEnd } = this.analytics.getPeriodDates(params);
 
     // 1. Data Fetching
-    const [debt, liquidity, totals, transactions] = await Promise.all([
-      this.analytics.getDebtMetrics(),
-      this.analytics.getLiquidityMetrics(),
+    const [financialPosition, totals, transactions] = await Promise.all([
+      this.analytics.getGlobalFinancialPosition(),
       this.analytics.getPeriodTotals(periodStart, periodEnd),
       this.analytics.getPeriodTransactions(periodStart, periodEnd),
     ]);
@@ -57,8 +56,6 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
       }
     });
 
-    const netPosition = liquidity.totalLiquidity + debt.totalAccountReceivables + debt.totalMembershipReceivables - debt.totalPayables;
-
     // 2. Data Transformation & PDF Building
     const builder = new PdfReportBuilder('Reporte General de Contabilidad');
 
@@ -73,8 +70,10 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
     builder.addExecutiveSummary([
       { label: 'Total Ingresos (Período)', value: `${totals.periodIncome.toFixed(2)} Bs.` },
       { label: 'Total Egresos (Período)', value: `${totals.periodExpenses.toFixed(2)} Bs.` },
-      { label: 'Liquidez Actual (Cajas+Bancos)', value: `${liquidity.totalLiquidity.toFixed(2)} Bs.` },
-      { label: 'Patrimonio Neto Estimado', value: `${netPosition.toFixed(2)} Bs.` },
+      { label: 'Saldo Disponible (Liquidez)', value: `${financialPosition.treasury.availableBalance.toFixed(2)} Bs.` },
+      { label: 'Total por Cobrar', value: `${financialPosition.financial.totalReceivables.toFixed(2)} Bs.` },
+      { label: 'Total por Pagar', value: `${financialPosition.financial.totalPayables.toFixed(2)} Bs.` },
+      { label: 'Posición Neta Proyectada', value: `${financialPosition.financial.netPosition.toFixed(2)} Bs.` },
     ]);
 
     builder.addDataTable({
@@ -82,8 +81,8 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
       headers: ['Concepto', 'Monto'],
       widths: ['*', 'auto'],
       rows: [
-        ['Efectivo (Cajas)', `${liquidity.totalInCash.toFixed(2)} Bs.`],
-        ['Bancos y Billeteras', `${liquidity.totalInBanks.toFixed(2)} Bs.`],
+        ['Efectivo (Cajas)', `${financialPosition.treasury.totalInCash.toFixed(2)} Bs.`],
+        ['Bancos y Billeteras', `${financialPosition.treasury.totalInBanks.toFixed(2)} Bs.`],
       ],
     });
 
@@ -99,13 +98,13 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
     });
 
     builder.addDataTable({
-      title: 'Deuda Viva (Cuentas por Cobrar y Pagar)',
-      headers: ['Concepto', 'Total Pendiente'],
+      title: 'Detalle de Obligaciones y Exigibles',
+      headers: ['Concepto', 'Monto'],
       widths: ['*', 'auto'],
       rows: [
-        ['Cuentas por Cobrar (Deuda Administrativa)', `${debt.totalAccountReceivables.toFixed(2)} Bs.`],
-        ['Cuentas por Cobrar (Membresías Jugadores)', `${debt.totalMembershipReceivables.toFixed(2)} Bs.`],
-        ['Cuentas por Pagar (Obligaciones)', `${debt.totalPayables.toFixed(2)} Bs.`],
+        ['Cuentas por Cobrar (Deuda Administrativa)', `${financialPosition.financial.totalAccountReceivables.toFixed(2)} Bs.`],
+        ['Cuentas por Cobrar (Membresías Jugadores)', `${financialPosition.financial.totalMembershipReceivables.toFixed(2)} Bs.`],
+        ['Cuentas por Pagar (Obligaciones)', `${financialPosition.financial.totalPayables.toFixed(2)} Bs.`],
       ],
     });
 

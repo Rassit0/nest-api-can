@@ -18,8 +18,8 @@ export class AccountingDashboardService {
 
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
     
-    // 2. KPIs Globales de Deuda Viva (No se filtran por fecha porque es la deuda actual)
-    const { totalAccountReceivables, totalMembershipReceivables, totalPayables } = await this.analytics.getDebtMetrics();
+    // 2. Posición Global Financiera
+    const { treasury, financial } = await this.analytics.getGlobalFinancialPosition();
 
     // 2. Alertas Agrupadas Extensibles
     const nextWeek = new Date();
@@ -177,26 +177,27 @@ export class AccountingDashboardService {
       value: expensesMap[name]
     })).sort((a, b) => b.value - a.value);
 
-    const liquidity = await this.analytics.getLiquidityMetrics();
-    const netPosition = liquidity.totalLiquidity + totalAccountReceivables + totalMembershipReceivables - totalPayables;
-
     return {
       data: {
         kpis: {
-          totalAccountReceivables,
-          totalMembershipReceivables,
-          totalPayables,
-          receivablesTrend: 5, // TODO: comparar con periodo anterior
-          payablesTrend: -2,   // TODO: comparar con periodo anterior
+          treasury: {
+            availableBalance: treasury.availableBalance,
+          },
+          financial: {
+            totalReceivables: financial.totalReceivables,
+            totalPayables: financial.totalPayables,
+            netPosition: financial.netPosition,
+            receivablesTrend: 5, // TODO: comparar con periodo anterior
+            payablesTrend: -2,   // TODO: comparar con periodo anterior
+          },
+          // Temporalmente mantenemos estos si el frontend los usa, o los movemos
           monthlyIncome: periodIncome,
           monthlyExpenses: periodExpenses,
-          totalInCash: liquidity.totalInCash,
-          totalInBanks: liquidity.totalInBanks,
-          netPosition,
         },
         alerts,
         cashFlow,
         expensesByCategory,
+        accounts: treasury.accounts,
       }
     };
   }
