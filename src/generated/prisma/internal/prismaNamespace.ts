@@ -414,7 +414,7 @@ export const ModelName = {
   Staff: 'Staff',
   TeamSeasonStaff: 'TeamSeasonStaff',
   Charge: 'Charge',
-  ChargeTransaction: 'ChargeTransaction',
+  Payment: 'Payment',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
   InternalTransfer: 'InternalTransfer',
@@ -470,7 +470,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "chargeTransaction" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2250,77 +2250,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ChargeTransaction: {
-      payload: Prisma.$ChargeTransactionPayload<ExtArgs>
-      fields: Prisma.ChargeTransactionFieldRefs
+    Payment: {
+      payload: Prisma.$PaymentPayload<ExtArgs>
+      fields: Prisma.PaymentFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ChargeTransactionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload> | null
+          args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ChargeTransactionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         findFirst: {
-          args: Prisma.ChargeTransactionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload> | null
+          args: Prisma.PaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ChargeTransactionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         findMany: {
-          args: Prisma.ChargeTransactionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>[]
+          args: Prisma.PaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
         }
         create: {
-          args: Prisma.ChargeTransactionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         createMany: {
-          args: Prisma.ChargeTransactionCreateManyArgs<ExtArgs>
+          args: Prisma.PaymentCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ChargeTransactionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>[]
+          args: Prisma.PaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
         }
         delete: {
-          args: Prisma.ChargeTransactionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         update: {
-          args: Prisma.ChargeTransactionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         deleteMany: {
-          args: Prisma.ChargeTransactionDeleteManyArgs<ExtArgs>
+          args: Prisma.PaymentDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ChargeTransactionUpdateManyArgs<ExtArgs>
+          args: Prisma.PaymentUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ChargeTransactionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>[]
+          args: Prisma.PaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
         }
         upsert: {
-          args: Prisma.ChargeTransactionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChargeTransactionPayload>
+          args: Prisma.PaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
         }
         aggregate: {
-          args: Prisma.ChargeTransactionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateChargeTransaction>
+          args: Prisma.PaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayment>
         }
         groupBy: {
-          args: Prisma.ChargeTransactionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChargeTransactionGroupByOutputType>[]
+          args: Prisma.PaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ChargeTransactionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ChargeTransactionCountAggregateOutputType> | number
+          args: Prisma.PaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentCountAggregateOutputType> | number
         }
       }
     }
@@ -5735,6 +5735,7 @@ export const ChargeScalarFieldEnum = {
   dueDate: 'dueDate',
   status: 'status',
   direction: 'direction',
+  chargeCategory: 'chargeCategory',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -5744,18 +5745,21 @@ export const ChargeScalarFieldEnum = {
 export type ChargeScalarFieldEnum = (typeof ChargeScalarFieldEnum)[keyof typeof ChargeScalarFieldEnum]
 
 
-export const ChargeTransactionScalarFieldEnum = {
+export const PaymentScalarFieldEnum = {
   id: 'id',
   chargeId: 'chargeId',
-  transactionId: 'transactionId',
-  amountApplied: 'amountApplied',
+  receiptSeries: 'receiptSeries',
+  receiptNumber: 'receiptNumber',
+  amount: 'amount',
+  status: 'status',
+  paymentDate: 'paymentDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
 
-export type ChargeTransactionScalarFieldEnum = (typeof ChargeTransactionScalarFieldEnum)[keyof typeof ChargeTransactionScalarFieldEnum]
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const FinancialAccountScalarFieldEnum = {
@@ -5770,7 +5774,8 @@ export const FinancialAccountScalarFieldEnum = {
   lastReconciledAt: 'lastReconciledAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  allowedPaymentMethods: 'allowedPaymentMethods'
 } as const
 
 export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
@@ -5789,6 +5794,7 @@ export const TransactionScalarFieldEnum = {
   reference: 'reference',
   notes: 'notes',
   financialAccountId: 'financialAccountId',
+  paymentId: 'paymentId',
   referenceGroupId: 'referenceGroupId',
   isReconciled: 'isReconciled',
   reconciledAt: 'reconciledAt',
@@ -6742,6 +6748,20 @@ export type ListEnumChargeDirectionFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'ChargeCategory'
+ */
+export type EnumChargeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChargeCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'ChargeCategory[]'
+ */
+export type ListEnumChargeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChargeCategory[]'>
+    
+
+
+/**
  * Reference to a field of type 'FinancialAccountType'
  */
 export type EnumFinancialAccountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FinancialAccountType'>
@@ -6756,16 +6776,9 @@ export type ListEnumFinancialAccountTypeFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
- * Reference to a field of type 'TransactionType'
+ * Reference to a field of type 'PaymentMethod[]'
  */
-export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
-    
-
-
-/**
- * Reference to a field of type 'TransactionType[]'
- */
-export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
     
 
 
@@ -6777,9 +6790,16 @@ export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
- * Reference to a field of type 'PaymentMethod[]'
+ * Reference to a field of type 'TransactionType'
  */
-export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType[]'
+ */
+export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
     
 
 
@@ -7103,7 +7123,7 @@ export type GlobalOmitConfig = {
   staff?: Prisma.StaffOmit
   teamSeasonStaff?: Prisma.TeamSeasonStaffOmit
   charge?: Prisma.ChargeOmit
-  chargeTransaction?: Prisma.ChargeTransactionOmit
+  payment?: Prisma.PaymentOmit
   financialAccount?: Prisma.FinancialAccountOmit
   transaction?: Prisma.TransactionOmit
   internalTransfer?: Prisma.InternalTransferOmit

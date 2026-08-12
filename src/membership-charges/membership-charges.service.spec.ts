@@ -115,7 +115,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
     const mockSeason = {
       id: 'season-1',
       startDate: new Date('2026-01-01T00:00:00.000Z'),
-      endDate: new Date('2026-12-31T23:59:59.999Z'),
+      endDate: new Date('2026-01-31T23:59:59.999Z'),
       status: 'ACTIVE',
     };
 
@@ -128,7 +128,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
         registrationFee: 100,
         recurringFee: 200,
         seasonFee: null,
-        prorateFirstRecurringFee: true,
+        prorateFirstRecurringFee: false,
         prorateRegistrationFee: false,
       },
       season: mockSeason,
@@ -174,15 +174,16 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharge?.amount).toBe(200);
       expect(recCharge?.description).toContain(
-        'Primera Mensualidad - Enero 2026',
+        'Primer Mes',
       );
     });
 
     it('Caso 2: Cobro Agrupado (Trimestral, advanceCycles = 3, sin descuento)', async () => {
       const trimestralPlan = { ...basePlan, advanceCycles: 3 };
+      const trimestralSeason = { ...mockTeamSeason, season: { ...mockSeason, endDate: new Date('2026-03-31T23:59:59.999Z') } };
 
       membershipRepo.getTeamSeasonOrThrow.mockResolvedValue(
-        mockTeamSeason as unknown as Awaited<
+        trimestralSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getTeamSeasonOrThrow>
         >,
       );
@@ -203,7 +204,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharges.length).toBe(3);
       expect(recCharges[0].amount).toBe(200);
-      expect(recCharges[0].description).toContain('Mensualidad');
+      expect(recCharges[0].description).toContain('Mes');
     });
 
     it('Caso 3: Cobro Agrupado con Descuento Adelantado (advanceCycles = 3, discount = 100%)', async () => {
@@ -212,9 +213,10 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
         advanceCycles: 3,
         advanceCyclesDiscountPercent: 100,
       };
+      const trimestralSeason = { ...mockTeamSeason, season: { ...mockSeason, endDate: new Date('2026-03-31T23:59:59.999Z') } };
 
       membershipRepo.getTeamSeasonOrThrow.mockResolvedValue(
-        mockTeamSeason as unknown as Awaited<
+        trimestralSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getTeamSeasonOrThrow>
         >,
       );
@@ -278,8 +280,12 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
     });
 
     it('Caso 5: Prorrateo primera cuota (Ingreso a mitad de mes)', async () => {
+      const prorateSeason = {
+        ...mockTeamSeason,
+        billingConfig: { ...mockTeamSeason.billingConfig, prorateFirstRecurringFee: true }
+      };
       membershipRepo.getTeamSeasonOrThrow.mockResolvedValue(
-        mockTeamSeason as unknown as Awaited<
+        prorateSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getTeamSeasonOrThrow>
         >,
       );

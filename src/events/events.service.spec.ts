@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { EventsService } from './events.service';
 import { PrismaService } from 'src/prisma.service';
 import { AvailabilityEngine } from './engines/availability.engine';
+import { EventSeriesService } from './event-series.service';
+import { EventMaterializationService } from './event-materialization.service';
 import { EventType } from 'src/generated/prisma/client';
 import {
   EventConflictException,
@@ -43,12 +45,17 @@ describe('EventsService (Orchestrator)', () => {
     checkAvailability: jest.fn(),
   };
 
+  const mockEventSeriesService = {};
+  const mockEventMaterializationService = {};
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EventsService,
         { provide: PrismaService, useValue: mockPrisma },
         { provide: AvailabilityEngine, useValue: mockAvailabilityEngine },
+        { provide: EventSeriesService, useValue: mockEventSeriesService },
+        { provide: EventMaterializationService, useValue: mockEventMaterializationService },
       ],
     }).compile();
 
@@ -131,7 +138,7 @@ describe('EventsService (Orchestrator)', () => {
       mockAvailabilityEngine.checkAvailability.mockResolvedValue(true);
 
       const updateData = {
-        startDate: new Date('2026-08-01T13:00:00Z'), // Time changed, should check availability
+        startDate: new Date('2026-08-01T11:00:00Z'), // Time changed, should check availability
       };
 
       const result = await service.executeEventUpdate('event-1', updateData, 'user-1', async () => ({

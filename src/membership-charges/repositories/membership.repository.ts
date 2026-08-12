@@ -96,12 +96,20 @@ export class MembershipRepository {
   async updateNextGenerationPointer(
     tx: Prisma.TransactionClient | PrismaService,
     membershipId: string,
+    currentPointer: Date | null,
     nextPointer: Date | null,
   ): Promise<void> {
-    await tx.playerMembership.update({
-      where: { id: membershipId },
+    const result = await tx.playerMembership.updateMany({
+      where: { 
+        id: membershipId,
+        nextRecurringChargeGenerationDate: currentPointer
+      },
       data: { nextRecurringChargeGenerationDate: nextPointer },
     });
+    
+    if (result.count === 0) {
+      throw new Error('OCC_POINTER_CHANGED: Concurrent generation detected, aborting transaction');
+    }
   }
 
   async getTeamSeasonOrThrow(id: string) {

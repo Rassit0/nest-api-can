@@ -160,7 +160,7 @@ export class AccountingAnalyticsService {
         receiptSeries: true,
         receiptNumber: true,
         paymentMethod: true,
-        chargeTransactions: {
+        payment: {
           select: {
             charge: {
               select: {

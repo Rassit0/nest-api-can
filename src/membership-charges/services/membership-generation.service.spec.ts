@@ -160,7 +160,8 @@ describe('MembershipGenerationService', () => {
 
       expect(mockTx.charge.create).toHaveBeenCalled();
       const payload = (mockTx.charge.create as jest.Mock).mock.calls[0][0].data;
-      expect(payload.amount).toBe(0);
+      expect(payload.amount).toBe(100);
+      expect(payload.pendingAmount).toBe(0);
     });
   });
 
@@ -180,7 +181,7 @@ describe('MembershipGenerationService', () => {
       // Also updates the pointer
       expect(membershipRepo.updateNextGenerationPointer).toHaveBeenCalled();
       const pointerPassed =
-        membershipRepo.updateNextGenerationPointer.mock.calls[0][2];
+        membershipRepo.updateNextGenerationPointer.mock.calls[0][3];
       expect(pointerPassed.getTime()).toBeGreaterThan(evaluationDate.getTime()); // next cycle is Feb 1, minus 7 days = Jan 25
     });
 
@@ -193,7 +194,8 @@ describe('MembershipGenerationService', () => {
 
       expect(mockTx.charge.create).toHaveBeenCalledTimes(1);
       const payload = (mockTx.charge.create as jest.Mock).mock.calls[0][0].data;
-      expect(payload.amount).toBe(0); // 100% discount
+      expect(payload.amount).toBeGreaterThan(0); // Prorated amount
+      expect(payload.pendingAmount).toBe(0); // 100% discount
     });
 
     it('should not generate recurring charge if pointer evaluates to a date in future', async () => {
@@ -251,6 +253,7 @@ describe('MembershipGenerationService', () => {
       expect(membershipRepo.updateNextGenerationPointer).toHaveBeenCalledWith(
         mockTx,
         membership.id,
+        null,
         null,
       );
     });

@@ -90,14 +90,12 @@ export class MembershipsService {
           status: 'COMPLETED',
           type: 'INCOME',
           transactionDate: { gte: firstDayOfMonth },
-          chargeTransactions: {
-            some: {
-              charge: {
-                OR: [
-                  { membershipCharges: { some: {} } },
-                  { studentCharges: { some: {} } },
-                ],
-              },
+          payment: {
+            charge: {
+              OR: [
+                { membershipCharges: { some: {} } },
+                { studentCharges: { some: {} } },
+              ],
             },
           },
         },
@@ -138,14 +136,12 @@ export class MembershipsService {
           status: 'COMPLETED',
           type: 'INCOME',
           transactionDate: { gte: m.start, lte: m.end },
-          chargeTransactions: {
-            some: {
-              charge: {
-                OR: [
-                  { membershipCharges: { some: {} } },
-                  { studentCharges: { some: {} } },
-                ],
-              },
+          payment: {
+            charge: {
+              OR: [
+                { membershipCharges: { some: {} } },
+                { studentCharges: { some: {} } },
+              ],
             },
           },
         },
@@ -358,14 +354,12 @@ export class MembershipsService {
       where: {
         status: 'COMPLETED',
         type: 'INCOME',
-        chargeTransactions: {
-          some: {
-            charge: {
-              OR: [
-                { membershipCharges: { some: {} } },
-                { studentCharges: { some: {} } },
-              ],
-            },
+        payment: {
+          charge: {
+            OR: [
+              { membershipCharges: { some: {} } },
+              { studentCharges: { some: {} } },
+            ],
           },
         },
       },

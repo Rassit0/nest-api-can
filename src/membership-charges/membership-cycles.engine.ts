@@ -36,12 +36,10 @@ const MAX_BILLING_CYCLES = 60; // Safe upper bound for cycle generation loop
 export function simulateAllCycles(
   membership: PlayerMembershipWithRelations,
 ): SimulatedCycle[] {
-  let seasonEnd = new Date(membership.teamSeason.season.endDate);
-  seasonEnd.setUTCHours(23, 59, 59, 999);
+  let seasonEnd = DateUtils.getEndOfLocalDayInUTC(membership.teamSeason.season.endDate);
 
   if (membership.endedAt) {
-    const endedAtDate = new Date(membership.endedAt);
-    endedAtDate.setUTCHours(23, 59, 59, 999);
+    const endedAtDate = DateUtils.getEndOfLocalDayInUTC(membership.endedAt);
     if (endedAtDate < seasonEnd) {
       seasonEnd = endedAtDate;
     }

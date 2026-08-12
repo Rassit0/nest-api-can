@@ -1,4 +1,4 @@
-import { Transaction, ChargeTransaction, Charge, Prisma } from 'src/generated/prisma/client';
+import { Transaction, Charge, Prisma } from 'src/generated/prisma/client';
 
 export type TransactionWithRelations = Prisma.TransactionGetPayload<{
   select: typeof import('./transactions.service').transactionSelect;
@@ -41,9 +41,9 @@ export class TransactionsMapper {
     let origin = 'UNKNOWN';
 
     // Resolver contexto a partir del cargo principal pagado (si lo hay)
-    if (transaction.chargeTransactions && transaction.chargeTransactions.length > 0) {
-      // Tomamos el primer cargo como referencia principal del movimiento
-      const mainCharge = transaction.chargeTransactions[0].charge as any;
+    if (transaction.payment && transaction.payment.charge) {
+      // Tomamos el cargo asociado al pago
+      const mainCharge = transaction.payment.charge as any;
 
       if (mainCharge.accountCharge) {
         origin = 'ACCOUNT_CHARGE';
@@ -77,8 +77,8 @@ export class TransactionsMapper {
       paymentMethod: transaction.paymentMethod,
       transactionDate: transaction.transactionDate,
       status: transaction.status,
-      receiptSeries: transaction.receiptSeries,
-      receiptNumber: transaction.receiptNumber,
+      receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,
+      receiptNumber: transaction.payment?.receiptNumber || transaction.receiptNumber,
       reference: transaction.reference,
       financialAccountName: (transaction as any).financialAccount?.name || null,
       thirdParty: transaction.thirdParty || null,

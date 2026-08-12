@@ -15,6 +15,14 @@ describe('AvailabilityEngine (Integration)', () => {
   let event1Id: string; // Event in root
   let event2Id: string; // Event in child
 
+  const uniqueId = Date.now().toString();
+  const rootName = `TestLoc_Root_${uniqueId}`;
+  const childName = `TestLoc_Child_${uniqueId}`;
+  const grandChildName = `TestLoc_GrandChild_${uniqueId}`;
+  const eventTitle1 = `TestEvent_1_${uniqueId}`;
+  const eventTitle2 = `TestEvent_2_${uniqueId}`;
+  const eventTitle3 = `TestEvent_3_${uniqueId}`;
+
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -28,34 +36,58 @@ describe('AvailabilityEngine (Integration)', () => {
     prisma = module.get<PrismaService>(PrismaService);
 
     // Clean up previous test data if any
-    await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_GrandChild' } } });
-    await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_Child' } } });
-    await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_Root' } } });
-    await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_' } } }); // fallback
-    await prisma.event.deleteMany({ where: { title: { startsWith: 'TestEvent_' } } });
-
+    // We still attempt cleanup for hygiene
+    try {
+      const events = await prisma.event.findMany({ where: { title: { endsWith: uniqueId } }, select: { id: true } });
+      const eventIds = events.map(e => e.id);
+      
+      if (eventIds.length > 0) {
+        await prisma.generalEvent.deleteMany({ where: { eventId: { in: eventIds } } });
+        await prisma.session.deleteMany({ where: { eventId: { in: eventIds } } });
+        await prisma.match.deleteMany({ where: { eventId: { in: eventIds } } });
+        await prisma.event.deleteMany({ where: { id: { in: eventIds } } });
+      }
+      
+      await prisma.location.deleteMany({ where: { name: { endsWith: uniqueId } } });
+    } catch (e) {
+      console.error('Cleanup failed in beforeAll:', e);
+    }
 
 
     // Create a hierarchy of locations: Root -> Child -> GrandChild
     const root = await prisma.location.create({
-      data: { name: 'TestLoc_Root', maxConcurrentEvents: 1, address: 'Fake Address' }
+      data: {
+        name: rootName,
+        maxConcurrentEvents: 1,
+        address: 'Fake Address'
+      },
     });
     rootLocationId = root.id;
 
     const child = await prisma.location.create({
-      data: { name: 'TestLoc_Child', maxConcurrentEvents: 1, parentId: root.id, address: 'Fake Address' }
+      data: {
+        name: childName,
+        maxConcurrentEvents: 1,
+        parentId: root.id,
+        address: 'Fake Address'
+      },
     });
     childLocationId = child.id;
 
     const grandChild = await prisma.location.create({
-      data: { name: 'TestLoc_GrandChild', maxConcurrentEvents: 1, parentId: child.id, address: 'Fake Address' }
+      data: {
+        name: grandChildName,
+        maxConcurrentEvents: 1,
+        parentId: child.id,
+        address: 'Fake Address'
+      },
     });
     grandChildLocationId = grandChild.id;
 
     // Create a blocking event in the root location from 10:00 to 12:00
     const e1 = await prisma.event.create({
       data: {
-        title: 'TestEvent_RootBlock',
+        title: eventTitle1,
         eventType: 'GENERAL',
         startDate: new Date('2026-08-01T10:00:00.000Z'),
         endDate: new Date('2026-08-01T12:00:00.000Z'),
@@ -80,12 +112,21 @@ describe('AvailabilityEngine (Integration)', () => {
   afterAll(async () => {
     // Cleanup
     if (prisma) {
-      await prisma.event.deleteMany({ where: { title: { startsWith: 'TestEvent_' } } });
-      await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_GrandChild' } } });
-      await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_Child' } } });
-      await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_Root' } } });
-      await prisma.location.deleteMany({ where: { name: { startsWith: 'TestLoc_' } } });
-      await prisma.$disconnect();
+      try {
+        const events = await prisma.event.findMany({ where: { title: { endsWith: uniqueId } }, select: { id: true } });
+        const eventIds = events.map(e => e.id);
+        
+        if (eventIds.length > 0) {
+          await prisma.generalEvent.deleteMany({ where: { eventId: { in: eventIds } } });
+          await prisma.session.deleteMany({ where: { eventId: { in: eventIds } } });
+          await prisma.match.deleteMany({ where: { eventId: { in: eventIds } } });
+          await prisma.event.deleteMany({ where: { id: { in: eventIds } } });
+        }
+        
+        await prisma.location.deleteMany({ where: { name: { endsWith: uniqueId } } });
+      } catch (e) {
+        console.error('Cleanup failed in afterAll:', e);
+      }
     }
   });
 

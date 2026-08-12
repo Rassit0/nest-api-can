@@ -758,7 +758,7 @@ export class StudentMembershipsService {
           include: {
             charge: {
               include: {
-                chargeTransactions: true,
+                payments: true,
                 childCharges: true,
               },
             },
@@ -779,7 +779,7 @@ export class StudentMembershipsService {
         (mc.charge.status !== StatusCharge.PENDING &&
           mc.charge.status !== StatusCharge.CANCELLED) ||
         (Number(mc.charge.amount) - Number(mc.charge.discountAmount)) > Number(mc.charge.pendingAmount) ||
-        mc.charge.chargeTransactions.length > 0 ||
+        mc.charge.payments.length > 0 ||
         mc.charge.childCharges.length > 0,
     );
 

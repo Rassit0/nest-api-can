@@ -22,7 +22,7 @@ export class TransactionReportService {
         createdBy: {
           include: { person: true },
         },
-        chargeTransactions: {
+        payment: {
           include: {
             charge: {
               include: {
@@ -82,10 +82,10 @@ export class TransactionReportService {
     // Determinar si hay un beneficiario (jugador o estudiante)
     let beneficiaryName: string | undefined;
     if (
-      transaction.chargeTransactions &&
-      transaction.chargeTransactions.length > 0
+      transaction.payment &&
+      transaction.payment.charge
     ) {
-      const charge = transaction.chargeTransactions[0].charge;
+      const charge = transaction.payment.charge;
       if (charge.membershipCharges && charge.membershipCharges.length > 0) {
         const person =
           charge.membershipCharges[0].playerMembership.player.person;

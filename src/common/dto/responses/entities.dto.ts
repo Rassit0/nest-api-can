@@ -1290,7 +1290,7 @@ export class ChargeResponseDto {
     isArray: true,
     example: 'any',
   })
-  chargeTransactions: any[];
+  payments: any[];
 
   @ApiProperty({
     required: false,
@@ -1305,7 +1305,7 @@ export class ChargeResponseDto {
   studentCharges: any[];
 }
 
-export class ChargeTransactionResponseDto {
+export class PaymentResponseDto {
   @ApiProperty({
     example: 'string',
   })
@@ -1324,17 +1324,17 @@ export class ChargeTransactionResponseDto {
   @ApiProperty({
     example: 'string',
   })
-  transactionId: string;
+  receiptSeries: string;
+
+  @ApiProperty({
+    example: 1,
+  })
+  receiptNumber: number;
 
   @ApiProperty({
     example: 'any',
   })
-  transaction: any;
-
-  @ApiProperty({
-    example: 'any',
-  })
-  amountApplied: any;
+  amount: any;
 
   @ApiProperty({
     example: '2024-01-01T00:00:00Z',
@@ -1345,6 +1345,12 @@ export class ChargeTransactionResponseDto {
     example: '2024-01-01T00:00:00Z',
   })
   updatedAt: Date;
+
+  @ApiProperty({
+    isArray: true,
+    example: 'any',
+  })
+  transactions: any[];
 }
 
 export class TransactionResponseDto {
@@ -1414,10 +1420,16 @@ export class TransactionResponseDto {
   updatedAt: Date;
 
   @ApiProperty({
-    isArray: true,
+    required: false,
+    example: 'string',
+  })
+  paymentId?: string;
+
+  @ApiProperty({
+    required: false,
     example: 'any',
   })
-  chargeTransactions: any[];
+  payment?: any;
 }
 
 export class UserResponseDto {

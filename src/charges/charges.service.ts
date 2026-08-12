@@ -254,7 +254,7 @@ export class ChargesService {
       include: {
         membershipCharges: true,
         studentCharges: true,
-        chargeTransactions: true,
+        payments: true,
       },
     });
     if (!charge) {
@@ -271,7 +271,7 @@ export class ChargesService {
       );
     }
 
-    if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+    if (charge.payments && charge.payments.length > 0) {
       throw new BadRequestException(
         'No se puede editar un cargo que ya tiene transacciones (pagos) registradas.',
       );
@@ -324,7 +324,7 @@ export class ChargesService {
       include: {
         membershipCharges: true,
         studentCharges: true,
-        chargeTransactions: true,
+        payments: true,
       },
     });
 
@@ -342,7 +342,7 @@ export class ChargesService {
       );
     }
 
-    if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+    if (charge.payments && charge.payments.length > 0) {
       throw new BadRequestException(
         'No se puede eliminar el cargo porque tiene transacciones (pagos) asociadas.',
       );
@@ -376,7 +376,7 @@ export class ChargesService {
   async addDiscount(id: string, addDiscountDto: AddDiscountDto) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
-      include: { chargeTransactions: true },
+      include: { payments: true },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
@@ -404,7 +404,7 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+      if (charge.payments && charge.payments.length > 0) {
         newStatus = StatusCharge.PAID;
       } else {
         newStatus = StatusCharge.PENDING;
@@ -435,7 +435,7 @@ export class ChargesService {
   async removeDiscount(id: string) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
-      include: { chargeTransactions: true },
+      include: { payments: true },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
@@ -459,7 +459,7 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      if (charge.chargeTransactions && charge.chargeTransactions.length > 0) {
+      if (charge.payments && charge.payments.length > 0) {
         newStatus = StatusCharge.PAID;
       } else {
         newStatus = StatusCharge.PENDING;

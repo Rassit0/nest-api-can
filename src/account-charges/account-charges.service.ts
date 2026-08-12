@@ -82,12 +82,7 @@ export class AccountChargesService {
             financialAccountId: immediatePayment.financialAccountId,
             transactionDate: new Date(),
             description: description || title,
-            chargeTransactions: [
-              {
-                chargeId: chargeResult.data.id,
-                amountApplied: amount,
-              },
-            ],
+            chargeId: chargeResult.data.id,
             attachmentIds: immediatePayment.attachmentIds,
           },
           tx,
@@ -177,7 +172,7 @@ export class AccountChargesService {
     const accountCharge = await this.prisma.accountCharge.findUnique({
       where: { id },
       include: {
-        charge: { include: { chargeTransactions: true } },
+        charge: { include: { payments: true } },
         category: true,
         person: true,
       },
@@ -198,7 +193,7 @@ export class AccountChargesService {
     const { data: existing } = await this.findOne(id);
 
     // Validar inmutabilidad si ya hay transacciones (pagos parciales/totales)
-    if (existing.charge.chargeTransactions.length > 0) {
+    if (existing.charge.payments.length > 0) {
       throw new BadRequestException(
         'No se puede modificar una cuenta que ya tiene pagos asociados. Debe cancelarla y crear una nueva.',
       );

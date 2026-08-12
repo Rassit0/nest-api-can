@@ -16,53 +16,27 @@ import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { PaymentMethod, TransactionType } from 'src/generated/prisma/client';
 
-export class CreateChargeTransactionDto {
-  @ApiProperty({
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID del cargo a pagar',
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'chargeId',
-    }),
-  })
-  @IsUUID('4', {
-    message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'chargeId',
-    }),
-  })
-  @Exists('charge', 'id', {
-    message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'chargeId',
-    }),
-  })
-  chargeId: string;
-
-  @ApiProperty({
-    example: 50.0,
-    description: 'Monto a aplicar a este cargo',
-  })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'amountApplied',
-    }),
-  })
-  @IsNumber(
-    {},
-    {
-      message: i18nValidationMessage('validation.IS_NUMBER', {
-        constraint1: 'amountApplied',
-      }),
-    },
-  )
-  @Min(0, {
-    message: i18nValidationMessage('validation.MIN_VALUE', {
-      constraint1: 'amountApplied',
-      constraint2: 0,
-    }),
-  })
+export class SplitTransactionDto {
+  @ApiProperty({ example: 100 })
+  @IsNumber()
+  @Min(0)
   @Type(() => Number)
-  amountApplied: number;
+  amount: number;
+
+  @ApiProperty({ enum: PaymentMethod })
+  @IsEnum(PaymentMethod)
+  paymentMethod: PaymentMethod;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  reference?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsUUID('4')
+  @Exists('financialAccount', 'id')
+  financialAccountId: string;
 }
 
 export class CreateTransactionDto {
@@ -100,15 +74,11 @@ export class CreateTransactionDto {
   })
   thirdPartyId?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 150.0,
-    description: 'Monto total de la transacción',
+    description: 'Monto total de la transacción (requerido si no hay splitTransactions)',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'amount',
-    }),
-  })
+  @IsOptional()
   @IsNumber(
     {},
     {
@@ -130,11 +100,7 @@ export class CreateTransactionDto {
     example: '2026-07-05T00:00:00.000Z',
     description: 'Fecha en que se realiza la transacción',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'transactionDate',
-    }),
-  })
+  @IsOptional()
   @IsDate({
     message: i18nValidationMessage('validation.IS_DATE', {
       constraint1: 'transactionDate',
@@ -160,11 +126,7 @@ export class CreateTransactionDto {
     example: TransactionType.INCOME,
     description: 'Tipo de transacción (INCOME, EXPENSE)',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'type',
-    }),
-  })
+  @IsOptional()
   @IsEnum(TransactionType, {
     message: i18nValidationMessage('validation.IS_ENUM', {
       constraint1: 'type',
@@ -177,11 +139,7 @@ export class CreateTransactionDto {
     example: PaymentMethod.CASH,
     description: 'Método de pago (QR, TRANSFER, CASH)',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'paymentMethod',
-    }),
-  })
+  @IsOptional()
   @IsEnum(PaymentMethod, {
     message: i18nValidationMessage('validation.IS_ENUM', {
       constraint1: 'paymentMethod',
@@ -214,18 +172,22 @@ export class CreateTransactionDto {
   notes?: string;
 
   @ApiPropertyOptional({
-    type: [CreateChargeTransactionDto],
-    description: 'Lista de cargos a los que se aplica este pago',
+    description: 'ID del cargo a pagar. Si se especifica, se generará un Payment comercial.',
   })
   @IsOptional()
-  @IsArray({
-    message: i18nValidationMessage('validation.IS_ARRAY', {
-      constraint1: 'chargeTransactions',
-    }),
+  @IsUUID('4')
+  @Exists('charge', 'id')
+  chargeId?: string;
+
+  @ApiPropertyOptional({
+    type: [SplitTransactionDto],
+    description: 'Lista de transacciones financieras múltiples (Ej. Efectivo + QR)',
   })
+  @IsOptional()
+  @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreateChargeTransactionDto)
-  chargeTransactions?: CreateChargeTransactionDto[];
+  @Type(() => SplitTransactionDto)
+  splitTransactions?: SplitTransactionDto[];
 
   @ApiPropertyOptional({
     type: [String],
@@ -244,11 +206,7 @@ export class CreateTransactionDto {
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID de la cuenta financiera a la que ingresa o sale el dinero',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'financialAccountId',
-    }),
-  })
+  @IsOptional()
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
       constraint1: 'financialAccountId',

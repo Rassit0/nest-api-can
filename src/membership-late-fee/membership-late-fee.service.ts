@@ -163,6 +163,7 @@ export class MembershipLateFeeService {
     } else {
       await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,
+        chargeCategory: 'LATE_FEE',
         description: `Recargo por Mora - ${penaltyDays} días de retraso`,
         amount: targetLateFeeAmount,
         pendingAmount: targetLateFeeAmount,

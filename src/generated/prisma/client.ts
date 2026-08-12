@@ -163,10 +163,10 @@ export type TeamSeasonStaff = Prisma.TeamSeasonStaffModel
  */
 export type Charge = Prisma.ChargeModel
 /**
- * Model ChargeTransaction
+ * Model Payment
  * 
  */
-export type ChargeTransaction = Prisma.ChargeTransactionModel
+export type Payment = Prisma.PaymentModel
 /**
  * Model FinancialAccount
  * 

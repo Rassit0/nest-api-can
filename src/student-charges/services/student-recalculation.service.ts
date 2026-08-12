@@ -68,6 +68,7 @@ export class StudentChargeRecalculationService {
         await this.membershipRepo.updateNextGenerationPointer(
           tx,
           studentMembershipId,
+          oldNextDate,
           resetDate,
         );
       }

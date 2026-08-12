@@ -92,6 +92,7 @@ export class StudentGenerationService {
       await this.membershipRepo.updateNextGenerationPointer(
         tx,
         membership.id,
+        membership.nextRecurringChargeGenerationDate,
         null,
       );
       return;
@@ -138,6 +139,7 @@ export class StudentGenerationService {
     await this.membershipRepo.updateNextGenerationPointer(
       tx,
       membership.id,
+      membership.nextRecurringChargeGenerationDate,
       nextPointer,
     );
   }
@@ -163,6 +165,7 @@ export class StudentGenerationService {
       await this.membershipRepo.updateNextGenerationPointer(
         tx,
         membership.id,
+        membership.nextRecurringChargeGenerationDate,
         nextPointer,
       );
     }
@@ -178,6 +181,7 @@ export class StudentGenerationService {
       await this.membershipRepo.updateNextGenerationPointer(
         tx,
         membership.id,
+        membership.nextRecurringChargeGenerationDate,
         null,
       );
       return null;

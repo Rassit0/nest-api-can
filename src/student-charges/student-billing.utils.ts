@@ -68,14 +68,15 @@ export function calculateCycleDates(
       Date.UTC(currentBillingYear, currentBillingMonth, safeStartBillingDay),
     );
 
-    // Removed logic that shifts the first billing cycle to the previous month
-    // if (startDate < thisMonthBillingDate) {
-    //   currentBillingMonth -= 1;
-    //   if (currentBillingMonth < 0) {
-    //     currentBillingMonth = 11;
-    //     currentBillingYear -= 1;
-    //   }
-    // }
+    // Restore logic that shifts the first billing cycle to the previous month
+    // if the start date is before the billing day of the current month.
+    if (startDate.getUTCDate() < safeStartBillingDay) {
+      currentBillingMonth -= 1;
+      if (currentBillingMonth < 0) {
+        currentBillingMonth = 11;
+        currentBillingYear -= 1;
+      }
+    }
 
     let targetMonth = currentBillingMonth + (cycleCounter - 1);
     let targetYear = currentBillingYear;

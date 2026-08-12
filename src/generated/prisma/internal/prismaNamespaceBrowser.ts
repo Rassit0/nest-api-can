@@ -73,7 +73,7 @@ export const ModelName = {
   Staff: 'Staff',
   TeamSeasonStaff: 'TeamSeasonStaff',
   Charge: 'Charge',
-  ChargeTransaction: 'ChargeTransaction',
+  Payment: 'Payment',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
   InternalTransfer: 'InternalTransfer',
@@ -544,6 +544,7 @@ export const ChargeScalarFieldEnum = {
   dueDate: 'dueDate',
   status: 'status',
   direction: 'direction',
+  chargeCategory: 'chargeCategory',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -553,18 +554,21 @@ export const ChargeScalarFieldEnum = {
 export type ChargeScalarFieldEnum = (typeof ChargeScalarFieldEnum)[keyof typeof ChargeScalarFieldEnum]
 
 
-export const ChargeTransactionScalarFieldEnum = {
+export const PaymentScalarFieldEnum = {
   id: 'id',
   chargeId: 'chargeId',
-  transactionId: 'transactionId',
-  amountApplied: 'amountApplied',
+  receiptSeries: 'receiptSeries',
+  receiptNumber: 'receiptNumber',
+  amount: 'amount',
+  status: 'status',
+  paymentDate: 'paymentDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
 
-export type ChargeTransactionScalarFieldEnum = (typeof ChargeTransactionScalarFieldEnum)[keyof typeof ChargeTransactionScalarFieldEnum]
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const FinancialAccountScalarFieldEnum = {
@@ -579,7 +583,8 @@ export const FinancialAccountScalarFieldEnum = {
   lastReconciledAt: 'lastReconciledAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  allowedPaymentMethods: 'allowedPaymentMethods'
 } as const
 
 export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
@@ -598,6 +603,7 @@ export const TransactionScalarFieldEnum = {
   reference: 'reference',
   notes: 'notes',
   financialAccountId: 'financialAccountId',
+  paymentId: 'paymentId',
   referenceGroupId: 'referenceGroupId',
   isReconciled: 'isReconciled',
   reconciledAt: 'reconciledAt',

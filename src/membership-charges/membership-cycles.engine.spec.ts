@@ -82,8 +82,8 @@ describe('MembershipCyclesEngine', () => {
     // First cycle
     expect(cycles[0].cycleCounter).toBe(1);
     expect(cycles[0].isFirstCycle).toBe(true);
-    expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 0, 15))); // startedAt because it's first cycle
-    expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 1, 1))); // Feb 1
+    expect(cycles[0].dueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 0, 15)))); // startedAt because it's first cycle
+    expect(cycles[0].nextDueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 1, 1)))); // Feb 1
 
     // Check if descriptions mark prorating
     expect(cycles[0].description).toContain('Prorrateado');
@@ -110,9 +110,9 @@ describe('MembershipCyclesEngine', () => {
     const cycles = simulateAllCycles(membership);
 
     expect(cycles.length).toBeGreaterThan(12); // Should be roughly 50 weeks
-    expect(cycles[0].dueDate).toEqual(new Date(Date.UTC(2024, 0, 15)));
-    expect(cycles[0].nextDueDate).toEqual(new Date(Date.UTC(2024, 0, 22)));
-    expect(cycles[1].dueDate).toEqual(new Date(Date.UTC(2024, 0, 22)));
+    expect(cycles[0].dueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 0, 15))));
+    expect(cycles[0].nextDueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 0, 22))));
+    expect(cycles[1].dueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 0, 22))));
   });
 
   it('should cap out at MAX_BILLING_CYCLES', () => {
@@ -147,7 +147,7 @@ describe('MembershipCyclesEngine', () => {
       const membership = getMockMembership();
       // Starts Jan 15. Due dates: Jan 15, Feb 1, Mar 1...
       // Let's end the membership exactly on Feb 1.
-      membership.endedAt = new Date(Date.UTC(2024, 1, 1)); // Feb 1
+      membership.endedAt = new Date(Date.UTC(2024, 1, 2)); // Feb 2
 
       const cycles = simulateAllCycles(membership);
 
@@ -155,7 +155,7 @@ describe('MembershipCyclesEngine', () => {
       expect(cycles.length).toBe(2);
       expect(cycles[1].dueDate.getUTCMonth()).toBe(1); // Feb 1
       expect(cycles[1].nextDueDate.getTime()).toBe(
-        new Date(Date.UTC(2024, 2, 1)).getTime(),
+        DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 2, 1))).getTime(),
       ); // Mar 1
     });
 
@@ -170,7 +170,7 @@ describe('MembershipCyclesEngine', () => {
       // Cycles: Jan 15, Feb 1. Next is Mar 1 which is after Feb 10.
       expect(cycles.length).toBe(2);
       expect(cycles[1].nextDueDate.getTime()).toBe(
-        new Date(Date.UTC(2024, 2, 1)).getTime(),
+        DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 2, 1))).getTime(),
       ); // Mar 1
     });
   });

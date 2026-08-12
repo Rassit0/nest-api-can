@@ -807,6 +807,12 @@ enum ChargeDirection {
   PAYABLE
 }
 
+enum ChargeCategory {
+  NORMAL
+  LATE_FEE
+  REGISTRATION
+}
+
 model Charge {
   id String @id @default(uuid())
 
@@ -826,11 +832,12 @@ model Charge {
   dueDate   DateTime        @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
   status    StatusCharge    @default(PENDING)
   direction ChargeDirection @default(RECEIVABLE)
+  chargeCategory ChargeCategory @default(NORMAL) @map("charge_category")
 
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
   membershipCharges  MembershipCharge[]
-  chargeTransactions ChargeTransaction[]
+
   sessionBooking     SessionBooking?
   studentCharges     StudentCharge[]
   accountCharge      AccountCharge?
@@ -840,25 +847,37 @@ model Charge {
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
+  payments    Payment[]
+
+  @@unique([parentChargeId, chargeCategory])
   @@map("charges")
 }
 
-model ChargeTransaction {
-  id            String      @id @default(uuid())
-  chargeId      String      @map("charge_id")
-  charge        Charge      @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-  transactionId String      @map("transaction_id")
-  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Restrict)
-  amountApplied Decimal     @map("amount_applied") @db.Decimal(10, 2)
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
 
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@map("charge_transactions")
+model Payment {
+  id              String   @id @default(uuid())
+  chargeId        String   @map("charge_id")
+  charge          Charge   @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  
+  receiptSeries   String   @map("receipt_series")
+  receiptNumber   Int      @map("receipt_number")
+  amount          Decimal  @db.Decimal(10, 2)
+  status          String   @default("COMPLETED")
+  paymentDate     DateTime @default(now()) @map("payment_date")
+
+  transactions    Transaction[]
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  createdById     String?  @map("created_by_id")
+  createdBy       User?    @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById     String?  @map("updated_by_id")
+  updatedBy       User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([receiptSeries, receiptNumber])
+  @@map("payments")
 }
 
 // =================================
@@ -889,6 +908,8 @@ model FinancialAccount {
   isActive  Boolean  @default(true) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  allowedPaymentMethods PaymentMethod[] @default([]) @map("allowed_payment_methods")
 
   transactions Transaction[]
   cashClosures CashClosure[]
@@ -938,6 +959,10 @@ model Transaction {
   financialAccountId String           @map("financial_account_id")
   financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id])
 
+  // Payment Link (New Architecture)
+  paymentId          String?          @map("payment_id")
+  payment            Payment?         @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+
   // Transfers & Reconciliations
   referenceGroupId       String?           @map("reference_group_id")
   isReconciled           Boolean           @default(false) @map("is_reconciled")
@@ -952,7 +977,7 @@ model Transaction {
 
   createdAt          DateTime            @default(now()) @map("created_at")
   updatedAt          DateTime            @updatedAt @map("updated_at")
-  chargeTransactions ChargeTransaction[]
+
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1069,8 +1094,7 @@ model User {
   updatedTeamSeasonStaffs           TeamSeasonStaff[]           @relation("UpdatedBy")
   createdCharges                    Charge[]                    @relation("CreatedBy")
   updatedCharges                    Charge[]                    @relation("UpdatedBy")
-  createdChargeTransactions         ChargeTransaction[]         @relation("CreatedBy")
-  updatedChargeTransactions         ChargeTransaction[]         @relation("UpdatedBy")
+
   createdTransactions               Transaction[]               @relation("CreatedBy")
   updatedTransactions               Transaction[]               @relation("UpdatedBy")
   createdInternalTransfers          InternalTransfer[]          @relation("CreatedByTransfer")
@@ -1122,6 +1146,8 @@ model User {
   createdAccountCharges             AccountCharge[]             @relation("CreatedBy")
   updatedAccountCharges             AccountCharge[]             @relation("UpdatedBy")
   attachments                       Attachment[]
+  createdPayments                   Payment[]                   @relation("CreatedBy")
+  updatedPayments                   Payment[]                   @relation("UpdatedBy")
 
   @@map("users")
 }

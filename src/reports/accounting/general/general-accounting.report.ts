@@ -45,8 +45,8 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
     transactions.forEach((t) => {
       const amt = Number(t.amount);
       if (t.type === 'INCOME') {
-        const hasMembership = t.chargeTransactions.some(ct => ct.charge.membershipCharges.length > 0);
-        const hasStudent = t.chargeTransactions.some(ct => ct.charge.studentCharges.length > 0);
+        const hasMembership = t.payment?.charge?.membershipCharges?.length > 0;
+        const hasStudent = t.payment?.charge?.studentCharges?.length > 0;
         
         if (hasMembership) membershipIncome += amt;
         else if (hasStudent) studentIncome += amt;

@@ -163,6 +163,15 @@ export const ChargeDirection = {
 export type ChargeDirection = (typeof ChargeDirection)[keyof typeof ChargeDirection]
 
 
+export const ChargeCategory = {
+  NORMAL: 'NORMAL',
+  LATE_FEE: 'LATE_FEE',
+  REGISTRATION: 'REGISTRATION'
+} as const
+
+export type ChargeCategory = (typeof ChargeCategory)[keyof typeof ChargeCategory]
+
+
 export const FinancialAccountType = {
   CASH: 'CASH',
   BANK: 'BANK',

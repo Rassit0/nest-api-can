@@ -77,6 +77,7 @@ export type FinancialAccountCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  allowedPaymentMethods: number
   _all: number
 }
 
@@ -132,6 +133,7 @@ export type FinancialAccountCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  allowedPaymentMethods?: true
   _all?: true
 }
 
@@ -234,6 +236,7 @@ export type FinancialAccountGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  allowedPaymentMethods: $Enums.PaymentMethod[]
   _count: FinancialAccountCountAggregateOutputType | null
   _avg: FinancialAccountAvgAggregateOutputType | null
   _sum: FinancialAccountSumAggregateOutputType | null
@@ -272,6 +275,7 @@ export type FinancialAccountWhereInput = {
   isActive?: Prisma.BoolFilter<"FinancialAccount"> | boolean
   createdAt?: Prisma.DateTimeFilter<"FinancialAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FinancialAccount"> | Date | string
+  allowedPaymentMethods?: Prisma.EnumPaymentMethodNullableListFilter<"FinancialAccount">
   transactions?: Prisma.TransactionListRelationFilter
   cashClosures?: Prisma.CashClosureListRelationFilter
 }
@@ -289,6 +293,7 @@ export type FinancialAccountOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedPaymentMethods?: Prisma.SortOrder
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   cashClosures?: Prisma.CashClosureOrderByRelationAggregateInput
 }
@@ -309,6 +314,7 @@ export type FinancialAccountWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"FinancialAccount"> | boolean
   createdAt?: Prisma.DateTimeFilter<"FinancialAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FinancialAccount"> | Date | string
+  allowedPaymentMethods?: Prisma.EnumPaymentMethodNullableListFilter<"FinancialAccount">
   transactions?: Prisma.TransactionListRelationFilter
   cashClosures?: Prisma.CashClosureListRelationFilter
 }, "id">
@@ -326,6 +332,7 @@ export type FinancialAccountOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedPaymentMethods?: Prisma.SortOrder
   _count?: Prisma.FinancialAccountCountOrderByAggregateInput
   _avg?: Prisma.FinancialAccountAvgOrderByAggregateInput
   _max?: Prisma.FinancialAccountMaxOrderByAggregateInput
@@ -349,6 +356,7 @@ export type FinancialAccountScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"FinancialAccount"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FinancialAccount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FinancialAccount"> | Date | string
+  allowedPaymentMethods?: Prisma.EnumPaymentMethodNullableListFilter<"FinancialAccount">
 }
 
 export type FinancialAccountCreateInput = {
@@ -364,6 +372,7 @@ export type FinancialAccountCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionCreateNestedManyWithoutFinancialAccountInput
   cashClosures?: Prisma.CashClosureCreateNestedManyWithoutFinancialAccountInput
 }
@@ -381,6 +390,7 @@ export type FinancialAccountUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutFinancialAccountInput
   cashClosures?: Prisma.CashClosureUncheckedCreateNestedManyWithoutFinancialAccountInput
 }
@@ -398,6 +408,7 @@ export type FinancialAccountUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUpdateManyWithoutFinancialAccountNestedInput
   cashClosures?: Prisma.CashClosureUpdateManyWithoutFinancialAccountNestedInput
 }
@@ -415,6 +426,7 @@ export type FinancialAccountUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutFinancialAccountNestedInput
   cashClosures?: Prisma.CashClosureUncheckedUpdateManyWithoutFinancialAccountNestedInput
 }
@@ -432,6 +444,7 @@ export type FinancialAccountCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
 }
 
 export type FinancialAccountUpdateManyMutationInput = {
@@ -447,6 +460,7 @@ export type FinancialAccountUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
 }
 
 export type FinancialAccountUncheckedUpdateManyInput = {
@@ -462,6 +476,15 @@ export type FinancialAccountUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
+}
+
+export type EnumPaymentMethodNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.PaymentMethod[] | Prisma.ListEnumPaymentMethodFieldRefInput<$PrismaModel> | null
+  has?: $Enums.PaymentMethod | Prisma.EnumPaymentMethodFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.PaymentMethod[] | Prisma.ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.PaymentMethod[] | Prisma.ListEnumPaymentMethodFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type FinancialAccountCountOrderByAggregateInput = {
@@ -477,6 +500,7 @@ export type FinancialAccountCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedPaymentMethods?: Prisma.SortOrder
 }
 
 export type FinancialAccountAvgOrderByAggregateInput = {
@@ -522,8 +546,17 @@ export type FinancialAccountScalarRelationFilter = {
   isNot?: Prisma.FinancialAccountWhereInput
 }
 
+export type FinancialAccountCreateallowedPaymentMethodsInput = {
+  set: $Enums.PaymentMethod[]
+}
+
 export type EnumFinancialAccountTypeFieldUpdateOperationsInput = {
   set?: $Enums.FinancialAccountType
+}
+
+export type FinancialAccountUpdateallowedPaymentMethodsInput = {
+  set?: $Enums.PaymentMethod[]
+  push?: $Enums.PaymentMethod | $Enums.PaymentMethod[]
 }
 
 export type FinancialAccountCreateNestedOneWithoutTransactionsInput = {
@@ -567,6 +600,7 @@ export type FinancialAccountCreateWithoutTransactionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   cashClosures?: Prisma.CashClosureCreateNestedManyWithoutFinancialAccountInput
 }
 
@@ -583,6 +617,7 @@ export type FinancialAccountUncheckedCreateWithoutTransactionsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   cashClosures?: Prisma.CashClosureUncheckedCreateNestedManyWithoutFinancialAccountInput
 }
 
@@ -615,6 +650,7 @@ export type FinancialAccountUpdateWithoutTransactionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   cashClosures?: Prisma.CashClosureUpdateManyWithoutFinancialAccountNestedInput
 }
 
@@ -631,6 +667,7 @@ export type FinancialAccountUncheckedUpdateWithoutTransactionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   cashClosures?: Prisma.CashClosureUncheckedUpdateManyWithoutFinancialAccountNestedInput
 }
 
@@ -647,6 +684,7 @@ export type FinancialAccountCreateWithoutCashClosuresInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionCreateNestedManyWithoutFinancialAccountInput
 }
 
@@ -663,6 +701,7 @@ export type FinancialAccountUncheckedCreateWithoutCashClosuresInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountCreateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutFinancialAccountInput
 }
 
@@ -695,6 +734,7 @@ export type FinancialAccountUpdateWithoutCashClosuresInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUpdateManyWithoutFinancialAccountNestedInput
 }
 
@@ -711,6 +751,7 @@ export type FinancialAccountUncheckedUpdateWithoutCashClosuresInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedPaymentMethods?: Prisma.FinancialAccountUpdateallowedPaymentMethodsInput | $Enums.PaymentMethod[]
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutFinancialAccountNestedInput
 }
 
@@ -767,6 +808,7 @@ export type FinancialAccountSelect<ExtArgs extends runtime.Types.Extensions.Inte
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedPaymentMethods?: boolean
   transactions?: boolean | Prisma.FinancialAccount$transactionsArgs<ExtArgs>
   cashClosures?: boolean | Prisma.FinancialAccount$cashClosuresArgs<ExtArgs>
   _count?: boolean | Prisma.FinancialAccountCountOutputTypeDefaultArgs<ExtArgs>
@@ -785,6 +827,7 @@ export type FinancialAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedPaymentMethods?: boolean
 }, ExtArgs["result"]["financialAccount"]>
 
 export type FinancialAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -800,6 +843,7 @@ export type FinancialAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedPaymentMethods?: boolean
 }, ExtArgs["result"]["financialAccount"]>
 
 export type FinancialAccountSelectScalar = {
@@ -815,9 +859,10 @@ export type FinancialAccountSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedPaymentMethods?: boolean
 }
 
-export type FinancialAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "currency" | "cachedBalance" | "isDefault" | "accountNumber" | "lastReconciledAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["financialAccount"]>
+export type FinancialAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "currency" | "cachedBalance" | "isDefault" | "accountNumber" | "lastReconciledAt" | "isActive" | "createdAt" | "updatedAt" | "allowedPaymentMethods", ExtArgs["result"]["financialAccount"]>
 export type FinancialAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transactions?: boolean | Prisma.FinancialAccount$transactionsArgs<ExtArgs>
   cashClosures?: boolean | Prisma.FinancialAccount$cashClosuresArgs<ExtArgs>
@@ -845,6 +890,7 @@ export type $FinancialAccountPayload<ExtArgs extends runtime.Types.Extensions.In
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    allowedPaymentMethods: $Enums.PaymentMethod[]
   }, ExtArgs["result"]["financialAccount"]>
   composites: {}
 }
@@ -1282,6 +1328,7 @@ export interface FinancialAccountFieldRefs {
   readonly isActive: Prisma.FieldRef<"FinancialAccount", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"FinancialAccount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"FinancialAccount", 'DateTime'>
+  readonly allowedPaymentMethods: Prisma.FieldRef<"FinancialAccount", 'PaymentMethod[]'>
 }
     
 

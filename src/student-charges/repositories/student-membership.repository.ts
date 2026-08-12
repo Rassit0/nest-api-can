@@ -100,12 +100,20 @@ export class StudentMembershipRepository {
   async updateNextGenerationPointer(
     tx: Prisma.TransactionClient | PrismaService,
     membershipId: string,
+    currentPointer: Date | null,
     nextPointer: Date | null,
   ): Promise<void> {
-    await tx.studentMembership.update({
-      where: { id: membershipId },
+    const result = await tx.studentMembership.updateMany({
+      where: { 
+        id: membershipId,
+        nextRecurringChargeGenerationDate: currentPointer
+      },
       data: { nextRecurringChargeGenerationDate: nextPointer },
     });
+    
+    if (result.count === 0) {
+      throw new Error('OCC_POINTER_CHANGED: Concurrent generation detected, aborting transaction');
+    }
   }
 
   async getCourseSeasonOrThrow(id: string) {

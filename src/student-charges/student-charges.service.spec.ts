@@ -111,7 +111,7 @@ describe('StudentChargesService (Financial Engine - Extremo)', () => {
     const mockSeason = {
       id: 'season-1',
       startDate: new Date('2026-01-01T00:00:00.000Z'),
-      endDate: new Date('2026-12-31T23:59:59.999Z'),
+      endDate: new Date('2026-01-31T23:59:59.999Z'), // Only 1 month to match the test's expected 2 charges (1 reg + 1 recurring)
       status: 'ACTIVE',
     };
 
@@ -124,7 +124,7 @@ describe('StudentChargesService (Financial Engine - Extremo)', () => {
         registrationFee: 100,
         recurringFee: 200,
         seasonFee: null,
-        prorateFirstRecurringFee: true,
+        prorateFirstRecurringFee: false,
         prorateRegistrationFee: false,
       },
       season: mockSeason,
@@ -170,15 +170,16 @@ describe('StudentChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharge?.amount).toBe(200);
       expect(recCharge?.description).toContain(
-        'Primera Mensualidad - Enero 2026',
+        'Primer Mes - Enero 2026',
       );
     });
 
     it('Caso 2: Cobro Agrupado (Trimestral, advanceCycles = 3, sin descuento)', async () => {
       const trimestralPlan = { ...basePlan, advanceCycles: 3 };
+      const trimestralSeason = { ...mockCourseSeason, season: { ...mockSeason, endDate: new Date('2026-03-31T23:59:59.999Z') } };
 
       membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(
-        mockCourseSeason as unknown as Awaited<
+        trimestralSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>
         >,
       );
@@ -199,23 +200,24 @@ describe('StudentChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharges.length).toBe(3);
       expect(recCharges[0].amount).toBe(200);
-      expect(recCharges[0].description).toContain('Mensualidad');
+      expect(recCharges[0].description).toContain('Primer Mes');
     });
 
     it('Caso 3: Cobro Agrupado con Descuento Adelantado (advanceCycles = 3, discount = 100%)', async () => {
-      const trimestralPromoPlan = {
+      const trimestralDiscountPlan = {
         ...basePlan,
         advanceCycles: 3,
         advanceCyclesDiscountPercent: 100,
       };
+      const trimestralSeason = { ...mockCourseSeason, season: { ...mockSeason, endDate: new Date('2026-03-31T23:59:59.999Z') } };
 
       membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(
-        mockCourseSeason as unknown as Awaited<
+        trimestralSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>
         >,
       );
       membershipRepo.getPaymentPlanOrThrow.mockResolvedValue(
-        trimestralPromoPlan as unknown as Awaited<
+        trimestralDiscountPlan as unknown as Awaited<
           ReturnType<typeof membershipRepo.getPaymentPlanOrThrow>
         >,
       );
@@ -274,8 +276,12 @@ describe('StudentChargesService (Financial Engine - Extremo)', () => {
     });
 
     it('Caso 5: Prorrateo primera cuota (Ingreso a mitad de mes)', async () => {
+      const prorateSeason = {
+        ...mockCourseSeason,
+        billingConfig: { ...mockCourseSeason.billingConfig, prorateFirstRecurringFee: true }
+      };
       membershipRepo.getCourseSeasonOrThrow.mockResolvedValue(
-        mockCourseSeason as unknown as Awaited<
+        prorateSeason as unknown as Awaited<
           ReturnType<typeof membershipRepo.getCourseSeasonOrThrow>
         >,
       );

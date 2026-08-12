@@ -70,6 +70,7 @@ export class MembershipChargeRecalculationService {
         await this.membershipRepo.updateNextGenerationPointer(
           tx,
           playerMembershipId,
+          oldNextDate,
           resetDate,
         );
       }

@@ -5,9 +5,11 @@ import {
   IsEnum,
   IsBoolean,
   IsNumber,
+  IsArray,
+  ArrayMinSize,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { FinancialAccountType } from 'src/generated/prisma/enums';
+import { FinancialAccountType, PaymentMethod } from 'src/generated/prisma/enums';
 
 export class CreateFinancialAccountDto {
   @ApiProperty({
@@ -57,4 +59,15 @@ export class CreateFinancialAccountDto {
   @IsNumber()
   @IsOptional()
   initialBalance?: number;
+
+  @ApiProperty({
+    description: 'Métodos de pago permitidos en esta cuenta',
+    enum: PaymentMethod,
+    isArray: true,
+    example: [PaymentMethod.CASH],
+  })
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsEnum(PaymentMethod, { each: true })
+  allowedPaymentMethods: PaymentMethod[];
 }

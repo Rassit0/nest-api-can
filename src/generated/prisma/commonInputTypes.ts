@@ -535,6 +535,13 @@ export type EnumChargeDirectionFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel> | $Enums.ChargeDirection
 }
 
+export type EnumChargeCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChargeCategory | Prisma.EnumChargeCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel> | $Enums.ChargeCategory
+}
+
 export type EnumStatusChargeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusCharge | Prisma.EnumStatusChargeFieldRefInput<$PrismaModel>
   in?: $Enums.StatusCharge[] | Prisma.ListEnumStatusChargeFieldRefInput<$PrismaModel>
@@ -553,6 +560,16 @@ export type EnumChargeDirectionWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel>
+}
+
+export type EnumChargeCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChargeCategory | Prisma.EnumChargeCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChargeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ChargeCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel>
 }
 
 export type EnumFinancialAccountTypeFilter<$PrismaModel = never> = {
@@ -1486,6 +1503,13 @@ export type NestedEnumChargeDirectionFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel> | $Enums.ChargeDirection
 }
 
+export type NestedEnumChargeCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChargeCategory | Prisma.EnumChargeCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel> | $Enums.ChargeCategory
+}
+
 export type NestedEnumStatusChargeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusCharge | Prisma.EnumStatusChargeFieldRefInput<$PrismaModel>
   in?: $Enums.StatusCharge[] | Prisma.ListEnumStatusChargeFieldRefInput<$PrismaModel>
@@ -1504,6 +1528,16 @@ export type NestedEnumChargeDirectionWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumChargeDirectionFilter<$PrismaModel>
+}
+
+export type NestedEnumChargeCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChargeCategory | Prisma.EnumChargeCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChargeCategory[] | Prisma.ListEnumChargeCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChargeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ChargeCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChargeCategoryFilter<$PrismaModel>
 }
 
 export type NestedEnumFinancialAccountTypeFilter<$PrismaModel = never> = {

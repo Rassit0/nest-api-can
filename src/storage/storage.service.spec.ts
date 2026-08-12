@@ -6,7 +6,13 @@ describe('StorageService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [StorageService],
+      providers: [
+        StorageService,
+        {
+          provide: 'STORAGE_PROVIDER',
+          useValue: { upload: jest.fn(), getSignedUrl: jest.fn(), getPublicUrl: jest.fn() },
+        },
+      ],
     }).compile();
 
     service = module.get<StorageService>(StorageService);
