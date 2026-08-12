@@ -80,7 +80,7 @@ export class AccountChargesService {
                 : TransactionType.EXPENSE,
             paymentMethod: immediatePayment.paymentMethod,
             financialAccountId: immediatePayment.financialAccountId,
-            transactionDate: new Date(),
+            transactionDate: new Date().toISOString(),
             description: description || title,
             chargeId: chargeResult.data.id,
             attachmentIds: immediatePayment.attachmentIds,
