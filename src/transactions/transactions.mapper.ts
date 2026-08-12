@@ -6,6 +6,7 @@ export type TransactionWithRelations = Prisma.TransactionGetPayload<{
 
 export interface MappedTransaction {
   id: string;
+  paymentId: string | null;
   type: string;
   amount: number;
   concept: string;
@@ -69,6 +70,7 @@ export class TransactionsMapper {
 
     return {
       id: transaction.id,
+      paymentId: transaction.paymentId || null,
       type: transaction.type,
       amount: Number(transaction.amount),
       concept,

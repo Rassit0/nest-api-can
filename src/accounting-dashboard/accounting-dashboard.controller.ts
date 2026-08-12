@@ -4,6 +4,7 @@ import { UserRoleGuard } from 'src/auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AccountingDashboardService } from './accounting-dashboard.service';
+import { DashboardFilterDto } from './dto/dashboard-filter.dto';
 import { ApiStandardResponse } from 'src/common/decorators/api-responses.decorator';
 
 @ApiTags('Accounting Dashboard')
@@ -14,13 +15,14 @@ export class AccountingDashboardController {
   constructor(private readonly dashboardService: AccountingDashboardService) {}
 
   @Get('summary')
-  @ApiOperation({ summary: 'Obtener resumen del dashboard contable', description: 'Devuelve un resumen consolidado de cuentas por cobrar, cuentas por pagar y flujo de caja general.' })
+  @ApiOperation({
+    summary: 'Obtener resumen del dashboard contable',
+    description:
+      'Devuelve un resumen consolidado de cuentas por cobrar, cuentas por pagar y flujo de caja general.',
+  })
   @ApiStandardResponse(Object, 'Resumen contable obtenido exitosamente.')
   @RequirePermissions('READ_ACCOUNT_CHARGES') // Reutilizamos el permiso por ahora, o crearíamos uno nuevo
-  getSummary(
-    @Query('start') start?: string,
-    @Query('end') end?: string,
-  ) {
-    return this.dashboardService.getSummary({ start, end });
+  getSummary(@Query() filter: DashboardFilterDto) {
+    return this.dashboardService.getSummary(filter);
   }
 }

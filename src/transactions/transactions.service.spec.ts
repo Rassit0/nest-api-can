@@ -49,7 +49,7 @@ describe('TransactionsService', () => {
         paymentMethod: PaymentMethod.CASH,
         financialAccountId: 'acc-1',
         reference: 'Test',
-        transactionDate: new Date(),
+        transactionDate: new Date().toISOString(),
         type: TransactionType.INCOME,
       };
 
@@ -70,7 +70,7 @@ describe('TransactionsService', () => {
         paymentMethod: PaymentMethod.QR,
         financialAccountId: 'acc-2',
         reference: 'Test',
-        transactionDate: new Date(),
+        transactionDate: new Date().toISOString(),
         type: TransactionType.INCOME,
       };
 
@@ -91,7 +91,7 @@ describe('TransactionsService', () => {
         paymentMethod: PaymentMethod.CASH,
         financialAccountId: 'acc-2',
         reference: 'Test',
-        transactionDate: new Date(),
+        transactionDate: new Date().toISOString(),
         type: TransactionType.INCOME,
       };
 
@@ -110,7 +110,7 @@ describe('TransactionsService', () => {
         paymentMethod: PaymentMethod.CASH,
         financialAccountId: 'acc-3',
         reference: 'Test',
-        transactionDate: new Date(),
+        transactionDate: new Date().toISOString(),
         type: TransactionType.INCOME,
       };
 

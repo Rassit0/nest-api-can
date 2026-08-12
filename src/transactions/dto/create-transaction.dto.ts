@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsDate,
   IsEnum,
+  IsISO8601,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -56,10 +56,11 @@ export class CreateTransactionDto {
     }),
   })
   payerPersonId?: string;
-  
+
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440001',
-    description: 'ID de la entidad/proveedor (ThirdParty) asociado a la transacción',
+    description:
+      'ID de la entidad/proveedor (ThirdParty) asociado a la transacción',
   })
   @IsOptional()
   @IsUUID('4', {
@@ -76,7 +77,8 @@ export class CreateTransactionDto {
 
   @ApiPropertyOptional({
     example: 150.0,
-    description: 'Monto total de la transacción (requerido si no hay splitTransactions)',
+    description:
+      'Monto total de la transacción (requerido si no hay splitTransactions)',
   })
   @IsOptional()
   @IsNumber(
@@ -101,13 +103,15 @@ export class CreateTransactionDto {
     description: 'Fecha en que se realiza la transacción',
   })
   @IsOptional()
-  @IsDate({
-    message: i18nValidationMessage('validation.IS_DATE', {
-      constraint1: 'transactionDate',
-    }),
-  })
-  @Type(() => Date)
-  transactionDate: Date;
+  @IsISO8601(
+    { strict: true },
+    {
+      message: i18nValidationMessage('validation.IS_DATE', {
+        constraint1: 'transactionDate',
+      }),
+    },
+  )
+  transactionDate?: string;
 
   @ApiPropertyOptional({
     example: 'Pago de mensualidad julio',
@@ -172,7 +176,8 @@ export class CreateTransactionDto {
   notes?: string;
 
   @ApiPropertyOptional({
-    description: 'ID del cargo a pagar. Si se especifica, se generará un Payment comercial.',
+    description:
+      'ID del cargo a pagar. Si se especifica, se generará un Payment comercial.',
   })
   @IsOptional()
   @IsUUID('4')
@@ -181,7 +186,8 @@ export class CreateTransactionDto {
 
   @ApiPropertyOptional({
     type: [SplitTransactionDto],
-    description: 'Lista de transacciones financieras múltiples (Ej. Efectivo + QR)',
+    description:
+      'Lista de transacciones financieras múltiples (Ej. Efectivo + QR)',
   })
   @IsOptional()
   @IsArray()
@@ -191,7 +197,8 @@ export class CreateTransactionDto {
 
   @ApiPropertyOptional({
     type: [String],
-    description: 'Lista de IDs de archivos temporales (previamente subidos) para enlazar a esta transacción',
+    description:
+      'Lista de IDs de archivos temporales (previamente subidos) para enlazar a esta transacción',
   })
   @IsOptional()
   @IsArray({
@@ -199,7 +206,10 @@ export class CreateTransactionDto {
       constraint1: 'attachmentIds',
     }),
   })
-  @IsUUID('4', { each: true, message: 'Cada attachmentId debe ser un UUID válido' })
+  @IsUUID('4', {
+    each: true,
+    message: 'Cada attachmentId debe ser un UUID válido',
+  })
   attachmentIds?: string[];
 
   @ApiProperty({

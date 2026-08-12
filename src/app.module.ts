@@ -69,13 +69,14 @@ import { AuthModule } from './auth/auth.module';
 import { ClsModule } from 'nestjs-cls';
 import { ShiftsModule } from './shifts/shifts.module';
 import { PrinterModule } from './printer/printer.module';
-import { TransactionReportModule } from './transaction-report/transaction-report.module';
+import { PaymentReportModule } from './payment-report/payment-report.module';
 import { AccountCategoriesModule } from './account-categories/account-categories.module';
 import { AccountChargesModule } from './account-charges/account-charges.module';
 import { FinancialAccountsModule } from './financial-accounts/financial-accounts.module';
 import { InternalTransfersModule } from './internal-transfers/internal-transfers.module';
 import { StorageModule } from './storage/storage.module';
 import { ThirdPartiesModule } from './third-parties/third-parties.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -139,7 +140,7 @@ import { ThirdPartiesModule } from './third-parties/third-parties.module';
     ShiftsModule,
     PrinterModule,
     ReportsModule,
-    TransactionReportModule,
+    PaymentReportModule,
     MembershipsModule,
     CalendarModule,
     AccountCategoriesModule,
@@ -151,6 +152,7 @@ import { ThirdPartiesModule } from './third-parties/third-parties.module';
     AccountingAnalyticsModule,
     StorageModule,
     ThirdPartiesModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

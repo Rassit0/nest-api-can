@@ -17,6 +17,7 @@ import { FinancialAccountsService } from 'src/financial-accounts/financial-accou
 
 export const transactionSelect = {
   id: true,
+  paymentId: true,
   receiptSeries: true,
   receiptNumber: true,
   amount: true,
@@ -224,6 +225,7 @@ export class TransactionsService {
           const transaction = await prisma.transaction.create({
             data: {
               ...rest,
+              transactionDate: rest.transactionDate || new Date().toISOString(),
               receiptSeries: finSequence.series,
               receiptNumber: finSequence.lastValue,
               amount: t.amount,
