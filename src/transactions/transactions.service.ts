@@ -17,7 +17,6 @@ import { FinancialAccountsService } from 'src/financial-accounts/financial-accou
 
 export const transactionSelect = {
   id: true,
-  paymentId: true,
   receiptSeries: true,
   receiptNumber: true,
   amount: true,
@@ -94,58 +93,94 @@ export class TransactionsService {
     private readonly financialAccountsService: FinancialAccountsService,
   ) {}
 
-  async create(createTransactionDto: CreateTransactionDto, tx?: Prisma.TransactionClient) {
-    const { 
-      amount, 
-      paymentMethod, 
-      financialAccountId, 
-      attachmentIds, 
+  async create(
+    createTransactionDto: CreateTransactionDto,
+    tx?: Prisma.TransactionClient,
+  ) {
+    const {
+      amount,
+      paymentMethod,
+      financialAccountId,
+      attachmentIds,
       chargeId,
       splitTransactions,
-      ...rest 
+      ...rest
     } = createTransactionDto;
 
     const isPayment = !!chargeId;
     const mainChargeId = chargeId;
 
     const transactionsToProcess = isPayment
-      ? (splitTransactions?.length > 0
-          ? splitTransactions
-          : [{ amount, paymentMethod, financialAccountId, reference: rest.reference }])
-      : [{ amount, paymentMethod, financialAccountId, reference: rest.reference }];
+      ? splitTransactions?.length > 0
+        ? splitTransactions
+        : [
+            {
+              amount,
+              paymentMethod,
+              financialAccountId,
+              reference: rest.reference,
+            },
+          ]
+      : [
+          {
+            amount,
+            paymentMethod,
+            financialAccountId,
+            reference: rest.reference,
+          },
+        ];
 
     let totalPaymentAmount = amount;
     if (isPayment) {
       if (!totalPaymentAmount) {
-         totalPaymentAmount = transactionsToProcess.reduce((acc, curr) => acc + curr.amount, 0);
+        totalPaymentAmount = transactionsToProcess.reduce(
+          (acc, curr) => acc + curr.amount,
+          0,
+        );
       } else {
-         const sum = transactionsToProcess.reduce((acc, curr) => acc + curr.amount, 0);
-         if (Number(sum.toFixed(2)) !== Number(totalPaymentAmount.toFixed(2))) {
-           throw new BadRequestException(`La suma de las transacciones divididas (${sum}) no coincide con el monto total del pago (${totalPaymentAmount}).`);
-         }
+        const sum = transactionsToProcess.reduce(
+          (acc, curr) => acc + curr.amount,
+          0,
+        );
+        if (Number(sum.toFixed(2)) !== Number(totalPaymentAmount.toFixed(2))) {
+          throw new BadRequestException(
+            `La suma de las transacciones divididas (${sum}) no coincide con el monto total del pago (${totalPaymentAmount}).`,
+          );
+        }
       }
     } else {
       if (!totalPaymentAmount) {
-        throw new BadRequestException('El monto total es requerido para transacciones independientes.');
+        throw new BadRequestException(
+          'El monto total es requerido para transacciones independientes.',
+        );
       }
     }
 
-    const uniqueAccountIds = [...new Set(transactionsToProcess.map(t => t.financialAccountId))];
+    const uniqueAccountIds = [
+      ...new Set(transactionsToProcess.map((t) => t.financialAccountId)),
+    ];
     const accounts = await this.prisma.financialAccount.findMany({
       where: { id: { in: uniqueAccountIds } },
       select: { id: true, name: true, allowedPaymentMethods: true },
     });
 
     for (const t of transactionsToProcess) {
-      const account = accounts.find(a => a.id === t.financialAccountId);
+      const account = accounts.find((a) => a.id === t.financialAccountId);
       if (!account) {
         throw new BadRequestException(`La cuenta financiera no existe.`);
       }
-      if (!account.allowedPaymentMethods || account.allowedPaymentMethods.length === 0) {
-        throw new BadRequestException(`La cuenta '${account.name}' no está configurada y no puede recibir pagos.`);
+      if (
+        !account.allowedPaymentMethods ||
+        account.allowedPaymentMethods.length === 0
+      ) {
+        throw new BadRequestException(
+          `La cuenta '${account.name}' no está configurada y no puede recibir pagos.`,
+        );
       }
       if (!account.allowedPaymentMethods.includes(t.paymentMethod)) {
-        throw new BadRequestException(`La cuenta '${account.name}' no permite pagos mediante ${t.paymentMethod}.`);
+        throw new BadRequestException(
+          `La cuenta '${account.name}' no permite pagos mediante ${t.paymentMethod}.`,
+        );
       }
     }
 
@@ -153,8 +188,12 @@ export class TransactionsService {
       transactionsToProcess.map(async (t) => {
         const strategy = PaymentStrategyFactory.getStrategy(t.paymentMethod);
         const result = await strategy.processPayment(t.amount);
-        return { ...t, status: result.transactionStatus, providerResponse: result.providerResponse };
-      })
+        return {
+          ...t,
+          status: result.transactionStatus,
+          providerResponse: result.providerResponse,
+        };
+      }),
     );
 
     // TODO: Si integration con S3 esta lista, mapear los archivos a URLs y agregarlos a receiptUrls
@@ -162,168 +201,199 @@ export class TransactionsService {
 
     // 3. Ejecutar todo en una transacción de BD
     const execute = async (prisma: Prisma.TransactionClient) => {
-        
-        let paymentSeries = 'GEN';
-        let paymentSequenceNumber = null;
-        let createdPayment = null;
-        let charge = null;
+      let paymentSeries = 'GEN';
+      let paymentSequenceNumber = null;
+      let createdPayment = null;
+      let charge = null;
 
-        if (isPayment) {
-          charge = await prisma.charge.findUnique({
-            where: { id: mainChargeId },
-            include: { membershipCharges: true, studentCharges: true },
-          });
-
-          if (!charge) throw new NotFoundException(`Cargo con ID ${mainChargeId} no encontrado`);
-
-          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
-          const applied = Number(totalPaymentAmount.toFixed(2));
-
-          if (currentPending < applied) {
-            throw new BadRequestException(`El monto aplicado (${applied}) supera el saldo pendiente (${currentPending}) del cargo ${charge.id}`);
-          }
-          if (applied === 0 && currentPending > 0) {
-            throw new BadRequestException(`Solo se permiten recibos de monto 0 si el cargo tiene un saldo pendiente de 0.`);
-          }
-
-          if (charge.membershipCharges?.length > 0) {
-            paymentSeries = 'EQ';
-          } else if (charge.studentCharges?.length > 0) {
-            paymentSeries = 'CU';
-          }
-
-          const sequence = await prisma.receiptSequence.upsert({
-            where: { series: paymentSeries },
-            update: { lastValue: { increment: 1 } },
-            create: { series: paymentSeries, lastValue: 1, description: `Secuencia de recibos comerciales para ${paymentSeries}` },
-          });
-          paymentSequenceNumber = sequence.lastValue;
-
-          createdPayment = await prisma.payment.create({
-            data: {
-              chargeId: charge.id,
-              amount: applied,
-              receiptSeries: sequence.series,
-              receiptNumber: sequence.lastValue,
-              status: 'COMPLETED',
-            },
-          });
-
-          // Payment created
-        }
-
-        const createdTransactions = [];
-
-        for (const t of processedTransactions) {
-          // Cada transacción financiera tiene su propia secuencia GEN
-          const finSequence = await prisma.receiptSequence.upsert({
-            where: { series: 'GEN' },
-            update: { lastValue: { increment: 1 } },
-            create: { series: 'GEN', lastValue: 1, description: 'Secuencia financiera general' },
-          });
-
-          const transaction = await prisma.transaction.create({
-            data: {
-              ...rest,
-              transactionDate: rest.transactionDate || new Date().toISOString(),
-              receiptSeries: finSequence.series,
-              receiptNumber: finSequence.lastValue,
-              amount: t.amount,
-              paymentMethod: t.paymentMethod,
-              status: t.status,
-              financialAccountId: t.financialAccountId,
-              reference: t.reference,
-              paymentId: createdPayment?.id || null,
-            },
-          });
-
-          if (t.financialAccountId) {
-            await this.financialAccountsService.applyMovement(
-              t.financialAccountId,
-              t.amount,
-              rest.type,
-              prisma,
-            );
-          }
-          createdTransactions.push(transaction);
-        }
-
-        if (isPayment && charge) {
-
-          const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
-          const applied = Number(totalPaymentAmount.toFixed(2));
-          const newPendingAmount = Number((currentPending - applied).toFixed(2));
-          const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
-          const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-          const expectedTotal = chargeAmount - discountAmount;
-
-          let newStatus = charge.status;
-          if (newPendingAmount <= 0) {
-            newStatus = StatusCharge.PAID;
-          } else if (newPendingAmount < expectedTotal) {
-            newStatus = StatusCharge.PARTIAL;
-          } else {
-            newStatus = StatusCharge.PENDING;
-          }
-
-          await prisma.charge.update({
-            where: { id: charge.id },
-            data: {
-              pendingAmount: newPendingAmount,
-              status: newStatus,
-            },
-          });
-        }
-
-        if (attachmentIds && attachmentIds.length > 0) {
-          const attachments = await prisma.attachment.findMany({
-            where: { id: { in: attachmentIds } }
-          });
-          
-          const missingIds = attachmentIds.filter((id) => !attachments.find((a) => a.id === id));
-          if (missingIds.length > 0) {
-            throw new BadRequestException(`Archivos no encontrados: ${missingIds.join(', ')}`);
-          }
-
-          // Verificar que estén PENDING
-          const invalidAttachments = attachments.filter(a => a.status !== 'PENDING');
-          if (invalidAttachments.length > 0) {
-             throw new BadRequestException('Uno o más archivos adjuntos ya han sido enlazados previamente o son inválidos.');
-          }
-
-          await prisma.attachment.updateMany({
-            where: { id: { in: attachmentIds } },
-            data: { 
-              transactionId: createdTransactions[0].id,
-              status: 'LINKED',
-            },
-          });
-        }
-
-        const transactionResponse = await prisma.transaction.findUnique({
-          where: { id: createdTransactions[0].id },
-          select: transactionSelect,
+      if (isPayment) {
+        charge = await prisma.charge.findUnique({
+          where: { id: mainChargeId },
+          include: { membershipCharges: true, studentCharges: true },
         });
 
-        return {
-           transaction: transactionResponse,
-           transactions: createdTransactions,
-           payment: createdPayment,
-           paymentData: null
-        };
+        if (!charge)
+          throw new NotFoundException(
+            `Cargo con ID ${mainChargeId} no encontrado`,
+          );
+
+        const currentPending = Number(
+          charge.pendingAmount.toNumber().toFixed(2),
+        );
+        const applied = Number(totalPaymentAmount.toFixed(2));
+
+        if (currentPending < applied) {
+          throw new BadRequestException(
+            `El monto aplicado (${applied}) supera el saldo pendiente (${currentPending}) del cargo ${charge.id}`,
+          );
+        }
+        if (applied === 0 && currentPending > 0) {
+          throw new BadRequestException(
+            `Solo se permiten recibos de monto 0 si el cargo tiene un saldo pendiente de 0.`,
+          );
+        }
+
+        if (charge.membershipCharges?.length > 0) {
+          paymentSeries = 'EQ';
+        } else if (charge.studentCharges?.length > 0) {
+          paymentSeries = 'CU';
+        }
+
+        const sequence = await prisma.receiptSequence.upsert({
+          where: { series: paymentSeries },
+          update: { lastValue: { increment: 1 } },
+          create: {
+            series: paymentSeries,
+            lastValue: 1,
+            description: `Secuencia de recibos comerciales para ${paymentSeries}`,
+          },
+        });
+        paymentSequenceNumber = sequence.lastValue;
+
+        createdPayment = await prisma.payment.create({
+          data: {
+            chargeId: charge.id,
+            amount: applied,
+            receiptSeries: sequence.series,
+            receiptNumber: sequence.lastValue,
+            status: 'COMPLETED',
+          },
+        });
+
+        // Payment created
+      }
+
+      const createdTransactions = [];
+
+      for (const t of processedTransactions) {
+        // Cada transacción financiera tiene su propia secuencia GEN
+        const finSequence = await prisma.receiptSequence.upsert({
+          where: { series: 'GEN' },
+          update: { lastValue: { increment: 1 } },
+          create: {
+            series: 'GEN',
+            lastValue: 1,
+            description: 'Secuencia financiera general',
+          },
+        });
+
+        const transaction = await prisma.transaction.create({
+          data: {
+            ...rest,
+            transactionDate: rest.transactionDate
+              ? new Date(rest.transactionDate).toISOString()
+              : new Date().toISOString(),
+            receiptSeries: finSequence.series,
+            receiptNumber: finSequence.lastValue,
+            amount: t.amount,
+            paymentMethod: t.paymentMethod,
+            status: t.status,
+            financialAccountId: t.financialAccountId,
+            reference: t.reference,
+            paymentId: createdPayment?.id || null,
+          },
+        });
+
+        if (t.financialAccountId) {
+          await this.financialAccountsService.applyMovement(
+            t.financialAccountId,
+            t.amount,
+            rest.type,
+            prisma,
+          );
+        }
+        createdTransactions.push(transaction);
+      }
+
+      if (isPayment && charge) {
+        const currentPending = Number(
+          charge.pendingAmount.toNumber().toFixed(2),
+        );
+        const applied = Number(totalPaymentAmount.toFixed(2));
+        const newPendingAmount = Number((currentPending - applied).toFixed(2));
+        const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
+        const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
+        const expectedTotal = chargeAmount - discountAmount;
+
+        let newStatus = charge.status;
+        if (newPendingAmount <= 0) {
+          newStatus = StatusCharge.PAID;
+        } else if (newPendingAmount < expectedTotal) {
+          newStatus = StatusCharge.PARTIAL;
+        } else {
+          newStatus = StatusCharge.PENDING;
+        }
+
+        await prisma.charge.update({
+          where: { id: charge.id },
+          data: {
+            pendingAmount: newPendingAmount,
+            status: newStatus,
+          },
+        });
+      }
+
+      if (attachmentIds && attachmentIds.length > 0) {
+        const attachments = await prisma.attachment.findMany({
+          where: { id: { in: attachmentIds } },
+        });
+
+        const missingIds = attachmentIds.filter(
+          (id) => !attachments.find((a) => a.id === id),
+        );
+        if (missingIds.length > 0) {
+          throw new BadRequestException(
+            `Archivos no encontrados: ${missingIds.join(', ')}`,
+          );
+        }
+
+        // Verificar que estén PENDING
+        const invalidAttachments = attachments.filter(
+          (a) => a.status !== 'PENDING',
+        );
+        if (invalidAttachments.length > 0) {
+          throw new BadRequestException(
+            'Uno o más archivos adjuntos ya han sido enlazados previamente o son inválidos.',
+          );
+        }
+
+        await prisma.attachment.updateMany({
+          where: { id: { in: attachmentIds } },
+          data: {
+            transactionId: createdTransactions[0].id,
+            status: 'LINKED',
+          },
+        });
+      }
+
+      const transactionResponse = await prisma.transaction.findUnique({
+        where: { id: createdTransactions[0].id },
+        select: transactionSelect,
+      });
+
+      return {
+        transaction: transactionResponse,
+        transactions: createdTransactions,
+        payment: createdPayment,
+        paymentData: null,
+      };
     };
 
-    const createdTransaction = tx ? await execute(tx) : await this.prisma.$transaction(execute, {
-      maxWait: 5000,
-      timeout: 10000,
-      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-    });
+    const createdTransaction = tx
+      ? await execute(tx)
+      : await this.prisma.$transaction(execute, {
+          maxWait: 5000,
+          timeout: 10000,
+          isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+        });
 
     return {
       message: 'Transacción registrada con éxito',
       data: {
         transaction: TransactionsMapper.toDomain(createdTransaction as any),
-        paymentData: processedTransactions.map(pt => pt.providerResponse).filter(Boolean), // Datos del QR si aplica
+        paymentData: processedTransactions
+          .map((pt) => pt.providerResponse)
+          .filter(Boolean), // Datos del QR si aplica
       },
     };
   }
@@ -428,9 +498,14 @@ export class TransactionsService {
     }
 
     // Proteger campos inmutables del Ledger
-    const { amount, type, financialAccountId, ...safeUpdateData } = updateTransactionDto as any;
+    const { amount, type, financialAccountId, ...safeUpdateData } =
+      updateTransactionDto as any;
 
-    if (amount !== undefined || type !== undefined || financialAccountId !== undefined) {
+    if (
+      amount !== undefined ||
+      type !== undefined ||
+      financialAccountId !== undefined
+    ) {
       // Idealmente podríamos lanzar un error, pero para no romper el frontend si envía el DTO completo,
       // simplemente ignoramos estos campos financieros clave.
     }
@@ -495,7 +570,10 @@ export class TransactionsService {
 
         // Eliminar payment si esta es la única transacción
         const otherTx = await prisma.transaction.count({
-          where: { paymentId: transaction.paymentId, id: { not: transaction.id } },
+          where: {
+            paymentId: transaction.paymentId,
+            id: { not: transaction.id },
+          },
         });
         if (otherTx === 0) {
           await prisma.payment.delete({
@@ -505,7 +583,10 @@ export class TransactionsService {
       }
 
       // Revertir el saldo de la caja / banco asociada
-      if (transaction.financialAccountId && transaction.status === 'COMPLETED') {
+      if (
+        transaction.financialAccountId &&
+        transaction.status === 'COMPLETED'
+      ) {
         await this.financialAccountsService.applyMovement(
           transaction.financialAccountId,
           -Number(transaction.amount),
