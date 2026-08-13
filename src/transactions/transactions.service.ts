@@ -280,10 +280,7 @@ export class TransactionsService {
         const transaction = await prisma.transaction.create({
           data: {
             ...rest,
-            // Obliga a mandar la fecha en utc
-            transactionDate: rest.transactionDate
-              ? new Date(rest.transactionDate).toISOString()
-              : new Date().toISOString(),
+            transactionDate: new Date().toISOString(),
             receiptSeries: finSequence.series,
             receiptNumber: finSequence.lastValue,
             amount: t.amount,
