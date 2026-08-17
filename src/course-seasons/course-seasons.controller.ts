@@ -28,6 +28,7 @@ import { FinalizeCourseSeasonDto } from './dto/finalize-course-season.dto';
 import { CancelCourseSeasonDto } from './dto/cancel-course-season.dto';
 import { CreateCourseSeasonPauseDto } from './dto/create-course-season-pause.dto';
 import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
+import { ToggleRegistrationDto } from './dto/toggle-registration.dto';
 import {
   ApiStandardResponse,
   ApiStandardCreatedResponse,
@@ -191,40 +192,6 @@ export class CourseSeasonsController {
     return await this.courseSeasonsService.remove(id);
   }
 
-  @Patch(':id/toggle-billing-engine')
-  @ApiOperation({
-    summary: 'Activar/Desactivar motor de cobros por ID',
-    description:
-      'Pausa o reanuda la generación automática de cargos y multas para este periodo de curso.',
-  })
-  @ApiParam({
-    name: 'id',
-    description: 'ID de la instancia del curso (UUID)',
-    format: 'uuid',
-  })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        isEngineActive: { type: 'boolean', example: false },
-      },
-    },
-  })
-  @ApiStandardResponse(
-    CourseSeasonResponseDto,
-    'Motor de cobros actualizado exitosamente.',
-  )
-  @RequirePermissions('UPDATE_COURSE_SEASONS')
-  async toggleBillingEngine(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body('isEngineActive') isEngineActive: boolean,
-  ) {
-    return await this.courseSeasonsService.toggleBillingEngine(
-      id,
-      isEngineActive,
-    );
-  }
-
   @Patch(':id/finish')
   @ApiOperation({
     summary: 'Finalizar un periodo de curso',
@@ -271,6 +238,33 @@ export class CourseSeasonsController {
     @Body() cancelCourseSeasonDto: CancelCourseSeasonDto,
   ) {
     return await this.courseSeasonsService.cancel(id, cancelCourseSeasonDto);
+  }
+
+  // Phase 7: Toggle registration
+  @Patch(':id/registration')
+  @ApiOperation({
+    summary: 'Abrir/Cerrar inscripciones',
+    description: 'Modifica exclusivamente el campo isRegistrationOpen sin afectar el estado operativo.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la instancia del curso (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: ToggleRegistrationDto })
+  @ApiStandardResponse(
+    CourseSeasonResponseDto,
+    'Estado de inscripciones actualizado exitosamente.',
+  )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
+  async toggleRegistration(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() toggleDto: ToggleRegistrationDto,
+  ) {
+    return await this.courseSeasonsService.toggleRegistration(
+      id,
+      toggleDto.isRegistrationOpen,
+    );
   }
 
   @Get(':id/pauses')

@@ -86,6 +86,27 @@ async function main() {
 
   console.log('✅ Institution seeded:', defaultOrganization.name);
 
+  console.log('🗂️ Seeding Account Categories...');
+  const structuralCategories = [
+    { code: 'ESC', name: 'Escuelas' },
+    { code: 'EQP', name: 'Equipos' },
+  ];
+
+  for (const cat of structuralCategories) {
+    await prisma.accountCategory.upsert({
+      where: { code: cat.code },
+      update: { name: cat.name },
+      create: {
+        code: cat.code,
+        name: cat.name,
+        type: 'RECEIVABLE',
+        isSystem: true,
+        isActive: true,
+      },
+    });
+  }
+  console.log('✅ Structural Account Categories seeded');
+
   console.log('🔒 Seeding permissions and roles...');
 
   // 0. Crear o actualizar los módulos

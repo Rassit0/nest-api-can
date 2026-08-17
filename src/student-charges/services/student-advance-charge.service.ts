@@ -2,23 +2,21 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { StudentMembershipRepository } from '../repositories/student-membership.repository';
 import { StudentCourseSeasonValidator } from '../validators/student-course-season.validator';
-import { StudentGenerationService } from './student-generation.service';
-import { StudentPreviewService } from './student-preview.service';
 import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
-import { BillingValidator } from 'src/common/validators/billing.validator';
+import { getAbsoluteSeasonCycles, findCycleContainingDate, MILLISECONDS_IN_DAY, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, buildCycleDescription } from '../student-billing.utils';
+import { calculateOnDemandCycleFee } from '../student-financial.calculator';
+import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
+import { TypeMembershipCharge, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
 
 @Injectable()
 export class StudentAdvanceChargeService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly membershipRepo: StudentMembershipRepository,
-    private readonly generationService: StudentGenerationService,
-    private readonly previewService: StudentPreviewService,
   ) {}
 
   private async validateAndGetMembershipForAdvance(membershipId: string) {
-    const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
+    const membership = await this.membershipRepo.getMembershipOrThrow(membershipId);
 
     StudentCourseSeasonValidator.assertIsActive(
       membership.courseSeason,
@@ -28,93 +26,258 @@ export class StudentAdvanceChargeService {
     if (membership.status === 'SUSPENDED') {
       throw new BadRequestException('errors.MEMBERSHIP_SUSPENDED');
     }
-    BillingValidator.assertNotSinglePayment(
-      membership.courseSeason.billingConfig,
-      membership.paymentPlan,
-    );
 
     return membership;
   }
 
-  /**
-   * Simula N ciclos hacia adelante sin guardarlos en la base de datos.
-   * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
-   */
-  async previewAdvanceCharges(membershipId: string, quantity: number) {
-    const membership =
-      await this.validateAndGetMembershipForAdvance(membershipId);
-
-    const nextCycles = await this.generationService.findNextUngeneratedCycles(
-      this.prisma,
-      membership,
-      quantity,
+  private async getUnenrolledCycles(membership: any, quantity: number) {
+    const allCycles = getAbsoluteSeasonCycles(
+      membership.courseSeason.season.startDate,
+      membership.courseSeason.season.endDate,
+      membership.courseSeason.billingConfig.billingFrequency
     );
 
-    if (nextCycles.length === 0) {
-      return {
-        charges: [],
-        breakdown: this.previewService.buildChargesBreakdown([]),
-      };
+    const existingEnrollments = await this.prisma.cycleEnrollment.findMany({
+      where: { studentMembershipId: membership.id },
+      select: { cycleStartDate: true, cycleEndDate: true }
+    });
+
+    const unenrolledCycles = allCycles.filter(cycle => {
+      return !existingEnrollments.some(e => 
+        e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
+        e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
+      );
+    });
+
+    if (unenrolledCycles.length === 0) {
+      return [];
     }
 
-    if (nextCycles.length < quantity) {
+    if (unenrolledCycles.length < quantity) {
       throw new BadRequestException(
-        `Solo quedan ${nextCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
+        `Solo quedan ${unenrolledCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
       );
     }
 
-    return this.previewService.extractAdvanceChargesFromCycles(nextCycles);
+    return unenrolledCycles.slice(0, quantity);
   }
 
   /**
-   * Concreta la generación física (persistida) de N cuotas por adelantado
-   * bajo el contexto de un solo agrupamiento transaccional.
+   * Genera el Preview On-Demand de la compra explícita de ciclos futuros.
    */
-  async generateAdvanceCharges(membershipId: string, quantity: number) {
-    const membership =
-      await this.validateAndGetMembershipForAdvance(membershipId);
+  async previewAdvanceCharges(membershipId: string, quantity: number) {
+    const membership = await this.validateAndGetMembershipForAdvance(membershipId);
+    const cyclesToPurchase = await this.getUnenrolledCycles(membership, quantity);
+
+    if (cyclesToPurchase.length === 0) {
+      return { charges: [], breakdown: { subtotal: 0, totalDiscounts: 0, total: 0 } };
+    }
+
+    const previewCharges = [];
+    let subtotal = 0;
+    let totalDiscounts = 0;
+    let total = 0;
+
+    const allPauses = [
+      ...(membership.pauses || []),
+      ...(membership.courseSeason.pauses || []),
+    ];
+
+    for (let i = 0; i < cyclesToPurchase.length; i++) {
+      const cycle = cyclesToPurchase[i];
+      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, cycle.cycleStartDate, membership.courseSeason.season.endDate);
+      
+      if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
+
+      const { billableDays, pauseDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
+      const cycleTotalDays = (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
+
+      let finalBillableDays = billableDays;
+      const isTruncatedEnd = cycle.cycleEndDate.getTime() > membership.courseSeason.season.endDate.getTime();
+      if (isTruncatedEnd && membership.courseSeason.billingConfig?.prorateLastRecurringFee === false) {
+          const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(effectiveStart, cycle.cycleEndDate, allPauses);
+          finalBillableDays = fullCycleBillableDays;
+      }
+
+      const cycleFee = calculateOnDemandCycleFee(
+        membership,
+        cycle,
+        finalBillableDays,
+        cycleTotalDays
+      );
+
+      const discountReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
+
+      subtotal += cycleFee.baseAmount;
+      totalDiscounts += cycleFee.discountAmount;
+      total += cycleFee.netAmount;
+
+      let description = buildCycleDescription(
+         cycle.cycleStartDate,
+         cycle.cycleEndDate,
+         membership.courseSeason.billingConfig.billingFrequency
+      );
+      if (finalBillableDays < cycleTotalDays) {
+        description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+      }
+
+      previewCharges.push({
+        cycleStartDate: cycle.cycleStartDate,
+        cycleEndDate: cycle.cycleEndDate,
+        effectiveStartDate: effectiveStart,
+        baseAmount: cycleFee.baseAmount,
+        discountAmount: cycleFee.discountAmount,
+        discountReason: discountReason,
+        finalAmount: cycleFee.netAmount,
+        totalDays: cycleTotalDays,
+        billableDays,
+        pauseDays,
+        description: `Adelanto de Cuota: ${description}`
+      });
+    }
+
+    return {
+      charges: previewCharges,
+      breakdown: { subtotal, totalDiscounts, total }
+    };
+  }
+
+  /**
+   * Concreta la compra explícita On-Demand de ciclos futuros.
+   */
+  async purchaseAdvanceCycles(membershipId: string, quantity: number) {
+    const membership = await this.validateAndGetMembershipForAdvance(membershipId);
+    
+    // Verificamos antes de entrar a la transacción para validaciones tempranas
+    await this.getUnenrolledCycles(membership, quantity);
 
     try {
       let generatedCount = 0;
       await this.prisma.$transaction(async (tx) => {
-        const nextCycles =
-          await this.generationService.findNextUngeneratedCycles(
-            tx,
-            membership,
-            quantity,
-          );
+        // En la transacción resolvemos de nuevo los disponibles para asegurar que no nos ganen por concurrencia
+        const existingEnrollments = await tx.cycleEnrollment.findMany({
+            where: { studentMembershipId: membership.id },
+            select: { cycleStartDate: true, cycleEndDate: true }
+        });
 
-        if (nextCycles.length === 0) {
-          return;
-        }
-
-        if (nextCycles.length < quantity) {
-          throw new BadRequestException(
-            `Solo quedan ${nextCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
-          );
-        }
-
-        generatedCount = await this.generationService.generateAdvanceCharges(
-          tx,
-          membership,
-          nextCycles,
+        const allCycles = getAbsoluteSeasonCycles(
+            membership.courseSeason.season.startDate,
+            membership.courseSeason.season.endDate,
+            membership.courseSeason.billingConfig.billingFrequency
         );
+
+        const unenrolledCycles = allCycles.filter(cycle => {
+            return !existingEnrollments.some(e => 
+              e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
+              e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
+            );
+        });
+
+        if (unenrolledCycles.length === 0) {
+            return; // Ya no hay ciclos
+        }
+        if (unenrolledCycles.length < quantity) {
+            throw new BadRequestException(
+                `Solo quedan ${unenrolledCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
+            );
+        }
+
+        const cyclesToPurchase = unenrolledCycles.slice(0, quantity);
+        const allPauses = [
+            ...(membership.pauses || []),
+            ...(membership.courseSeason.pauses || []),
+        ];
+
+        for (const cycle of cyclesToPurchase) {
+            const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, cycle.cycleStartDate, membership.courseSeason.season.endDate);
+            
+            if (effectiveStart >= effectiveEnd) continue;
+
+            const { billableDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
+            const cycleTotalDays = (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
+
+            let finalBillableDays = billableDays;
+            const isTruncatedEnd = cycle.cycleEndDate.getTime() > membership.courseSeason.season.endDate.getTime();
+            if (isTruncatedEnd && membership.courseSeason.billingConfig?.prorateLastRecurringFee === false) {
+                const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(effectiveStart, cycle.cycleEndDate, allPauses);
+                finalBillableDays = fullCycleBillableDays;
+            }
+
+            const cycleFee = calculateOnDemandCycleFee(
+                membership,
+                cycle,
+                finalBillableDays,
+                cycleTotalDays
+            );
+
+            const discountReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
+
+            let description = buildCycleDescription(
+               cycle.cycleStartDate,
+               cycle.cycleEndDate,
+               membership.courseSeason.billingConfig.billingFrequency
+            );
+
+            if (finalBillableDays < cycleTotalDays) {
+              description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+            }
+
+            // VALIDAR CAPACIDAD ANTES DE CREAR EL ENROLLMENT
+            await validateCourseSeasonCapacity(
+                tx,
+                membership.courseSeasonId,
+                cycle.cycleStartDate,
+                cycle.cycleEndDate,
+            );
+
+            // 1. Crear Charge
+            const charge = await tx.charge.create({
+                data: {
+                    amount: cycleFee.netAmount,
+                    pendingAmount: cycleFee.netAmount,
+                    discountAmount: cycleFee.discountAmount,
+                    discountReason: discountReason,
+                    description: `Adelanto de Cuota: ${description}`,
+                    dueDate: new Date(Date.UTC(effectiveStart.getUTCFullYear(), effectiveStart.getUTCMonth(), effectiveStart.getUTCDate(), 23, 59, 59, 999)), // Vence al inicio del ciclo
+                    status: cycleFee.netAmount <= 0 ? StatusCharge.PAID : StatusCharge.PENDING,
+                }
+            });
+
+            // 2. Crear CycleEnrollment enlazado
+            const ce = await tx.cycleEnrollment.create({
+                data: {
+                    studentMembershipId: membership.id,
+                    courseSeasonId: membership.courseSeasonId,
+                    chargeId: charge.id,
+                    cycleStartDate: cycle.cycleStartDate,
+                    cycleEndDate: cycle.cycleEndDate,
+                    effectiveStartDate: effectiveStart,
+                    status: cycleFee.netAmount <= 0 ? CycleEnrollmentStatus.CONFIRMED : CycleEnrollmentStatus.PENDING
+                }
+            });
+
+            // 3. Crear StudentCharge (por compatibilidad)
+            await tx.studentCharge.create({
+                data: {
+                    chargeId: charge.id,
+                    studentMembershipId: membership.id,
+                    type: TypeMembershipCharge.RECURRING_FEE,
+                }
+            });
+
+            generatedCount++;
+        }
       });
 
       if (generatedCount === 0) {
-        return {
-          message:
-            'No hay más cuotas disponibles para generar en la temporada.',
-        };
+        return { message: 'No hay más cuotas disponibles para comprar en la temporada.' };
       }
 
-      return {
-        message: `Se generaron exitosamente ${generatedCount} cuotas por adelantado.`,
-      };
+      return { message: `Se compraron exitosamente ${generatedCount} cuotas futuras.` };
     } catch (error) {
       if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
         throw new BadRequestException(
-          'Algunas de las cuotas solicitadas ya fueron generadas recientemente por otro proceso.',
+          'El ciclo solicitado ya se encontraba comprado o fue procesado de forma concurrente.',
         );
       }
       throw error;

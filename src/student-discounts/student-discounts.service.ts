@@ -70,16 +70,9 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService
-      .recalculatePendingFutureCharges(
-        createStudentDiscountDto.studentMembershipId,
-      )
-      .catch((e) => {
-        this.logger.error(
-          `Error al recalcular cargos tras asignar descuento escolar a membresía ${createStudentDiscountDto.studentMembershipId}`,
-          e.stack,
-        );
-      });
+    // (Desconectado en FASE 2.8): La creación de descuentos ya no dispara
+    // una recalibración automática sobre cuotas futuras/pendientes,
+    // garantizando que CourseSeason funcione 100% On-Demand.
 
     return {
       message: 'Descuento escolar registrado exitosamente',
@@ -219,14 +212,8 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService
-      .recalculatePendingFutureCharges(discount.studentMembershipId)
-      .catch((e) => {
-        this.logger.error(
-          `Error al recalcular cargos tras actualizar descuento escolar en membresía ${discount.studentMembershipId}`,
-          e.stack,
-        );
-      });
+    // (Desconectado en FASE 2.8): La actualización de descuentos ya no dispara
+    // una recalibración automática sobre cuotas futuras/pendientes.
 
     return {
       message: 'Descuento actualizado exitosamente',
@@ -242,14 +229,8 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService
-      .recalculatePendingFutureCharges(discount.studentMembershipId)
-      .catch((e) => {
-        this.logger.error(
-          `Error al recalcular cargos tras eliminar descuento escolar en membresía ${discount.studentMembershipId}`,
-          e.stack,
-        );
-      });
+    // (Desconectado en FASE 2.8): La eliminación de descuentos ya no dispara
+    // una recalibración automática sobre cuotas futuras/pendientes.
 
     return {
       message: 'Descuento eliminado de la membresía exitosamente',
@@ -278,14 +259,8 @@ export class StudentDiscountsService {
       select: studentDiscountSelect,
     });
 
-    this.studentChargesService
-      .recalculatePendingFutureCharges(discount.studentMembershipId)
-      .catch((e) => {
-        this.logger.error(
-          `Error al recalcular cargos tras finalizar descuento en membresía ${discount.studentMembershipId}`,
-          e.stack,
-        );
-      });
+    // (Desconectado en FASE 2.8): La finalización de descuentos ya no dispara
+    // una recalibración automática sobre cuotas futuras/pendientes.
 
     return {
       message: 'Descuento finalizado exitosamente',

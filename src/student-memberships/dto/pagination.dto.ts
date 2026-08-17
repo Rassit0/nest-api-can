@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsUUID, IsEnum } from 'class-validator';
+import { IsIn, IsOptional, IsUUID, IsEnum, IsISO8601 } from 'class-validator';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { StudentMembershipStatus } from '../../generated/prisma/enums';
 
@@ -21,6 +21,13 @@ export class StudentMembershipsPaginationDto extends PaginationDto {
   @IsUUID('4')
   @IsOptional()
   courseSeasonId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Fecha física para consultar la asistencia al turno en formato ISO 8601 UTC (ej. 2026-09-01T15:30:00.000Z)',
+  })
+  @IsOptional()
+  @IsISO8601({ strict: true }, { message: 'physicalDate debe ser una cadena ISO 8601 válida' })
+  physicalDate?: string;
 
   @ApiPropertyOptional({
     description: 'Filtrar por estudiante',

@@ -49,8 +49,19 @@ export class AccountingDashboardService {
       },
     });
 
-    // Contar Membresías pendientes (Receivables)
+    // Contar Membresías pendientes (Receivables - TeamSeason)
     const pendingMemberships = await this.prisma.membershipCharge.count({
+      where: {
+        charge: {
+          direction: 'RECEIVABLE',
+          status: { in: pendingStatuses },
+          dueDate: { lte: nextWeek },
+        },
+      },
+    });
+
+    // Contar Cuotas de Estudiantes pendientes (Receivables - CourseSeason)
+    const pendingStudentCharges = await this.prisma.studentCharge.count({
       where: {
         charge: {
           direction: 'RECEIVABLE',
@@ -63,6 +74,20 @@ export class AccountingDashboardService {
     const alerts = [];
 
     // Alertas de Cobros (Receivables)
+    if (pendingStudentCharges > 0) {
+      alerts.push({
+        context: 'StudentCharges',
+        count: pendingStudentCharges,
+        label:
+          pendingStudentCharges === 1
+            ? 'Cuota escolar pendiente'
+            : 'Cuotas escolares pendientes',
+        href: '/admin/student-charges?status=PENDING', // TODO: Ajustar a las URLs correctas del frontend cuando existan
+        severity: 'warning',
+        type: 'RECEIVABLE',
+      });
+    }
+
     if (pendingMemberships > 0) {
       alerts.push({
         context: 'Memberships',

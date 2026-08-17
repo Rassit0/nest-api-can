@@ -250,6 +250,15 @@ export const StudentMembershipStatus = {
 export type StudentMembershipStatus = (typeof StudentMembershipStatus)[keyof typeof StudentMembershipStatus]
 
 
+export const CycleEnrollmentStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CycleEnrollmentStatus = (typeof CycleEnrollmentStatus)[keyof typeof CycleEnrollmentStatus]
+
+
 export const EventType = {
   SESSION: 'SESSION',
   MATCH: 'MATCH',

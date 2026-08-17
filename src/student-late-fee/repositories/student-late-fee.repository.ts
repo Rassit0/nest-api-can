@@ -49,44 +49,33 @@ const chargeInclude = {
 export class StudentLateFeeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findOverdueCharges(
-    evaluationDate: Date,
-  ): Promise<StudentChargeWithLateFeeRelations[]> {
-    return this.prisma.charge.findMany({
+  async findChargeForLateFee(
+    chargeId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<StudentChargeWithLateFeeRelations | null> {
+    const client = tx || this.prisma;
+    return client.charge.findUnique({
+      where: { id: chargeId },
+      include: chargeInclude,
+    });
+  }
+
+  async findPendingLateFeeCharge(
+    tx: Prisma.TransactionClient,
+    parentChargeId: string,
+  ) {
+    return tx.charge.findFirst({
       where: {
+        parentChargeId,
         status: {
           in: [StatusCharge.PENDING, StatusCharge.PARTIAL],
         },
         studentCharges: {
           some: {
-            type: {
-              in: [
-                TypeMembershipCharge.RECURRING_FEE,
-                TypeMembershipCharge.SEASON_FEE,
-              ],
-            },
-            studentMembership: {
-              status: {
-                in: [
-                  StudentMembershipStatus.ACTIVE,
-                  StudentMembershipStatus.PENDING_ACTIVE,
-                  StudentMembershipStatus.SUSPENDED,
-                ],
-              },
-              courseSeason: {
-                billingConfig: {
-                  isEngineActive: true,
-                },
-              },
-            },
+            type: TypeMembershipCharge.LATE_FEE,
           },
         },
-        parentChargeId: null,
-        dueDate: {
-          lt: evaluationDate,
-        },
       },
-      include: chargeInclude,
     });
   }
 
@@ -121,7 +110,7 @@ export class StudentLateFeeRepository {
     tx: Prisma.TransactionClient,
     data: Prisma.ChargeUncheckedCreateInput,
   ) {
-    await tx.charge.create({
+    return tx.charge.create({
       data,
     });
   }

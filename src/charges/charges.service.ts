@@ -11,6 +11,7 @@ import { PrismaService } from 'src/prisma.service';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { ChargesPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
+import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 
 export const chargeSelect: Prisma.ChargeSelect = {
   id: true,
@@ -306,10 +307,18 @@ export class ChargesService {
       }
     }
 
-    const updatedCharge = await this.prisma.charge.update({
-      where: { id },
-      data,
-      select: chargeSelect,
+    const updatedCharge = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.charge.update({
+        where: { id },
+        data,
+        select: chargeSelect,
+      });
+
+      if (data.status) {
+        await syncCycleEnrollmentStatus(tx, id, data.status as StatusCharge);
+      }
+
+      return updated;
     });
 
     return {
@@ -415,15 +424,19 @@ export class ChargesService {
       newStatus = StatusCharge.PENDING;
     }
 
-    const updatedCharge = await this.prisma.charge.update({
-      where: { id },
-      data: {
-        discountAmount: newDiscount,
-        discountReason: addDiscountDto.discountReason,
-        pendingAmount: newPending,
-        status: newStatus,
-      },
-      select: chargeSelect,
+    const updatedCharge = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.charge.update({
+        where: { id },
+        data: {
+          discountAmount: newDiscount,
+          discountReason: addDiscountDto.discountReason,
+          pendingAmount: newPending,
+          status: newStatus,
+        },
+        select: chargeSelect,
+      });
+      await syncCycleEnrollmentStatus(tx, id, newStatus);
+      return updated;
     });
 
     return {
@@ -470,15 +483,19 @@ export class ChargesService {
       newStatus = StatusCharge.PENDING;
     }
 
-    const updatedCharge = await this.prisma.charge.update({
-      where: { id },
-      data: {
-        discountAmount: 0,
-        discountReason: null,
-        pendingAmount: newPending,
-        status: newStatus,
-      },
-      select: chargeSelect,
+    const updatedCharge = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.charge.update({
+        where: { id },
+        data: {
+          discountAmount: 0,
+          discountReason: null,
+          pendingAmount: newPending,
+          status: newStatus,
+        },
+        select: chargeSelect,
+      });
+      await syncCycleEnrollmentStatus(tx, id, newStatus);
+      return updated;
     });
 
     return {

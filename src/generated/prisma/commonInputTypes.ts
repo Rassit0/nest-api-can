@@ -725,6 +725,23 @@ export type EnumStudentMembershipStatusNullableWithAggregatesFilter<$PrismaModel
   _max?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
 }
 
+export type EnumCycleEnrollmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CycleEnrollmentStatus | Prisma.EnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel> | $Enums.CycleEnrollmentStatus
+}
+
+export type EnumCycleEnrollmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CycleEnrollmentStatus | Prisma.EnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCycleEnrollmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.CycleEnrollmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel>
+}
+
 export type EnumEventTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.EventType | Prisma.EnumEventTypeFieldRefInput<$PrismaModel>
   in?: $Enums.EventType[] | Prisma.ListEnumEventTypeFieldRefInput<$PrismaModel>
@@ -1691,6 +1708,23 @@ export type NestedEnumStudentMembershipStatusNullableWithAggregatesFilter<$Prism
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumCycleEnrollmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CycleEnrollmentStatus | Prisma.EnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel> | $Enums.CycleEnrollmentStatus
+}
+
+export type NestedEnumCycleEnrollmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CycleEnrollmentStatus | Prisma.EnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CycleEnrollmentStatus[] | Prisma.ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCycleEnrollmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.CycleEnrollmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCycleEnrollmentStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumEventTypeFilter<$PrismaModel = never> = {

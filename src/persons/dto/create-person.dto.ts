@@ -98,28 +98,32 @@ export class CreatePersonDto {
   })
   imageUrl?: File | null;
 
+  @IsOptional()
   @ApiProperty({
     example: DocumentType.CI,
     enum: DocumentType,
     description: 'Tipo de documento de la persona',
+    required: false,
   })
   @IsEnum(DocumentType, {
     message: i18nValidationMessage('validation.IS_ENUM', {
       constraint1: 'documentType',
     }),
   })
-  documentType: DocumentType;
+  documentType?: DocumentType;
 
+  @IsOptional()
   @ApiProperty({
     example: '12345678',
     description: 'Número de documento de la persona',
+    required: false,
   })
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {
       constraint1: 'documentNumber',
     }),
   })
-  documentNumber: string;
+  documentNumber?: string;
 
   @IsOptional()
   @ApiProperty({

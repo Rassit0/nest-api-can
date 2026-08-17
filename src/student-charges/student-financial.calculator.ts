@@ -1,6 +1,6 @@
 import { DateUtils } from '../utils/date.utils';
 import { Prisma, StatusCourseSeason } from 'src/generated/prisma/client';
-import { MILLISECONDS_IN_DAY } from './student-billing.utils';
+import { MILLISECONDS_IN_DAY, AbsoluteCycle } from './student-billing.utils';
 
 export type StudentMembershipWithRelations =
   Prisma.StudentMembershipGetPayload<{
@@ -19,6 +19,8 @@ export type StudentMembershipWithRelations =
   }> & {
     chargeRegistrationOnMigration?: boolean;
     chargeCurrentMonthOnMigration?: boolean;
+    chargeRegistration?: boolean;
+    chargeInitialCycle?: boolean;
   };
 
 export interface FinancialCalculationResult {
@@ -399,5 +401,91 @@ export function calculateSinglePaymentFee(
     appliedDiscounts,
     description,
     hasSinglePaymentAmount,
+  };
+}
+
+export function calculateOnDemandCycleFee(
+  membership: StudentMembershipWithRelations,
+  cycle: AbsoluteCycle,
+  billableDays: number,
+  totalCycleDays: number,
+): FinancialCalculationResult {
+  let base = Number(membership.courseSeason.billingConfig?.recurringFee || 0);
+  let factor = 1;
+
+  if (totalCycleDays > 0) {
+    factor = Math.max(0, billableDays / totalCycleDays);
+  }
+
+  base = base * factor;
+
+  const appliedDiscounts: {
+    percent: number;
+    reason?: string;
+    endDate?: Date | null;
+  }[] = [];
+
+  const advanceCycles = Math.max(1, membership.paymentPlan?.advanceCycles || 1);
+  const advanceDiscount = Number(
+    membership.paymentPlan?.advanceCyclesDiscountPercent || 0,
+  );
+  
+  const promotionalCycles = membership.paymentPlan?.promotionalCycles || 0;
+  const effectivePromotionalCycles = promotionalCycles > 0 
+    ? Math.min(promotionalCycles, advanceCycles) 
+    : advanceCycles;
+
+  if (
+    cycle.cycleCounter <= effectivePromotionalCycles && 
+    advanceDiscount > 0
+  ) {
+    appliedDiscounts.push({
+      percent: advanceDiscount,
+      reason: 'Descuento Pago Adelantado',
+    });
+  } else {
+    const ppRecDiscount = Number(
+      membership.paymentPlan?.recurringDiscountPercent || 0,
+    );
+    if (ppRecDiscount > 0) {
+      appliedDiscounts.push({ percent: ppRecDiscount, reason: 'Plan de pago' });
+    }
+  }
+
+  const activeRecDiscounts = (membership.studentDiscounts || []).filter((d) => {
+    const evalDate = cycle.cycleStartDate < membership.startedAt ? membership.startedAt : cycle.cycleStartDate;
+    return d.startDate <= evalDate && (!d.endDate || d.endDate >= evalDate);
+  });
+
+  for (const d of activeRecDiscounts) {
+    const p = Number(d.recurringDiscountPercent || 0);
+    if (p > 0) {
+      appliedDiscounts.push({
+        percent: p,
+        reason: d.reason || d.type,
+        endDate: d.endDate,
+      });
+    }
+  }
+
+  const discount = Math.min(
+    100,
+    appliedDiscounts.reduce((sum, d) => sum + d.percent, 0),
+  );
+  const baseAmountRounded = Number(base.toFixed(2));
+
+  const discountAmount = Number(
+    ((baseAmountRounded * discount) / 100).toFixed(2),
+  );
+  const netAmount = Number(
+    Math.max(0, baseAmountRounded - discountAmount).toFixed(2),
+  );
+
+  return {
+    baseAmount: baseAmountRounded,
+    discountPercent: Number(discount.toFixed(2)),
+    discountAmount,
+    netAmount,
+    appliedDiscounts,
   };
 }

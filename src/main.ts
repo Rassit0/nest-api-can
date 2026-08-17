@@ -6,6 +6,7 @@ import { I18nValidationFilter } from './common/filters/i18n-validation/i18n-vali
 import { useContainer } from 'class-validator';
 import { PrismaExceptionFilter } from './common/filters/prisma/prisma-exception.filter';
 import { I18nHttpExceptionFilter } from './common/filters/i18n-http-exception/i18n-http-exception.filter';
+import { GlobalFileFilter } from './common/filters/global-file.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { envs } from './config';
 
@@ -47,6 +48,7 @@ async function bootstrap() {
   const i18nService = app.get(I18nService);
 
   app.useGlobalFilters(
+    new GlobalFileFilter(),
     new I18nHttpExceptionFilter(i18nService),
     app.get(PrismaExceptionFilter),
     new I18nValidationFilter(),

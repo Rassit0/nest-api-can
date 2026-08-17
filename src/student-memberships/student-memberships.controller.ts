@@ -38,7 +38,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
-@ApiTags('Student Memberships')
+import { TransferShiftDto } from './dto/transfer-shift.dto';
+
+@ApiTags('Inscripciones Escolares (Student Memberships)')
 @Controller('student-memberships')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'), UserRoleGuard)
@@ -59,9 +61,7 @@ export class StudentMembershipsController {
   )
   @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS')
   async create(@Body() createStudentMembershipDto: CreateStudentMembershipDto) {
-    return await this.studentMembershipsService.create(
-      createStudentMembershipDto,
-    );
+    return await this.studentMembershipsService.create(createStudentMembershipDto);
   }
 
   @Get()
@@ -122,6 +122,47 @@ export class StudentMembershipsController {
   @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.studentMembershipsService.findOne(id);
+  }
+
+  @Get(':id/histories')
+  @ApiOperation({
+    summary: 'Obtener el historial de cambios de una inscripción escolar',
+    description:
+      'Retorna la lista ordenada cronológicamente de todos los cambios de estado y transferencias de una membresía.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la inscripción a consultar (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(Object, 'Historial obtenido exitosamente.') // Using Object for now, since we don't have a specific DTO for the history array yet
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
+  async getHistories(@Param('id', ParseUUIDPipe) id: string) {
+    const data = await this.studentMembershipsService.getMembershipHistories(id);
+    return { data };
+  }
+
+  @Post(':id/transfer-shift')
+  @ApiOperation({
+    summary: 'Transferir turno de una membresía',
+    description: 'Transfiere físicamente a un alumno a otro turno a partir de su próximo ciclo disponible. Los ciclos históricos y en curso se mantienen inmutables en su turno original.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la membresía a transferir (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: TransferShiftDto })
+  @ApiStandardResponse(
+    StudentMembershipResponseDto,
+    'Transferencia de turno procesada exitosamente.',
+  )
+  @RequirePermissions('UPDATE_STUDENT_MEMBERSHIPS')
+  async transferShift(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() transferDto: TransferShiftDto,
+  ) {
+    return await this.studentMembershipsService.transferShift(id, transferDto);
   }
 
   @Patch(':id')

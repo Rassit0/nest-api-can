@@ -3,9 +3,9 @@ import {
   StudentMembershipWithRelations,
   calculateRegistrationFee,
   calculateSinglePaymentFee,
+  calculateOnDemandCycleFee,
 } from '../student-financial.calculator';
-import { simulateAllCycles, SimulatedCycle } from '../student-cycles.engine';
-import { formatDiscountsDescription } from '../student-billing.utils';
+import { formatDiscountsDescription, getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions } from '../student-billing.utils';
 import { DateUtils } from 'src/utils/date.utils';
 import {
   TypeMembershipCharge,
@@ -20,9 +20,13 @@ import { PreviewChargeFactory } from '../factories/preview-charge.factory';
 
 @Injectable()
 export class StudentPreviewService {
-  public extractPreviewChargesFromCycles(
+  /**
+   * FASE 2.5: Genera el Preview utilizando exclusivamente el modelo On-Demand (sin persistir nada).
+   * Calcula matemáticamente los ciclos, encuentra el ciclo correspondiente a la inscripción,
+   * prorratea los días efectivos y descuenta las pausas interseccionadas.
+   */
+  public extractOnDemandPreviewCharges(
     membership: StudentMembershipWithRelations,
-    existingCharges: ExistingChargeMinimal[] | null,
   ): PreviewResult {
     let charges: PreviewCharge[] = [];
     const isSeasonFeeOnly =
@@ -30,58 +34,140 @@ export class StudentPreviewService {
       (membership.courseSeason.billingConfig?.billingType === 'BOTH' &&
         membership.paymentPlan?.isSinglePayment === true);
     const isFullPaymentPlan = membership.paymentPlan?.isSinglePayment === true;
-    const isMigratedContext =
-      existingCharges === null ? membership.isMigrated : membership.isMigrated;
-    const allCycles = simulateAllCycles(membership);
-
+    
+    const { chargeRegistration, chargeInitialCycle } = resolveFinancialEnrollmentOptions(membership.isMigrated, {
+       chargeRegistration: membership.chargeRegistration,
+       chargeInitialCycle: membership.chargeInitialCycle,
+       chargeRegistrationOnMigration: membership.chargeRegistrationOnMigration,
+       chargeCurrentMonthOnMigration: membership.chargeCurrentMonthOnMigration
+    });
+    
+    // 1. Inscripción
     charges = charges.concat(
-      this.extractRegistrationCharge(
-        membership,
-        existingCharges,
-        isMigratedContext,
-      ),
+      this.extractRegistrationCharge(membership, null, chargeRegistration),
     );
+
+    const billingFrequency = membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
+    const seasonStartDate = membership.courseSeason.season.startDate;
+    const seasonEndDate = membership.courseSeason.season.endDate;
+
+    // 2. Obtener todos los ciclos matemáticos de la Season
+    const allCycles = getAbsoluteSeasonCycles(seasonStartDate, seasonEndDate, billingFrequency);
 
     if (isSeasonFeeOnly) {
-      charges = charges.concat(
-        this.extractSinglePaymentCharge(
-          membership,
-          existingCharges,
-          isMigratedContext,
-          allCycles,
-        ),
-      );
+       // Para SINGLE, todo es un solo ciclo (el ciclo 1).
+       const singleCycle = allCycles[0];
+       if (singleCycle) {
+          // Extraemos los límites efectivos
+          const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(singleCycle, membership.startedAt, seasonEndDate);
+          
+          // Todas las pausas del estudiante y de la season
+          const allPauses = [
+            ...(membership.pauses || []),
+            ...(membership.courseSeason.pauses || []),
+          ];
+
+          const { billableDays, totalDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
+
+          // Calculamos el importe
+          // Para SINGLE normalmente se usa calculateSinglePaymentFee, que ya tiene lógica propia.
+          // Reutilizaremos calculateSinglePaymentFee pero le pasaremos los descuentos/factores simulados si hace falta.
+          // Como calculateSinglePaymentFee ya calcula factor basado en membership.startedAt, lo usamos directamente.
+          charges = charges.concat(
+             this.extractSinglePaymentCharge(membership, null, chargeInitialCycle, allCycles as any)
+          );
+       }
     } else {
-      charges = charges.concat(
-        this.extractRecurringCharges(
-          membership,
-          existingCharges,
-          allCycles,
-          isFullPaymentPlan,
-          isMigratedContext,
-        ),
-      );
+       // Frecuencias recurrentes
+       // 3. Encontrar el ciclo que contiene la fecha de inicio
+       const firstCycle = findCycleContainingDate(allCycles, membership.startedAt);
+       if (firstCycle) {
+           const advanceCycles = isFullPaymentPlan ? allCycles.length : Math.max(1, membership.paymentPlan?.advanceCycles || 1);
+           const cycleIndex = allCycles.findIndex(c => c.cycleCounter === firstCycle.cycleCounter);
+           
+           for (let i = 0; i < advanceCycles; i++) {
+               const currentCycle = allCycles[cycleIndex + i];
+               if (!currentCycle) break;
+               
+               // Para el primer ciclo, el enrollment date es startedAt. 
+               // Para los siguientes, es simplemente el inicio del ciclo (porque ya está inscrito).
+               const enrollmentDateForCycle = (i === 0) ? membership.startedAt : currentCycle.cycleStartDate;
+               
+               // 4. Calcular período efectivo para este ciclo
+               const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(currentCycle, enrollmentDateForCycle, seasonEndDate);
+               
+               if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
+               
+               // 5. Integrar pausas
+               const allPauses = [
+                 ...(membership.pauses || []),
+                 ...(membership.courseSeason.pauses || []),
+               ];
+               const { billableDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
+               const cycleTotalDays = (currentCycle.cycleEndDate.getTime() - currentCycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
+               
+               let finalBillableDays = billableDays;
+               if (i === 0 && membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false) {
+                  const { billableDays: billableDaysWithoutLateEntry } = calculateBillableDaysWithPauses(currentCycle.cycleStartDate, effectiveEnd, allPauses);
+                  finalBillableDays = billableDaysWithoutLateEntry;
+               }
+               
+               // 6. Calcular importe On-Demand
+               const { netAmount, baseAmount, discountAmount, discountPercent, appliedDiscounts } = calculateOnDemandCycleFee(
+                  membership,
+                  currentCycle,
+                  finalBillableDays,
+                  cycleTotalDays
+               );
+               
+               // Si prorrateó por entrar tarde y no está en la configuración permitida
+               // (Esta regla puede refinarse, pero por ahora mostramos lo calculado)
+
+               let description = buildCycleDescription(
+                  currentCycle.cycleStartDate,
+                  currentCycle.cycleEndDate,
+                  billingFrequency
+               );
+               
+               if (finalBillableDays < cycleTotalDays) {
+                 description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+               }
+               description += formatDiscountsDescription(appliedDiscounts);
+               
+               const shouldChargeCycle = !(i === 0 && !chargeInitialCycle);
+
+               if (!shouldChargeCycle) {
+                 charges.push(
+                    PreviewChargeFactory.buildRecurringCharge(
+                      0,
+                      0,
+                      buildCycleDescription(currentCycle.cycleStartDate, currentCycle.cycleEndDate, billingFrequency) + ' — Sin cobro / Exonerado',
+                      0,
+                      0,
+                      currentCycle.cycleStartDate,
+                      currentCycle.billingYear,
+                      currentCycle.billingMonth,
+                      billingFrequency === 'MONTHLY' ? null : currentCycle.billingCycle
+                    )
+                 );
+               } else {
+                 charges.push(
+                    PreviewChargeFactory.buildRecurringCharge(
+                      netAmount,
+                      baseAmount,
+                      description,
+                      discountAmount,
+                      discountPercent,
+                      currentCycle.cycleStartDate, // dueDate es el inicio del ciclo
+                      currentCycle.billingYear,
+                      currentCycle.billingMonth,
+                      billingFrequency === 'MONTHLY' ? null : currentCycle.billingCycle
+                    )
+                 );
+               }
+           }
+       }
     }
-
-    return { charges, breakdown: this.buildChargesBreakdown(charges) };
-  }
-
-  public extractAdvanceChargesFromCycles(
-    cycles: SimulatedCycle[],
-  ): PreviewResult {
-    const charges = cycles.map((cycle) =>
-      PreviewChargeFactory.buildRecurringCharge(
-        cycle.netAmount,
-        cycle.baseAmount,
-        cycle.description,
-        cycle.discountAmount,
-        cycle.discountPercent,
-        cycle.dueDate,
-        cycle.billingYear,
-        cycle.billingMonth,
-        cycle.billingCycle,
-      ),
-    );
 
     return { charges, breakdown: this.buildChargesBreakdown(charges) };
   }
@@ -89,18 +175,25 @@ export class StudentPreviewService {
   private extractRegistrationCharge(
     membership: StudentMembershipWithRelations,
     existingCharges: ExistingChargeMinimal[] | null,
-    isMigratedContext: boolean,
+    chargeRegistration: boolean,
   ): PreviewCharge[] {
-    if (
-      isMigratedContext &&
-      (!existingCharges || existingCharges.length === 0) &&
-      !membership.chargeRegistrationOnMigration
-    )
-      return [];
     if (
       existingCharges?.some((c) => c.type === TypeMembershipCharge.REGISTRATION)
     )
       return [];
+
+    if (!chargeRegistration) {
+       return [
+         PreviewChargeFactory.buildRegistrationCharge(
+           0,
+           0,
+           'Matrícula — Exonerada',
+           0,
+           0,
+           membership.startedAt,
+         ),
+       ];
+    }
 
     const {
       netAmount,
@@ -128,22 +221,33 @@ export class StudentPreviewService {
   private extractSinglePaymentCharge(
     membership: StudentMembershipWithRelations,
     existingCharges: ExistingChargeMinimal[] | null,
-    isMigratedContext: boolean,
-    allCycles: SimulatedCycle[],
+    chargeInitialCycle: boolean,
+    allCycles: any[],
   ): PreviewCharge[] {
-    if (isMigratedContext && !membership.chargeCurrentMonthOnMigration)
-      return [];
     if (
       existingCharges?.some((c) => c.type === TypeMembershipCharge.SEASON_FEE)
     )
       return [];
 
+    if (!chargeInitialCycle) {
+       return [
+         PreviewChargeFactory.buildSeasonCharge(
+           0,
+           0,
+           'Ciclo Único — Sin cobro / Exonerado',
+           0,
+           0,
+           membership.startedAt,
+         ),
+       ];
+    }
+
     let singlePaymentBaseAmount = 0;
     let singlePaymentDiscountPercent = 0;
 
     for (const cycle of allCycles) {
-      singlePaymentBaseAmount += cycle.baseAmount;
-      singlePaymentDiscountPercent = cycle.discountPercent;
+      singlePaymentBaseAmount += cycle.baseAmount || 0;
+      singlePaymentDiscountPercent = cycle.discountPercent || 0;
     }
 
     const singlePayment = calculateSinglePaymentFee(
@@ -163,112 +267,6 @@ export class StudentPreviewService {
         membership.startedAt,
       ),
     ];
-  }
-
-  private extractRecurringCharges(
-    membership: StudentMembershipWithRelations,
-    existingCharges: ExistingChargeMinimal[] | null,
-    allCycles: SimulatedCycle[],
-    isFullPaymentPlan: boolean = false,
-    isMigratedContext: boolean = false,
-  ): PreviewCharge[] {
-    const charges: PreviewCharge[] = [];
-    const advanceCycles = isFullPaymentPlan
-      ? allCycles.length
-      : Math.max(1, membership.paymentPlan?.advanceCycles || 1);
-    const billingFrequency =
-      membership.courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
-    let firstDueDate: Date | null = null;
-
-    for (const cycle of allCycles) {
-      const hasMonthly =
-        existingCharges?.some(
-          (c) =>
-            c.type === TypeMembershipCharge.RECURRING_FEE &&
-            c.billingYear === cycle.billingYear &&
-            c.billingMonth === cycle.billingMonth &&
-            (billingFrequency === 'MONTHLY'
-              ? true
-              : c.billingCycle === cycle.billingCycle),
-        ) || false;
-
-      let isMigratedCurrentMonth = false;
-      if (
-        isMigratedContext &&
-        membership.chargeCurrentMonthOnMigration === false
-      ) {
-        const startYear = membership.startedAt.getUTCFullYear();
-        const startMonth = membership.startedAt.getUTCMonth() + 1;
-        if (
-          cycle.billingYear < startYear ||
-          (cycle.billingYear === startYear && cycle.billingMonth <= startMonth)
-        ) {
-          isMigratedCurrentMonth = true;
-        }
-      }
-
-      if (!hasMonthly && !isMigratedCurrentMonth) {
-        if (charges.length === 0 && existingCharges === null) {
-          const chargeGenerationDaysBefore =
-            membership.courseSeason.billingConfig?.chargeGenerationDaysBefore ||
-            7;
-          let cycleGenDate = new Date(cycle.dueDate);
-          cycleGenDate.setUTCDate(
-            cycleGenDate.getUTCDate() - chargeGenerationDaysBefore,
-          );
-
-          // Removed cycleGenDate override to allow generation if within the generation window
-
-          const evaluationDate = isFullPaymentPlan 
-            ? DateUtils.getEndOfUTCDay(membership.courseSeason.season.endDate) 
-            : DateUtils.getEndOfUTCDay(new Date());
-            
-          if (cycleGenDate > evaluationDate) {
-            break;
-          }
-        }
-
-        if (!firstDueDate) firstDueDate = cycle.dueDate;
-
-        charges.push(
-          PreviewChargeFactory.buildRecurringCharge(
-            cycle.netAmount,
-            cycle.baseAmount,
-            cycle.description,
-            cycle.discountAmount,
-            cycle.discountPercent,
-            existingCharges ? firstDueDate : cycle.dueDate,
-            cycle.billingYear,
-            cycle.billingMonth,
-            cycle.billingCycle,
-          ),
-        );
-
-        // Only break if we've reached advanceCycles AND the next cycle isn't already due to be generated
-        if (charges.length >= advanceCycles && existingCharges === null) {
-           const nextCycle = allCycles[allCycles.indexOf(cycle) + 1];
-           if (nextCycle) {
-              const chargeGenerationDaysBefore = membership.courseSeason.billingConfig?.chargeGenerationDaysBefore || 7;
-              let nextCycleGenDate = new Date(nextCycle.dueDate);
-              nextCycleGenDate.setUTCDate(nextCycleGenDate.getUTCDate() - chargeGenerationDaysBefore);
-              
-              const evaluationDate = isFullPaymentPlan 
-                ? DateUtils.getEndOfUTCDay(membership.courseSeason.season.endDate) 
-                : DateUtils.getEndOfUTCDay(new Date());
-
-              if (nextCycleGenDate > evaluationDate) {
-                 break;
-              }
-           } else {
-              break;
-           }
-        } else if (charges.length >= advanceCycles && existingCharges !== null) {
-           break;
-        }
-      }
-    }
-
-    return charges;
   }
 
   public buildChargesBreakdown(

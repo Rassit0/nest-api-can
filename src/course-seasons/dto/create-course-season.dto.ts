@@ -203,7 +203,8 @@ export class CreateCourseSeasonDto {
 
   @ApiPropertyOptional({
     example: true,
-    description: 'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
+    description:
+      'Indica si se debe validar la edad al inscribir basándose en minBirthYear/maxBirthYear o en la categoría',
     default: true,
   })
   @Transform(({ value }) => value === 'true' || value === true)

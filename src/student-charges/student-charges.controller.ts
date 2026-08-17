@@ -7,7 +7,12 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
+  ForbiddenException,
 } from '@nestjs/common';
+import { Request } from 'express';
+import { StudentRegularizationService } from './services/student-regularization.service';
+import { RegularizeStudentChargeDto } from './dto/regularize-student-charge.dto';
 import { StudentChargesService } from './student-charges.service';
 import { CreateStudentChargeDto } from './dto/create-student-charge.dto';
 import { UpdateStudentChargeDto } from './dto/update-student-charge.dto';
@@ -28,7 +33,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
 import { PreviewAdvanceChargesDto } from './dto/preview-advance-charges.dto';
-import { GenerateAdvanceChargesDto } from './dto/generate-advance-charges.dto';
+import { PurchaseAdvanceCyclesDto } from './dto/purchase-advance-cycles.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
@@ -38,7 +43,10 @@ import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class StudentChargesController {
-  constructor(private readonly studentChargesService: StudentChargesService) {}
+  constructor(
+    private readonly studentChargesService: StudentChargesService,
+    private readonly studentRegularizationService: StudentRegularizationService,
+  ) {}
 
   @Post('preview')
   @ApiOperation({
@@ -87,22 +95,6 @@ export class StudentChargesController {
     return {
       message: 'Previsualización de cargos faltantes generada correctamente.',
       data: charges,
-    };
-  }
-
-  @Post('apply')
-  @ApiOperation({
-    summary: 'Generar cargos mensuales masivamente',
-    description:
-      'Inicia el proceso (típicamente programado por Cron) para calcular y generar las cuotas mensuales para todas las membresías activas que les toque cobro.',
-  })
-  @ApiResponse({ status: 201, description: 'Proceso ejecutado.' })
-  @RequirePermissions('CREATE_STUDENT_CHARGES')
-  async applyCharges() {
-    await this.studentChargesService.applyDailyStudentCharges();
-
-    return {
-      message: 'Proceso de generación de cargos ejecutado correctamente.',
     };
   }
 
@@ -167,25 +159,25 @@ export class StudentChargesController {
     };
   }
 
-  @Post('advance/:membershipId/generate')
+  @Post('advance/:membershipId/purchase')
   @ApiOperation({
-    summary: 'Generar cuotas adelantadas',
+    summary: 'Comprar ciclos adelantados',
     description:
-      'Genera y registra en la base de datos las próximas N cuotas adelantadas para una membresía específica.',
+      'Inscribe y registra en la base de datos la compra adelantada de los próximos N ciclos para una membresía específica.',
   })
   @ApiParam({ name: 'membershipId', description: 'ID de la membresía' })
-  @ApiBody({ type: GenerateAdvanceChargesDto })
+  @ApiBody({ type: PurchaseAdvanceCyclesDto })
   @ApiResponse({
     status: 201,
-    description: 'Cuotas adelantadas generadas exitosamente.',
+    description: 'Compra de ciclos adelantados exitosa.',
   })
   @ApiResponse({ status: 404, description: 'Membresía no encontrada.' })
   @RequirePermissions('CREATE_STUDENT_CHARGES')
-  async generateAdvanceCharges(
+  async purchaseAdvanceCycles(
     @Param('membershipId') membershipId: string,
-    @Body() dto: GenerateAdvanceChargesDto,
+    @Body() dto: PurchaseAdvanceCyclesDto,
   ) {
-    const data = await this.studentChargesService.generateAdvanceCharges(
+    const data = await this.studentChargesService.purchaseAdvanceCycles(
       membershipId,
       dto.quantity,
     );
@@ -194,4 +186,25 @@ export class StudentChargesController {
       data,
     };
   }
+  @Get(':membershipId/regularizable-cycles')
+  @RequirePermissions('READ_STUDENT_CHARGES')
+  async getRegularizableCycles(@Param('membershipId') membershipId: string) {
+    return this.studentRegularizationService.getRegularizableCycles(membershipId);
+  }
+
+  @Post(':membershipId/regularize')
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
+  async regularizeCharge(
+    @Param('membershipId') membershipId: string,
+    @Body() dto: RegularizeStudentChargeDto,
+    @Req() req: Request & { user: any },
+  ) {
+    if (dto.overrideAmount !== undefined && dto.overrideAmount !== null) {
+      if (!req.user.permissions?.includes('OVERRIDE_STUDENT_CHARGES')) {
+        throw new ForbiddenException('No posees permisos para sobreescribir montos históricos.');
+      }
+    }
+    return this.studentRegularizationService.regularizeCharge(membershipId, dto);
+  }
+
 }

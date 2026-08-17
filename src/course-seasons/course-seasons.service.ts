@@ -117,6 +117,24 @@ export class CourseSeasonsService {
   async create(createCourseCategoryDto: CreateCourseSeasonDto) {
     const { imageUrl, ...rest } = createCourseCategoryDto;
 
+    // Phase 7: Duplicate validation
+    const existingCourseSeason = await this.prisma.courseSeason.findFirst({
+      where: {
+        courseId: createCourseCategoryDto.courseId,
+        seasonId: createCourseCategoryDto.seasonId,
+        shiftId: createCourseCategoryDto.shiftId,
+        status: {
+          not: StatusCourseSeason.CANCELLED,
+        },
+      },
+    });
+
+    if (existingCourseSeason) {
+      throw new BadRequestException(
+        'Ya existe un turno configurado con esta combinación de curso, temporada y horario',
+      );
+    }
+
     const season = await this.prisma.season.findUnique({
       where: { id: createCourseCategoryDto.seasonId },
     });
@@ -691,31 +709,31 @@ export class CourseSeasonsService {
       select: {
         id: true,
         status: true,
-        studentMemberships: true,
       },
     });
     if (!courseSeason) {
-      throw new NotFoundException(
-        'La categoria de equipo en temporada no fue encontrada',
-      );
+      throw new NotFoundException('El turno no fue encontrado');
     }
-    if (courseSeason.status !== StatusCourseSeason.DRAFT) {
-      throw new BadRequestException(
-        'La temporada de equipo no puede ser eliminada',
-      );
+    
+    try {
+      await this.prisma.courseSeason.delete({
+        where: { id },
+      });
+      return {
+        message: 'Turno eliminado exitosamente',
+        data: courseSeason,
+      };
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2003'
+      ) {
+        throw new BadRequestException(
+          'No se puede eliminar el turno porque existen alumnos, ciclos financieros o clases programadas vinculadas. Intente inactivarlo.',
+        );
+      }
+      throw error;
     }
-    if (courseSeason.studentMemberships?.length > 0) {
-      throw new BadRequestException(
-        'La temporada no puede ser eliminada porque tiene registros asociados',
-      );
-    }
-    await this.prisma.courseSeason.delete({
-      where: { id },
-    });
-    return {
-      message: 'Temporada de equipo eliminada exitosamente',
-      data: courseSeason,
-    };
   }
 
   async finish(id: string, finalizeCourseSeasonDto: FinalizeCourseSeasonDto) {
@@ -847,28 +865,6 @@ export class CourseSeasonsService {
     }
   }
 
-  async toggleBillingEngine(id: string, isEngineActive: boolean) {
-    const courseSeason = await this.prisma.courseSeason.findUnique({
-      where: { id },
-      include: { billingConfig: true },
-    });
-    if (!courseSeason || !courseSeason.billingConfig) {
-      throw new NotFoundException(
-        'La configuración de cobros para esta temporada no fue encontrada',
-      );
-    }
-
-    const updated = await this.prisma.courseSeasonBillingConfig.update({
-      where: { courseSeasonId: id },
-      data: { isEngineActive },
-    });
-
-    return {
-      message: `Motor de cobros ${isEngineActive ? 'activado' : 'pausado'} exitosamente`,
-      data: updated,
-    };
-  }
-
   async getPauses(courseSeasonId: string) {
     const pauses = await this.prisma.courseSeasonPause.findMany({
       where: { courseSeasonId },
@@ -944,5 +940,27 @@ export class CourseSeasonsService {
     });
 
     return { message: 'Pausa eliminada correctamente' };
+  }
+
+  // Phase 7: Toggle Registration
+  async toggleRegistration(id: string, isRegistrationOpen: boolean) {
+    const courseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id },
+    });
+
+    if (!courseSeason) {
+      throw new NotFoundException('El turno no fue encontrado');
+    }
+
+    const updated = await this.prisma.courseSeason.update({
+      where: { id },
+      data: { isRegistrationOpen },
+      select: courseSeasonSelect,
+    });
+
+    return {
+      message: `Las inscripciones han sido ${isRegistrationOpen ? 'abiertas' : 'cerradas'} exitosamente`,
+      data: updated,
+    };
   }
 }

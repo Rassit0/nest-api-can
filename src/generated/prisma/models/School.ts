@@ -32,6 +32,7 @@ export type SchoolMinAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
 }
@@ -44,6 +45,7 @@ export type SchoolMaxAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
 }
@@ -56,6 +58,7 @@ export type SchoolCountAggregateOutputType = {
   disciplineId: number
   createdAt: number
   updatedAt: number
+  defaultAccountCategoryId: number
   createdById: number
   updatedById: number
   _all: number
@@ -70,6 +73,7 @@ export type SchoolMinAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
 }
@@ -82,6 +86,7 @@ export type SchoolMaxAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
 }
@@ -94,6 +99,7 @@ export type SchoolCountAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
+  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
   _all?: true
@@ -179,6 +185,7 @@ export type SchoolGroupByOutputType = {
   disciplineId: string
   createdAt: Date
   updatedAt: Date
+  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
   _count: SchoolCountAggregateOutputType | null
@@ -212,10 +219,12 @@ export type SchoolWhereInput = {
   disciplineId?: Prisma.StringFilter<"School"> | string
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"School"> | string | null
   createdById?: Prisma.StringNullableFilter<"School"> | string | null
   updatedById?: Prisma.StringNullableFilter<"School"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
+  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
   courses?: Prisma.CourseListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -229,10 +238,12 @@ export type SchoolOrderByWithRelationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   institution?: Prisma.InstitutionOrderByWithRelationInput
   discipline?: Prisma.DisciplineOrderByWithRelationInput
+  defaultAccountCategory?: Prisma.AccountCategoryOrderByWithRelationInput
   courses?: Prisma.CourseOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
@@ -250,10 +261,12 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   disciplineId?: Prisma.StringFilter<"School"> | string
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"School"> | string | null
   createdById?: Prisma.StringNullableFilter<"School"> | string | null
   updatedById?: Prisma.StringNullableFilter<"School"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
+  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
   courses?: Prisma.CourseListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -267,6 +280,7 @@ export type SchoolOrderByWithAggregationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SchoolCountOrderByAggregateInput
@@ -285,6 +299,7 @@ export type SchoolScalarWhereWithAggregatesInput = {
   disciplineId?: Prisma.StringWithAggregatesFilter<"School"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
+  defaultAccountCategoryId?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
 }
@@ -297,6 +312,7 @@ export type SchoolCreateInput = {
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
   discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
@@ -310,6 +326,7 @@ export type SchoolUncheckedCreateInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
@@ -323,6 +340,7 @@ export type SchoolUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
@@ -336,6 +354,7 @@ export type SchoolUncheckedUpdateInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
@@ -349,6 +368,7 @@ export type SchoolCreateManyInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
 }
@@ -369,6 +389,7 @@ export type SchoolUncheckedUpdateManyInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -397,6 +418,7 @@ export type SchoolCountOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -409,6 +431,7 @@ export type SchoolMaxOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -421,6 +444,7 @@ export type SchoolMinOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -612,6 +636,48 @@ export type SchoolUpdateOneRequiredWithoutCoursesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutCoursesInput, Prisma.SchoolUpdateWithoutCoursesInput>, Prisma.SchoolUncheckedUpdateWithoutCoursesInput>
 }
 
+export type SchoolCreateNestedManyWithoutDefaultAccountCategoryInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput> | Prisma.SchoolCreateWithoutDefaultAccountCategoryInput[] | Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput[]
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput | Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput[]
+  createMany?: Prisma.SchoolCreateManyDefaultAccountCategoryInputEnvelope
+  connect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+}
+
+export type SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput> | Prisma.SchoolCreateWithoutDefaultAccountCategoryInput[] | Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput[]
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput | Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput[]
+  createMany?: Prisma.SchoolCreateManyDefaultAccountCategoryInputEnvelope
+  connect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+}
+
+export type SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput> | Prisma.SchoolCreateWithoutDefaultAccountCategoryInput[] | Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput[]
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput | Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput[]
+  upsert?: Prisma.SchoolUpsertWithWhereUniqueWithoutDefaultAccountCategoryInput | Prisma.SchoolUpsertWithWhereUniqueWithoutDefaultAccountCategoryInput[]
+  createMany?: Prisma.SchoolCreateManyDefaultAccountCategoryInputEnvelope
+  set?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  disconnect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  delete?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  connect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  update?: Prisma.SchoolUpdateWithWhereUniqueWithoutDefaultAccountCategoryInput | Prisma.SchoolUpdateWithWhereUniqueWithoutDefaultAccountCategoryInput[]
+  updateMany?: Prisma.SchoolUpdateManyWithWhereWithoutDefaultAccountCategoryInput | Prisma.SchoolUpdateManyWithWhereWithoutDefaultAccountCategoryInput[]
+  deleteMany?: Prisma.SchoolScalarWhereInput | Prisma.SchoolScalarWhereInput[]
+}
+
+export type SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput> | Prisma.SchoolCreateWithoutDefaultAccountCategoryInput[] | Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput[]
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput | Prisma.SchoolCreateOrConnectWithoutDefaultAccountCategoryInput[]
+  upsert?: Prisma.SchoolUpsertWithWhereUniqueWithoutDefaultAccountCategoryInput | Prisma.SchoolUpsertWithWhereUniqueWithoutDefaultAccountCategoryInput[]
+  createMany?: Prisma.SchoolCreateManyDefaultAccountCategoryInputEnvelope
+  set?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  disconnect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  delete?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  connect?: Prisma.SchoolWhereUniqueInput | Prisma.SchoolWhereUniqueInput[]
+  update?: Prisma.SchoolUpdateWithWhereUniqueWithoutDefaultAccountCategoryInput | Prisma.SchoolUpdateWithWhereUniqueWithoutDefaultAccountCategoryInput[]
+  updateMany?: Prisma.SchoolUpdateManyWithWhereWithoutDefaultAccountCategoryInput | Prisma.SchoolUpdateManyWithWhereWithoutDefaultAccountCategoryInput[]
+  deleteMany?: Prisma.SchoolScalarWhereInput | Prisma.SchoolScalarWhereInput[]
+}
+
 export type SchoolCreateWithoutDisciplineInput = {
   id?: string
   name: string
@@ -619,6 +685,7 @@ export type SchoolCreateWithoutDisciplineInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
@@ -631,6 +698,7 @@ export type SchoolUncheckedCreateWithoutDisciplineInput = {
   institutionId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
@@ -673,6 +741,7 @@ export type SchoolScalarWhereInput = {
   disciplineId?: Prisma.StringFilter<"School"> | string
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"School"> | string | null
   createdById?: Prisma.StringNullableFilter<"School"> | string | null
   updatedById?: Prisma.StringNullableFilter<"School"> | string | null
 }
@@ -684,6 +753,7 @@ export type SchoolCreateWithoutInstitutionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
@@ -696,6 +766,7 @@ export type SchoolUncheckedCreateWithoutInstitutionInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
@@ -735,6 +806,7 @@ export type SchoolCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
   discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
 }
@@ -747,6 +819,7 @@ export type SchoolUncheckedCreateWithoutCreatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   updatedById?: string | null
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
 }
@@ -769,6 +842,7 @@ export type SchoolCreateWithoutUpdatedByInput = {
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
   discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
 }
@@ -781,6 +855,7 @@ export type SchoolUncheckedCreateWithoutUpdatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
 }
@@ -835,6 +910,7 @@ export type SchoolCreateWithoutCoursesInput = {
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
   discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutSchoolsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
 }
@@ -847,6 +923,7 @@ export type SchoolUncheckedCreateWithoutCoursesInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
 }
@@ -875,6 +952,7 @@ export type SchoolUpdateWithoutCoursesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
 }
@@ -887,8 +965,61 @@ export type SchoolUncheckedUpdateWithoutCoursesInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SchoolCreateWithoutDefaultAccountCategoryInput = {
+  id?: string
+  name: string
+  shortName?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  institution: Prisma.InstitutionCreateNestedOneWithoutSchoolsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutSchoolsInput
+  courses?: Prisma.CourseCreateNestedManyWithoutSchoolInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSchoolsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSchoolsInput
+}
+
+export type SchoolUncheckedCreateWithoutDefaultAccountCategoryInput = {
+  id?: string
+  name: string
+  shortName?: string | null
+  institutionId: string
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutDefaultAccountCategoryInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput>
+}
+
+export type SchoolCreateManyDefaultAccountCategoryInputEnvelope = {
+  data: Prisma.SchoolCreateManyDefaultAccountCategoryInput | Prisma.SchoolCreateManyDefaultAccountCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type SchoolUpsertWithWhereUniqueWithoutDefaultAccountCategoryInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedUpdateWithoutDefaultAccountCategoryInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedCreateWithoutDefaultAccountCategoryInput>
+}
+
+export type SchoolUpdateWithWhereUniqueWithoutDefaultAccountCategoryInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutDefaultAccountCategoryInput, Prisma.SchoolUncheckedUpdateWithoutDefaultAccountCategoryInput>
+}
+
+export type SchoolUpdateManyWithWhereWithoutDefaultAccountCategoryInput = {
+  where: Prisma.SchoolScalarWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateManyMutationInput, Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryInput>
 }
 
 export type SchoolCreateManyDisciplineInput = {
@@ -898,6 +1029,7 @@ export type SchoolCreateManyDisciplineInput = {
   institutionId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
 }
@@ -909,6 +1041,7 @@ export type SchoolUpdateWithoutDisciplineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
@@ -921,6 +1054,7 @@ export type SchoolUncheckedUpdateWithoutDisciplineInput = {
   institutionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
@@ -933,6 +1067,7 @@ export type SchoolUncheckedUpdateManyWithoutDisciplineInput = {
   institutionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -944,6 +1079,7 @@ export type SchoolCreateManyInstitutionInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
 }
@@ -955,6 +1091,7 @@ export type SchoolUpdateWithoutInstitutionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
@@ -967,6 +1104,7 @@ export type SchoolUncheckedUpdateWithoutInstitutionInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
@@ -979,6 +1117,7 @@ export type SchoolUncheckedUpdateManyWithoutInstitutionInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -991,6 +1130,7 @@ export type SchoolCreateManyCreatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   updatedById?: string | null
 }
 
@@ -1002,6 +1142,7 @@ export type SchoolCreateManyUpdatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  defaultAccountCategoryId?: string | null
   createdById?: string | null
 }
 
@@ -1013,6 +1154,7 @@ export type SchoolUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
 }
@@ -1025,6 +1167,7 @@ export type SchoolUncheckedUpdateWithoutCreatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
 }
@@ -1037,6 +1180,7 @@ export type SchoolUncheckedUpdateManyWithoutCreatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1048,6 +1192,7 @@ export type SchoolUpdateWithoutUpdatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
   discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutSchoolsNestedInput
   courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
 }
@@ -1060,6 +1205,7 @@ export type SchoolUncheckedUpdateWithoutUpdatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
 }
@@ -1072,7 +1218,58 @@ export type SchoolUncheckedUpdateManyWithoutUpdatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SchoolCreateManyDefaultAccountCategoryInput = {
+  id?: string
+  name: string
+  shortName?: string | null
+  institutionId: string
+  disciplineId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type SchoolUpdateWithoutDefaultAccountCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutSchoolsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutSchoolsNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutSchoolNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedSchoolsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSchoolsNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutDefaultAccountCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institutionId?: Prisma.StringFieldUpdateOperationsInput | string
+  disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1114,10 +1311,12 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   courses?: boolean | Prisma.School$coursesArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
@@ -1132,10 +1331,12 @@ export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["school"]>
@@ -1148,10 +1349,12 @@ export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["school"]>
@@ -1164,14 +1367,16 @@ export type SchoolSelectScalar = {
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortName" | "institutionId" | "disciplineId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["school"]>
+export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortName" | "institutionId" | "disciplineId" | "createdAt" | "updatedAt" | "defaultAccountCategoryId" | "createdById" | "updatedById", ExtArgs["result"]["school"]>
 export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   courses?: boolean | Prisma.School$coursesArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
@@ -1180,12 +1385,14 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type SchoolIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
 }
 export type SchoolIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.School$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.School$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.School$updatedByArgs<ExtArgs>
 }
@@ -1195,6 +1402,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     institution: Prisma.$InstitutionPayload<ExtArgs>
     discipline: Prisma.$DisciplinePayload<ExtArgs>
+    defaultAccountCategory: Prisma.$AccountCategoryPayload<ExtArgs> | null
     courses: Prisma.$CoursePayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
@@ -1207,6 +1415,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     disciplineId: string
     createdAt: Date
     updatedAt: Date
+    defaultAccountCategoryId: string | null
     createdById: string | null
     updatedById: string | null
   }, ExtArgs["result"]["school"]>
@@ -1605,6 +1814,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   discipline<T extends Prisma.DisciplineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DisciplineDefaultArgs<ExtArgs>>): Prisma.Prisma__DisciplineClient<runtime.Types.Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  defaultAccountCategory<T extends Prisma.School$defaultAccountCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$defaultAccountCategoryArgs<ExtArgs>>): Prisma.Prisma__AccountCategoryClient<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   courses<T extends Prisma.School$coursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.School$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.School$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1644,6 +1854,7 @@ export interface SchoolFieldRefs {
   readonly disciplineId: Prisma.FieldRef<"School", 'String'>
   readonly createdAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"School", 'DateTime'>
+  readonly defaultAccountCategoryId: Prisma.FieldRef<"School", 'String'>
   readonly createdById: Prisma.FieldRef<"School", 'String'>
   readonly updatedById: Prisma.FieldRef<"School", 'String'>
 }
@@ -2039,6 +2250,25 @@ export type SchoolDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Schools to delete.
    */
   limit?: number
+}
+
+/**
+ * School.defaultAccountCategory
+ */
+export type School$defaultAccountCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountCategory
+   */
+  select?: Prisma.AccountCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountCategory
+   */
+  omit?: Prisma.AccountCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountCategoryInclude<ExtArgs> | null
+  where?: Prisma.AccountCategoryWhereInput
 }
 
 /**

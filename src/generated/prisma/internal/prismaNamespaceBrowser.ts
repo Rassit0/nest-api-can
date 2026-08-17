@@ -94,6 +94,7 @@ export const ModelName = {
   StudentMembership: 'StudentMembership',
   StudentMembershipHistory: 'StudentMembershipHistory',
   StudentMembershipPause: 'StudentMembershipPause',
+  CycleEnrollment: 'CycleEnrollment',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
@@ -235,6 +236,7 @@ export const ClubScalarFieldEnum = {
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -719,6 +721,7 @@ export const SchoolScalarFieldEnum = {
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -815,6 +818,7 @@ export const CourseSeasonBillingConfigScalarFieldEnum = {
   prorateLastRecurringFee: 'prorateLastRecurringFee',
   prorateRegistrationFee: 'prorateRegistrationFee',
   prorateSeasonFee: 'prorateSeasonFee',
+  prorationEnabled: 'prorationEnabled',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -901,6 +905,24 @@ export const StudentMembershipPauseScalarFieldEnum = {
 } as const
 
 export type StudentMembershipPauseScalarFieldEnum = (typeof StudentMembershipPauseScalarFieldEnum)[keyof typeof StudentMembershipPauseScalarFieldEnum]
+
+
+export const CycleEnrollmentScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  courseSeasonId: 'courseSeasonId',
+  chargeId: 'chargeId',
+  cycleStartDate: 'cycleStartDate',
+  cycleEndDate: 'cycleEndDate',
+  effectiveStartDate: 'effectiveStartDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CycleEnrollmentScalarFieldEnum = (typeof CycleEnrollmentScalarFieldEnum)[keyof typeof CycleEnrollmentScalarFieldEnum]
 
 
 export const StudentDiscountScalarFieldEnum = {
@@ -1135,9 +1157,14 @@ export type EventMaterializationLogScalarFieldEnum = (typeof EventMaterializatio
 
 export const AccountCategoryScalarFieldEnum = {
   id: 'id',
+  code: 'code',
   name: 'name',
   description: 'description',
+  receiptSeries: 'receiptSeries',
+  isSystem: 'isSystem',
+  isActive: 'isActive',
   type: 'type',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',

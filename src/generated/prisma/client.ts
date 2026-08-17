@@ -268,6 +268,11 @@ export type StudentMembershipHistory = Prisma.StudentMembershipHistoryModel
  */
 export type StudentMembershipPause = Prisma.StudentMembershipPauseModel
 /**
+ * Model CycleEnrollment
+ * 
+ */
+export type CycleEnrollment = Prisma.CycleEnrollmentModel
+/**
  * Model StudentDiscount
  * 
  */

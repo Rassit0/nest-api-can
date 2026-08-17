@@ -2,8 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StudentAdvanceChargeService } from './student-advance-charge.service';
 import { PrismaService } from 'src/prisma.service';
 import { StudentMembershipRepository } from '../repositories/student-membership.repository';
-import { StudentGenerationService } from './student-generation.service';
-import { StudentPreviewService } from './student-preview.service';
 import { BadRequestException } from '@nestjs/common';
 import {
   SeasonStatus,
@@ -12,173 +10,141 @@ import {
 } from 'src/generated/prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-describe('StudentAdvanceChargeService', () => {
+describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycles)', () => {
   let service: StudentAdvanceChargeService;
-  let prismaService: PrismaService;
-  let membershipRepo: StudentMembershipRepository;
-  let generationService: StudentGenerationService;
-  let previewService: StudentPreviewService;
+  let prismaService: any;
+  let membershipRepo: any;
 
   beforeEach(async () => {
+    prismaService = {
+      $transaction: jest.fn(async (cb) => {
+        return await cb(prismaService);
+      }),
+      $queryRaw: jest.fn().mockResolvedValue([{ maxMembers: null }]),
+      cycleEnrollment: {
+        findMany: jest.fn(),
+        create: jest.fn(),
+      },
+      charge: {
+        create: jest.fn().mockImplementation((data) => ({ id: 'mock-charge-id', ...data.data })),
+      },
+      studentCharge: {
+        create: jest.fn(),
+      }
+    };
+
+    membershipRepo = {
+      getMembershipOrThrow: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StudentAdvanceChargeService,
-        {
-          provide: PrismaService,
-          useValue: {
-            $transaction: jest.fn().mockImplementation((cb) => cb({})),
-          },
-        },
-        {
-          provide: StudentMembershipRepository,
-          useValue: {
-            getMembershipOrThrow: jest.fn(),
-          },
-        },
-        {
-          provide: StudentGenerationService,
-          useValue: {
-            findNextUngeneratedCycles: jest.fn(),
-            generateAdvanceCharges: jest.fn(),
-          },
-        },
-        {
-          provide: StudentPreviewService,
-          useValue: {
-            buildChargesBreakdown: jest.fn(),
-            extractAdvanceChargesFromCycles: jest.fn(),
-          },
-        },
+        { provide: PrismaService, useValue: prismaService },
+        { provide: StudentMembershipRepository, useValue: membershipRepo },
       ],
     }).compile();
 
-    service = module.get<StudentAdvanceChargeService>(
-      StudentAdvanceChargeService,
-    );
-    prismaService = module.get<PrismaService>(PrismaService);
-    membershipRepo = module.get<StudentMembershipRepository>(
-      StudentMembershipRepository,
-    );
-    generationService = module.get<StudentGenerationService>(
-      StudentGenerationService,
-    );
-    previewService = module.get<StudentPreviewService>(StudentPreviewService);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+    service = module.get<StudentAdvanceChargeService>(StudentAdvanceChargeService);
   });
 
   const getMockMembership = (overrides = {}) => ({
     id: 'mem-1',
     courseSeason: {
       status: StatusCourseSeason.ACTIVE,
-      season: { status: SeasonStatus.ACTIVE },
-      billingConfig: { billingType: SeasonBillingType.MONTHLY_ONLY },
+      season: { 
+        status: SeasonStatus.ACTIVE,
+        startDate: new Date('2026-08-01T00:00:00.000Z'),
+        endDate: new Date('2026-12-31T23:59:59.000Z'),
+      },
+      billingConfig: { 
+        billingType: SeasonBillingType.MONTHLY_ONLY,
+        billingFrequency: 'MONTHLY',
+        isEngineActive: true,
+        recurringFee: 100,
+        registrationFee: 0,
+      },
+      pauses: []
     },
-    paymentPlan: { isSinglePayment: false },
+    paymentPlan: { isSinglePayment: false, advanceCycles: 1 },
+    pauses: [],
+    studentDiscounts: [],
     ...overrides,
   });
 
   describe('previewAdvanceCharges', () => {
-    it('should throw BadRequestException if season is inactive', async () => {
-      const mockMembership = getMockMembership({
-        courseSeason: {
-          status: StatusCourseSeason.FINISHED,
-          season: { status: SeasonStatus.FINISHED },
-        },
-      });
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
-
-      await expect(service.previewAdvanceCharges('mem-1', 2)).rejects.toThrow(
-        BadRequestException,
-      );
-    });
-
-    it('should throw BadRequestException if billing is SINGLE_ONLY', async () => {
-      const mockMembership = getMockMembership({
-        courseSeason: {
-          status: StatusCourseSeason.ACTIVE,
-          season: { status: SeasonStatus.ACTIVE },
-          billingConfig: { billingType: SeasonBillingType.SINGLE_ONLY },
-        },
-      });
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
-
-      await expect(service.previewAdvanceCharges('mem-1', 2)).rejects.toThrow(
-        BadRequestException,
-      );
-    });
-
-    it('should throw BadRequestException if requesting more cycles than available', async () => {
+    it('should return empty if no cycles left', async () => {
       const mockMembership = getMockMembership();
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
-      (generationService.findNextUngeneratedCycles as jest.Mock).mockResolvedValue(
-        [{ id: 'cycle1' }], // Only 1 cycle available
-      );
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      // Mock that all 5 months are already enrolled
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([
+        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
+        { cycleStartDate: new Date('2026-09-01T00:00:00.000Z'), cycleEndDate: new Date('2026-10-01T00:00:00.000Z') },
+        { cycleStartDate: new Date('2026-10-01T00:00:00.000Z'), cycleEndDate: new Date('2026-11-01T00:00:00.000Z') },
+        { cycleStartDate: new Date('2026-11-01T00:00:00.000Z'), cycleEndDate: new Date('2026-12-01T00:00:00.000Z') },
+        { cycleStartDate: new Date('2026-12-01T00:00:00.000Z'), cycleEndDate: new Date('2027-01-01T00:00:00.000Z') },
+      ]);
 
-      await expect(service.previewAdvanceCharges('mem-1', 2)).rejects.toThrow(
-        BadRequestException,
-      );
+      const result = await service.previewAdvanceCharges('mem-1', 1);
+      expect(result.charges.length).toBe(0);
     });
 
-    it('should successfully preview charges', async () => {
+    it('should preview 2 future cycles and ignore previous ones', async () => {
       const mockMembership = getMockMembership();
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
-      const cycles = [{ id: 'cycle1' }, { id: 'cycle2' }];
-      (generationService.findNextUngeneratedCycles as jest.Mock).mockResolvedValue(
-        cycles,
-      );
-      (previewService.extractAdvanceChargesFromCycles as jest.Mock).mockReturnValue(
-        { success: true },
-      );
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      // Only August is enrolled
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([
+        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
+      ]);
 
       const result = await service.previewAdvanceCharges('mem-1', 2);
-      expect(result).toEqual({ success: true });
-      expect(previewService.extractAdvanceChargesFromCycles).toHaveBeenCalledWith(
-        cycles,
-      );
+      expect(result.charges.length).toBe(2);
+      expect(result.charges[0].cycleStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
+      expect(result.charges[1].cycleStartDate).toEqual(new Date('2026-10-01T00:00:00.000Z'));
+      
+      // effectiveStart must be equal to cycleStartDate (no late entry inheritance)
+      expect(result.charges[0].effectiveStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
+      expect(result.charges[1].effectiveStartDate).toEqual(new Date('2026-10-01T00:00:00.000Z'));
+    });
+
+    it('should ignore an exonerated cycle (CycleEnrollment exists but without Charge)', async () => {
+      const mockMembership = getMockMembership();
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      
+      // Simulate that August was exonerated. The student HAS the CycleEnrollment for August.
+      // Notice we don't even return Charge info here because the service DOES NOT query it.
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([
+        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
+      ]);
+
+      const result = await service.previewAdvanceCharges('mem-1', 1);
+      
+      // It should skip August and offer September, proving that the exoneration
+      // is respected just by the presence of CycleEnrollment.
+      expect(result.charges.length).toBe(1);
+      expect(result.charges[0].cycleStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
     });
   });
 
-  describe('generateAdvanceCharges', () => {
-    it('should successfully generate charges', async () => {
+  describe('purchaseAdvanceCycles', () => {
+    it('should successfully generate explicitly 2 charges for future cycles', async () => {
       const mockMembership = getMockMembership();
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
-      const cycles = [{ id: 'cycle1' }, { id: 'cycle2' }];
-      (generationService.findNextUngeneratedCycles as jest.Mock).mockResolvedValue(
-        cycles,
-      );
-      (generationService.generateAdvanceCharges as jest.Mock).mockResolvedValue(
-        cycles.length,
-      );
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([
+        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
+      ]);
 
-      const result = await service.generateAdvanceCharges('mem-1', 2);
+      const result = await service.purchaseAdvanceCycles('mem-1', 2);
 
-      expect(prismaService.$transaction).toHaveBeenCalled();
-      expect(generationService.generateAdvanceCharges).toHaveBeenCalledWith(
-        expect.anything(), // tx
-        mockMembership,
-        cycles,
-      );
+      expect(prismaService.charge.create).toHaveBeenCalledTimes(2);
+      expect(prismaService.cycleEnrollment.create).toHaveBeenCalledTimes(2);
       expect(result.message).toContain('exitosamente 2 cuotas');
     });
 
-    it('should handle unique constraint violations correctly', async () => {
+    it('should handle unique constraint violations correctly for concurrency', async () => {
       const mockMembership = getMockMembership();
-      (membershipRepo.getMembershipOrThrow as jest.Mock).mockResolvedValue(
-        mockMembership,
-      );
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([]);
       
       const error = new PrismaClientKnownRequestError('Unique constraint failed', {
         code: 'P2002',
@@ -186,9 +152,9 @@ describe('StudentAdvanceChargeService', () => {
         meta: { target: ['unique_index'] }
       });
 
-      (prismaService.$transaction as jest.Mock).mockRejectedValue(error);
+      prismaService.charge.create.mockRejectedValue(error);
 
-      await expect(service.generateAdvanceCharges('mem-1', 2)).rejects.toThrow(
+      await expect(service.purchaseAdvanceCycles('mem-1', 2)).rejects.toThrow(
         BadRequestException,
       );
     });

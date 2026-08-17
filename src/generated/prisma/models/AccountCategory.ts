@@ -26,9 +26,14 @@ export type AggregateAccountCategory = {
 
 export type AccountCategoryMinAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
   description: string | null
+  receiptSeries: string | null
+  isSystem: boolean | null
+  isActive: boolean | null
   type: $Enums.ChargeDirection | null
+  parentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -37,9 +42,14 @@ export type AccountCategoryMinAggregateOutputType = {
 
 export type AccountCategoryMaxAggregateOutputType = {
   id: string | null
+  code: string | null
   name: string | null
   description: string | null
+  receiptSeries: string | null
+  isSystem: boolean | null
+  isActive: boolean | null
   type: $Enums.ChargeDirection | null
+  parentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -48,9 +58,14 @@ export type AccountCategoryMaxAggregateOutputType = {
 
 export type AccountCategoryCountAggregateOutputType = {
   id: number
+  code: number
   name: number
   description: number
+  receiptSeries: number
+  isSystem: number
+  isActive: number
   type: number
+  parentId: number
   createdAt: number
   updatedAt: number
   createdById: number
@@ -61,9 +76,14 @@ export type AccountCategoryCountAggregateOutputType = {
 
 export type AccountCategoryMinAggregateInputType = {
   id?: true
+  code?: true
   name?: true
   description?: true
+  receiptSeries?: true
+  isSystem?: true
+  isActive?: true
   type?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -72,9 +92,14 @@ export type AccountCategoryMinAggregateInputType = {
 
 export type AccountCategoryMaxAggregateInputType = {
   id?: true
+  code?: true
   name?: true
   description?: true
+  receiptSeries?: true
+  isSystem?: true
+  isActive?: true
   type?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -83,9 +108,14 @@ export type AccountCategoryMaxAggregateInputType = {
 
 export type AccountCategoryCountAggregateInputType = {
   id?: true
+  code?: true
   name?: true
   description?: true
+  receiptSeries?: true
+  isSystem?: true
+  isActive?: true
   type?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -167,9 +197,14 @@ export type AccountCategoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 
 export type AccountCategoryGroupByOutputType = {
   id: string
+  code: string
   name: string
   description: string | null
+  receiptSeries: string | null
+  isSystem: boolean
+  isActive: boolean
   type: $Enums.ChargeDirection
+  parentId: string | null
   createdAt: Date
   updatedAt: Date
   createdById: string | null
@@ -199,54 +234,86 @@ export type AccountCategoryWhereInput = {
   OR?: Prisma.AccountCategoryWhereInput[]
   NOT?: Prisma.AccountCategoryWhereInput | Prisma.AccountCategoryWhereInput[]
   id?: Prisma.StringFilter<"AccountCategory"> | string
+  code?: Prisma.StringFilter<"AccountCategory"> | string
   name?: Prisma.StringFilter<"AccountCategory"> | string
   description?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  receiptSeries?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  isSystem?: Prisma.BoolFilter<"AccountCategory"> | boolean
+  isActive?: Prisma.BoolFilter<"AccountCategory"> | boolean
   type?: Prisma.EnumChargeDirectionFilter<"AccountCategory"> | $Enums.ChargeDirection
+  parentId?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  parent?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
+  children?: Prisma.AccountCategoryListRelationFilter
   accountCharges?: Prisma.AccountChargeListRelationFilter
+  schools?: Prisma.SchoolListRelationFilter
+  clubs?: Prisma.ClubListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type AccountCategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSystem?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  parent?: Prisma.AccountCategoryOrderByWithRelationInput
+  children?: Prisma.AccountCategoryOrderByRelationAggregateInput
   accountCharges?: Prisma.AccountChargeOrderByRelationAggregateInput
+  schools?: Prisma.SchoolOrderByRelationAggregateInput
+  clubs?: Prisma.ClubOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AccountCategoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  code?: string
   AND?: Prisma.AccountCategoryWhereInput | Prisma.AccountCategoryWhereInput[]
   OR?: Prisma.AccountCategoryWhereInput[]
   NOT?: Prisma.AccountCategoryWhereInput | Prisma.AccountCategoryWhereInput[]
   name?: Prisma.StringFilter<"AccountCategory"> | string
   description?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  receiptSeries?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  isSystem?: Prisma.BoolFilter<"AccountCategory"> | boolean
+  isActive?: Prisma.BoolFilter<"AccountCategory"> | boolean
   type?: Prisma.EnumChargeDirectionFilter<"AccountCategory"> | $Enums.ChargeDirection
+  parentId?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  parent?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
+  children?: Prisma.AccountCategoryListRelationFilter
   accountCharges?: Prisma.AccountChargeListRelationFilter
+  schools?: Prisma.SchoolListRelationFilter
+  clubs?: Prisma.ClubListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id">
+}, "id" | "code">
 
 export type AccountCategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSystem?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -261,9 +328,14 @@ export type AccountCategoryScalarWhereWithAggregatesInput = {
   OR?: Prisma.AccountCategoryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AccountCategoryScalarWhereWithAggregatesInput | Prisma.AccountCategoryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AccountCategory"> | string
+  code?: Prisma.StringWithAggregatesFilter<"AccountCategory"> | string
   name?: Prisma.StringWithAggregatesFilter<"AccountCategory"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"AccountCategory"> | string | null
+  receiptSeries?: Prisma.StringNullableWithAggregatesFilter<"AccountCategory"> | string | null
+  isSystem?: Prisma.BoolWithAggregatesFilter<"AccountCategory"> | boolean
+  isActive?: Prisma.BoolWithAggregatesFilter<"AccountCategory"> | boolean
   type?: Prisma.EnumChargeDirectionWithAggregatesFilter<"AccountCategory"> | $Enums.ChargeDirection
+  parentId?: Prisma.StringNullableWithAggregatesFilter<"AccountCategory"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AccountCategory"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AccountCategory"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"AccountCategory"> | string | null
@@ -272,57 +344,94 @@ export type AccountCategoryScalarWhereWithAggregatesInput = {
 
 export type AccountCategoryCreateInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
   createdAt?: Date | string
   updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
 }
 
 export type AccountCategoryUncheckedCreateInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
 }
 
 export type AccountCategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
 }
 
 export type AccountCategoryCreateManyInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -331,8 +440,12 @@ export type AccountCategoryCreateManyInput = {
 
 export type AccountCategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,13 +453,23 @@ export type AccountCategoryUpdateManyMutationInput = {
 
 export type AccountCategoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AccountCategoryNullableScalarRelationFilter = {
+  is?: Prisma.AccountCategoryWhereInput | null
+  isNot?: Prisma.AccountCategoryWhereInput | null
 }
 
 export type AccountCategoryListRelationFilter = {
@@ -361,9 +484,14 @@ export type AccountCategoryOrderByRelationAggregateInput = {
 
 export type AccountCategoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  isSystem?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -372,9 +500,14 @@ export type AccountCategoryCountOrderByAggregateInput = {
 
 export type AccountCategoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  isSystem?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -383,18 +516,34 @@ export type AccountCategoryMaxOrderByAggregateInput = {
 
 export type AccountCategoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  isSystem?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
 
-export type AccountCategoryNullableScalarRelationFilter = {
-  is?: Prisma.AccountCategoryWhereInput | null
-  isNot?: Prisma.AccountCategoryWhereInput | null
+export type AccountCategoryCreateNestedOneWithoutClubsInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutClubsInput, Prisma.AccountCategoryUncheckedCreateWithoutClubsInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutClubsInput
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+}
+
+export type AccountCategoryUpdateOneWithoutClubsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutClubsInput, Prisma.AccountCategoryUncheckedCreateWithoutClubsInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutClubsInput
+  upsert?: Prisma.AccountCategoryUpsertWithoutClubsInput
+  disconnect?: Prisma.AccountCategoryWhereInput | boolean
+  delete?: Prisma.AccountCategoryWhereInput | boolean
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountCategoryUpdateToOneWithWhereWithoutClubsInput, Prisma.AccountCategoryUpdateWithoutClubsInput>, Prisma.AccountCategoryUncheckedUpdateWithoutClubsInput>
 }
 
 export type AccountCategoryCreateNestedManyWithoutCreatedByInput = {
@@ -481,6 +630,80 @@ export type AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.AccountCategoryScalarWhereInput | Prisma.AccountCategoryScalarWhereInput[]
 }
 
+export type AccountCategoryCreateNestedOneWithoutSchoolsInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedCreateWithoutSchoolsInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutSchoolsInput
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+}
+
+export type AccountCategoryUpdateOneWithoutSchoolsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedCreateWithoutSchoolsInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutSchoolsInput
+  upsert?: Prisma.AccountCategoryUpsertWithoutSchoolsInput
+  disconnect?: Prisma.AccountCategoryWhereInput | boolean
+  delete?: Prisma.AccountCategoryWhereInput | boolean
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountCategoryUpdateToOneWithWhereWithoutSchoolsInput, Prisma.AccountCategoryUpdateWithoutSchoolsInput>, Prisma.AccountCategoryUncheckedUpdateWithoutSchoolsInput>
+}
+
+export type AccountCategoryCreateNestedOneWithoutChildrenInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutChildrenInput, Prisma.AccountCategoryUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutChildrenInput
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+}
+
+export type AccountCategoryCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput> | Prisma.AccountCategoryCreateWithoutParentInput[] | Prisma.AccountCategoryUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutParentInput | Prisma.AccountCategoryCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.AccountCategoryCreateManyParentInputEnvelope
+  connect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+}
+
+export type AccountCategoryUncheckedCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput> | Prisma.AccountCategoryCreateWithoutParentInput[] | Prisma.AccountCategoryUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutParentInput | Prisma.AccountCategoryCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.AccountCategoryCreateManyParentInputEnvelope
+  connect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+}
+
+export type AccountCategoryUpdateOneWithoutChildrenNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutChildrenInput, Prisma.AccountCategoryUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutChildrenInput
+  upsert?: Prisma.AccountCategoryUpsertWithoutChildrenInput
+  disconnect?: Prisma.AccountCategoryWhereInput | boolean
+  delete?: Prisma.AccountCategoryWhereInput | boolean
+  connect?: Prisma.AccountCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountCategoryUpdateToOneWithWhereWithoutChildrenInput, Prisma.AccountCategoryUpdateWithoutChildrenInput>, Prisma.AccountCategoryUncheckedUpdateWithoutChildrenInput>
+}
+
+export type AccountCategoryUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput> | Prisma.AccountCategoryCreateWithoutParentInput[] | Prisma.AccountCategoryUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutParentInput | Prisma.AccountCategoryCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.AccountCategoryUpsertWithWhereUniqueWithoutParentInput | Prisma.AccountCategoryUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.AccountCategoryCreateManyParentInputEnvelope
+  set?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  disconnect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  delete?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  connect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  update?: Prisma.AccountCategoryUpdateWithWhereUniqueWithoutParentInput | Prisma.AccountCategoryUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.AccountCategoryUpdateManyWithWhereWithoutParentInput | Prisma.AccountCategoryUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.AccountCategoryScalarWhereInput | Prisma.AccountCategoryScalarWhereInput[]
+}
+
+export type AccountCategoryUncheckedUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput> | Prisma.AccountCategoryCreateWithoutParentInput[] | Prisma.AccountCategoryUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutParentInput | Prisma.AccountCategoryCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.AccountCategoryUpsertWithWhereUniqueWithoutParentInput | Prisma.AccountCategoryUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.AccountCategoryCreateManyParentInputEnvelope
+  set?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  disconnect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  delete?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  connect?: Prisma.AccountCategoryWhereUniqueInput | Prisma.AccountCategoryWhereUniqueInput[]
+  update?: Prisma.AccountCategoryUpdateWithWhereUniqueWithoutParentInput | Prisma.AccountCategoryUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.AccountCategoryUpdateManyWithWhereWithoutParentInput | Prisma.AccountCategoryUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.AccountCategoryScalarWhereInput | Prisma.AccountCategoryScalarWhereInput[]
+}
+
 export type AccountCategoryCreateNestedOneWithoutAccountChargesInput = {
   create?: Prisma.XOR<Prisma.AccountCategoryCreateWithoutAccountChargesInput, Prisma.AccountCategoryUncheckedCreateWithoutAccountChargesInput>
   connectOrCreate?: Prisma.AccountCategoryCreateOrConnectWithoutAccountChargesInput
@@ -497,26 +720,134 @@ export type AccountCategoryUpdateOneWithoutAccountChargesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AccountCategoryUpdateToOneWithWhereWithoutAccountChargesInput, Prisma.AccountCategoryUpdateWithoutAccountChargesInput>, Prisma.AccountCategoryUncheckedUpdateWithoutAccountChargesInput>
 }
 
-export type AccountCategoryCreateWithoutCreatedByInput = {
+export type AccountCategoryCreateWithoutClubsInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
   createdAt?: Date | string
   updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
+}
+
+export type AccountCategoryUncheckedCreateWithoutClubsInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+}
+
+export type AccountCategoryCreateOrConnectWithoutClubsInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutClubsInput, Prisma.AccountCategoryUncheckedCreateWithoutClubsInput>
+}
+
+export type AccountCategoryUpsertWithoutClubsInput = {
+  update: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutClubsInput, Prisma.AccountCategoryUncheckedUpdateWithoutClubsInput>
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutClubsInput, Prisma.AccountCategoryUncheckedCreateWithoutClubsInput>
+  where?: Prisma.AccountCategoryWhereInput
+}
+
+export type AccountCategoryUpdateToOneWithWhereWithoutClubsInput = {
+  where?: Prisma.AccountCategoryWhereInput
+  data: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutClubsInput, Prisma.AccountCategoryUncheckedUpdateWithoutClubsInput>
+}
+
+export type AccountCategoryUpdateWithoutClubsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
+}
+
+export type AccountCategoryUncheckedUpdateWithoutClubsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+}
+
+export type AccountCategoryCreateWithoutCreatedByInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
 }
 
 export type AccountCategoryUncheckedCreateWithoutCreatedByInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
 }
 
 export type AccountCategoryCreateOrConnectWithoutCreatedByInput = {
@@ -531,24 +862,40 @@ export type AccountCategoryCreateManyCreatedByInputEnvelope = {
 
 export type AccountCategoryCreateWithoutUpdatedByInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
   createdAt?: Date | string
   updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
 }
 
 export type AccountCategoryUncheckedCreateWithoutUpdatedByInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
   accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
 }
 
 export type AccountCategoryCreateOrConnectWithoutUpdatedByInput = {
@@ -582,9 +929,14 @@ export type AccountCategoryScalarWhereInput = {
   OR?: Prisma.AccountCategoryScalarWhereInput[]
   NOT?: Prisma.AccountCategoryScalarWhereInput | Prisma.AccountCategoryScalarWhereInput[]
   id?: Prisma.StringFilter<"AccountCategory"> | string
+  code?: Prisma.StringFilter<"AccountCategory"> | string
   name?: Prisma.StringFilter<"AccountCategory"> | string
   description?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  receiptSeries?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
+  isSystem?: Prisma.BoolFilter<"AccountCategory"> | boolean
+  isActive?: Prisma.BoolFilter<"AccountCategory"> | boolean
   type?: Prisma.EnumChargeDirectionFilter<"AccountCategory"> | $Enums.ChargeDirection
+  parentId?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"AccountCategory"> | string | null
@@ -607,26 +959,290 @@ export type AccountCategoryUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.AccountCategoryUpdateManyMutationInput, Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
-export type AccountCategoryCreateWithoutAccountChargesInput = {
+export type AccountCategoryCreateWithoutSchoolsInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
   createdAt?: Date | string
   updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
+}
+
+export type AccountCategoryUncheckedCreateWithoutSchoolsInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+}
+
+export type AccountCategoryCreateOrConnectWithoutSchoolsInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedCreateWithoutSchoolsInput>
+}
+
+export type AccountCategoryUpsertWithoutSchoolsInput = {
+  update: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedUpdateWithoutSchoolsInput>
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedCreateWithoutSchoolsInput>
+  where?: Prisma.AccountCategoryWhereInput
+}
+
+export type AccountCategoryUpdateToOneWithWhereWithoutSchoolsInput = {
+  where?: Prisma.AccountCategoryWhereInput
+  data: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutSchoolsInput, Prisma.AccountCategoryUncheckedUpdateWithoutSchoolsInput>
+}
+
+export type AccountCategoryUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
+}
+
+export type AccountCategoryUncheckedUpdateWithoutSchoolsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+}
+
+export type AccountCategoryCreateWithoutChildrenInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
+}
+
+export type AccountCategoryUncheckedCreateWithoutChildrenInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+}
+
+export type AccountCategoryCreateOrConnectWithoutChildrenInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutChildrenInput, Prisma.AccountCategoryUncheckedCreateWithoutChildrenInput>
+}
+
+export type AccountCategoryCreateWithoutParentInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
+}
+
+export type AccountCategoryUncheckedCreateWithoutParentInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
+  accountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCategoryInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+}
+
+export type AccountCategoryCreateOrConnectWithoutParentInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput>
+}
+
+export type AccountCategoryCreateManyParentInputEnvelope = {
+  data: Prisma.AccountCategoryCreateManyParentInput | Prisma.AccountCategoryCreateManyParentInput[]
+  skipDuplicates?: boolean
+}
+
+export type AccountCategoryUpsertWithoutChildrenInput = {
+  update: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutChildrenInput, Prisma.AccountCategoryUncheckedUpdateWithoutChildrenInput>
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutChildrenInput, Prisma.AccountCategoryUncheckedCreateWithoutChildrenInput>
+  where?: Prisma.AccountCategoryWhereInput
+}
+
+export type AccountCategoryUpdateToOneWithWhereWithoutChildrenInput = {
+  where?: Prisma.AccountCategoryWhereInput
+  data: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutChildrenInput, Prisma.AccountCategoryUncheckedUpdateWithoutChildrenInput>
+}
+
+export type AccountCategoryUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
+}
+
+export type AccountCategoryUncheckedUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+}
+
+export type AccountCategoryUpsertWithWhereUniqueWithoutParentInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutParentInput, Prisma.AccountCategoryUncheckedUpdateWithoutParentInput>
+  create: Prisma.XOR<Prisma.AccountCategoryCreateWithoutParentInput, Prisma.AccountCategoryUncheckedCreateWithoutParentInput>
+}
+
+export type AccountCategoryUpdateWithWhereUniqueWithoutParentInput = {
+  where: Prisma.AccountCategoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountCategoryUpdateWithoutParentInput, Prisma.AccountCategoryUncheckedUpdateWithoutParentInput>
+}
+
+export type AccountCategoryUpdateManyWithWhereWithoutParentInput = {
+  where: Prisma.AccountCategoryScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountCategoryUpdateManyMutationInput, Prisma.AccountCategoryUncheckedUpdateManyWithoutParentInput>
+}
+
+export type AccountCategoryCreateWithoutAccountChargesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.AccountCategoryCreateNestedOneWithoutChildrenInput
+  children?: Prisma.AccountCategoryCreateNestedManyWithoutParentInput
+  schools?: Prisma.SchoolCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDefaultAccountCategoryInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountCategoriesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountCategoriesInput
 }
 
 export type AccountCategoryUncheckedCreateWithoutAccountChargesInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  children?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutParentInput
+  schools?: Prisma.SchoolUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDefaultAccountCategoryInput
 }
 
 export type AccountCategoryCreateOrConnectWithoutAccountChargesInput = {
@@ -647,31 +1263,52 @@ export type AccountCategoryUpdateToOneWithWhereWithoutAccountChargesInput = {
 
 export type AccountCategoryUpdateWithoutAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateWithoutAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
 }
 
 export type AccountCategoryCreateManyCreatedByInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
@@ -679,9 +1316,14 @@ export type AccountCategoryCreateManyCreatedByInput = {
 
 export type AccountCategoryCreateManyUpdatedByInput = {
   id?: string
+  code: string
   name: string
   description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
   type: $Enums.ChargeDirection
+  parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -689,31 +1331,52 @@ export type AccountCategoryCreateManyUpdatedByInput = {
 
 export type AccountCategoryUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -721,34 +1384,123 @@ export type AccountCategoryUncheckedUpdateManyWithoutCreatedByInput = {
 
 export type AccountCategoryUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.AccountCategoryUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
   accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
 }
 
 export type AccountCategoryUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AccountCategoryCreateManyParentInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  receiptSeries?: string | null
+  isSystem?: boolean
+  isActive?: boolean
+  type: $Enums.ChargeDirection
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type AccountCategoryUpdateWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.AccountCategoryUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDefaultAccountCategoryNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountCategoriesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountCategoriesNestedInput
+}
+
+export type AccountCategoryUncheckedUpdateWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.AccountCategoryUncheckedUpdateManyWithoutParentNestedInput
+  accountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryNestedInput
+  schools?: Prisma.SchoolUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDefaultAccountCategoryNestedInput
+}
+
+export type AccountCategoryUncheckedUpdateManyWithoutParentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -757,11 +1509,17 @@ export type AccountCategoryUncheckedUpdateManyWithoutUpdatedByInput = {
  */
 
 export type AccountCategoryCountOutputType = {
+  children: number
   accountCharges: number
+  schools: number
+  clubs: number
 }
 
 export type AccountCategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  children?: boolean | AccountCategoryCountOutputTypeCountChildrenArgs
   accountCharges?: boolean | AccountCategoryCountOutputTypeCountAccountChargesArgs
+  schools?: boolean | AccountCategoryCountOutputTypeCountSchoolsArgs
+  clubs?: boolean | AccountCategoryCountOutputTypeCountClubsArgs
 }
 
 /**
@@ -777,21 +1535,51 @@ export type AccountCategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
 /**
  * AccountCategoryCountOutputType without action
  */
+export type AccountCategoryCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountCategoryWhereInput
+}
+
+/**
+ * AccountCategoryCountOutputType without action
+ */
 export type AccountCategoryCountOutputTypeCountAccountChargesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AccountChargeWhereInput
+}
+
+/**
+ * AccountCategoryCountOutputType without action
+ */
+export type AccountCategoryCountOutputTypeCountSchoolsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SchoolWhereInput
+}
+
+/**
+ * AccountCategoryCountOutputType without action
+ */
+export type AccountCategoryCountOutputTypeCountClubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubWhereInput
 }
 
 
 export type AccountCategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
+  receiptSeries?: boolean
+  isSystem?: boolean
+  isActive?: boolean
   type?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
+  children?: boolean | Prisma.AccountCategory$childrenArgs<ExtArgs>
   accountCharges?: boolean | Prisma.AccountCategory$accountChargesArgs<ExtArgs>
+  schools?: boolean | Prisma.AccountCategory$schoolsArgs<ExtArgs>
+  clubs?: boolean | Prisma.AccountCategory$clubsArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -799,53 +1587,76 @@ export type AccountCategorySelect<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type AccountCategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
+  receiptSeries?: boolean
+  isSystem?: boolean
+  isActive?: boolean
   type?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["accountCategory"]>
 
 export type AccountCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
+  receiptSeries?: boolean
+  isSystem?: boolean
+  isActive?: boolean
   type?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["accountCategory"]>
 
 export type AccountCategorySelectScalar = {
   id?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
+  receiptSeries?: boolean
+  isSystem?: boolean
+  isActive?: boolean
   type?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type AccountCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["accountCategory"]>
+export type AccountCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "receiptSeries" | "isSystem" | "isActive" | "type" | "parentId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["accountCategory"]>
 export type AccountCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
+  children?: boolean | Prisma.AccountCategory$childrenArgs<ExtArgs>
   accountCharges?: boolean | Prisma.AccountCategory$accountChargesArgs<ExtArgs>
+  schools?: boolean | Prisma.AccountCategory$schoolsArgs<ExtArgs>
+  clubs?: boolean | Prisma.AccountCategory$clubsArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AccountCategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
 }
 export type AccountCategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parent?: boolean | Prisma.AccountCategory$parentArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCategory$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCategory$updatedByArgs<ExtArgs>
 }
@@ -853,15 +1664,24 @@ export type AccountCategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type $AccountCategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AccountCategory"
   objects: {
+    parent: Prisma.$AccountCategoryPayload<ExtArgs> | null
+    children: Prisma.$AccountCategoryPayload<ExtArgs>[]
     accountCharges: Prisma.$AccountChargePayload<ExtArgs>[]
+    schools: Prisma.$SchoolPayload<ExtArgs>[]
+    clubs: Prisma.$ClubPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    code: string
     name: string
     description: string | null
+    receiptSeries: string | null
+    isSystem: boolean
+    isActive: boolean
     type: $Enums.ChargeDirection
+    parentId: string | null
     createdAt: Date
     updatedAt: Date
     createdById: string | null
@@ -1260,7 +2080,11 @@ readonly fields: AccountCategoryFieldRefs;
  */
 export interface Prisma__AccountCategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  parent<T extends Prisma.AccountCategory$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$parentArgs<ExtArgs>>): Prisma.Prisma__AccountCategoryClient<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  children<T extends Prisma.AccountCategory$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accountCharges<T extends Prisma.AccountCategory$accountChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$accountChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  schools<T extends Prisma.AccountCategory$schoolsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$schoolsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubs<T extends Prisma.AccountCategory$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.AccountCategory$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.AccountCategory$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCategory$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1293,9 +2117,14 @@ export interface Prisma__AccountCategoryClient<T, Null = never, ExtArgs extends 
  */
 export interface AccountCategoryFieldRefs {
   readonly id: Prisma.FieldRef<"AccountCategory", 'String'>
+  readonly code: Prisma.FieldRef<"AccountCategory", 'String'>
   readonly name: Prisma.FieldRef<"AccountCategory", 'String'>
   readonly description: Prisma.FieldRef<"AccountCategory", 'String'>
+  readonly receiptSeries: Prisma.FieldRef<"AccountCategory", 'String'>
+  readonly isSystem: Prisma.FieldRef<"AccountCategory", 'Boolean'>
+  readonly isActive: Prisma.FieldRef<"AccountCategory", 'Boolean'>
   readonly type: Prisma.FieldRef<"AccountCategory", 'ChargeDirection'>
+  readonly parentId: Prisma.FieldRef<"AccountCategory", 'String'>
   readonly createdAt: Prisma.FieldRef<"AccountCategory", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AccountCategory", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"AccountCategory", 'String'>
@@ -1696,6 +2525,49 @@ export type AccountCategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
+ * AccountCategory.parent
+ */
+export type AccountCategory$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountCategory
+   */
+  select?: Prisma.AccountCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountCategory
+   */
+  omit?: Prisma.AccountCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountCategoryInclude<ExtArgs> | null
+  where?: Prisma.AccountCategoryWhereInput
+}
+
+/**
+ * AccountCategory.children
+ */
+export type AccountCategory$childrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountCategory
+   */
+  select?: Prisma.AccountCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountCategory
+   */
+  omit?: Prisma.AccountCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountCategoryInclude<ExtArgs> | null
+  where?: Prisma.AccountCategoryWhereInput
+  orderBy?: Prisma.AccountCategoryOrderByWithRelationInput | Prisma.AccountCategoryOrderByWithRelationInput[]
+  cursor?: Prisma.AccountCategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountCategoryScalarFieldEnum | Prisma.AccountCategoryScalarFieldEnum[]
+}
+
+/**
  * AccountCategory.accountCharges
  */
 export type AccountCategory$accountChargesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1717,6 +2589,54 @@ export type AccountCategory$accountChargesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.AccountChargeScalarFieldEnum | Prisma.AccountChargeScalarFieldEnum[]
+}
+
+/**
+ * AccountCategory.schools
+ */
+export type AccountCategory$schoolsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the School
+   */
+  select?: Prisma.SchoolSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the School
+   */
+  omit?: Prisma.SchoolOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolInclude<ExtArgs> | null
+  where?: Prisma.SchoolWhereInput
+  orderBy?: Prisma.SchoolOrderByWithRelationInput | Prisma.SchoolOrderByWithRelationInput[]
+  cursor?: Prisma.SchoolWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SchoolScalarFieldEnum | Prisma.SchoolScalarFieldEnum[]
+}
+
+/**
+ * AccountCategory.clubs
+ */
+export type AccountCategory$clubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Club
+   */
+  select?: Prisma.ClubSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Club
+   */
+  omit?: Prisma.ClubOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubInclude<ExtArgs> | null
+  where?: Prisma.ClubWhereInput
+  orderBy?: Prisma.ClubOrderByWithRelationInput | Prisma.ClubOrderByWithRelationInput[]
+  cursor?: Prisma.ClubWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubScalarFieldEnum | Prisma.ClubScalarFieldEnum[]
 }
 
 /**

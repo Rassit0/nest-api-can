@@ -435,6 +435,7 @@ export const ModelName = {
   StudentMembership: 'StudentMembership',
   StudentMembershipHistory: 'StudentMembershipHistory',
   StudentMembershipPause: 'StudentMembershipPause',
+  CycleEnrollment: 'CycleEnrollment',
   StudentDiscount: 'StudentDiscount',
   StudentCharge: 'StudentCharge',
   SessionIncident: 'SessionIncident',
@@ -470,7 +471,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3804,6 +3805,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CycleEnrollment: {
+      payload: Prisma.$CycleEnrollmentPayload<ExtArgs>
+      fields: Prisma.CycleEnrollmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CycleEnrollmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CycleEnrollmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        findFirst: {
+          args: Prisma.CycleEnrollmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CycleEnrollmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        findMany: {
+          args: Prisma.CycleEnrollmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>[]
+        }
+        create: {
+          args: Prisma.CycleEnrollmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        createMany: {
+          args: Prisma.CycleEnrollmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CycleEnrollmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>[]
+        }
+        delete: {
+          args: Prisma.CycleEnrollmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        update: {
+          args: Prisma.CycleEnrollmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.CycleEnrollmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CycleEnrollmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CycleEnrollmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.CycleEnrollmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CycleEnrollmentPayload>
+        }
+        aggregate: {
+          args: Prisma.CycleEnrollmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCycleEnrollment>
+        }
+        groupBy: {
+          args: Prisma.CycleEnrollmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CycleEnrollmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CycleEnrollmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CycleEnrollmentCountAggregateOutputType> | number
+        }
+      }
+    }
     StudentDiscount: {
       payload: Prisma.$StudentDiscountPayload<ExtArgs>
       fields: Prisma.StudentDiscountFieldRefs
@@ -5426,6 +5501,7 @@ export const ClubScalarFieldEnum = {
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5910,6 +5986,7 @@ export const SchoolScalarFieldEnum = {
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6006,6 +6083,7 @@ export const CourseSeasonBillingConfigScalarFieldEnum = {
   prorateLastRecurringFee: 'prorateLastRecurringFee',
   prorateRegistrationFee: 'prorateRegistrationFee',
   prorateSeasonFee: 'prorateSeasonFee',
+  prorationEnabled: 'prorationEnabled',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6092,6 +6170,24 @@ export const StudentMembershipPauseScalarFieldEnum = {
 } as const
 
 export type StudentMembershipPauseScalarFieldEnum = (typeof StudentMembershipPauseScalarFieldEnum)[keyof typeof StudentMembershipPauseScalarFieldEnum]
+
+
+export const CycleEnrollmentScalarFieldEnum = {
+  id: 'id',
+  studentMembershipId: 'studentMembershipId',
+  courseSeasonId: 'courseSeasonId',
+  chargeId: 'chargeId',
+  cycleStartDate: 'cycleStartDate',
+  cycleEndDate: 'cycleEndDate',
+  effectiveStartDate: 'effectiveStartDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CycleEnrollmentScalarFieldEnum = (typeof CycleEnrollmentScalarFieldEnum)[keyof typeof CycleEnrollmentScalarFieldEnum]
 
 
 export const StudentDiscountScalarFieldEnum = {
@@ -6326,9 +6422,14 @@ export type EventMaterializationLogScalarFieldEnum = (typeof EventMaterializatio
 
 export const AccountCategoryScalarFieldEnum = {
   id: 'id',
+  code: 'code',
   name: 'name',
   description: 'description',
+  receiptSeries: 'receiptSeries',
+  isSystem: 'isSystem',
+  isActive: 'isActive',
   type: 'type',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -6874,6 +6975,20 @@ export type ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> = FieldRe
 
 
 /**
+ * Reference to a field of type 'CycleEnrollmentStatus'
+ */
+export type EnumCycleEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CycleEnrollmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CycleEnrollmentStatus[]'
+ */
+export type ListEnumCycleEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CycleEnrollmentStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'EventType'
  */
 export type EnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType'>
@@ -7144,6 +7259,7 @@ export type GlobalOmitConfig = {
   studentMembership?: Prisma.StudentMembershipOmit
   studentMembershipHistory?: Prisma.StudentMembershipHistoryOmit
   studentMembershipPause?: Prisma.StudentMembershipPauseOmit
+  cycleEnrollment?: Prisma.CycleEnrollmentOmit
   studentDiscount?: Prisma.StudentDiscountOmit
   studentCharge?: Prisma.StudentChargeOmit
   sessionIncident?: Prisma.SessionIncidentOmit

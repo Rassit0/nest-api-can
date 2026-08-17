@@ -16,6 +16,8 @@ import {
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { CreateStudentMembershipPauseDto } from './dto/create-student-membership-pause.dto';
+import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
+import { TransferShiftDto } from './dto/transfer-shift.dto';
 
 export const studentMembershipSelect = {
   id: true,
@@ -198,47 +200,63 @@ export class StudentMembershipsService {
       studentDiscounts,
       chargeRegistrationOnMigration,
       chargeCurrentMonthOnMigration,
+      chargeRegistration,
+      chargeInitialCycle,
       ...createData
     } = createDto;
 
-    const membership = await this.prisma.studentMembership.create({
-      data: {
-        ...createData,
-        ...(studentDiscounts &&
-          studentDiscounts.length > 0 && {
-            studentDiscounts: {
-              create: studentDiscounts.map((d) => ({
-                ...d,
-                startDate: new Date(d.startDate),
-                endDate: d.endDate ? new Date(d.endDate) : null,
-              })),
+    return await this.prisma.$transaction(async (tx) => {
+      // Adquirir lock pesimista sobre CourseSeason tempranamente para serializar 
+      // la concurrencia y evitar FK deadlocks al insertar StudentMembership.
+      await tx.$queryRaw`
+        SELECT 1 
+        FROM course_seasons 
+        WHERE id = ${createDto.courseSeasonId} 
+        FOR UPDATE
+      `;
+
+      const membership = await tx.studentMembership.create({
+        data: {
+          ...createData,
+          ...(studentDiscounts &&
+            studentDiscounts.length > 0 && {
+              studentDiscounts: {
+                create: studentDiscounts.map((d) => ({
+                  ...d,
+                  startDate: new Date(d.startDate),
+                  endDate: d.endDate ? new Date(d.endDate) : null,
+                })),
+              },
+            }),
+          histories: {
+            create: {
+              previousStatus: null,
+              newStatus:
+                createData.status ?? StudentMembershipStatus.PENDING_ACTIVE,
+              reason: createData.notes ?? 'Creación de inscripción',
             },
-          }),
-        histories: {
-          create: {
-            previousStatus: null,
-            newStatus:
-              createData.status ?? StudentMembershipStatus.PENDING_ACTIVE,
-            reason: createData.notes ?? 'Creación de inscripción',
           },
         },
-      },
-      select: studentMembershipSelect,
-    });
+        select: studentMembershipSelect,
+      });
 
-    // Generar cargos inmediatamente después de crear la membresía
-    await this.studentChargesService.generateChargesForNewMembership(
-      membership.id,
-      {
-        chargeRegistrationOnMigration: createDto.chargeRegistrationOnMigration,
-        chargeCurrentMonthOnMigration: createDto.chargeCurrentMonthOnMigration,
-      },
-    );
+      // Generar cargos inmediatamente después de crear la membresía
+      await this.studentChargesService.generateChargesForNewMembership(
+        membership.id,
+        {
+          chargeRegistrationOnMigration,
+          chargeCurrentMonthOnMigration,
+          chargeRegistration,
+          chargeInitialCycle,
+        },
+        tx,
+      );
 
-    return {
-      message: 'Inscripción de estudiante a curso escolar creada exitosamente',
-      data: mapMembershipWithTotal(membership),
-    };
+      return {
+        message: 'Inscripción de estudiante a curso escolar creada exitosamente',
+        data: mapMembershipWithTotal(membership),
+      };
+    }, { timeout: 15000 });
   }
 
   private calculateAge(birthDate: Date, referenceDate: Date): number {
@@ -301,6 +319,7 @@ export class StudentMembershipsService {
       studentId,
       paymentPlanId,
       status,
+      physicalDate,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
@@ -311,7 +330,19 @@ export class StudentMembershipsService {
     }
 
     if (courseSeasonId) {
-      where.courseSeasonId = courseSeasonId;
+      if (physicalDate) {
+        const pDate = new Date(physicalDate);
+        where.cycleEnrollments = {
+          some: {
+            courseSeasonId: courseSeasonId,
+            status: { in: ['PENDING', 'CONFIRMED'] },
+            effectiveStartDate: { lte: pDate },
+            cycleEndDate: { gt: pDate },
+          }
+        };
+      } else {
+        where.courseSeasonId = courseSeasonId;
+      }
     }
 
     if (paymentPlanId) {
@@ -512,14 +543,14 @@ export class StudentMembershipsService {
       updateDto.paymentPlanId &&
       updateDto.paymentPlanId !== membership.paymentPlanId
     ) {
-      this.studentChargesService
-        .recalculatePendingFutureCharges(id)
-        .catch((e) => {
-          this.logger.error(
-            `Error al recalcular cargos tras cambio de plan en membresía de estudiante ${id}`,
-            e.stack,
-          );
-        });
+      // this.studentChargesService
+      //   .recalculatePendingFutureCharges(id)
+      //   .catch((e) => {
+      //     this.logger.error(
+      //       `Error al recalcular cargos tras cambio de plan en membresía de estudiante ${id}`,
+      //       e.stack,
+      //     );
+      //   });
     }
 
     return {
@@ -825,6 +856,161 @@ export class StudentMembershipsService {
     };
   }
 
+  async transferShift(id: string, transferDto: TransferShiftDto) {
+    return await this.prisma.$transaction(async (tx) => {
+      // 1. Obtener y bloquear la membresía y sus ciclos futuros
+      const membership = await tx.studentMembership.findUnique({
+        where: { id },
+        include: {
+          courseSeason: {
+            include: { course: true, shift: true }
+          },
+          cycleEnrollments: {
+            where: {
+              status: { in: ['PENDING', 'CONFIRMED'] }
+            },
+            orderBy: { cycleStartDate: 'asc' }
+          }
+        }
+      });
+
+      if (!membership) {
+        throw new NotFoundException('errors.MEMBERSHIP_NOT_FOUND');
+      }
+
+      if (membership.status !== StudentMembershipStatus.ACTIVE && membership.status !== StudentMembershipStatus.PENDING_ACTIVE) {
+        throw new BadRequestException('Solo las inscripciones activas pueden ser transferidas');
+      }
+
+      if (membership.courseSeasonId === transferDto.targetCourseSeasonId) {
+        throw new BadRequestException('El estudiante ya se encuentra en este turno');
+      }
+
+      // 2. Bloquear y validar destino
+      const targetCourseSeason = await tx.courseSeason.findUnique({
+        where: { id: transferDto.targetCourseSeasonId },
+        include: { course: true, shift: true }
+      });
+
+      if (!targetCourseSeason) {
+        throw new NotFoundException('El turno destino no fue encontrado');
+      }
+
+      if (targetCourseSeason.status !== StatusCourseSeason.ACTIVE) {
+        throw new BadRequestException('El turno destino no está activo');
+      }
+
+      // Validar que ambos turnos pertenezcan al mismo curso (regla de negocio)
+      if (membership.courseSeason.courseId !== targetCourseSeason.courseId) {
+        throw new BadRequestException('Solo se pueden realizar transferencias entre turnos del mismo curso');
+      }
+
+      // 3. Determinar el primer ciclo transferible
+      const effectiveDate = new Date(transferDto.effectiveDate);
+      
+      const overlappingCycle = membership.cycleEnrollments.find(c => 
+        c.cycleStartDate <= effectiveDate && c.cycleEndDate > effectiveDate
+      );
+
+      let transferStartDate: Date;
+      if (overlappingCycle) {
+        // La transferencia aplica desde el inicio del próximo ciclo
+        transferStartDate = overlappingCycle.cycleEndDate;
+      } else {
+        // No hay ciclo en curso en esta fecha, aplica desde la fecha efectiva
+        transferStartDate = effectiveDate;
+      }
+
+      const cyclesToTransfer = membership.cycleEnrollments.filter(c => 
+        c.cycleStartDate >= transferStartDate
+      );
+
+      if (cyclesToTransfer.length === 0) {
+        // Si no hay ciclos futuros, de todas formas cambiamos el turno base
+        // para que las próximas facturaciones (cron) se generen en el nuevo turno.
+        this.logger.log(`No hay ciclos futuros para transferir en membresía ${id}, solo se actualizará el turno base.`);
+      } else {
+        // 4. Validar capacidad para cada ciclo a transferir
+        for (const cycle of cyclesToTransfer) {
+          await validateCourseSeasonCapacity(
+            tx,
+            transferDto.targetCourseSeasonId,
+            cycle.cycleStartDate,
+            cycle.cycleEndDate,
+            cycle.id // Excluimos su propio ID por si acaso, aunque su courseSeasonId actual es el de origen
+          );
+        }
+
+        // 5. Actualizar los ciclos futuros al nuevo turno
+        await tx.cycleEnrollment.updateMany({
+          where: {
+            id: { in: cyclesToTransfer.map(c => c.id) }
+          },
+          data: {
+            courseSeasonId: transferDto.targetCourseSeasonId
+          }
+        });
+      }
+
+      // 6. Actualizar el contrato base (StudentMembership)
+      const updatedMembership = await tx.studentMembership.update({
+        where: { id },
+        data: {
+          courseSeasonId: transferDto.targetCourseSeasonId,
+          histories: {
+            create: {
+              previousStatus: membership.status,
+              newStatus: membership.status,
+              reason: `Transferencia de turno de ${membership.courseSeason.shift?.name || 'Origen'} a ${targetCourseSeason.shift?.name || 'Destino'} a partir del ${transferStartDate.toLocaleDateString()}`
+            }
+          }
+        },
+        select: studentMembershipSelect
+      });
+
+      return {
+        message: 'Transferencia de turno procesada exitosamente',
+        data: mapMembershipWithTotal(updatedMembership)
+      };
+    }, { timeout: 15000 });
+  }
+
+  async getMembershipHistories(id: string) {
+    const membership = await this.prisma.studentMembership.findUnique({
+      where: { id },
+    });
+    
+    if (!membership) {
+      throw new NotFoundException('La inscripción no fue encontrada');
+    }
+
+    const histories = await this.prisma.studentMembershipHistory.findMany({
+      where: { studentMembershipId: id },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        previousStatus: true,
+        newStatus: true,
+        reason: true,
+        createdAt: true,
+        createdBy: {
+          select: {
+            id: true,
+            email: true,
+            person: {
+              select: {
+                name: true,
+                lastName: true,
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return histories;
+  }
+
   private async getMembership(id: string) {
     const membership = await this.prisma.studentMembership.findUnique({
       where: { id },
@@ -941,12 +1127,12 @@ export class StudentMembershipsService {
     if (!student.isActive) {
       throw new BadRequestException('El estudiante se encuentra inactivo');
     }
-    if (!student.person.birthDate) {
-      throw new BadRequestException(
-        'La fecha de nacimiento del estudiante no fue encontrada',
-      );
-    }
     if (offering.validateAge !== false) {
+      if (!student.person.birthDate) {
+        throw new BadRequestException(
+          'La fecha de nacimiento del estudiante es requerida para validar la edad en este curso',
+        );
+      }
       if (offering.minBirthYear || offering.maxBirthYear) {
         const birthYear = student.person.birthDate.getFullYear();
         if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {

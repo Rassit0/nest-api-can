@@ -27,7 +27,7 @@ export class MembershipLateFeeService {
   async applyDailyLateFees() {
     this.logger.log('Iniciando proceso diario de cálculo de recargos...');
 
-    const evaluationDate = DateUtils.getStartOfUTCDay(new Date());
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
 
     const overdueCharges =
       await this.lateFeeRepo.findOverdueCharges(evaluationDate);
@@ -76,7 +76,7 @@ export class MembershipLateFeeService {
     )
       return;
 
-    const dueDate = DateUtils.getStartOfUTCDay(baseCharge.dueDate);
+    const dueDate = DateUtils.getEndOfLocalDayInUTC(baseCharge.dueDate);
 
     const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
     const individualPauses =
@@ -88,8 +88,8 @@ export class MembershipLateFeeService {
     if (allPauses.length > 0) {
       const intervals = allPauses
         .map((p) => {
-          const pStart = DateUtils.getStartOfUTCDay(p.startDate);
-          const pEnd = DateUtils.getStartOfUTCDay(p.endDate);
+          const pStart = DateUtils.getEndOfLocalDayInUTC(p.startDate);
+          const pEnd = DateUtils.getEndOfLocalDayInUTC(p.endDate);
           return {
             start: pStart < dueDate ? dueDate.getTime() : pStart.getTime(),
             end:

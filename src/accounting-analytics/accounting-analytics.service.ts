@@ -35,7 +35,7 @@ export class AccountingAnalyticsService {
    */
   private async getReceivableMetrics() {
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
-    const [accountReceivables, membershipReceivables] = await Promise.all([
+    const [accountReceivables, membershipReceivables, studentReceivables] = await Promise.all([
       this.prisma.charge.aggregate({
         where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, accountCharge: { isNot: null } },
         _sum: { pendingAmount: true },
@@ -44,15 +44,21 @@ export class AccountingAnalyticsService {
         where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, membershipCharges: { some: {} } },
         _sum: { pendingAmount: true },
       }),
+      this.prisma.charge.aggregate({
+        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, studentCharges: { some: {} } },
+        _sum: { pendingAmount: true },
+      }),
     ]);
 
     const totalAccountReceivables = Number(accountReceivables._sum.pendingAmount || 0);
     const totalMembershipReceivables = Number(membershipReceivables._sum.pendingAmount || 0);
+    const totalStudentReceivables = Number(studentReceivables._sum.pendingAmount || 0);
 
     return {
       totalAccountReceivables,
       totalMembershipReceivables,
-      totalReceivables: totalAccountReceivables + totalMembershipReceivables,
+      totalStudentReceivables,
+      totalReceivables: totalAccountReceivables + totalMembershipReceivables + totalStudentReceivables,
     };
   }
 

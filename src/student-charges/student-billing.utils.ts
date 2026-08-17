@@ -143,42 +143,54 @@ export function buildRecurringDescription(
 }
 
 export function buildCycleDescription(
-  startedAt: Date,
+  cycleStartDate: Date,
+  cycleEndDate: Date,
   billingFrequency: string,
-  billingYear: number,
-  billingMonth: number,
-  billingCycle: number,
 ): string {
-  const capitalizedMonthName = MONTH_NAMES[billingMonth - 1];
+  const formatter = new Intl.DateTimeFormat('es-ES', { month: 'long', timeZone: 'UTC' });
+  const formatDay = (d: Date) => d.getUTCDate().toString();
+  const formatYear = (d: Date) => d.getUTCFullYear().toString();
+
+  // Para visualización inclusiva, restamos 1 milisegundo al endDate
+  const visualEndDate = new Date(cycleEndDate.getTime() - 1);
+  const startMonthName = formatter.format(cycleStartDate);
+  const endMonthName = formatter.format(visualEndDate);
+  
+  // "Agosto" -> "agosto" o "Agosto"
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  if (billingFrequency === 'MONTHLY') {
+    return capitalize(startMonthName) + ' ' + cycleStartDate.getUTCFullYear();
+  }
+  
   if (billingFrequency === 'WEEKLY') {
-    return (
-      'Semana ' +
-      billingCycle +
-      ' - ' +
-      capitalizedMonthName +
-      ' ' +
-      billingYear
-    );
+    if (startMonthName === endMonthName) {
+      return `Semana del ${formatDay(cycleStartDate)} al ${formatDay(visualEndDate)} de ${startMonthName} de ${formatYear(cycleStartDate)}`;
+    } else if (formatYear(cycleStartDate) === formatYear(visualEndDate)) {
+      return `Semana del ${formatDay(cycleStartDate)} de ${startMonthName} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(cycleStartDate)}`;
+    } else {
+      return `Semana del ${formatDay(cycleStartDate)} de ${startMonthName} de ${formatYear(cycleStartDate)} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(visualEndDate)}`;
+    }
   }
+  
   if (billingFrequency === 'BIWEEKLY') {
-    return (
-      'Quincena ' +
-      billingCycle +
-      ' - ' +
-      capitalizedMonthName +
-      ' ' +
-      billingYear
-    );
+    if (startMonthName === endMonthName) {
+      return `Quincena del ${formatDay(cycleStartDate)} al ${formatDay(visualEndDate)} de ${startMonthName} de ${formatYear(cycleStartDate)}`;
+    } else if (formatYear(cycleStartDate) === formatYear(visualEndDate)) {
+      return `Quincena del ${formatDay(cycleStartDate)} de ${startMonthName} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(cycleStartDate)}`;
+    } else {
+      return `Quincena del ${formatDay(cycleStartDate)} de ${startMonthName} de ${formatYear(cycleStartDate)} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(visualEndDate)}`;
+    }
   }
+  
   if (billingFrequency === 'SINGLE') {
-    return 'Pago Único';
+    if (formatYear(cycleStartDate) === formatYear(visualEndDate)) {
+       return `Temporada completa — ${formatDay(cycleStartDate)} de ${startMonthName} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(cycleStartDate)}`;
+    }
+    return `Temporada completa — ${formatDay(cycleStartDate)} de ${startMonthName} de ${formatYear(cycleStartDate)} al ${formatDay(visualEndDate)} de ${endMonthName} de ${formatYear(visualEndDate)}`;
   }
-  return buildRecurringDescription(
-    startedAt,
-    billingYear,
-    billingMonth,
-    capitalizedMonthName,
-  );
+
+  return 'Ciclo irregular';
 }
 
 const DISCOUNT_TYPE_TRANSLATIONS: Record<string, string> = {
@@ -230,4 +242,163 @@ export function extractDiscountReason(
     .map((d) => (d.reason ? DISCOUNT_TYPE_TRANSLATIONS[d.reason] || d.reason : 'Plan de pago'))
     .filter(Boolean);
   return reasons.length > 0 ? reasons.join(', ') : null;
+}
+
+
+export interface AbsoluteCycle {
+  cycleCounter: number;
+  cycleStartDate: Date;
+  cycleEndDate: Date;
+  billingYear: number;
+  billingMonth: number;
+  billingCycle: number;
+}
+
+/**
+ * Motor absoluto de ciclos (FASE 2.2).
+ * Genera bloques estáticos [cycleStartDate, cycleEndDate) partiendo
+ * EXCLUSIVAMENTE del startDate de la Season. No depende del estudiante.
+ */
+export function getAbsoluteSeasonCycles(
+  seasonStartDate: Date,
+  seasonEndDate: Date,
+  billingFrequency: 'MONTHLY' | 'WEEKLY' | 'BIWEEKLY' | 'SINGLE' | string,
+): AbsoluteCycle[] {
+  const cycles: AbsoluteCycle[] = [];
+  const start = new Date(seasonStartDate);
+  const endLimit = new Date(seasonEndDate);
+
+  if (billingFrequency === 'SINGLE') {
+    cycles.push({
+      cycleCounter: 1,
+      cycleStartDate: new Date(start),
+      cycleEndDate: new Date(endLimit),
+      billingYear: start.getUTCFullYear(),
+      billingMonth: start.getUTCMonth() + 1,
+      billingCycle: 1,
+    });
+    return cycles;
+  }
+
+  let currentStart: Date;
+  if (billingFrequency === 'MONTHLY') {
+    currentStart = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), 1));
+  } else {
+    currentStart = new Date(start);
+  }
+
+  let cycleCounter = 1;
+
+  while (currentStart < endLimit && cycleCounter <= MAX_BILLING_CYCLES) {
+    let nextStart: Date;
+
+    if (billingFrequency === 'WEEKLY') {
+      nextStart = new Date(currentStart);
+      nextStart.setUTCDate(nextStart.getUTCDate() + 7);
+    } else if (billingFrequency === 'BIWEEKLY') {
+      nextStart = new Date(currentStart);
+      nextStart.setUTCDate(nextStart.getUTCDate() + 14);
+    } else {
+      // MONTHLY: ancla en el mes calendario real
+      nextStart = new Date(Date.UTC(currentStart.getUTCFullYear(), currentStart.getUTCMonth() + 1, 1));
+    }
+
+    cycles.push({
+      cycleCounter,
+      cycleStartDate: new Date(currentStart),
+      cycleEndDate: new Date(nextStart),
+      billingYear: currentStart.getUTCFullYear(),
+      billingMonth: currentStart.getUTCMonth() + 1,
+      billingCycle: cycleCounter,
+    });
+
+    currentStart = nextStart;
+    cycleCounter++;
+  }
+
+  return cycles;
+}
+
+/**
+ * FASE 2.4: Resuelve a qué ciclo absoluto pertenece una fecha de inscripción.
+ */
+export function findCycleContainingDate(
+  cycles: AbsoluteCycle[],
+  enrollmentDate: Date,
+): AbsoluteCycle | null {
+  for (const cycle of cycles) {
+    if (enrollmentDate >= cycle.cycleStartDate && enrollmentDate < cycle.cycleEndDate) {
+      return cycle;
+    }
+  }
+  return null;
+}
+
+/**
+ * FASE 2.4: Calcula los límites efectivos de cobro sin modificar la identidad del ciclo.
+ */
+export function calculateEffectiveBillablePeriod(
+  cycle: AbsoluteCycle,
+  enrollmentDate: Date,
+  seasonEndDate: Date,
+): { effectiveStart: Date; effectiveEnd: Date } {
+  const effectiveStart = new Date(Math.max(cycle.cycleStartDate.getTime(), enrollmentDate.getTime()));
+  const effectiveEnd = new Date(Math.min(cycle.cycleEndDate.getTime(), seasonEndDate.getTime()));
+  return { effectiveStart, effectiveEnd };
+}
+
+/**
+ * FASE 2.5: Calcula los días facturables descontando pausas (si aplica).
+ */
+export function calculateBillableDaysWithPauses(
+  effectiveStart: Date,
+  effectiveEnd: Date,
+  allPauses: any[] = [],
+): { billableDays: number; adjustedEnd: Date; totalDays: number; pauseDays: number } {
+  const totalDays = Math.max(0, Math.round((effectiveEnd.getTime() - effectiveStart.getTime()) / MILLISECONDS_IN_DAY));
+  let pauseDays = 0;
+  
+  if (allPauses.length > 0) {
+    for (const pause of allPauses) {
+      if (pause.startDate && pause.endDate) {
+        const pStart = new Date(pause.startDate);
+        const pEnd = new Date(pause.endDate);
+        const overlapStart = new Date(Math.max(pStart.getTime(), effectiveStart.getTime()));
+        const overlapEnd = new Date(Math.min(pEnd.getTime(), effectiveEnd.getTime()));
+        
+        if (overlapStart < overlapEnd) {
+          pauseDays += Math.round((overlapEnd.getTime() - overlapStart.getTime()) / MILLISECONDS_IN_DAY);
+        }
+      }
+    }
+  }
+
+  const billableDays = Math.max(0, totalDays - pauseDays);
+  return { billableDays, adjustedEnd: effectiveEnd, totalDays, pauseDays };
+}
+
+/**
+ * Resuelve las opciones financieras de inscripción, dando prioridad a las opciones explícitas
+ * (chargeRegistration, chargeInitialCycle) y utilizando los campos legacy como fallback.
+ */
+export function resolveFinancialEnrollmentOptions(
+  isMigrated: boolean,
+  options?: {
+    chargeRegistration?: boolean;
+    chargeInitialCycle?: boolean;
+    chargeRegistrationOnMigration?: boolean;
+    chargeCurrentMonthOnMigration?: boolean;
+  } | null
+): { chargeRegistration: boolean; chargeInitialCycle: boolean } {
+  const chargeRegistration =
+    options?.chargeRegistration ??
+    (isMigrated ? options?.chargeRegistrationOnMigration : undefined) ??
+    true;
+
+  const chargeInitialCycle =
+    options?.chargeInitialCycle ??
+    (isMigrated ? options?.chargeCurrentMonthOnMigration : undefined) ??
+    true;
+
+  return { chargeRegistration, chargeInitialCycle };
 }

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MembershipRegularizationService } from './services/membership-regularization.service';
 import { MembershipChargesService } from './membership-charges.service';
 import { MembershipChargesController } from './membership-charges.controller';
 import { PrismaService } from 'src/prisma.service';
@@ -16,6 +17,7 @@ import { MembershipRecalibrationDateCalculator } from './domain/membership-recal
   controllers: [MembershipChargesController],
   providers: [
     MembershipChargesService,
+    MembershipRegularizationService,
     PrismaService,
     MembershipPreviewService,
     MembershipGenerationService,
@@ -30,3 +32,4 @@ import { MembershipRecalibrationDateCalculator } from './domain/membership-recal
   exports: [MembershipChargesService],
 })
 export class MembershipChargesModule {}
+

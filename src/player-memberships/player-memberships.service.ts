@@ -326,16 +326,29 @@ export class PlayerMembershipsService {
     }
 
     if (search) {
-      where.player = {
-        person: {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { lastName: { contains: search, mode: 'insensitive' } },
-            { secondLastName: { contains: search, mode: 'insensitive' } },
-            { documentNumber: { contains: search, mode: 'insensitive' } },
-          ],
+      const searchTerms = search.trim().split(/\s+/);
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(search);
+
+      where.OR = [];
+
+      if (isUuid) {
+        where.OR.push({ id: search });
+      }
+
+      where.OR.push({
+        player: {
+          person: {
+            AND: searchTerms.map(term => ({
+              OR: [
+                { name: { contains: term, mode: 'insensitive' } },
+                { lastName: { contains: term, mode: 'insensitive' } },
+                { secondLastName: { contains: term, mode: 'insensitive' } },
+                { documentNumber: { contains: term, mode: 'insensitive' } },
+              ],
+            })),
+          },
         },
-      };
+      });
     }
 
     // `globalWhere` se usa para obtener el "Summary" global, ignorando filtros de búsqueda o de estado.

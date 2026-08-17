@@ -3,7 +3,7 @@ import { TransactionsService } from './transactions.service';
 import { PrismaService } from '../prisma.service';
 import { FinancialAccountsService } from '../financial-accounts/financial-accounts.service';
 import { BadRequestException } from '@nestjs/common';
-import { PaymentMethod, TransactionType } from '../generated/prisma/enums';
+import { PaymentMethod, TransactionType, StatusCharge, CycleEnrollmentStatus } from '../generated/prisma/client';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 
 describe('TransactionsService', () => {
@@ -20,12 +20,17 @@ describe('TransactionsService', () => {
             financialAccount: {
               findMany: jest.fn(),
             },
+            transaction: {
+              findUnique: jest.fn(),
+            },
             $transaction: jest.fn(),
           },
         },
         {
           provide: FinancialAccountsService,
-          useValue: {},
+          useValue: {
+            applyMovement: jest.fn(),
+          },
         },
       ],
     }).compile();
@@ -157,6 +162,142 @@ describe('TransactionsService', () => {
 
       await expect(service.create(createDto)).rejects.toThrow(
         new BadRequestException("La cuenta 'Cuenta 2' no permite pagos mediante TRANSFER.")
+      );
+    });
+  });
+
+  describe('CycleEnrollment Sync (Pagos y Cancelaciones)', () => {
+    let transactionCallbackPrisma: any;
+
+    beforeEach(() => {
+      // Mock para simular la ejecución del callback dentro de $transaction
+      transactionCallbackPrisma = {
+        charge: {
+          findUnique: jest.fn(),
+          update: jest.fn(),
+        },
+        receiptSequence: {
+          upsert: jest.fn().mockResolvedValue({ series: 'GEN', lastValue: 1 }),
+        },
+        payment: {
+          create: jest.fn().mockResolvedValue({ id: 'payment-1' }),
+          delete: jest.fn(),
+        },
+        transaction: {
+          create: jest.fn().mockResolvedValue({ id: 'tx-1' }),
+          findUnique: jest.fn().mockResolvedValue({ id: 'tx-1' }),
+          count: jest.fn().mockResolvedValue(0),
+          delete: jest.fn(),
+        },
+        attachment: {
+          findMany: jest.fn().mockResolvedValue([]),
+        },
+        cycleEnrollment: {
+          updateMany: jest.fn(),
+        },
+      };
+
+      jest.spyOn(prisma, '$transaction').mockImplementation(async (callback: any) => {
+        return callback(transactionCallbackPrisma);
+      });
+      jest.spyOn(prisma.financialAccount, 'findMany').mockResolvedValue([
+        { id: 'acc-1', name: 'Cuenta 1', allowedPaymentMethods: [PaymentMethod.CASH] } as any,
+      ]);
+    });
+
+    it('Pago Completo: Charge -> PAID, CycleEnrollment -> CONFIRMED', async () => {
+      transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
+        id: 'charge-1',
+        amount: { toNumber: () => 100 },
+        pendingAmount: { toNumber: () => 100 },
+        discountAmount: null,
+        status: StatusCharge.PENDING,
+      });
+
+      const createDto: CreateTransactionDto = {
+        amount: 100,
+        paymentMethod: PaymentMethod.CASH,
+        financialAccountId: 'acc-1',
+        chargeId: 'charge-1',
+        type: TransactionType.INCOME,
+      } as any;
+
+      await service.create(createDto);
+
+      expect(transactionCallbackPrisma.charge.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ status: StatusCharge.PAID, pendingAmount: 0 }),
+        })
+      );
+      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: { status: 'CONFIRMED' },
+        })
+      );
+    });
+
+    it('Pago Parcial: Charge -> PARTIAL, CycleEnrollment -> PENDING', async () => {
+      transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
+        id: 'charge-1',
+        amount: { toNumber: () => 100 },
+        pendingAmount: { toNumber: () => 100 },
+        discountAmount: null,
+        status: StatusCharge.PENDING,
+      });
+
+      const createDto: CreateTransactionDto = {
+        amount: 50,
+        paymentMethod: PaymentMethod.CASH,
+        financialAccountId: 'acc-1',
+        chargeId: 'charge-1',
+        type: TransactionType.INCOME,
+      } as any;
+
+      await service.create(createDto);
+
+      expect(transactionCallbackPrisma.charge.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ status: StatusCharge.PARTIAL, pendingAmount: 50 }),
+        })
+      );
+      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: { status: 'PENDING' },
+        })
+      );
+    });
+
+    it('Cancelación de Pago Completo: Charge -> PENDING, CycleEnrollment -> PENDING', async () => {
+      const mockTx = {
+        id: 'tx-1',
+        amount: { toNumber: () => 100 },
+        paymentId: 'pay-1',
+        payment: { chargeId: 'charge-1' },
+      };
+      
+      // first call outside transaction
+      jest.spyOn(prisma.transaction, 'findUnique').mockResolvedValue(mockTx as any);
+
+      // inside transaction
+      transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
+        id: 'charge-1',
+        amount: { toNumber: () => 100 },
+        pendingAmount: { toNumber: () => 0 }, // It was PAID
+        discountAmount: null,
+        status: StatusCharge.PAID,
+      });
+
+      await service.remove('tx-1');
+
+      expect(transactionCallbackPrisma.charge.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ status: StatusCharge.PENDING, pendingAmount: 100 }),
+        })
+      );
+      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: { status: 'PENDING' },
+        })
       );
     });
   });

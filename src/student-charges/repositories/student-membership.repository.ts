@@ -22,8 +22,10 @@ export class StudentMembershipRepository {
 
   async getMembershipOrThrow(
     id: string,
+    tx?: Prisma.TransactionClient,
   ): Promise<StudentMembershipWithRelations> {
-    const membership = await this.prisma.studentMembership.findUnique({
+    const prisma = tx || this.prisma;
+    const membership = await prisma.studentMembership.findUnique({
       where: { id },
       include: studentMembershipInclude,
     });
@@ -37,8 +39,10 @@ export class StudentMembershipRepository {
 
   async getMembershipById(
     id: string,
+    tx?: Prisma.TransactionClient,
   ): Promise<StudentMembershipWithRelations | null> {
-    return this.prisma.studentMembership.findUnique({
+    const prisma = tx || this.prisma;
+    return prisma.studentMembership.findUnique({
       where: { id },
       include: studentMembershipInclude,
     });
@@ -51,69 +55,6 @@ export class StudentMembershipRepository {
       where: { courseSeasonId, status: StudentMembershipStatus.ACTIVE },
       select: { id: true },
     });
-  }
-
-  async getMembershipsForDailyGeneration(
-    evaluationDate: Date,
-  ): Promise<StudentMembershipWithRelations[]> {
-    return this.prisma.studentMembership.findMany({
-      where: {
-        OR: [
-          {
-            status: {
-              in: [
-                StudentMembershipStatus.PENDING_ACTIVE,
-                StudentMembershipStatus.ACTIVE,
-                StudentMembershipStatus.SUSPENDED,
-              ],
-            },
-            OR: [
-              { nextRecurringChargeGenerationDate: { lte: evaluationDate } },
-              { nextRecurringChargeGenerationDate: null },
-            ],
-          },
-          {
-            status: {
-              in: [
-                StudentMembershipStatus.WITHDRAWN,
-                StudentMembershipStatus.FINISHED,
-              ],
-            },
-            nextRecurringChargeGenerationDate: { lte: evaluationDate },
-          },
-        ],
-        courseSeason: {
-          status: 'ACTIVE',
-          billingConfig: {
-            isEngineActive: true,
-          },
-          season: {
-            endDate: { gte: evaluationDate },
-            status: { in: ['ACTIVE'] },
-          },
-        },
-      },
-      include: studentMembershipInclude,
-    });
-  }
-
-  async updateNextGenerationPointer(
-    tx: Prisma.TransactionClient | PrismaService,
-    membershipId: string,
-    currentPointer: Date | null,
-    nextPointer: Date | null,
-  ): Promise<void> {
-    const result = await tx.studentMembership.updateMany({
-      where: { 
-        id: membershipId,
-        nextRecurringChargeGenerationDate: currentPointer
-      },
-      data: { nextRecurringChargeGenerationDate: nextPointer },
-    });
-    
-    if (result.count === 0) {
-      throw new Error('OCC_POINTER_CHANGED: Concurrent generation detected, aborting transaction');
-    }
   }
 
   async getCourseSeasonOrThrow(id: string) {

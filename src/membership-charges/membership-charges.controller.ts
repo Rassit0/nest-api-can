@@ -7,7 +7,12 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
+  ForbiddenException,
 } from '@nestjs/common';
+import { Request } from 'express';
+import { MembershipRegularizationService } from './services/membership-regularization.service';
+import { RegularizeMembershipChargeDto } from './dto/regularize-membership-charge.dto';
 import { MembershipChargesService } from './membership-charges.service';
 import { CreateMembershipChargeDto } from './dto/create-membership-charge.dto';
 import { UpdateMembershipChargeDto } from './dto/update-membership-charge.dto';
@@ -40,6 +45,7 @@ import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 export class MembershipChargesController {
   constructor(
     private readonly membershipChargesService: MembershipChargesService,
+    private readonly membershipRegularizationService: MembershipRegularizationService,
   ) {}
 
   @Post('preview')
@@ -196,4 +202,25 @@ export class MembershipChargesController {
       data,
     };
   }
+  @Get(':membershipId/regularizable-cycles')
+  @RequirePermissions('READ_MEMBERSHIP_CHARGES')
+  async getRegularizableCycles(@Param('membershipId') membershipId: string) {
+    return this.membershipRegularizationService.getRegularizableCycles(membershipId);
+  }
+
+  @Post(':membershipId/regularize')
+  @RequirePermissions('CREATE_MEMBERSHIP_CHARGES')
+  async regularizeCharge(
+    @Param('membershipId') membershipId: string,
+    @Body() dto: RegularizeMembershipChargeDto,
+    @Req() req: Request & { user: any },
+  ) {
+    if (dto.overrideAmount !== undefined && dto.overrideAmount !== null) {
+      if (!req.user.permissions?.includes('OVERRIDE_MEMBERSHIP_CHARGES')) {
+        throw new ForbiddenException('No posees permisos para sobreescribir montos históricos.');
+      }
+    }
+    return this.membershipRegularizationService.regularizeCharge(membershipId, dto);
+  }
+
 }

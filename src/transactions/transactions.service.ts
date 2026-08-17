@@ -9,14 +9,21 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from 'src/prisma.service';
 import { TransactionsPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
-import { Prisma, StatusCharge } from 'src/generated/prisma/client';
+import {
+  Prisma,
+  StatusCharge,
+  CycleEnrollmentStatus,
+} from 'src/generated/prisma/client';
 import { PaymentStrategyFactory } from './strategies/payment-strategy.factory';
+import { ReceiptResolverService } from 'src/payments/receipt-resolver.service';
 import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dto';
 import { TransactionsMapper } from './transactions.mapper';
 import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
+import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 
 export const transactionSelect = {
   id: true,
+  paymentId: true,
   receiptSeries: true,
   receiptNumber: true,
   amount: true,
@@ -91,6 +98,7 @@ export class TransactionsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly financialAccountsService: FinancialAccountsService,
+    private readonly receiptResolver: ReceiptResolverService,
   ) {}
 
   async create(
@@ -233,29 +241,16 @@ export class TransactionsService {
           );
         }
 
-        if (charge.membershipCharges?.length > 0) {
-          paymentSeries = 'EQ';
-        } else if (charge.studentCharges?.length > 0) {
-          paymentSeries = 'CU';
-        }
-
-        const sequence = await prisma.receiptSequence.upsert({
-          where: { series: paymentSeries },
-          update: { lastValue: { increment: 1 } },
-          create: {
-            series: paymentSeries,
-            lastValue: 1,
-            description: `Secuencia de recibos comerciales para ${paymentSeries}`,
-          },
-        });
-        paymentSequenceNumber = sequence.lastValue;
+        const resolvedReceipt = await this.receiptResolver.resolveReceiptForCharge(charge.id, prisma);
+        paymentSeries = resolvedReceipt.receiptSeries;
+        paymentSequenceNumber = resolvedReceipt.receiptNumber;
 
         createdPayment = await prisma.payment.create({
           data: {
             chargeId: charge.id,
             amount: applied,
-            receiptSeries: sequence.series,
-            receiptNumber: sequence.lastValue,
+            receiptSeries: paymentSeries,
+            receiptNumber: paymentSequenceNumber,
             status: 'COMPLETED',
           },
         });
@@ -266,23 +261,21 @@ export class TransactionsService {
       const createdTransactions = [];
 
       for (const t of processedTransactions) {
-        // Cada transacción financiera tiene su propia secuencia GEN
-        const finSequence = await prisma.receiptSequence.upsert({
-          where: { series: 'GEN' },
-          update: { lastValue: { increment: 1 } },
-          create: {
-            series: 'GEN',
-            lastValue: 1,
-            description: 'Secuencia financiera general',
-          },
-        });
+        let txSeries = 'GEN';
+        if (!createdPayment && rest.type === 'EXPENSE') {
+          txSeries = 'EGR';
+        }
+
+        const nextFinNum = await this.receiptResolver.nextReceiptNumber(txSeries, prisma);
 
         const transaction = await prisma.transaction.create({
           data: {
             ...rest,
-            transactionDate: new Date().toISOString(),
-            receiptSeries: finSequence.series,
-            receiptNumber: finSequence.lastValue,
+            transactionDate: rest.transactionDate
+              ? new Date(rest.transactionDate).toISOString()
+              : new Date().toISOString(),
+            receiptSeries: txSeries,
+            receiptNumber: nextFinNum,
             amount: t.amount,
             paymentMethod: t.paymentMethod,
             status: t.status,
@@ -329,6 +322,8 @@ export class TransactionsService {
             status: newStatus,
           },
         });
+
+        await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
       }
 
       if (attachmentIds && attachmentIds.length > 0) {
@@ -564,6 +559,12 @@ export class TransactionsService {
               status: newStatus,
             },
           });
+
+          await syncCycleEnrollmentStatus(
+            prisma,
+            transaction.payment.chargeId,
+            newStatus,
+          );
         }
 
         // Eliminar payment si esta es la única transacción

@@ -199,7 +199,11 @@ model Club {
   discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
-  teams         Team[]
+
+  defaultAccountCategoryId String?          @map("default_account_category_id")
+  defaultAccountCategory   AccountCategory? @relation("ClubDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
+
+  teams Team[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -829,52 +833,51 @@ model Charge {
   discountAmount Decimal @default(0) @map("discount_amount") @db.Decimal(10, 2)
   discountReason String? @map("discount_reason")
 
-  dueDate   DateTime        @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
-  status    StatusCharge    @default(PENDING)
-  direction ChargeDirection @default(RECEIVABLE)
-  chargeCategory ChargeCategory @default(NORMAL) @map("charge_category")
+  dueDate        DateTime        @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
+  status         StatusCharge    @default(PENDING)
+  direction      ChargeDirection @default(RECEIVABLE)
+  chargeCategory ChargeCategory  @default(NORMAL) @map("charge_category")
 
-  createdAt          DateTime            @default(now()) @map("created_at")
-  updatedAt          DateTime            @updatedAt @map("updated_at")
-  membershipCharges  MembershipCharge[]
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  membershipCharges MembershipCharge[]
 
-  sessionBooking     SessionBooking?
-  studentCharges     StudentCharge[]
-  accountCharge      AccountCharge?
+  sessionBooking SessionBooking?
+  studentCharges StudentCharge[]
+  accountCharge  AccountCharge?
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  payments    Payment[]
+  payments        Payment[]
+  cycleEnrollment CycleEnrollment?
 
   @@unique([parentChargeId, chargeCategory])
   @@map("charges")
 }
 
-
-
 model Payment {
-  id              String   @id @default(uuid())
-  chargeId        String   @map("charge_id")
-  charge          Charge   @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-  
-  receiptSeries   String   @map("receipt_series")
-  receiptNumber   Int      @map("receipt_number")
-  amount          Decimal  @db.Decimal(10, 2)
-  status          String   @default("COMPLETED")
-  paymentDate     DateTime @default(now()) @map("payment_date")
+  id       String @id @default(uuid())
+  chargeId String @map("charge_id")
+  charge   Charge @relation(fields: [chargeId], references: [id], onDelete: Restrict)
 
-  transactions    Transaction[]
+  receiptSeries String   @map("receipt_series")
+  receiptNumber Int      @map("receipt_number")
+  amount        Decimal  @db.Decimal(10, 2)
+  status        String   @default("COMPLETED")
+  paymentDate   DateTime @default(now()) @map("payment_date")
 
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  transactions Transaction[]
 
-  createdById     String?  @map("created_by_id")
-  createdBy       User?    @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById     String?  @map("updated_by_id")
-  updatedBy       User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([receiptSeries, receiptNumber])
   @@map("payments")
@@ -960,8 +963,8 @@ model Transaction {
   financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id])
 
   // Payment Link (New Architecture)
-  paymentId          String?          @map("payment_id")
-  payment            Payment?         @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  paymentId String?  @map("payment_id")
+  payment   Payment? @relation(fields: [paymentId], references: [id], onDelete: Restrict)
 
   // Transfers & Reconciliations
   referenceGroupId       String?           @map("reference_group_id")
@@ -975,9 +978,8 @@ model Transaction {
   internalTransferSource InternalTransfer? @relation("TransferSource")
   internalTransferDest   InternalTransfer? @relation("TransferDestination")
 
-  createdAt          DateTime            @default(now()) @map("created_at")
-  updatedAt          DateTime            @updatedAt @map("updated_at")
-
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1048,52 +1050,52 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  createdPersons                    Person[]                    @relation("CreatedBy")
-  updatedPersons                    Person[]                    @relation("UpdatedBy")
-  createdDisciplines                Discipline[]                @relation("CreatedBy")
-  updatedDisciplines                Discipline[]                @relation("UpdatedBy")
-  createdInstitutions               Institution[]               @relation("CreatedBy")
-  updatedInstitutions               Institution[]               @relation("UpdatedBy")
-  createdInstitutionContacts        InstitutionContact[]        @relation("CreatedBy")
-  updatedInstitutionContacts        InstitutionContact[]        @relation("UpdatedBy")
-  cashClosuresCreated               CashClosure[]               @relation("CreatedByCashClosure")
-  cashClosuresUpdated               CashClosure[]               @relation("UpdatedByCashClosure")
-  createdClubs                      Club[]                      @relation("CreatedBy")
-  updatedClubs                      Club[]                      @relation("UpdatedBy")
-  createdLocations                  Location[]                  @relation("CreatedBy")
-  updatedLocations                  Location[]                  @relation("UpdatedBy")
-  createdCategories                 Category[]                  @relation("CreatedBy")
-  updatedCategories                 Category[]                  @relation("UpdatedBy")
-  createdSeasons                    Season[]                    @relation("CreatedBy")
-  updatedSeasons                    Season[]                    @relation("UpdatedBy")
-  createdSeasonEvents               SeasonEvent[]               @relation("CreatedBy")
-  updatedSeasonEvents               SeasonEvent[]               @relation("UpdatedBy")
-  createdTeams                      Team[]                      @relation("CreatedBy")
-  updatedTeams                      Team[]                      @relation("UpdatedBy")
-  createdTeamSeasons                TeamSeason[]                @relation("CreatedBy")
-  updatedTeamSeasons                TeamSeason[]                @relation("UpdatedBy")
-  createdTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("CreatedBy")
-  updatedTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("UpdatedBy")
-  createdPaymentPlans               PaymentPlan[]               @relation("CreatedBy")
-  updatedPaymentPlans               PaymentPlan[]               @relation("UpdatedBy")
-  createdPlayers                    Player[]                    @relation("CreatedBy")
-  updatedPlayers                    Player[]                    @relation("UpdatedBy")
-  createdPlayerMemberships          PlayerMembership[]          @relation("CreatedBy")
-  updatedPlayerMemberships          PlayerMembership[]          @relation("UpdatedBy")
-  createdPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("CreatedBy")
-  updatedPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("UpdatedBy")
-  createdPlayerMembershipPauses     PlayerMembershipPause[]     @relation("CreatedBy")
-  updatedPlayerMembershipPauses     PlayerMembershipPause[]     @relation("UpdatedBy")
-  createdMembershipDiscounts        MembershipDiscount[]        @relation("CreatedBy")
-  updatedMembershipDiscounts        MembershipDiscount[]        @relation("UpdatedBy")
-  createdMembershipCharges          MembershipCharge[]          @relation("CreatedBy")
-  updatedMembershipCharges          MembershipCharge[]          @relation("UpdatedBy")
-  createdStaffs                     Staff[]                     @relation("CreatedBy")
-  updatedStaffs                     Staff[]                     @relation("UpdatedBy")
-  createdTeamSeasonStaffs           TeamSeasonStaff[]           @relation("CreatedBy")
-  updatedTeamSeasonStaffs           TeamSeasonStaff[]           @relation("UpdatedBy")
-  createdCharges                    Charge[]                    @relation("CreatedBy")
-  updatedCharges                    Charge[]                    @relation("UpdatedBy")
+  createdPersons                   Person[]                  @relation("CreatedBy")
+  updatedPersons                   Person[]                  @relation("UpdatedBy")
+  createdDisciplines               Discipline[]              @relation("CreatedBy")
+  updatedDisciplines               Discipline[]              @relation("UpdatedBy")
+  createdInstitutions              Institution[]             @relation("CreatedBy")
+  updatedInstitutions              Institution[]             @relation("UpdatedBy")
+  createdInstitutionContacts       InstitutionContact[]      @relation("CreatedBy")
+  updatedInstitutionContacts       InstitutionContact[]      @relation("UpdatedBy")
+  cashClosuresCreated              CashClosure[]             @relation("CreatedByCashClosure")
+  cashClosuresUpdated              CashClosure[]             @relation("UpdatedByCashClosure")
+  createdClubs                     Club[]                    @relation("CreatedBy")
+  updatedClubs                     Club[]                    @relation("UpdatedBy")
+  createdLocations                 Location[]                @relation("CreatedBy")
+  updatedLocations                 Location[]                @relation("UpdatedBy")
+  createdCategories                Category[]                @relation("CreatedBy")
+  updatedCategories                Category[]                @relation("UpdatedBy")
+  createdSeasons                   Season[]                  @relation("CreatedBy")
+  updatedSeasons                   Season[]                  @relation("UpdatedBy")
+  createdSeasonEvents              SeasonEvent[]             @relation("CreatedBy")
+  updatedSeasonEvents              SeasonEvent[]             @relation("UpdatedBy")
+  createdTeams                     Team[]                    @relation("CreatedBy")
+  updatedTeams                     Team[]                    @relation("UpdatedBy")
+  createdTeamSeasons               TeamSeason[]              @relation("CreatedBy")
+  updatedTeamSeasons               TeamSeason[]              @relation("UpdatedBy")
+  createdTeamSeasonBillingConfigs  TeamSeasonBillingConfig[] @relation("CreatedBy")
+  updatedTeamSeasonBillingConfigs  TeamSeasonBillingConfig[] @relation("UpdatedBy")
+  createdPaymentPlans              PaymentPlan[]             @relation("CreatedBy")
+  updatedPaymentPlans              PaymentPlan[]             @relation("UpdatedBy")
+  createdPlayers                   Player[]                  @relation("CreatedBy")
+  updatedPlayers                   Player[]                  @relation("UpdatedBy")
+  createdPlayerMemberships         PlayerMembership[]        @relation("CreatedBy")
+  updatedPlayerMemberships         PlayerMembership[]        @relation("UpdatedBy")
+  createdPlayerMembershipHistories PlayerMembershipHistory[] @relation("CreatedBy")
+  updatedPlayerMembershipHistories PlayerMembershipHistory[] @relation("UpdatedBy")
+  createdPlayerMembershipPauses    PlayerMembershipPause[]   @relation("CreatedBy")
+  updatedPlayerMembershipPauses    PlayerMembershipPause[]   @relation("UpdatedBy")
+  createdMembershipDiscounts       MembershipDiscount[]      @relation("CreatedBy")
+  updatedMembershipDiscounts       MembershipDiscount[]      @relation("UpdatedBy")
+  createdMembershipCharges         MembershipCharge[]        @relation("CreatedBy")
+  updatedMembershipCharges         MembershipCharge[]        @relation("UpdatedBy")
+  createdStaffs                    Staff[]                   @relation("CreatedBy")
+  updatedStaffs                    Staff[]                   @relation("UpdatedBy")
+  createdTeamSeasonStaffs          TeamSeasonStaff[]         @relation("CreatedBy")
+  updatedTeamSeasonStaffs          TeamSeasonStaff[]         @relation("UpdatedBy")
+  createdCharges                   Charge[]                  @relation("CreatedBy")
+  updatedCharges                   Charge[]                  @relation("UpdatedBy")
 
   createdTransactions               Transaction[]               @relation("CreatedBy")
   updatedTransactions               Transaction[]               @relation("UpdatedBy")
@@ -1148,6 +1150,8 @@ model User {
   attachments                       Attachment[]
   createdPayments                   Payment[]                   @relation("CreatedBy")
   updatedPayments                   Payment[]                   @relation("UpdatedBy")
+  createdCycleEnrollments           CycleEnrollment[]           @relation("CreatedBy")
+  updatedCycleEnrollments           CycleEnrollment[]           @relation("UpdatedBy")
 
   @@map("users")
 }
@@ -1231,7 +1235,11 @@ model School {
   discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
-  courses       Course[]
+
+  defaultAccountCategoryId String?          @map("default_account_category_id")
+  defaultAccountCategory   AccountCategory? @relation("SchoolDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
+
+  courses Course[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1301,6 +1309,7 @@ model CourseSeason {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   studentMemberships StudentMembership[]
+  cycleEnrollments   CycleEnrollment[]
   paymentPlans       PaymentPlan[]
   courseSeasonStaffs CourseSeasonStaff[]
   sessionCourses     SessionCourse[]
@@ -1376,6 +1385,7 @@ model CourseSeasonBillingConfig {
   prorateLastRecurringFee  Boolean @default(true) @map("prorate_last_recurring_fee")
   prorateRegistrationFee   Boolean @default(false) @map("prorate_registration_fee")
   prorateSeasonFee         Boolean @default(false) @map("prorate_season_fee")
+  prorationEnabled         Boolean @default(true) @map("proration_enabled")
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1448,6 +1458,12 @@ enum StudentMembershipStatus {
   FINISHED
 }
 
+enum CycleEnrollmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
 model StudentMembership {
   id             String       @id @default(uuid())
   studentId      String       @map("student_id")
@@ -1473,6 +1489,7 @@ model StudentMembership {
   studentCharges   StudentCharge[]
   pauses           StudentMembershipPause[]
   histories        StudentMembershipHistory[]
+  cycleEnrollments CycleEnrollment[]
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1521,6 +1538,32 @@ model StudentMembershipPause {
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@map("student_membership_pauses")
+}
+
+model CycleEnrollment {
+  id                  String            @id @default(uuid())
+  studentMembershipId String            @map("student_membership_id")
+  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
+
+  courseSeasonId String       @map("course_season_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+
+  chargeId           String?               @unique @map("charge_id")
+  charge             Charge?               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  cycleStartDate     DateTime              @map("cycle_start_date")
+  cycleEndDate       DateTime              @map("cycle_end_date")
+  effectiveStartDate DateTime              @map("effective_start_date")
+  status             CycleEnrollmentStatus @default(PENDING)
+  createdAt          DateTime              @default(now()) @map("created_at")
+  updatedAt          DateTime              @updatedAt @map("updated_at")
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([studentMembershipId, cycleStartDate, cycleEndDate], name: "unique_cycle_enrollment")
+  @@map("cycle_enrollments")
 }
 
 model StudentDiscount {
@@ -1914,14 +1957,24 @@ enum AccountReferenceType {
 }
 
 model AccountCategory {
-  id          String  @id @default(uuid())
-  name        String
-  description String?
+  id            String  @id @default(uuid())
+  code          String  @unique @map("code")
+  name          String
+  description   String?
+  receiptSeries String? @map("receipt_series")
+  isSystem      Boolean @default(false) @map("is_system")
+  isActive      Boolean @default(true) @map("is_active")
 
   // Para saber si la categoría es mayormente de gastos o ingresos (opcional)
   type ChargeDirection
 
+  parentId String?           @map("parent_id")
+  parent   AccountCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children AccountCategory[] @relation("CategoryHierarchy")
+
   accountCharges AccountCharge[]
+  schools        School[]        @relation("SchoolDefaultCategory")
+  clubs          Club[]          @relation("ClubDefaultCategory")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -2028,7 +2081,7 @@ model Attachment {
   url          String?
   path         String?
 
-  status       AttachmentStatus @default(PENDING)
+  status AttachmentStatus @default(PENDING)
 
   // Exclusive Arcs for polymorphic associations
   transactionId String?      @map("transaction_id")

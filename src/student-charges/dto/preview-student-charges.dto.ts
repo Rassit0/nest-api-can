@@ -93,7 +93,7 @@ export class PreviewStudentChargesDto {
 
   @ApiPropertyOptional({
     description:
-      'Si es una migración, indica si se debe forzar el cobro de la matrícula',
+      '[LEGACY] Si es una migración, indica si se debe forzar el cobro de la matrícula',
     example: true,
   })
   @IsOptional()
@@ -102,10 +102,26 @@ export class PreviewStudentChargesDto {
 
   @ApiPropertyOptional({
     description:
-      'Si es una migración, indica si se debe forzar la generación de la cuota del mes actual',
+      '[LEGACY] Si es una migración, indica si se debe forzar la generación de la cuota del mes actual',
     example: true,
   })
   @IsOptional()
   @IsBoolean()
   chargeCurrentMonthOnMigration?: boolean;
+
+  @ApiPropertyOptional({
+    description: '¿Generar cargo por inscripción/matrícula? Default: true',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeRegistration?: boolean;
+
+  @ApiPropertyOptional({
+    description: '¿Generar cargo por el primer ciclo de la membresía? Default: true',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  chargeInitialCycle?: boolean;
 }

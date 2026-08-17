@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, HttpException } from '@nestjs/common';
 import { PreviewStudentChargesDto } from './dto/preview-student-charges.dto';
 import { CreateManualChargeDto } from './dto/create-manual-charge.dto';
 import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
@@ -6,13 +6,12 @@ import { PrismaService } from 'src/prisma.service';
 import { Prisma, TypeMembershipCharge } from 'src/generated/prisma/client';
 import { DateUtils } from 'src/utils/date.utils';
 import { StudentPreviewService } from './services/student-preview.service';
-import { StudentGenerationService } from './services/student-generation.service';
 import { PreviewStudentFactory } from './factories/preview-student.factory';
 import { StudentChargeRepository } from './repositories/student-charge.repository';
 import { StudentMembershipRepository } from './repositories/student-membership.repository';
 import { StudentCourseSeasonValidator } from './validators/student-course-season.validator';
 import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
-import { StudentChargeRecalculationService } from './services/student-recalculation.service';
+import { StudentEnrollmentService } from './services/student-enrollment.service';
 import { StudentManualChargeService } from './services/student-manual-charge.service';
 import { StudentAdvanceChargeService } from './services/student-advance-charge.service';
 
@@ -28,12 +27,11 @@ export class StudentChargesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly previewService: StudentPreviewService,
-    private readonly generationService: StudentGenerationService,
     private readonly membershipRepo: StudentMembershipRepository,
     private readonly chargeRepo: StudentChargeRepository,
-    private readonly recalculationService: StudentChargeRecalculationService,
     private readonly manualChargeService: StudentManualChargeService,
     private readonly advanceChargeService: StudentAdvanceChargeService,
+    private readonly enrollmentService: StudentEnrollmentService,
   ) {}
 
   /**
@@ -90,11 +88,12 @@ export class StudentChargesService {
       isMigrated || false,
       data.chargeRegistrationOnMigration,
       data.chargeCurrentMonthOnMigration,
+      data.chargeRegistration,
+      data.chargeInitialCycle,
     );
 
-    return this.previewService.extractPreviewChargesFromCycles(
-      mockMembership,
-      null,
+    return this.previewService.extractOnDemandPreviewCharges(
+      mockMembership
     );
   }
 
@@ -118,101 +117,10 @@ export class StudentChargesService {
       ],
     );
 
-    return this.previewService.extractPreviewChargesFromCycles(
-      membership,
-      existingCharges,
+    // In On-Demand model, the preview for existing just uses the mathematical calculation.
+    return this.previewService.extractOnDemandPreviewCharges(
+      membership
     );
-  }
-
-  /**
-   * [PROCESO CRON DIARIO]
-   * Orquesta la evaluación masiva de todas las membresías activas del sistema.
-   * Se procesa en bloques (chunks) para cuidar la memoria RAM y envolviendo
-   * en transacciones iterativas para asegurar atomicidad sin bloquear toda la DB.
-   */
-  async applyDailyStudentCharges() {
-    this.logger.log('Iniciando proceso diario de cálculo de cargos...');
-    const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
-
-    const memberships =
-      await this.membershipRepo.getMembershipsForDailyGeneration(
-        evaluationDate,
-      );
-    this.logger.log(
-      `Se encontraron ${memberships.length} membresías activas o pendientes.`,
-    );
-
-    const chunkSize = 50;
-    for (let i = 0; i < memberships.length; i += chunkSize) {
-      const chunk = memberships.slice(i, i + chunkSize);
-      for (const membership of chunk) {
-        try {
-          await this.prisma.$transaction(async (tx) => {
-            await this.generationService.ensureStudentCharges(
-              tx,
-              membership,
-              evaluationDate,
-            );
-          });
-        } catch (error) {
-          if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
-            this.logger.warn(
-              `Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`,
-            );
-          } else {
-            this.logger.error(
-              `Error procesando cargos para la membresía ID ${membership.id}:`,
-              error,
-            );
-          }
-        }
-      }
-    }
-
-    this.logger.log('Proceso de cargos finalizado.');
-  }
-
-  /**
-   * Fuerza matemáticamente la generación del siguiente ciclo de cobro disponible,
-   * sin importar si aún no se ha cumplido la fecha límite de generación.
-   * Util para administradores que requieren facturar por adelantado manualmente.
-   */
-  async generateNextChargeManually(membershipId: string) {
-    const membership =
-      await this.membershipRepo.getMembershipOrThrow(membershipId);
-
-    StudentCourseSeasonValidator.assertIsActive(
-      membership.courseSeason,
-      'No se pueden generar cargos para una temporada o equipo que ha finalizado o fue cancelada',
-    );
-
-    if (!membership.nextRecurringChargeGenerationDate) {
-      throw new BadRequestException(
-        'La membresía no tiene próximas cuotas programadas (fin de temporada o no inicializada)',
-      );
-    }
-
-    const evaluationDate = DateUtils.getEndOfUTCDay(
-      membership.nextRecurringChargeGenerationDate,
-    );
-
-    try {
-      await this.prisma.$transaction(async (tx) => {
-        await this.generationService.ensureRecurringCharges(
-          tx,
-          membership,
-          evaluationDate,
-        );
-      });
-      return { message: 'Próxima cuota generada por adelantado exitosamente' };
-    } catch (error) {
-      if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
-        throw new BadRequestException(
-          'La cuota que intentas generar ya fue creada recientemente por otro proceso.',
-        );
-      }
-      throw error;
-    }
   }
 
   /**
@@ -225,15 +133,14 @@ export class StudentChargesService {
     options?: {
       chargeRegistrationOnMigration?: boolean;
       chargeCurrentMonthOnMigration?: boolean;
+      chargeRegistration?: boolean;
+      chargeInitialCycle?: boolean;
     },
+    tx?: Prisma.TransactionClient,
   ) {
     const membership =
-      await this.membershipRepo.getMembershipById(membershipId);
+      await this.membershipRepo.getMembershipById(membershipId, tx);
     if (!membership) return;
-
-    if (!membership.courseSeason.billingConfig?.isEngineActive) {
-      return;
-    }
 
     const generationMembership = {
       ...membership,
@@ -245,18 +152,11 @@ export class StudentChargesService {
         membership.chargeCurrentMonthOnMigration,
     } as typeof membership;
 
-    const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
-
     try {
-      await this.prisma.$transaction(async (tx) => {
-        await this.generationService.ensureStudentCharges(
-          tx,
-          generationMembership,
-          evaluationDate,
-        );
-      });
-      this.logger.log(
-        `Cargos generados/actualizados para nueva membresía ${membershipId}`,
+      await this.enrollmentService.enrollInitialCycle(
+        membershipId,
+        options,
+        tx,
       );
     } catch (error) {
       if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
@@ -268,6 +168,11 @@ export class StudentChargesService {
           `Error generando cargos para nueva membresía ID ${membershipId}:`,
           error,
         );
+        // Propagar errores de negocio (o cualquier error si estamos en transacción, 
+        // para abortar la creación completa)
+        if (error instanceof HttpException || tx) {
+          throw error;
+        }
       }
     }
   }
@@ -290,23 +195,6 @@ export class StudentChargesService {
   }
 
   /**
-   * Módulo de Autorreparación/Recalibración de Cargos.
-   * Invocado cuando ocurre un cambio mutacional (ej: Se le cambia el PaymentPlan al usuario).
-   *
-   * Lógica crítica:
-   * 1. Descubre todos los cargos recurrentes pendientes a futuro.
-   * 2. (PROTECCIÓN FINANCIERA): Solo selecciona aquellos donde (PendingAmount === Amount).
-   * 3. Borra las cuotas elegibles.
-   * 4. Retrasa el 'nextRecurringChargeGenerationDate' para simular que retrocedimos en el tiempo.
-   * 5. Fuerza un recalculo para que nazcan nuevas cuotas con los beneficios del nuevo plan.
-   */
-  async recalculatePendingFutureCharges(studentMembershipId: string) {
-    return this.recalculationService.recalculatePendingFutureCharges(
-      studentMembershipId,
-    );
-  }
-
-  /**
    * Simula N ciclos hacia adelante sin guardarlos en la base de datos.
    * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
    */
@@ -321,8 +209,8 @@ export class StudentChargesService {
    * Concreta la generación física (persistida) de N cuotas por adelantado
    * bajo el contexto de un solo agrupamiento transaccional.
    */
-  async generateAdvanceCharges(membershipId: string, quantity: number) {
-    return this.advanceChargeService.generateAdvanceCharges(
+  async purchaseAdvanceCycles(membershipId: string, quantity: number) {
+    return this.advanceChargeService.purchaseAdvanceCycles(
       membershipId,
       quantity,
     );

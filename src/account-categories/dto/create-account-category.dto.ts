@@ -3,6 +3,11 @@ import { ChargeDirection } from 'src/generated/prisma/client';
 
 export class CreateAccountCategoryDto {
   @IsString()
+  @IsOptional()
+  @MaxLength(50)
+  code?: string;
+
+  @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   name: string;
@@ -11,6 +16,15 @@ export class CreateAccountCategoryDto {
   @IsOptional()
   @MaxLength(500)
   description?: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(50)
+  receiptSeries?: string;
+
+  @IsString()
+  @IsOptional()
+  parentId?: string;
 
   @IsEnum(ChargeDirection)
   @IsNotEmpty()

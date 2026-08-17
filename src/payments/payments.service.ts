@@ -4,6 +4,7 @@ import { FinancialAccountsService } from 'src/financial-accounts/financial-accou
 import { TransactionsPaginationDto } from 'src/transactions/dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
+import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 
 export const paymentSelect = {
   id: true,
@@ -150,6 +151,8 @@ export class PaymentsService {
           status: newStatus,
         },
       });
+
+      await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
 
       // 3. Revertir saldos en cuentas financieras (por Transaction) y eliminar Transactions
       for (const t of payment.transactions) {

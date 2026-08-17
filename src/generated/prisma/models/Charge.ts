@@ -313,6 +313,7 @@ export type ChargeWhereInput = {
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
+  cycleEnrollment?: Prisma.XOR<Prisma.CycleEnrollmentNullableScalarRelationFilter, Prisma.CycleEnrollmentWhereInput> | null
 }
 
 export type ChargeOrderByWithRelationInput = {
@@ -340,6 +341,7 @@ export type ChargeOrderByWithRelationInput = {
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  cycleEnrollment?: Prisma.CycleEnrollmentOrderByWithRelationInput
 }
 
 export type ChargeWhereUniqueInput = Prisma.AtLeast<{
@@ -371,6 +373,7 @@ export type ChargeWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
+  cycleEnrollment?: Prisma.XOR<Prisma.CycleEnrollmentNullableScalarRelationFilter, Prisma.CycleEnrollmentWhereInput> | null
 }, "id" | "parentChargeId_chargeCategory">
 
 export type ChargeOrderByWithAggregationInput = {
@@ -439,6 +442,7 @@ export type ChargeCreateInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateInput = {
@@ -463,6 +467,7 @@ export type ChargeUncheckedCreateInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUpdateInput = {
@@ -487,6 +492,7 @@ export type ChargeUpdateInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateInput = {
@@ -511,6 +517,7 @@ export type ChargeUncheckedUpdateInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateManyInput = {
@@ -837,6 +844,22 @@ export type ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.ChargeScalarWhereInput | Prisma.ChargeScalarWhereInput[]
 }
 
+export type ChargeCreateNestedOneWithoutCycleEnrollmentInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedCreateWithoutCycleEnrollmentInput>
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCycleEnrollmentInput
+  connect?: Prisma.ChargeWhereUniqueInput
+}
+
+export type ChargeUpdateOneWithoutCycleEnrollmentNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeCreateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedCreateWithoutCycleEnrollmentInput>
+  connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutCycleEnrollmentInput
+  upsert?: Prisma.ChargeUpsertWithoutCycleEnrollmentInput
+  disconnect?: Prisma.ChargeWhereInput | boolean
+  delete?: Prisma.ChargeWhereInput | boolean
+  connect?: Prisma.ChargeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChargeUpdateToOneWithWhereWithoutCycleEnrollmentInput, Prisma.ChargeUpdateWithoutCycleEnrollmentInput>, Prisma.ChargeUncheckedUpdateWithoutCycleEnrollmentInput>
+}
+
 export type ChargeCreateNestedOneWithoutStudentChargesInput = {
   create?: Prisma.XOR<Prisma.ChargeCreateWithoutStudentChargesInput, Prisma.ChargeUncheckedCreateWithoutStudentChargesInput>
   connectOrCreate?: Prisma.ChargeCreateOrConnectWithoutStudentChargesInput
@@ -902,6 +925,7 @@ export type ChargeCreateWithoutMembershipChargesInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
@@ -925,6 +949,7 @@ export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutMembershipChargesInput = {
@@ -964,6 +989,7 @@ export type ChargeUpdateWithoutMembershipChargesInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
@@ -987,6 +1013,7 @@ export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateWithoutChildChargesInput = {
@@ -1010,6 +1037,7 @@ export type ChargeCreateWithoutChildChargesInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutChildChargesInput = {
@@ -1033,6 +1061,7 @@ export type ChargeUncheckedCreateWithoutChildChargesInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutChildChargesInput = {
@@ -1061,6 +1090,7 @@ export type ChargeCreateWithoutParentChargeInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutParentChargeInput = {
@@ -1084,6 +1114,7 @@ export type ChargeUncheckedCreateWithoutParentChargeInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutParentChargeInput = {
@@ -1128,6 +1159,7 @@ export type ChargeUpdateWithoutChildChargesInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutChildChargesInput = {
@@ -1151,6 +1183,7 @@ export type ChargeUncheckedUpdateWithoutChildChargesInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUpsertWithWhereUniqueWithoutParentChargeInput = {
@@ -1211,6 +1244,7 @@ export type ChargeCreateWithoutPaymentsInput = {
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutPaymentsInput = {
@@ -1234,6 +1268,7 @@ export type ChargeUncheckedCreateWithoutPaymentsInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutPaymentsInput = {
@@ -1273,6 +1308,7 @@ export type ChargeUpdateWithoutPaymentsInput = {
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutPaymentsInput = {
@@ -1296,6 +1332,7 @@ export type ChargeUncheckedUpdateWithoutPaymentsInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateWithoutCreatedByInput = {
@@ -1319,6 +1356,7 @@ export type ChargeCreateWithoutCreatedByInput = {
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutCreatedByInput = {
@@ -1342,6 +1380,7 @@ export type ChargeUncheckedCreateWithoutCreatedByInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutCreatedByInput = {
@@ -1375,6 +1414,7 @@ export type ChargeCreateWithoutUpdatedByInput = {
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutUpdatedByInput = {
@@ -1398,6 +1438,7 @@ export type ChargeUncheckedCreateWithoutUpdatedByInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutUpdatedByInput = {
@@ -1442,6 +1483,118 @@ export type ChargeUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.ChargeUpdateManyMutationInput, Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
+export type ChargeCreateWithoutCycleEnrollmentInput = {
+  id?: string
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  direction?: $Enums.ChargeDirection
+  chargeCategory?: $Enums.ChargeCategory
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parentCharge?: Prisma.ChargeCreateNestedOneWithoutChildChargesInput
+  childCharges?: Prisma.ChargeCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeCreateNestedManyWithoutChargeInput
+  accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+}
+
+export type ChargeUncheckedCreateWithoutCycleEnrollmentInput = {
+  id?: string
+  parentChargeId?: string | null
+  description?: string | null
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: string | null
+  dueDate: Date | string
+  status?: $Enums.StatusCharge
+  direction?: $Enums.ChargeDirection
+  chargeCategory?: $Enums.ChargeCategory
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  childCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutParentChargeInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutChargeInput
+  sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
+  studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
+  accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+}
+
+export type ChargeCreateOrConnectWithoutCycleEnrollmentInput = {
+  where: Prisma.ChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedCreateWithoutCycleEnrollmentInput>
+}
+
+export type ChargeUpsertWithoutCycleEnrollmentInput = {
+  update: Prisma.XOR<Prisma.ChargeUpdateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedUpdateWithoutCycleEnrollmentInput>
+  create: Prisma.XOR<Prisma.ChargeCreateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedCreateWithoutCycleEnrollmentInput>
+  where?: Prisma.ChargeWhereInput
+}
+
+export type ChargeUpdateToOneWithWhereWithoutCycleEnrollmentInput = {
+  where?: Prisma.ChargeWhereInput
+  data: Prisma.XOR<Prisma.ChargeUpdateWithoutCycleEnrollmentInput, Prisma.ChargeUncheckedUpdateWithoutCycleEnrollmentInput>
+}
+
+export type ChargeUpdateWithoutCycleEnrollmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentCharge?: Prisma.ChargeUpdateOneWithoutChildChargesNestedInput
+  childCharges?: Prisma.ChargeUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUpdateManyWithoutChargeNestedInput
+  accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+}
+
+export type ChargeUncheckedUpdateWithoutCycleEnrollmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  parentChargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pendingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
+  direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
+  chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childCharges?: Prisma.ChargeUncheckedUpdateManyWithoutParentChargeNestedInput
+  membershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutChargeNestedInput
+  sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
+  studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
+  accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+}
+
 export type ChargeCreateWithoutStudentChargesInput = {
   id?: string
   description?: string | null
@@ -1463,6 +1616,7 @@ export type ChargeCreateWithoutStudentChargesInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutStudentChargesInput = {
@@ -1486,6 +1640,7 @@ export type ChargeUncheckedCreateWithoutStudentChargesInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutStudentChargesInput = {
@@ -1525,6 +1680,7 @@ export type ChargeUpdateWithoutStudentChargesInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
@@ -1548,6 +1704,7 @@ export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateWithoutSessionBookingInput = {
@@ -1571,6 +1728,7 @@ export type ChargeCreateWithoutSessionBookingInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutSessionBookingInput = {
@@ -1594,6 +1752,7 @@ export type ChargeUncheckedCreateWithoutSessionBookingInput = {
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   accountCharge?: Prisma.AccountChargeUncheckedCreateNestedOneWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutSessionBookingInput = {
@@ -1633,6 +1792,7 @@ export type ChargeUpdateWithoutSessionBookingInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
@@ -1656,6 +1816,7 @@ export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateWithoutAccountChargeInput = {
@@ -1679,6 +1840,7 @@ export type ChargeCreateWithoutAccountChargeInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedChargesInput
   payments?: Prisma.PaymentCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeUncheckedCreateWithoutAccountChargeInput = {
@@ -1702,6 +1864,7 @@ export type ChargeUncheckedCreateWithoutAccountChargeInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedCreateNestedOneWithoutChargeInput
   studentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutChargeInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutChargeInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedCreateNestedOneWithoutChargeInput
 }
 
 export type ChargeCreateOrConnectWithoutAccountChargeInput = {
@@ -1741,6 +1904,7 @@ export type ChargeUpdateWithoutAccountChargeInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutAccountChargeInput = {
@@ -1764,6 +1928,7 @@ export type ChargeUncheckedUpdateWithoutAccountChargeInput = {
   sessionBooking?: Prisma.SessionBookingUncheckedUpdateOneWithoutChargeNestedInput
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeCreateManyParentChargeInput = {
@@ -1804,6 +1969,7 @@ export type ChargeUpdateWithoutParentChargeInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutParentChargeInput = {
@@ -1827,6 +1993,7 @@ export type ChargeUncheckedUpdateWithoutParentChargeInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateManyWithoutParentChargeInput = {
@@ -1901,6 +2068,7 @@ export type ChargeUpdateWithoutCreatedByInput = {
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutCreatedByInput = {
@@ -1924,6 +2092,7 @@ export type ChargeUncheckedUpdateWithoutCreatedByInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1964,6 +2133,7 @@ export type ChargeUpdateWithoutUpdatedByInput = {
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateWithoutUpdatedByInput = {
@@ -1987,6 +2157,7 @@ export type ChargeUncheckedUpdateWithoutUpdatedByInput = {
   studentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutChargeNestedInput
   accountCharge?: Prisma.AccountChargeUncheckedUpdateOneWithoutChargeNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutChargeNestedInput
+  cycleEnrollment?: Prisma.CycleEnrollmentUncheckedUpdateOneWithoutChargeNestedInput
 }
 
 export type ChargeUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -2089,6 +2260,7 @@ export type ChargeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
   payments?: boolean | Prisma.Charge$paymentsArgs<ExtArgs>
+  cycleEnrollment?: boolean | Prisma.Charge$cycleEnrollmentArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["charge"]>
 
@@ -2163,6 +2335,7 @@ export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Charge$updatedByArgs<ExtArgs>
   payments?: boolean | Prisma.Charge$paymentsArgs<ExtArgs>
+  cycleEnrollment?: boolean | Prisma.Charge$cycleEnrollmentArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2188,6 +2361,7 @@ export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    cycleEnrollment: Prisma.$CycleEnrollmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2608,6 +2782,7 @@ export interface Prisma__ChargeClient<T, Null = never, ExtArgs extends runtime.T
   createdBy<T extends Prisma.Charge$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Charge$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.Charge$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cycleEnrollment<T extends Prisma.Charge$cycleEnrollmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Charge$cycleEnrollmentArgs<ExtArgs>>): Prisma.Prisma__CycleEnrollmentClient<runtime.Types.Result.GetResult<Prisma.$CycleEnrollmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3236,6 +3411,25 @@ export type Charge$paymentsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * Charge.cycleEnrollment
+ */
+export type Charge$cycleEnrollmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CycleEnrollment
+   */
+  select?: Prisma.CycleEnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CycleEnrollment
+   */
+  omit?: Prisma.CycleEnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CycleEnrollmentInclude<ExtArgs> | null
+  where?: Prisma.CycleEnrollmentWhereInput
 }
 
 /**

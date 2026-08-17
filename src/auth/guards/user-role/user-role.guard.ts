@@ -111,6 +111,9 @@ export class UserRoleGuard implements CanActivate {
       }
     }
 
+    // Adjuntar los permisos al objeto user de la Request para comprobaciones granulares
+    user.permissions = roleAccess.permissions;
+
     return true;
   }
 }

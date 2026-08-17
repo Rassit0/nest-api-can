@@ -67,6 +67,7 @@ export type CourseSeasonBillingConfigMinAggregateOutputType = {
   prorateLastRecurringFee: boolean | null
   prorateRegistrationFee: boolean | null
   prorateSeasonFee: boolean | null
+  prorationEnabled: boolean | null
   createdById: string | null
   updatedById: string | null
 }
@@ -90,6 +91,7 @@ export type CourseSeasonBillingConfigMaxAggregateOutputType = {
   prorateLastRecurringFee: boolean | null
   prorateRegistrationFee: boolean | null
   prorateSeasonFee: boolean | null
+  prorationEnabled: boolean | null
   createdById: string | null
   updatedById: string | null
 }
@@ -113,6 +115,7 @@ export type CourseSeasonBillingConfigCountAggregateOutputType = {
   prorateLastRecurringFee: number
   prorateRegistrationFee: number
   prorateSeasonFee: number
+  prorationEnabled: number
   createdById: number
   updatedById: number
   _all: number
@@ -160,6 +163,7 @@ export type CourseSeasonBillingConfigMinAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  prorationEnabled?: true
   createdById?: true
   updatedById?: true
 }
@@ -183,6 +187,7 @@ export type CourseSeasonBillingConfigMaxAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  prorationEnabled?: true
   createdById?: true
   updatedById?: true
 }
@@ -206,6 +211,7 @@ export type CourseSeasonBillingConfigCountAggregateInputType = {
   prorateLastRecurringFee?: true
   prorateRegistrationFee?: true
   prorateSeasonFee?: true
+  prorationEnabled?: true
   createdById?: true
   updatedById?: true
   _all?: true
@@ -316,6 +322,7 @@ export type CourseSeasonBillingConfigGroupByOutputType = {
   prorateLastRecurringFee: boolean
   prorateRegistrationFee: boolean
   prorateSeasonFee: boolean
+  prorationEnabled: boolean
   createdById: string | null
   updatedById: string | null
   _count: CourseSeasonBillingConfigCountAggregateOutputType | null
@@ -362,6 +369,7 @@ export type CourseSeasonBillingConfigWhereInput = {
   prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorationEnabled?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
@@ -388,6 +396,7 @@ export type CourseSeasonBillingConfigOrderByWithRelationInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  prorationEnabled?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
@@ -417,6 +426,7 @@ export type CourseSeasonBillingConfigWhereUniqueInput = Prisma.AtLeast<{
   prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorationEnabled?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
@@ -443,6 +453,7 @@ export type CourseSeasonBillingConfigOrderByWithAggregationInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  prorationEnabled?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CourseSeasonBillingConfigCountOrderByAggregateInput
@@ -474,6 +485,7 @@ export type CourseSeasonBillingConfigScalarWhereWithAggregatesInput = {
   prorateLastRecurringFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
+  prorationEnabled?: Prisma.BoolWithAggregatesFilter<"CourseSeasonBillingConfig"> | boolean
   createdById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonBillingConfig"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonBillingConfig"> | string | null
 }
@@ -496,6 +508,7 @@ export type CourseSeasonBillingConfigCreateInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
@@ -520,6 +533,7 @@ export type CourseSeasonBillingConfigUncheckedCreateInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: string | null
   updatedById?: string | null
 }
@@ -542,6 +556,7 @@ export type CourseSeasonBillingConfigUpdateInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
@@ -566,6 +581,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -589,6 +605,7 @@ export type CourseSeasonBillingConfigCreateManyInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: string | null
   updatedById?: string | null
 }
@@ -611,6 +628,7 @@ export type CourseSeasonBillingConfigUpdateManyMutationInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type CourseSeasonBillingConfigUncheckedUpdateManyInput = {
@@ -632,6 +650,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateManyInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -670,6 +689,7 @@ export type CourseSeasonBillingConfigCountOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  prorationEnabled?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -704,6 +724,7 @@ export type CourseSeasonBillingConfigMaxOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  prorationEnabled?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -727,6 +748,7 @@ export type CourseSeasonBillingConfigMinOrderByAggregateInput = {
   prorateLastRecurringFee?: Prisma.SortOrder
   prorateRegistrationFee?: Prisma.SortOrder
   prorateSeasonFee?: Prisma.SortOrder
+  prorationEnabled?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -876,6 +898,7 @@ export type CourseSeasonBillingConfigCreateWithoutCreatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
 }
@@ -899,6 +922,7 @@ export type CourseSeasonBillingConfigUncheckedCreateWithoutCreatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   updatedById?: string | null
 }
 
@@ -930,6 +954,7 @@ export type CourseSeasonBillingConfigCreateWithoutUpdatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutBillingConfigInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
 }
@@ -953,6 +978,7 @@ export type CourseSeasonBillingConfigUncheckedCreateWithoutUpdatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: string | null
 }
 
@@ -1004,6 +1030,7 @@ export type CourseSeasonBillingConfigScalarWhereInput = {
   prorateLastRecurringFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateRegistrationFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   prorateSeasonFee?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
+  prorationEnabled?: Prisma.BoolFilter<"CourseSeasonBillingConfig"> | boolean
   createdById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonBillingConfig"> | string | null
 }
@@ -1042,6 +1069,7 @@ export type CourseSeasonBillingConfigCreateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonBillingConfigsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonBillingConfigsInput
 }
@@ -1064,6 +1092,7 @@ export type CourseSeasonBillingConfigUncheckedCreateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: string | null
   updatedById?: string | null
 }
@@ -1102,6 +1131,7 @@ export type CourseSeasonBillingConfigUpdateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
 }
@@ -1124,6 +1154,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateWithoutCourseSeasonInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1147,6 +1178,7 @@ export type CourseSeasonBillingConfigCreateManyCreatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   updatedById?: string | null
 }
 
@@ -1169,6 +1201,7 @@ export type CourseSeasonBillingConfigCreateManyUpdatedByInput = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: string | null
 }
 
@@ -1190,6 +1223,7 @@ export type CourseSeasonBillingConfigUpdateWithoutCreatedByInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonBillingConfigsNestedInput
 }
@@ -1213,6 +1247,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateWithoutCreatedByInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1235,6 +1270,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByInput = 
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1256,6 +1292,7 @@ export type CourseSeasonBillingConfigUpdateWithoutUpdatedByInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutBillingConfigNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonBillingConfigsNestedInput
 }
@@ -1279,6 +1316,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateWithoutUpdatedByInput = {
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1301,6 +1339,7 @@ export type CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByInput = 
   prorateLastRecurringFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateRegistrationFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   prorateSeasonFee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prorationEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1325,6 +1364,7 @@ export type CourseSeasonBillingConfigSelect<ExtArgs extends runtime.Types.Extens
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: boolean
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
@@ -1351,6 +1391,7 @@ export type CourseSeasonBillingConfigSelectCreateManyAndReturn<ExtArgs extends r
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: boolean
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
@@ -1377,6 +1418,7 @@ export type CourseSeasonBillingConfigSelectUpdateManyAndReturn<ExtArgs extends r
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: boolean
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
@@ -1403,11 +1445,12 @@ export type CourseSeasonBillingConfigSelectScalar = {
   prorateLastRecurringFee?: boolean
   prorateRegistrationFee?: boolean
   prorateSeasonFee?: boolean
+  prorationEnabled?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type CourseSeasonBillingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "isEngineActive" | "billingDay" | "registrationFee" | "recurringFee" | "seasonFee" | "debtToleranceMonths" | "lateFeeEnabled" | "lateFeePerDay" | "graceDays" | "chargeGenerationDaysBefore" | "billingType" | "billingFrequency" | "prorateFirstRecurringFee" | "prorateLastRecurringFee" | "prorateRegistrationFee" | "prorateSeasonFee" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonBillingConfig"]>
+export type CourseSeasonBillingConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "isEngineActive" | "billingDay" | "registrationFee" | "recurringFee" | "seasonFee" | "debtToleranceMonths" | "lateFeeEnabled" | "lateFeePerDay" | "graceDays" | "chargeGenerationDaysBefore" | "billingType" | "billingFrequency" | "prorateFirstRecurringFee" | "prorateLastRecurringFee" | "prorateRegistrationFee" | "prorateSeasonFee" | "prorationEnabled" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonBillingConfig"]>
 export type CourseSeasonBillingConfigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonBillingConfig$createdByArgs<ExtArgs>
@@ -1450,6 +1493,7 @@ export type $CourseSeasonBillingConfigPayload<ExtArgs extends runtime.Types.Exte
     prorateLastRecurringFee: boolean
     prorateRegistrationFee: boolean
     prorateSeasonFee: boolean
+    prorationEnabled: boolean
     createdById: string | null
     updatedById: string | null
   }, ExtArgs["result"]["courseSeasonBillingConfig"]>
@@ -1896,6 +1940,7 @@ export interface CourseSeasonBillingConfigFieldRefs {
   readonly prorateLastRecurringFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
   readonly prorateRegistrationFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
   readonly prorateSeasonFee: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
+  readonly prorationEnabled: Prisma.FieldRef<"CourseSeasonBillingConfig", 'Boolean'>
   readonly createdById: Prisma.FieldRef<"CourseSeasonBillingConfig", 'String'>
   readonly updatedById: Prisma.FieldRef<"CourseSeasonBillingConfig", 'String'>
 }

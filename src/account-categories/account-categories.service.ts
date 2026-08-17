@@ -11,9 +11,33 @@ export class AccountCategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createAccountCategoryDto: CreateAccountCategoryDto, userId?: string) {
+    let { code, ...rest } = createAccountCategoryDto;
+
+    if (!code) {
+      code = rest.name.replace(/\s+/g, '').substring(0, 4).toUpperCase();
+      let isUnique = false;
+      let suffix = 1;
+      let finalCode = code;
+
+      while (!isUnique) {
+        const existing = await this.prisma.accountCategory.findUnique({ where: { code: finalCode } });
+        if (!existing) {
+          isUnique = true;
+        } else {
+          suffix++;
+          finalCode = `${code}${suffix}`;
+        }
+      }
+      code = finalCode;
+    } else {
+      const existing = await this.prisma.accountCategory.findUnique({ where: { code } });
+      if (existing) throw new Error('Ya existe una categoría con este código.');
+    }
+
     const newCategory = await this.prisma.accountCategory.create({
       data: {
-        ...createAccountCategoryDto,
+        ...rest,
+        code,
         createdById: userId,
         updatedById: userId,
       },

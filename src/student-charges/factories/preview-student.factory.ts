@@ -36,6 +36,8 @@ export class PreviewStudentFactory {
     isMigrated: boolean,
     chargeRegistrationOnMigration?: boolean,
     chargeCurrentMonthOnMigration?: boolean,
+    chargeRegistration?: boolean,
+    chargeInitialCycle?: boolean,
   ): StudentMembershipWithRelations {
     return {
       id: 'preview-id',
@@ -47,9 +49,11 @@ export class PreviewStudentFactory {
       isMigrated,
       chargeRegistrationOnMigration,
       chargeCurrentMonthOnMigration,
+      chargeRegistration,
+      chargeInitialCycle,
       createdAt: new Date(),
       updatedAt: new Date(),
-      nextRecurringChargeGenerationDate: null,
+      pauses: [],
       courseSeason,
       paymentPlan,
       studentDiscounts,

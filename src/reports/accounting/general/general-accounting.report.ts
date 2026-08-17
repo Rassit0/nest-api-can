@@ -77,13 +77,13 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
     ]);
 
     builder.addDataTable({
-      title: 'Estado de Liquidez Actual',
-      headers: ['Concepto', 'Monto'],
+      title: 'Estado de Liquidez Actual (Por Cuenta)',
+      headers: ['Cuenta', 'Monto'],
       widths: ['*', 'auto'],
-      rows: [
-        ['Efectivo (Cajas)', `${financialPosition.treasury.totalInCash.toFixed(2)} Bs.`],
-        ['Bancos y Billeteras', `${financialPosition.treasury.totalInBanks.toFixed(2)} Bs.`],
-      ],
+      rows: financialPosition.treasury.accounts.map(acc => [
+        acc.name,
+        `${acc.balance.toFixed(2)} ${acc.currency === 'USD' ? '$us' : 'Bs.'}`
+      ]),
     });
 
     builder.addDataTable({
@@ -104,6 +104,7 @@ export class GeneralAccountingReport implements ReportHandler, OnModuleInit {
       rows: [
         ['Cuentas por Cobrar (Deuda Administrativa)', `${financialPosition.financial.totalAccountReceivables.toFixed(2)} Bs.`],
         ['Cuentas por Cobrar (Membresías Jugadores)', `${financialPosition.financial.totalMembershipReceivables.toFixed(2)} Bs.`],
+        ['Cuentas por Cobrar (Estudiantes/Cursos)', `${financialPosition.financial.totalStudentReceivables.toFixed(2)} Bs.`],
         ['Cuentas por Pagar (Obligaciones)', `${financialPosition.financial.totalPayables.toFixed(2)} Bs.`],
       ],
     });
