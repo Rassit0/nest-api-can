@@ -51,7 +51,6 @@ export class InternalTransfersService {
           transactionDate,
           paymentMethod: 'TRANSFER',
           isInternalTransfer: true,
-          createdById: user.id,
           receiptSeries: 'TR',
           receiptNumber: Math.floor(Math.random() * 1000000), // Podríamos usar una secuencia real
         },
@@ -68,7 +67,6 @@ export class InternalTransfersService {
           transactionDate,
           paymentMethod: 'TRANSFER',
           isInternalTransfer: true,
-          createdById: user.id,
           receiptSeries: 'TR',
           receiptNumber: Math.floor(Math.random() * 1000000),
         },
@@ -83,7 +81,6 @@ export class InternalTransfersService {
           date: transactionDate,
           sourceTransactionId: sourceTransaction.id,
           destinationTransactionId: destTransaction.id,
-          createdById: user.id,
           status: TransferStatus.COMPLETED, // Podría ser PENDING en el futuro
         },
       });

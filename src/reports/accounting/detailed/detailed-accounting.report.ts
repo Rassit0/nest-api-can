@@ -15,9 +15,7 @@ interface AggregatedGroup {
   documentIds: Set<string>;
   minReceipt: number | null;
   maxReceipt: number | null;
-  cash: number;
-  qr: number;
-  transfer: number;
+  accounts: Record<string, number>;
   total: number;
   order: number;
   children: AggregatedGroup[];
@@ -53,6 +51,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         status: 'COMPLETED',
       },
       include: {
+        financialAccount: { select: { name: true } },
         payment: {
           include: {
             charge: {
@@ -109,9 +108,24 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     });
   }
 
+  private async getAccountingTransfers(start: Date, end: Date) {
+    return this.prisma.internalTransfer.findMany({
+      where: {
+        date: { gte: start, lte: end },
+        status: 'COMPLETED',
+      },
+      include: {
+        sourceTransaction: { include: { financialAccount: true } },
+        destinationTransaction: { include: { financialAccount: true } },
+      },
+      orderBy: { date: 'asc' },
+    });
+  }
+
   private groupAccountingData(transactions: any[]) {
     // ParentCategory -> ChildCategory -> Series -> AggregatedGroup
     const parentMap = new Map<string, AggregatedGroup>();
+    const activeAccountNames = new Set<string>();
 
     const getOrCreateGroup = (
       parentId: string, parentName: string, 
@@ -128,7 +142,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           documentIds: new Set(),
           minReceipt: null,
           maxReceipt: null,
-          cash: 0, qr: 0, transfer: 0, total: 0, order: 0,
+          accounts: {}, total: 0, order: 0,
           children: []
         };
         parentMap.set(parentId, pGroup);
@@ -145,7 +159,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           documentIds: new Set(),
           minReceipt: null,
           maxReceipt: null,
-          cash: 0, qr: 0, transfer: 0, total: 0, order: 0,
+          accounts: {}, total: 0, order: 0,
           children: []
         };
         pGroup.children.push(cGroup);
@@ -222,36 +236,35 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       let isPositive = t.type === 'INCOME' ? 1 : -1;
       const effectiveAmt = amt * isPositive;
 
-      if (t.paymentMethod === 'CASH') {
-        cGroup.cash += effectiveAmt;
-        pGroup.cash += effectiveAmt;
-      } else if (t.paymentMethod === 'QR') {
-        cGroup.qr += effectiveAmt;
-        pGroup.qr += effectiveAmt;
-      } else if (t.paymentMethod === 'TRANSFER') {
-        cGroup.transfer += effectiveAmt;
-        pGroup.transfer += effectiveAmt;
-      } else {
-        // Fallback for any other method, we group it in CASH conceptually for now or just add to total.
-        // We will add to CASH to avoid discarding, but log it.
-        cGroup.cash += effectiveAmt;
-        pGroup.cash += effectiveAmt;
-      }
+      const accName = t.financialAccount?.name || 'Desconocida';
+      activeAccountNames.add(accName);
+
+      cGroup.accounts[accName] = (cGroup.accounts[accName] || 0) + effectiveAmt;
+      pGroup.accounts[accName] = (pGroup.accounts[accName] || 0) + effectiveAmt;
 
       cGroup.total += effectiveAmt;
       pGroup.total += effectiveAmt;
     }
 
-    return Array.from(parentMap.values()).sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+    return {
+      groups: Array.from(parentMap.values()).sort((a, b) => a.categoryName.localeCompare(b.categoryName)),
+      activeAccounts: Array.from(activeAccountNames).sort()
+    };
   }
 
   async generate(params: any, format: string): Promise<any> {
     const today = new Date();
-    const start = params.start ? new Date(params.start) : new Date(today.getFullYear(), today.getMonth(), 1);
-    const end = params.end ? new Date(params.end) : new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
+    let start = params.start ? new Date(params.start) : new Date(today.getFullYear(), today.getMonth(), 1);
+    let end = params.end ? new Date(params.end) : new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    if (params.end) {
+      end.setUTCHours(23, 59, 59, 999);
+    }
 
     const transactions = await this.getAccountingTransactions(start, end);
-    const groups = this.groupAccountingData(transactions);
+    const transfers = await this.getAccountingTransfers(start, end);
+
+    const { groups, activeAccounts } = this.groupAccountingData(transactions);
 
     let grandTotal = 0;
     for (const g of groups) {
@@ -268,9 +281,12 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       content: [
         this.buildHeader(start, end, grandTotal),
         { text: '\n' },
-        this.buildTable(groups, grandTotal),
+        this.buildTable(groups, activeAccounts, grandTotal),
+        transfers.length > 0 ? { text: '\n\nMOVIMIENTOS INTERNOS Y RECLASIFICACIONES', style: 'sectionTitle', margin: [0, 10, 0, 5] } : '',
+        transfers.length > 0 ? this.buildTransfersTable(transfers) : '',
       ],
       styles: {
+        sectionTitle: { bold: true, fontSize: 12, color: 'black' },
         tableHeader: { bold: true, fontSize: 9, color: 'black', alignment: 'center', margin: [0, 4, 0, 4] },
         tableCell: { fontSize: 9, margin: [0, 4, 0, 4] },
         tableCellRight: { fontSize: 9, alignment: 'right', margin: [0, 4, 4, 4] },
@@ -324,67 +340,134 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     };
   }
 
-  private buildTable(groups: AggregatedGroup[], grandTotal: number): Content {
-    const body: any[] = [
-      [
-        { text: 'N°', style: 'tableHeader' },
-        { text: 'GRUPOS CONCEPTO', style: 'tableHeader' },
-        { text: 'RECIBOS', style: 'tableHeader' },
-        { text: 'NÚMEROS', style: 'tableHeader' },
-        { text: 'CANTIDAD', style: 'tableHeader' },
-        { text: 'QR', style: 'tableHeader' },
-        { text: 'Banco/Trans', style: 'tableHeader' },
-        { text: 'Efectivo', style: 'tableHeader' },
-        { text: 'IMPORTE TOTAL', style: 'tableHeader' },
-      ]
+  private buildTable(groups: AggregatedGroup[], activeAccounts: string[], grandTotal: number): Content {
+    const headerRow: any[] = [
+      { text: 'N°', style: 'tableHeader' },
+      { text: 'GRUPOS CONCEPTO', style: 'tableHeader' },
+      { text: 'RECIBOS', style: 'tableHeader' },
+      { text: 'NÚMEROS', style: 'tableHeader' },
+      { text: 'CANTIDAD', style: 'tableHeader' },
     ];
+
+    activeAccounts.forEach(acc => {
+      headerRow.push({ text: acc, style: 'tableHeader' });
+    });
+
+    headerRow.push({ text: 'IMPORTE TOTAL', style: 'tableHeader' });
+
+    const body: any[] = [headerRow];
 
     let rowIndex = 1;
 
     for (const pGroup of groups) {
-      body.push([
+      const pRow: any[] = [
         { text: String(rowIndex++), style: 'tableCellCenter' },
         { text: pGroup.categoryName.toUpperCase(), style: 'tableCell', bold: true },
         { text: '', style: 'tableCellCenter' },
         { text: '', style: 'tableCellCenter' },
         { text: String(pGroup.documentIds.size), style: 'tableCellCenter', bold: true },
-        { text: pGroup.qr.toFixed(2), style: 'tableCellRight', bold: true },
-        { text: pGroup.transfer.toFixed(2), style: 'tableCellRight', bold: true },
-        { text: pGroup.cash.toFixed(2), style: 'tableCellRight', bold: true },
-        { text: pGroup.total.toFixed(2), style: 'tableCellRight', bold: true },
-      ]);
+      ];
+
+      activeAccounts.forEach(acc => {
+        const val = pGroup.accounts[acc] || 0;
+        pRow.push({ text: val.toFixed(2), style: 'tableCellRight', bold: true });
+      });
+
+      pRow.push({ text: pGroup.total.toFixed(2), style: 'tableCellRight', bold: true });
+      body.push(pRow);
 
       for (const cGroup of pGroup.children) {
-        body.push([
+        const cRow: any[] = [
           { text: String(rowIndex++), style: 'tableCellCenter' },
           { text: `* ${cGroup.categoryName.toUpperCase()}`, style: 'tableCell', margin: [10, 4, 0, 4] },
           { text: cGroup.receiptSeries, style: 'tableCellCenter' },
           { text: cGroup.minReceipt !== null && cGroup.maxReceipt !== null ? `${cGroup.minReceipt} - ${cGroup.maxReceipt}` : 'ninguno', style: 'tableCellCenter' },
           { text: String(cGroup.documentIds.size), style: 'tableCellCenter' },
-          { text: cGroup.qr.toFixed(2), style: 'tableCellRight' },
-          { text: cGroup.transfer.toFixed(2), style: 'tableCellRight' },
-          { text: cGroup.cash.toFixed(2), style: 'tableCellRight' },
-          { text: cGroup.total.toFixed(2), style: 'tableCellRight' },
-        ]);
+        ];
+
+        activeAccounts.forEach(acc => {
+          const val = cGroup.accounts[acc] || 0;
+          cRow.push({ text: val.toFixed(2), style: 'tableCellRight' });
+        });
+
+        cRow.push({ text: cGroup.total.toFixed(2), style: 'tableCellRight' });
+        body.push(cRow);
       }
     }
 
+    const totalRow: any[] = [
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: 'TOTAL:', style: 'boldRight', border: [false, false, false, false] },
+    ];
+    
+    const totalsByAcc: Record<string, number> = {};
+    for (const pGroup of groups) {
+      activeAccounts.forEach(acc => {
+        totalsByAcc[acc] = (totalsByAcc[acc] || 0) + (pGroup.accounts[acc] || 0);
+      });
+    }
+
+    activeAccounts.forEach(acc => {
+      totalRow.push({ text: totalsByAcc[acc].toFixed(2), style: 'boldRight', border: [true, true, true, true] });
+    });
+
+    totalRow.push({ text: `Bs ${grandTotal.toFixed(2)}`, style: 'boldRight', border: [true, true, true, true], fillColor: '#f2f2f2' });
+
+    body.push(totalRow);
+
+    const widths: any[] = ['auto', '*', 'auto', 'auto', 'auto'];
+    activeAccounts.forEach(() => widths.push('auto'));
+    widths.push('auto');
+
+    return {
+      table: {
+        headerRows: 1,
+        widths,
+        body
+      }
+    };
+  }
+
+  private buildTransfersTable(transfers: any[]): Content {
+    const body: any[] = [
+      [
+        { text: 'Fecha', style: 'tableHeader' },
+        { text: 'Origen', style: 'tableHeader' },
+        { text: 'Destino', style: 'tableHeader' },
+        { text: 'Importe', style: 'tableHeader' },
+      ]
+    ];
+
+    let total = 0;
+    for (const t of transfers) {
+      const amt = Number(t.amount || 0);
+      total += amt;
+      const src = t.sourceTransaction?.financialAccount?.name || 'Desconocida';
+      const dst = t.destinationTransaction?.financialAccount?.name || 'Desconocida';
+      const dateStr = new Intl.DateTimeFormat('es-BO', { timeZone: 'America/La_Paz', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(t.date));
+
+      body.push([
+        { text: dateStr, style: 'tableCellCenter' },
+        { text: src, style: 'tableCell' },
+        { text: dst, style: 'tableCell' },
+        { text: amt.toFixed(2), style: 'tableCellRight' },
+      ]);
+    }
+
     body.push([
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-      { text: 'TOTAL:', style: 'boldRight', colSpan: 4, border: [false, false, false, false] },
+      { text: 'TOTAL MOVIMIENTOS INTERNOS:', style: 'boldRight', colSpan: 3, border: [false, false, false, false] },
       {},
       {},
-      {},
-      { text: `Bs ${grandTotal.toFixed(2)}`, style: 'boldRight', border: [true, true, true, true], fillColor: '#f2f2f2' },
+      { text: `Bs ${total.toFixed(2)}`, style: 'boldRight', border: [true, true, true, true], fillColor: '#f2f2f2' },
     ]);
 
     return {
       table: {
         headerRows: 1,
-        widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+        widths: ['auto', '*', '*', 'auto'],
         body
       }
     };

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { StatusCharge, TransactionType, Prisma } from 'src/generated/prisma/client';
+import { StatusCharge, TransactionType, TransactionStatus, TransferStatus } from 'src/generated/prisma/client';
 
 export interface AnalyticsPeriodParams {
   start?: string;
@@ -11,9 +11,6 @@ export interface AnalyticsPeriodParams {
 export class AccountingAnalyticsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Determina las fechas de inicio y fin para el periodo analítico
-   */
   getPeriodDates(params?: AnalyticsPeriodParams): { periodStart: Date; periodEnd: Date } {
     const today = new Date();
     let periodStart: Date;
@@ -22,69 +19,17 @@ export class AccountingAnalyticsService {
     if (params?.start && params?.end) {
       periodStart = new Date(params.start);
       periodEnd = new Date(params.end);
+      periodEnd.setUTCHours(23, 59, 59, 999);
     } else {
       periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
       periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
     }
-
     return { periodStart, periodEnd };
   }
 
-  /**
-   * Obtiene métricas de deuda a favor (Por Cobrar)
-   */
-  private async getReceivableMetrics() {
-    const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
-    const [accountReceivables, membershipReceivables, studentReceivables] = await Promise.all([
-      this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, accountCharge: { isNot: null } },
-        _sum: { pendingAmount: true },
-      }),
-      this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, membershipCharges: { some: {} } },
-        _sum: { pendingAmount: true },
-      }),
-      this.prisma.charge.aggregate({
-        where: { direction: 'RECEIVABLE', status: { in: pendingStatuses }, studentCharges: { some: {} } },
-        _sum: { pendingAmount: true },
-      }),
-    ]);
-
-    const totalAccountReceivables = Number(accountReceivables._sum.pendingAmount || 0);
-    const totalMembershipReceivables = Number(membershipReceivables._sum.pendingAmount || 0);
-    const totalStudentReceivables = Number(studentReceivables._sum.pendingAmount || 0);
-
-    return {
-      totalAccountReceivables,
-      totalMembershipReceivables,
-      totalStudentReceivables,
-      totalReceivables: totalAccountReceivables + totalMembershipReceivables + totalStudentReceivables,
-    };
-  }
-
-  /**
-   * Obtiene métricas de deuda en contra (Por Pagar)
-   */
-  private async getPayableMetrics() {
-    const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
-    const payables = await this.prisma.charge.aggregate({
-      where: { direction: 'PAYABLE', status: { in: pendingStatuses } },
-      _sum: { pendingAmount: true },
-    });
-
-    return {
-      totalPayables: Number(payables._sum.pendingAmount || 0),
-    };
-  }
-
-  /**
-   * Encapsula la lógica de cálculo de liquidez actual y el detalle de cuentas (Tesorería)
-   */
-  private async getTreasuryMetrics() {
-    const accountsDetail = await this.prisma.financialAccount.findMany({
-      where: {
-        isActive: true,
-      },
+  async getTreasuryMetrics() {
+    const accounts = await this.prisma.financialAccount.findMany({
+      where: { isActive: true },
       select: {
         id: true,
         name: true,
@@ -93,121 +38,246 @@ export class AccountingAnalyticsService {
         isActive: true,
         cachedBalance: true,
       },
-      orderBy: {
-        name: 'asc',
-      },
+      orderBy: { name: 'asc' },
     });
 
-    let totalInCash = 0;
-    let totalInBanks = 0;
-
-    const formattedAccounts = accountsDetail.map(acc => {
+    const liquidityByCurrency: Record<string, number> = {};
+    const formattedAccounts = accounts.map(acc => {
       const balance = acc.cachedBalance?.toNumber() || 0;
-      if (acc.type === 'CASH') {
-        totalInCash += balance;
-      } else if (acc.type === 'BANK' || acc.type === 'DIGITAL_WALLET') {
-        totalInBanks += balance;
-      }
-
-      return {
-        id: acc.id,
-        name: acc.name,
-        type: acc.type,
-        currency: acc.currency,
-        isActive: acc.isActive,
-        balance,
-      };
+      const cur = acc.currency || 'BOB';
+      if (!liquidityByCurrency[cur]) liquidityByCurrency[cur] = 0;
+      liquidityByCurrency[cur] += balance;
+      return { ...acc, balance };
     });
 
     return {
-      availableBalance: totalInCash + totalInBanks,
-      totalInCash,
-      totalInBanks,
+      liquidityByCurrency,
       accounts: formattedAccounts,
     };
   }
 
-  /**
-   * Única fuente de verdad para la posición financiera global.
-   * Orquesta la recolección de Tesorería y Finanzas.
-   */
-  async getGlobalFinancialPosition() {
-    const treasury = await this.getTreasuryMetrics();
-    const receivables = await this.getReceivableMetrics();
-    const payables = await this.getPayableMetrics();
-
-    const netPosition = treasury.availableBalance + receivables.totalReceivables - payables.totalPayables;
-
-    return {
-      treasury,
-      financial: {
-        ...receivables,
-        ...payables,
-        netPosition,
+  async getReceivableMetrics() {
+    const today = new Date();
+    
+    const charges = await this.prisma.charge.findMany({
+      where: {
+        direction: 'RECEIVABLE',
+        status: { in: [StatusCharge.PENDING, StatusCharge.PARTIAL] },
+      },
+      select: {
+        pendingAmount: true,
+        dueDate: true,
+        accountCharge: { select: { id: true } },
+        studentCharges: { select: { id: true } },
+        membershipCharges: { select: { id: true } },
       }
+    });
+
+    const metrics = {
+      expired: { total: 0, student: 0, membership: 0, general: 0 },
+      valid: { total: 0, student: 0, membership: 0, general: 0 },
+      total: 0,
+    };
+
+    charges.forEach(c => {
+      const amount = Number(c.pendingAmount || 0);
+      const isExpired = c.dueDate < today;
+      const target = isExpired ? metrics.expired : metrics.valid;
+      
+      target.total += amount;
+      metrics.total += amount;
+
+      if (c.studentCharges.length > 0) target.student += amount;
+      else if (c.membershipCharges.length > 0) target.membership += amount;
+      else target.general += amount;
+    });
+
+    return { receivables: metrics };
+  }
+
+  async getPayableMetrics() {
+    const today = new Date();
+    const charges = await this.prisma.charge.findMany({
+      where: {
+        direction: 'PAYABLE',
+        status: { in: [StatusCharge.PENDING, StatusCharge.PARTIAL] },
+      },
+      select: {
+        pendingAmount: true,
+        dueDate: true,
+      }
+    });
+
+    let expired = 0;
+    let valid = 0;
+
+    charges.forEach(c => {
+      const amount = Number(c.pendingAmount || 0);
+      if (c.dueDate < today) expired += amount;
+      else valid += amount;
+    });
+
+    return { 
+      payables: { expired, valid, total: expired + valid }
     };
   }
 
-  /**
-   * Obtiene todos los flujos de dinero pagados (Income/Expense) en un periodo
-   */
-  async getPeriodTransactions(periodStart: Date, periodEnd: Date) {
-    return this.prisma.transaction.findMany({
+  async getPeriodIncome(periodStart: Date, periodEnd: Date) {
+    const transactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: { gte: periodStart, lte: periodEnd },
-        isInternalTransfer: false, // EXCLUIR TRANSFERENCIAS
-        status: { in: ['COMPLETED'] } // O lo que aplique, asumo que todas están completadas
+        isInternalTransfer: false,
+        status: TransactionStatus.COMPLETED,
+        type: TransactionType.INCOME,
       },
       select: {
-        id: true,
         amount: true,
-        type: true,
-        transactionDate: true,
-        receiptSeries: true,
-        receiptNumber: true,
-        paymentMethod: true,
+        financialAccount: { select: { currency: true } },
         payment: {
           select: {
             charge: {
               select: {
                 studentCharges: { select: { id: true } },
                 membershipCharges: { select: { id: true } },
-                accountCharge: { select: { id: true, category: { select: { name: true } } } }
+                accountCharge: { select: { category: { select: { name: true } } } }
               }
             }
           }
         }
       }
     });
+
+    const incomeByCurrency: Record<string, { school: number, club: number, general: number, uncategorized: number, categories: Record<string, number>, total: number }> = {};
+
+    transactions.forEach(t => {
+      const cur = t.financialAccount?.currency || 'BOB';
+      if (!incomeByCurrency[cur]) {
+        incomeByCurrency[cur] = { school: 0, club: 0, general: 0, uncategorized: 0, categories: {}, total: 0 };
+      }
+      
+      const amt = Number(t.amount);
+      incomeByCurrency[cur].total += amt;
+
+      const charge = t.payment?.charge;
+      if (charge) {
+        if (charge.studentCharges.length > 0) {
+          incomeByCurrency[cur].school += amt;
+        } else if (charge.membershipCharges.length > 0) {
+          incomeByCurrency[cur].club += amt;
+        } else if (charge.accountCharge) {
+          const catName = charge.accountCharge.category?.name || 'Sin Categoría';
+          incomeByCurrency[cur].general += amt;
+          incomeByCurrency[cur].categories[catName] = (incomeByCurrency[cur].categories[catName] || 0) + amt;
+        } else {
+          incomeByCurrency[cur].uncategorized += amt;
+        }
+      } else {
+        incomeByCurrency[cur].uncategorized += amt;
+      }
+    });
+
+    return incomeByCurrency;
   }
 
-  /**
-   * Obtiene el resumen de ingresos y egresos de un periodo
-   */
-  async getPeriodTotals(periodStart: Date, periodEnd: Date) {
+  async getPeriodExpenses(periodStart: Date, periodEnd: Date) {
     const transactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: { gte: periodStart, lte: periodEnd },
         isInternalTransfer: false,
+        status: TransactionStatus.COMPLETED,
+        type: TransactionType.EXPENSE,
       },
       select: {
         amount: true,
-        type: true,
+        financialAccount: { select: { currency: true } },
+        payment: {
+          select: {
+            charge: {
+              select: {
+                accountCharge: { select: { category: { select: { name: true } } } }
+              }
+            }
+          }
+        }
       }
     });
 
-    let periodIncome = 0;
-    let periodExpenses = 0;
+    const expensesByCurrency: Record<string, { categories: Record<string, number>, uncategorized: number, total: number }> = {};
 
     transactions.forEach(t => {
-      const amount = Number(t.amount);
-      if (t.type === TransactionType.INCOME) {
-        periodIncome += amount;
-      } else if (t.type === TransactionType.EXPENSE) {
-        periodExpenses += amount;
+      const cur = t.financialAccount?.currency || 'BOB';
+      if (!expensesByCurrency[cur]) {
+        expensesByCurrency[cur] = { categories: {}, uncategorized: 0, total: 0 };
+      }
+      
+      const amt = Number(t.amount);
+      expensesByCurrency[cur].total += amt;
+
+      const categoryName = t.payment?.charge?.accountCharge?.category?.name;
+      if (categoryName) {
+        expensesByCurrency[cur].categories[categoryName] = (expensesByCurrency[cur].categories[categoryName] || 0) + amt;
+      } else {
+        expensesByCurrency[cur].uncategorized += amt;
       }
     });
 
-    return { periodIncome, periodExpenses };
+    return expensesByCurrency;
+  }
+
+  async getPeriodTransfers(periodStart: Date, periodEnd: Date) {
+    const transfers = await this.prisma.internalTransfer.findMany({
+      where: {
+        date: { gte: periodStart, lte: periodEnd },
+        status: TransferStatus.COMPLETED,
+      },
+      select: {
+        date: true,
+        amount: true,
+        sourceTransaction: { select: { financialAccount: { select: { name: true, currency: true } } } },
+        destinationTransaction: { select: { financialAccount: { select: { name: true } } } },
+      },
+      orderBy: { date: 'asc' },
+    });
+
+    return transfers.map(t => ({
+      date: t.date,
+      amount: Number(t.amount),
+      currency: t.sourceTransaction?.financialAccount?.currency || 'BOB',
+      sourceAccount: t.sourceTransaction?.financialAccount?.name || 'Desconocida',
+      destinationAccount: t.destinationTransaction?.financialAccount?.name || 'Desconocida',
+    }));
+  }
+
+  async getAccountingSummary(params?: AnalyticsPeriodParams) {
+    const { periodStart, periodEnd } = this.getPeriodDates(params);
+
+    const [treasury, receivables, payables, income, expenses, transfers] = await Promise.all([
+      this.getTreasuryMetrics(),
+      this.getReceivableMetrics(),
+      this.getPayableMetrics(),
+      this.getPeriodIncome(periodStart, periodEnd),
+      this.getPeriodExpenses(periodStart, periodEnd),
+      this.getPeriodTransfers(periodStart, periodEnd)
+    ]);
+
+    const periodResultByCurrency: Record<string, number> = {};
+    const currencies = new Set([...Object.keys(income), ...Object.keys(expenses)]);
+    currencies.forEach(cur => {
+      const inc = income[cur]?.total || 0;
+      const exp = expenses[cur]?.total || 0;
+      periodResultByCurrency[cur] = inc - exp;
+    });
+
+    return {
+      periodStart,
+      periodEnd,
+      treasury,
+      receivables,
+      payables,
+      income,
+      expenses,
+      transfers,
+      periodResultByCurrency,
+    };
   }
 }

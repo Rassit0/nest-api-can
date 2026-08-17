@@ -89,7 +89,38 @@ export const chargeSelect: Prisma.ChargeSelect = {
       },
     },
   },
+  payments: {
+    select: {
+      amount: true,
+      status: true,
+    },
+  },
 };
+
+function mapChargeForFrontend(charge: any) {
+  const amount = Number(charge.amount);
+  const discountAmount = Number(charge.discountAmount || 0);
+
+  const paidAmount = charge.payments
+    ? charge.payments
+        .filter((p: any) => p.status === 'COMPLETED')
+        .reduce((sum: number, p: any) => sum + Number(p.amount), 0)
+    : 0;
+
+  const isFullyPaidWithMoney = paidAmount >= amount;
+  const hasDiscount = discountAmount > 0;
+
+  const canEditDiscount = charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
+  const canRemoveDiscount = hasDiscount && charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
+
+  const { payments, ...chargeWithoutPayments } = charge;
+
+  return {
+    ...chargeWithoutPayments,
+    canEditDiscount,
+    canRemoveDiscount,
+  };
+}
 
 @Injectable()
 export class ChargesService {
@@ -117,7 +148,7 @@ export class ChargesService {
 
     return {
       message: 'Cargo facturado creado exitosamente',
-      data: newCharge,
+      data: mapChargeForFrontend(newCharge),
     };
   }
 
@@ -226,8 +257,10 @@ export class ChargesService {
       this.prisma.charge.count({ where }),
     ]);
 
+    const mappedCharges = charges.map(mapChargeForFrontend);
+
     return createPaginationResult(
-      charges,
+      mappedCharges,
       totalItems,
       page,
       per_page,
@@ -245,7 +278,7 @@ export class ChargesService {
     }
     return {
       message: 'Cargo obtenido exitosamente',
-      data: charge,
+      data: mapChargeForFrontend(charge),
     };
   }
 
@@ -323,7 +356,7 @@ export class ChargesService {
 
     return {
       message: 'Cargo actualizado exitosamente',
-      data: updatedCharge,
+      data: mapChargeForFrontend(updatedCharge),
     };
   }
 
@@ -378,7 +411,7 @@ export class ChargesService {
 
     return {
       message: 'Cargo eliminado exitosamente',
-      data: deletedCharge,
+      data: mapChargeForFrontend(deletedCharge),
     };
   }
 
@@ -401,9 +434,25 @@ export class ChargesService {
     }
 
     const oldDiscount = Number(charge.discountAmount || 0);
-    const currentPending = Number(charge.pendingAmount || 0);
 
-    const paidAmount = amount - oldDiscount - currentPending;
+    const paidAmount = charge.payments
+      ? charge.payments
+          .filter((p) => p.status === 'COMPLETED')
+          .reduce((sum, p) => sum + Number(p.amount), 0)
+      : 0;
+
+    const isFullyPaidWithMoney = paidAmount >= amount;
+
+    if (charge.status === 'CANCELLED') {
+      throw new BadRequestException('No se puede modificar un cargo cancelado.');
+    }
+
+    if (isFullyPaidWithMoney) {
+      throw new BadRequestException(
+        'No se puede modificar el descuento de un cargo que ya fue pagado completamente con dinero real.',
+      );
+    }
+
     const newExpectedTotal = amount - newDiscount;
 
     let newPending = newExpectedTotal - paidAmount;
@@ -413,11 +462,7 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      if (charge.payments && charge.payments.length > 0) {
-        newStatus = StatusCharge.PAID;
-      } else {
-        newStatus = StatusCharge.PENDING;
-      }
+      newStatus = StatusCharge.PAID;
     } else if (paidAmount > 0) {
       newStatus = StatusCharge.PARTIAL;
     } else {
@@ -441,7 +486,7 @@ export class ChargesService {
 
     return {
       message: 'Descuento agregado exitosamente',
-      data: updatedCharge,
+      data: mapChargeForFrontend(updatedCharge),
     };
   }
 
@@ -459,10 +504,25 @@ export class ChargesService {
       throw new BadRequestException('El cargo no tiene un descuento aplicado');
     }
 
-    const currentPending = Number(charge.pendingAmount || 0);
     const amount = Number(charge.amount);
+    const paidAmount = charge.payments
+      ? charge.payments
+          .filter((p) => p.status === 'COMPLETED')
+          .reduce((sum, p) => sum + Number(p.amount), 0)
+      : 0;
 
-    const paidAmount = amount - oldDiscount - currentPending;
+    const isFullyPaidWithMoney = paidAmount >= amount;
+
+    if (charge.status === 'CANCELLED') {
+      throw new BadRequestException('No se puede modificar un cargo cancelado.');
+    }
+
+    if (isFullyPaidWithMoney) {
+      throw new BadRequestException(
+        'No se puede remover el descuento de un cargo que ya fue pagado completamente con dinero real.',
+      );
+    }
+
     const newExpectedTotal = amount; // Sin descuento
 
     let newPending = newExpectedTotal - paidAmount;
@@ -472,11 +532,7 @@ export class ChargesService {
 
     let newStatus: StatusCharge;
     if (newPending <= 0) {
-      if (charge.payments && charge.payments.length > 0) {
-        newStatus = StatusCharge.PAID;
-      } else {
-        newStatus = StatusCharge.PENDING;
-      }
+      newStatus = StatusCharge.PAID;
     } else if (paidAmount > 0) {
       newStatus = StatusCharge.PARTIAL;
     } else {
@@ -500,7 +556,7 @@ export class ChargesService {
 
     return {
       message: 'Descuento eliminado exitosamente',
-      data: updatedCharge,
+      data: mapChargeForFrontend(updatedCharge),
     };
   }
 }
