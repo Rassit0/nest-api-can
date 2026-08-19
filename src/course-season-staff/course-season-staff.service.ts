@@ -16,13 +16,19 @@ export const courseSeasonStaffSelect: Prisma.CourseSeasonStaffSelect = {
   notes: true,
   createdAt: true,
   updatedAt: true,
-  courseSeason: {
+  courseSeasonShift: {
     select: {
       id: true,
-      course: {
+      courseSeason: {
         select: {
           id: true,
           name: true,
+          course: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
@@ -55,13 +61,13 @@ export class CourseSeasonStaffService {
   ) {}
 
   async create(createCourseSeasonStaffDto: CreateCourseSeasonStaffDto) {
-    const { courseSeasonId, isPrimary } = createCourseSeasonStaffDto;
+    const { courseSeasonShiftId, isPrimary } = createCourseSeasonStaffDto;
 
     const newStaffAssoc = await this.prisma.$transaction(async (tx) => {
       // Si se marca como primario, remover la bandera de los demás
       if (isPrimary) {
         await tx.courseSeasonStaff.updateMany({
-          where: { courseSeasonId, isPrimary: true },
+          where: { courseSeasonShiftId, isPrimary: true },
           data: { isPrimary: false },
         });
       }
@@ -104,9 +110,11 @@ export class CourseSeasonStaffService {
           },
         },
         {
-          courseSeason: {
-            course: {
-              name: { contains: search, mode: 'insensitive' },
+          courseSeasonShift: {
+            courseSeason: {
+              course: {
+                name: { contains: search, mode: 'insensitive' },
+              },
             },
           },
         },
@@ -139,16 +147,16 @@ export class CourseSeasonStaffService {
       page = 1,
       search,
       orderBy = 'asc',
-      courseSeasonId,
+      courseSeasonShiftId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.StaffWhereInput = {
       isActive: true,
-      ...(courseSeasonId
+      ...(courseSeasonShiftId
         ? {
             courseSeasonStaffs: {
-              none: { courseSeasonId },
+              none: { courseSeasonShiftId },
             },
           }
         : {}),
@@ -237,14 +245,14 @@ export class CourseSeasonStaffService {
       throw new NotFoundException(this.i18n.t('errors.COURSE_STAFF_NOT_FOUND'));
     }
 
-    const { courseSeasonId, isPrimary } = updateCourseSeasonStaffDto;
-    const finalCourseSeasonId = courseSeasonId || staffAssoc.courseSeasonId;
+    const { courseSeasonShiftId, isPrimary } = updateCourseSeasonStaffDto;
+    const finalCourseSeasonShiftId = courseSeasonShiftId || staffAssoc.courseSeasonShiftId;
 
     const updatedStaffAssoc = await this.prisma.$transaction(async (tx) => {
       // Si se actualiza a primario, limpiar los otros
       if (isPrimary === true) {
         await tx.courseSeasonStaff.updateMany({
-          where: { courseSeasonId: finalCourseSeasonId, isPrimary: true },
+          where: { courseSeasonShiftId: finalCourseSeasonShiftId, isPrimary: true },
           data: { isPrimary: false },
         });
       }

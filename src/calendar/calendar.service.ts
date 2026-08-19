@@ -32,8 +32,8 @@ export class CalendarService {
             name: st.teamSeason.team.name
           })),
           courses: event.session.sessionCourses.map(sc => ({
-            id: sc.courseSeason.id,
-            name: sc.courseSeason.course.name
+            id: sc.courseSeasonShift.courseSeason.id,
+            name: sc.courseSeasonShift.courseSeason.course.name
           }))
         };
         metadata = sessionMeta;

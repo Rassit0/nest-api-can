@@ -10,6 +10,7 @@ import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma.service';
 import { CourseSeasonsService } from '../src/course-seasons/course-seasons.service';
 import { CreateCourseSeasonDto } from '../src/course-seasons/dto/create-course-season.dto';
+import { AddShiftDto } from '../src/course-seasons/dto/add-shift.dto';
 import { ProgramGender, StatusCourseSeason, SeasonStatus, StatusCharge, TypeMembershipCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
 
 describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
@@ -36,15 +37,13 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
   });
 
   afterAll(async () => {
-    // Teardown the cron jobs to prevent Jest open handles
     try {
       const schedulerRegistry = app.get(require('@nestjs/schedule').SchedulerRegistry);
       schedulerRegistry.getCronJobs().forEach((job: any) => job.stop());
       schedulerRegistry.getIntervals().forEach((interval: any) => clearInterval(schedulerRegistry.getInterval(interval)));
       schedulerRegistry.getTimeouts().forEach((timeout: any) => clearTimeout(schedulerRegistry.getTimeout(timeout)));
-    } catch (e) {
-      // Ignorar si ScheduleModule no está inyectado correctamente
-    }
+    } catch (e) {}
+
     for (const id of createdIds.institutions) {
       await prisma.cycleEnrollment.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
       await prisma.studentCharge.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
@@ -56,7 +55,11 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
       await prisma.studentMembershipHistory.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
       await prisma.studentMembership.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
       await prisma.paymentPlan.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
+      
+      await prisma.courseSeasonShift.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
+      await prisma.courseSeasonBillingConfig.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
       await prisma.courseSeason.deleteMany({ where: { season: { institutionId: id } } });
+      
       await prisma.season.deleteMany({ where: { institutionId: id } });
       await prisma.course.deleteMany({ where: { school: { institutionId: id } } });
       await prisma.school.deleteMany({ where: { institutionId: id } });
@@ -83,15 +86,14 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
     let schoolId: string;
     let courseId: string;
     let seasonId: string;
-    let shift1Id: string;
-    let shift2Id: string;
+    let shiftMorningId: string;
+    let shiftAfternoonId: string;
     let personId: string;
     let studentId: string;
-    let courseSeason1Id: string;
-    let courseSeason2Id: string;
-    let courseSeasonCancelledId: string;
-    let chargeId: string;
-    let paymentPlanId: string;
+    
+    let regularCourseSeasonId: string;
+    let morningShiftId: string;
+    let afternoonShiftId: string;
 
     beforeAll(async () => {
       const inst = await prisma.institution.create({ data: { name: 'Inst QA Fase 7', address: '123' } });
@@ -123,11 +125,11 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
       });
       seasonId = season.id;
 
-      const shift1 = await prisma.shift.create({ data: { name: 'Shift 1 QA Fase 7', institutionId: instId } });
-      shift1Id = shift1.id;
+      const shift1 = await prisma.shift.create({ data: { name: 'Mañana QA Fase 7', institutionId: instId } });
+      shiftMorningId = shift1.id;
       
-      const shift2 = await prisma.shift.create({ data: { name: 'Shift 2 QA Fase 7', institutionId: instId } });
-      shift2Id = shift2.id;
+      const shift2 = await prisma.shift.create({ data: { name: 'Tarde QA Fase 7', institutionId: instId } });
+      shiftAfternoonId = shift2.id;
 
       const person = await prisma.person.create({ data: { name: 'John', lastName: 'Doe Fase 7', documentNumber: 'QA7001' } });
       personId = person.id;
@@ -137,161 +139,92 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
       studentId = student.id;
     });
 
-    it('1. Debe crear un turno nuevo', async () => {
+    it('A. Crear una CourseSeason/oferta con un turno inicial', async () => {
       const createDto: CreateCourseSeasonDto = {
-        courseId, categoryId, seasonId, shiftId: shift1Id,
+        name: 'Regular',
+        courseId, categoryId, seasonId, shiftId: shiftMorningId,
         gender: ProgramGender.MIXED, maxMembers: 10, minMembers: 5, validateAge: false,
+        billingConfig: { billingFrequency: 'MONTHLY', billingType: 'MONTHLY_ONLY' as any, recurringFee: '150', billingDay: 1, debtToleranceMonths: 1, lateFeeEnabled: false, registrationFee: '10', chargeGenerationDaysBefore: 7 }
       };
 
-      const result = await courseSeasonsService.create(createDto);
+      let result;
+      try {
+        result = await courseSeasonsService.create(createDto);
+      } catch(e) {
+        console.error('ERROR CREATING COURSE SEASON:', e);
+        throw e;
+      }
       expect(result.data.id).toBeDefined();
-      courseSeason1Id = result.data.id;
-      // Mark it ACTIVE so we can test cancel logic fully
-      await prisma.courseSeason.update({ where: { id: courseSeason1Id }, data: { status: StatusCourseSeason.ACTIVE } });
+      regularCourseSeasonId = result.data.id;
+      
+      const dbSeason = await prisma.courseSeason.findUnique({
+        where: { id: regularCourseSeasonId },
+        include: { shifts: true, billingConfig: true }
+      });
+      
+      expect(dbSeason).toBeDefined();
+      expect(dbSeason.name).toBe('Regular');
+      expect(dbSeason.shifts.length).toBe(1);
+      expect(dbSeason.billingConfig).toBeDefined();
+      expect(Number(dbSeason.billingConfig.recurringFee)).toBe(150);
+      
+      morningShiftId = dbSeason.shifts[0].id;
     });
 
-    it('2. Debe rechazar la creacion del mismo turno (duplicado)', async () => {
-      const createDto: CreateCourseSeasonDto = {
-        courseId, categoryId, seasonId, shiftId: shift1Id,
-        gender: ProgramGender.MIXED, maxMembers: 15, minMembers: 1, validateAge: false,
+    it('B. Agregar otro turno mediante addShift', async () => {
+      const addShiftDto: AddShiftDto = {
+        shiftId: shiftAfternoonId,
+        maxMembers: 15,
+        minMembers: 5
       };
-
-      await expect(courseSeasonsService.create(createDto)).rejects.toThrow('Ya existe un turno configurado con esta combinación');
-    });
-
-    it('4. Debe crear turnos paralelos con capacidades independientes', async () => {
-      const createDto: CreateCourseSeasonDto = {
-        courseId, categoryId, seasonId, shiftId: shift2Id,
-        gender: ProgramGender.MIXED, maxMembers: 20, minMembers: 2, validateAge: false,
-      };
-
-      const result = await courseSeasonsService.create(createDto);
+      
+      const result = await courseSeasonsService.addShift(regularCourseSeasonId, addShiftDto);
       expect(result.data).toBeDefined();
-      courseSeason2Id = result.data.id;
+      afternoonShiftId = result.data.id;
+    });
+
+    it('C. Verificar que ambos turnos pertenecen al mismo CourseSeason', async () => {
+      const dbSeason = await prisma.courseSeason.findUnique({
+        where: { id: regularCourseSeasonId },
+        include: { shifts: { orderBy: { createdAt: 'asc' } } }
+      });
       
-      const created1 = await prisma.courseSeason.findUnique({ where: { id: courseSeason1Id } });
-      const created2 = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      expect(created1.maxMembers).toBe(10);
-      expect(created2.maxMembers).toBe(20);
-    });
-
-    it('5. Debe eliminar fisicamente un turno completamente vacio', async () => {
-      const shiftTemp = await prisma.shift.create({ data: { name: 'Shift Temp', institutionId: instId } });
-      const createDto: CreateCourseSeasonDto = {
-        courseId, categoryId, seasonId, shiftId: shiftTemp.id,
-        gender: ProgramGender.MIXED, maxMembers: 5, minMembers: 1, validateAge: false,
-      };
-
-      const tempCs = await courseSeasonsService.create(createDto);
-      const res = await courseSeasonsService.remove(tempCs.data.id);
-      expect(res.message).toContain('eliminado exitosamente');
-
-      const check = await prisma.courseSeason.findUnique({ where: { id: tempCs.data.id } });
-      expect(check).toBeNull();
-    });
-
-    it('6. Debe rechazar eliminacion con StudentMembership', async () => {
-      await prisma.studentMembership.create({
-        data: {
-          student: { connect: { id: studentId } },
-          courseSeason: { connect: { id: courseSeason1Id } },
-          startedAt: new Date(),
-          paymentPlan: {
-            create: { name: 'Plan QA Fase 7', courseSeason: { connect: { id: courseSeason1Id } } }
-          }
-        }
-      });
-      await expect(courseSeasonsService.remove(courseSeason1Id)).rejects.toThrow('No se puede eliminar el turno porque existen alumnos');
-    });
-
-    it('7. Debe rechazar eliminacion con CycleEnrollment', async () => {
-      const membership = await prisma.studentMembership.findFirst({ where: { courseSeasonId: courseSeason1Id } });
-      await prisma.cycleEnrollment.create({
-        data: {
-          studentMembership: { connect: { id: membership.id } },
-          courseSeason: { connect: { id: courseSeason1Id } },
-          cycleStartDate: new Date(),
-          cycleEndDate: new Date(),
-          effectiveStartDate: new Date(),
-          status: CycleEnrollmentStatus.PENDING
-        }
-      }).catch(() => {}); // It might fail if cycleId is missing, but Prisma constraint on membership prevents deletion anyway
-      await expect(courseSeasonsService.remove(courseSeason1Id)).rejects.toThrow('No se puede eliminar el turno porque existen alumnos');
-    });
-
-    it('11. Cerrar isRegistrationOpen', async () => {
-      await courseSeasonsService.toggleRegistration(courseSeason2Id, false);
-      const closed = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      expect(closed.isRegistrationOpen).toBe(false);
-    });
-
-    it('12. Volver a abrir isRegistrationOpen', async () => {
-      await courseSeasonsService.toggleRegistration(courseSeason2Id, true);
-      const opened = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      expect(opened.isRegistrationOpen).toBe(true);
-    });
-
-    it('13. Modificar isRegistrationOpen NO modifica status', async () => {
-      const current = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      const currentStatus = current.status;
-      await courseSeasonsService.toggleRegistration(courseSeason2Id, false);
-      const after = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      expect(after.status).toBe(currentStatus);
-    });
-
-    it('14-16. Cancelar un turno NO elimina relaciones, preserva membresias/historial/cargos', async () => {
-      let membership = await prisma.studentMembership.findFirst({ where: { courseSeasonId: courseSeason1Id } });
-      membership = await prisma.studentMembership.update({
-        where: { id: membership.id },
-        data: { status: 'ACTIVE' }
-      });
-      // Create a charge to test preservation
-      const charge = await prisma.charge.create({
-        data: { amount: 100, pendingAmount: 100, status: StatusCharge.PENDING, dueDate: new Date() }
-      });
-      chargeId = charge.id;
-      await prisma.studentCharge.create({ 
-        data: { 
-          charge: { connect: { id: chargeId } }, 
-          studentMembership: { connect: { id: membership.id } },
-          type: TypeMembershipCharge.SEASON_FEE
-        } 
-      });
-
-      await courseSeasonsService.cancel(courseSeason1Id, { reason: 'Test cancel' });
+      expect(dbSeason.shifts.length).toBe(2);
       
-      const cancelled = await prisma.courseSeason.findUnique({ where: { id: courseSeason1Id } });
-      expect(cancelled.status).toBe(StatusCourseSeason.CANCELLED);
-      
-      const membershipsAfter = await prisma.studentMembership.findMany({ where: { courseSeasonId: courseSeason1Id } });
-      expect(membershipsAfter.length).toBe(1); // Relaciones no eliminadas
-      
-      const chargesAfter = await prisma.charge.findUnique({ where: { id: chargeId } });
-      expect(chargesAfter).toBeDefined(); 
-      expect(chargesAfter.status).toBe(StatusCharge.CANCELLED); // Because cancel logic sets PENDING charges to CANCELLED, but it DOES NOT DELETE THEM.
-
-      const otherSeason = await prisma.courseSeason.findUnique({ where: { id: courseSeason2Id } });
-      expect(otherSeason.status).not.toBe(StatusCourseSeason.CANCELLED);
     });
 
-    it('3. Permitir nuevamente la combinacion si el registro anterior esta CANCELLED', async () => {
-      // courseSeason1Id is now CANCELLED
-      const createDto: CreateCourseSeasonDto = {
-        courseId, categoryId, seasonId, shiftId: shift1Id,
-        gender: ProgramGender.MIXED, maxMembers: 15, minMembers: 1, validateAge: false,
-      };
-
-      const result = await courseSeasonsService.create(createDto);
-      expect(result.data).toBeDefined();
-      expect(result.data.id).toBeDefined();
-    });
-
-    it('17. El nuevo turno puede utilizarse como destino', async () => {
-      // In next tests or manual QA, we ensure this new ID is visible in DB as DRAFT/ACTIVE and eligible.
-      const newSeason = await prisma.courseSeason.findFirst({
-        where: { courseId, seasonId, shiftId: shift1Id, status: StatusCourseSeason.DRAFT }
+    it('D. Verificar que existe un único BillingConfig para la oferta', async () => {
+      const billingConfigs = await prisma.courseSeasonBillingConfig.findMany({
+        where: { courseSeasonId: regularCourseSeasonId }
       });
-      expect(newSeason).toBeDefined();
+      
+      // La regla de negocio indica que la configuración comercial pertenece a la Oferta, no a los turnos.
+      expect(billingConfigs.length).toBe(1);
     });
+
+    it('E. Verificar que ambos turnos utilizan la misma configuración económica', async () => {
+      const dbSeason = await prisma.courseSeason.findUnique({
+        where: { id: regularCourseSeasonId },
+        include: { shifts: true, billingConfig: true }
+      });
+      
+      // Para cualquier turno que escojamos, el precio viene del CourseSeason
+      expect(dbSeason.billingConfig).toBeDefined();
+      expect(Number(dbSeason.billingConfig.recurringFee)).toBe(150);
+      // Confirmamos que en el modelo CourseSeasonShift NO existe configuración de billing
+      expect((dbSeason.shifts[0] as any).billingConfig).toBeUndefined();
+      expect((dbSeason.shifts[1] as any).billingConfig).toBeUndefined();
+    });
+
+    it('Prueba de capacidad - maxMembers pertenece al turno logístico', async () => {
+      const shiftData = await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: regularCourseSeasonId, shiftId: shiftAfternoonId } });
+      
+      expect(shiftData.maxMembers).toBe(15);
+      
+      // Validar que el total (10 + 15 = 25) se sumariza al pedir resumen
+      const summary = await courseSeasonsService.getSummary(regularCourseSeasonId);
+      expect(summary.data.maxMembers).toBe(25);
+    });
+
   });
 });

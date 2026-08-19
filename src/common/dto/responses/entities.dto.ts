@@ -2386,12 +2386,12 @@ export class SessionCourseResponseDto {
   @ApiProperty({
     example: 'string',
   })
-  courseSeasonId: string;
+  courseSeasonShiftId: string;
 
   @ApiProperty({
     example: 'any',
   })
-  courseSeason: any;
+  courseSeasonShift: any;
 }
 
 export class SessionBookingResponseDto {

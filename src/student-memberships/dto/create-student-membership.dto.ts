@@ -123,6 +123,27 @@ export class CreateStudentMembershipDto {
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del turno de la oferta (CourseSeasonShift)',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'courseSeasonShiftId',
+    }),
+  })
+  @Exists('courseSeasonShift', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'courseSeasonShiftId',
+    }),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
+      constraint1: 'courseSeasonShiftId',
+    }),
+  })
+  courseSeasonShiftId: string;
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID del plan de pago (PaymentPlan)',
   })
   @IsUUID('4', {

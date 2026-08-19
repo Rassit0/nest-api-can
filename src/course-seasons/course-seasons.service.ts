@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
 import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
+import { AddShiftDto } from './dto/add-shift.dto';
 import { PrismaService } from 'src/prisma.service';
 import {
   StudentMembershipStatus,
@@ -21,12 +22,57 @@ import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
 
 export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   id: true,
+  name: true,
   imageUrl: true,
   gender: true,
-  shift: {
+  shifts: {
     select: {
       id: true,
-      name: true,
+      maxMembers: true,
+      minMembers: true,
+      isActive: true,
+      shift: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      courseSeasonStaffs: {
+        select: {
+          id: true,
+          role: true,
+          isPrimary: true,
+          startedAt: true,
+          endedAt: true,
+          staff: {
+            select: {
+              id: true,
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                  lastName: true,
+                  secondLastName: true,
+                  imageUrl: true,
+                  documentNumber: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          studentMemberships: {
+            where: {
+              OR: [
+                { status: StudentMembershipStatus.SUSPENDED },
+                { status: StudentMembershipStatus.ACTIVE },
+              ],
+            },
+          },
+        },
+      },
     },
   },
   course: {
@@ -60,38 +106,12 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
     },
   },
   description: true,
-  maxMembers: true,
-  minMembers: true,
   minBirthYear: true,
   maxBirthYear: true,
   validateAge: true,
   status: true,
   billingConfig: true,
   isRegistrationOpen: true,
-  courseSeasonStaffs: {
-    select: {
-      id: true,
-      role: true,
-      isPrimary: true,
-      startedAt: true,
-      endedAt: true,
-      staff: {
-        select: {
-          id: true,
-          person: {
-            select: {
-              id: true,
-              name: true,
-              lastName: true,
-              secondLastName: true,
-              imageUrl: true,
-              documentNumber: true,
-            },
-          },
-        },
-      },
-    },
-  },
   _count: {
     select: {
       studentMemberships: {
@@ -121,8 +141,10 @@ export class CourseSeasonsService {
     const existingCourseSeason = await this.prisma.courseSeason.findFirst({
       where: {
         courseId: createCourseCategoryDto.courseId,
+        categoryId: createCourseCategoryDto.categoryId,
         seasonId: createCourseCategoryDto.seasonId,
-        shiftId: createCourseCategoryDto.shiftId,
+        gender: createCourseCategoryDto.gender,
+        name: createCourseCategoryDto.name,
         status: {
           not: StatusCourseSeason.CANCELLED,
         },
@@ -254,10 +276,17 @@ export class CourseSeasonsService {
       }
     }
 
-    const { billingConfig, ...courseSeasonData } = rest;
+    const { billingConfig, shiftId, maxMembers, minMembers, ...courseSeasonData } = rest;
     const newCourseSeason = await this.prisma.courseSeason.create({
       data: {
         ...courseSeasonData,
+        shifts: {
+          create: [{
+            shiftId,
+            maxMembers,
+            minMembers,
+          }]
+        },
         ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
       },
       select: courseSeasonSelect,
@@ -266,6 +295,70 @@ export class CourseSeasonsService {
     return {
       message: 'Temporada asignada a equipo exitosamente',
       data: newCourseSeason,
+    };
+  }
+
+  async addShift(id: string, addShiftDto: AddShiftDto) {
+    const { shiftId, maxMembers, minMembers } = addShiftDto;
+
+    // 1. Obtener la oferta origen
+    const baseCourseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id },
+    });
+
+    if (!baseCourseSeason) {
+      throw new NotFoundException('La oferta no fue encontrada');
+    }
+
+    if (
+      baseCourseSeason.status === StatusCourseSeason.FINISHED ||
+      baseCourseSeason.status === StatusCourseSeason.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede agregar un turno a una temporada inactiva o finalizada',
+      );
+    }
+
+    // 2. Validar que el shift exista
+    const shiftExists = await this.prisma.shift.findUnique({
+      where: { id: shiftId },
+    });
+    if (!shiftExists) {
+      throw new NotFoundException('El nuevo turno (Shift) no fue encontrado');
+    }
+
+    // 3. Validar duplicidad
+    const existingShift = await this.prisma.courseSeasonShift.findFirst({
+      where: {
+        courseSeasonId: id,
+        shiftId: shiftId,
+      },
+    });
+
+    if (existingShift) {
+      throw new BadRequestException(
+        'La oferta ya tiene este turno asignado',
+      );
+    }
+
+    // 4. Crear el turno
+    await this.prisma.courseSeasonShift.create({
+      data: {
+        courseSeasonId: id,
+        shiftId,
+        maxMembers,
+        minMembers,
+      },
+    });
+
+    const updatedCourseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id },
+      select: courseSeasonSelect,
+    });
+
+    return {
+      message: 'Turno agregado exitosamente a la oferta',
+      data: updatedCourseSeason,
     };
   }
 
@@ -362,7 +455,7 @@ export class CourseSeasonsService {
     ] = await Promise.all([
       this.prisma.courseSeason.findUnique({
         where: { id },
-        select: { id: true, maxMembers: true },
+        select: { id: true, shifts: { select: { maxMembers: true } } },
       }),
       this.prisma.charge.aggregate({
         where: {
@@ -402,7 +495,7 @@ export class CourseSeasonsService {
         suspendedMembers,
         pendingMembers,
         occupiedSlotsCount: activeMembers + suspendedMembers + pendingMembers,
-        maxMembers: courseSeason.maxMembers,
+        maxMembers: courseSeason.shifts.reduce((acc, shift) => acc + shift.maxMembers, 0),
       },
       message: 'Resumen de la temporada de curso obtenido exitosamente',
     };
@@ -435,8 +528,6 @@ export class CourseSeasonsService {
         (courseId && courseId !== courseSeason.course.id) ||
         (seasonId && seasonId !== courseSeason.season.id) ||
         (categoryId && categoryId !== courseSeason.category.id) ||
-        (updateCourseSeasonDto.shiftId &&
-          updateCourseSeasonDto.shiftId !== courseSeason.shift?.id) ||
         (updateCourseSeasonDto.gender &&
           updateCourseSeasonDto.gender !== courseSeason.gender)
       ) {
@@ -532,26 +623,6 @@ export class CourseSeasonsService {
       );
     }
 
-    if (
-      rest.maxMembers !== undefined &&
-      rest.maxMembers < courseSeason.maxMembers
-    ) {
-      const activeMembersCount = await this.prisma.studentMembership.count({
-        where: {
-          courseSeasonId: id,
-          status: {
-            in: ['ACTIVE', 'PENDING_ACTIVE', 'SUSPENDED'],
-          },
-        },
-      });
-
-      if (rest.maxMembers < activeMembersCount) {
-        throw new BadRequestException(
-          `No se pueden reducir los cupos máximos a ${rest.maxMembers} porque ya hay ${activeMembersCount} estudiantes ocupando un cupo.`,
-        );
-      }
-    }
-
     if (rest.billingConfig) {
       const currentBillingConfig = courseSeason.billingConfig;
       const targetBillingType =
@@ -641,6 +712,30 @@ export class CourseSeasonsService {
       message: 'Temporadas obtenidas exitosamente',
     };
   }
+  async getShiftsByCourseSeasonOptions(courseSeasonId: string) {
+    const courseSeasonShifts = await this.prisma.courseSeasonShift.findMany({
+      where: { courseSeasonId },
+      select: {
+        id: true,
+        shift: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    const formattedShifts = courseSeasonShifts.map((css) => ({
+      id: css.id,
+      name: css.shift.name,
+    }));
+
+    return {
+      data: formattedShifts,
+      message: 'Turnos de la temporada obtenidos exitosamente',
+    };
+  }
+
 
   async getShiftsByInstitutionOptions() {
     const institution = await this.prisma.institution.findFirst({
@@ -875,7 +970,7 @@ export class CourseSeasonsService {
 
   async addPause(
     courseSeasonId: string,
-    createPauseDto: { startDate: string; endDate: string; reason?: string },
+    createPauseDto: { startDate: string; endDate: string; reason?: string; courseSeasonShiftId?: string },
   ) {
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id: courseSeasonId },
@@ -907,19 +1002,21 @@ export class CourseSeasonsService {
     const overlapping = await this.prisma.courseSeasonPause.findFirst({
       where: {
         courseSeasonId,
+        ...(createPauseDto.courseSeasonShiftId ? { courseSeasonShiftId: createPauseDto.courseSeasonShiftId } : {}),
         OR: [{ startDate: { lte: endDate }, endDate: { gte: startDate } }],
       },
     });
 
     if (overlapping) {
       throw new BadRequestException(
-        `Ya existe una pausa para este equipo en estas fechas (${overlapping.startDate.toISOString().split('T')[0]} - ${overlapping.endDate.toISOString().split('T')[0]})`,
+        `Ya existe una pausa para esta oferta/turno en estas fechas (${overlapping.startDate.toISOString().split('T')[0]} - ${overlapping.endDate.toISOString().split('T')[0]})`,
       );
     }
 
     const pause = await this.prisma.courseSeasonPause.create({
       data: {
         courseSeasonId,
+        courseSeasonShiftId: createPauseDto.courseSeasonShiftId,
         startDate,
         endDate,
         reason: createPauseDto.reason,

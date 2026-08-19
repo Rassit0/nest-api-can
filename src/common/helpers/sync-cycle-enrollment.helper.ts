@@ -24,7 +24,7 @@ export async function syncCycleEnrollmentStatus(
       status: { not: targetStatus }
     },
     include: {
-      studentMembership: { select: { courseSeasonId: true } }
+      studentMembership: { select: { courseSeasonShiftId: true } }
     }
   });
 
@@ -33,7 +33,7 @@ export async function syncCycleEnrollmentStatus(
       // Validar JIT antes de consolidar
       await validateCourseSeasonCapacity(
         tx,
-        enrollment.studentMembership.courseSeasonId,
+        enrollment.studentMembership.courseSeasonShiftId,
         enrollment.cycleStartDate,
         enrollment.cycleEndDate,
         enrollment.id // Excluirse a sí mismo para no causar un falso positivo

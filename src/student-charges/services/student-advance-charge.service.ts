@@ -43,6 +43,11 @@ export class StudentAdvanceChargeService {
     });
 
     const unenrolledCycles = allCycles.filter(cycle => {
+      // Ignore cycles that ended before the student's membership started
+      if (cycle.cycleEndDate.getTime() <= membership.startedAt.getTime()) {
+        return false;
+      }
+
       return !existingEnrollments.some(e => 
         e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
         e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
@@ -70,7 +75,7 @@ export class StudentAdvanceChargeService {
     const cyclesToPurchase = await this.getUnenrolledCycles(membership, quantity);
 
     if (cyclesToPurchase.length === 0) {
-      return { charges: [], breakdown: { subtotal: 0, totalDiscounts: 0, total: 0 } };
+      return { charges: [], breakdown: { totalBaseAmount: 0, totalDiscount: 0, totalNetAmount: 0 } };
     }
 
     const previewCharges = [];
@@ -85,7 +90,7 @@ export class StudentAdvanceChargeService {
 
     for (let i = 0; i < cyclesToPurchase.length; i++) {
       const cycle = cyclesToPurchase[i];
-      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, cycle.cycleStartDate, membership.courseSeason.season.endDate);
+      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, membership.startedAt, membership.courseSeason.season.endDate);
       
       if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
 
@@ -128,7 +133,8 @@ export class StudentAdvanceChargeService {
         baseAmount: cycleFee.baseAmount,
         discountAmount: cycleFee.discountAmount,
         discountReason: discountReason,
-        finalAmount: cycleFee.netAmount,
+        amount: cycleFee.netAmount,
+        dueDate: new Date(Date.UTC(effectiveStart.getUTCFullYear(), effectiveStart.getUTCMonth(), effectiveStart.getUTCDate(), 23, 59, 59, 999)),
         totalDays: cycleTotalDays,
         billableDays,
         pauseDays,
@@ -138,7 +144,11 @@ export class StudentAdvanceChargeService {
 
     return {
       charges: previewCharges,
-      breakdown: { subtotal, totalDiscounts, total }
+      breakdown: { 
+        totalBaseAmount: subtotal, 
+        totalDiscount: totalDiscounts, 
+        totalNetAmount: total 
+      }
     };
   }
 
@@ -167,6 +177,11 @@ export class StudentAdvanceChargeService {
         );
 
         const unenrolledCycles = allCycles.filter(cycle => {
+            // Ignore cycles that ended before the student's membership started
+            if (cycle.cycleEndDate.getTime() <= membership.startedAt.getTime()) {
+              return false;
+            }
+
             return !existingEnrollments.some(e => 
               e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
               e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
@@ -189,7 +204,7 @@ export class StudentAdvanceChargeService {
         ];
 
         for (const cycle of cyclesToPurchase) {
-            const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, cycle.cycleStartDate, membership.courseSeason.season.endDate);
+            const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, membership.startedAt, membership.courseSeason.season.endDate);
             
             if (effectiveStart >= effectiveEnd) continue;
 
@@ -225,7 +240,7 @@ export class StudentAdvanceChargeService {
             // VALIDAR CAPACIDAD ANTES DE CREAR EL ENROLLMENT
             await validateCourseSeasonCapacity(
                 tx,
-                membership.courseSeasonId,
+                membership.courseSeasonShiftId,
                 cycle.cycleStartDate,
                 cycle.cycleEndDate,
             );
@@ -248,6 +263,7 @@ export class StudentAdvanceChargeService {
                 data: {
                     studentMembershipId: membership.id,
                     courseSeasonId: membership.courseSeasonId,
+                    courseSeasonShiftId: membership.courseSeasonShiftId,
                     chargeId: charge.id,
                     cycleStartDate: cycle.cycleStartDate,
                     cycleEndDate: cycle.cycleEndDate,

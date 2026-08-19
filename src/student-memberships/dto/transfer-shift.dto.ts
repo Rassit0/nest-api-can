@@ -3,12 +3,20 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class TransferShiftDto {
   @ApiProperty({
-    description: 'ID de la temporada/turno destino (CourseSeason)',
+    description: 'ID de la Oferta destino (CourseSeason)',
     example: 'uuid-del-course-season-destino',
   })
   @IsUUID()
   @IsNotEmpty()
   targetCourseSeasonId: string;
+
+  @ApiProperty({
+    description: 'ID del turno destino (CourseSeasonShift)',
+    example: 'uuid-del-course-season-shift-destino',
+  })
+  @IsUUID()
+  @IsNotEmpty()
+  targetCourseSeasonShiftId: string;
 
   @ApiProperty({
     description: 'Fecha en la que se solicita la transferencia',

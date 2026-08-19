@@ -86,6 +86,7 @@ export const ModelName = {
   School: 'School',
   Course: 'Course',
   CourseSeason: 'CourseSeason',
+  CourseSeasonShift: 'CourseSeasonShift',
   TeamSeasonPause: 'TeamSeasonPause',
   CourseSeasonPause: 'CourseSeasonPause',
   CourseSeasonBillingConfig: 'CourseSeasonBillingConfig',
@@ -747,11 +748,9 @@ export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof 
 
 export const CourseSeasonScalarFieldEnum = {
   id: 'id',
-  shiftId: 'shiftId',
+  name: 'name',
   imageUrl: 'imageUrl',
   description: 'description',
-  maxMembers: 'maxMembers',
-  minMembers: 'minMembers',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
   validateAge: 'validateAge',
@@ -771,6 +770,22 @@ export const CourseSeasonScalarFieldEnum = {
 export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
 
 
+export const CourseSeasonShiftScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  shiftId: 'shiftId',
+  maxMembers: 'maxMembers',
+  minMembers: 'minMembers',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CourseSeasonShiftScalarFieldEnum = (typeof CourseSeasonShiftScalarFieldEnum)[keyof typeof CourseSeasonShiftScalarFieldEnum]
+
+
 export const TeamSeasonPauseScalarFieldEnum = {
   id: 'id',
   teamSeasonId: 'teamSeasonId',
@@ -788,6 +803,7 @@ export type TeamSeasonPauseScalarFieldEnum = (typeof TeamSeasonPauseScalarFieldE
 export const CourseSeasonPauseScalarFieldEnum = {
   id: 'id',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   startDate: 'startDate',
   endDate: 'endDate',
   reason: 'reason',
@@ -828,7 +844,7 @@ export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBilli
 
 export const CourseSeasonStaffScalarFieldEnum = {
   id: 'id',
-  courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   staffId: 'staffId',
   role: 'role',
   customRole: 'customRole',
@@ -862,6 +878,7 @@ export const StudentMembershipScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   paymentPlanId: 'paymentPlanId',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -911,6 +928,7 @@ export const CycleEnrollmentScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   chargeId: 'chargeId',
   cycleStartDate: 'cycleStartDate',
   cycleEndDate: 'cycleEndDate',
@@ -1043,7 +1061,8 @@ export const GeneralEventScalarFieldEnum = {
   eventId: 'eventId',
   institutionId: 'institutionId',
   teamSeasonId: 'teamSeasonId',
-  courseSeasonId: 'courseSeasonId'
+  courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[keyof typeof GeneralEventScalarFieldEnum]
@@ -1068,7 +1087,7 @@ export type SessionTeamScalarFieldEnum = (typeof SessionTeamScalarFieldEnum)[key
 
 export const SessionCourseScalarFieldEnum = {
   sessionId: 'sessionId',
-  courseSeasonId: 'courseSeasonId'
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type SessionCourseScalarFieldEnum = (typeof SessionCourseScalarFieldEnum)[keyof typeof SessionCourseScalarFieldEnum]

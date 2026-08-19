@@ -20,6 +20,19 @@ import { ValidateNested } from 'class-validator';
 import { SeasonBillingConfigDto } from 'src/common/dto/season-billing-config.dto';
 
 export class CreateCourseSeasonDto {
+  @ApiPropertyOptional({
+    example: 'Regular',
+    description: 'Nombre o identificador de la oferta comercial (ej. Regular, Premium)',
+    default: 'Regular',
+  })
+  @IsOptional()
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'name',
+    }),
+  })
+  name?: string = 'Regular';
+
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID del curso base (Course)',

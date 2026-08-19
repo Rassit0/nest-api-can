@@ -16,8 +16,8 @@ export class CourseSeasonStaffPaginationDto extends PaginationDto {
 
   @ApiPropertyOptional({
     description:
-      'ID de la temporada del curso para excluir el personal ya asignado',
+      'ID del turno de la oferta para excluir el personal ya asignado',
   })
   @IsOptional()
-  courseSeasonId?: string;
+  courseSeasonShiftId?: string;
 }

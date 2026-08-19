@@ -172,7 +172,7 @@ model Shift {
   institutionId String      @map("institution_id")
   institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
 
-  courseSeasons CourseSeason[]
+  courseSeasonShifts CourseSeasonShift[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -1152,6 +1152,8 @@ model User {
   updatedPayments                   Payment[]                   @relation("UpdatedBy")
   createdCycleEnrollments           CycleEnrollment[]           @relation("CreatedBy")
   updatedCycleEnrollments           CycleEnrollment[]           @relation("UpdatedBy")
+  createdCourseSeasonShifts         CourseSeasonShift[]         @relation("CreatedBy")
+  updatedCourseSeasonShifts         CourseSeasonShift[]         @relation("UpdatedBy")
 
   @@map("users")
 }
@@ -1280,12 +1282,9 @@ enum StatusCourseSeason {
 
 model CourseSeason {
   id          String  @id @default(uuid())
-  shiftId     String  @map("shift_id")
-  shift       Shift   @relation(fields: [shiftId], references: [id], onDelete: Restrict)
+  name        String  @default("Regular")
   imageUrl    String? @map("image_url")
   description String?
-  maxMembers  Int     @map("max_members")
-  minMembers  Int     @map("min_members")
 
   minBirthYear Int? @map("min_birth_year")
   maxBirthYear Int? @map("max_birth_year")
@@ -1308,11 +1307,10 @@ model CourseSeason {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  shifts             CourseSeasonShift[]
   studentMemberships StudentMembership[]
   cycleEnrollments   CycleEnrollment[]
   paymentPlans       PaymentPlan[]
-  courseSeasonStaffs CourseSeasonStaff[]
-  sessionCourses     SessionCourse[]
   generalEvents      GeneralEvent[]
   billingConfig      CourseSeasonBillingConfig?
   pauses             CourseSeasonPause[]
@@ -1322,8 +1320,39 @@ model CourseSeason {
   updatedById String? @map("updated_by_id")
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([courseId, categoryId, seasonId, gender, shiftId, status])
+  @@unique([courseId, categoryId, seasonId, gender, name])
   @@map("course_seasons")
+}
+
+model CourseSeasonShift {
+  id             String       @id @default(uuid())
+  courseSeasonId String       @map("course_season_id")
+  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  shiftId        String       @map("shift_id")
+  shift          Shift        @relation(fields: [shiftId], references: [id], onDelete: Restrict)
+
+  maxMembers Int @map("max_members")
+  minMembers Int @map("min_members")
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  studentMemberships StudentMembership[]
+  cycleEnrollments   CycleEnrollment[]
+  courseSeasonStaffs CourseSeasonStaff[]
+  sessionCourses     SessionCourse[]
+  pauses             CourseSeasonPause[]
+  generalEvents      GeneralEvent[]
+
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([courseSeasonId, shiftId])
+  @@map("course_season_shifts")
 }
 
 model TeamSeasonPause {
@@ -1344,13 +1373,15 @@ model TeamSeasonPause {
 }
 
 model CourseSeasonPause {
-  id             String       @id @default(uuid())
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  startDate      DateTime     @map("start_date")
-  endDate        DateTime     @map("end_date")
-  reason         String?      @db.Text
-  createdAt      DateTime     @default(now()) @map("created_at")
+  id                  String             @id @default(uuid())
+  courseSeasonId      String             @map("course_season_id")
+  courseSeason        CourseSeason       @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonShiftId String?            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift? @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
+  startDate           DateTime           @map("start_date")
+  endDate             DateTime           @map("end_date")
+  reason              String?            @db.Text
+  createdAt           DateTime           @default(now()) @map("created_at")
 
   createdById String? @map("created_by_id")
   createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1405,17 +1436,17 @@ enum CourseSeasonStaffRole {
 }
 
 model CourseSeasonStaff {
-  id             String                @id @default(uuid())
-  courseSeasonId String                @map("course_season_id")
-  courseSeason   CourseSeason          @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  staffId        String                @map("staff_id")
-  staff          Staff                 @relation(fields: [staffId], references: [id], onDelete: Restrict)
-  role           CourseSeasonStaffRole
-  customRole     String?               @map("custom_role")
-  startedAt      DateTime              @map("started_at")
-  endedAt        DateTime?             @map("ended_at")
-  isPrimary      Boolean               @default(false) @map("is_primary")
-  notes          String?
+  id                  String                @id @default(uuid())
+  courseSeasonShiftId String                @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift     @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
+  staffId             String                @map("staff_id")
+  staff               Staff                 @relation(fields: [staffId], references: [id], onDelete: Restrict)
+  role                CourseSeasonStaffRole
+  customRole          String?               @map("custom_role")
+  startedAt           DateTime              @map("started_at")
+  endedAt             DateTime?             @map("ended_at")
+  isPrimary           Boolean               @default(false) @map("is_primary")
+  notes               String?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -1465,13 +1496,15 @@ enum CycleEnrollmentStatus {
 }
 
 model StudentMembership {
-  id             String       @id @default(uuid())
-  studentId      String       @map("student_id")
-  student        Student      @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-  paymentPlanId  String       @map("payment_plan_id")
-  paymentPlan    PaymentPlan  @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
+  id                  String            @id @default(uuid())
+  studentId           String            @map("student_id")
+  student             Student           @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  courseSeasonId      String            @map("course_season_id")
+  courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  courseSeasonShiftId String            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
+  paymentPlanId       String            @map("payment_plan_id")
+  paymentPlan         PaymentPlan       @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
 
   startedAt DateTime                @map("started_at")
   endedAt   DateTime?               @map("ended_at")
@@ -1545,8 +1578,10 @@ model CycleEnrollment {
   studentMembershipId String            @map("student_membership_id")
   studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
 
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  courseSeasonId      String            @map("course_season_id")
+  courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  courseSeasonShiftId String            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
 
   chargeId           String?               @unique @map("charge_id")
   charge             Charge?               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
@@ -1772,12 +1807,14 @@ model GeneralEvent {
   event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   // Integridad referencial con contextos
-  institutionId  String?       @map("institution_id")
-  institution    Institution?  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
-  teamSeasonId   String?       @map("team_season_id")
-  teamSeason     TeamSeason?   @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  courseSeasonId String?       @map("course_season_id")
-  courseSeason   CourseSeason? @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  institutionId       String?            @map("institution_id")
+  institution         Institution?       @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  teamSeasonId        String?            @map("team_season_id")
+  teamSeason          TeamSeason?        @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonId      String?            @map("course_season_id")
+  courseSeason        CourseSeason?      @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonShiftId String?            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift? @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
 
   @@map("general_events")
 }
@@ -1807,12 +1844,12 @@ model SessionTeam {
 }
 
 model SessionCourse {
-  sessionId      String
-  session        Session      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  sessionId           String
+  session             Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  courseSeasonShiftId String            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
 
-  @@id([sessionId, courseSeasonId])
+  @@id([sessionId, courseSeasonShiftId])
   @@map("session_courses")
 }
 

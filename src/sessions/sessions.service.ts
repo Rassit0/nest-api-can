@@ -60,27 +60,32 @@ export const sessionSelect: Prisma.SessionSelect = {
   },
   sessionCourses: {
     select: {
-      courseSeason: {
+      courseSeasonShift: {
         select: {
-          id: true,
-          gender: true,
-          course: {
+          shift: { select: { id: true, name: true } },
+          courseSeason: {
             select: {
               id: true,
-              name: true,
-              imageUrl: true,
-            },
-          },
-          season: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-          category: {
-            select: {
-              id: true,
-              name: true,
+              gender: true,
+              course: {
+                select: {
+                  id: true,
+                  name: true,
+                  imageUrl: true,
+                },
+              },
+              season: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             },
           },
         },
@@ -117,9 +122,9 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
       };
     }
 
-    if (templateData.courseSeasonIds && templateData.courseSeasonIds.length > 0) {
+    if (templateData.courseSeasonShiftIds && templateData.courseSeasonShiftIds.length > 0) {
       sessionData.sessionCourses = {
-        create: templateData.courseSeasonIds.map((cid: string) => ({ courseSeasonId: cid })),
+        create: templateData.courseSeasonShiftIds.map((cid: string) => ({ courseSeasonShiftId: cid })),
       };
     }
 
@@ -132,7 +137,7 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
   async create(createSessionDto: CreateSessionDto, userId?: string) {
     const {
       teamSeasonIds,
-      courseSeasonIds,
+      courseSeasonShiftIds,
       locationId,
       title,
       startDate,
@@ -161,9 +166,9 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
                 create: teamSeasonIds.map((id) => ({ teamSeasonId: id })),
               }
             : undefined,
-          sessionCourses: courseSeasonIds
+          sessionCourses: courseSeasonShiftIds
             ? {
-                create: courseSeasonIds.map((id) => ({ courseSeasonId: id })),
+                create: courseSeasonShiftIds.map((id) => ({ courseSeasonShiftId: id })),
               }
             : undefined,
         },
@@ -217,9 +222,11 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
         {
           sessionCourses: {
             some: {
-              courseSeason: {
-                course: {
-                  name: { contains: search, mode: 'insensitive' },
+              courseSeasonShift: {
+                courseSeason: {
+                  course: {
+                    name: { contains: search, mode: 'insensitive' },
+                  },
                 },
               },
             },
@@ -283,7 +290,7 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
 
     const {
       teamSeasonIds,
-      courseSeasonIds,
+      courseSeasonShiftIds,
       locationId,
       title,
       startDate,
@@ -306,7 +313,7 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
       const mergeTemplate = (oldTemplate: any) => ({
         ...oldTemplate,
         ...(teamSeasonIds !== undefined && { teamSeasonIds }),
-        ...(courseSeasonIds !== undefined && { courseSeasonIds }),
+        ...(courseSeasonShiftIds !== undefined && { courseSeasonShiftIds }),
         ...(durationMin !== undefined && { durationMin }),
       });
 
@@ -322,9 +329,9 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
           };
         }
 
-        if (mergedTemplate.courseSeasonIds && mergedTemplate.courseSeasonIds.length > 0) {
+        if (mergedTemplate.courseSeasonShiftIds && mergedTemplate.courseSeasonShiftIds.length > 0) {
           sessionData.sessionCourses = {
-            create: mergedTemplate.courseSeasonIds.map((cid: string) => ({ courseSeasonId: cid })),
+            create: mergedTemplate.courseSeasonShiftIds.map((cid: string) => ({ courseSeasonShiftId: cid })),
           };
         }
 
@@ -356,10 +363,10 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
         };
       }
 
-      if (courseSeasonIds) {
+      if (courseSeasonShiftIds) {
         sessionData.sessionCourses = {
           deleteMany: {},
-          create: courseSeasonIds.map((cid) => ({ courseSeasonId: cid })),
+          create: courseSeasonShiftIds.map((cid) => ({ courseSeasonShiftId: cid })),
         };
       }
 

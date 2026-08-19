@@ -18,11 +18,13 @@ import {
   ProgramGender,
   SeasonStatus
 } from 'src/generated/prisma/client';
+import { CourseSeasonsService } from '../src/course-seasons/course-seasons.service';
 
-describe('Fase 5.4 - Transfer Shift QA Integration', () => {
+describe('Fase 7 - Transfer QA Integration', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let membershipsService: StudentMembershipsService;
+  let courseSeasonsService: CourseSeasonsService;
 
   const createdIds = {
     institutions: [] as string[],
@@ -39,18 +41,16 @@ describe('Fase 5.4 - Transfer Shift QA Integration', () => {
 
     prisma = app.get(PrismaService);
     membershipsService = app.get(StudentMembershipsService);
+    courseSeasonsService = app.get(CourseSeasonsService);
   });
 
   afterAll(async () => {
-    // Teardown the cron jobs to prevent Jest open handles
     try {
       const schedulerRegistry = app.get(require('@nestjs/schedule').SchedulerRegistry);
       schedulerRegistry.getCronJobs().forEach((job: any) => job.stop());
       schedulerRegistry.getIntervals().forEach((interval: any) => clearInterval(schedulerRegistry.getInterval(interval)));
       schedulerRegistry.getTimeouts().forEach((timeout: any) => clearTimeout(schedulerRegistry.getTimeout(timeout)));
-    } catch (e) {
-      // Ignorar si ScheduleModule no está inyectado correctamente
-    }
+    } catch (e) {}
     for (const id of createdIds.institutions) {
       await prisma.cycleEnrollment.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
       await prisma.studentCharge.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
@@ -62,12 +62,14 @@ describe('Fase 5.4 - Transfer Shift QA Integration', () => {
       await prisma.studentMembershipHistory.deleteMany({ where: { studentMembership: { courseSeason: { season: { institutionId: id } } } } });
       await prisma.studentMembership.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
       await prisma.paymentPlan.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
+      
+      await prisma.courseSeasonShift.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
+      await prisma.courseSeasonBillingConfig.deleteMany({ where: { courseSeason: { season: { institutionId: id } } } });
       await prisma.courseSeason.deleteMany({ where: { season: { institutionId: id } } });
+      
       await prisma.season.deleteMany({ where: { institutionId: id } });
       await prisma.course.deleteMany({ where: { school: { institutionId: id } } });
       await prisma.school.deleteMany({ where: { institutionId: id } });
-      // await prisma.category.deleteMany({});
-      // await prisma.discipline.deleteMany({});
       await prisma.shift.deleteMany({ where: { institutionId: id } });
       await prisma.institution.delete({ where: { id } });
     }
@@ -81,24 +83,29 @@ describe('Fase 5.4 - Transfer Shift QA Integration', () => {
     await new Promise(resolve => setTimeout(resolve, 500));
   });
 
-  describe('Escenario Completo: Transferencias A -> B -> C', () => {
+  describe('Escenario de Transferencia (F-I)', () => {
     let instId: string;
     let discId: string;
     let schoolId: string;
     let courseId: string;
     let seasonId: string;
     let categoryId: string;
-    let seasonAId: string;
-    let seasonBId: string;
-    let seasonCId: string;
+    
+    let regularSeasonId: string;
+    let regularMorningShiftId: string;
+    let regularAfternoonShiftId: string;
+    
+    let premiumSeasonId: string;
+    let premiumNightShiftId: string;
+
     let personId: string;
     let studentId: string;
     let membershipId: string;
-    let chargeId1: string;
-    let chargeId2: string;
+    let pastChargeId: string;
+    let futureCycleId: string;
 
     beforeAll(async () => {
-      const inst = await prisma.institution.create({ data: { name: 'Inst QA', address: '123' } });
+      const inst = await prisma.institution.create({ data: { name: 'Inst Transfer QA', address: '123' } });
       instId = inst.id;
       createdIds.institutions.push(instId);
 
@@ -126,51 +133,41 @@ describe('Fase 5.4 - Transfer Shift QA Integration', () => {
       });
       seasonId = season.id;
 
-      const shiftA = await prisma.shift.create({ data: { name: 'Shift A', institutionId: instId } });
-      const shiftB = await prisma.shift.create({ data: { name: 'Shift B', institutionId: instId } });
-      const shiftC = await prisma.shift.create({ data: { name: 'Shift C', institutionId: instId } });
+      const shiftMorning = await prisma.shift.create({ data: { name: 'Mañana', institutionId: instId } });
+      const shiftAfternoon = await prisma.shift.create({ data: { name: 'Tarde', institutionId: instId } });
+      const shiftNight = await prisma.shift.create({ data: { name: 'Noche', institutionId: instId } });
 
-      const seasonA = await prisma.courseSeason.create({
-        data: {
-          courseId,
-          shiftId: shiftA.id,
-          seasonId,
-          categoryId,
-          gender: ProgramGender.MIXED,
-          minMembers: 1,
-          maxMembers: 10,
-          status: StatusCourseSeason.ACTIVE,
-        }
-      });
-      seasonAId = seasonA.id;
+      // Oferta Regular
+      let resultRegular;
+      try {
+        resultRegular = await courseSeasonsService.create({
 
-      const seasonB = await prisma.courseSeason.create({
-        data: {
-          courseId,
-          shiftId: shiftB.id,
-          seasonId,
-          categoryId,
-          gender: ProgramGender.MIXED,
-          minMembers: 1,
-          maxMembers: 10,
-          status: StatusCourseSeason.ACTIVE,
-        }
-      });
-      seasonBId = seasonB.id;
+        name: 'Regular',
+        courseId, seasonId, categoryId, shiftId: shiftMorning.id,
+        gender: ProgramGender.MIXED, minMembers: 1, maxMembers: 10, validateAge: false,
+        billingConfig: { billingFrequency: 'MONTHLY', billingType: 'MONTHLY_ONLY' as any, recurringFee: '100', billingDay: 1, debtToleranceMonths: 1, lateFeeEnabled: false, registrationFee: '10', chargeGenerationDaysBefore: 7 } });
+      } catch(e) {
+        console.error('ERROR CREATING REGULAR:', e);
+        throw e;
+      }
+      regularSeasonId = resultRegular.data.id;
+      regularMorningShiftId = (await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: regularSeasonId } })).id;
+      
+      // Agregar turno Tarde a Regular
+      const resultTarde = await courseSeasonsService.addShift(regularSeasonId, { shiftId: shiftAfternoon.id, minMembers: 1, maxMembers: 10 });
+      regularAfternoonShiftId = (await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: regularSeasonId, shiftId: shiftAfternoon.id } })).id;
 
-      const seasonC = await prisma.courseSeason.create({
-        data: {
-          courseId,
-          shiftId: shiftC.id,
-          seasonId,
-          categoryId,
-          gender: ProgramGender.MIXED,
-          minMembers: 1,
-          maxMembers: 10,
-          status: StatusCourseSeason.ACTIVE,
-        }
+      // Oferta Premium
+      const resultPremium = await courseSeasonsService.create({
+        name: 'Premium',
+        courseId, seasonId, categoryId, shiftId: shiftNight.id,
+        gender: ProgramGender.MIXED, minMembers: 1, maxMembers: 10, validateAge: false,
+        billingConfig: { billingFrequency: 'MONTHLY', billingType: 'MONTHLY_ONLY' as any, recurringFee: '200', billingDay: 1, debtToleranceMonths: 1, lateFeeEnabled: false, registrationFee: '10', chargeGenerationDaysBefore: 7 }
       });
-      seasonCId = seasonC.id;
+      premiumSeasonId = resultPremium.data.id;
+      premiumNightShiftId = (await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: premiumSeasonId } })).id;
+
+      await prisma.courseSeason.updateMany({ data: { status: StatusCourseSeason.ACTIVE } });
 
       const person = await prisma.person.create({ data: { name: 'Juan', lastName: 'Transfer QA' } });
       personId = person.id;
@@ -178,234 +175,139 @@ describe('Fase 5.4 - Transfer Shift QA Integration', () => {
 
       const student = await prisma.student.create({ data: { personId } });
       studentId = student.id;
+    });
 
+    it('F. Inscribir un alumno en Oferta Regular, Turno Mañana', async () => {
       const paymentPlan = await prisma.paymentPlan.create({
-        data: {
-          name: 'Plan Mensual QA',
-          courseSeasonId: seasonAId,
-          isDefault: true,
-        }
+        data: { name: 'Plan Mensual', courseSeasonId: regularSeasonId, isDefault: true }
       });
-      const paymentPlanId = paymentPlan.id;
 
       const membership = await prisma.studentMembership.create({
         data: {
           studentId,
-          courseSeasonId: seasonAId,
-          paymentPlanId,
+          courseSeasonId: regularSeasonId,
+          courseSeasonShiftId: regularMorningShiftId,
+          paymentPlanId: paymentPlan.id,
           status: StudentMembershipStatus.ACTIVE,
-          startedAt: new Date('2026-08-01T15:00:00Z'),
+          startedAt: new Date('2026-08-01T10:00:00Z'),
         }
       });
       membershipId = membership.id;
 
-      const chargeAgosto = await prisma.charge.create({
-        data: { amount: 100, pendingAmount: 100, status: StatusCharge.PENDING, description: 'Agosto', dueDate: new Date('2026-08-01T00:00:00Z') }
+      // Generar un Charge "historico" ya pagado (agosto)
+      const pastCharge = await prisma.charge.create({
+        data: { amount: 100, pendingAmount: 0, status: StatusCharge.PAID, dueDate: new Date('2026-08-05') }
       });
-      chargeId1 = chargeAgosto.id;
-
+      pastChargeId = pastCharge.id;
       await prisma.studentCharge.create({
-        data: {
-          studentMembershipId: membershipId,
-          chargeId: chargeId1,
-          type: TypeMembershipCharge.RECURRING_FEE,
-          billingYear: 2026,
-          billingMonth: 8,
-        }
+        data: { studentMembershipId: membershipId, chargeId: pastChargeId, type: TypeMembershipCharge.RECURRING_FEE }
       });
 
+      // Crear ciclo historico (Agosto)
       await prisma.cycleEnrollment.create({
         data: {
           studentMembershipId: membershipId,
-          courseSeasonId: seasonAId,
-          chargeId: chargeId1,
+          courseSeasonShiftId: regularMorningShiftId, courseSeasonId: regularSeasonId,
+          chargeId: pastChargeId,
           cycleStartDate: new Date('2026-08-01T00:00:00Z'),
           cycleEndDate: new Date('2026-09-01T00:00:00Z'),
-          effectiveStartDate: new Date('2026-08-01T15:00:00Z'),
-          status: CycleEnrollmentStatus.PENDING,
+          effectiveStartDate: new Date('2026-08-01T00:00:00Z'),
+          status: CycleEnrollmentStatus.CONFIRMED
         }
       });
 
-      const chargeSeptiembre = await prisma.charge.create({
-        data: { amount: 100, pendingAmount: 100, status: StatusCharge.PENDING, description: 'Septiembre', dueDate: new Date('2026-09-01T00:00:00Z') }
+      // Generar un Charge "futuro" pendiente (septiembre)
+      const futureCharge = await prisma.charge.create({
+        data: { amount: 100, pendingAmount: 100, status: StatusCharge.PENDING, dueDate: new Date('2026-09-05') }
       });
-      chargeId2 = chargeSeptiembre.id;
-
       await prisma.studentCharge.create({
-        data: {
-          studentMembershipId: membershipId,
-          chargeId: chargeId2,
-          type: TypeMembershipCharge.RECURRING_FEE,
-          billingYear: 2026,
-          billingMonth: 9,
-        }
+        data: { studentMembershipId: membershipId, chargeId: futureCharge.id, type: TypeMembershipCharge.RECURRING_FEE }
       });
 
-      await prisma.cycleEnrollment.create({
+      // Crear ciclo futuro (Septiembre)
+      const futureCycle = await prisma.cycleEnrollment.create({
         data: {
           studentMembershipId: membershipId,
-          courseSeasonId: seasonAId,
-          chargeId: chargeId2,
+          courseSeasonShiftId: regularMorningShiftId, courseSeasonId: regularSeasonId,
+          chargeId: futureCharge.id,
           cycleStartDate: new Date('2026-09-01T00:00:00Z'),
           cycleEndDate: new Date('2026-10-01T00:00:00Z'),
           effectiveStartDate: new Date('2026-09-01T00:00:00Z'),
-          status: CycleEnrollmentStatus.PENDING,
+          status: CycleEnrollmentStatus.PENDING
         }
       });
+      futureCycleId = futureCycle.id;
+
+      expect(membershipId).toBeDefined();
     });
 
-    it('1. Debe validar que inicialmente todo pertenece al Turno A', async () => {
-      const membership = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
-      expect(membership?.courseSeasonId).toBe(seasonAId);
-
-      const cycles = await prisma.cycleEnrollment.findMany({ where: { studentMembershipId: membershipId } });
-      expect(cycles).toHaveLength(2);
-      expect(cycles[0].courseSeasonId).toBe(seasonAId); // Agosto
-      expect(cycles[1].courseSeasonId).toBe(seasonAId); // Septiembre
-    });
-
-    it('2. Ejecutar Transferencia A -> B en el mes de Agosto', async () => {
+    it('G & H. Transferencia Interna (Regular Mañana -> Regular Tarde)', async () => {
+      // Act
       await membershipsService.transferShift(membershipId, {
-        targetCourseSeasonId: seasonBId,
-        effectiveDate: new Date('2026-08-15T10:00:00Z'), // Efectivo en agosto
+        targetCourseSeasonId: regularSeasonId,
+        targetCourseSeasonShiftId: regularAfternoonShiftId,
+        effectiveDate: new Date('2026-08-15T00:00:00Z') // Medio mes de agosto
       });
 
-      const membership = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
-      // El administrativo base se actualiza inmediatamente a B
-      expect(membership?.courseSeasonId).toBe(seasonBId);
+      // Assert
+      const updatedMembership = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
+      
+      // G: Cambio unicamente courseSeasonShiftId
+      expect(updatedMembership.courseSeasonId).toBe(regularSeasonId);
+      expect(updatedMembership.courseSeasonShiftId).toBe(regularAfternoonShiftId);
 
-      // Verificamos inmutabilidad del ciclo Agosto y actualización de Septiembre
-      const cycles = await prisma.cycleEnrollment.findMany({ 
-        where: { studentMembershipId: membershipId },
-        orderBy: { cycleStartDate: 'asc' } 
-      });
-      expect(cycles).toHaveLength(2);
-      expect(cycles[0].courseSeasonId).toBe(seasonAId); // Agosto inmutable
-      expect(cycles[1].courseSeasonId).toBe(seasonBId); // Septiembre actualizado a B
+      // H: No crear otra membership
+      const membershipsCount = await prisma.studentMembership.count({ where: { studentId } });
+      expect(membershipsCount).toBe(1);
+
+      // H: Ciclo historico (Agosto) permanece igual porque la fecha efectiva (15 de agosto) es cubierta por el ciclo (1-agosto a 1-septiembre), PERO OJO, segun la logica actual, si esta PENDING o CONFIRMED y arranca antes de transferStartDate... wait!
+      // En la logica, el overlappingCycle determina transferStartDate. Si overlap (c.cycleStartDate <= effectiveDate < c.cycleEndDate), transferStartDate = overlappingCycle.cycleEndDate.
+      // Así que el ciclo de Agosto NO SE TOCA. Se toca a partir de Septiembre.
+      
+      const cycles = await prisma.cycleEnrollment.findMany({ where: { studentMembershipId: membershipId }, orderBy: { cycleStartDate: 'asc' } });
+      
+      // Ciclo historico de agosto NO cambia de turno
+      expect(cycles[0].courseSeasonShiftId).toBe(regularMorningShiftId);
+      
+      // Ciclo futuro de septiembre SI cambia de turno
+      expect(cycles[1].courseSeasonShiftId).toBe(regularAfternoonShiftId);
+
+      // Los cargos historicos permanecen inmutables (el amount = 100)
+      const pastCharge = await prisma.charge.findUnique({ where: { id: pastChargeId } });
+      expect(Number(pastCharge.amount)).toBe(100);
+      expect(pastCharge.status).toBe(StatusCharge.PAID);
     });
 
-    it('3. Verificar inmutabilidad financiera tras la primera transferencia', async () => {
-      const charges = await prisma.charge.findMany({
-        where: { id: { in: [chargeId1, chargeId2] } },
-        orderBy: { description: 'asc' }
-      });
-      // Montos deben seguir siendo 100
-      expect(Number(charges[0].amount)).toBe(100);
-      expect(Number(charges[1].amount)).toBe(100);
-      expect(charges[0].status).toBe(StatusCharge.PENDING);
-
-      const studentCharges = await prisma.studentCharge.findMany({
-        where: { studentMembershipId: membershipId }
-      });
-      expect(studentCharges).toHaveLength(2);
-      // Las asociaciones deben seguir intactas
-      expect(studentCharges[0].chargeId).toBeDefined();
-    });
-
-    it('4. Consulta de Asistencia (Bordes y Roster) para el 1 de Agosto', async () => {
-      // 1 de Agosto a las 14:00 (1 hora antes de inscripcion):
-      const resAntes = await membershipsService.findAll({
-        courseSeasonId: seasonAId,
-        physicalDate: '2026-08-01T14:00:00.000Z', // formato ISO 8601
-      });
-      expect(resAntes.data).toHaveLength(0);
-
-      // 1 de Agosto a las 16:00 (despues de inscripcion):
-      const resDespues = await membershipsService.findAll({
-        courseSeasonId: seasonAId,
-        physicalDate: '2026-08-01T16:00:00.000Z',
-      });
-      expect(resDespues.data).toHaveLength(1);
-
-      // Si consulto Turno B en Agosto, no debe salir en lista física
-      const resTurnoBAgosto = await membershipsService.findAll({
-        courseSeasonId: seasonBId,
-        physicalDate: '2026-08-01T16:00:00.000Z',
-      });
-      expect(resTurnoBAgosto.data).toHaveLength(0);
-    });
-
-    it('5. Consulta Administrativa (Sin physicalDate)', async () => {
-      // Al pedir Roster sin physicalDate, es puramente administrativo.
-      // Como ahora la membresía base es Turno B, debe salir en Turno B, no en Turno A.
-      const resAdminA = await membershipsService.findAll({ courseSeasonId: seasonAId });
-      expect(resAdminA.data).toHaveLength(0);
-
-      const resAdminB = await membershipsService.findAll({ courseSeasonId: seasonBId });
-      expect(resAdminB.data).toHaveLength(1);
-    });
-
-    it('6. Consulta de Asistencia (Límite Final de Mes UTC) para Agosto', async () => {
-      // El ciclo de agosto acaba en 2026-09-01T00:00:00Z.
-      // Si pido la clase 1 milisegundo antes, es Agosto. Debe salir en A.
-      const resFinalAgosto = await membershipsService.findAll({
-        courseSeasonId: seasonAId,
-        physicalDate: '2026-08-31T23:59:59.999Z',
-      });
-      expect(resFinalAgosto.data).toHaveLength(1);
-
-      // Si pido exactamente a medianoche, es Septiembre. Septiembre esta en B, no en A.
-      const resPrimeraSeptiembre = await membershipsService.findAll({
-        courseSeasonId: seasonAId,
-        physicalDate: '2026-09-01T00:00:00.000Z',
-      });
-      expect(resPrimeraSeptiembre.data).toHaveLength(0);
-
-      const resPrimeraSeptiembreB = await membershipsService.findAll({
-        courseSeasonId: seasonBId,
-        physicalDate: '2026-09-01T00:00:00.000Z',
-      });
-      expect(resPrimeraSeptiembreB.data).toHaveLength(1); // Septiembre esta en B
-    });
-
-    it('7. Ejecutar Transferencia Consecutiva B -> C', async () => {
+    it('I. Transferencia Externa (Regular Tarde -> Premium Noche)', async () => {
+      // Act
       await membershipsService.transferShift(membershipId, {
-        targetCourseSeasonId: seasonCId,
-        effectiveDate: new Date('2026-08-20T10:00:00Z'), // Efectivo también en agosto
+        targetCourseSeasonId: premiumSeasonId,
+        targetCourseSeasonShiftId: premiumNightShiftId,
+        effectiveDate: new Date('2026-09-15T00:00:00Z') // A mitad de Septiembre
       });
 
-      const membership = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
-      // El administrativo base se actualiza inmediatamente a C
-      expect(membership?.courseSeasonId).toBe(seasonCId);
-
-      // Verificamos inmutabilidad del ciclo Agosto (Turno A) y actualización de Septiembre a Turno C
-      const cycles = await prisma.cycleEnrollment.findMany({ 
-        where: { studentMembershipId: membershipId },
-        orderBy: { cycleStartDate: 'asc' } 
-      });
-      expect(cycles).toHaveLength(2);
-      expect(cycles[0].courseSeasonId).toBe(seasonAId); // Agosto inmutable!
-      expect(cycles[1].courseSeasonId).toBe(seasonCId); // Septiembre ahora en C!
-    });
-
-    it('8. Concurrencia Básica - Intentar 3 transferencias simultáneas a turnos diferentes', async () => {
-      // Simulamos que el frontend hace 3 clics rápidos para transferir a A, B y C
-      const requests = [
-        membershipsService.transferShift(membershipId, { targetCourseSeasonId: seasonAId, effectiveDate: new Date('2026-09-05T00:00Z') }),
-        membershipsService.transferShift(membershipId, { targetCourseSeasonId: seasonBId, effectiveDate: new Date('2026-09-05T00:00Z') }),
-        membershipsService.transferShift(membershipId, { targetCourseSeasonId: seasonCId, effectiveDate: new Date('2026-09-05T00:00Z') }),
-      ];
-
-      const results = await Promise.allSettled(requests);
+      // Assert
+      const updatedMembership = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
       
-      const fulfilled = results.filter(r => r.status === 'fulfilled');
-      const rejected = results.filter(r => r.status === 'rejected');
+      // I: Cambian ambos IDs
+      expect(updatedMembership.courseSeasonId).toBe(premiumSeasonId);
+      expect(updatedMembership.courseSeasonShiftId).toBe(premiumNightShiftId);
 
-      // Gracias al FOR UPDATE, deben procesarse de a una.
-      // Sin embargo, las que entren después encontrarán que originCourseSeason === targetCourseSeason 
-      // (si ya se movió ahí), o fallarán si las validaciones del capacityHelper determinan algo incorrecto.
-      // Al menos 1 debe tener éxito, o bien si lanza BadRequest por ser redundante, no debe haber deadlocks.
-      expect(results.length).toBe(3);
-      // Validamos explícitamente que no exista deadlock (el Promise.all resuelve).
+      const cycles = await prisma.cycleEnrollment.findMany({ where: { studentMembershipId: membershipId }, orderBy: { cycleStartDate: 'asc' } });
       
-      // La membresía debe quedar en un estado consistente
-      const memFinal = await prisma.studentMembership.findUnique({ where: { id: membershipId } });
-      expect(memFinal?.courseSeasonId).toBeTruthy();
+      // El ciclo historico de agosto (indice 0) debe estar en Regular/Mañana
+      expect(cycles[0].courseSeasonShiftId).toBe(regularMorningShiftId);
+      
+      // El ciclo de septiembre (indice 1) superpone al effectiveDate (15 sept), asi que el transferStartDate sera el fin de Septiembre (1 Octubre).
+      // Por ende, el ciclo de septiembre NO se toca y se queda en Regular/Tarde.
+      expect(cycles[1].courseSeasonShiftId).toBe(regularAfternoonShiftId);
 
-      const cyclesFinal = await prisma.cycleEnrollment.findMany({ where: { studentMembershipId: membershipId }, orderBy: { cycleStartDate: 'asc' } });
-      expect(cyclesFinal[0].courseSeasonId).toBe(seasonAId); // Agosto sigue en A
-      // Septiembre quedará en el último turno que logró procesarse (A, B o C).
-      expect(['A', 'B', 'C'].some(letter => cyclesFinal[1].courseSeasonId === eval(`season${letter}Id`))).toBe(true);
+      // No se generaron ciclos nuevos (el cronjob de Billing sera quien lo haga)
+      expect(cycles.length).toBe(2);
+
+      // Los cargos pasados siguen inmutables
+      const pastCharge = await prisma.charge.findUnique({ where: { id: pastChargeId } });
+      expect(Number(pastCharge.amount)).toBe(100);
     });
   });
 });

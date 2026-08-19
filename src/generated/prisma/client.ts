@@ -228,6 +228,11 @@ export type Course = Prisma.CourseModel
  */
 export type CourseSeason = Prisma.CourseSeasonModel
 /**
+ * Model CourseSeasonShift
+ * 
+ */
+export type CourseSeasonShift = Prisma.CourseSeasonShiftModel
+/**
  * Model TeamSeasonPause
  * 
  */

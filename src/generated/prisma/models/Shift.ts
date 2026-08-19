@@ -199,7 +199,7 @@ export type ShiftWhereInput = {
   createdById?: Prisma.StringNullableFilter<"Shift"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Shift"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
-  courseSeasons?: Prisma.CourseSeasonListRelationFilter
+  courseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -213,7 +213,7 @@ export type ShiftOrderByWithRelationInput = {
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   institution?: Prisma.InstitutionOrderByWithRelationInput
-  courseSeasons?: Prisma.CourseSeasonOrderByRelationAggregateInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -231,7 +231,7 @@ export type ShiftWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.StringNullableFilter<"Shift"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Shift"> | string | null
   institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
-  courseSeasons?: Prisma.CourseSeasonListRelationFilter
+  courseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "institutionId_name">
@@ -268,7 +268,7 @@ export type ShiftCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
-  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
@@ -281,7 +281,7 @@ export type ShiftUncheckedCreateInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutShiftInput
 }
 
 export type ShiftUpdateInput = {
@@ -290,7 +290,7 @@ export type ShiftUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
-  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
@@ -303,7 +303,7 @@ export type ShiftUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutShiftNestedInput
 }
 
 export type ShiftCreateManyInput = {
@@ -509,18 +509,18 @@ export type ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.ShiftScalarWhereInput | Prisma.ShiftScalarWhereInput[]
 }
 
-export type ShiftCreateNestedOneWithoutCourseSeasonsInput = {
-  create?: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonsInput>
-  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutCourseSeasonsInput
+export type ShiftCreateNestedOneWithoutCourseSeasonShiftsInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutCourseSeasonShiftsInput
   connect?: Prisma.ShiftWhereUniqueInput
 }
 
-export type ShiftUpdateOneRequiredWithoutCourseSeasonsNestedInput = {
-  create?: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonsInput>
-  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutCourseSeasonsInput
-  upsert?: Prisma.ShiftUpsertWithoutCourseSeasonsInput
+export type ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.ShiftCreateOrConnectWithoutCourseSeasonShiftsInput
+  upsert?: Prisma.ShiftUpsertWithoutCourseSeasonShiftsInput
   connect?: Prisma.ShiftWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ShiftUpdateToOneWithWhereWithoutCourseSeasonsInput, Prisma.ShiftUpdateWithoutCourseSeasonsInput>, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShiftUpdateToOneWithWhereWithoutCourseSeasonShiftsInput, Prisma.ShiftUpdateWithoutCourseSeasonShiftsInput>, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonShiftsInput>
 }
 
 export type ShiftCreateWithoutInstitutionInput = {
@@ -528,7 +528,7 @@ export type ShiftCreateWithoutInstitutionInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
@@ -540,7 +540,7 @@ export type ShiftUncheckedCreateWithoutInstitutionInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutShiftInput
 }
 
 export type ShiftCreateOrConnectWithoutInstitutionInput = {
@@ -588,7 +588,7 @@ export type ShiftCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
-  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
 
@@ -599,7 +599,7 @@ export type ShiftUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutShiftInput
 }
 
 export type ShiftCreateOrConnectWithoutCreatedByInput = {
@@ -618,7 +618,7 @@ export type ShiftCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
-  courseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
 }
 
@@ -629,7 +629,7 @@ export type ShiftUncheckedCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutShiftInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutShiftInput
 }
 
 export type ShiftCreateOrConnectWithoutUpdatedByInput = {
@@ -674,7 +674,7 @@ export type ShiftUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.ShiftUpdateManyMutationInput, Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
-export type ShiftCreateWithoutCourseSeasonsInput = {
+export type ShiftCreateWithoutCourseSeasonShiftsInput = {
   id?: string
   name: string
   createdAt?: Date | string
@@ -684,7 +684,7 @@ export type ShiftCreateWithoutCourseSeasonsInput = {
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
 
-export type ShiftUncheckedCreateWithoutCourseSeasonsInput = {
+export type ShiftUncheckedCreateWithoutCourseSeasonShiftsInput = {
   id?: string
   name: string
   institutionId: string
@@ -694,23 +694,23 @@ export type ShiftUncheckedCreateWithoutCourseSeasonsInput = {
   updatedById?: string | null
 }
 
-export type ShiftCreateOrConnectWithoutCourseSeasonsInput = {
+export type ShiftCreateOrConnectWithoutCourseSeasonShiftsInput = {
   where: Prisma.ShiftWhereUniqueInput
-  create: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonsInput>
+  create: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonShiftsInput>
 }
 
-export type ShiftUpsertWithoutCourseSeasonsInput = {
-  update: Prisma.XOR<Prisma.ShiftUpdateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonsInput>
-  create: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonsInput>
+export type ShiftUpsertWithoutCourseSeasonShiftsInput = {
+  update: Prisma.XOR<Prisma.ShiftUpdateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonShiftsInput>
+  create: Prisma.XOR<Prisma.ShiftCreateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedCreateWithoutCourseSeasonShiftsInput>
   where?: Prisma.ShiftWhereInput
 }
 
-export type ShiftUpdateToOneWithWhereWithoutCourseSeasonsInput = {
+export type ShiftUpdateToOneWithWhereWithoutCourseSeasonShiftsInput = {
   where?: Prisma.ShiftWhereInput
-  data: Prisma.XOR<Prisma.ShiftUpdateWithoutCourseSeasonsInput, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonsInput>
+  data: Prisma.XOR<Prisma.ShiftUpdateWithoutCourseSeasonShiftsInput, Prisma.ShiftUncheckedUpdateWithoutCourseSeasonShiftsInput>
 }
 
-export type ShiftUpdateWithoutCourseSeasonsInput = {
+export type ShiftUpdateWithoutCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -720,7 +720,7 @@ export type ShiftUpdateWithoutCourseSeasonsInput = {
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
 
-export type ShiftUncheckedUpdateWithoutCourseSeasonsInput = {
+export type ShiftUncheckedUpdateWithoutCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -744,7 +744,7 @@ export type ShiftUpdateWithoutInstitutionInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
@@ -756,7 +756,7 @@ export type ShiftUncheckedUpdateWithoutInstitutionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutShiftNestedInput
 }
 
 export type ShiftUncheckedUpdateManyWithoutInstitutionInput = {
@@ -792,7 +792,7 @@ export type ShiftUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
-  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
 
@@ -803,7 +803,7 @@ export type ShiftUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutShiftNestedInput
 }
 
 export type ShiftUncheckedUpdateManyWithoutCreatedByInput = {
@@ -821,7 +821,7 @@ export type ShiftUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
-  courseSeasons?: Prisma.CourseSeasonUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
 }
 
@@ -832,7 +832,7 @@ export type ShiftUncheckedUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutShiftNestedInput
+  courseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutShiftNestedInput
 }
 
 export type ShiftUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -850,11 +850,11 @@ export type ShiftUncheckedUpdateManyWithoutUpdatedByInput = {
  */
 
 export type ShiftCountOutputType = {
-  courseSeasons: number
+  courseSeasonShifts: number
 }
 
 export type ShiftCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courseSeasons?: boolean | ShiftCountOutputTypeCountCourseSeasonsArgs
+  courseSeasonShifts?: boolean | ShiftCountOutputTypeCountCourseSeasonShiftsArgs
 }
 
 /**
@@ -870,8 +870,8 @@ export type ShiftCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * ShiftCountOutputType without action
  */
-export type ShiftCountOutputTypeCountCourseSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CourseSeasonWhereInput
+export type ShiftCountOutputTypeCountCourseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseSeasonShiftWhereInput
 }
 
 
@@ -884,7 +884,7 @@ export type ShiftSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdById?: boolean
   updatedById?: boolean
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  courseSeasons?: boolean | Prisma.Shift$courseSeasonsArgs<ExtArgs>
+  courseSeasonShifts?: boolean | Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
@@ -929,7 +929,7 @@ export type ShiftSelectScalar = {
 export type ShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "institutionId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["shift"]>
 export type ShiftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  courseSeasons?: boolean | Prisma.Shift$courseSeasonsArgs<ExtArgs>
+  courseSeasonShifts?: boolean | Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
@@ -949,7 +949,7 @@ export type $ShiftPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Shift"
   objects: {
     institution: Prisma.$InstitutionPayload<ExtArgs>
-    courseSeasons: Prisma.$CourseSeasonPayload<ExtArgs>[]
+    courseSeasonShifts: Prisma.$CourseSeasonShiftPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
@@ -1356,7 +1356,7 @@ readonly fields: ShiftFieldRefs;
 export interface Prisma__ShiftClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  courseSeasons<T extends Prisma.Shift$courseSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$courseSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  courseSeasonShifts<T extends Prisma.Shift$courseSeasonShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Shift$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Shift$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1791,27 +1791,27 @@ export type ShiftDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Shift.courseSeasons
+ * Shift.courseSeasonShifts
  */
-export type Shift$courseSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Shift$courseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the CourseSeason
+   * Select specific fields to fetch from the CourseSeasonShift
    */
-  select?: Prisma.CourseSeasonSelect<ExtArgs> | null
+  select?: Prisma.CourseSeasonShiftSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the CourseSeason
+   * Omit specific fields from the CourseSeasonShift
    */
-  omit?: Prisma.CourseSeasonOmit<ExtArgs> | null
+  omit?: Prisma.CourseSeasonShiftOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CourseSeasonInclude<ExtArgs> | null
-  where?: Prisma.CourseSeasonWhereInput
-  orderBy?: Prisma.CourseSeasonOrderByWithRelationInput | Prisma.CourseSeasonOrderByWithRelationInput[]
-  cursor?: Prisma.CourseSeasonWhereUniqueInput
+  include?: Prisma.CourseSeasonShiftInclude<ExtArgs> | null
+  where?: Prisma.CourseSeasonShiftWhereInput
+  orderBy?: Prisma.CourseSeasonShiftOrderByWithRelationInput | Prisma.CourseSeasonShiftOrderByWithRelationInput[]
+  cursor?: Prisma.CourseSeasonShiftWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CourseSeasonScalarFieldEnum | Prisma.CourseSeasonScalarFieldEnum[]
+  distinct?: Prisma.CourseSeasonShiftScalarFieldEnum | Prisma.CourseSeasonShiftScalarFieldEnum[]
 }
 
 /**

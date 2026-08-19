@@ -16,19 +16,19 @@ import { TeamSeasonStaffRole } from 'src/generated/prisma/client';
 export class CreateCourseSeasonStaffDto {
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID del periodo del curso (CourseSeason)',
+    description: 'ID del turno logístico de la oferta (CourseSeasonShift)',
   })
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'courseSeasonId',
+      constraint1: 'courseSeasonShiftId',
     }),
   })
-  @Exists('courseSeason', 'id', {
+  @Exists('courseSeasonShift', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'courseSeasonId',
+      constraint1: 'courseSeasonShiftId',
     }),
   })
-  courseSeasonId: string;
+  courseSeasonShiftId: string;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

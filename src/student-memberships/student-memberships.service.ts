@@ -56,11 +56,12 @@ export const studentMembershipSelect = {
           name: true,
         },
       },
-      shift: {
-        select: {
-          name: true,
-        },
-      },
+    },
+  },
+  courseSeasonShiftId: true,
+  courseSeasonShift: {
+    select: {
+      shift: { select: { name: true } },
     },
   },
   paymentPlanId: true,
@@ -168,10 +169,12 @@ export class StudentMembershipsService {
       createDto.courseSeasonId,
     );
 
-    const [student, offering] = await Promise.all([
+    const [student, offeringData] = await Promise.all([
       this.getStudent(createDto.studentId),
-      this.getCourseMembershipOffering(createDto.courseSeasonId),
+      this.getCourseMembershipOfferingAndShift(createDto.courseSeasonId, createDto.courseSeasonShiftId),
     ]);
+    const offering = offeringData.courseSeason;
+    const shift = offeringData.shift;
 
     this.validateMembershipStartDate(
       new Date(createDto.startedAt),
@@ -179,7 +182,7 @@ export class StudentMembershipsService {
       offering.season.endDate,
     );
 
-    await this.validateOfferingCapacity(offering.id, offering.maxMembers);
+    await this.validateOfferingCapacity(shift.id, shift.maxMembers);
 
     await this.validateDuplicateMembership(
       createDto.studentId,
@@ -316,6 +319,7 @@ export class StudentMembershipsService {
       orderBy = 'asc',
       sortField = 'createdAt',
       courseSeasonId,
+      courseSeasonShiftId,
       studentId,
       paymentPlanId,
       status,
@@ -345,6 +349,10 @@ export class StudentMembershipsService {
       }
     }
 
+    if (courseSeasonShiftId) {
+      where.courseSeasonShiftId = courseSeasonShiftId;
+    }
+
     if (paymentPlanId) {
       where.paymentPlanId = paymentPlanId;
     }
@@ -369,6 +377,7 @@ export class StudentMembershipsService {
     const globalWhere: Prisma.StudentMembershipWhereInput = {};
     if (studentId) globalWhere.studentId = studentId;
     if (courseSeasonId) globalWhere.courseSeasonId = courseSeasonId;
+    if (courseSeasonShiftId) globalWhere.courseSeasonShiftId = courseSeasonShiftId;
     if (paymentPlanId) globalWhere.paymentPlanId = paymentPlanId;
 
     const [
@@ -417,10 +426,10 @@ export class StudentMembershipsService {
         where: { ...globalWhere, status: 'PENDING_ACTIVE' },
       }),
       courseSeasonId
-        ? this.prisma.courseSeason.findUnique({
-            where: { id: courseSeasonId },
-            select: { maxMembers: true },
-          })
+        ? this.prisma.courseSeasonShift.aggregate({
+            where: { courseSeasonId },
+            _sum: { maxMembers: true },
+          }).then(res => ({ maxMembers: res._sum.maxMembers }))
         : Promise.resolve(null),
     ]);
 
@@ -509,25 +518,25 @@ export class StudentMembershipsService {
 
     const [student, offering] = await Promise.all([
       this.getStudent(studentId),
-      this.getCourseMembershipOffering(offeringId),
+      this.getCourseMembershipOfferingAndShift(offeringId, updateDto.courseSeasonShiftId ?? membership.courseSeasonShiftId),
     ]);
 
     this.validateMembershipStartDate(
       updateDto.startedAt
         ? new Date(updateDto.startedAt)
         : membership.startedAt,
-      offering.season.startDate,
-      offering.season.endDate,
+      offering.courseSeason.season.startDate,
+      offering.courseSeason.season.endDate,
     );
 
-    this.validateStudentEligibility(student, offering);
+    this.validateStudentEligibility(student, offering.courseSeason);
 
     const isChangingOffering =
       updateDto.courseSeasonId &&
       updateDto.courseSeasonId !== membership.courseSeasonId;
 
     if (isChangingOffering) {
-      await this.validateOfferingCapacity(offering.id, offering.maxMembers);
+      await this.validateOfferingCapacity(offering.shift.id, offering.shift.maxMembers);
       await this.validateDuplicateMembership(studentId, offeringId, id);
     }
 
@@ -753,11 +762,12 @@ export class StudentMembershipsService {
       );
     }
 
-    const offering = await this.getCourseMembershipOffering(
+    const offering = await this.getCourseMembershipOfferingAndShift(
       membership.courseSeasonId,
+      membership.courseSeasonShiftId,
     );
 
-    await this.validateOfferingCapacity(offering.id, offering.maxMembers);
+    await this.validateOfferingCapacity(offering.shift.id, offering.shift.maxMembers);
 
     const updatedMembership = await this.prisma.studentMembership.update({
       where: { id },
@@ -863,7 +873,10 @@ export class StudentMembershipsService {
         where: { id },
         include: {
           courseSeason: {
-            include: { course: true, shift: true }
+            include: { course: true }
+          },
+          courseSeasonShift: {
+            include: { shift: true }
           },
           cycleEnrollments: {
             where: {
@@ -882,19 +895,21 @@ export class StudentMembershipsService {
         throw new BadRequestException('Solo las inscripciones activas pueden ser transferidas');
       }
 
-      if (membership.courseSeasonId === transferDto.targetCourseSeasonId) {
+      if (membership.courseSeasonShiftId === transferDto.targetCourseSeasonShiftId) {
         throw new BadRequestException('El estudiante ya se encuentra en este turno');
       }
 
       // 2. Bloquear y validar destino
-      const targetCourseSeason = await tx.courseSeason.findUnique({
-        where: { id: transferDto.targetCourseSeasonId },
-        include: { course: true, shift: true }
+      const targetCourseSeasonShift = await tx.courseSeasonShift.findUnique({
+        where: { id: transferDto.targetCourseSeasonShiftId },
+        include: { shift: true, courseSeason: { include: { course: true } } }
       });
 
-      if (!targetCourseSeason) {
+      if (!targetCourseSeasonShift) {
         throw new NotFoundException('El turno destino no fue encontrado');
       }
+
+      const targetCourseSeason = targetCourseSeasonShift.courseSeason;
 
       if (targetCourseSeason.status !== StatusCourseSeason.ACTIVE) {
         throw new BadRequestException('El turno destino no está activo');
@@ -904,6 +919,8 @@ export class StudentMembershipsService {
       if (membership.courseSeason.courseId !== targetCourseSeason.courseId) {
         throw new BadRequestException('Solo se pueden realizar transferencias entre turnos del mismo curso');
       }
+
+      const isSameOffer = membership.courseSeasonId === transferDto.targetCourseSeasonId;
 
       // 3. Determinar el primer ciclo transferible
       const effectiveDate = new Date(transferDto.effectiveDate);
@@ -934,10 +951,10 @@ export class StudentMembershipsService {
         for (const cycle of cyclesToTransfer) {
           await validateCourseSeasonCapacity(
             tx,
-            transferDto.targetCourseSeasonId,
+            transferDto.targetCourseSeasonShiftId,
             cycle.cycleStartDate,
             cycle.cycleEndDate,
-            cycle.id // Excluimos su propio ID por si acaso, aunque su courseSeasonId actual es el de origen
+            cycle.id
           );
         }
 
@@ -947,7 +964,8 @@ export class StudentMembershipsService {
             id: { in: cyclesToTransfer.map(c => c.id) }
           },
           data: {
-            courseSeasonId: transferDto.targetCourseSeasonId
+            courseSeasonId: transferDto.targetCourseSeasonId,
+            courseSeasonShiftId: transferDto.targetCourseSeasonShiftId
           }
         });
       }
@@ -957,11 +975,12 @@ export class StudentMembershipsService {
         where: { id },
         data: {
           courseSeasonId: transferDto.targetCourseSeasonId,
+          courseSeasonShiftId: transferDto.targetCourseSeasonShiftId,
           histories: {
             create: {
               previousStatus: membership.status,
               newStatus: membership.status,
-              reason: `Transferencia de turno de ${membership.courseSeason.shift?.name || 'Origen'} a ${targetCourseSeason.shift?.name || 'Destino'} a partir del ${transferStartDate.toLocaleDateString()}`
+              reason: `Transferencia de turno de ${membership.courseSeasonShift?.shift?.name || 'Origen'} a ${targetCourseSeasonShift.shift.name || 'Destino'} a partir del ${transferStartDate.toLocaleDateString()}`
             }
           }
         },
@@ -1049,33 +1068,37 @@ export class StudentMembershipsService {
     return student;
   }
 
-  private async getCourseMembershipOffering(courseSeasonId: string) {
-    const offering = await this.prisma.courseSeason.findUnique({
-      where: { id: courseSeasonId },
+  private async getCourseMembershipOfferingAndShift(courseSeasonId: string, courseSeasonShiftId: string) {
+    const shift = await this.prisma.courseSeasonShift.findUnique({
+      where: { id: courseSeasonShiftId },
       include: {
-        category: {
-          select: { minAge: true, maxAge: true },
-        },
-        season: {
-          select: { startDate: true, endDate: true },
+        courseSeason: {
+          include: {
+            category: {
+              select: { minAge: true, maxAge: true },
+            },
+            season: {
+              select: { startDate: true, endDate: true },
+            },
+          },
         },
       },
     });
-    if (!offering) {
-      throw new NotFoundException('La temporada de curso no fue encontrada');
+    if (!shift || shift.courseSeasonId !== courseSeasonId) {
+      throw new NotFoundException('El turno o la temporada de curso no fue encontrada');
     }
-    return offering;
+    return { shift, courseSeason: shift.courseSeason as unknown as CourseMembershipOfferingWithCategory };
   }
 
   private async validateOfferingCapacity(
-    offeringId: string,
+    courseSeasonShiftId: string,
     maxMembers: number | null,
   ) {
     if (maxMembers === null) return;
 
     const activeMembers = await this.prisma.studentMembership.count({
       where: {
-        courseSeasonId: offeringId,
+        courseSeasonShiftId,
         status: {
           in: [
             StudentMembershipStatus.ACTIVE,

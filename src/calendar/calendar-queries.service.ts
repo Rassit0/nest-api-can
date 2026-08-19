@@ -41,7 +41,7 @@ export class CalendarQueriesService {
           session: {
             OR: [
               { sessionTeams: { some: { teamSeasonId: teamSeasonId } } },
-              { sessionCourses: { some: { courseSeasonId: courseSeasonId } } }
+              { sessionCourses: { some: { courseSeasonShift: { courseSeasonId: courseSeasonId } } } }
             ]
           }
         },
@@ -86,10 +86,14 @@ export class CalendarQueriesService {
             },
             sessionCourses: {
               select: {
-                courseSeason: {
+                courseSeasonShift: {
                   select: {
-                    id: true,
-                    course: { select: { name: true } }
+                    courseSeason: {
+                      select: {
+                        id: true,
+                        course: { select: { name: true } }
+                      }
+                    }
                   }
                 }
               }

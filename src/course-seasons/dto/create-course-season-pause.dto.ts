@@ -17,4 +17,8 @@ export class CreateCourseSeasonPauseDto {
   @IsString()
   @IsOptional()
   reason?: string;
+
+  @IsString()
+  @IsOptional()
+  courseSeasonShiftId?: string;
 }

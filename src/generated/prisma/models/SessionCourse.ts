@@ -26,34 +26,34 @@ export type AggregateSessionCourse = {
 
 export type SessionCourseMinAggregateOutputType = {
   sessionId: string | null
-  courseSeasonId: string | null
+  courseSeasonShiftId: string | null
 }
 
 export type SessionCourseMaxAggregateOutputType = {
   sessionId: string | null
-  courseSeasonId: string | null
+  courseSeasonShiftId: string | null
 }
 
 export type SessionCourseCountAggregateOutputType = {
   sessionId: number
-  courseSeasonId: number
+  courseSeasonShiftId: number
   _all: number
 }
 
 
 export type SessionCourseMinAggregateInputType = {
   sessionId?: true
-  courseSeasonId?: true
+  courseSeasonShiftId?: true
 }
 
 export type SessionCourseMaxAggregateInputType = {
   sessionId?: true
-  courseSeasonId?: true
+  courseSeasonShiftId?: true
 }
 
 export type SessionCourseCountAggregateInputType = {
   sessionId?: true
-  courseSeasonId?: true
+  courseSeasonShiftId?: true
   _all?: true
 }
 
@@ -131,7 +131,7 @@ export type SessionCourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type SessionCourseGroupByOutputType = {
   sessionId: string
-  courseSeasonId: string
+  courseSeasonShiftId: string
   _count: SessionCourseCountAggregateOutputType | null
   _min: SessionCourseMinAggregateOutputType | null
   _max: SessionCourseMaxAggregateOutputType | null
@@ -157,32 +157,32 @@ export type SessionCourseWhereInput = {
   OR?: Prisma.SessionCourseWhereInput[]
   NOT?: Prisma.SessionCourseWhereInput | Prisma.SessionCourseWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionCourse"> | string
-  courseSeasonId?: Prisma.StringFilter<"SessionCourse"> | string
+  courseSeasonShiftId?: Prisma.StringFilter<"SessionCourse"> | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
-  courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
+  courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput>
 }
 
 export type SessionCourseOrderByWithRelationInput = {
   sessionId?: Prisma.SortOrder
-  courseSeasonId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
   session?: Prisma.SessionOrderByWithRelationInput
-  courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftOrderByWithRelationInput
 }
 
 export type SessionCourseWhereUniqueInput = Prisma.AtLeast<{
-  sessionId_courseSeasonId?: Prisma.SessionCourseSessionIdCourseSeasonIdCompoundUniqueInput
+  sessionId_courseSeasonShiftId?: Prisma.SessionCourseSessionIdCourseSeasonShiftIdCompoundUniqueInput
   AND?: Prisma.SessionCourseWhereInput | Prisma.SessionCourseWhereInput[]
   OR?: Prisma.SessionCourseWhereInput[]
   NOT?: Prisma.SessionCourseWhereInput | Prisma.SessionCourseWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionCourse"> | string
-  courseSeasonId?: Prisma.StringFilter<"SessionCourse"> | string
+  courseSeasonShiftId?: Prisma.StringFilter<"SessionCourse"> | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
-  courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
-}, "sessionId_courseSeasonId">
+  courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput>
+}, "sessionId_courseSeasonShiftId">
 
 export type SessionCourseOrderByWithAggregationInput = {
   sessionId?: Prisma.SortOrder
-  courseSeasonId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
   _count?: Prisma.SessionCourseCountOrderByAggregateInput
   _max?: Prisma.SessionCourseMaxOrderByAggregateInput
   _min?: Prisma.SessionCourseMinOrderByAggregateInput
@@ -193,32 +193,32 @@ export type SessionCourseScalarWhereWithAggregatesInput = {
   OR?: Prisma.SessionCourseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SessionCourseScalarWhereWithAggregatesInput | Prisma.SessionCourseScalarWhereWithAggregatesInput[]
   sessionId?: Prisma.StringWithAggregatesFilter<"SessionCourse"> | string
-  courseSeasonId?: Prisma.StringWithAggregatesFilter<"SessionCourse"> | string
+  courseSeasonShiftId?: Prisma.StringWithAggregatesFilter<"SessionCourse"> | string
 }
 
 export type SessionCourseCreateInput = {
   session: Prisma.SessionCreateNestedOneWithoutSessionCoursesInput
-  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutSessionCoursesInput
+  courseSeasonShift: Prisma.CourseSeasonShiftCreateNestedOneWithoutSessionCoursesInput
 }
 
 export type SessionCourseUncheckedCreateInput = {
   sessionId: string
-  courseSeasonId: string
+  courseSeasonShiftId: string
 }
 
 export type SessionCourseUpdateInput = {
   session?: Prisma.SessionUpdateOneRequiredWithoutSessionCoursesNestedInput
-  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutSessionCoursesNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneRequiredWithoutSessionCoursesNestedInput
 }
 
 export type SessionCourseUncheckedUpdateInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonShiftId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionCourseCreateManyInput = {
   sessionId: string
-  courseSeasonId: string
+  courseSeasonShiftId: string
 }
 
 export type SessionCourseUpdateManyMutationInput = {
@@ -227,7 +227,7 @@ export type SessionCourseUpdateManyMutationInput = {
 
 export type SessionCourseUncheckedUpdateManyInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonShiftId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionCourseListRelationFilter = {
@@ -240,65 +240,65 @@ export type SessionCourseOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type SessionCourseSessionIdCourseSeasonIdCompoundUniqueInput = {
+export type SessionCourseSessionIdCourseSeasonShiftIdCompoundUniqueInput = {
   sessionId: string
-  courseSeasonId: string
+  courseSeasonShiftId: string
 }
 
 export type SessionCourseCountOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  courseSeasonId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
 export type SessionCourseMaxOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  courseSeasonId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
 export type SessionCourseMinOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  courseSeasonId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
-export type SessionCourseCreateNestedManyWithoutCourseSeasonInput = {
-  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput> | Prisma.SessionCourseCreateWithoutCourseSeasonInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput[]
-  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput[]
-  createMany?: Prisma.SessionCourseCreateManyCourseSeasonInputEnvelope
+export type SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput = {
+  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.SessionCourseCreateManyCourseSeasonShiftInputEnvelope
   connect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
 }
 
-export type SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonInput = {
-  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput> | Prisma.SessionCourseCreateWithoutCourseSeasonInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput[]
-  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput[]
-  createMany?: Prisma.SessionCourseCreateManyCourseSeasonInputEnvelope
+export type SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput = {
+  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.SessionCourseCreateManyCourseSeasonShiftInputEnvelope
   connect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
 }
 
-export type SessionCourseUpdateManyWithoutCourseSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput> | Prisma.SessionCourseCreateWithoutCourseSeasonInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput[]
-  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput[]
-  upsert?: Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonInput | Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonInput[]
-  createMany?: Prisma.SessionCourseCreateManyCourseSeasonInputEnvelope
+export type SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput[]
+  upsert?: Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.SessionCourseCreateManyCourseSeasonShiftInputEnvelope
   set?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   disconnect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   delete?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   connect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
-  update?: Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonInput | Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonInput[]
-  updateMany?: Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonInput | Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonInput[]
+  update?: Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  updateMany?: Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonShiftInput[]
   deleteMany?: Prisma.SessionCourseScalarWhereInput | Prisma.SessionCourseScalarWhereInput[]
 }
 
-export type SessionCourseUncheckedUpdateManyWithoutCourseSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput> | Prisma.SessionCourseCreateWithoutCourseSeasonInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput[]
-  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonInput[]
-  upsert?: Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonInput | Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonInput[]
-  createMany?: Prisma.SessionCourseCreateManyCourseSeasonInputEnvelope
+export type SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput[] | Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput[]
+  upsert?: Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.SessionCourseCreateManyCourseSeasonShiftInputEnvelope
   set?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   disconnect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   delete?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
   connect?: Prisma.SessionCourseWhereUniqueInput | Prisma.SessionCourseWhereUniqueInput[]
-  update?: Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonInput | Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonInput[]
-  updateMany?: Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonInput | Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonInput[]
+  update?: Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  updateMany?: Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonShiftInput | Prisma.SessionCourseUpdateManyWithWhereWithoutCourseSeasonShiftInput[]
   deleteMany?: Prisma.SessionCourseScalarWhereInput | Prisma.SessionCourseScalarWhereInput[]
 }
 
@@ -344,38 +344,38 @@ export type SessionCourseUncheckedUpdateManyWithoutSessionNestedInput = {
   deleteMany?: Prisma.SessionCourseScalarWhereInput | Prisma.SessionCourseScalarWhereInput[]
 }
 
-export type SessionCourseCreateWithoutCourseSeasonInput = {
+export type SessionCourseCreateWithoutCourseSeasonShiftInput = {
   session: Prisma.SessionCreateNestedOneWithoutSessionCoursesInput
 }
 
-export type SessionCourseUncheckedCreateWithoutCourseSeasonInput = {
+export type SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput = {
   sessionId: string
 }
 
-export type SessionCourseCreateOrConnectWithoutCourseSeasonInput = {
+export type SessionCourseCreateOrConnectWithoutCourseSeasonShiftInput = {
   where: Prisma.SessionCourseWhereUniqueInput
-  create: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput>
+  create: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput>
 }
 
-export type SessionCourseCreateManyCourseSeasonInputEnvelope = {
-  data: Prisma.SessionCourseCreateManyCourseSeasonInput | Prisma.SessionCourseCreateManyCourseSeasonInput[]
+export type SessionCourseCreateManyCourseSeasonShiftInputEnvelope = {
+  data: Prisma.SessionCourseCreateManyCourseSeasonShiftInput | Prisma.SessionCourseCreateManyCourseSeasonShiftInput[]
   skipDuplicates?: boolean
 }
 
-export type SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonInput = {
+export type SessionCourseUpsertWithWhereUniqueWithoutCourseSeasonShiftInput = {
   where: Prisma.SessionCourseWhereUniqueInput
-  update: Prisma.XOR<Prisma.SessionCourseUpdateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedUpdateWithoutCourseSeasonInput>
-  create: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonInput>
+  update: Prisma.XOR<Prisma.SessionCourseUpdateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedUpdateWithoutCourseSeasonShiftInput>
+  create: Prisma.XOR<Prisma.SessionCourseCreateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedCreateWithoutCourseSeasonShiftInput>
 }
 
-export type SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonInput = {
+export type SessionCourseUpdateWithWhereUniqueWithoutCourseSeasonShiftInput = {
   where: Prisma.SessionCourseWhereUniqueInput
-  data: Prisma.XOR<Prisma.SessionCourseUpdateWithoutCourseSeasonInput, Prisma.SessionCourseUncheckedUpdateWithoutCourseSeasonInput>
+  data: Prisma.XOR<Prisma.SessionCourseUpdateWithoutCourseSeasonShiftInput, Prisma.SessionCourseUncheckedUpdateWithoutCourseSeasonShiftInput>
 }
 
-export type SessionCourseUpdateManyWithWhereWithoutCourseSeasonInput = {
+export type SessionCourseUpdateManyWithWhereWithoutCourseSeasonShiftInput = {
   where: Prisma.SessionCourseScalarWhereInput
-  data: Prisma.XOR<Prisma.SessionCourseUpdateManyMutationInput, Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonInput>
+  data: Prisma.XOR<Prisma.SessionCourseUpdateManyMutationInput, Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftInput>
 }
 
 export type SessionCourseScalarWhereInput = {
@@ -383,15 +383,15 @@ export type SessionCourseScalarWhereInput = {
   OR?: Prisma.SessionCourseScalarWhereInput[]
   NOT?: Prisma.SessionCourseScalarWhereInput | Prisma.SessionCourseScalarWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionCourse"> | string
-  courseSeasonId?: Prisma.StringFilter<"SessionCourse"> | string
+  courseSeasonShiftId?: Prisma.StringFilter<"SessionCourse"> | string
 }
 
 export type SessionCourseCreateWithoutSessionInput = {
-  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutSessionCoursesInput
+  courseSeasonShift: Prisma.CourseSeasonShiftCreateNestedOneWithoutSessionCoursesInput
 }
 
 export type SessionCourseUncheckedCreateWithoutSessionInput = {
-  courseSeasonId: string
+  courseSeasonShiftId: string
 }
 
 export type SessionCourseCreateOrConnectWithoutSessionInput = {
@@ -420,89 +420,89 @@ export type SessionCourseUpdateManyWithWhereWithoutSessionInput = {
   data: Prisma.XOR<Prisma.SessionCourseUpdateManyMutationInput, Prisma.SessionCourseUncheckedUpdateManyWithoutSessionInput>
 }
 
-export type SessionCourseCreateManyCourseSeasonInput = {
+export type SessionCourseCreateManyCourseSeasonShiftInput = {
   sessionId: string
 }
 
-export type SessionCourseUpdateWithoutCourseSeasonInput = {
+export type SessionCourseUpdateWithoutCourseSeasonShiftInput = {
   session?: Prisma.SessionUpdateOneRequiredWithoutSessionCoursesNestedInput
 }
 
-export type SessionCourseUncheckedUpdateWithoutCourseSeasonInput = {
+export type SessionCourseUncheckedUpdateWithoutCourseSeasonShiftInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type SessionCourseUncheckedUpdateManyWithoutCourseSeasonInput = {
+export type SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionCourseCreateManySessionInput = {
-  courseSeasonId: string
+  courseSeasonShiftId: string
 }
 
 export type SessionCourseUpdateWithoutSessionInput = {
-  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutSessionCoursesNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneRequiredWithoutSessionCoursesNestedInput
 }
 
 export type SessionCourseUncheckedUpdateWithoutSessionInput = {
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonShiftId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionCourseUncheckedUpdateManyWithoutSessionInput = {
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonShiftId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type SessionCourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  courseSeasonId?: boolean
+  courseSeasonShiftId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  courseSeasonId?: boolean
+  courseSeasonShiftId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  courseSeasonId?: boolean
+  courseSeasonShiftId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectScalar = {
   sessionId?: boolean
-  courseSeasonId?: boolean
+  courseSeasonShiftId?: boolean
 }
 
-export type SessionCourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sessionId" | "courseSeasonId", ExtArgs["result"]["sessionCourse"]>
+export type SessionCourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sessionId" | "courseSeasonShiftId", ExtArgs["result"]["sessionCourse"]>
 export type SessionCourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }
 export type SessionCourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }
 export type SessionCourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
 }
 
 export type $SessionCoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SessionCourse"
   objects: {
     session: Prisma.$SessionPayload<ExtArgs>
-    courseSeason: Prisma.$CourseSeasonPayload<ExtArgs>
+    courseSeasonShift: Prisma.$CourseSeasonShiftPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     sessionId: string
-    courseSeasonId: string
+    courseSeasonShiftId: string
   }, ExtArgs["result"]["sessionCourse"]>
   composites: {}
 }
@@ -898,7 +898,7 @@ readonly fields: SessionCourseFieldRefs;
 export interface Prisma__SessionCourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   session<T extends Prisma.SessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  courseSeason<T extends Prisma.CourseSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  courseSeasonShift<T extends Prisma.CourseSeasonShiftDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonShiftClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -929,7 +929,7 @@ export interface Prisma__SessionCourseClient<T, Null = never, ExtArgs extends ru
  */
 export interface SessionCourseFieldRefs {
   readonly sessionId: Prisma.FieldRef<"SessionCourse", 'String'>
-  readonly courseSeasonId: Prisma.FieldRef<"SessionCourse", 'String'>
+  readonly courseSeasonShiftId: Prisma.FieldRef<"SessionCourse", 'String'>
 }
     
 

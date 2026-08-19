@@ -27,6 +27,7 @@ import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
 import { FinalizeCourseSeasonDto } from './dto/finalize-course-season.dto';
 import { CancelCourseSeasonDto } from './dto/cancel-course-season.dto';
 import { CreateCourseSeasonPauseDto } from './dto/create-course-season-pause.dto';
+import { AddShiftDto } from './dto/add-shift.dto';
 import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
 import { ToggleRegistrationDto } from './dto/toggle-registration.dto';
 import {
@@ -92,6 +93,15 @@ export class CourseSeasonsController {
   async getShiftsOptions() {
     return await this.courseSeasonsService.getShiftsByInstitutionOptions();
   }
+  @Get(':id/shifts')
+  @ApiOperation({ summary: 'Obtener opciones de turnos por oferta (CourseSeason)' })
+  @RequirePermissions('READ_COURSE_SEASONS')
+  async getCourseSeasonShiftsOptions(
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    return await this.courseSeasonsService.getShiftsByCourseSeasonOptions(id);
+  }
+
 
   @Get('seasons-by-discipline/options/:disciplineId')
   @ApiOperation({ summary: 'Obtener temporadas por disciplina' })
@@ -191,6 +201,31 @@ export class CourseSeasonsController {
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.courseSeasonsService.remove(id);
   }
+
+  @Post(':id/add-shift')
+  @ApiOperation({
+    summary: 'Agregar un turno adicional a la oferta',
+    description:
+      'Agrega un CourseSeasonShift a una Oferta (CourseSeason) existente. No clona la Oferta ni duplica su configuración económica. El turno únicamente define la parte logística (shiftId, maxMembers y minMembers).',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del periodo del curso base (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: AddShiftDto })
+  @ApiStandardCreatedResponse(
+    CourseSeasonResponseDto,
+    'Turno adicional agregado exitosamente.',
+  )
+  @RequirePermissions('CREATE_COURSE_SEASONS')
+  async addShift(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() addShiftDto: AddShiftDto,
+  ) {
+    return await this.courseSeasonsService.addShift(id, addShiftDto);
+  }
+
 
   @Patch(':id/finish')
   @ApiOperation({

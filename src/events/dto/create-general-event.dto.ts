@@ -39,6 +39,10 @@ export class CreateGeneralEventDto {
   courseSeasonId?: string;
 
   @IsOptional()
+  @IsUUID()
+  courseSeasonShiftId?: string;
+
+  @IsOptional()
   @IsString()
   recurrenceRule?: string;
 

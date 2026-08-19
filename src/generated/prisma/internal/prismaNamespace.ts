@@ -427,6 +427,7 @@ export const ModelName = {
   School: 'School',
   Course: 'Course',
   CourseSeason: 'CourseSeason',
+  CourseSeasonShift: 'CourseSeasonShift',
   TeamSeasonPause: 'TeamSeasonPause',
   CourseSeasonPause: 'CourseSeasonPause',
   CourseSeasonBillingConfig: 'CourseSeasonBillingConfig',
@@ -471,7 +472,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3210,6 +3211,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CourseSeasonCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CourseSeasonCountAggregateOutputType> | number
+        }
+      }
+    }
+    CourseSeasonShift: {
+      payload: Prisma.$CourseSeasonShiftPayload<ExtArgs>
+      fields: Prisma.CourseSeasonShiftFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CourseSeasonShiftFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CourseSeasonShiftFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        findFirst: {
+          args: Prisma.CourseSeasonShiftFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CourseSeasonShiftFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        findMany: {
+          args: Prisma.CourseSeasonShiftFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>[]
+        }
+        create: {
+          args: Prisma.CourseSeasonShiftCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        createMany: {
+          args: Prisma.CourseSeasonShiftCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CourseSeasonShiftCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>[]
+        }
+        delete: {
+          args: Prisma.CourseSeasonShiftDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        update: {
+          args: Prisma.CourseSeasonShiftUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        deleteMany: {
+          args: Prisma.CourseSeasonShiftDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CourseSeasonShiftUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CourseSeasonShiftUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>[]
+        }
+        upsert: {
+          args: Prisma.CourseSeasonShiftUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseSeasonShiftPayload>
+        }
+        aggregate: {
+          args: Prisma.CourseSeasonShiftAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseSeasonShift>
+        }
+        groupBy: {
+          args: Prisma.CourseSeasonShiftGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonShiftGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CourseSeasonShiftCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseSeasonShiftCountAggregateOutputType> | number
         }
       }
     }
@@ -6012,11 +6087,9 @@ export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof 
 
 export const CourseSeasonScalarFieldEnum = {
   id: 'id',
-  shiftId: 'shiftId',
+  name: 'name',
   imageUrl: 'imageUrl',
   description: 'description',
-  maxMembers: 'maxMembers',
-  minMembers: 'minMembers',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
   validateAge: 'validateAge',
@@ -6036,6 +6109,22 @@ export const CourseSeasonScalarFieldEnum = {
 export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
 
 
+export const CourseSeasonShiftScalarFieldEnum = {
+  id: 'id',
+  courseSeasonId: 'courseSeasonId',
+  shiftId: 'shiftId',
+  maxMembers: 'maxMembers',
+  minMembers: 'minMembers',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type CourseSeasonShiftScalarFieldEnum = (typeof CourseSeasonShiftScalarFieldEnum)[keyof typeof CourseSeasonShiftScalarFieldEnum]
+
+
 export const TeamSeasonPauseScalarFieldEnum = {
   id: 'id',
   teamSeasonId: 'teamSeasonId',
@@ -6053,6 +6142,7 @@ export type TeamSeasonPauseScalarFieldEnum = (typeof TeamSeasonPauseScalarFieldE
 export const CourseSeasonPauseScalarFieldEnum = {
   id: 'id',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   startDate: 'startDate',
   endDate: 'endDate',
   reason: 'reason',
@@ -6093,7 +6183,7 @@ export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBilli
 
 export const CourseSeasonStaffScalarFieldEnum = {
   id: 'id',
-  courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   staffId: 'staffId',
   role: 'role',
   customRole: 'customRole',
@@ -6127,6 +6217,7 @@ export const StudentMembershipScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   paymentPlanId: 'paymentPlanId',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -6176,6 +6267,7 @@ export const CycleEnrollmentScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
   courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
   chargeId: 'chargeId',
   cycleStartDate: 'cycleStartDate',
   cycleEndDate: 'cycleEndDate',
@@ -6308,7 +6400,8 @@ export const GeneralEventScalarFieldEnum = {
   eventId: 'eventId',
   institutionId: 'institutionId',
   teamSeasonId: 'teamSeasonId',
-  courseSeasonId: 'courseSeasonId'
+  courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[keyof typeof GeneralEventScalarFieldEnum]
@@ -6333,7 +6426,7 @@ export type SessionTeamScalarFieldEnum = (typeof SessionTeamScalarFieldEnum)[key
 
 export const SessionCourseScalarFieldEnum = {
   sessionId: 'sessionId',
-  courseSeasonId: 'courseSeasonId'
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type SessionCourseScalarFieldEnum = (typeof SessionCourseScalarFieldEnum)[keyof typeof SessionCourseScalarFieldEnum]
@@ -7251,6 +7344,7 @@ export type GlobalOmitConfig = {
   school?: Prisma.SchoolOmit
   course?: Prisma.CourseOmit
   courseSeason?: Prisma.CourseSeasonOmit
+  courseSeasonShift?: Prisma.CourseSeasonShiftOmit
   teamSeasonPause?: Prisma.TeamSeasonPauseOmit
   courseSeasonPause?: Prisma.CourseSeasonPauseOmit
   courseSeasonBillingConfig?: Prisma.CourseSeasonBillingConfigOmit

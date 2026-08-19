@@ -243,7 +243,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
   // ---------------------------------------------------------
 
   async createGeneralEvent(createDto: CreateGeneralEventDto, userId?: string) {
-    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, recurrenceRule, timezone } = createDto;
+    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = createDto;
 
     const baseData: BaseEventCreateDto = {
       eventType: EventType.GENERAL,
@@ -264,6 +264,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
           institutionId,
           teamSeasonId,
           courseSeasonId,
+          courseSeasonShiftId,
         },
       });
     };
@@ -287,7 +288,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       throw new EventNotFoundException('GeneralEvent not found');
     }
 
-    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, recurrenceRule, timezone } = updateDto;
+    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = updateDto;
 
     const baseData: Partial<BaseEventCreateDto> = {
       ...(startDate && { startDate: new Date(startDate) }),
@@ -306,6 +307,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
         ...(institutionId !== undefined && { institutionId }),
         ...(teamSeasonId !== undefined && { teamSeasonId }),
         ...(courseSeasonId !== undefined && { courseSeasonId }),
+        ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
       });
 
       const occurrenceHandler = async (tx: Prisma.TransactionClient, newEventId: string, mergedTemplate: any) => {
@@ -315,6 +317,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
             institutionId: mergedTemplate.institutionId,
             teamSeasonId: mergedTemplate.teamSeasonId,
             courseSeasonId: mergedTemplate.courseSeasonId,
+            courseSeasonShiftId: mergedTemplate.courseSeasonShiftId,
           }
         });
       };
@@ -329,6 +332,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
           ...(institutionId !== undefined && { institutionId }),
           ...(teamSeasonId !== undefined && { teamSeasonId }),
           ...(courseSeasonId !== undefined && { courseSeasonId }),
+          ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
         },
       });
     });

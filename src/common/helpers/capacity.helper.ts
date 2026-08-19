@@ -34,7 +34,7 @@ export function buildValidOccupancyCondition(): Prisma.CycleEnrollmentWhereInput
  */
 export async function validateCourseSeasonCapacity(
   tx: Prisma.TransactionClient,
-  offeringId: string,
+  courseSeasonShiftId: string,
   cycleStartDate: Date,
   cycleEndDate: Date,
   excludeEnrollmentId?: string,
@@ -42,8 +42,8 @@ export async function validateCourseSeasonCapacity(
   // 1. Obtener la capacidad máxima y bloquear la fila maestra (FOR UPDATE)
   const results = await tx.$queryRaw<{ maxMembers: number | null }[]>`
     SELECT max_members as "maxMembers"
-    FROM course_seasons
-    WHERE id = ${offeringId}
+    FROM course_season_shifts
+    WHERE id = ${courseSeasonShiftId}
     FOR UPDATE
   `;
 
@@ -61,7 +61,7 @@ export async function validateCourseSeasonCapacity(
   const validOccupancyCondition = buildValidOccupancyCondition();
 
   const whereCondition: Prisma.CycleEnrollmentWhereInput = {
-    courseSeasonId: offeringId,
+    courseSeasonShiftId: courseSeasonShiftId,
     // Regla de intersección de fechas para validar si conviven en el mismo ciclo temporal
     cycleStartDate: { lt: cycleEndDate },
     cycleEndDate: { gt: cycleStartDate },

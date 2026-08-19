@@ -111,17 +111,17 @@ export class CreateSessionDto {
     type: [String],
     example: ['550e8400-e29b-41d4-a716-446655440000'],
     description:
-      'Arreglo de IDs de temporadas de cursos de escuelas asociados (CourseSeason)',
+      'Arreglo de IDs de turnos de ofertas asociados (CourseSeasonShift)',
   })
   @IsOptional()
   @IsArray({
-    message: 'courseSeasonIds debe ser un arreglo',
+    message: 'courseSeasonShiftIds debe ser un arreglo',
   })
   @IsUUID('4', {
     each: true,
-    message: 'Cada elemento de courseSeasonIds debe ser un UUID válido',
+    message: 'Cada elemento de courseSeasonShiftIds debe ser un UUID válido',
   })
-  courseSeasonIds?: string[];
+  courseSeasonShiftIds?: string[];
 
   @ApiPropertyOptional({
     example: 'FREQ=WEEKLY;BYDAY=MO,WE;INTERVAL=1',

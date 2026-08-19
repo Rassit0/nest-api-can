@@ -309,6 +309,8 @@ export type UserWhereInput = {
   updatedPayments?: Prisma.PaymentListRelationFilter
   createdCycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
   updatedCycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -423,6 +425,8 @@ export type UserOrderByWithRelationInput = {
   updatedPayments?: Prisma.PaymentOrderByRelationAggregateInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentOrderByRelationAggregateInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentOrderByRelationAggregateInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftOrderByRelationAggregateInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -540,6 +544,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedPayments?: Prisma.PaymentListRelationFilter
   createdCycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
   updatedCycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
 }, "id" | "email" | "personId">
 
 export type UserOrderByWithAggregationInput = {
@@ -680,6 +686,8 @@ export type UserCreateInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -792,6 +800,8 @@ export type UserUncheckedCreateInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUpdateInput = {
@@ -904,6 +914,8 @@ export type UserUpdateInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -1016,6 +1028,8 @@ export type UserUncheckedUpdateInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -2147,6 +2161,38 @@ export type UserUpdateOneWithoutUpdatedCourseSeasonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonsInput, Prisma.UserUpdateWithoutUpdatedCourseSeasonsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedCourseSeasonShiftsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCourseSeasonShiftsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedCourseSeasonShiftsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCourseSeasonShiftsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedCourseSeasonShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCourseSeasonShiftsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedCourseSeasonShiftsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUpdateWithoutCreatedCourseSeasonShiftsInput>, Prisma.UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput>
+}
+
+export type UserUpdateOneWithoutUpdatedCourseSeasonShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCourseSeasonShiftsInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedCourseSeasonShiftsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUpdateWithoutUpdatedCourseSeasonShiftsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedTeamSeasonPausesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamSeasonPausesInput, Prisma.UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTeamSeasonPausesInput
@@ -2896,6 +2942,8 @@ export type UserCreateWithoutPersonInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutPersonInput = {
@@ -3007,6 +3055,8 @@ export type UserUncheckedCreateWithoutPersonInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutPersonInput = {
@@ -3123,6 +3173,8 @@ export type UserCreateWithoutCreatedPersonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPersonsInput = {
@@ -3234,6 +3286,8 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPersonsInput = {
@@ -3350,6 +3404,8 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
@@ -3461,6 +3517,8 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPersonsInput = {
@@ -3588,6 +3646,8 @@ export type UserUpdateWithoutPersonInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPersonInput = {
@@ -3699,6 +3759,8 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedPersonsInput = {
@@ -3821,6 +3883,8 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
@@ -3932,6 +3996,8 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPersonsInput = {
@@ -4054,6 +4120,8 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
@@ -4165,6 +4233,8 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedDisciplinesInput = {
@@ -4276,6 +4346,8 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
@@ -4387,6 +4459,8 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDisciplinesInput = {
@@ -4503,6 +4577,8 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
@@ -4614,6 +4690,8 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedDisciplinesInput = {
@@ -4741,6 +4819,8 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
@@ -4852,6 +4932,8 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedDisciplinesInput = {
@@ -4974,6 +5056,8 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
@@ -5085,6 +5169,8 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionsInput = {
@@ -5196,6 +5282,8 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
@@ -5307,6 +5395,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionsInput = {
@@ -5423,6 +5513,8 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
@@ -5534,6 +5626,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionsInput = {
@@ -5661,6 +5755,8 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
@@ -5772,6 +5868,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionsInput = {
@@ -5894,6 +5992,8 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
@@ -6005,6 +6105,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionContactsInput = {
@@ -6116,6 +6218,8 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
@@ -6227,6 +6331,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionContactsInput = {
@@ -6343,6 +6449,8 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
@@ -6454,6 +6562,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionContactsInput = {
@@ -6581,6 +6691,8 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
@@ -6692,6 +6804,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionContactsInput = {
@@ -6814,6 +6928,8 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
@@ -6925,6 +7041,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedShiftsInput = {
@@ -7036,6 +7154,8 @@ export type UserCreateWithoutCreatedShiftsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedShiftsInput = {
@@ -7147,6 +7267,8 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedShiftsInput = {
@@ -7263,6 +7385,8 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
@@ -7374,6 +7498,8 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedShiftsInput = {
@@ -7501,6 +7627,8 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
@@ -7612,6 +7740,8 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedShiftsInput = {
@@ -7734,6 +7864,8 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
@@ -7845,6 +7977,8 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedClubsInput = {
@@ -7956,6 +8090,8 @@ export type UserCreateWithoutCreatedClubsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedClubsInput = {
@@ -8067,6 +8203,8 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedClubsInput = {
@@ -8183,6 +8321,8 @@ export type UserCreateWithoutUpdatedClubsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedClubsInput = {
@@ -8294,6 +8434,8 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedClubsInput = {
@@ -8421,6 +8563,8 @@ export type UserUpdateWithoutCreatedClubsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedClubsInput = {
@@ -8532,6 +8676,8 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedClubsInput = {
@@ -8654,6 +8800,8 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
@@ -8765,6 +8913,8 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedLocationsInput = {
@@ -8876,6 +9026,8 @@ export type UserCreateWithoutCreatedLocationsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLocationsInput = {
@@ -8987,6 +9139,8 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLocationsInput = {
@@ -9103,6 +9257,8 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
@@ -9214,6 +9370,8 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLocationsInput = {
@@ -9341,6 +9499,8 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
@@ -9452,6 +9612,8 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLocationsInput = {
@@ -9574,6 +9736,8 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
@@ -9685,6 +9849,8 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCategoriesInput = {
@@ -9796,6 +9962,8 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
@@ -9907,6 +10075,8 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCategoriesInput = {
@@ -10023,6 +10193,8 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
@@ -10134,6 +10306,8 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCategoriesInput = {
@@ -10261,6 +10435,8 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
@@ -10372,6 +10548,8 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCategoriesInput = {
@@ -10494,6 +10672,8 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
@@ -10605,6 +10785,8 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonsInput = {
@@ -10716,6 +10898,8 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
@@ -10827,6 +11011,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonsInput = {
@@ -10943,6 +11129,8 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
@@ -11054,6 +11242,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonsInput = {
@@ -11181,6 +11371,8 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
@@ -11292,6 +11484,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonsInput = {
@@ -11414,6 +11608,8 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
@@ -11525,6 +11721,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonEventsInput = {
@@ -11636,6 +11834,8 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
@@ -11747,6 +11947,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonEventsInput = {
@@ -11863,6 +12065,8 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
@@ -11974,6 +12178,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonEventsInput = {
@@ -12101,6 +12307,8 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
@@ -12212,6 +12420,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonEventsInput = {
@@ -12334,6 +12544,8 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
@@ -12445,6 +12657,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamsInput = {
@@ -12556,6 +12770,8 @@ export type UserCreateWithoutCreatedTeamsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamsInput = {
@@ -12667,6 +12883,8 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamsInput = {
@@ -12783,6 +13001,8 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
@@ -12894,6 +13114,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamsInput = {
@@ -13021,6 +13243,8 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
@@ -13132,6 +13356,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamsInput = {
@@ -13254,6 +13480,8 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
@@ -13365,6 +13593,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonsInput = {
@@ -13476,6 +13706,8 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
@@ -13587,6 +13819,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonsInput = {
@@ -13703,6 +13937,8 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
@@ -13814,6 +14050,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonsInput = {
@@ -13941,6 +14179,8 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
@@ -14052,6 +14292,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonsInput = {
@@ -14174,6 +14416,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
@@ -14285,6 +14529,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14396,6 +14642,8 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14507,6 +14755,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14623,6 +14873,8 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14734,6 +14986,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14861,6 +15115,8 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14972,6 +15228,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -15094,6 +15352,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -15205,6 +15465,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPaymentPlansInput = {
@@ -15316,6 +15578,8 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
@@ -15427,6 +15691,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPaymentPlansInput = {
@@ -15543,6 +15809,8 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
@@ -15654,6 +15922,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPaymentPlansInput = {
@@ -15781,6 +16051,8 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
@@ -15892,6 +16164,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPaymentPlansInput = {
@@ -16014,6 +16288,8 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
@@ -16125,6 +16401,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayersInput = {
@@ -16236,6 +16514,8 @@ export type UserCreateWithoutCreatedPlayersInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayersInput = {
@@ -16347,6 +16627,8 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayersInput = {
@@ -16463,6 +16745,8 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
@@ -16574,6 +16858,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayersInput = {
@@ -16701,6 +16987,8 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
@@ -16812,6 +17100,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayersInput = {
@@ -16934,6 +17224,8 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
@@ -17045,6 +17337,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipsInput = {
@@ -17156,6 +17450,8 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
@@ -17267,6 +17563,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipsInput = {
@@ -17383,6 +17681,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
@@ -17494,6 +17794,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipsInput = {
@@ -17621,6 +17923,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
@@ -17732,6 +18036,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipsInput = {
@@ -17854,6 +18160,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
@@ -17965,6 +18273,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18076,6 +18386,8 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18187,6 +18499,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18303,6 +18617,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18414,6 +18730,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18541,6 +18859,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18652,6 +18972,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18774,6 +19096,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18885,6 +19209,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -18996,6 +19322,8 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19107,6 +19435,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipPausesInput = {
@@ -19223,6 +19553,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19334,6 +19666,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19461,6 +19795,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19572,6 +19908,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19694,6 +20032,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19805,6 +20145,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipDiscountsInput = {
@@ -19916,6 +20258,8 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
@@ -20027,6 +20371,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipDiscountsInput = {
@@ -20143,6 +20489,8 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
@@ -20254,6 +20602,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipDiscountsInput = {
@@ -20381,6 +20731,8 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
@@ -20492,6 +20844,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipDiscountsInput = {
@@ -20614,6 +20968,8 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
@@ -20725,6 +21081,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipChargesInput = {
@@ -20836,6 +21194,8 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
@@ -20947,6 +21307,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipChargesInput = {
@@ -21063,6 +21425,8 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
@@ -21174,6 +21538,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipChargesInput = {
@@ -21301,6 +21667,8 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
@@ -21412,6 +21780,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipChargesInput = {
@@ -21534,6 +21904,8 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
@@ -21645,6 +22017,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStaffsInput = {
@@ -21756,6 +22130,8 @@ export type UserCreateWithoutCreatedStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStaffsInput = {
@@ -21867,6 +22243,8 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStaffsInput = {
@@ -21983,6 +22361,8 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
@@ -22094,6 +22474,8 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStaffsInput = {
@@ -22221,6 +22603,8 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
@@ -22332,6 +22716,8 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStaffsInput = {
@@ -22454,6 +22840,8 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
@@ -22565,6 +22953,8 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -22676,6 +23066,8 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -22787,6 +23179,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonStaffsInput = {
@@ -22903,6 +23297,8 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23014,6 +23410,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23141,6 +23539,8 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
@@ -23252,6 +23652,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23374,6 +23776,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23485,6 +23889,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedChargesInput = {
@@ -23596,6 +24002,8 @@ export type UserCreateWithoutCreatedChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedChargesInput = {
@@ -23707,6 +24115,8 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedChargesInput = {
@@ -23823,6 +24233,8 @@ export type UserCreateWithoutUpdatedChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedChargesInput = {
@@ -23934,6 +24346,8 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedChargesInput = {
@@ -24061,6 +24475,8 @@ export type UserUpdateWithoutCreatedChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedChargesInput = {
@@ -24172,6 +24588,8 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedChargesInput = {
@@ -24294,6 +24712,8 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
@@ -24405,6 +24825,8 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPaymentsInput = {
@@ -24516,6 +24938,8 @@ export type UserCreateWithoutCreatedPaymentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
@@ -24627,6 +25051,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPaymentsInput = {
@@ -24743,6 +25169,8 @@ export type UserCreateWithoutUpdatedPaymentsInput = {
   createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
@@ -24854,6 +25282,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
   createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPaymentsInput = {
@@ -24981,6 +25411,8 @@ export type UserUpdateWithoutCreatedPaymentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
@@ -25092,6 +25524,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPaymentsInput = {
@@ -25214,6 +25648,8 @@ export type UserUpdateWithoutUpdatedPaymentsInput = {
   createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
@@ -25325,6 +25761,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
   createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -25436,6 +25874,8 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -25547,6 +25987,8 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -25663,6 +26105,8 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
@@ -25774,6 +26218,8 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTransactionsInput = {
@@ -25901,6 +26347,8 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -26012,6 +26460,8 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTransactionsInput = {
@@ -26134,6 +26584,8 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
@@ -26245,6 +26697,8 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInternalTransfersInput = {
@@ -26356,6 +26810,8 @@ export type UserCreateWithoutCreatedInternalTransfersInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
@@ -26467,6 +26923,8 @@ export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInternalTransfersInput = {
@@ -26594,6 +27052,8 @@ export type UserUpdateWithoutCreatedInternalTransfersInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
@@ -26705,6 +27165,8 @@ export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -26816,6 +27278,8 @@ export type UserCreateWithoutRoleInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -26927,6 +27391,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -27048,6 +27514,8 @@ export type UserCreateWithoutCreatedRolesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRolesInput = {
@@ -27159,6 +27627,8 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRolesInput = {
@@ -27275,6 +27745,8 @@ export type UserCreateWithoutUpdatedRolesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedRolesInput = {
@@ -27386,6 +27858,8 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedRolesInput = {
@@ -27543,6 +28017,8 @@ export type UserUpdateWithoutCreatedRolesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRolesInput = {
@@ -27654,6 +28130,8 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedRolesInput = {
@@ -27776,6 +28254,8 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
@@ -27887,6 +28367,8 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPermissionsInput = {
@@ -27998,6 +28480,8 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
@@ -28109,6 +28593,8 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPermissionsInput = {
@@ -28225,6 +28711,8 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
@@ -28336,6 +28824,8 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPermissionsInput = {
@@ -28463,6 +28953,8 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
@@ -28574,6 +29066,8 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPermissionsInput = {
@@ -28696,6 +29190,8 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
@@ -28807,6 +29303,8 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSchoolsInput = {
@@ -28918,6 +29416,8 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
@@ -29029,6 +29529,8 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSchoolsInput = {
@@ -29145,6 +29647,8 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
@@ -29256,6 +29760,8 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSchoolsInput = {
@@ -29383,6 +29889,8 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
@@ -29494,6 +30002,8 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSchoolsInput = {
@@ -29616,6 +30126,8 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
@@ -29727,6 +30239,8 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCoursesInput = {
@@ -29838,6 +30352,8 @@ export type UserCreateWithoutCreatedCoursesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCoursesInput = {
@@ -29949,6 +30465,8 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCoursesInput = {
@@ -30065,6 +30583,8 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
@@ -30176,6 +30696,8 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCoursesInput = {
@@ -30303,6 +30825,8 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
@@ -30414,6 +30938,8 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCoursesInput = {
@@ -30536,6 +31062,8 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
@@ -30647,6 +31175,8 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonsInput = {
@@ -30758,6 +31288,8 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
@@ -30869,6 +31401,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonsInput = {
@@ -30985,6 +31519,8 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
@@ -31096,6 +31632,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonsInput = {
@@ -31223,6 +31761,8 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
@@ -31334,6 +31874,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonsInput = {
@@ -31456,6 +31998,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
@@ -31567,6 +32111,944 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedCourseSeasonShiftsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput>
+}
+
+export type UserCreateWithoutUpdatedCourseSeasonShiftsInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedCourseSeasonShiftsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput>
+}
+
+export type UserUpsertWithoutCreatedCourseSeasonShiftsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonShiftsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCourseSeasonShiftsInput, Prisma.UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput>
+}
+
+export type UserUpdateWithoutCreatedCourseSeasonShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUpsertWithoutUpdatedCourseSeasonShiftsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonShiftsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCourseSeasonShiftsInput, Prisma.UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput>
+}
+
+export type UserUpdateWithoutUpdatedCourseSeasonShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -31678,6 +33160,8 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -31789,6 +33273,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonPausesInput = {
@@ -31905,6 +33391,8 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
@@ -32016,6 +33504,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonPausesInput = {
@@ -32143,6 +33633,8 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
@@ -32254,6 +33746,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonPausesInput = {
@@ -32376,6 +33870,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
@@ -32487,6 +33983,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -32598,6 +34096,8 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -32709,6 +34209,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonPausesInput = {
@@ -32825,6 +34327,8 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
@@ -32936,6 +34440,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonPausesInput = {
@@ -33063,6 +34569,8 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
@@ -33174,6 +34682,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonPausesInput = {
@@ -33296,6 +34806,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
@@ -33407,6 +34919,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -33518,6 +35032,8 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -33629,6 +35145,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -33745,6 +35263,8 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -33856,6 +35376,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -33983,6 +35505,8 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -34094,6 +35618,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -34216,6 +35742,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -34327,6 +35855,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -34438,6 +35968,8 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -34549,6 +36081,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonStaffsInput = {
@@ -34665,6 +36199,8 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -34776,6 +36312,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonStaffsInput = {
@@ -34903,6 +36441,8 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
@@ -35014,6 +36554,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonStaffsInput = {
@@ -35136,6 +36678,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -35247,6 +36791,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentsInput = {
@@ -35358,6 +36904,8 @@ export type UserCreateWithoutCreatedStudentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentsInput = {
@@ -35469,6 +37017,8 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentsInput = {
@@ -35585,6 +37135,8 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
@@ -35696,6 +37248,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentsInput = {
@@ -35823,6 +37377,8 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
@@ -35934,6 +37490,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentsInput = {
@@ -36056,6 +37614,8 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
@@ -36167,6 +37727,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipsInput = {
@@ -36278,6 +37840,8 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
@@ -36389,6 +37953,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipsInput = {
@@ -36505,6 +38071,8 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
@@ -36616,6 +38184,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipsInput = {
@@ -36743,6 +38313,8 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
@@ -36854,6 +38426,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipsInput = {
@@ -36976,6 +38550,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
@@ -37087,6 +38663,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -37198,6 +38776,8 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -37309,6 +38889,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipHistoriesInput = {
@@ -37425,6 +39007,8 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -37536,6 +39120,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -37663,6 +39249,8 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -37774,6 +39362,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -37896,6 +39486,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -38007,6 +39599,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -38118,6 +39712,8 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -38229,6 +39825,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipPausesInput = {
@@ -38345,6 +39943,8 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
@@ -38456,6 +40056,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipPausesInput = {
@@ -38583,6 +40185,8 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
@@ -38694,6 +40298,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipPausesInput = {
@@ -38816,6 +40422,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
@@ -38927,6 +40535,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
@@ -39038,6 +40648,8 @@ export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
@@ -39149,6 +40761,8 @@ export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCycleEnrollmentsInput = {
@@ -39265,6 +40879,8 @@ export type UserCreateWithoutUpdatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
@@ -39376,6 +40992,8 @@ export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCycleEnrollmentsInput = {
@@ -39503,6 +41121,8 @@ export type UserUpdateWithoutCreatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
@@ -39614,6 +41234,8 @@ export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCycleEnrollmentsInput = {
@@ -39736,6 +41358,8 @@ export type UserUpdateWithoutUpdatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
@@ -39847,6 +41471,8 @@ export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
   createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentDiscountsInput = {
@@ -39958,6 +41584,8 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
@@ -40069,6 +41697,8 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentDiscountsInput = {
@@ -40185,6 +41815,8 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
@@ -40296,6 +41928,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentDiscountsInput = {
@@ -40423,6 +42057,8 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
@@ -40534,6 +42170,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentDiscountsInput = {
@@ -40656,6 +42294,8 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
@@ -40767,6 +42407,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentChargesInput = {
@@ -40878,6 +42520,8 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
@@ -40989,6 +42633,8 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentChargesInput = {
@@ -41105,6 +42751,8 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
@@ -41216,6 +42864,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentChargesInput = {
@@ -41343,6 +42993,8 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
@@ -41454,6 +43106,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentChargesInput = {
@@ -41576,6 +43230,8 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
@@ -41687,6 +43343,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionIncidentsInput = {
@@ -41798,6 +43456,8 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
@@ -41909,6 +43569,8 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionIncidentsInput = {
@@ -42025,6 +43687,8 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
@@ -42136,6 +43800,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionIncidentsInput = {
@@ -42263,6 +43929,8 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
@@ -42374,6 +44042,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionIncidentsInput = {
@@ -42496,6 +44166,8 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
@@ -42607,6 +44279,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedProgressEvaluationsInput = {
@@ -42718,6 +44392,8 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
@@ -42829,6 +44505,8 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProgressEvaluationsInput = {
@@ -42945,6 +44623,8 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
@@ -43056,6 +44736,8 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProgressEvaluationsInput = {
@@ -43183,6 +44865,8 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
@@ -43294,6 +44978,8 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProgressEvaluationsInput = {
@@ -43416,6 +45102,8 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
@@ -43527,6 +45215,8 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedEventsInput = {
@@ -43638,6 +45328,8 @@ export type UserCreateWithoutCreatedEventsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -43749,6 +45441,8 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -43865,6 +45559,8 @@ export type UserCreateWithoutUpdatedEventsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEventsInput = {
@@ -43976,6 +45672,8 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEventsInput = {
@@ -44103,6 +45801,8 @@ export type UserUpdateWithoutCreatedEventsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -44214,6 +45914,8 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedEventsInput = {
@@ -44336,6 +46038,8 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
@@ -44447,6 +46151,8 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionBookingsInput = {
@@ -44558,6 +46264,8 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
@@ -44669,6 +46377,8 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionBookingsInput = {
@@ -44785,6 +46495,8 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
@@ -44896,6 +46608,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionBookingsInput = {
@@ -45023,6 +46737,8 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
@@ -45134,6 +46850,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionBookingsInput = {
@@ -45256,6 +46974,8 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
@@ -45367,6 +47087,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMatchLineupsInput = {
@@ -45478,6 +47200,8 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
@@ -45589,6 +47313,8 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMatchLineupsInput = {
@@ -45705,6 +47431,8 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
@@ -45816,6 +47544,8 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMatchLineupsInput = {
@@ -45943,6 +47673,8 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
@@ -46054,6 +47786,8 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMatchLineupsInput = {
@@ -46176,6 +47910,8 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
@@ -46287,6 +48023,8 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -46398,6 +48136,8 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -46509,6 +48249,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -46636,6 +48378,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -46747,6 +48491,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountCategoriesInput = {
@@ -46858,6 +48604,8 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
@@ -46969,6 +48717,8 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountCategoriesInput = {
@@ -47085,6 +48835,8 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
@@ -47196,6 +48948,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountCategoriesInput = {
@@ -47323,6 +49077,8 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
@@ -47434,6 +49190,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountCategoriesInput = {
@@ -47556,6 +49314,8 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
@@ -47667,6 +49427,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountChargesInput = {
@@ -47778,6 +49540,8 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
@@ -47889,6 +49653,8 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountChargesInput = {
@@ -48005,6 +49771,8 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
@@ -48116,6 +49884,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountChargesInput = {
@@ -48243,6 +50013,8 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
@@ -48354,6 +50126,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountChargesInput = {
@@ -48476,6 +50250,8 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
@@ -48587,6 +50363,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCashClosuresCreatedInput = {
@@ -48698,6 +50476,8 @@ export type UserCreateWithoutCashClosuresCreatedInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
@@ -48809,6 +50589,8 @@ export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresCreatedInput = {
@@ -48925,6 +50707,8 @@ export type UserCreateWithoutCashClosuresUpdatedInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
@@ -49036,6 +50820,8 @@ export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresUpdatedInput = {
@@ -49163,6 +50949,8 @@ export type UserUpdateWithoutCashClosuresCreatedInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
@@ -49274,6 +51062,8 @@ export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCashClosuresUpdatedInput = {
@@ -49396,6 +51186,8 @@ export type UserUpdateWithoutCashClosuresUpdatedInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
@@ -49507,6 +51299,8 @@ export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutAttachmentsInput = {
@@ -49618,6 +51412,8 @@ export type UserCreateWithoutAttachmentsInput = {
   updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutAttachmentsInput = {
@@ -49729,6 +51525,8 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutAttachmentsInput = {
@@ -49856,6 +51654,8 @@ export type UserUpdateWithoutAttachmentsInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttachmentsInput = {
@@ -49967,6 +51767,8 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -50088,6 +51890,8 @@ export type UserUpdateWithoutRoleInput = {
   updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -50199,6 +52003,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -50318,6 +52124,8 @@ export type UserCountOutputType = {
   updatedPayments: number
   createdCycleEnrollments: number
   updatedCycleEnrollments: number
+  createdCourseSeasonShifts: number
+  updatedCourseSeasonShifts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -50422,6 +52230,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedPayments?: boolean | UserCountOutputTypeCountUpdatedPaymentsArgs
   createdCycleEnrollments?: boolean | UserCountOutputTypeCountCreatedCycleEnrollmentsArgs
   updatedCycleEnrollments?: boolean | UserCountOutputTypeCountUpdatedCycleEnrollmentsArgs
+  createdCourseSeasonShifts?: boolean | UserCountOutputTypeCountCreatedCourseSeasonShiftsArgs
+  updatedCourseSeasonShifts?: boolean | UserCountOutputTypeCountUpdatedCourseSeasonShiftsArgs
 }
 
 /**
@@ -51141,6 +52951,20 @@ export type UserCountOutputTypeCountUpdatedCycleEnrollmentsArgs<ExtArgs extends 
   where?: Prisma.CycleEnrollmentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedCourseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseSeasonShiftWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedCourseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseSeasonShiftWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -51254,6 +53078,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedPayments?: boolean | Prisma.User$updatedPaymentsArgs<ExtArgs>
   createdCycleEnrollments?: boolean | Prisma.User$createdCycleEnrollmentsArgs<ExtArgs>
   updatedCycleEnrollments?: boolean | Prisma.User$updatedCycleEnrollmentsArgs<ExtArgs>
+  createdCourseSeasonShifts?: boolean | Prisma.User$createdCourseSeasonShiftsArgs<ExtArgs>
+  updatedCourseSeasonShifts?: boolean | Prisma.User$updatedCourseSeasonShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -51399,6 +53225,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedPayments?: boolean | Prisma.User$updatedPaymentsArgs<ExtArgs>
   createdCycleEnrollments?: boolean | Prisma.User$createdCycleEnrollmentsArgs<ExtArgs>
   updatedCycleEnrollments?: boolean | Prisma.User$updatedCycleEnrollmentsArgs<ExtArgs>
+  createdCourseSeasonShifts?: boolean | Prisma.User$createdCourseSeasonShiftsArgs<ExtArgs>
+  updatedCourseSeasonShifts?: boolean | Prisma.User$updatedCourseSeasonShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -51516,6 +53344,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedPayments: Prisma.$PaymentPayload<ExtArgs>[]
     createdCycleEnrollments: Prisma.$CycleEnrollmentPayload<ExtArgs>[]
     updatedCycleEnrollments: Prisma.$CycleEnrollmentPayload<ExtArgs>[]
+    createdCourseSeasonShifts: Prisma.$CourseSeasonShiftPayload<ExtArgs>[]
+    updatedCourseSeasonShifts: Prisma.$CourseSeasonShiftPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -52023,6 +53853,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedPayments<T extends Prisma.User$updatedPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdCycleEnrollments<T extends Prisma.User$createdCycleEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCycleEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CycleEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedCycleEnrollments<T extends Prisma.User$updatedCycleEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCycleEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CycleEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdCourseSeasonShifts<T extends Prisma.User$createdCourseSeasonShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCourseSeasonShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedCourseSeasonShifts<T extends Prisma.User$updatedCourseSeasonShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCourseSeasonShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -54896,6 +56728,54 @@ export type User$updatedCycleEnrollmentsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.CycleEnrollmentScalarFieldEnum | Prisma.CycleEnrollmentScalarFieldEnum[]
+}
+
+/**
+ * User.createdCourseSeasonShifts
+ */
+export type User$createdCourseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CourseSeasonShift
+   */
+  select?: Prisma.CourseSeasonShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CourseSeasonShift
+   */
+  omit?: Prisma.CourseSeasonShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonShiftInclude<ExtArgs> | null
+  where?: Prisma.CourseSeasonShiftWhereInput
+  orderBy?: Prisma.CourseSeasonShiftOrderByWithRelationInput | Prisma.CourseSeasonShiftOrderByWithRelationInput[]
+  cursor?: Prisma.CourseSeasonShiftWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CourseSeasonShiftScalarFieldEnum | Prisma.CourseSeasonShiftScalarFieldEnum[]
+}
+
+/**
+ * User.updatedCourseSeasonShifts
+ */
+export type User$updatedCourseSeasonShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CourseSeasonShift
+   */
+  select?: Prisma.CourseSeasonShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CourseSeasonShift
+   */
+  omit?: Prisma.CourseSeasonShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonShiftInclude<ExtArgs> | null
+  where?: Prisma.CourseSeasonShiftWhereInput
+  orderBy?: Prisma.CourseSeasonShiftOrderByWithRelationInput | Prisma.CourseSeasonShiftOrderByWithRelationInput[]
+  cursor?: Prisma.CourseSeasonShiftWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CourseSeasonShiftScalarFieldEnum | Prisma.CourseSeasonShiftScalarFieldEnum[]
 }
 
 /**

@@ -145,7 +145,7 @@ export class StudentEnrollmentService {
             // VALIDAR CAPACIDAD ANTES DE CREAR EL ENROLLMENT
             await validateCourseSeasonCapacity(
               db,
-              membership.courseSeasonId,
+              membership.courseSeasonShiftId,
               currentCycle.cycleStartDate,
               currentCycle.cycleEndDate,
             );
@@ -239,6 +239,7 @@ export class StudentEnrollmentService {
                 data: {
                     studentMembershipId: membership.id,
                     courseSeasonId: membership.courseSeasonId,
+                    courseSeasonShiftId: membership.courseSeasonShiftId,
                     chargeId: cycleCharge?.id || null, // Relación! Puede ser null
                     cycleStartDate: currentCycle.cycleStartDate,
                     cycleEndDate: currentCycle.cycleEndDate,

@@ -23,6 +23,13 @@ export class StudentMembershipsPaginationDto extends PaginationDto {
   courseSeasonId?: string;
 
   @ApiPropertyOptional({
+    description: 'Filtrar por turno específico de la temporada',
+  })
+  @IsUUID('4')
+  @IsOptional()
+  courseSeasonShiftId?: string;
+
+  @ApiPropertyOptional({
     description: 'Fecha física para consultar la asistencia al turno en formato ISO 8601 UTC (ej. 2026-09-01T15:30:00.000Z)',
   })
   @IsOptional()
