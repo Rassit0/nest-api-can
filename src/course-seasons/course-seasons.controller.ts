@@ -28,6 +28,7 @@ import { FinalizeCourseSeasonDto } from './dto/finalize-course-season.dto';
 import { CancelCourseSeasonDto } from './dto/cancel-course-season.dto';
 import { CreateCourseSeasonPauseDto } from './dto/create-course-season-pause.dto';
 import { AddShiftDto } from './dto/add-shift.dto';
+import { UpdateShiftDto } from './dto/update-shift.dto';
 import { CourseSeasonsPaginationDto } from './dto/pagination.dto';
 import { ToggleRegistrationDto } from './dto/toggle-registration.dto';
 import {
@@ -226,6 +227,35 @@ export class CourseSeasonsController {
     return await this.courseSeasonsService.addShift(id, addShiftDto);
   }
 
+  @Patch(':id/shifts/:shiftId')
+  @ApiOperation({
+    summary: 'Actualizar configuración de un turno',
+    description:
+      'Actualiza las configuraciones exclusivas de un turno (ej. categoría, género, reglas de edad, capacidad). No modifica el horario asignado.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la temporada base (UUID)',
+    format: 'uuid',
+  })
+  @ApiParam({
+    name: 'shiftId',
+    description: 'ID del CourseSeasonShift a actualizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: UpdateShiftDto })
+  @ApiStandardResponse(
+    CourseSeasonResponseDto,
+    'Configuración del turno actualizada exitosamente.',
+  )
+  @RequirePermissions('UPDATE_COURSE_SEASONS')
+  async updateShift(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('shiftId', ParseUUIDPipe) shiftId: string,
+    @Body() updateShiftDto: UpdateShiftDto,
+  ) {
+    return await this.courseSeasonsService.updateShift(id, shiftId, updateShiftDto);
+  }
 
   @Patch(':id/finish')
   @ApiOperation({

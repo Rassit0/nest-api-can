@@ -29,11 +29,15 @@ export type AggregateCourseSeasonShift = {
 export type CourseSeasonShiftAvgAggregateOutputType = {
   maxMembers: number | null
   minMembers: number | null
+  minBirthYear: number | null
+  maxBirthYear: number | null
 }
 
 export type CourseSeasonShiftSumAggregateOutputType = {
   maxMembers: number | null
   minMembers: number | null
+  minBirthYear: number | null
+  maxBirthYear: number | null
 }
 
 export type CourseSeasonShiftMinAggregateOutputType = {
@@ -42,6 +46,11 @@ export type CourseSeasonShiftMinAggregateOutputType = {
   shiftId: string | null
   maxMembers: number | null
   minMembers: number | null
+  categoryId: string | null
+  gender: $Enums.ProgramGender | null
+  minBirthYear: number | null
+  maxBirthYear: number | null
+  validateAge: boolean | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +64,11 @@ export type CourseSeasonShiftMaxAggregateOutputType = {
   shiftId: string | null
   maxMembers: number | null
   minMembers: number | null
+  categoryId: string | null
+  gender: $Enums.ProgramGender | null
+  minBirthYear: number | null
+  maxBirthYear: number | null
+  validateAge: boolean | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,6 +82,11 @@ export type CourseSeasonShiftCountAggregateOutputType = {
   shiftId: number
   maxMembers: number
   minMembers: number
+  categoryId: number
+  gender: number
+  minBirthYear: number
+  maxBirthYear: number
+  validateAge: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -80,11 +99,15 @@ export type CourseSeasonShiftCountAggregateOutputType = {
 export type CourseSeasonShiftAvgAggregateInputType = {
   maxMembers?: true
   minMembers?: true
+  minBirthYear?: true
+  maxBirthYear?: true
 }
 
 export type CourseSeasonShiftSumAggregateInputType = {
   maxMembers?: true
   minMembers?: true
+  minBirthYear?: true
+  maxBirthYear?: true
 }
 
 export type CourseSeasonShiftMinAggregateInputType = {
@@ -93,6 +116,11 @@ export type CourseSeasonShiftMinAggregateInputType = {
   shiftId?: true
   maxMembers?: true
   minMembers?: true
+  categoryId?: true
+  gender?: true
+  minBirthYear?: true
+  maxBirthYear?: true
+  validateAge?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -106,6 +134,11 @@ export type CourseSeasonShiftMaxAggregateInputType = {
   shiftId?: true
   maxMembers?: true
   minMembers?: true
+  categoryId?: true
+  gender?: true
+  minBirthYear?: true
+  maxBirthYear?: true
+  validateAge?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -119,6 +152,11 @@ export type CourseSeasonShiftCountAggregateInputType = {
   shiftId?: true
   maxMembers?: true
   minMembers?: true
+  categoryId?: true
+  gender?: true
+  minBirthYear?: true
+  maxBirthYear?: true
+  validateAge?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -219,6 +257,11 @@ export type CourseSeasonShiftGroupByOutputType = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear: number | null
+  maxBirthYear: number | null
+  validateAge: boolean
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -255,6 +298,11 @@ export type CourseSeasonShiftWhereInput = {
   shiftId?: Prisma.StringFilter<"CourseSeasonShift"> | string
   maxMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
   minMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
+  categoryId?: Prisma.StringFilter<"CourseSeasonShift"> | string
+  gender?: Prisma.EnumProgramGenderFilter<"CourseSeasonShift"> | $Enums.ProgramGender
+  minBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  maxBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  validateAge?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   isActive?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
@@ -262,6 +310,7 @@ export type CourseSeasonShiftWhereInput = {
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonShift"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
   shift?: Prisma.XOR<Prisma.ShiftScalarRelationFilter, Prisma.ShiftWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
   cycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
   courseSeasonStaffs?: Prisma.CourseSeasonStaffListRelationFilter
@@ -278,6 +327,11 @@ export type CourseSeasonShiftOrderByWithRelationInput = {
   shiftId?: Prisma.SortOrder
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -285,6 +339,7 @@ export type CourseSeasonShiftOrderByWithRelationInput = {
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
   shift?: Prisma.ShiftOrderByWithRelationInput
+  category?: Prisma.CategoryOrderByWithRelationInput
   studentMemberships?: Prisma.StudentMembershipOrderByRelationAggregateInput
   cycleEnrollments?: Prisma.CycleEnrollmentOrderByRelationAggregateInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffOrderByRelationAggregateInput
@@ -298,6 +353,7 @@ export type CourseSeasonShiftOrderByWithRelationInput = {
 export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   courseSeasonId_shiftId?: Prisma.CourseSeasonShiftCourseSeasonIdShiftIdCompoundUniqueInput
+  id_courseSeasonId?: Prisma.CourseSeasonShiftIdCourseSeasonIdCompoundUniqueInput
   AND?: Prisma.CourseSeasonShiftWhereInput | Prisma.CourseSeasonShiftWhereInput[]
   OR?: Prisma.CourseSeasonShiftWhereInput[]
   NOT?: Prisma.CourseSeasonShiftWhereInput | Prisma.CourseSeasonShiftWhereInput[]
@@ -305,6 +361,11 @@ export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
   shiftId?: Prisma.StringFilter<"CourseSeasonShift"> | string
   maxMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
   minMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
+  categoryId?: Prisma.StringFilter<"CourseSeasonShift"> | string
+  gender?: Prisma.EnumProgramGenderFilter<"CourseSeasonShift"> | $Enums.ProgramGender
+  minBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  maxBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  validateAge?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   isActive?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
@@ -312,6 +373,7 @@ export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonShift"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
   shift?: Prisma.XOR<Prisma.ShiftScalarRelationFilter, Prisma.ShiftWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
   cycleEnrollments?: Prisma.CycleEnrollmentListRelationFilter
   courseSeasonStaffs?: Prisma.CourseSeasonStaffListRelationFilter
@@ -320,7 +382,7 @@ export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
   generalEvents?: Prisma.GeneralEventListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "courseSeasonId_shiftId">
+}, "id" | "courseSeasonId_shiftId" | "id_courseSeasonId">
 
 export type CourseSeasonShiftOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -328,6 +390,11 @@ export type CourseSeasonShiftOrderByWithAggregationInput = {
   shiftId?: Prisma.SortOrder
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -349,6 +416,11 @@ export type CourseSeasonShiftScalarWhereWithAggregatesInput = {
   shiftId?: Prisma.StringWithAggregatesFilter<"CourseSeasonShift"> | string
   maxMembers?: Prisma.IntWithAggregatesFilter<"CourseSeasonShift"> | number
   minMembers?: Prisma.IntWithAggregatesFilter<"CourseSeasonShift"> | number
+  categoryId?: Prisma.StringWithAggregatesFilter<"CourseSeasonShift"> | string
+  gender?: Prisma.EnumProgramGenderWithAggregatesFilter<"CourseSeasonShift"> | $Enums.ProgramGender
+  minBirthYear?: Prisma.IntNullableWithAggregatesFilter<"CourseSeasonShift"> | number | null
+  maxBirthYear?: Prisma.IntNullableWithAggregatesFilter<"CourseSeasonShift"> | number | null
+  validateAge?: Prisma.BoolWithAggregatesFilter<"CourseSeasonShift"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"CourseSeasonShift"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseSeasonShift"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CourseSeasonShift"> | Date | string
@@ -360,11 +432,16 @@ export type CourseSeasonShiftCreateInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -381,6 +458,11 @@ export type CourseSeasonShiftUncheckedCreateInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -398,11 +480,16 @@ export type CourseSeasonShiftUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -419,6 +506,11 @@ export type CourseSeasonShiftUncheckedUpdateInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,6 +530,11 @@ export type CourseSeasonShiftCreateManyInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -449,6 +546,10 @@ export type CourseSeasonShiftUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -460,6 +561,11 @@ export type CourseSeasonShiftUncheckedUpdateManyInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,12 +588,22 @@ export type CourseSeasonShiftCourseSeasonIdShiftIdCompoundUniqueInput = {
   shiftId: string
 }
 
+export type CourseSeasonShiftIdCourseSeasonIdCompoundUniqueInput = {
+  id: string
+  courseSeasonId: string
+}
+
 export type CourseSeasonShiftCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   shiftId?: Prisma.SortOrder
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrder
+  validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -498,6 +614,8 @@ export type CourseSeasonShiftCountOrderByAggregateInput = {
 export type CourseSeasonShiftAvgOrderByAggregateInput = {
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrder
 }
 
 export type CourseSeasonShiftMaxOrderByAggregateInput = {
@@ -506,6 +624,11 @@ export type CourseSeasonShiftMaxOrderByAggregateInput = {
   shiftId?: Prisma.SortOrder
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrder
+  validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -519,6 +642,11 @@ export type CourseSeasonShiftMinOrderByAggregateInput = {
   shiftId?: Prisma.SortOrder
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrder
+  validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -529,6 +657,8 @@ export type CourseSeasonShiftMinOrderByAggregateInput = {
 export type CourseSeasonShiftSumOrderByAggregateInput = {
   maxMembers?: Prisma.SortOrder
   minMembers?: Prisma.SortOrder
+  minBirthYear?: Prisma.SortOrder
+  maxBirthYear?: Prisma.SortOrder
 }
 
 export type CourseSeasonShiftNullableScalarRelationFilter = {
@@ -580,6 +710,48 @@ export type CourseSeasonShiftUncheckedUpdateManyWithoutShiftNestedInput = {
   connect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
   update?: Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutShiftInput | Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutShiftInput[]
   updateMany?: Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutShiftInput | Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutShiftInput[]
+  deleteMany?: Prisma.CourseSeasonShiftScalarWhereInput | Prisma.CourseSeasonShiftScalarWhereInput[]
+}
+
+export type CourseSeasonShiftCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput> | Prisma.CourseSeasonShiftCreateWithoutCategoryInput[] | Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput | Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.CourseSeasonShiftCreateManyCategoryInputEnvelope
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+}
+
+export type CourseSeasonShiftUncheckedCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput> | Prisma.CourseSeasonShiftCreateWithoutCategoryInput[] | Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput | Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.CourseSeasonShiftCreateManyCategoryInputEnvelope
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+}
+
+export type CourseSeasonShiftUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput> | Prisma.CourseSeasonShiftCreateWithoutCategoryInput[] | Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput | Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.CourseSeasonShiftUpsertWithWhereUniqueWithoutCategoryInput | Prisma.CourseSeasonShiftUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.CourseSeasonShiftCreateManyCategoryInputEnvelope
+  set?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  update?: Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutCategoryInput | Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutCategoryInput | Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.CourseSeasonShiftScalarWhereInput | Prisma.CourseSeasonShiftScalarWhereInput[]
+}
+
+export type CourseSeasonShiftUncheckedUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput> | Prisma.CourseSeasonShiftCreateWithoutCategoryInput[] | Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput | Prisma.CourseSeasonShiftCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.CourseSeasonShiftUpsertWithWhereUniqueWithoutCategoryInput | Prisma.CourseSeasonShiftUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.CourseSeasonShiftCreateManyCategoryInputEnvelope
+  set?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  disconnect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  delete?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput | Prisma.CourseSeasonShiftWhereUniqueInput[]
+  update?: Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutCategoryInput | Prisma.CourseSeasonShiftUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutCategoryInput | Prisma.CourseSeasonShiftUpdateManyWithWhereWithoutCategoryInput[]
   deleteMany?: Prisma.CourseSeasonShiftScalarWhereInput | Prisma.CourseSeasonShiftScalarWhereInput[]
 }
 
@@ -801,10 +973,15 @@ export type CourseSeasonShiftCreateWithoutShiftInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -820,6 +997,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutShiftInput = {
   courseSeasonId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -868,6 +1050,11 @@ export type CourseSeasonShiftScalarWhereInput = {
   shiftId?: Prisma.StringFilter<"CourseSeasonShift"> | string
   maxMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
   minMembers?: Prisma.IntFilter<"CourseSeasonShift"> | number
+  categoryId?: Prisma.StringFilter<"CourseSeasonShift"> | string
+  gender?: Prisma.EnumProgramGenderFilter<"CourseSeasonShift"> | $Enums.ProgramGender
+  minBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  maxBirthYear?: Prisma.IntNullableFilter<"CourseSeasonShift"> | number | null
+  validateAge?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   isActive?: Prisma.BoolFilter<"CourseSeasonShift"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseSeasonShift"> | Date | string
@@ -875,15 +1062,92 @@ export type CourseSeasonShiftScalarWhereInput = {
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonShift"> | string | null
 }
 
-export type CourseSeasonShiftCreateWithoutCreatedByInput = {
+export type CourseSeasonShiftCreateWithoutCategoryInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
+  pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonShiftInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonShiftsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonShiftsInput
+}
+
+export type CourseSeasonShiftUncheckedCreateWithoutCategoryInput = {
+  id?: string
+  courseSeasonId: string
+  shiftId: string
+  maxMembers: number
+  minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+}
+
+export type CourseSeasonShiftCreateOrConnectWithoutCategoryInput = {
+  where: Prisma.CourseSeasonShiftWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput>
+}
+
+export type CourseSeasonShiftCreateManyCategoryInputEnvelope = {
+  data: Prisma.CourseSeasonShiftCreateManyCategoryInput | Prisma.CourseSeasonShiftCreateManyCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseSeasonShiftUpsertWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.CourseSeasonShiftWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseSeasonShiftUpdateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedUpdateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutCategoryInput>
+}
+
+export type CourseSeasonShiftUpdateWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.CourseSeasonShiftWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseSeasonShiftUpdateWithoutCategoryInput, Prisma.CourseSeasonShiftUncheckedUpdateWithoutCategoryInput>
+}
+
+export type CourseSeasonShiftUpdateManyWithWhereWithoutCategoryInput = {
+  where: Prisma.CourseSeasonShiftScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonShiftUpdateManyMutationInput, Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCategoryInput>
+}
+
+export type CourseSeasonShiftCreateWithoutCreatedByInput = {
+  id?: string
+  maxMembers: number
+  minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
+  shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -899,6 +1163,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutCreatedByInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -925,11 +1194,16 @@ export type CourseSeasonShiftCreateWithoutUpdatedByInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -945,6 +1219,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutUpdatedByInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1003,10 +1282,15 @@ export type CourseSeasonShiftCreateWithoutCourseSeasonInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1022,6 +1306,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1065,11 +1354,16 @@ export type CourseSeasonShiftCreateWithoutPausesInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1085,6 +1379,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutPausesInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1117,11 +1416,16 @@ export type CourseSeasonShiftUpdateWithoutPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1137,6 +1441,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutPausesInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1153,11 +1462,16 @@ export type CourseSeasonShiftCreateWithoutCourseSeasonStaffsInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1173,6 +1487,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonStaffsInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1205,11 +1524,16 @@ export type CourseSeasonShiftUpdateWithoutCourseSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1225,6 +1549,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonStaffsInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1241,11 +1570,16 @@ export type CourseSeasonShiftCreateWithoutStudentMembershipsInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1261,6 +1595,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutStudentMembershipsInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1293,11 +1632,16 @@ export type CourseSeasonShiftUpdateWithoutStudentMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1313,6 +1657,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutStudentMembershipsInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1329,11 +1678,16 @@ export type CourseSeasonShiftCreateWithoutCycleEnrollmentsInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1349,6 +1703,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutCycleEnrollmentsInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1381,11 +1740,16 @@ export type CourseSeasonShiftUpdateWithoutCycleEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1401,6 +1765,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCycleEnrollmentsInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1417,11 +1786,16 @@ export type CourseSeasonShiftCreateWithoutGeneralEventsInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1437,6 +1811,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutGeneralEventsInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1469,11 +1848,16 @@ export type CourseSeasonShiftUpdateWithoutGeneralEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1489,6 +1873,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutGeneralEventsInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1505,11 +1894,16 @@ export type CourseSeasonShiftCreateWithoutSessionCoursesInput = {
   id?: string
   maxMembers: number
   minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
   shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
@@ -1525,6 +1919,11 @@ export type CourseSeasonShiftUncheckedCreateWithoutSessionCoursesInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1557,11 +1956,16 @@ export type CourseSeasonShiftUpdateWithoutSessionCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1577,6 +1981,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutSessionCoursesInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1594,6 +2003,11 @@ export type CourseSeasonShiftCreateManyShiftInput = {
   courseSeasonId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1605,10 +2019,15 @@ export type CourseSeasonShiftUpdateWithoutShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1624,6 +2043,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutShiftInput = {
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1642,6 +2066,91 @@ export type CourseSeasonShiftUncheckedUpdateManyWithoutShiftInput = {
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CourseSeasonShiftCreateManyCategoryInput = {
+  id?: string
+  courseSeasonId: string
+  shiftId: string
+  maxMembers: number
+  minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type CourseSeasonShiftUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
+  shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
+  pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonShiftNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonShiftsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonShiftsNestedInput
+}
+
+export type CourseSeasonShiftUncheckedUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  shiftId?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+}
+
+export type CourseSeasonShiftUncheckedUpdateManyWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  shiftId?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1655,6 +2164,11 @@ export type CourseSeasonShiftCreateManyCreatedByInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1667,6 +2181,11 @@ export type CourseSeasonShiftCreateManyUpdatedByInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1677,11 +2196,16 @@ export type CourseSeasonShiftUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1697,6 +2221,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCreatedByInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1715,6 +2244,11 @@ export type CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1725,11 +2259,16 @@ export type CourseSeasonShiftUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1745,6 +2284,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutUpdatedByInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1763,6 +2307,11 @@ export type CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1774,6 +2323,11 @@ export type CourseSeasonShiftCreateManyCourseSeasonInput = {
   shiftId: string
   maxMembers: number
   minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1785,10 +2339,15 @@ export type CourseSeasonShiftUpdateWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1804,6 +2363,11 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1822,6 +2386,11 @@ export type CourseSeasonShiftUncheckedUpdateManyWithoutCourseSeasonInput = {
   shiftId?: Prisma.StringFieldUpdateOperationsInput | string
   maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
   minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1911,6 +2480,11 @@ export type CourseSeasonShiftSelect<ExtArgs extends runtime.Types.Extensions.Int
   shiftId?: boolean
   maxMembers?: boolean
   minMembers?: boolean
+  categoryId?: boolean
+  gender?: boolean
+  minBirthYear?: boolean
+  maxBirthYear?: boolean
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1918,6 +2492,7 @@ export type CourseSeasonShiftSelect<ExtArgs extends runtime.Types.Extensions.Int
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>
   cycleEnrollments?: boolean | Prisma.CourseSeasonShift$cycleEnrollmentsArgs<ExtArgs>
   courseSeasonStaffs?: boolean | Prisma.CourseSeasonShift$courseSeasonStaffsArgs<ExtArgs>
@@ -1935,6 +2510,11 @@ export type CourseSeasonShiftSelectCreateManyAndReturn<ExtArgs extends runtime.T
   shiftId?: boolean
   maxMembers?: boolean
   minMembers?: boolean
+  categoryId?: boolean
+  gender?: boolean
+  minBirthYear?: boolean
+  maxBirthYear?: boolean
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1942,6 +2522,7 @@ export type CourseSeasonShiftSelectCreateManyAndReturn<ExtArgs extends runtime.T
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonShift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CourseSeasonShift$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonShift"]>
@@ -1952,6 +2533,11 @@ export type CourseSeasonShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   shiftId?: boolean
   maxMembers?: boolean
   minMembers?: boolean
+  categoryId?: boolean
+  gender?: boolean
+  minBirthYear?: boolean
+  maxBirthYear?: boolean
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1959,6 +2545,7 @@ export type CourseSeasonShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   updatedById?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonShift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CourseSeasonShift$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonShift"]>
@@ -1969,6 +2556,11 @@ export type CourseSeasonShiftSelectScalar = {
   shiftId?: boolean
   maxMembers?: boolean
   minMembers?: boolean
+  categoryId?: boolean
+  gender?: boolean
+  minBirthYear?: boolean
+  maxBirthYear?: boolean
+  validateAge?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1976,10 +2568,11 @@ export type CourseSeasonShiftSelectScalar = {
   updatedById?: boolean
 }
 
-export type CourseSeasonShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "shiftId" | "maxMembers" | "minMembers" | "isActive" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonShift"]>
+export type CourseSeasonShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "shiftId" | "maxMembers" | "minMembers" | "categoryId" | "gender" | "minBirthYear" | "maxBirthYear" | "validateAge" | "isActive" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonShift"]>
 export type CourseSeasonShiftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>
   cycleEnrollments?: boolean | Prisma.CourseSeasonShift$cycleEnrollmentsArgs<ExtArgs>
   courseSeasonStaffs?: boolean | Prisma.CourseSeasonShift$courseSeasonStaffsArgs<ExtArgs>
@@ -1993,12 +2586,14 @@ export type CourseSeasonShiftInclude<ExtArgs extends runtime.Types.Extensions.In
 export type CourseSeasonShiftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonShift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CourseSeasonShift$updatedByArgs<ExtArgs>
 }
 export type CourseSeasonShiftIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   shift?: boolean | Prisma.ShiftDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonShift$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CourseSeasonShift$updatedByArgs<ExtArgs>
 }
@@ -2008,6 +2603,7 @@ export type $CourseSeasonShiftPayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     courseSeason: Prisma.$CourseSeasonPayload<ExtArgs>
     shift: Prisma.$ShiftPayload<ExtArgs>
+    category: Prisma.$CategoryPayload<ExtArgs>
     studentMemberships: Prisma.$StudentMembershipPayload<ExtArgs>[]
     cycleEnrollments: Prisma.$CycleEnrollmentPayload<ExtArgs>[]
     courseSeasonStaffs: Prisma.$CourseSeasonStaffPayload<ExtArgs>[]
@@ -2023,6 +2619,11 @@ export type $CourseSeasonShiftPayload<ExtArgs extends runtime.Types.Extensions.I
     shiftId: string
     maxMembers: number
     minMembers: number
+    categoryId: string
+    gender: $Enums.ProgramGender
+    minBirthYear: number | null
+    maxBirthYear: number | null
+    validateAge: boolean
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -2424,6 +3025,7 @@ export interface Prisma__CourseSeasonShiftClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   courseSeason<T extends Prisma.CourseSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   shift<T extends Prisma.ShiftDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ShiftDefaultArgs<ExtArgs>>): Prisma.Prisma__ShiftClient<runtime.Types.Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   studentMemberships<T extends Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cycleEnrollments<T extends Prisma.CourseSeasonShift$cycleEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$cycleEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CycleEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   courseSeasonStaffs<T extends Prisma.CourseSeasonShift$courseSeasonStaffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$courseSeasonStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2466,6 +3068,11 @@ export interface CourseSeasonShiftFieldRefs {
   readonly shiftId: Prisma.FieldRef<"CourseSeasonShift", 'String'>
   readonly maxMembers: Prisma.FieldRef<"CourseSeasonShift", 'Int'>
   readonly minMembers: Prisma.FieldRef<"CourseSeasonShift", 'Int'>
+  readonly categoryId: Prisma.FieldRef<"CourseSeasonShift", 'String'>
+  readonly gender: Prisma.FieldRef<"CourseSeasonShift", 'ProgramGender'>
+  readonly minBirthYear: Prisma.FieldRef<"CourseSeasonShift", 'Int'>
+  readonly maxBirthYear: Prisma.FieldRef<"CourseSeasonShift", 'Int'>
+  readonly validateAge: Prisma.FieldRef<"CourseSeasonShift", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"CourseSeasonShift", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"CourseSeasonShift", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CourseSeasonShift", 'DateTime'>

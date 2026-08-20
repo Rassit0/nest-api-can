@@ -46,11 +46,6 @@ export const studentMembershipSelect = {
           name: true,
         },
       },
-      category: {
-        select: {
-          name: true,
-        },
-      },
       season: {
         select: {
           name: true,
@@ -62,6 +57,7 @@ export const studentMembershipSelect = {
   courseSeasonShift: {
     select: {
       shift: { select: { name: true } },
+      category: { select: { name: true } },
     },
   },
   paymentPlanId: true,
@@ -134,7 +130,7 @@ type StudentWithPerson = Prisma.StudentGetPayload<{
   };
 }>;
 
-type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
+type CourseSeasonShiftWithEligibility = Prisma.CourseSeasonShiftGetPayload<{
   include: {
     category: {
       select: {
@@ -142,14 +138,18 @@ type CourseMembershipOfferingWithCategory = Prisma.CourseSeasonGetPayload<{
         maxAge: true;
       };
     };
-    season: {
-      select: {
-        startDate: true;
-        endDate: true;
+    courseSeason: {
+      include: {
+        season: {
+          select: {
+            startDate: true;
+            endDate: true;
+          };
+        };
       };
     };
   };
-}> & { minBirthYear: number | null; maxBirthYear: number | null; validateAge: boolean };
+}>;
 
 import { StudentChargesService } from 'src/student-charges/student-charges.service';
 import { StudentsOptionsPaginationDto } from './dto/students-options-pagination.dto';
@@ -189,7 +189,7 @@ export class StudentMembershipsService {
       createDto.courseSeasonId,
     );
 
-    this.validateStudentEligibility(student, offering);
+    this.validateStudentEligibility(student, shift);
 
     if (createDto.studentDiscounts && createDto.studentDiscounts.length > 0) {
       this.validateDiscountDates(
@@ -529,7 +529,7 @@ export class StudentMembershipsService {
       offering.courseSeason.season.endDate,
     );
 
-    this.validateStudentEligibility(student, offering.courseSeason);
+    this.validateStudentEligibility(student, offering.shift);
 
     const isChangingOffering =
       updateDto.courseSeasonId &&
@@ -1072,11 +1072,11 @@ export class StudentMembershipsService {
     const shift = await this.prisma.courseSeasonShift.findUnique({
       where: { id: courseSeasonShiftId },
       include: {
+        category: {
+          select: { minAge: true, maxAge: true },
+        },
         courseSeason: {
           include: {
-            category: {
-              select: { minAge: true, maxAge: true },
-            },
             season: {
               select: { startDate: true, endDate: true },
             },
@@ -1087,7 +1087,7 @@ export class StudentMembershipsService {
     if (!shift || shift.courseSeasonId !== courseSeasonId) {
       throw new NotFoundException('El turno o la temporada de curso no fue encontrada');
     }
-    return { shift, courseSeason: shift.courseSeason as unknown as CourseMembershipOfferingWithCategory };
+    return { shift: shift as unknown as CourseSeasonShiftWithEligibility, courseSeason: shift.courseSeason };
   }
 
   private async validateOfferingCapacity(
@@ -1135,54 +1135,66 @@ export class StudentMembershipsService {
           NOT: { id: currentMembershipId },
         }),
       },
+      include: {
+        courseSeasonShift: {
+          include: {
+            shift: true,
+          },
+        },
+      },
     });
     if (existingMembership) {
       throw new BadRequestException(
-        'El estudiante ya se encuentra registrado en este curso',
+        `El estudiante ya se encuentra registrado en la temporada actual, asignado al turno "${existingMembership.courseSeasonShift.shift.name}". Si deseas cambiarlo de horario, utiliza la opción de Transferencia en su membresía actual.`,
       );
     }
   }
 
   private validateStudentEligibility(
     student: StudentWithPerson,
-    offering: CourseMembershipOfferingWithCategory,
+    shift: CourseSeasonShiftWithEligibility,
   ) {
     if (!student.isActive) {
-      throw new BadRequestException('El estudiante se encuentra inactivo');
+      throw new BadRequestException(
+        'El estudiante se encuentra inactivo y no puede ser inscrito en cursos',
+      );
     }
-    if (offering.validateAge !== false) {
+
+    if (shift.validateAge) {
       if (!student.person.birthDate) {
         throw new BadRequestException(
-          'La fecha de nacimiento del estudiante es requerida para validar la edad en este curso',
+          'El estudiante no tiene fecha de nacimiento registrada, por lo que no es posible validar su edad para este turno.',
         );
       }
-      if (offering.minBirthYear || offering.maxBirthYear) {
+
+      if (shift.minBirthYear || shift.maxBirthYear) {
         const birthYear = student.person.birthDate.getFullYear();
-        if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
+        if (shift.maxBirthYear && birthYear > shift.maxBirthYear) {
           throw new BadRequestException(
-            `El año de nacimiento del estudiante (${birthYear}) supera el año máximo permitido (${offering.maxBirthYear}) para esta temporada.`,
+            `El año de nacimiento del estudiante (${birthYear}) supera el año máximo permitido (${shift.maxBirthYear}) para este turno.`,
           );
         }
-        if (offering.minBirthYear && birthYear < offering.minBirthYear) {
+        if (shift.minBirthYear && birthYear < shift.minBirthYear) {
           throw new BadRequestException(
-            `El año de nacimiento del estudiante (${birthYear}) es inferior al año mínimo permitido (${offering.minBirthYear}) para esta temporada.`,
+            `El año de nacimiento del estudiante (${birthYear}) es inferior al año mínimo permitido (${shift.minBirthYear}) para este turno.`,
           );
         }
       } else {
         this.validateStudentAge(
           student.person.birthDate,
-          offering.season.startDate,
-          offering.category.minAge,
-          offering.category.maxAge,
+          shift.courseSeason.season.startDate,
+          shift.category.minAge,
+          shift.category.maxAge,
         );
       }
     }
+
     if (
-      offering.gender !== 'MIXED' &&
-      offering.gender !== student.person.gender
+      shift.gender !== 'MIXED' &&
+      shift.gender !== student.person.gender
     ) {
       throw new BadRequestException(
-        'El género del estudiante no es compatible con el curso',
+        'El género del estudiante no coincide con el género requerido para este turno',
       );
     }
   }

@@ -57,6 +57,7 @@ describe('StudentMembershipsService', () => {
 
     const transferDto = {
       targetCourseSeasonId,
+      targetCourseSeasonShiftId: 'target-shift-id',
       effectiveDate,
     };
 
@@ -98,6 +99,7 @@ describe('StudentMembershipsService', () => {
           where: { id: membershipId },
           data: expect.objectContaining({
             courseSeasonId: targetCourseSeasonId,
+            courseSeasonShiftId: 'target-shift-id',
           })
         })
       );

@@ -7,6 +7,7 @@ import {
 import { CreateCourseSeasonDto } from './dto/create-course-season.dto';
 import { UpdateCourseSeasonDto } from './dto/update-course-season.dto';
 import { AddShiftDto } from './dto/add-shift.dto';
+import { UpdateShiftDto } from './dto/update-shift.dto';
 import { PrismaService } from 'src/prisma.service';
 import {
   StudentMembershipStatus,
@@ -24,13 +25,25 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
   id: true,
   name: true,
   imageUrl: true,
-  gender: true,
   shifts: {
     select: {
       id: true,
       maxMembers: true,
       minMembers: true,
+      categoryId: true,
+      gender: true,
+      minBirthYear: true,
+      maxBirthYear: true,
+      validateAge: true,
       isActive: true,
+      category: {
+        select: {
+          id: true,
+          name: true,
+          minAge: true,
+          maxAge: true,
+        },
+      },
       shift: {
         select: {
           id: true,
@@ -88,14 +101,6 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
       },
     },
   },
-  category: {
-    select: {
-      id: true,
-      name: true,
-      minAge: true,
-      maxAge: true,
-    },
-  },
   season: {
     select: {
       id: true,
@@ -106,9 +111,6 @@ export const courseSeasonSelect: Prisma.CourseSeasonSelect = {
     },
   },
   description: true,
-  minBirthYear: true,
-  maxBirthYear: true,
-  validateAge: true,
   status: true,
   billingConfig: true,
   isRegistrationOpen: true,
@@ -141,9 +143,7 @@ export class CourseSeasonsService {
     const existingCourseSeason = await this.prisma.courseSeason.findFirst({
       where: {
         courseId: createCourseCategoryDto.courseId,
-        categoryId: createCourseCategoryDto.categoryId,
         seasonId: createCourseCategoryDto.seasonId,
-        gender: createCourseCategoryDto.gender,
         name: createCourseCategoryDto.name,
         status: {
           not: StatusCourseSeason.CANCELLED,
@@ -276,7 +276,7 @@ export class CourseSeasonsService {
       }
     }
 
-    const { billingConfig, shiftId, maxMembers, minMembers, ...courseSeasonData } = rest;
+    const { billingConfig, shiftId, maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge, ...courseSeasonData } = rest;
     const newCourseSeason = await this.prisma.courseSeason.create({
       data: {
         ...courseSeasonData,
@@ -285,6 +285,11 @@ export class CourseSeasonsService {
             shiftId,
             maxMembers,
             minMembers,
+            categoryId,
+            gender,
+            minBirthYear,
+            maxBirthYear,
+            validateAge,
           }]
         },
         ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
@@ -299,7 +304,7 @@ export class CourseSeasonsService {
   }
 
   async addShift(id: string, addShiftDto: AddShiftDto) {
-    const { shiftId, maxMembers, minMembers } = addShiftDto;
+    const { shiftId, maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge } = addShiftDto;
 
     // 1. Obtener la oferta origen
     const baseCourseSeason = await this.prisma.courseSeason.findUnique({
@@ -348,6 +353,11 @@ export class CourseSeasonsService {
         shiftId,
         maxMembers,
         minMembers,
+        categoryId,
+        gender,
+        minBirthYear,
+        maxBirthYear,
+        validateAge,
       },
     });
 
@@ -358,6 +368,70 @@ export class CourseSeasonsService {
 
     return {
       message: 'Turno agregado exitosamente a la oferta',
+      data: updatedCourseSeason,
+    };
+  }
+
+  async updateShift(courseSeasonId: string, shiftId: string, updateShiftDto: UpdateShiftDto) {
+    const { maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge } = updateShiftDto;
+
+    // 1. Obtener la oferta
+    const baseCourseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id: courseSeasonId },
+    });
+
+    if (!baseCourseSeason) {
+      throw new NotFoundException('La oferta no fue encontrada');
+    }
+
+    if (
+      baseCourseSeason.status === StatusCourseSeason.FINISHED ||
+      baseCourseSeason.status === StatusCourseSeason.CANCELLED
+    ) {
+      throw new BadRequestException(
+        'No se puede editar un turno de una temporada inactiva o finalizada',
+      );
+    }
+
+    // 2. Obtener el CourseSeasonShift
+    const existingShift = await this.prisma.courseSeasonShift.findFirst({
+      where: {
+        id: shiftId,
+        courseSeasonId: courseSeasonId,
+      },
+    });
+
+    if (!existingShift) {
+      throw new NotFoundException('El turno no pertenece a la oferta indicada o no existe');
+    }
+
+    // 3. Validar Category si viene
+    if (categoryId) {
+      const cat = await this.prisma.category.findUnique({ where: { id: categoryId } });
+      if (!cat) throw new NotFoundException('La categoría indicada no existe');
+    }
+
+    // 4. Actualizar el turno
+    await this.prisma.courseSeasonShift.update({
+      where: { id: shiftId },
+      data: {
+        ...(maxMembers !== undefined && { maxMembers }),
+        ...(minMembers !== undefined && { minMembers }),
+        ...(categoryId !== undefined && { categoryId }),
+        ...(gender !== undefined && { gender }),
+        ...(minBirthYear !== undefined && { minBirthYear }),
+        ...(maxBirthYear !== undefined && { maxBirthYear }),
+        ...(validateAge !== undefined && { validateAge }),
+      },
+    });
+
+    const updatedCourseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id: courseSeasonId },
+      select: courseSeasonSelect,
+    });
+
+    return {
+      message: 'Configuración del turno actualizada exitosamente',
       data: updatedCourseSeason,
     };
   }
@@ -379,7 +453,7 @@ export class CourseSeasonsService {
       ? {
           OR: [
             { course: { name: { contains: search, mode: 'insensitive' } } },
-            { category: { name: { contains: search, mode: 'insensitive' } } },
+            { shifts: { some: { category: { name: { contains: search, mode: 'insensitive' } } } } },
           ],
         }
       : {};
@@ -389,7 +463,13 @@ export class CourseSeasonsService {
     }
 
     if (gender) {
-      where.gender = gender;
+      where.shifts = {
+        ...(where.shifts as object),
+        some: {
+          ...(where.shifts && 'some' in (where.shifts as object) ? (where.shifts as any).some : {}),
+          gender,
+        },
+      };
     }
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
@@ -502,7 +582,7 @@ export class CourseSeasonsService {
   }
 
   async update(id: string, updateCourseSeasonDto: UpdateCourseSeasonDto) {
-    const { courseId, categoryId, seasonId, imageUrl, ...rest } =
+    const { courseId, seasonId, imageUrl, ...rest } =
       updateCourseSeasonDto;
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id },
@@ -526,13 +606,10 @@ export class CourseSeasonsService {
     if (courseSeason.status === StatusCourseSeason.ACTIVE) {
       if (
         (courseId && courseId !== courseSeason.course.id) ||
-        (seasonId && seasonId !== courseSeason.season.id) ||
-        (categoryId && categoryId !== courseSeason.category.id) ||
-        (updateCourseSeasonDto.gender &&
-          updateCourseSeasonDto.gender !== courseSeason.gender)
+        (seasonId && seasonId !== courseSeason.season.id)
       ) {
         throw new BadRequestException(
-          'No se puede modificar el curso, la temporada, la categoría, el turno ni el género una vez que la temporada de curso está activa',
+          'No se puede modificar el curso ni la temporada una vez que la temporada de curso está activa',
         );
       }
 
@@ -570,19 +647,9 @@ export class CourseSeasonsService {
       where: { id: seasonId ? seasonId : courseSeason.season.id },
     });
 
-    let category = await this.prisma.category.findUnique({
-      where: { id: categoryId ? categoryId : courseSeason.category.id },
-    });
-
     if (updateCourseSeasonDto.seasonId) {
       season = await this.prisma.season.findUnique({
         where: { id: updateCourseSeasonDto.seasonId },
-      });
-    }
-
-    if (updateCourseSeasonDto.categoryId) {
-      category = await this.prisma.category.findUnique({
-        where: { id: updateCourseSeasonDto.categoryId },
       });
     }
 
@@ -596,30 +663,6 @@ export class CourseSeasonsService {
     ) {
       throw new BadRequestException(
         'No se puede actualizar ni reasignar un equipo a una temporada inactiva o finalizada',
-      );
-    }
-    if (!category) {
-      throw new NotFoundException('La categoria no fue encontrada');
-    }
-
-    if (season.disciplineId !== category.disciplineId) {
-      throw new NotFoundException(
-        'La temporada y la categoria no pertenecen a la misma disciplina',
-      );
-    }
-
-    const minBirthYear =
-      rest.minBirthYear !== undefined
-        ? rest.minBirthYear
-        : courseSeason.minBirthYear;
-    const maxBirthYear =
-      rest.maxBirthYear !== undefined
-        ? rest.maxBirthYear
-        : courseSeason.maxBirthYear;
-
-    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      throw new BadRequestException(
-        'El año mínimo de nacimiento no puede ser mayor al año máximo permitido',
       );
     }
 
@@ -676,7 +719,6 @@ export class CourseSeasonsService {
         ...courseSeasonData,
         courseId,
         seasonId,
-        categoryId,
         ...(billingConfig
           ? {
               billingConfig: {

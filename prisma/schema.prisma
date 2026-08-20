@@ -276,12 +276,12 @@ model Category {
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   teamSeasons   TeamSeason[]
-  courseSeasons CourseSeason[]
 
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+  createdById        String?             @map("created_by_id")
+  createdBy          User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById        String?             @map("updated_by_id")
+  updatedBy          User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+  courseSeasonShifts CourseSeasonShift[]
 
   @@unique([disciplineId, name])
   @@map("categories")
@@ -1286,18 +1286,10 @@ model CourseSeason {
   imageUrl    String? @map("image_url")
   description String?
 
-  minBirthYear Int? @map("min_birth_year")
-  maxBirthYear Int? @map("max_birth_year")
-
-  validateAge Boolean @default(true) @map("validate_age")
-
-  courseId   String        @map("course_id")
-  course     Course        @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  categoryId String        @map("category_id")
-  category   Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  seasonId   String        @map("season_id")
-  season     Season        @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-  gender     ProgramGender
+  courseId String @map("course_id")
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  seasonId String @map("season_id")
+  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
 
   status      StatusCourseSeason @default(DRAFT)
   statusNotes String?            @map("status_notes") @db.Text
@@ -1315,12 +1307,12 @@ model CourseSeason {
   billingConfig      CourseSeasonBillingConfig?
   pauses             CourseSeasonPause[]
 
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
+  createdById String?   @map("created_by_id")
+  createdBy   User?     @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String?   @map("updated_by_id")
+  updatedBy   User?     @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([courseId, categoryId, seasonId, gender, name])
+  @@unique([courseId, seasonId, name])
   @@map("course_seasons")
 }
 
@@ -1333,6 +1325,15 @@ model CourseSeasonShift {
 
   maxMembers Int @map("max_members")
   minMembers Int @map("min_members")
+
+  categoryId String        @map("category_id")
+  category   Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  gender     ProgramGender
+
+  minBirthYear Int? @map("min_birth_year")
+  maxBirthYear Int? @map("max_birth_year")
+
+  validateAge Boolean @default(true) @map("validate_age")
 
   isActive Boolean @default(true) @map("is_active")
 
@@ -1352,6 +1353,7 @@ model CourseSeasonShift {
   updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([courseSeasonId, shiftId])
+  @@unique([id, courseSeasonId])
   @@map("course_season_shifts")
 }
 
@@ -1502,7 +1504,7 @@ model StudentMembership {
   courseSeasonId      String            @map("course_season_id")
   courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   courseSeasonShiftId String            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId], onDelete: Restrict)
   paymentPlanId       String            @map("payment_plan_id")
   paymentPlan         PaymentPlan       @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
 
@@ -1581,7 +1583,7 @@ model CycleEnrollment {
   courseSeasonId      String            @map("course_season_id")
   courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   courseSeasonShiftId String            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId], onDelete: Restrict)
 
   chargeId           String?               @unique @map("charge_id")
   charge             Charge?               @relation(fields: [chargeId], references: [id], onDelete: Restrict)

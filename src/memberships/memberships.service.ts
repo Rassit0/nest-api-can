@@ -270,7 +270,8 @@ export class MembershipsService {
         },
         include: {
           student: { include: { person: true } },
-          courseSeason: { include: { course: true, category: true } },
+          courseSeason: { include: { course: true } },
+          courseSeasonShift: { include: { category: true } },
         },
         take: 5,
         orderBy: { endedAt: 'asc' },
@@ -289,7 +290,7 @@ export class MembershipsService {
         id: s.id,
         type: 'Estudiante',
         name: `${s.student.person.name} ${s.student.person.lastName}`,
-        program: `${s.courseSeason.course.name} - ${s.courseSeason.category.name}`,
+        program: `${s.courseSeason.course.name} - ${s.courseSeasonShift.category.name}`,
         endedAt: s.endedAt,
       })),
     ]

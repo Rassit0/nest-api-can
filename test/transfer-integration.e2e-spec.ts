@@ -154,7 +154,7 @@ describe('Fase 7 - Transfer QA Integration', () => {
       regularMorningShiftId = (await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: regularSeasonId } })).id;
       
       // Agregar turno Tarde a Regular
-      const resultTarde = await courseSeasonsService.addShift(regularSeasonId, { shiftId: shiftAfternoon.id, minMembers: 1, maxMembers: 10 });
+      const resultTarde = await courseSeasonsService.addShift(regularSeasonId, { shiftId: shiftAfternoon.id, minMembers: 1, maxMembers: 10, categoryId, gender: ProgramGender.MIXED });
       regularAfternoonShiftId = (await prisma.courseSeasonShift.findFirst({ where: { courseSeasonId: regularSeasonId, shiftId: shiftAfternoon.id } })).id;
 
       // Oferta Premium

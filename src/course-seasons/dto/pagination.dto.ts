@@ -7,11 +7,11 @@ export class CourseSeasonsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Campo por el cual ordenar los resultados',
     default: 'createdAt',
-    enum: ['createdAt', 'status', 'gender', 'id'],
+    enum: ['createdAt', 'status', 'id'],
   })
   @IsOptional()
-  @IsIn(['createdAt', 'status', 'gender', 'id'], {
-    message: 'Columnas permitidas: createdAt, status, gender, id',
+  @IsIn(['createdAt', 'status', 'id'], {
+    message: 'Columnas permitidas: createdAt, status, id',
   })
   sortField?: string = 'createdAt';
 

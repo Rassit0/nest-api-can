@@ -1042,7 +1042,6 @@ export type CycleEnrollmentCreateWithoutCourseSeasonShiftInput = {
 export type CycleEnrollmentUncheckedCreateWithoutCourseSeasonShiftInput = {
   id?: string
   studentMembershipId: string
-  courseSeasonId: string
   chargeId?: string | null
   cycleStartDate: Date | string
   cycleEndDate: Date | string
@@ -1319,7 +1318,6 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonInput = {
 export type CycleEnrollmentCreateManyCourseSeasonShiftInput = {
   id?: string
   studentMembershipId: string
-  courseSeasonId: string
   chargeId?: string | null
   cycleStartDate: Date | string
   cycleEndDate: Date | string
@@ -1349,7 +1347,6 @@ export type CycleEnrollmentUpdateWithoutCourseSeasonShiftInput = {
 export type CycleEnrollmentUncheckedUpdateWithoutCourseSeasonShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   chargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cycleStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1364,7 +1361,6 @@ export type CycleEnrollmentUncheckedUpdateWithoutCourseSeasonShiftInput = {
 export type CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   chargeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cycleStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string

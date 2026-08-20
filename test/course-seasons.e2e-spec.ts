@@ -175,7 +175,9 @@ describe('Fase 7 - CourseSeason Shift Management QA Integration', () => {
       const addShiftDto: AddShiftDto = {
         shiftId: shiftAfternoonId,
         maxMembers: 15,
-        minMembers: 5
+        minMembers: 5,
+        categoryId: categoryId,
+        gender: ProgramGender.MIXED
       };
       
       const result = await courseSeasonsService.addShift(regularCourseSeasonId, addShiftDto);

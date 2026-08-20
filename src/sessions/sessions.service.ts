@@ -63,10 +63,16 @@ export const sessionSelect: Prisma.SessionSelect = {
       courseSeasonShift: {
         select: {
           shift: { select: { id: true, name: true } },
+          gender: true,
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
           courseSeason: {
             select: {
               id: true,
-              gender: true,
               course: {
                 select: {
                   id: true,
@@ -75,12 +81,6 @@ export const sessionSelect: Prisma.SessionSelect = {
                 },
               },
               season: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-              category: {
                 select: {
                   id: true,
                   name: true,
