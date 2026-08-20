@@ -245,6 +245,10 @@ export class TransactionsService {
         paymentSeries = resolvedReceipt.receiptSeries;
         paymentSequenceNumber = resolvedReceipt.receiptNumber;
 
+        const paymentDateObj = rest.transactionDate
+          ? new Date(rest.transactionDate)
+          : new Date();
+
         createdPayment = await prisma.payment.create({
           data: {
             chargeId: charge.id,
@@ -252,6 +256,7 @@ export class TransactionsService {
             receiptSeries: paymentSeries,
             receiptNumber: paymentSequenceNumber,
             status: 'COMPLETED',
+            paymentDate: paymentDateObj,
           },
         });
 

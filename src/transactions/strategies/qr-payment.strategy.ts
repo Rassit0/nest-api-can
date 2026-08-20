@@ -6,9 +6,9 @@ export class QrPaymentStrategy implements IPaymentStrategy {
     // TODO: Implementar llamada real a la API del Banco para generar el QR
     // const bankResponse = await this.bankService.generateQr(amount);
 
-    // Por ahora simulamos la generación del QR y dejamos la transacción pendiente
+    // Por ahora simulamos la generación del QR y completamos la transacción de inmediato
     return {
-      transactionStatus: TransactionStatus.PENDING,
+      transactionStatus: TransactionStatus.COMPLETED,
       providerResponse: {
         message: 'QR generado exitosamente (Simulado)',
         qrBase64: 'data:image/png;base64,iVBORw0KGgo...', // Simulación
