@@ -4,9 +4,10 @@ import { AccountingReportModule } from './accounting/accounting-report.module';
 import { ReportCoreModule } from './core/report-core.module';
 import { PaymentsMatrixService } from './payments-matrix.service';
 import { PaymentsMatrixPdfService } from './payments-matrix-pdf.service';
+import { PrinterModule } from '../printer/printer.module';
 
 @Module({
-  imports: [ReportCoreModule, AccountingReportModule],
+  imports: [ReportCoreModule, AccountingReportModule, PrinterModule],
   controllers: [ReportsController],
   providers: [PaymentsMatrixService, PaymentsMatrixPdfService],
 })
