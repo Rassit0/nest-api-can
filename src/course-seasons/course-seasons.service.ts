@@ -276,21 +276,34 @@ export class CourseSeasonsService {
       }
     }
 
-    const { billingConfig, shiftId, maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge, ...courseSeasonData } = rest;
+    const {
+      billingConfig,
+      shiftId,
+      maxMembers,
+      minMembers,
+      categoryId,
+      gender,
+      minBirthYear,
+      maxBirthYear,
+      validateAge,
+      ...courseSeasonData
+    } = rest;
     const newCourseSeason = await this.prisma.courseSeason.create({
       data: {
         ...courseSeasonData,
         shifts: {
-          create: [{
-            shiftId,
-            maxMembers,
-            minMembers,
-            categoryId,
-            gender,
-            minBirthYear,
-            maxBirthYear,
-            validateAge,
-          }]
+          create: [
+            {
+              shiftId,
+              maxMembers,
+              minMembers,
+              categoryId,
+              gender,
+              minBirthYear,
+              maxBirthYear,
+              validateAge,
+            },
+          ],
         },
         ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
       },
@@ -304,7 +317,16 @@ export class CourseSeasonsService {
   }
 
   async addShift(id: string, addShiftDto: AddShiftDto) {
-    const { shiftId, maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge } = addShiftDto;
+    const {
+      shiftId,
+      maxMembers,
+      minMembers,
+      categoryId,
+      gender,
+      minBirthYear,
+      maxBirthYear,
+      validateAge,
+    } = addShiftDto;
 
     // 1. Obtener la oferta origen
     const baseCourseSeason = await this.prisma.courseSeason.findUnique({
@@ -341,9 +363,7 @@ export class CourseSeasonsService {
     });
 
     if (existingShift) {
-      throw new BadRequestException(
-        'La oferta ya tiene este turno asignado',
-      );
+      throw new BadRequestException('La oferta ya tiene este turno asignado');
     }
 
     // 4. Crear el turno
@@ -372,8 +392,20 @@ export class CourseSeasonsService {
     };
   }
 
-  async updateShift(courseSeasonId: string, shiftId: string, updateShiftDto: UpdateShiftDto) {
-    const { maxMembers, minMembers, categoryId, gender, minBirthYear, maxBirthYear, validateAge } = updateShiftDto;
+  async updateShift(
+    courseSeasonId: string,
+    shiftId: string,
+    updateShiftDto: UpdateShiftDto,
+  ) {
+    const {
+      maxMembers,
+      minMembers,
+      categoryId,
+      gender,
+      minBirthYear,
+      maxBirthYear,
+      validateAge,
+    } = updateShiftDto;
 
     // 1. Obtener la oferta
     const baseCourseSeason = await this.prisma.courseSeason.findUnique({
@@ -402,12 +434,16 @@ export class CourseSeasonsService {
     });
 
     if (!existingShift) {
-      throw new NotFoundException('El turno no pertenece a la oferta indicada o no existe');
+      throw new NotFoundException(
+        'El turno no pertenece a la oferta indicada o no existe',
+      );
     }
 
     // 3. Validar Category si viene
     if (categoryId) {
-      const cat = await this.prisma.category.findUnique({ where: { id: categoryId } });
+      const cat = await this.prisma.category.findUnique({
+        where: { id: categoryId },
+      });
       if (!cat) throw new NotFoundException('La categoría indicada no existe');
     }
 
@@ -453,7 +489,13 @@ export class CourseSeasonsService {
       ? {
           OR: [
             { course: { name: { contains: search, mode: 'insensitive' } } },
-            { shifts: { some: { category: { name: { contains: search, mode: 'insensitive' } } } } },
+            {
+              shifts: {
+                some: {
+                  category: { name: { contains: search, mode: 'insensitive' } },
+                },
+              },
+            },
           ],
         }
       : {};
@@ -466,7 +508,9 @@ export class CourseSeasonsService {
       where.shifts = {
         ...(where.shifts as object),
         some: {
-          ...(where.shifts && 'some' in (where.shifts as object) ? (where.shifts as any).some : {}),
+          ...(where.shifts && 'some' in (where.shifts as object)
+            ? (where.shifts as any).some
+            : {}),
           gender,
         },
       };
@@ -575,15 +619,17 @@ export class CourseSeasonsService {
         suspendedMembers,
         pendingMembers,
         occupiedSlotsCount: activeMembers + suspendedMembers + pendingMembers,
-        maxMembers: courseSeason.shifts.reduce((acc, shift) => acc + shift.maxMembers, 0),
+        maxMembers: courseSeason.shifts.reduce(
+          (acc, shift) => acc + shift.maxMembers,
+          0,
+        ),
       },
       message: 'Resumen de la temporada de curso obtenido exitosamente',
     };
   }
 
   async update(id: string, updateCourseSeasonDto: UpdateCourseSeasonDto) {
-    const { courseId, seasonId, imageUrl, ...rest } =
-      updateCourseSeasonDto;
+    const { courseId, seasonId, imageUrl, ...rest } = updateCourseSeasonDto;
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id },
       select: courseSeasonSelect,
@@ -778,7 +824,6 @@ export class CourseSeasonsService {
     };
   }
 
-
   async getShiftsByInstitutionOptions() {
     const institution = await this.prisma.institution.findFirst({
       select: {
@@ -851,7 +896,7 @@ export class CourseSeasonsService {
     if (!courseSeason) {
       throw new NotFoundException('El turno no fue encontrado');
     }
-    
+
     try {
       await this.prisma.courseSeason.delete({
         where: { id },
@@ -1012,7 +1057,12 @@ export class CourseSeasonsService {
 
   async addPause(
     courseSeasonId: string,
-    createPauseDto: { startDate: string; endDate: string; reason?: string; courseSeasonShiftId?: string },
+    createPauseDto: {
+      startDate: string;
+      endDate: string;
+      reason?: string;
+      courseSeasonShiftId?: string;
+    },
   ) {
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id: courseSeasonId },
@@ -1044,7 +1094,9 @@ export class CourseSeasonsService {
     const overlapping = await this.prisma.courseSeasonPause.findFirst({
       where: {
         courseSeasonId,
-        ...(createPauseDto.courseSeasonShiftId ? { courseSeasonShiftId: createPauseDto.courseSeasonShiftId } : {}),
+        ...(createPauseDto.courseSeasonShiftId
+          ? { courseSeasonShiftId: createPauseDto.courseSeasonShiftId }
+          : {}),
         OR: [{ startDate: { lte: endDate }, endDate: { gte: startDate } }],
       },
     });

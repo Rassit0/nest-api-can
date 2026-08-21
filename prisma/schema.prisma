@@ -273,9 +273,9 @@ model Category {
   disciplineId String     @map("discipline_id")
   discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
 
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
-  teamSeasons   TeamSeason[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  teamSeasons TeamSeason[]
 
   createdById        String?             @map("created_by_id")
   createdBy          User?               @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1307,10 +1307,10 @@ model CourseSeason {
   billingConfig      CourseSeasonBillingConfig?
   pauses             CourseSeasonPause[]
 
-  createdById String?   @map("created_by_id")
-  createdBy   User?     @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String?   @map("updated_by_id")
-  updatedBy   User?     @relation("UpdatedBy", fields: [updatedById], references: [id])
+  createdById String? @map("created_by_id")
+  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById String? @map("updated_by_id")
+  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([courseId, seasonId, name])
   @@map("course_seasons")
@@ -1323,9 +1323,8 @@ model CourseSeasonShift {
   shiftId        String       @map("shift_id")
   shift          Shift        @relation(fields: [shiftId], references: [id], onDelete: Restrict)
 
-  maxMembers Int @map("max_members")
-  minMembers Int @map("min_members")
-
+  maxMembers Int           @map("max_members")
+  minMembers Int           @map("min_members")
   categoryId String        @map("category_id")
   category   Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   gender     ProgramGender

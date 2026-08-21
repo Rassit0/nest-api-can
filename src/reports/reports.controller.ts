@@ -1,10 +1,20 @@
-import { Controller, Get, Query, Res, BadRequestException } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Query, Res, BadRequestException, Param, Req, UseGuards } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { ReportRegistry } from './core/registry/report.registry';
+import { PaymentsMatrixService } from './payments-matrix.service';
+import { PaymentsMatrixPdfService } from './payments-matrix-pdf.service';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
 @Controller('reports')
+@UseGuards(AuthGuard('jwt'), UserRoleGuard)
 export class ReportsController {
-  constructor(private readonly registry: ReportRegistry) {}
+  constructor(
+    private readonly registry: ReportRegistry,
+    private readonly paymentsMatrixService: PaymentsMatrixService,
+    private readonly paymentsMatrixPdfService: PaymentsMatrixPdfService
+  ) {}
 
   @Get()
   getReports() {
@@ -34,5 +44,65 @@ export class ReportsController {
     } else {
       throw new BadRequestException(`Format ${format} not supported yet`);
     }
+  }
+
+  @Get('payments-matrix/course-season-shifts/:shiftId')
+  @RequirePermissions('READ_COURSE_SEASONS')
+  async getCourseSeasonShiftPaymentsMatrix(
+    @Param('shiftId') shiftId: string,
+    @Req() req: Request & { user: any },
+  ) {
+    const institutionId = req.user.institutionId;
+    return await this.paymentsMatrixService.getCourseSeasonShiftMatrix(institutionId, shiftId);
+  }
+
+  @Get('payments-matrix/team-seasons/:teamSeasonId')
+  @RequirePermissions('READ_TEAM_SEASONS')
+  async getTeamSeasonPaymentsMatrix(
+    @Param('teamSeasonId') teamSeasonId: string,
+    @Req() req: Request & { user: any },
+  ) {
+    const institutionId = req.user.institutionId;
+    return await this.paymentsMatrixService.getTeamSeasonMatrix(institutionId, teamSeasonId);
+  }
+
+  @Get('payments-matrix/course-season-shifts/:shiftId/pdf')
+  @RequirePermissions('READ_COURSE_SEASONS')
+  async getCourseSeasonShiftPaymentsMatrixPdf(
+    @Param('shiftId') shiftId: string,
+    @Req() req: Request & { user: any },
+    @Res() res: Response,
+  ) {
+    const institutionId = req.user.institutionId;
+    const userName = req.user.name || 'Sistema';
+    const result = await this.paymentsMatrixPdfService.generateCourseSeasonShiftPdf(institutionId, shiftId, userName);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=control-pagos-turno-${shiftId}.pdf`,
+    );
+    result.pipe(res);
+    result.end();
+  }
+
+  @Get('payments-matrix/team-seasons/:teamSeasonId/pdf')
+  @RequirePermissions('READ_TEAM_SEASONS')
+  async getTeamSeasonPaymentsMatrixPdf(
+    @Param('teamSeasonId') teamSeasonId: string,
+    @Req() req: Request & { user: any },
+    @Res() res: Response,
+  ) {
+    const institutionId = req.user.institutionId;
+    const userName = req.user.name || 'Sistema';
+    const result = await this.paymentsMatrixPdfService.generateTeamSeasonPdf(institutionId, teamSeasonId, userName);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=control-pagos-equipo-${teamSeasonId}.pdf`,
+    );
+    result.pipe(res);
+    result.end();
   }
 }

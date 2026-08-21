@@ -24,9 +24,13 @@ export class PdfReportBuilder {
   };
 
   private title: string;
+  private pageOrientation: 'portrait' | 'landscape' = 'portrait';
 
-  constructor(title: string) {
+  constructor(title: string, options?: { pageOrientation?: 'portrait' | 'landscape' }) {
     this.title = title;
+    if (options?.pageOrientation) {
+      this.pageOrientation = options.pageOrientation;
+    }
   }
 
   addCover(data: {
@@ -182,6 +186,7 @@ export class PdfReportBuilder {
       info: {
         title: this.title,
       },
+      pageOrientation: this.pageOrientation,
       content: this.content,
       styles: this.styles,
       defaultStyle: {

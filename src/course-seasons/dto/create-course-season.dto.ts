@@ -22,7 +22,8 @@ import { SeasonBillingConfigDto } from 'src/common/dto/season-billing-config.dto
 export class CreateCourseSeasonDto {
   @ApiPropertyOptional({
     example: 'Regular',
-    description: 'Nombre o identificador de la oferta comercial (ej. Regular, Premium)',
+    description:
+      'Nombre o identificador de la oferta comercial (ej. Regular, Premium)',
     default: 'Regular',
   })
   @IsOptional()
