@@ -203,7 +203,9 @@ export class PaymentsMatrixService {
     const absoluteCycles = getAbsoluteSeasonCycles(season.startDate, season.endDate, frequency);
     
     const periods: PaymentMatrixPeriodDto[] = absoluteCycles.map(c => ({
-      key: `${c.billingYear}-${c.billingMonth}-${c.billingCycle}`,
+      key: frequency === 'MONTHLY'
+        ? `${c.billingYear}-${c.billingMonth}`
+        : `${c.billingYear}-${c.billingMonth}-${c.billingCycle}`,
       label: buildCycleDescription(c.cycleStartDate, c.cycleEndDate, frequency),
       startDate: c.cycleStartDate.toISOString(),
       endDate: c.cycleEndDate.toISOString(),
@@ -230,7 +232,9 @@ export class PaymentsMatrixService {
         if (!mCharge.charge) continue;
 
         // Para TeamSeason, la correspondencia del periodo se da por año, mes y ciclo de facturación
-        const key = `${mCharge.billingYear}-${mCharge.billingMonth}-${mCharge.billingCycle || 1}`;
+        const key = frequency === 'MONTHLY'
+          ? `${mCharge.billingYear}-${mCharge.billingMonth}`
+          : `${mCharge.billingYear}-${mCharge.billingMonth}-${mCharge.billingCycle || 1}`;
 
         // Verificamos que este periodo sea parte de los periodos absolutos de la temporada
         // (Podría haber cargos extra-temporada pero los omitimos en este reporte estructurado, 
