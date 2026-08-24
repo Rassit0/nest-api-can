@@ -8,6 +8,8 @@ import { getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBil
 import { calculateOnDemandCycleFee, calculateRegistrationFee, calculateSinglePaymentFee } from '../student-financial.calculator';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 
+import { StudentCycleManagerService } from './student-cycle-manager.service';
+
 @Injectable()
 export class StudentEnrollmentService {
   private readonly logger = new Logger(StudentEnrollmentService.name);
@@ -15,6 +17,7 @@ export class StudentEnrollmentService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly membershipRepo: StudentMembershipRepository,
+    private readonly cycleManager: StudentCycleManagerService,
   ) {}
 
   /**
@@ -125,143 +128,18 @@ export class StudentEnrollmentService {
            }
         }
 
-        // 2. Crear los CycleEnrollments y sus Charges
-        for (let i = 0; i < cyclesToEnroll.length; i++) {
-            const currentCycle = cyclesToEnroll[i];
-            
-            // Validar que no exista un CycleEnrollment duplicado
-            const existingEnrollment = await db.cycleEnrollment.findUnique({
-               where: {
-                   unique_cycle_enrollment: {
-                       studentMembershipId: membership.id,
-                       cycleStartDate: currentCycle.cycleStartDate,
-                       cycleEndDate: currentCycle.cycleEndDate
-                   }
-               }
-            });
-            
-            if (existingEnrollment) continue; // Si ya existe, lo ignoramos
-
-            // VALIDAR CAPACIDAD ANTES DE CREAR EL ENROLLMENT
-            await validateCourseSeasonCapacity(
-              db,
-              membership.courseSeasonShiftId,
-              currentCycle.cycleStartDate,
-              currentCycle.cycleEndDate,
-            );
-
-            // Calcular montos y fechas (Recálculo fuerte validando en backend)
-            const enrollmentDateForCycle = (i === 0) ? membership.startedAt : currentCycle.cycleStartDate;
-            const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(currentCycle, enrollmentDateForCycle, seasonEndDate);
-            
-            const fs = require('fs');
-            fs.appendFileSync('enrollment-debug.log', `[DEBUG] cycle ${i}: effectiveStart=${effectiveStart}, effectiveEnd=${effectiveEnd}\n`);
-
-            if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
-            
-            const allPauses = [
-              ...(membership.pauses || []),
-              ...(membership.courseSeason.pauses || []),
-            ];
-            const { billableDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
-            const cycleTotalDays = (currentCycle.cycleEndDate.getTime() - currentCycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
-               
-            let finalBillableDays = billableDays;
-            if (i === 0 && membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false) {
-               const { billableDays: billableDaysWithoutLateEntry } = calculateBillableDaysWithPauses(currentCycle.cycleStartDate, effectiveEnd, allPauses);
-               finalBillableDays = billableDaysWithoutLateEntry;
-            }
-
-            const isTruncatedEnd = currentCycle.cycleEndDate.getTime() > seasonEndDate.getTime();
-            if (isTruncatedEnd && membership.courseSeason.billingConfig?.prorateLastRecurringFee === false) {
-               const startForProrating = (i === 0 && membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false) 
-                    ? currentCycle.cycleStartDate 
-                    : effectiveStart;
-               
-               const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(startForProrating, currentCycle.cycleEndDate, allPauses);
-               finalBillableDays = fullCycleBillableDays;
-            }
-
-            let netAmount = 0, baseAmount = 0, discountAmount = 0, description = 'Cuota regular';
-
-            if (isSeasonFeeOnly) {
-               const singlePaymentBaseAmount = Number(membership.courseSeason.billingConfig?.seasonFee || 0);
-               const singlePaymentDiscountPercent = (membership.studentDiscounts || []).reduce((acc, d) => acc + Number(d.seasonFeeDiscountPercent || 0), 0);
-
-               const singlePayment = calculateSinglePaymentFee(membership, singlePaymentBaseAmount, singlePaymentDiscountPercent);
-               
-               if (singlePayment.hasSinglePaymentAmount) {
-                  netAmount = singlePayment.netAmount;
-                  baseAmount = singlePayment.baseAmount;
-                  discountAmount = singlePayment.discountAmount;
-                  description = singlePayment.description;
-               }
-            } else {
-               const calc = calculateOnDemandCycleFee(
-                  membership,
-                  currentCycle,
-                  finalBillableDays,
-                  cycleTotalDays
-               );
-               netAmount = calc.netAmount;
-               baseAmount = calc.baseAmount;
-               discountAmount = calc.discountAmount;
-               description = buildCycleDescription(
-                  currentCycle.cycleStartDate,
-                  currentCycle.cycleEndDate,
-                  billingFrequency
-               );
-               
-               if (finalBillableDays < cycleTotalDays) {
-                 description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
-               }
-            }
-
-            // 1. Validar si debemos cobrar el ciclo actual (siempre es true excepto para el primer ciclo si chargeInitialCycle = false)
-            const shouldChargeCycle = !(i === 0 && !chargeInitialCycle);
-            
-            let cycleCharge = null;
-            if (shouldChargeCycle) {
-               cycleCharge = await db.charge.create({
-                   data: {
-                       amount: netAmount,
-                       pendingAmount: netAmount,
-                       discountAmount: discountAmount,
-                       description: description,
-                       status: netAmount > 0 ? StatusCharge.PENDING : StatusCharge.PAID,
-                       dueDate: DateUtils.getEndOfUTCDay(currentCycle.cycleStartDate),
-                   }
-               });
-            }
-
-            // 2. Crear el CycleEnrollment y enlazar el Charge
-            const enrollment = await db.cycleEnrollment.create({
-                data: {
-                    studentMembershipId: membership.id,
-                    courseSeasonId: membership.courseSeasonId,
-                    courseSeasonShiftId: membership.courseSeasonShiftId,
-                    chargeId: cycleCharge?.id || null, // Relación! Puede ser null
-                    cycleStartDate: currentCycle.cycleStartDate,
-                    cycleEndDate: currentCycle.cycleEndDate,
-                    effectiveStartDate: effectiveStart,
-                    status: (netAmount <= 0 || !shouldChargeCycle) ? CycleEnrollmentStatus.CONFIRMED : CycleEnrollmentStatus.PENDING
-                }
-            });
-
-            // 3. Crear el StudentCharge para compatibilidad y UI actual (HISTORICO REQUERIDO)
-            if (shouldChargeCycle && cycleCharge) {
-               await db.studentCharge.create({
-                   data: {
-                       studentMembershipId: membership.id,
-                       chargeId: cycleCharge.id,
-                       type: isSeasonFeeOnly ? TypeMembershipCharge.SEASON_FEE : TypeMembershipCharge.RECURRING_FEE,
-                       billingYear: currentCycle.billingYear,
-                       billingMonth: currentCycle.billingMonth,
-                       billingCycle: billingFrequency === 'MONTHLY' ? null : currentCycle.billingCycle
-                   }
-               });
-            }
-        }
+        // 2. Crear los CycleEnrollments y sus Charges a través del orquestador central
+        await this.cycleManager.enrollCyclesToMembership(
+          membership,
+          cyclesToEnroll,
+          membership.startedAt, // enrollmentDate explícito (para inscripción inicial, es el startedAt)
+          {
+            chargeInitialCycle,
+            isSeasonFeeOnly,
+            billingFrequency,
+          },
+          db
+        );
       };
 
       if (tx) {

@@ -250,6 +250,14 @@ export const StudentMembershipStatus = {
 export type StudentMembershipStatus = (typeof StudentMembershipStatus)[keyof typeof StudentMembershipStatus]
 
 
+export const StudentMembershipSuspensionReason = {
+  PAUSE: 'PAUSE',
+  MANUAL: 'MANUAL'
+} as const
+
+export type StudentMembershipSuspensionReason = (typeof StudentMembershipSuspensionReason)[keyof typeof StudentMembershipSuspensionReason]
+
+
 export const CycleEnrollmentStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',

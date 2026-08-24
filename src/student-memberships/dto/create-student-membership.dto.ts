@@ -196,10 +196,10 @@ export class CreateStudentMembershipDto {
 
   @ApiPropertyOptional({
     enum: StudentMembershipStatus,
-    example: StudentMembershipStatus.PENDING_ACTIVE,
+    example: StudentMembershipStatus.ACTIVE,
     description:
       'Estado de la inscripción (PENDING, ACTIVE, SUSPENDED, WITHDRAWN, FINISHED)',
-    default: StudentMembershipStatus.PENDING_ACTIVE,
+    default: StudentMembershipStatus.ACTIVE,
   })
   @IsOptional()
   @IsEnum(StudentMembershipStatus, {
@@ -207,7 +207,7 @@ export class CreateStudentMembershipDto {
       constraint1: 'status',
     }),
   })
-  status?: StudentMembershipStatus = StudentMembershipStatus.PENDING_ACTIVE;
+  status?: StudentMembershipStatus = StudentMembershipStatus.ACTIVE;
 
   @ApiPropertyOptional({
     example: 'Inscripción bajo convenio con descuento escolar',

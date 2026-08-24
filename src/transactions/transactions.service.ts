@@ -225,6 +225,12 @@ export class TransactionsService {
             `Cargo con ID ${mainChargeId} no encontrado`,
           );
 
+        if (charge.status === StatusCharge.CANCELLED) {
+          throw new BadRequestException(
+            `El cargo con ID ${mainChargeId} se encuentra cancelado y no puede recibir pagos.`,
+          );
+        }
+
         const currentPending = Number(
           charge.pendingAmount.toNumber().toFixed(2),
         );

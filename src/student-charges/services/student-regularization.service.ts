@@ -11,11 +11,15 @@ import { StudentChargeFactory } from '../student-charge.factory';
 import { RegularizeStudentChargeDto } from '../dto/regularize-student-charge.dto';
 
 import { calculateOnDemandCycleFee } from '../student-financial.calculator';
+import { StudentCycleManagerService } from './student-cycle-manager.service';
 
 
 @Injectable()
 export class StudentRegularizationService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cycleManager: StudentCycleManagerService,
+  ) {}
 
   public async getRegularizableCycles(
     membershipId: string,
@@ -170,30 +174,40 @@ export class StudentRegularizationService {
       throw new ConflictException('El ciclo solicitado ya cuenta con un cargo generado o regularizado.');
     }
 
-    const discountAmount = dto.overrideAmount !== undefined ? 0 : targetCalc.discountAmount;
-    const baseAmount = dto.overrideAmount !== undefined ? dto.overrideAmount : targetCalc.baseAmount;
     const targetFreq = (membership as any).courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
-    const description = buildCycleDescription(targetCycle.cycleStartDate, targetCycle.cycleEndDate, targetFreq);
-
-    const chargePayload = StudentChargeFactory.buildRecurringChargePayload(
-      membershipId,
-      baseAmount,
-      discountAmount,
-      description,
-      targetCycle.cycleEndDate,
-      targetCycle.billingYear,
-      targetCycle.billingMonth,
-      targetCycle.billingCycle,
-      null,
-    );
-
-    // Sobrescribir createdByCron para marcarlo como regularización manual
-    chargePayload.studentCharges.create['createdByCron'] = false;
 
     try {
-      const result = await this.prisma.charge.create({
-        data: chargePayload,
-        include: { studentCharges: true },
+      let result = null;
+      await this.prisma.$transaction(async (tx) => {
+        const options = {
+          chargeInitialCycle: true,
+          isSeasonFeeOnly: false,
+          billingFrequency: targetFreq,
+          overrideChargeAmount: dto.overrideAmount,
+        };
+
+        const managerResult = await this.cycleManager.enrollCyclesToMembership(
+          membership,
+          [targetCycle],
+          targetCycle.cycleStartDate, // Fecha de enrolamiento histórica = inicio del ciclo objetivo
+          options,
+          tx,
+        );
+
+        if (managerResult.generatedCount === 0) {
+          throw new ConflictException('No se generaron cuotas. Es posible que el ciclo ya estuviera inscrito concurrentemente.');
+        }
+
+        // Return the created charge (for backward compatibility if controllers expect it)
+        result = await tx.charge.findFirst({
+          where: {
+            studentCharges: {
+              some: { studentMembershipId: membershipId }
+            },
+          },
+          orderBy: { createdAt: 'desc' },
+          include: { studentCharges: true }
+        });
       });
       return result;
     } catch (error) {

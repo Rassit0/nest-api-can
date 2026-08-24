@@ -8,11 +8,14 @@ import { calculateOnDemandCycleFee } from '../student-financial.calculator';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 import { TypeMembershipCharge, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
 
+import { StudentCycleManagerService } from './student-cycle-manager.service';
+
 @Injectable()
 export class StudentAdvanceChargeService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly membershipRepo: StudentMembershipRepository,
+    private readonly cycleManager: StudentCycleManagerService,
   ) {}
 
   private async validateAndGetMembershipForAdvance(membershipId: string) {
@@ -38,7 +41,10 @@ export class StudentAdvanceChargeService {
     );
 
     const existingEnrollments = await this.prisma.cycleEnrollment.findMany({
-      where: { studentMembershipId: membership.id },
+      where: { 
+        studentMembershipId: membership.id,
+        status: { not: CycleEnrollmentStatus.CANCELLED }
+      },
       select: { cycleStartDate: true, cycleEndDate: true }
     });
 
@@ -90,7 +96,7 @@ export class StudentAdvanceChargeService {
 
     for (let i = 0; i < cyclesToPurchase.length; i++) {
       const cycle = cyclesToPurchase[i];
-      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, membership.startedAt, membership.courseSeason.season.endDate);
+      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, new Date(), membership.courseSeason.season.endDate);
       
       if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
 
@@ -166,7 +172,10 @@ export class StudentAdvanceChargeService {
       await this.prisma.$transaction(async (tx) => {
         // En la transacción resolvemos de nuevo los disponibles para asegurar que no nos ganen por concurrencia
         const existingEnrollments = await tx.cycleEnrollment.findMany({
-            where: { studentMembershipId: membership.id },
+            where: { 
+              studentMembershipId: membership.id,
+              status: { not: CycleEnrollmentStatus.CANCELLED }
+            },
             select: { cycleStartDate: true, cycleEndDate: true }
         });
 
@@ -198,91 +207,21 @@ export class StudentAdvanceChargeService {
         }
 
         const cyclesToPurchase = unenrolledCycles.slice(0, quantity);
-        const allPauses = [
-            ...(membership.pauses || []),
-            ...(membership.courseSeason.pauses || []),
-        ];
+        // Delegar la creación al orquestador central
+        const options = {
+          chargeInitialCycle: true, // Siempre cobramos en un adelanto
+          isSeasonFeeOnly: false, // Adelantos siempre son RECURRING
+          billingFrequency: membership.courseSeason.billingConfig.billingFrequency
+        };
 
-        for (const cycle of cyclesToPurchase) {
-            const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, membership.startedAt, membership.courseSeason.season.endDate);
-            
-            if (effectiveStart >= effectiveEnd) continue;
-
-            const { billableDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
-            const cycleTotalDays = (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
-
-            let finalBillableDays = billableDays;
-            const isTruncatedEnd = cycle.cycleEndDate.getTime() > membership.courseSeason.season.endDate.getTime();
-            if (isTruncatedEnd && membership.courseSeason.billingConfig?.prorateLastRecurringFee === false) {
-                const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(effectiveStart, cycle.cycleEndDate, allPauses);
-                finalBillableDays = fullCycleBillableDays;
-            }
-
-            const cycleFee = calculateOnDemandCycleFee(
-                membership,
-                cycle,
-                finalBillableDays,
-                cycleTotalDays
-            );
-
-            const discountReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
-
-            let description = buildCycleDescription(
-               cycle.cycleStartDate,
-               cycle.cycleEndDate,
-               membership.courseSeason.billingConfig.billingFrequency
-            );
-
-            if (finalBillableDays < cycleTotalDays) {
-              description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
-            }
-
-            // VALIDAR CAPACIDAD ANTES DE CREAR EL ENROLLMENT
-            await validateCourseSeasonCapacity(
-                tx,
-                membership.courseSeasonShiftId,
-                cycle.cycleStartDate,
-                cycle.cycleEndDate,
-            );
-
-            // 1. Crear Charge
-            const charge = await tx.charge.create({
-                data: {
-                    amount: cycleFee.netAmount,
-                    pendingAmount: cycleFee.netAmount,
-                    discountAmount: cycleFee.discountAmount,
-                    discountReason: discountReason,
-                    description: `Adelanto de Cuota: ${description}`,
-                    dueDate: new Date(Date.UTC(effectiveStart.getUTCFullYear(), effectiveStart.getUTCMonth(), effectiveStart.getUTCDate(), 23, 59, 59, 999)), // Vence al inicio del ciclo
-                    status: cycleFee.netAmount <= 0 ? StatusCharge.PAID : StatusCharge.PENDING,
-                }
-            });
-
-            // 2. Crear CycleEnrollment enlazado
-            const ce = await tx.cycleEnrollment.create({
-                data: {
-                    studentMembershipId: membership.id,
-                    courseSeasonId: membership.courseSeasonId,
-                    courseSeasonShiftId: membership.courseSeasonShiftId,
-                    chargeId: charge.id,
-                    cycleStartDate: cycle.cycleStartDate,
-                    cycleEndDate: cycle.cycleEndDate,
-                    effectiveStartDate: effectiveStart,
-                    status: cycleFee.netAmount <= 0 ? CycleEnrollmentStatus.CONFIRMED : CycleEnrollmentStatus.PENDING
-                }
-            });
-
-            // 3. Crear StudentCharge (por compatibilidad)
-            await tx.studentCharge.create({
-                data: {
-                    chargeId: charge.id,
-                    studentMembershipId: membership.id,
-                    type: TypeMembershipCharge.RECURRING_FEE,
-                }
-            });
-
-            generatedCount++;
-        }
+        const result = await this.cycleManager.enrollCyclesToMembership(
+          membership,
+          cyclesToPurchase,
+          new Date(), // La fecha de inscripción material (hoy) para la compra de adelantos
+          options,
+          tx
+        );
+        generatedCount = result.generatedCount;
       });
 
       if (generatedCount === 0) {

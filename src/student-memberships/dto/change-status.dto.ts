@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MinLength } from 'class-validator';
+import { IsString, MinLength, IsOptional, IsEnum } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
+import { StudentMembershipSuspensionReason } from 'src/generated/prisma/client';
 
 export class ChangeStatusDto {
   @ApiProperty({
@@ -20,4 +21,15 @@ export class ChangeStatusDto {
     }),
   })
   reason: string;
+
+  @ApiProperty({
+    enum: StudentMembershipSuspensionReason,
+    description: 'Motivo estructurado de la suspensión',
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(StudentMembershipSuspensionReason, {
+    message: 'El motivo de suspensión debe ser un valor válido',
+  })
+  suspensionReason?: StudentMembershipSuspensionReason;
 }

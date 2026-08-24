@@ -883,6 +883,7 @@ export const StudentMembershipScalarFieldEnum = {
   startedAt: 'startedAt',
   endedAt: 'endedAt',
   status: 'status',
+  suspensionReason: 'suspensionReason',
   notes: 'notes',
   nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
   isMigrated: 'isMigrated',

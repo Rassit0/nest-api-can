@@ -698,6 +698,13 @@ export type EnumStudentMembershipStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel> | $Enums.StudentMembershipStatus
 }
 
+export type EnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipSuspensionReason | Prisma.EnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel> | $Enums.StudentMembershipSuspensionReason | null
+}
+
 export type EnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel>
   in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel>
@@ -706,6 +713,16 @@ export type EnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
+}
+
+export type EnumStudentMembershipSuspensionReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipSuspensionReason | Prisma.EnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.StudentMembershipSuspensionReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel>
 }
 
 export type EnumStudentMembershipStatusNullableFilter<$PrismaModel = never> = {
@@ -1683,6 +1700,13 @@ export type NestedEnumStudentMembershipStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel> | $Enums.StudentMembershipStatus
 }
 
+export type NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipSuspensionReason | Prisma.EnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel> | $Enums.StudentMembershipSuspensionReason | null
+}
+
 export type NestedEnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StudentMembershipStatus | Prisma.EnumStudentMembershipStatusFieldRefInput<$PrismaModel>
   in?: $Enums.StudentMembershipStatus[] | Prisma.ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel>
@@ -1691,6 +1715,16 @@ export type NestedEnumStudentMembershipStatusWithAggregatesFilter<$PrismaModel =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumStudentMembershipStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumStudentMembershipSuspensionReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StudentMembershipSuspensionReason | Prisma.EnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StudentMembershipSuspensionReason[] | Prisma.ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.StudentMembershipSuspensionReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStudentMembershipSuspensionReasonNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumStudentMembershipStatusNullableFilter<$PrismaModel = never> = {

@@ -5,6 +5,7 @@ import { StudentMembershipRepository } from '../repositories/student-membership.
 import { StudentPreviewService } from './student-preview.service';
 import { DateUtils } from 'src/utils/date.utils';
 import { TypeMembershipCharge, StatusCharge } from 'src/generated/prisma/client';
+import { StudentCycleManagerService } from './student-cycle-manager.service';
 
 describe('StudentEnrollmentService (FASE 2.6 - On-Demand Enrollment)', () => {
   let service: StudentEnrollmentService;
@@ -40,6 +41,7 @@ describe('StudentEnrollmentService (FASE 2.6 - On-Demand Enrollment)', () => {
         { provide: PrismaService, useValue: prismaMock },
         { provide: StudentMembershipRepository, useValue: membershipRepoMock },
         { provide: StudentPreviewService, useValue: {} },
+        StudentCycleManagerService,
       ],
     }).compile();
 

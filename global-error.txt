@@ -1,0 +1,118 @@
+PrismaClientValidationError: 
+Invalid `tx.studentMembership.create()` invocation in
+D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\student-memberships\student-memberships.service.ts:223:53
+
+  220   FOR UPDATE
+  221 `;
+  222 
+→ 223 const membership = await tx.studentMembership.create({
+        data: {
+          status: "ACTIVE",
+          studentId: "f1111111-1111-4111-8111-111111111111",
+          courseSeasonId: "19feb3af-0799-4b13-925a-4365be36b8d1",
+          courseSeasonShiftId: null,
+          paymentPlanId: "1f9538a9-3629-4ed7-9c28-2b7b62019400",
+          startedAt: new Date("2026-08-24T14:04:16.358Z"),
+          histories: {
+            create: {
+              previousStatus: null,
+              newStatus: "ACTIVE",
+              reason: "Creación de inscripción"
+            }
+          },
+          createdById: "ba778394-85b7-4689-81c7-61cfcc7a7819",
+          updatedById: "ba778394-85b7-4689-81c7-61cfcc7a7819",
+      +   student: {
+      +     create: StudentCreateWithoutStudentMembershipsInput | StudentUncheckedCreateWithoutStudentMembershipsInput,
+      +     connectOrCreate: StudentCreateOrConnectWithoutStudentMembershipsInput,
+      +     connect: StudentWhereUniqueInput
+      +   }
+        },
+        select: {
+          id: true,
+          studentId: true,
+          student: {
+            select: {
+              person: {
+                select: {
+                  name: true,
+                  lastName: true,
+                  secondLastName: true,
+                  email: true,
+                  phone: true,
+                  birthDate: true,
+                  documentNumber: true,
+                  documentType: true
+                }
+              }
+            }
+          },
+          courseSeasonId: true,
+          courseSeason: {
+            select: {
+              course: {
+                select: {
+                  name: true
+                }
+              },
+              season: {
+                select: {
+                  name: true
+                }
+              }
+            }
+          },
+          courseSeasonShiftId: true,
+          courseSeasonShift: {
+            select: {
+              shift: {
+                select: {
+                  name: true
+                }
+              },
+              category: {
+                select: {
+                  name: true
+                }
+              }
+            }
+          },
+          paymentPlanId: true,
+          paymentPlan: true,
+          startedAt: true,
+          endedAt: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+          studentCharges: {
+            where: {
+              charge: {
+                status: {
+                  not: "CANCELLED"
+                }
+              }
+            },
+            select: {
+              charge: {
+                select: {
+                  pendingAmount: true,
+                  amount: true,
+                  discountAmount: true
+                }
+              }
+            }
+          }
+        }
+      })
+
+Argument `student` is missing.
+    at throwValidationException (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:45:9)
+    at ei.handleRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at ei.handleAndLogRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at ei.request (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at async Array.create (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\prisma.service.ts:76:28)
+    at async a (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:833:24)
+    at async prisma.$transaction.timeout (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\student-memberships\student-memberships.service.ts:223:26)
+    at async Proxy._transactionWithCallback (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:722:18)
+    at async StudentMembershipsService.create (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\student-memberships\student-memberships.service.ts:213:12)
+    at async StudentMembershipsController.create (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\student-memberships\student-memberships.controller.ts:64:12)

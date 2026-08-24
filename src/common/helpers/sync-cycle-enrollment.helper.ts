@@ -1,5 +1,7 @@
 import { Prisma, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
+import { BadRequestException } from '@nestjs/common';
 import { validateCourseSeasonCapacity } from './capacity.helper';
+import { isCycleEnrollmentExpired } from './cycle-enrollment.helper';
 
 export async function syncCycleEnrollmentStatus(
   tx: Prisma.TransactionClient,
@@ -30,6 +32,10 @@ export async function syncCycleEnrollmentStatus(
 
   for (const enrollment of enrollmentsToUpdate) {
     if (targetStatus === CycleEnrollmentStatus.CONFIRMED) {
+      if (isCycleEnrollmentExpired(enrollment.createdAt)) {
+        throw new BadRequestException('El pago fue rechazado porque la reserva del ciclo ya expiró.');
+      }
+
       // Validar JIT antes de consolidar
       await validateCourseSeasonCapacity(
         tx,

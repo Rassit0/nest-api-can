@@ -1,7 +1,7 @@
 import { Prisma, CycleEnrollmentStatus } from 'src/generated/prisma/client';
 import { BadRequestException } from '@nestjs/common';
 
-const GRACE_PERIOD_HOURS = 24;
+import { PAYMENT_DEADLINE_HOURS } from './cycle-enrollment.helper';
 
 /**
  * Retorna las condiciones Prisma (WhereInput) para determinar si un CycleEnrollment
@@ -12,15 +12,14 @@ const GRACE_PERIOD_HOURS = 24;
  * 2. El estado es PENDING y su fecha de creación está dentro de las últimas 24 horas.
  */
 export function buildValidOccupancyCondition(): Prisma.CycleEnrollmentWhereInput {
-  const graceWindow = new Date();
-  graceWindow.setHours(graceWindow.getHours() - GRACE_PERIOD_HOURS);
+  const graceWindow = new Date(Date.now() - (PAYMENT_DEADLINE_HOURS * 60 * 60 * 1000));
 
   return {
     OR: [
       { status: CycleEnrollmentStatus.CONFIRMED },
       {
         status: CycleEnrollmentStatus.PENDING,
-        createdAt: { gte: graceWindow },
+        createdAt: { gt: graceWindow },
       },
     ],
   };

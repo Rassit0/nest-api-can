@@ -21,10 +21,11 @@ export class CreateSessionBookingDto {
   })
   sessionId: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID del jugador (Player)',
   })
+  @IsOptional()
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
       constraint1: 'playerId',
@@ -35,7 +36,24 @@ export class CreateSessionBookingDto {
       constraint1: 'playerId',
     }),
   })
-  playerId: string;
+  playerId?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del estudiante (Student)',
+  })
+  @IsOptional()
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'studentId',
+    }),
+  })
+  @Exists('student', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'studentId',
+    }),
+  })
+  studentId?: string;
 
   @ApiPropertyOptional({
     example: false,

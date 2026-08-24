@@ -1,4 +1,4 @@
-import { IsIn, IsOptional } from 'class-validator';
+import { IsIn, IsOptional, IsUUID } from 'class-validator';
 import { PaginationDto } from 'src/common/dto/pagination';
 
 export class SessionBookingsPaginationDto extends PaginationDto {
@@ -7,4 +7,8 @@ export class SessionBookingsPaginationDto extends PaginationDto {
     message: 'Columnas permitidas: createdAt, attended, isExternal, id',
   })
   sortField?: string = 'createdAt';
+
+  @IsOptional()
+  @IsUUID('4')
+  sessionId?: string;
 }

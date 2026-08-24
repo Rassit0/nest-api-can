@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { CreateSessionBookingDto } from './dto/create-session-booking.dto';
 import { UpdateSessionBookingDto } from './dto/update-session-booking.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -41,6 +41,20 @@ export const sessionBookingSelect: Prisma.SessionBookingSelect = {
       },
     },
   },
+  studentId: true,
+  student: {
+    select: {
+      id: true,
+      person: {
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+        },
+      },
+    },
+  },
   charge: {
     select: {
       id: true,
@@ -58,6 +72,56 @@ export class SessionBookingsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSessionBookingDto: CreateSessionBookingDto) {
+    const { sessionId, playerId, studentId } = createSessionBookingDto;
+
+    if (!playerId && !studentId) {
+      throw new BadRequestException('Se debe proveer playerId o studentId');
+    }
+    if (playerId && studentId) {
+      throw new BadRequestException('Solo se debe proveer playerId o studentId, no ambos');
+    }
+
+    const session = await this.prisma.session.findUniqueOrThrow({
+      where: { id: sessionId },
+      include: {
+        event: true,
+        sessionCourses: {
+          include: { courseSeasonShift: true },
+        },
+      },
+    });
+
+    // Validar autorización si es un CourseSeason y enviaron studentId
+    if (session.sessionCourses.length > 0 && studentId) {
+      const courseSeasonId = session.sessionCourses[0].courseSeasonShift.courseSeasonId;
+      const sessionStart = session.event.startDate;
+
+      const membership = await this.prisma.studentMembership.findFirst({
+        where: { studentId, courseSeasonId },
+      });
+
+      if (!membership) {
+        throw new ForbiddenException('El estudiante no tiene una membresía activa para este curso.');
+      }
+
+      if (membership.status !== 'ACTIVE') {
+        throw new ForbiddenException('El estudiante se encuentra suspendido o inactivo.');
+      }
+
+      const validEnrollment = await this.prisma.cycleEnrollment.findFirst({
+        where: {
+          studentMembershipId: membership.id,
+          status: 'CONFIRMED',
+          cycleStartDate: { lte: sessionStart },
+          cycleEndDate: { gt: sessionStart },
+        },
+      });
+
+      if (!validEnrollment) {
+        throw new ForbiddenException('El estudiante no tiene un ciclo confirmado vigente para esta sesión.');
+      }
+    }
+
     const newBooking = await this.prisma.sessionBooking.create({
       data: createSessionBookingDto,
       select: sessionBookingSelect,
@@ -76,10 +140,13 @@ export class SessionBookingsService {
       search,
       orderBy = 'asc',
       sortField = 'createdAt',
+      sessionId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
-    const where: Prisma.SessionBookingWhereInput = {};
+    const where: Prisma.SessionBookingWhereInput = {
+      ...(sessionId ? { sessionId } : {}),
+    };
 
     if (search) {
       where.OR = [
@@ -143,9 +210,15 @@ export class SessionBookingsService {
       );
     }
 
+    const { isExternal, attended, chargeId } = updateSessionBookingDto;
+
     const updatedBooking = await this.prisma.sessionBooking.update({
       where: { id },
-      data: updateSessionBookingDto,
+      data: {
+        isExternal,
+        attended,
+        chargeId,
+      },
       select: sessionBookingSelect,
     });
 

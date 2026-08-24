@@ -25,6 +25,10 @@ describe('StudentMembershipsService', () => {
       courseSeason: {
         findUnique: jest.fn(),
       },
+      courseSeasonShift: {
+        findUnique: jest.fn().mockResolvedValue({ id: 'valid-shift', shift: { name: 'Destino' }, courseSeason: { id: 'valid-season', status: 'ACTIVE', courseId: 'course-1' } }),
+        aggregate: jest.fn().mockResolvedValue({ _sum: { maxMembers: 10 } }),
+      },
       cycleEnrollment: {
         updateMany: jest.fn(),
       },
@@ -90,7 +94,7 @@ describe('StudentMembershipsService', () => {
       // should update only cycle2
       expect(prismaMock.cycleEnrollment.updateMany).toHaveBeenCalledWith({
         where: { id: { in: ['c2'] } },
-        data: { courseSeasonId: targetCourseSeasonId },
+        data: { courseSeasonId: targetCourseSeasonId, courseSeasonShiftId: transferDto.targetCourseSeasonShiftId },
       });
 
       // should update membership
@@ -116,6 +120,16 @@ describe('StudentMembershipsService', () => {
     });
 
     it('should fail if target course season belongs to different course', async () => {
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValueOnce({
+        id: transferDto.targetCourseSeasonShiftId,
+        shift: { name: 'Destino' },
+        courseSeason: {
+          id: targetCourseSeasonId,
+          status: StatusCourseSeason.ACTIVE,
+          courseId: 'different-course-id',
+        },
+      });
+
       prismaMock.studentMembership.findUnique.mockResolvedValue({
         id: membershipId,
         status: StudentMembershipStatus.ACTIVE,

@@ -9,6 +9,7 @@ import {
   SeasonBillingType,
 } from 'src/generated/prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { StudentCycleManagerService } from './student-cycle-manager.service';
 
 describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycles)', () => {
   let service: StudentAdvanceChargeService;
@@ -23,6 +24,8 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
       $queryRaw: jest.fn().mockResolvedValue([{ maxMembers: null }]),
       cycleEnrollment: {
         findMany: jest.fn(),
+        findUnique: jest.fn().mockResolvedValue(null),
+        findFirst: jest.fn().mockResolvedValue(null),
         create: jest.fn(),
       },
       charge: {
@@ -42,6 +45,7 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
         StudentAdvanceChargeService,
         { provide: PrismaService, useValue: prismaService },
         { provide: StudentMembershipRepository, useValue: membershipRepo },
+        StudentCycleManagerService,
       ],
     }).compile();
 
@@ -50,6 +54,7 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
 
   const getMockMembership = (overrides = {}) => ({
     id: 'mem-1',
+    startedAt: new Date('2026-08-01T00:00:00.000Z'),
     courseSeason: {
       status: StatusCourseSeason.ACTIVE,
       season: { 
@@ -123,6 +128,25 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
       // is respected just by the presence of CycleEnrollment.
       expect(result.charges.length).toBe(1);
       expect(result.charges[0].cycleStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
+    });
+
+    it('should allow purchasing a cycle that was previously CANCELLED', async () => {
+      const mockMembership = getMockMembership();
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      
+      // Simulate that findMany returns an empty array because CANCELLED are filtered out by Prisma in the real implementation
+      // But in the mock, we just want to ensure that `findMany` is called with the `{ not: 'CANCELLED' }` condition.
+      prismaService.cycleEnrollment.findMany.mockResolvedValue([]);
+
+      await service.previewAdvanceCharges('mem-1', 1);
+      
+      expect(prismaService.cycleEnrollment.findMany).toHaveBeenCalledWith({
+        where: {
+          studentMembershipId: 'mem-1',
+          status: { not: 'CANCELLED' }
+        },
+        select: { cycleStartDate: true, cycleEndDate: true }
+      });
     });
   });
 

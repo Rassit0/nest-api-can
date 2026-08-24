@@ -1,16 +1,16 @@
 import {
-  IsDateString,
+  IsISO8601,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class CreateTeamSeasonPauseDto {
-  @IsDateString()
+  @IsISO8601({ strict: true })
   @IsNotEmpty()
   startDate: string;
 
-  @IsDateString()
+  @IsISO8601({ strict: true })
   @IsNotEmpty()
   endDate: string;
 

@@ -6222,6 +6222,7 @@ export const StudentMembershipScalarFieldEnum = {
   startedAt: 'startedAt',
   endedAt: 'endedAt',
   status: 'status',
+  suspensionReason: 'suspensionReason',
   notes: 'notes',
   nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
   isMigrated: 'isMigrated',
@@ -7064,6 +7065,20 @@ export type EnumStudentMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInp
  * Reference to a field of type 'StudentMembershipStatus[]'
  */
 export type ListEnumStudentMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentMembershipStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StudentMembershipSuspensionReason'
+ */
+export type EnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentMembershipSuspensionReason'>
+    
+
+
+/**
+ * Reference to a field of type 'StudentMembershipSuspensionReason[]'
+ */
+export type ListEnumStudentMembershipSuspensionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentMembershipSuspensionReason[]'>
     
 
 

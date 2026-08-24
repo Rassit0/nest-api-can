@@ -67,6 +67,12 @@ export const studentMembershipSelect = {
   status: true,
   createdAt: true,
   updatedAt: true,
+  cycleEnrollments: {
+    where: {
+      status: { in: ['PENDING', 'CONFIRMED'] },
+    },
+    orderBy: { cycleStartDate: 'asc' },
+  },
   studentCharges: {
     where: {
       charge: {
@@ -221,6 +227,7 @@ export class StudentMembershipsService {
       const membership = await tx.studentMembership.create({
         data: {
           ...createData,
+          status: createData.status ?? StudentMembershipStatus.ACTIVE,
           ...(studentDiscounts &&
             studentDiscounts.length > 0 && {
               studentDiscounts: {
@@ -235,7 +242,7 @@ export class StudentMembershipsService {
             create: {
               previousStatus: null,
               newStatus:
-                createData.status ?? StudentMembershipStatus.PENDING_ACTIVE,
+                createData.status ?? StudentMembershipStatus.ACTIVE,
               reason: createData.notes ?? 'Creación de inscripción',
             },
           },

@@ -12,7 +12,9 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { StudentRegularizationService } from './services/student-regularization.service';
+import { StudentReactivationService } from './services/student-reactivation.service';
 import { RegularizeStudentChargeDto } from './dto/regularize-student-charge.dto';
+import { ReactivateStudentMembershipDto } from './dto/reactivate-student-membership.dto';
 import { StudentChargesService } from './student-charges.service';
 import { CreateStudentChargeDto } from './dto/create-student-charge.dto';
 import { UpdateStudentChargeDto } from './dto/update-student-charge.dto';
@@ -46,6 +48,7 @@ export class StudentChargesController {
   constructor(
     private readonly studentChargesService: StudentChargesService,
     private readonly studentRegularizationService: StudentRegularizationService,
+    private readonly studentReactivationService: StudentReactivationService,
   ) {}
 
   @Post('preview')
@@ -186,6 +189,35 @@ export class StudentChargesController {
       data,
     };
   }
+
+  @Post(':membershipId/reactivation')
+  @ApiOperation({
+    summary: 'Reactivar membresía con nuevos ciclos',
+    description:
+      'Reactiva un estudiante SUSPENDIDO inscribiéndolo en los próximos N ciclos a partir de su fecha de reingreso (reentryDate).',
+  })
+  @ApiParam({ name: 'membershipId', description: 'ID de la membresía suspendida' })
+  @ApiBody({ type: ReactivateStudentMembershipDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Reactivación exitosa con inscripción a ciclos.',
+  })
+  @ApiResponse({ status: 400, description: 'La membresía no está suspendida o la fecha es inválida.' })
+  @RequirePermissions('CREATE_STUDENT_CHARGES')
+  async reactivateWithCycles(
+    @Param('membershipId') membershipId: string,
+    @Body() dto: ReactivateStudentMembershipDto,
+  ) {
+    const data = await this.studentReactivationService.reactivateWithCycles(
+      membershipId,
+      dto,
+    );
+    return {
+      message: data.message,
+      data: data.membership,
+    };
+  }
+
   @Get(':membershipId/regularizable-cycles')
   @RequirePermissions('READ_STUDENT_CHARGES')
   async getRegularizableCycles(@Param('membershipId') membershipId: string) {

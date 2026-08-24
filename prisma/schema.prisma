@@ -1490,6 +1490,11 @@ enum StudentMembershipStatus {
   FINISHED
 }
 
+enum StudentMembershipSuspensionReason {
+  PAUSE
+  MANUAL
+}
+
 enum CycleEnrollmentStatus {
   PENDING
   CONFIRMED
@@ -1510,6 +1515,7 @@ model StudentMembership {
   startedAt DateTime                @map("started_at")
   endedAt   DateTime?               @map("ended_at")
   status    StudentMembershipStatus @default(PENDING_ACTIVE)
+  suspensionReason StudentMembershipSuspensionReason? @map("suspension_reason")
   notes     String?
 
   nextRecurringChargeGenerationDate DateTime?
