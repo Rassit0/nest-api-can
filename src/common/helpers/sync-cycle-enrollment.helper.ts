@@ -1,4 +1,4 @@
-import { Prisma, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
+import { Prisma, StatusCharge, CycleEnrollmentStatus, StudentMembershipStatus } from 'src/generated/prisma/client';
 import { BadRequestException } from '@nestjs/common';
 import { validateCourseSeasonCapacity } from './capacity.helper';
 import { isCycleEnrollmentExpired } from './cycle-enrollment.helper';
@@ -26,7 +26,7 @@ export async function syncCycleEnrollmentStatus(
       status: { not: targetStatus }
     },
     include: {
-      studentMembership: { select: { courseSeasonShiftId: true } }
+      studentMembership: { select: { id: true, status: true, courseSeasonShiftId: true } }
     }
   });
 
@@ -44,6 +44,17 @@ export async function syncCycleEnrollmentStatus(
         enrollment.cycleEndDate,
         enrollment.id // Excluirse a sí mismo para no causar un falso positivo
       );
+
+      // Activar membresía pendiente automáticamente tras confirmarse el pago del ciclo
+      if (enrollment.studentMembership.status === StudentMembershipStatus.PENDING_ACTIVE) {
+        await tx.studentMembership.update({
+          where: { id: enrollment.studentMembership.id },
+          data: { 
+            status: StudentMembershipStatus.ACTIVE,
+            notes: 'Activada automáticamente tras pago de ciclo' 
+          }
+        });
+      }
     }
 
     await tx.cycleEnrollment.update({

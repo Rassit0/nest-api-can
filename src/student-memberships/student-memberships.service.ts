@@ -12,12 +12,15 @@ import {
   Prisma,
   StatusCourseSeason,
   StatusCharge,
+  CycleEnrollmentStatus,
 } from 'src/generated/prisma/client';
 import { StudentMembershipsPaginationDto } from './dto/pagination.dto';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { CreateStudentMembershipPauseDto } from './dto/create-student-membership-pause.dto';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 import { TransferShiftDto } from './dto/transfer-shift.dto';
+import { isCycleEnrollmentExpired } from 'src/common/helpers/cycle-enrollment.helper';
+import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 
 export const studentMembershipSelect = {
   id: true,
@@ -1073,6 +1076,58 @@ export class StudentMembershipsService {
       throw new NotFoundException('El estudiante no fue encontrado');
     }
     return student;
+  }
+
+  async cancelExpiredPendingCycle(cycleEnrollmentId: string) {
+    return await this.prisma.$transaction(
+      async (tx) => {
+        const cycle = await tx.cycleEnrollment.findUnique({
+          where: { id: cycleEnrollmentId },
+          include: { charge: true },
+        });
+
+        if (!cycle) return;
+
+        // Idempotencia: si ya no es PENDING, no hacemos nada
+        if (cycle.status !== CycleEnrollmentStatus.PENDING) return;
+
+        // Validar JIT si realmente expiro
+        if (!isCycleEnrollmentExpired(cycle.createdAt)) {
+          return;
+        }
+
+        if (cycle.chargeId) {
+          // Si el charge ya estaba pagado o cancelado, solo sincronizamos (por seguridad idempotente)
+          if (
+            cycle.charge.status === StatusCharge.PENDING ||
+            cycle.charge.status === StatusCharge.PARTIAL
+          ) {
+            // Cancelar el cargo de forma automática
+            await tx.charge.update({
+              where: { id: cycle.chargeId },
+              data: { status: StatusCharge.CANCELLED },
+            });
+          }
+
+          // Propagar el estado CANCELLED al CycleEnrollment
+          // Usamos esto para respetar la misma ruta arquitectónica de sincronización
+          await syncCycleEnrollmentStatus(
+            tx,
+            cycle.chargeId,
+            StatusCharge.CANCELLED,
+          );
+        } else {
+          // Fallback por si no existiese un charge (datos corruptos)
+          await tx.cycleEnrollment.update({
+            where: { id: cycle.id },
+            data: { status: CycleEnrollmentStatus.CANCELLED },
+          });
+        }
+      },
+      {
+        isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+      },
+    );
   }
 
   private async getCourseMembershipOfferingAndShift(courseSeasonId: string, courseSeasonShiftId: string) {

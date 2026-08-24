@@ -6,6 +6,7 @@ import { PrismaService } from 'src/prisma.service';
 import { ChargesService } from 'src/charges/charges.service';
 import { PAYMENT_DEADLINE_HOURS } from 'src/common/helpers/cycle-enrollment.helper';
 import { StatusCharge } from 'src/generated/prisma/client';
+import { StudentMembershipsService } from './student-memberships.service';
 
 @Injectable()
 export class StudentMembershipsCron {
@@ -14,6 +15,7 @@ export class StudentMembershipsCron {
   constructor(
     private readonly prisma: PrismaService,
     private readonly chargesService: ChargesService,
+    private readonly studentMembershipsService: StudentMembershipsService,
   ) {}
 
   @Cron('30 0 * * *', {
@@ -137,34 +139,15 @@ export class StudentMembershipsCron {
 
     for (const enrollment of expiredEnrollments) {
       try {
-        // Verificar que siga estando PENDING justo antes de procesar (Idempotencia)
-        const currentCycle = await this.prisma.cycleEnrollment.findUnique({
-          where: { id: enrollment.id },
-          select: { status: true },
-        });
-
-        if (currentCycle?.status !== CycleEnrollmentStatus.PENDING) {
-          continue;
-        }
-
-        if (enrollment.chargeId) {
-          // El servicio chargesService.update({status: CANCELLED}) ya maneja
-          // transaccionalmente la cancelación del charge y usa syncCycleEnrollmentStatus
-          // para propagar el status CANCELLED al CycleEnrollment.
-          await this.chargesService.update(enrollment.chargeId, {
-            status: StatusCharge.CANCELLED
-          });
-          this.logger.log(`Reserva ${enrollment.id} expirada tras 24h. Cargo ${enrollment.chargeId} cancelado automáticamente.`);
-        } else {
-          // Fallback por si no tiene cargo (raro, pero posible en datos inconsistentes)
-          await this.prisma.cycleEnrollment.update({
-            where: { id: enrollment.id },
-            data: { status: CycleEnrollmentStatus.CANCELLED },
-          });
-          this.logger.log(`Reserva ${enrollment.id} expirada tras 24h (sin cargo asociado). Cancelada automáticamente.`);
-        }
+        await this.studentMembershipsService.cancelExpiredPendingCycle(enrollment.id);
+        this.logger.log(`Reserva ${enrollment.id} expirada tras 24h verificada y cancelada automáticamente (si aplicaba).`);
       } catch (error) {
-        this.logger.error(`Error cancelando reserva expirada ${enrollment.id}: ${error.message}`);
+        if (error.code === 'P2034') {
+          // Serialization failure, another process handled it
+          this.logger.log(`Conflicto transaccional al cancelar reserva ${enrollment.id} (P2034). Reintentará luego si sigue PENDING.`);
+        } else {
+          this.logger.error(`Error cancelando reserva expirada ${enrollment.id}: ${error.message}`);
+        }
       }
     }
   }
