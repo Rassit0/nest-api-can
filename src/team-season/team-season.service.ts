@@ -21,19 +21,10 @@ import { TeamCategorySeasonsPaginationDto } from './dto/pagination.dto';
 
 export const teamCategorySelect: Prisma.TeamSeasonSelect = {
   id: true,
-  gender: true,
   team: {
     select: {
       id: true,
       name: true,
-    },
-  },
-  category: {
-    select: {
-      id: true,
-      name: true,
-      minAge: true,
-      maxAge: true,
     },
   },
   season: {
@@ -46,32 +37,36 @@ export const teamCategorySelect: Prisma.TeamSeasonSelect = {
     },
   },
   description: true,
-  maxMembers: true,
-  minMembers: true,
-  minBirthYear: true,
-  maxBirthYear: true,
-  validateAge: true,
   status: true,
   isRegistrationOpen: true,
   billingConfig: true,
-  teamSeasonStaffs: {
+  categories: {
     select: {
       id: true,
-      role: true,
-      isPrimary: true,
-      startedAt: true,
-      endedAt: true,
-      staff: {
+      categoryId: true,
+      category: {
         select: {
           id: true,
-          person: {
-            select: {
-              id: true,
-              name: true,
-              lastName: true,
-              secondLastName: true,
-              imageUrl: true,
-              documentNumber: true,
+          name: true,
+          minAge: true,
+          maxAge: true,
+        },
+      },
+      gender: true,
+      minBirthYear: true,
+      maxBirthYear: true,
+      minMembers: true,
+      maxMembers: true,
+      validateAge: true,
+      isActive: true,
+      _count: {
+        select: {
+          player_membership: {
+            where: {
+              OR: [
+                { status: PlayerMembershipStatus.SUSPENDED },
+                { status: PlayerMembershipStatus.ACTIVE },
+              ],
             },
           },
         },
@@ -105,10 +100,10 @@ export class TeamSeasonService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createTeamCategoryDto: CreateTeamSeasonDto) {
-    const { imageUrl, ...rest } = createTeamCategoryDto;
+    const { categories, billingConfig, ...teamSeasonData } = createTeamCategoryDto;
 
     const season = await this.prisma.season.findUnique({
-      where: { id: createTeamCategoryDto.seasonId },
+      where: { id: teamSeasonData.seasonId },
     });
 
     if (!season) {
@@ -124,38 +119,52 @@ export class TeamSeasonService {
       );
     }
 
-    const category = await this.prisma.category.findUnique({
-      where: { id: createTeamCategoryDto.categoryId },
+    // Validar categorías
+    if (!categories || categories.length === 0) {
+      throw new BadRequestException('Debe especificar al menos una categoría');
+    }
+
+    const categoryIds = categories.map((c) => c.categoryId);
+    const uniqueCategoryKeys = new Set(categories.map((c) => `${c.categoryId}-${c.gender}`));
+    if (uniqueCategoryKeys.size !== categories.length) {
+      throw new BadRequestException('No se pueden incluir categorías duplicadas con el mismo género');
+    }
+
+    const fetchedCategories = await this.prisma.category.findMany({
+      where: { id: { in: categoryIds } },
     });
 
-    if (!category) {
-      throw new NotFoundException('La categoria no fue encontrada');
+    if (fetchedCategories.length !== new Set(categoryIds).size) {
+      throw new NotFoundException('Una o más categorías no fueron encontradas');
     }
 
-    if (
-      rest.minBirthYear &&
-      rest.maxBirthYear &&
-      rest.minBirthYear > rest.maxBirthYear
-    ) {
-      throw new BadRequestException(
-        'El año mínimo de nacimiento no puede ser mayor al año máximo permitido',
-      );
+    for (const catDto of categories) {
+      const category = fetchedCategories.find((c) => c.id === catDto.categoryId);
+      if (season.disciplineId !== category.disciplineId) {
+        throw new BadRequestException(
+          `La temporada y la categoria ${category.name} no pertenecen a la misma disciplina`,
+        );
+      }
+
+      if (
+        catDto.minBirthYear &&
+        catDto.maxBirthYear &&
+        catDto.minBirthYear > catDto.maxBirthYear
+      ) {
+        throw new BadRequestException(
+          `En la categoría ${category.name}, el año mínimo de nacimiento no puede ser mayor al año máximo permitido`,
+        );
+      }
     }
 
-    if (season.disciplineId !== category.disciplineId) {
-      throw new NotFoundException(
-        'La temporada y la categoria no pertenecen a la misma disciplina',
-      );
-    }
-
-    if (rest.billingConfig) {
-      if (rest.billingConfig.billingType !== SeasonBillingType.SINGLE_ONLY) {
-        if (!rest.billingConfig.recurringFee) {
+    if (billingConfig) {
+      if (billingConfig.billingType !== SeasonBillingType.SINGLE_ONLY) {
+        if (!billingConfig.recurringFee) {
           throw new BadRequestException(
             'La cuota mensual es requerida si el plan no es de pago único exclusivo',
           );
         }
-        if (!rest.billingConfig.registrationFee) {
+        if (!billingConfig.registrationFee) {
           throw new BadRequestException(
             'La matrícula es requerida si el plan no es de pago único exclusivo',
           );
@@ -163,10 +172,10 @@ export class TeamSeasonService {
       }
 
       if (
-        rest.billingConfig.billingType === SeasonBillingType.SINGLE_ONLY ||
-        rest.billingConfig.billingType === SeasonBillingType.BOTH
+        billingConfig.billingType === SeasonBillingType.SINGLE_ONLY ||
+        billingConfig.billingType === SeasonBillingType.BOTH
       ) {
-        if (!rest.billingConfig.seasonFee) {
+        if (!billingConfig.seasonFee) {
           throw new BadRequestException(
             'La cuota de temporada es requerida si el plan permite pago único',
           );
@@ -174,12 +183,12 @@ export class TeamSeasonService {
       }
 
       if (
-        !rest.billingConfig.billingFrequency ||
-        rest.billingConfig.billingFrequency === 'MONTHLY'
+        !billingConfig.billingFrequency ||
+        billingConfig.billingFrequency === 'MONTHLY'
       ) {
         if (
-          rest.billingConfig.billingDay < 1 ||
-          rest.billingConfig.billingDay > 28
+          billingConfig.billingDay < 1 ||
+          billingConfig.billingDay > 28
         ) {
           throw new BadRequestException(
             'El día de facturación mensual debe estar entre 1 y 28',
@@ -193,7 +202,7 @@ export class TeamSeasonService {
           let isValidDay = false;
           const current = new Date(season.startDate);
           while (current <= season.endDate) {
-            if (current.getUTCDate() === rest.billingConfig.billingDay) {
+            if (current.getUTCDate() === billingConfig.billingDay) {
               isValidDay = true;
               break;
             }
@@ -205,19 +214,19 @@ export class TeamSeasonService {
             );
           }
         }
-      } else if (rest.billingConfig.billingFrequency === 'WEEKLY') {
+      } else if (billingConfig.billingFrequency === 'WEEKLY') {
         if (
-          rest.billingConfig.billingDay < 1 ||
-          rest.billingConfig.billingDay > 7
+          billingConfig.billingDay < 1 ||
+          billingConfig.billingDay > 7
         ) {
           throw new BadRequestException(
             'El día de facturación semanal debe estar entre 1 y 7',
           );
         }
-      } else if (rest.billingConfig.billingFrequency === 'BIWEEKLY') {
+      } else if (billingConfig.billingFrequency === 'BIWEEKLY') {
         if (
-          rest.billingConfig.billingDay < 1 ||
-          rest.billingConfig.billingDay > 14
+          billingConfig.billingDay < 1 ||
+          billingConfig.billingDay > 14
         ) {
           throw new BadRequestException(
             'El día de facturación quincenal debe estar entre 1 y 14',
@@ -226,18 +235,31 @@ export class TeamSeasonService {
       }
     }
 
-    const { billingConfig, ...teamSeasonData } = rest;
-    const newTeamCategorySeason = await this.prisma.teamSeason.create({
-      data: {
-        ...teamSeasonData,
-        ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
-      },
-      select: teamCategorySelect,
+    const newTeamSeason = await this.prisma.$transaction(async (tx) => {
+      return tx.teamSeason.create({
+        data: {
+          ...teamSeasonData,
+          ...(billingConfig ? { billingConfig: { create: billingConfig } } : {}),
+          categories: {
+            create: categories.map((c) => ({
+              categoryId: c.categoryId,
+              gender: c.gender,
+              minBirthYear: c.minBirthYear,
+              maxBirthYear: c.maxBirthYear,
+              minMembers: c.minMembers,
+              maxMembers: c.maxMembers,
+              validateAge: c.validateAge ?? true,
+              isActive: c.isActive ?? true,
+            })),
+          },
+        },
+        select: teamCategorySelect,
+      });
     });
 
     return {
       message: 'Temporada asignada a equipo exitosamente',
-      data: newTeamCategorySeason,
+      data: newTeamSeason,
     };
   }
 
@@ -258,7 +280,13 @@ export class TeamSeasonService {
       ? {
           OR: [
             { team: { name: { contains: search, mode: 'insensitive' } } },
-            { category: { name: { contains: search, mode: 'insensitive' } } },
+            {
+              categories: {
+                some: {
+                  category: { name: { contains: search, mode: 'insensitive' } },
+                },
+              },
+            },
           ],
         }
       : {};
@@ -268,7 +296,9 @@ export class TeamSeasonService {
     }
 
     if (gender) {
-      where.gender = gender;
+      where.categories = {
+        some: { gender },
+      };
     }
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
@@ -334,7 +364,7 @@ export class TeamSeasonService {
     ] = await Promise.all([
       this.prisma.teamSeason.findUnique({
         where: { id },
-        select: { id: true, maxMembers: true },
+        select: { id: true, categories: { select: { maxMembers: true } } },
       }),
       this.prisma.charge.aggregate({
         where: {
@@ -365,6 +395,8 @@ export class TeamSeasonService {
     const totalPending = Number(chargesAggr._sum.pendingAmount || 0);
     const totalPaid = totalBilled - totalPending;
 
+    const maxMembers = teamSeason.categories.reduce((sum, cat) => sum + cat.maxMembers, 0);
+
     return {
       data: {
         totalBilled,
@@ -374,19 +406,20 @@ export class TeamSeasonService {
         suspendedMembers,
         pendingMembers,
         occupiedSlotsCount: activeMembers + suspendedMembers + pendingMembers,
-        maxMembers: teamSeason.maxMembers,
+        maxMembers,
       },
       message: 'Resumen de la temporada de equipo obtenido exitosamente',
     };
   }
 
   async update(id: string, updateTeamSeasonDto: UpdateTeamSeasonDto) {
-    const { teamId, categoryId, seasonId, imageUrl, ...rest } =
-      updateTeamSeasonDto;
+    const { ...rest } = updateTeamSeasonDto;
+    
     const teamSeason = await this.prisma.teamSeason.findUnique({
       where: { id },
       select: teamCategorySelect,
     });
+    
     if (!teamSeason) {
       throw new NotFoundException(
         'La categoria de equipo en temporada no fue encontrada',
@@ -403,18 +436,6 @@ export class TeamSeasonService {
     }
 
     if (teamSeason.status === StatusTeamSeason.ACTIVE) {
-      if (
-        (teamId && teamId !== teamSeason.team.id) ||
-        (seasonId && seasonId !== teamSeason.season.id) ||
-        (categoryId && categoryId !== teamSeason.category.id) ||
-        (updateTeamSeasonDto.gender &&
-          updateTeamSeasonDto.gender !== teamSeason.gender)
-      ) {
-        throw new BadRequestException(
-          'No se puede modificar el equipo, la temporada, la categoría ni el género una vez que la temporada de equipo está activa',
-        );
-      }
-
       const billing = updateTeamSeasonDto.billingConfig;
       if (billing && teamSeason.billingConfig) {
         if (
@@ -442,83 +463,6 @@ export class TeamSeasonService {
             'No se puede modificar la configuración base del motor de cobros (tipo, frecuencia, día y prorrateos) en una temporada activa. Solo se permite actualizar montos para nuevas inscripciones.',
           );
         }
-      }
-    }
-
-    let season = await this.prisma.season.findUnique({
-      where: { id: seasonId ? seasonId : teamSeason.season.id },
-    });
-
-    let category = await this.prisma.category.findUnique({
-      where: { id: categoryId ? categoryId : teamSeason.category.id },
-    });
-
-    if (updateTeamSeasonDto.seasonId) {
-      season = await this.prisma.season.findUnique({
-        where: { id: updateTeamSeasonDto.seasonId },
-      });
-    }
-
-    if (updateTeamSeasonDto.categoryId) {
-      category = await this.prisma.category.findUnique({
-        where: { id: updateTeamSeasonDto.categoryId },
-      });
-    }
-
-    if (!season) {
-      throw new NotFoundException('La temporada no fue encontrada');
-    }
-
-    if (
-      season.status === SeasonStatus.FINISHED ||
-      season.status === SeasonStatus.CANCELLED
-    ) {
-      throw new BadRequestException(
-        'No se puede actualizar ni reasignar un equipo a una temporada inactiva o finalizada',
-      );
-    }
-    if (!category) {
-      throw new NotFoundException('La categoria no fue encontrada');
-    }
-
-    if (season.disciplineId !== category.disciplineId) {
-      throw new NotFoundException(
-        'La temporada y la categoria no pertenecen a la misma disciplina',
-      );
-    }
-
-    const minBirthYear =
-      rest.minBirthYear !== undefined
-        ? rest.minBirthYear
-        : teamSeason.minBirthYear;
-    const maxBirthYear =
-      rest.maxBirthYear !== undefined
-        ? rest.maxBirthYear
-        : teamSeason.maxBirthYear;
-
-    if (minBirthYear && maxBirthYear && minBirthYear > maxBirthYear) {
-      throw new BadRequestException(
-        'El año mínimo de nacimiento no puede ser mayor al año máximo permitido',
-      );
-    }
-
-    if (
-      rest.maxMembers !== undefined &&
-      rest.maxMembers < teamSeason.maxMembers
-    ) {
-      const activeMembersCount = await this.prisma.playerMembership.count({
-        where: {
-          teamSeasonId: id,
-          status: {
-            in: ['ACTIVE', 'PENDING_ACTIVE', 'SUSPENDED'],
-          },
-        },
-      });
-
-      if (rest.maxMembers < activeMembersCount) {
-        throw new BadRequestException(
-          `No se pueden reducir los cupos máximos a ${rest.maxMembers} porque ya hay ${activeMembersCount} jugadores ocupando un cupo.`,
-        );
       }
     }
 
@@ -573,9 +517,6 @@ export class TeamSeasonService {
       where: { id },
       data: {
         ...teamSeasonData,
-        teamId,
-        seasonId,
-        categoryId,
         ...(billingConfig
           ? {
               billingConfig: {
@@ -906,7 +847,7 @@ export class TeamSeasonService {
     await this.prisma.teamSeasonPause.delete({
       where: { id },
     });
-
+    
     return { message: 'Pausa eliminada correctamente' };
   }
 
@@ -922,23 +863,11 @@ export class TeamSeasonService {
       },
       select: {
         id: true,
-        gender: true,
-        minBirthYear: true,
-        maxBirthYear: true,
-        maxMembers: true,
         description: true,
         team: {
           select: {
             name: true,
             club: { select: { name: true } },
-          },
-        },
-        category: {
-          select: {
-            name: true,
-            minAge: true,
-            maxAge: true,
-            discipline: { select: { name: true } },
           },
         },
         billingConfig: {
@@ -949,11 +878,29 @@ export class TeamSeasonService {
             billingType: true,
           },
         },
-        _count: {
+        categories: {
+          where: { isActive: true },
           select: {
-            playerMemberships: {
-              where: {
-                status: { in: ['ACTIVE', 'SUSPENDED'] },
+            id: true,
+            gender: true,
+            minBirthYear: true,
+            maxBirthYear: true,
+            maxMembers: true,
+            category: {
+              select: {
+                name: true,
+                minAge: true,
+                maxAge: true,
+                discipline: { select: { name: true } },
+              },
+            },
+            _count: {
+              select: {
+                player_membership: {
+                  where: {
+                    status: { in: ['ACTIVE', 'SUSPENDED'] },
+                  },
+                },
               },
             },
           },
@@ -961,7 +908,7 @@ export class TeamSeasonService {
       },
     });
 
-    const mapped = teamSeasons.map((ts) => {
+    const mapped = teamSeasons.flatMap((ts) => {
       let regFee = 0;
       let monthFee = 0;
       if (ts.billingConfig) {
@@ -973,30 +920,31 @@ export class TeamSeasonService {
         }
       }
 
-      return {
+      return ts.categories.map((tsc) => ({
         id: ts.id,
+        teamSeasonCategoryId: tsc.id,
         name: ts.team.name,
-        discipline: ts.category.discipline.name,
+        discipline: tsc.category.discipline.name,
         club: ts.team.club.name,
         gender:
-          ts.gender === 'MALE'
+          tsc.gender === 'MALE'
             ? 'Masculino'
-            : ts.gender === 'FEMALE'
+            : tsc.gender === 'FEMALE'
               ? 'Femenino'
               : 'Mixto',
-        minAge: ts.category.minAge,
-        maxAge: ts.category.maxAge,
-        category: ts.category.name,
+        minAge: tsc.category.minAge,
+        maxAge: tsc.category.maxAge,
+        category: tsc.category.name,
         tournament: ts.description || 'Competencia local',
-        capacity: ts.maxMembers,
-        enrolled: ts._count.playerMemberships,
+        capacity: tsc.maxMembers,
+        enrolled: tsc._count.player_membership,
         registrationFee: regFee,
         monthlyFee: monthFee,
-      };
+      }));
     });
 
     return {
-      message: 'Equipos p�blicos obtenidos exitosamente',
+      message: 'Equipos públicos obtenidos exitosamente',
       data: mapped,
     };
   }

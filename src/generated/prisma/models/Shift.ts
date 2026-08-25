@@ -198,9 +198,9 @@ export type ShiftWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Shift"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Shift"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Shift"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   courseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -212,9 +212,9 @@ export type ShiftOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  institution?: Prisma.InstitutionOrderByWithRelationInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  institution?: Prisma.InstitutionOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -230,9 +230,9 @@ export type ShiftWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Shift"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Shift"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Shift"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   courseSeasonShifts?: Prisma.CourseSeasonShiftListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "institutionId_name">
 
@@ -267,9 +267,9 @@ export type ShiftCreateInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
 
@@ -289,9 +289,9 @@ export type ShiftUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
 
@@ -587,8 +587,8 @@ export type ShiftCreateWithoutCreatedByInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
 
@@ -617,9 +617,9 @@ export type ShiftCreateWithoutUpdatedByInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutShiftInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
 }
 
 export type ShiftUncheckedCreateWithoutUpdatedByInput = {
@@ -679,8 +679,8 @@ export type ShiftCreateWithoutCourseSeasonShiftsInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedShiftsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutShiftsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedShiftsInput
 }
 
@@ -715,8 +715,8 @@ export type ShiftUpdateWithoutCourseSeasonShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
 
@@ -791,8 +791,8 @@ export type ShiftUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedShiftsNestedInput
 }
 
@@ -820,9 +820,9 @@ export type ShiftUpdateWithoutUpdatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
   courseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutShiftNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedShiftsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutShiftsNestedInput
 }
 
 export type ShiftUncheckedUpdateWithoutUpdatedByInput = {
@@ -883,9 +883,9 @@ export type ShiftSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   courseSeasonShifts?: boolean | Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
@@ -898,8 +898,8 @@ export type ShiftSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
 
@@ -911,8 +911,8 @@ export type ShiftSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["shift"]>
 
@@ -928,29 +928,29 @@ export type ShiftSelectScalar = {
 
 export type ShiftOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "institutionId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["shift"]>
 export type ShiftInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   courseSeasonShifts?: boolean | Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.ShiftCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ShiftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
 }
 export type ShiftIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Shift$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Shift$updatedByArgs<ExtArgs>
 }
 
 export type $ShiftPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Shift"
   objects: {
-    institution: Prisma.$InstitutionPayload<ExtArgs>
     courseSeasonShifts: Prisma.$CourseSeasonShiftPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    institution: Prisma.$InstitutionPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1355,9 +1355,9 @@ readonly fields: ShiftFieldRefs;
  */
 export interface Prisma__ShiftClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   courseSeasonShifts<T extends Prisma.Shift$courseSeasonShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$courseSeasonShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Shift$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Shift$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shift$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

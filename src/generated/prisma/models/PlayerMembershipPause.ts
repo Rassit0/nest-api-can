@@ -214,8 +214,8 @@ export type PlayerMembershipPauseWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembershipPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"PlayerMembershipPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"PlayerMembershipPause"> | string | null
-  playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -229,8 +229,8 @@ export type PlayerMembershipPauseOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  playerMembership?: Prisma.PlayerMembershipOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -247,8 +247,8 @@ export type PlayerMembershipPauseWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"PlayerMembershipPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"PlayerMembershipPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"PlayerMembershipPause"> | string | null
-  playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  playerMembership?: Prisma.XOR<Prisma.PlayerMembershipScalarRelationFilter, Prisma.PlayerMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -289,8 +289,8 @@ export type PlayerMembershipPauseCreateInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutPausesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipPausesInput
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutPausesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedPlayerMembershipPausesInput
 }
 
@@ -313,8 +313,8 @@ export type PlayerMembershipPauseUpdateInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutPausesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipPausesNestedInput
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutPausesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedPlayerMembershipPausesNestedInput
 }
 
@@ -637,8 +637,8 @@ export type PlayerMembershipPauseCreateWithoutUpdatedByInput = {
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutPausesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlayerMembershipPausesInput
+  playerMembership: Prisma.PlayerMembershipCreateNestedOneWithoutPausesInput
 }
 
 export type PlayerMembershipPauseUncheckedCreateWithoutUpdatedByInput = {
@@ -800,8 +800,8 @@ export type PlayerMembershipPauseUpdateWithoutUpdatedByInput = {
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutPausesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPlayerMembershipPausesNestedInput
+  playerMembership?: Prisma.PlayerMembershipUpdateOneRequiredWithoutPausesNestedInput
 }
 
 export type PlayerMembershipPauseUncheckedUpdateWithoutUpdatedByInput = {
@@ -838,8 +838,8 @@ export type PlayerMembershipPauseSelect<ExtArgs extends runtime.Types.Extensions
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipPause"]>
 
@@ -853,8 +853,8 @@ export type PlayerMembershipPauseSelectCreateManyAndReturn<ExtArgs extends runti
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipPause"]>
 
@@ -868,8 +868,8 @@ export type PlayerMembershipPauseSelectUpdateManyAndReturn<ExtArgs extends runti
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["playerMembershipPause"]>
 
@@ -887,26 +887,26 @@ export type PlayerMembershipPauseSelectScalar = {
 
 export type PlayerMembershipPauseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerMembershipId" | "startDate" | "endDate" | "reason" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["playerMembershipPause"]>
 export type PlayerMembershipPauseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }
 export type PlayerMembershipPauseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }
 export type PlayerMembershipPauseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>
+  playerMembership?: boolean | Prisma.PlayerMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>
 }
 
 export type $PlayerMembershipPausePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PlayerMembershipPause"
   objects: {
-    playerMembership: Prisma.$PlayerMembershipPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    playerMembership: Prisma.$PlayerMembershipPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1313,8 +1313,8 @@ readonly fields: PlayerMembershipPauseFieldRefs;
  */
 export interface Prisma__PlayerMembershipPauseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  playerMembership<T extends Prisma.PlayerMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerMembershipClient<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.PlayerMembershipPause$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipPause$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  playerMembership<T extends Prisma.PlayerMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerMembershipClient<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerMembershipPause$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

@@ -43,11 +43,11 @@ export type EventSeriesMinAggregateOutputType = {
   materializedUntil: Date | null
   lastMaterializedAt: Date | null
   status: $Enums.EventSeriesStatus | null
-  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  lockedUntil: Date | null
 }
 
 export type EventSeriesMaxAggregateOutputType = {
@@ -59,11 +59,11 @@ export type EventSeriesMaxAggregateOutputType = {
   materializedUntil: Date | null
   lastMaterializedAt: Date | null
   status: $Enums.EventSeriesStatus | null
-  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  lockedUntil: Date | null
 }
 
 export type EventSeriesCountAggregateOutputType = {
@@ -76,11 +76,11 @@ export type EventSeriesCountAggregateOutputType = {
   materializedUntil: number
   lastMaterializedAt: number
   status: number
-  lockedUntil: number
   createdAt: number
   updatedAt: number
   createdById: number
   updatedById: number
+  lockedUntil: number
   _all: number
 }
 
@@ -102,11 +102,11 @@ export type EventSeriesMinAggregateInputType = {
   materializedUntil?: true
   lastMaterializedAt?: true
   status?: true
-  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  lockedUntil?: true
 }
 
 export type EventSeriesMaxAggregateInputType = {
@@ -118,11 +118,11 @@ export type EventSeriesMaxAggregateInputType = {
   materializedUntil?: true
   lastMaterializedAt?: true
   status?: true
-  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  lockedUntil?: true
 }
 
 export type EventSeriesCountAggregateInputType = {
@@ -135,11 +135,11 @@ export type EventSeriesCountAggregateInputType = {
   materializedUntil?: true
   lastMaterializedAt?: true
   status?: true
-  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  lockedUntil?: true
   _all?: true
 }
 
@@ -239,11 +239,11 @@ export type EventSeriesGroupByOutputType = {
   materializedUntil: Date
   lastMaterializedAt: Date | null
   status: $Enums.EventSeriesStatus
-  lockedUntil: Date | null
   createdAt: Date
   updatedAt: Date
   createdById: string | null
   updatedById: string | null
+  lockedUntil: Date | null
   _count: EventSeriesCountAggregateOutputType | null
   _avg: EventSeriesAvgAggregateOutputType | null
   _sum: EventSeriesSumAggregateOutputType | null
@@ -279,11 +279,11 @@ export type EventSeriesWhereInput = {
   materializedUntil?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   lastMaterializedAt?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFilter<"EventSeries"> | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   createdById?: Prisma.StringNullableFilter<"EventSeries"> | string | null
   updatedById?: Prisma.StringNullableFilter<"EventSeries"> | string | null
+  lockedUntil?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   events?: Prisma.EventListRelationFilter
 }
 
@@ -297,11 +297,11 @@ export type EventSeriesOrderByWithRelationInput = {
   materializedUntil?: Prisma.SortOrder
   lastMaterializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   events?: Prisma.EventOrderByRelationAggregateInput
 }
 
@@ -318,11 +318,11 @@ export type EventSeriesWhereUniqueInput = Prisma.AtLeast<{
   materializedUntil?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   lastMaterializedAt?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFilter<"EventSeries"> | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventSeries"> | Date | string
   createdById?: Prisma.StringNullableFilter<"EventSeries"> | string | null
   updatedById?: Prisma.StringNullableFilter<"EventSeries"> | string | null
+  lockedUntil?: Prisma.DateTimeNullableFilter<"EventSeries"> | Date | string | null
   events?: Prisma.EventListRelationFilter
 }, "id">
 
@@ -336,11 +336,11 @@ export type EventSeriesOrderByWithAggregationInput = {
   materializedUntil?: Prisma.SortOrder
   lastMaterializedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EventSeriesCountOrderByAggregateInput
   _avg?: Prisma.EventSeriesAvgOrderByAggregateInput
   _max?: Prisma.EventSeriesMaxOrderByAggregateInput
@@ -361,11 +361,11 @@ export type EventSeriesScalarWhereWithAggregatesInput = {
   materializedUntil?: Prisma.DateTimeWithAggregatesFilter<"EventSeries"> | Date | string
   lastMaterializedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EventSeries"> | Date | string | null
   status?: Prisma.EnumEventSeriesStatusWithAggregatesFilter<"EventSeries"> | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"EventSeries"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EventSeries"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"EventSeries"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"EventSeries"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"EventSeries"> | string | null
+  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"EventSeries"> | Date | string | null
 }
 
 export type EventSeriesCreateInput = {
@@ -378,11 +378,11 @@ export type EventSeriesCreateInput = {
   materializedUntil: Date | string
   lastMaterializedAt?: Date | string | null
   status?: $Enums.EventSeriesStatus
-  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  lockedUntil?: Date | string | null
   events?: Prisma.EventCreateNestedManyWithoutEventSeriesInput
 }
 
@@ -396,11 +396,11 @@ export type EventSeriesUncheckedCreateInput = {
   materializedUntil: Date | string
   lastMaterializedAt?: Date | string | null
   status?: $Enums.EventSeriesStatus
-  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  lockedUntil?: Date | string | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutEventSeriesInput
 }
 
@@ -414,11 +414,11 @@ export type EventSeriesUpdateInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   events?: Prisma.EventUpdateManyWithoutEventSeriesNestedInput
 }
 
@@ -432,11 +432,11 @@ export type EventSeriesUncheckedUpdateInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   events?: Prisma.EventUncheckedUpdateManyWithoutEventSeriesNestedInput
 }
 
@@ -450,11 +450,11 @@ export type EventSeriesCreateManyInput = {
   materializedUntil: Date | string
   lastMaterializedAt?: Date | string | null
   status?: $Enums.EventSeriesStatus
-  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  lockedUntil?: Date | string | null
 }
 
 export type EventSeriesUpdateManyMutationInput = {
@@ -467,11 +467,11 @@ export type EventSeriesUpdateManyMutationInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventSeriesUncheckedUpdateManyInput = {
@@ -484,11 +484,11 @@ export type EventSeriesUncheckedUpdateManyInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventSeriesCountOrderByAggregateInput = {
@@ -501,11 +501,11 @@ export type EventSeriesCountOrderByAggregateInput = {
   materializedUntil?: Prisma.SortOrder
   lastMaterializedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
 }
 
 export type EventSeriesAvgOrderByAggregateInput = {
@@ -521,11 +521,11 @@ export type EventSeriesMaxOrderByAggregateInput = {
   materializedUntil?: Prisma.SortOrder
   lastMaterializedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
 }
 
 export type EventSeriesMinOrderByAggregateInput = {
@@ -537,11 +537,11 @@ export type EventSeriesMinOrderByAggregateInput = {
   materializedUntil?: Prisma.SortOrder
   lastMaterializedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
 }
 
 export type EventSeriesSumOrderByAggregateInput = {
@@ -587,11 +587,11 @@ export type EventSeriesCreateWithoutEventsInput = {
   materializedUntil: Date | string
   lastMaterializedAt?: Date | string | null
   status?: $Enums.EventSeriesStatus
-  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  lockedUntil?: Date | string | null
 }
 
 export type EventSeriesUncheckedCreateWithoutEventsInput = {
@@ -604,11 +604,11 @@ export type EventSeriesUncheckedCreateWithoutEventsInput = {
   materializedUntil: Date | string
   lastMaterializedAt?: Date | string | null
   status?: $Enums.EventSeriesStatus
-  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  lockedUntil?: Date | string | null
 }
 
 export type EventSeriesCreateOrConnectWithoutEventsInput = {
@@ -637,11 +637,11 @@ export type EventSeriesUpdateWithoutEventsInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventSeriesUncheckedUpdateWithoutEventsInput = {
@@ -654,11 +654,11 @@ export type EventSeriesUncheckedUpdateWithoutEventsInput = {
   materializedUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastMaterializedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEventSeriesStatusFieldUpdateOperationsInput | $Enums.EventSeriesStatus
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -702,11 +702,11 @@ export type EventSeriesSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   materializedUntil?: boolean
   lastMaterializedAt?: boolean
   status?: boolean
-  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  lockedUntil?: boolean
   events?: boolean | Prisma.EventSeries$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.EventSeriesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventSeries"]>
@@ -721,11 +721,11 @@ export type EventSeriesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   materializedUntil?: boolean
   lastMaterializedAt?: boolean
   status?: boolean
-  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  lockedUntil?: boolean
 }, ExtArgs["result"]["eventSeries"]>
 
 export type EventSeriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -738,11 +738,11 @@ export type EventSeriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   materializedUntil?: boolean
   lastMaterializedAt?: boolean
   status?: boolean
-  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  lockedUntil?: boolean
 }, ExtArgs["result"]["eventSeries"]>
 
 export type EventSeriesSelectScalar = {
@@ -755,14 +755,14 @@ export type EventSeriesSelectScalar = {
   materializedUntil?: boolean
   lastMaterializedAt?: boolean
   status?: boolean
-  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  lockedUntil?: boolean
 }
 
-export type EventSeriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "recurrenceRule" | "timezone" | "eventType" | "templateData" | "templateVersion" | "materializedUntil" | "lastMaterializedAt" | "status" | "lockedUntil" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["eventSeries"]>
+export type EventSeriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "recurrenceRule" | "timezone" | "eventType" | "templateData" | "templateVersion" | "materializedUntil" | "lastMaterializedAt" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "lockedUntil", ExtArgs["result"]["eventSeries"]>
 export type EventSeriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   events?: boolean | Prisma.EventSeries$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.EventSeriesCountOutputTypeDefaultArgs<ExtArgs>
@@ -785,11 +785,11 @@ export type $EventSeriesPayload<ExtArgs extends runtime.Types.Extensions.Interna
     materializedUntil: Date
     lastMaterializedAt: Date | null
     status: $Enums.EventSeriesStatus
-    lockedUntil: Date | null
     createdAt: Date
     updatedAt: Date
     createdById: string | null
     updatedById: string | null
+    lockedUntil: Date | null
   }, ExtArgs["result"]["eventSeries"]>
   composites: {}
 }
@@ -1223,11 +1223,11 @@ export interface EventSeriesFieldRefs {
   readonly materializedUntil: Prisma.FieldRef<"EventSeries", 'DateTime'>
   readonly lastMaterializedAt: Prisma.FieldRef<"EventSeries", 'DateTime'>
   readonly status: Prisma.FieldRef<"EventSeries", 'EventSeriesStatus'>
-  readonly lockedUntil: Prisma.FieldRef<"EventSeries", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"EventSeries", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"EventSeries", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"EventSeries", 'String'>
   readonly updatedById: Prisma.FieldRef<"EventSeries", 'String'>
+  readonly lockedUntil: Prisma.FieldRef<"EventSeries", 'DateTime'>
 }
     
 

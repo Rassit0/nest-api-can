@@ -26,5 +26,9 @@ export class EventFilterDto {
 
   @IsOptional()
   @IsUUID()
+  teamSeasonCategoryId?: string;
+
+  @IsOptional()
+  @IsUUID()
   courseSeasonId?: string;
 }

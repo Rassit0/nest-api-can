@@ -264,9 +264,9 @@ export type InternalTransferWhereInput = {
   createdById?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
   createdAt?: Prisma.DateTimeFilter<"InternalTransfer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InternalTransfer"> | Date | string
-  sourceTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
-  destinationTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  destinationTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
+  sourceTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
 }
 
 export type InternalTransferOrderByWithRelationInput = {
@@ -281,9 +281,9 @@ export type InternalTransferOrderByWithRelationInput = {
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  sourceTransaction?: Prisma.TransactionOrderByWithRelationInput
-  destinationTransaction?: Prisma.TransactionOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  destinationTransaction?: Prisma.TransactionOrderByWithRelationInput
+  sourceTransaction?: Prisma.TransactionOrderByWithRelationInput
 }
 
 export type InternalTransferWhereUniqueInput = Prisma.AtLeast<{
@@ -301,9 +301,9 @@ export type InternalTransferWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
   createdAt?: Prisma.DateTimeFilter<"InternalTransfer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InternalTransfer"> | Date | string
-  sourceTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
-  destinationTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  destinationTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
+  sourceTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
 }, "id" | "sourceTransactionId" | "destinationTransactionId">
 
 export type InternalTransferOrderByWithAggregationInput = {
@@ -351,9 +351,9 @@ export type InternalTransferCreateInput = {
   date?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
-  destinationTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferDestInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInternalTransfersInput
+  destinationTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferDestInput
+  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
 }
 
 export type InternalTransferUncheckedCreateInput = {
@@ -379,9 +379,9 @@ export type InternalTransferUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
-  destinationTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferDestNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInternalTransfersNestedInput
+  destinationTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferDestNestedInput
+  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
 }
 
 export type InternalTransferUncheckedUpdateInput = {
@@ -502,19 +502,13 @@ export type InternalTransferOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type InternalTransferCreateNestedOneWithoutSourceTransactionInput = {
-  create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
-  connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutSourceTransactionInput
-  connect?: Prisma.InternalTransferWhereUniqueInput
-}
-
 export type InternalTransferCreateNestedOneWithoutDestinationTransactionInput = {
   create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutDestinationTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutDestinationTransactionInput>
   connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutDestinationTransactionInput
   connect?: Prisma.InternalTransferWhereUniqueInput
 }
 
-export type InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput = {
+export type InternalTransferCreateNestedOneWithoutSourceTransactionInput = {
   create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
   connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutSourceTransactionInput
   connect?: Prisma.InternalTransferWhereUniqueInput
@@ -526,14 +520,10 @@ export type InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactio
   connect?: Prisma.InternalTransferWhereUniqueInput
 }
 
-export type InternalTransferUpdateOneWithoutSourceTransactionNestedInput = {
+export type InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput = {
   create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
   connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutSourceTransactionInput
-  upsert?: Prisma.InternalTransferUpsertWithoutSourceTransactionInput
-  disconnect?: Prisma.InternalTransferWhereInput | boolean
-  delete?: Prisma.InternalTransferWhereInput | boolean
   connect?: Prisma.InternalTransferWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InternalTransferUpdateToOneWithWhereWithoutSourceTransactionInput, Prisma.InternalTransferUpdateWithoutSourceTransactionInput>, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
 }
 
 export type InternalTransferUpdateOneWithoutDestinationTransactionNestedInput = {
@@ -546,7 +536,7 @@ export type InternalTransferUpdateOneWithoutDestinationTransactionNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.InternalTransferUpdateToOneWithWhereWithoutDestinationTransactionInput, Prisma.InternalTransferUpdateWithoutDestinationTransactionInput>, Prisma.InternalTransferUncheckedUpdateWithoutDestinationTransactionInput>
 }
 
-export type InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput = {
+export type InternalTransferUpdateOneWithoutSourceTransactionNestedInput = {
   create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
   connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutSourceTransactionInput
   upsert?: Prisma.InternalTransferUpsertWithoutSourceTransactionInput
@@ -564,6 +554,16 @@ export type InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNeste
   delete?: Prisma.InternalTransferWhereInput | boolean
   connect?: Prisma.InternalTransferWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.InternalTransferUpdateToOneWithWhereWithoutDestinationTransactionInput, Prisma.InternalTransferUpdateWithoutDestinationTransactionInput>, Prisma.InternalTransferUncheckedUpdateWithoutDestinationTransactionInput>
+}
+
+export type InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput = {
+  create?: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
+  connectOrCreate?: Prisma.InternalTransferCreateOrConnectWithoutSourceTransactionInput
+  upsert?: Prisma.InternalTransferUpsertWithoutSourceTransactionInput
+  disconnect?: Prisma.InternalTransferWhereInput | boolean
+  delete?: Prisma.InternalTransferWhereInput | boolean
+  connect?: Prisma.InternalTransferWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InternalTransferUpdateToOneWithWhereWithoutSourceTransactionInput, Prisma.InternalTransferUpdateWithoutSourceTransactionInput>, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
 }
 
 export type EnumTransferStatusFieldUpdateOperationsInput = {
@@ -612,37 +612,6 @@ export type InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput = {
   deleteMany?: Prisma.InternalTransferScalarWhereInput | Prisma.InternalTransferScalarWhereInput[]
 }
 
-export type InternalTransferCreateWithoutSourceTransactionInput = {
-  id?: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  reference?: string | null
-  status?: $Enums.TransferStatus
-  date?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  destinationTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferDestInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInternalTransfersInput
-}
-
-export type InternalTransferUncheckedCreateWithoutSourceTransactionInput = {
-  id?: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  reference?: string | null
-  status?: $Enums.TransferStatus
-  date?: Date | string
-  destinationTransactionId: string
-  createdById?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type InternalTransferCreateOrConnectWithoutSourceTransactionInput = {
-  where: Prisma.InternalTransferWhereUniqueInput
-  create: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
-}
-
 export type InternalTransferCreateWithoutDestinationTransactionInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -652,8 +621,8 @@ export type InternalTransferCreateWithoutDestinationTransactionInput = {
   date?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInternalTransfersInput
+  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
 }
 
 export type InternalTransferUncheckedCreateWithoutDestinationTransactionInput = {
@@ -674,41 +643,35 @@ export type InternalTransferCreateOrConnectWithoutDestinationTransactionInput = 
   create: Prisma.XOR<Prisma.InternalTransferCreateWithoutDestinationTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutDestinationTransactionInput>
 }
 
-export type InternalTransferUpsertWithoutSourceTransactionInput = {
-  update: Prisma.XOR<Prisma.InternalTransferUpdateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
+export type InternalTransferCreateWithoutSourceTransactionInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  description?: string | null
+  reference?: string | null
+  status?: $Enums.TransferStatus
+  date?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInternalTransfersInput
+  destinationTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferDestInput
+}
+
+export type InternalTransferUncheckedCreateWithoutSourceTransactionInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  description?: string | null
+  reference?: string | null
+  status?: $Enums.TransferStatus
+  date?: Date | string
+  destinationTransactionId: string
+  createdById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InternalTransferCreateOrConnectWithoutSourceTransactionInput = {
+  where: Prisma.InternalTransferWhereUniqueInput
   create: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
-  where?: Prisma.InternalTransferWhereInput
-}
-
-export type InternalTransferUpdateToOneWithWhereWithoutSourceTransactionInput = {
-  where?: Prisma.InternalTransferWhereInput
-  data: Prisma.XOR<Prisma.InternalTransferUpdateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
-}
-
-export type InternalTransferUpdateWithoutSourceTransactionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destinationTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferDestNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedInternalTransfersNestedInput
-}
-
-export type InternalTransferUncheckedUpdateWithoutSourceTransactionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destinationTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternalTransferUpsertWithoutDestinationTransactionInput = {
@@ -731,8 +694,8 @@ export type InternalTransferUpdateWithoutDestinationTransactionInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInternalTransfersNestedInput
+  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
 }
 
 export type InternalTransferUncheckedUpdateWithoutDestinationTransactionInput = {
@@ -748,6 +711,43 @@ export type InternalTransferUncheckedUpdateWithoutDestinationTransactionInput = 
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type InternalTransferUpsertWithoutSourceTransactionInput = {
+  update: Prisma.XOR<Prisma.InternalTransferUpdateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
+  create: Prisma.XOR<Prisma.InternalTransferCreateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedCreateWithoutSourceTransactionInput>
+  where?: Prisma.InternalTransferWhereInput
+}
+
+export type InternalTransferUpdateToOneWithWhereWithoutSourceTransactionInput = {
+  where?: Prisma.InternalTransferWhereInput
+  data: Prisma.XOR<Prisma.InternalTransferUpdateWithoutSourceTransactionInput, Prisma.InternalTransferUncheckedUpdateWithoutSourceTransactionInput>
+}
+
+export type InternalTransferUpdateWithoutSourceTransactionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedInternalTransfersNestedInput
+  destinationTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferDestNestedInput
+}
+
+export type InternalTransferUncheckedUpdateWithoutSourceTransactionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumTransferStatusFieldUpdateOperationsInput | $Enums.TransferStatus
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  destinationTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type InternalTransferCreateWithoutCreatedByInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -757,8 +757,8 @@ export type InternalTransferCreateWithoutCreatedByInput = {
   date?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
   destinationTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferDestInput
+  sourceTransaction: Prisma.TransactionCreateNestedOneWithoutInternalTransferSourceInput
 }
 
 export type InternalTransferUncheckedCreateWithoutCreatedByInput = {
@@ -839,8 +839,8 @@ export type InternalTransferUpdateWithoutCreatedByInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
   destinationTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferDestNestedInput
+  sourceTransaction?: Prisma.TransactionUpdateOneRequiredWithoutInternalTransferSourceNestedInput
 }
 
 export type InternalTransferUncheckedUpdateWithoutCreatedByInput = {
@@ -883,9 +883,9 @@ export type InternalTransferSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["internalTransfer"]>
 
 export type InternalTransferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -900,9 +900,9 @@ export type InternalTransferSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["internalTransfer"]>
 
 export type InternalTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -917,9 +917,9 @@ export type InternalTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["internalTransfer"]>
 
 export type InternalTransferSelectScalar = {
@@ -938,27 +938,27 @@ export type InternalTransferSelectScalar = {
 
 export type InternalTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "description" | "reference" | "status" | "date" | "sourceTransactionId" | "destinationTransactionId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["internalTransfer"]>
 export type InternalTransferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 export type InternalTransferIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 export type InternalTransferIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
-  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
+  destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
+  sourceTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 
 export type $InternalTransferPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InternalTransfer"
   objects: {
-    sourceTransaction: Prisma.$TransactionPayload<ExtArgs>
-    destinationTransaction: Prisma.$TransactionPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    destinationTransaction: Prisma.$TransactionPayload<ExtArgs>
+    sourceTransaction: Prisma.$TransactionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1366,9 +1366,9 @@ readonly fields: InternalTransferFieldRefs;
  */
 export interface Prisma__InternalTransferClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  sourceTransaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  destinationTransaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.InternalTransfer$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InternalTransfer$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  destinationTransaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sourceTransaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

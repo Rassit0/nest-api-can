@@ -198,8 +198,8 @@ export type PersonContactWhereInput = {
   isEmergencyContact?: Prisma.BoolFilter<"PersonContact"> | boolean
   isBillingContact?: Prisma.BoolFilter<"PersonContact"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PersonContact"> | Date | string
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   contactPerson?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }
 
 export type PersonContactOrderByWithRelationInput = {
@@ -210,8 +210,8 @@ export type PersonContactOrderByWithRelationInput = {
   isEmergencyContact?: Prisma.SortOrder
   isBillingContact?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  person?: Prisma.PersonOrderByWithRelationInput
   contactPerson?: Prisma.PersonOrderByWithRelationInput
+  person?: Prisma.PersonOrderByWithRelationInput
 }
 
 export type PersonContactWhereUniqueInput = Prisma.AtLeast<{
@@ -226,8 +226,8 @@ export type PersonContactWhereUniqueInput = Prisma.AtLeast<{
   isEmergencyContact?: Prisma.BoolFilter<"PersonContact"> | boolean
   isBillingContact?: Prisma.BoolFilter<"PersonContact"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PersonContact"> | Date | string
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   contactPerson?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
 }, "personId_contactPersonId">
 
 export type PersonContactOrderByWithAggregationInput = {
@@ -262,8 +262,8 @@ export type PersonContactCreateInput = {
   isEmergencyContact?: boolean
   isBillingContact?: boolean
   createdAt?: Date | string
-  person: Prisma.PersonCreateNestedOneWithoutContactsInput
   contactPerson: Prisma.PersonCreateNestedOneWithoutContactOfInput
+  person: Prisma.PersonCreateNestedOneWithoutContactsInput
 }
 
 export type PersonContactUncheckedCreateInput = {
@@ -282,8 +282,8 @@ export type PersonContactUpdateInput = {
   isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  person?: Prisma.PersonUpdateOneRequiredWithoutContactsNestedInput
   contactPerson?: Prisma.PersonUpdateOneRequiredWithoutContactOfNestedInput
+  person?: Prisma.PersonUpdateOneRequiredWithoutContactsNestedInput
 }
 
 export type PersonContactUncheckedUpdateInput = {
@@ -369,13 +369,6 @@ export type PersonContactMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type PersonContactCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput> | Prisma.PersonContactCreateWithoutPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutPersonInput | Prisma.PersonContactCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.PersonContactCreateManyPersonInputEnvelope
-  connect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
-}
-
 export type PersonContactCreateNestedManyWithoutContactPersonInput = {
   create?: Prisma.XOR<Prisma.PersonContactCreateWithoutContactPersonInput, Prisma.PersonContactUncheckedCreateWithoutContactPersonInput> | Prisma.PersonContactCreateWithoutContactPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutContactPersonInput[]
   connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutContactPersonInput | Prisma.PersonContactCreateOrConnectWithoutContactPersonInput[]
@@ -383,7 +376,7 @@ export type PersonContactCreateNestedManyWithoutContactPersonInput = {
   connect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
 }
 
-export type PersonContactUncheckedCreateNestedManyWithoutPersonInput = {
+export type PersonContactCreateNestedManyWithoutPersonInput = {
   create?: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput> | Prisma.PersonContactCreateWithoutPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutPersonInput[]
   connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutPersonInput | Prisma.PersonContactCreateOrConnectWithoutPersonInput[]
   createMany?: Prisma.PersonContactCreateManyPersonInputEnvelope
@@ -397,18 +390,11 @@ export type PersonContactUncheckedCreateNestedManyWithoutContactPersonInput = {
   connect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
 }
 
-export type PersonContactUpdateManyWithoutPersonNestedInput = {
+export type PersonContactUncheckedCreateNestedManyWithoutPersonInput = {
   create?: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput> | Prisma.PersonContactCreateWithoutPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutPersonInput[]
   connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutPersonInput | Prisma.PersonContactCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput | Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput[]
   createMany?: Prisma.PersonContactCreateManyPersonInputEnvelope
-  set?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
-  disconnect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
-  delete?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
   connect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
-  update?: Prisma.PersonContactUpdateWithWhereUniqueWithoutPersonInput | Prisma.PersonContactUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.PersonContactUpdateManyWithWhereWithoutPersonInput | Prisma.PersonContactUpdateManyWithWhereWithoutPersonInput[]
-  deleteMany?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
 }
 
 export type PersonContactUpdateManyWithoutContactPersonNestedInput = {
@@ -425,7 +411,7 @@ export type PersonContactUpdateManyWithoutContactPersonNestedInput = {
   deleteMany?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
 }
 
-export type PersonContactUncheckedUpdateManyWithoutPersonNestedInput = {
+export type PersonContactUpdateManyWithoutPersonNestedInput = {
   create?: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput> | Prisma.PersonContactCreateWithoutPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutPersonInput[]
   connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutPersonInput | Prisma.PersonContactCreateOrConnectWithoutPersonInput[]
   upsert?: Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput | Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput[]
@@ -453,40 +439,26 @@ export type PersonContactUncheckedUpdateManyWithoutContactPersonNestedInput = {
   deleteMany?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
 }
 
+export type PersonContactUncheckedUpdateManyWithoutPersonNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput> | Prisma.PersonContactCreateWithoutPersonInput[] | Prisma.PersonContactUncheckedCreateWithoutPersonInput[]
+  connectOrCreate?: Prisma.PersonContactCreateOrConnectWithoutPersonInput | Prisma.PersonContactCreateOrConnectWithoutPersonInput[]
+  upsert?: Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput | Prisma.PersonContactUpsertWithWhereUniqueWithoutPersonInput[]
+  createMany?: Prisma.PersonContactCreateManyPersonInputEnvelope
+  set?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
+  disconnect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
+  delete?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
+  connect?: Prisma.PersonContactWhereUniqueInput | Prisma.PersonContactWhereUniqueInput[]
+  update?: Prisma.PersonContactUpdateWithWhereUniqueWithoutPersonInput | Prisma.PersonContactUpdateWithWhereUniqueWithoutPersonInput[]
+  updateMany?: Prisma.PersonContactUpdateManyWithWhereWithoutPersonInput | Prisma.PersonContactUpdateManyWithWhereWithoutPersonInput[]
+  deleteMany?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
+}
+
 export type EnumContactRelationshipFieldUpdateOperationsInput = {
   set?: $Enums.ContactRelationship
 }
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
-}
-
-export type PersonContactCreateWithoutPersonInput = {
-  relationship: $Enums.ContactRelationship
-  isPrimaryContact?: boolean
-  isEmergencyContact?: boolean
-  isBillingContact?: boolean
-  createdAt?: Date | string
-  contactPerson: Prisma.PersonCreateNestedOneWithoutContactOfInput
-}
-
-export type PersonContactUncheckedCreateWithoutPersonInput = {
-  contactPersonId: string
-  relationship: $Enums.ContactRelationship
-  isPrimaryContact?: boolean
-  isEmergencyContact?: boolean
-  isBillingContact?: boolean
-  createdAt?: Date | string
-}
-
-export type PersonContactCreateOrConnectWithoutPersonInput = {
-  where: Prisma.PersonContactWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput>
-}
-
-export type PersonContactCreateManyPersonInputEnvelope = {
-  data: Prisma.PersonContactCreateManyPersonInput | Prisma.PersonContactCreateManyPersonInput[]
-  skipDuplicates?: boolean
 }
 
 export type PersonContactCreateWithoutContactPersonInput = {
@@ -517,33 +489,32 @@ export type PersonContactCreateManyContactPersonInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type PersonContactUpsertWithWhereUniqueWithoutPersonInput = {
+export type PersonContactCreateWithoutPersonInput = {
+  relationship: $Enums.ContactRelationship
+  isPrimaryContact?: boolean
+  isEmergencyContact?: boolean
+  isBillingContact?: boolean
+  createdAt?: Date | string
+  contactPerson: Prisma.PersonCreateNestedOneWithoutContactOfInput
+}
+
+export type PersonContactUncheckedCreateWithoutPersonInput = {
+  contactPersonId: string
+  relationship: $Enums.ContactRelationship
+  isPrimaryContact?: boolean
+  isEmergencyContact?: boolean
+  isBillingContact?: boolean
+  createdAt?: Date | string
+}
+
+export type PersonContactCreateOrConnectWithoutPersonInput = {
   where: Prisma.PersonContactWhereUniqueInput
-  update: Prisma.XOR<Prisma.PersonContactUpdateWithoutPersonInput, Prisma.PersonContactUncheckedUpdateWithoutPersonInput>
   create: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput>
 }
 
-export type PersonContactUpdateWithWhereUniqueWithoutPersonInput = {
-  where: Prisma.PersonContactWhereUniqueInput
-  data: Prisma.XOR<Prisma.PersonContactUpdateWithoutPersonInput, Prisma.PersonContactUncheckedUpdateWithoutPersonInput>
-}
-
-export type PersonContactUpdateManyWithWhereWithoutPersonInput = {
-  where: Prisma.PersonContactScalarWhereInput
-  data: Prisma.XOR<Prisma.PersonContactUpdateManyMutationInput, Prisma.PersonContactUncheckedUpdateManyWithoutPersonInput>
-}
-
-export type PersonContactScalarWhereInput = {
-  AND?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
-  OR?: Prisma.PersonContactScalarWhereInput[]
-  NOT?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
-  personId?: Prisma.StringFilter<"PersonContact"> | string
-  contactPersonId?: Prisma.StringFilter<"PersonContact"> | string
-  relationship?: Prisma.EnumContactRelationshipFilter<"PersonContact"> | $Enums.ContactRelationship
-  isPrimaryContact?: Prisma.BoolFilter<"PersonContact"> | boolean
-  isEmergencyContact?: Prisma.BoolFilter<"PersonContact"> | boolean
-  isBillingContact?: Prisma.BoolFilter<"PersonContact"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"PersonContact"> | Date | string
+export type PersonContactCreateManyPersonInputEnvelope = {
+  data: Prisma.PersonContactCreateManyPersonInput | Prisma.PersonContactCreateManyPersonInput[]
+  skipDuplicates?: boolean
 }
 
 export type PersonContactUpsertWithWhereUniqueWithoutContactPersonInput = {
@@ -562,13 +533,33 @@ export type PersonContactUpdateManyWithWhereWithoutContactPersonInput = {
   data: Prisma.XOR<Prisma.PersonContactUpdateManyMutationInput, Prisma.PersonContactUncheckedUpdateManyWithoutContactPersonInput>
 }
 
-export type PersonContactCreateManyPersonInput = {
-  contactPersonId: string
-  relationship: $Enums.ContactRelationship
-  isPrimaryContact?: boolean
-  isEmergencyContact?: boolean
-  isBillingContact?: boolean
-  createdAt?: Date | string
+export type PersonContactScalarWhereInput = {
+  AND?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
+  OR?: Prisma.PersonContactScalarWhereInput[]
+  NOT?: Prisma.PersonContactScalarWhereInput | Prisma.PersonContactScalarWhereInput[]
+  personId?: Prisma.StringFilter<"PersonContact"> | string
+  contactPersonId?: Prisma.StringFilter<"PersonContact"> | string
+  relationship?: Prisma.EnumContactRelationshipFilter<"PersonContact"> | $Enums.ContactRelationship
+  isPrimaryContact?: Prisma.BoolFilter<"PersonContact"> | boolean
+  isEmergencyContact?: Prisma.BoolFilter<"PersonContact"> | boolean
+  isBillingContact?: Prisma.BoolFilter<"PersonContact"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"PersonContact"> | Date | string
+}
+
+export type PersonContactUpsertWithWhereUniqueWithoutPersonInput = {
+  where: Prisma.PersonContactWhereUniqueInput
+  update: Prisma.XOR<Prisma.PersonContactUpdateWithoutPersonInput, Prisma.PersonContactUncheckedUpdateWithoutPersonInput>
+  create: Prisma.XOR<Prisma.PersonContactCreateWithoutPersonInput, Prisma.PersonContactUncheckedCreateWithoutPersonInput>
+}
+
+export type PersonContactUpdateWithWhereUniqueWithoutPersonInput = {
+  where: Prisma.PersonContactWhereUniqueInput
+  data: Prisma.XOR<Prisma.PersonContactUpdateWithoutPersonInput, Prisma.PersonContactUncheckedUpdateWithoutPersonInput>
+}
+
+export type PersonContactUpdateManyWithWhereWithoutPersonInput = {
+  where: Prisma.PersonContactScalarWhereInput
+  data: Prisma.XOR<Prisma.PersonContactUpdateManyMutationInput, Prisma.PersonContactUncheckedUpdateManyWithoutPersonInput>
 }
 
 export type PersonContactCreateManyContactPersonInput = {
@@ -580,31 +571,13 @@ export type PersonContactCreateManyContactPersonInput = {
   createdAt?: Date | string
 }
 
-export type PersonContactUpdateWithoutPersonInput = {
-  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
-  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactPerson?: Prisma.PersonUpdateOneRequiredWithoutContactOfNestedInput
-}
-
-export type PersonContactUncheckedUpdateWithoutPersonInput = {
-  contactPersonId?: Prisma.StringFieldUpdateOperationsInput | string
-  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
-  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PersonContactUncheckedUpdateManyWithoutPersonInput = {
-  contactPersonId?: Prisma.StringFieldUpdateOperationsInput | string
-  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
-  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type PersonContactCreateManyPersonInput = {
+  contactPersonId: string
+  relationship: $Enums.ContactRelationship
+  isPrimaryContact?: boolean
+  isEmergencyContact?: boolean
+  isBillingContact?: boolean
+  createdAt?: Date | string
 }
 
 export type PersonContactUpdateWithoutContactPersonInput = {
@@ -634,6 +607,33 @@ export type PersonContactUncheckedUpdateManyWithoutContactPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type PersonContactUpdateWithoutPersonInput = {
+  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
+  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contactPerson?: Prisma.PersonUpdateOneRequiredWithoutContactOfNestedInput
+}
+
+export type PersonContactUncheckedUpdateWithoutPersonInput = {
+  contactPersonId?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
+  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PersonContactUncheckedUpdateManyWithoutPersonInput = {
+  contactPersonId?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.EnumContactRelationshipFieldUpdateOperationsInput | $Enums.ContactRelationship
+  isPrimaryContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEmergencyContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBillingContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type PersonContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -644,8 +644,8 @@ export type PersonContactSelect<ExtArgs extends runtime.Types.Extensions.Interna
   isEmergencyContact?: boolean
   isBillingContact?: boolean
   createdAt?: boolean
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["personContact"]>
 
 export type PersonContactSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -656,8 +656,8 @@ export type PersonContactSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   isEmergencyContact?: boolean
   isBillingContact?: boolean
   createdAt?: boolean
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["personContact"]>
 
 export type PersonContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -668,8 +668,8 @@ export type PersonContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   isEmergencyContact?: boolean
   isBillingContact?: boolean
   createdAt?: boolean
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["personContact"]>
 
 export type PersonContactSelectScalar = {
@@ -684,23 +684,23 @@ export type PersonContactSelectScalar = {
 
 export type PersonContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"personId" | "contactPersonId" | "relationship" | "isPrimaryContact" | "isEmergencyContact" | "isBillingContact" | "createdAt", ExtArgs["result"]["personContact"]>
 export type PersonContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }
 export type PersonContactIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }
 export type PersonContactIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   contactPerson?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
 }
 
 export type $PersonContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PersonContact"
   objects: {
-    person: Prisma.$PersonPayload<ExtArgs>
     contactPerson: Prisma.$PersonPayload<ExtArgs>
+    person: Prisma.$PersonPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     personId: string
@@ -1104,8 +1104,8 @@ readonly fields: PersonContactFieldRefs;
  */
 export interface Prisma__PersonContactClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   contactPerson<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

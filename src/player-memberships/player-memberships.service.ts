@@ -42,12 +42,17 @@ export const playerMembershipSelect = {
           name: true,
         },
       },
-      category: {
+      season: {
         select: {
           name: true,
         },
       },
-      season: {
+    },
+  },
+  teamSeasonCategoryId: true,
+  teamSeasonCategories: {
+    select: {
+      category: {
         select: {
           name: true,
         },
@@ -124,7 +129,7 @@ type PlayerWithPerson = Prisma.PlayerGetPayload<{
   };
 }>;
 
-type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
+type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonCategoryGetPayload<{
   include: {
     category: {
       select: {
@@ -132,14 +137,22 @@ type TeamMembershipOfferingWithCategory = Prisma.TeamSeasonGetPayload<{
         maxAge: true;
       };
     };
-    season: {
-      select: {
-        startDate: true;
-        endDate: true;
+    teamSeason: {
+      include: {
+        season: {
+          select: {
+            startDate: true;
+            endDate: true;
+          };
+        };
       };
     };
   };
-}> & { minBirthYear: number | null; maxBirthYear: number | null; validateAge: boolean };
+}> & {
+  minBirthYear: number | null;
+  maxBirthYear: number | null;
+  validateAge: boolean;
+};
 
 import { MembershipChargesService } from 'src/membership-charges/membership-charges.service';
 import { PaginationDto } from 'src/common/dto/pagination';
@@ -156,27 +169,28 @@ export class PlayerMembershipsService {
   ) {}
 
   async create(createDto: CreatePlayerMembershipDto) {
-    await this.validatePaymentPlan(
-      createDto.paymentPlanId,
-      createDto.teamSeasonId,
+    const offering = await this.getTeamMembershipOffering(
+      createDto.teamSeasonCategoryId,
     );
 
-    const [player, offering] = await Promise.all([
-      this.getPlayer(createDto.playerId),
-      this.getTeamMembershipOffering(createDto.teamSeasonId),
-    ]);
+    await this.validatePaymentPlan(
+      createDto.paymentPlanId,
+      offering.teamSeasonId,
+    );
+
+    const player = await this.getPlayer(createDto.playerId);
 
     this.validateMembershipStartDate(
       new Date(createDto.startedAt),
-      offering.season.startDate,
-      offering.season.endDate,
+      offering.teamSeason.season.startDate,
+      offering.teamSeason.season.endDate,
     );
 
     await this.validateOfferingCapacity(offering.id, offering.maxMembers);
 
     await this.validateDuplicateMembership(
       createDto.playerId,
-      createDto.teamSeasonId,
+      offering.teamSeasonId,
     );
 
     this.validatePlayerEligibility(player, offering);
@@ -187,8 +201,8 @@ export class PlayerMembershipsService {
     ) {
       this.validateDiscountDates(
         createDto.membershipDiscounts,
-        offering.season.startDate,
-        offering.season.endDate,
+        offering.teamSeason.season.startDate,
+        offering.teamSeason.season.endDate,
       );
     }
 
@@ -202,6 +216,7 @@ export class PlayerMembershipsService {
     const membership = await this.prisma.playerMembership.create({
       data: {
         ...createData,
+        teamSeasonId: offering.teamSeasonId,
         ...(membershipDiscounts &&
           membershipDiscounts.length > 0 && {
             membershipDiscounts: {
@@ -300,7 +315,7 @@ export class PlayerMembershipsService {
       orderBy = 'asc',
       sortField = 'createdAt',
       playerId,
-      teamSeasonId,
+      teamSeasonCategoryId,
       paymentPlanId,
       status,
     } = paginationDto;
@@ -313,8 +328,8 @@ export class PlayerMembershipsService {
       where.playerId = playerId;
     }
 
-    if (teamSeasonId) {
-      where.teamSeasonId = teamSeasonId;
+    if (teamSeasonCategoryId) {
+      where.teamSeasonCategoryId = teamSeasonCategoryId;
     }
 
     if (paymentPlanId) {
@@ -327,7 +342,10 @@ export class PlayerMembershipsService {
 
     if (search) {
       const searchTerms = search.trim().split(/\s+/);
-      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(search);
+      const isUuid =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          search,
+        );
 
       where.OR = [];
 
@@ -338,7 +356,7 @@ export class PlayerMembershipsService {
       where.OR.push({
         player: {
           person: {
-            AND: searchTerms.map(term => ({
+            AND: searchTerms.map((term) => ({
               OR: [
                 { name: { contains: term, mode: 'insensitive' } },
                 { lastName: { contains: term, mode: 'insensitive' } },
@@ -354,7 +372,8 @@ export class PlayerMembershipsService {
     // `globalWhere` se usa para obtener el "Summary" global, ignorando filtros de búsqueda o de estado.
     const globalWhere: Prisma.PlayerMembershipWhereInput = {};
     if (playerId) globalWhere.playerId = playerId;
-    if (teamSeasonId) globalWhere.teamSeasonId = teamSeasonId;
+    if (teamSeasonCategoryId)
+      globalWhere.teamSeasonCategoryId = teamSeasonCategoryId;
     if (paymentPlanId) globalWhere.paymentPlanId = paymentPlanId;
 
     // Ejecutamos las consultas en paralelo para máxima velocidad
@@ -403,9 +422,9 @@ export class PlayerMembershipsService {
       this.prisma.playerMembership.count({
         where: { ...globalWhere, status: 'PENDING_ACTIVE' },
       }),
-      teamSeasonId
-        ? this.prisma.teamSeason.findUnique({
-            where: { id: teamSeasonId },
+      teamSeasonCategoryId
+        ? this.prisma.teamSeasonCategory.findUnique({
+            where: { id: teamSeasonCategoryId },
             select: { maxMembers: true },
           })
         : Promise.resolve(null),
@@ -500,42 +519,54 @@ export class PlayerMembershipsService {
 
     const playerId = updateDto.playerId ?? membership.playerId;
 
-    const offeringId = updateDto.teamSeasonId ?? membership.teamSeasonId;
+    const offeringId =
+      updateDto.teamSeasonCategoryId ?? membership.teamSeasonCategoryId;
+
+    const offering = await this.getTeamMembershipOffering(offeringId);
 
     if (updateDto.paymentPlanId) {
-      await this.validatePaymentPlan(updateDto.paymentPlanId, offeringId);
+      await this.validatePaymentPlan(
+        updateDto.paymentPlanId,
+        offering.teamSeasonId,
+      );
     }
 
-    const [player, offering] = await Promise.all([
-      this.getPlayer(playerId),
-      this.getTeamMembershipOffering(offeringId),
-    ]);
+    const player = await this.getPlayer(playerId);
 
     this.validateMembershipStartDate(
       updateDto.startedAt
         ? new Date(updateDto.startedAt)
         : membership.startedAt,
-      offering.season.startDate,
-      offering.season.endDate,
+      offering.teamSeason.season.startDate,
+      offering.teamSeason.season.endDate,
     );
 
     this.validatePlayerEligibility(player, offering);
 
     const isChangingOffering =
-      updateDto.teamSeasonId &&
-      updateDto.teamSeasonId !== membership.teamSeasonId;
+      updateDto.teamSeasonCategoryId &&
+      updateDto.teamSeasonCategoryId !== membership.teamSeasonCategoryId;
 
     if (isChangingOffering) {
       await this.validateOfferingCapacity(offering.id, offering.maxMembers);
 
-      await this.validateDuplicateMembership(playerId, offeringId, id);
+      await this.validateDuplicateMembership(
+        playerId,
+        offering.teamSeasonId,
+        id,
+      );
     }
 
     const { membershipDiscounts, ...updateData } = updateDto;
 
     const updatedMembership = await this.prisma.playerMembership.update({
       where: { id },
-      data: updateData,
+      data: {
+        ...updateData,
+        ...(updateData.teamSeasonCategoryId && {
+          teamSeasonId: offering.teamSeasonId,
+        }),
+      },
       select: playerMembershipSelect,
     });
 
@@ -812,7 +843,8 @@ export class PlayerMembershipsService {
       (mc) =>
         (mc.charge.status !== StatusCharge.PENDING &&
           mc.charge.status !== StatusCharge.CANCELLED) ||
-        (Number(mc.charge.amount) - Number(mc.charge.discountAmount)) > Number(mc.charge.pendingAmount) ||
+        Number(mc.charge.amount) - Number(mc.charge.discountAmount) >
+          Number(mc.charge.pendingAmount) ||
         mc.charge.payments.length > 0 ||
         mc.charge.childCharges.length > 0,
     );
@@ -906,9 +938,9 @@ export class PlayerMembershipsService {
     return player;
   }
 
-  private async getTeamMembershipOffering(teamSeasonId: string) {
-    const offering = await this.prisma.teamSeason.findUnique({
-      where: { id: teamSeasonId },
+  private async getTeamMembershipOffering(teamSeasonCategoryId: string) {
+    const offering = await this.prisma.teamSeasonCategory.findUnique({
+      where: { id: teamSeasonCategoryId },
       include: {
         category: {
           select: {
@@ -916,10 +948,14 @@ export class PlayerMembershipsService {
             maxAge: true,
           },
         },
-        season: {
-          select: {
-            startDate: true,
-            endDate: true,
+        teamSeason: {
+          include: {
+            season: {
+              select: {
+                startDate: true,
+                endDate: true,
+              },
+            },
           },
         },
       },
@@ -942,7 +978,7 @@ export class PlayerMembershipsService {
 
     const activeMembers = await this.prisma.playerMembership.count({
       where: {
-        teamSeasonId: offeringId,
+        teamSeasonCategoryId: offeringId,
         status: {
           in: [PlayerMembershipStatus.ACTIVE, PlayerMembershipStatus.SUSPENDED],
         },
@@ -1017,7 +1053,7 @@ export class PlayerMembershipsService {
       } else {
         this.validatePlayerAge(
           player.person.birthDate,
-          offering.season.startDate,
+          offering.teamSeason.season.startDate,
           offering.category.minAge,
           offering.category.maxAge,
         );
@@ -1345,30 +1381,34 @@ export class PlayerMembershipsService {
     return { message: 'Pausa eliminada exitosamente' };
   }
 
-  async getTeamSeasonContext(teamSeasonId: string) {
-    const teamSeason = await this.prisma.teamSeason.findUnique({
-      where: { id: teamSeasonId },
+  async getTeamSeasonContext(teamSeasonCategoryId: string) {
+    const teamSeason = await this.prisma.teamSeasonCategory.findUnique({
+      where: { id: teamSeasonCategoryId },
       select: {
         id: true,
         gender: true,
-        season: {
+        teamSeason: {
           select: {
-            id: true,
-            name: true,
-            startDate: true,
-            endDate: true,
+            season: {
+              select: {
+                id: true,
+                name: true,
+                startDate: true,
+                endDate: true,
+              },
+            },
+            team: {
+              select: {
+                name: true,
+                shortName: true,
+              },
+            },
+            description: true,
           },
         },
-        description: true,
         category: {
           select: {
             name: true,
-          },
-        },
-        team: {
-          select: {
-            name: true,
-            shortName: true,
           },
         },
       },

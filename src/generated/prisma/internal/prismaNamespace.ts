@@ -456,7 +456,8 @@ export const ModelName = {
   AccountCharge: 'AccountCharge',
   CashClosure: 'CashClosure',
   ThirdParty: 'ThirdParty',
-  Attachment: 'Attachment'
+  Attachment: 'Attachment',
+  TeamSeasonCategory: 'TeamSeasonCategory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -472,7 +473,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5434,6 +5435,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TeamSeasonCategory: {
+      payload: Prisma.$TeamSeasonCategoryPayload<ExtArgs>
+      fields: Prisma.TeamSeasonCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamSeasonCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamSeasonCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.TeamSeasonCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamSeasonCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.TeamSeasonCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.TeamSeasonCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.TeamSeasonCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamSeasonCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.TeamSeasonCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        update: {
+          args: Prisma.TeamSeasonCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamSeasonCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamSeasonCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamSeasonCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamSeasonCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamSeasonCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.TeamSeasonCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamSeasonCategory>
+        }
+        groupBy: {
+          args: Prisma.TeamSeasonCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamSeasonCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamSeasonCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5526,11 +5601,11 @@ export const InstitutionScalarFieldEnum = {
   name: 'name',
   imageUrl: 'imageUrl',
   address: 'address',
-  latitude: 'latitude',
-  longitude: 'longitude',
-  googleMapsUrl: 'googleMapsUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  googleMapsUrl: 'googleMapsUrl',
+  latitude: 'latitude',
+  longitude: 'longitude',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5576,9 +5651,9 @@ export const ClubScalarFieldEnum = {
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  defaultAccountCategoryId: 'defaultAccountCategoryId',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  defaultAccountCategoryId: 'defaultAccountCategoryId'
 } as const
 
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
@@ -5597,10 +5672,10 @@ export const LocationScalarFieldEnum = {
   isRentable: 'isRentable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  parentId: 'parentId',
-  maxConcurrentEvents: 'maxConcurrentEvents',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  maxConcurrentEvents: 'maxConcurrentEvents',
+  parentId: 'parentId'
 } as const
 
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
@@ -5675,20 +5750,13 @@ export const TeamSeasonScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   description: 'description',
-  maxMembers: 'maxMembers',
-  minMembers: 'minMembers',
-  minBirthYear: 'minBirthYear',
-  maxBirthYear: 'maxBirthYear',
-  validateAge: 'validateAge',
   teamId: 'teamId',
-  categoryId: 'categoryId',
   seasonId: 'seasonId',
-  gender: 'gender',
   status: 'status',
-  statusNotes: 'statusNotes',
-  isRegistrationOpen: 'isRegistrationOpen',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  statusNotes: 'statusNotes',
+  isRegistrationOpen: 'isRegistrationOpen',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5734,11 +5802,11 @@ export const PaymentPlanScalarFieldEnum = {
   isSinglePayment: 'isSinglePayment',
   advanceCycles: 'advanceCycles',
   advanceCyclesDiscountPercent: 'advanceCyclesDiscountPercent',
-  promotionalCycles: 'promotionalCycles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  promotionalCycles: 'promotionalCycles'
 } as const
 
 export type PaymentPlanScalarFieldEnum = (typeof PaymentPlanScalarFieldEnum)[keyof typeof PaymentPlanScalarFieldEnum]
@@ -5771,7 +5839,8 @@ export const PlayerMembershipScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
 export type PlayerMembershipScalarFieldEnum = (typeof PlayerMembershipScalarFieldEnum)[keyof typeof PlayerMembershipScalarFieldEnum]
@@ -5811,13 +5880,13 @@ export const MembershipDiscountScalarFieldEnum = {
   playerMembershipId: 'playerMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5858,7 +5927,6 @@ export type StaffScalarFieldEnum = (typeof StaffScalarFieldEnum)[keyof typeof St
 
 export const TeamSeasonStaffScalarFieldEnum = {
   id: 'id',
-  teamSeasonId: 'teamSeasonId',
   staffId: 'staffId',
   role: 'role',
   customRole: 'customRole',
@@ -5869,7 +5937,8 @@ export const TeamSeasonStaffScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
 export type TeamSeasonStaffScalarFieldEnum = (typeof TeamSeasonStaffScalarFieldEnum)[keyof typeof TeamSeasonStaffScalarFieldEnum]
@@ -5881,16 +5950,16 @@ export const ChargeScalarFieldEnum = {
   description: 'description',
   amount: 'amount',
   pendingAmount: 'pendingAmount',
-  discountAmount: 'discountAmount',
-  discountReason: 'discountReason',
   dueDate: 'dueDate',
   status: 'status',
-  direction: 'direction',
-  chargeCategory: 'chargeCategory',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  discountAmount: 'discountAmount',
+  discountReason: 'discountReason',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  direction: 'direction',
+  chargeCategory: 'chargeCategory'
 } as const
 
 export type ChargeScalarFieldEnum = (typeof ChargeScalarFieldEnum)[keyof typeof ChargeScalarFieldEnum]
@@ -5920,12 +5989,12 @@ export const FinancialAccountScalarFieldEnum = {
   type: 'type',
   currency: 'currency',
   cachedBalance: 'cachedBalance',
-  isDefault: 'isDefault',
-  accountNumber: 'accountNumber',
-  lastReconciledAt: 'lastReconciledAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  accountNumber: 'accountNumber',
+  isDefault: 'isDefault',
+  lastReconciledAt: 'lastReconciledAt',
   allowedPaymentMethods: 'allowedPaymentMethods'
 } as const
 
@@ -5934,8 +6003,6 @@ export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFiel
 
 export const TransactionScalarFieldEnum = {
   id: 'id',
-  receiptSeries: 'receiptSeries',
-  receiptNumber: 'receiptNumber',
   payerPersonId: 'payerPersonId',
   amount: 'amount',
   transactionDate: 'transactionDate',
@@ -5944,18 +6011,20 @@ export const TransactionScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   reference: 'reference',
   notes: 'notes',
-  financialAccountId: 'financialAccountId',
-  paymentId: 'paymentId',
-  referenceGroupId: 'referenceGroupId',
-  isReconciled: 'isReconciled',
-  reconciledAt: 'reconciledAt',
   status: 'status',
-  thirdPartyId: 'thirdPartyId',
-  isInternalTransfer: 'isInternalTransfer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  receiptNumber: 'receiptNumber',
+  receiptSeries: 'receiptSeries',
+  financialAccountId: 'financialAccountId',
+  isReconciled: 'isReconciled',
+  reconciledAt: 'reconciledAt',
+  referenceGroupId: 'referenceGroupId',
+  isInternalTransfer: 'isInternalTransfer',
+  thirdPartyId: 'thirdPartyId',
+  paymentId: 'paymentId'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -5993,12 +6062,12 @@ export type ReceiptSequenceScalarFieldEnum = (typeof ReceiptSequenceScalarFieldE
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password',
   personId: 'personId',
   roleId: 'roleId',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  password: 'password'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6035,11 +6104,11 @@ export const PermissionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  moduleId: 'moduleId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  moduleId: 'moduleId'
 } as const
 
 export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -6056,14 +6125,14 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  defaultAccountCategoryId: 'defaultAccountCategoryId',
+  shortName: 'shortName',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  defaultAccountCategoryId: 'defaultAccountCategoryId'
 } as const
 
 export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
@@ -6073,11 +6142,11 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
-  shortName: 'shortName',
   description: 'description',
   schoolId: 'schoolId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  shortName: 'shortName',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6087,18 +6156,18 @@ export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof 
 
 export const CourseSeasonScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   imageUrl: 'imageUrl',
   description: 'description',
   courseId: 'courseId',
   seasonId: 'seasonId',
   status: 'status',
-  statusNotes: 'statusNotes',
-  isRegistrationOpen: 'isRegistrationOpen',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  statusNotes: 'statusNotes',
+  isRegistrationOpen: 'isRegistrationOpen',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  name: 'name'
 } as const
 
 export type CourseSeasonScalarFieldEnum = (typeof CourseSeasonScalarFieldEnum)[keyof typeof CourseSeasonScalarFieldEnum]
@@ -6110,16 +6179,16 @@ export const CourseSeasonShiftScalarFieldEnum = {
   shiftId: 'shiftId',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
-  categoryId: 'categoryId',
-  gender: 'gender',
-  minBirthYear: 'minBirthYear',
-  maxBirthYear: 'maxBirthYear',
-  validateAge: 'validateAge',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  categoryId: 'categoryId',
+  gender: 'gender',
+  minBirthYear: 'minBirthYear',
+  maxBirthYear: 'maxBirthYear',
+  validateAge: 'validateAge'
 } as const
 
 export type CourseSeasonShiftScalarFieldEnum = (typeof CourseSeasonShiftScalarFieldEnum)[keyof typeof CourseSeasonShiftScalarFieldEnum]
@@ -6142,13 +6211,13 @@ export type TeamSeasonPauseScalarFieldEnum = (typeof TeamSeasonPauseScalarFieldE
 export const CourseSeasonPauseScalarFieldEnum = {
   id: 'id',
   courseSeasonId: 'courseSeasonId',
-  courseSeasonShiftId: 'courseSeasonShiftId',
   startDate: 'startDate',
   endDate: 'endDate',
   reason: 'reason',
   createdAt: 'createdAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type CourseSeasonPauseScalarFieldEnum = (typeof CourseSeasonPauseScalarFieldEnum)[keyof typeof CourseSeasonPauseScalarFieldEnum]
@@ -6157,7 +6226,6 @@ export type CourseSeasonPauseScalarFieldEnum = (typeof CourseSeasonPauseScalarFi
 export const CourseSeasonBillingConfigScalarFieldEnum = {
   id: 'id',
   courseSeasonId: 'courseSeasonId',
-  isEngineActive: 'isEngineActive',
   billingDay: 'billingDay',
   registrationFee: 'registrationFee',
   recurringFee: 'recurringFee',
@@ -6166,16 +6234,17 @@ export const CourseSeasonBillingConfigScalarFieldEnum = {
   lateFeeEnabled: 'lateFeeEnabled',
   lateFeePerDay: 'lateFeePerDay',
   graceDays: 'graceDays',
-  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
   billingType: 'billingType',
   billingFrequency: 'billingFrequency',
   prorateFirstRecurringFee: 'prorateFirstRecurringFee',
   prorateLastRecurringFee: 'prorateLastRecurringFee',
   prorateRegistrationFee: 'prorateRegistrationFee',
   prorateSeasonFee: 'prorateSeasonFee',
-  prorationEnabled: 'prorationEnabled',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  prorationEnabled: 'prorationEnabled',
+  chargeGenerationDaysBefore: 'chargeGenerationDaysBefore',
+  isEngineActive: 'isEngineActive'
 } as const
 
 export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBillingConfigScalarFieldEnum)[keyof typeof CourseSeasonBillingConfigScalarFieldEnum]
@@ -6183,9 +6252,7 @@ export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBilli
 
 export const CourseSeasonStaffScalarFieldEnum = {
   id: 'id',
-  courseSeasonShiftId: 'courseSeasonShiftId',
   staffId: 'staffId',
-  role: 'role',
   customRole: 'customRole',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -6193,8 +6260,10 @@ export const CourseSeasonStaffScalarFieldEnum = {
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  role: 'role',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type CourseSeasonStaffScalarFieldEnum = (typeof CourseSeasonStaffScalarFieldEnum)[keyof typeof CourseSeasonStaffScalarFieldEnum]
@@ -6217,19 +6286,19 @@ export const StudentMembershipScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   courseSeasonId: 'courseSeasonId',
-  courseSeasonShiftId: 'courseSeasonShiftId',
   paymentPlanId: 'paymentPlanId',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
   status: 'status',
-  suspensionReason: 'suspensionReason',
   notes: 'notes',
-  nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
   isMigrated: 'isMigrated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  nextRecurringChargeGenerationDate: 'nextRecurringChargeGenerationDate',
+  courseSeasonShiftId: 'courseSeasonShiftId',
+  suspensionReason: 'suspensionReason'
 } as const
 
 export type StudentMembershipScalarFieldEnum = (typeof StudentMembershipScalarFieldEnum)[keyof typeof StudentMembershipScalarFieldEnum]
@@ -6267,8 +6336,6 @@ export type StudentMembershipPauseScalarFieldEnum = (typeof StudentMembershipPau
 export const CycleEnrollmentScalarFieldEnum = {
   id: 'id',
   studentMembershipId: 'studentMembershipId',
-  courseSeasonId: 'courseSeasonId',
-  courseSeasonShiftId: 'courseSeasonShiftId',
   chargeId: 'chargeId',
   cycleStartDate: 'cycleStartDate',
   cycleEndDate: 'cycleEndDate',
@@ -6277,7 +6344,9 @@ export const CycleEnrollmentScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  courseSeasonId: 'courseSeasonId',
+  courseSeasonShiftId: 'courseSeasonShiftId'
 } as const
 
 export type CycleEnrollmentScalarFieldEnum = (typeof CycleEnrollmentScalarFieldEnum)[keyof typeof CycleEnrollmentScalarFieldEnum]
@@ -6288,13 +6357,13 @@ export const StudentDiscountScalarFieldEnum = {
   studentMembershipId: 'studentMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6364,11 +6433,11 @@ export const EventSeriesScalarFieldEnum = {
   materializedUntil: 'materializedUntil',
   lastMaterializedAt: 'lastMaterializedAt',
   status: 'status',
-  lockedUntil: 'lockedUntil',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  lockedUntil: 'lockedUntil'
 } as const
 
 export type EventSeriesScalarFieldEnum = (typeof EventSeriesScalarFieldEnum)[keyof typeof EventSeriesScalarFieldEnum]
@@ -6384,13 +6453,13 @@ export const EventScalarFieldEnum = {
   eventType: 'eventType',
   status: 'status',
   color: 'color',
-  eventSeriesId: 'eventSeriesId',
-  originalStartDate: 'originalStartDate',
-  exceptionType: 'exceptionType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  eventSeriesId: 'eventSeriesId',
+  exceptionType: 'exceptionType',
+  originalStartDate: 'originalStartDate'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -6400,9 +6469,9 @@ export const GeneralEventScalarFieldEnum = {
   id: 'id',
   eventId: 'eventId',
   institutionId: 'institutionId',
-  teamSeasonId: 'teamSeasonId',
   courseSeasonId: 'courseSeasonId',
-  courseSeasonShiftId: 'courseSeasonShiftId'
+  courseSeasonShiftId: 'courseSeasonShiftId',
+  teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
 export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[keyof typeof GeneralEventScalarFieldEnum]
@@ -6410,8 +6479,8 @@ export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[k
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  eventId: 'eventId',
-  durationMin: 'durationMin'
+  durationMin: 'durationMin',
+  eventId: 'eventId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -6419,7 +6488,7 @@ export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeo
 
 export const SessionTeamScalarFieldEnum = {
   sessionId: 'sessionId',
-  teamSeasonId: 'teamSeasonId'
+  teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
 export type SessionTeamScalarFieldEnum = (typeof SessionTeamScalarFieldEnum)[keyof typeof SessionTeamScalarFieldEnum]
@@ -6452,13 +6521,13 @@ export type SessionBookingScalarFieldEnum = (typeof SessionBookingScalarFieldEnu
 
 export const MatchScalarFieldEnum = {
   id: 'id',
-  eventId: 'eventId',
-  teamSeasonId: 'teamSeasonId',
   opponentName: 'opponentName',
   type: 'type',
   ourScore: 'ourScore',
   theirScore: 'theirScore',
-  result: 'result'
+  result: 'result',
+  eventId: 'eventId',
+  teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
 export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]
@@ -6488,14 +6557,14 @@ export const AuditLogScalarFieldEnum = {
   entityName: 'entityName',
   entityId: 'entityId',
   action: 'action',
-  type: 'type',
-  titleKey: 'titleKey',
-  messageKey: 'messageKey',
-  messageParams: 'messageParams',
   oldValues: 'oldValues',
   newValues: 'newValues',
   userId: 'userId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  messageKey: 'messageKey',
+  messageParams: 'messageParams',
+  titleKey: 'titleKey',
+  type: 'type'
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
@@ -6516,18 +6585,18 @@ export type EventMaterializationLogScalarFieldEnum = (typeof EventMaterializatio
 
 export const AccountCategoryScalarFieldEnum = {
   id: 'id',
-  code: 'code',
   name: 'name',
   description: 'description',
-  receiptSeries: 'receiptSeries',
-  isSystem: 'isSystem',
-  isActive: 'isActive',
-  type: 'type',
-  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  type: 'type',
+  code: 'code',
+  isActive: 'isActive',
+  isSystem: 'isSystem',
+  parentId: 'parentId',
+  receiptSeries: 'receiptSeries'
 } as const
 
 export type AccountCategoryScalarFieldEnum = (typeof AccountCategoryScalarFieldEnum)[keyof typeof AccountCategoryScalarFieldEnum]
@@ -6590,15 +6659,35 @@ export const AttachmentScalarFieldEnum = {
   sizeBytes: 'sizeBytes',
   url: 'url',
   path: 'path',
-  status: 'status',
   transactionId: 'transactionId',
   uploadedById: 'uploadedById',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  status: 'status'
 } as const
 
 export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
+
+
+export const TeamSeasonCategoryScalarFieldEnum = {
+  id: 'id',
+  teamSeasonId: 'teamSeasonId',
+  categoryId: 'categoryId',
+  gender: 'gender',
+  minBirthYear: 'minBirthYear',
+  maxBirthYear: 'maxBirthYear',
+  minMembers: 'minMembers',
+  maxMembers: 'maxMembers',
+  validateAge: 'validateAge',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type TeamSeasonCategoryScalarFieldEnum = (typeof TeamSeasonCategoryScalarFieldEnum)[keyof typeof TeamSeasonCategoryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -6785,20 +6874,6 @@ export type EnumSeasonEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'SeasonEventType[]'
  */
 export type ListEnumSeasonEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeasonEventType[]'>
-    
-
-
-/**
- * Reference to a field of type 'ProgramGender'
- */
-export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
-    
-
-
-/**
- * Reference to a field of type 'ProgramGender[]'
- */
-export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
     
 
 
@@ -7037,6 +7112,20 @@ export type EnumStatusCourseSeasonFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'StatusCourseSeason[]'
  */
 export type ListEnumStatusCourseSeasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusCourseSeason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProgramGender'
+ */
+export type EnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender'>
+    
+
+
+/**
+ * Reference to a field of type 'ProgramGender[]'
+ */
+export type ListEnumProgramGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProgramGender[]'>
     
 
 
@@ -7389,6 +7478,7 @@ export type GlobalOmitConfig = {
   cashClosure?: Prisma.CashClosureOmit
   thirdParty?: Prisma.ThirdPartyOmit
   attachment?: Prisma.AttachmentOmit
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryOmit
 }
 
 /* Types for Logging */

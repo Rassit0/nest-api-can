@@ -296,9 +296,9 @@ export type MatchLineupWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"MatchLineup"> | Date | string
   createdById?: Prisma.StringNullableFilter<"MatchLineup"> | string | null
   updatedById?: Prisma.StringNullableFilter<"MatchLineup"> | string | null
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -316,9 +316,9 @@ export type MatchLineupOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.UserOrderByWithRelationInput
   match?: Prisma.MatchOrderByWithRelationInput
   player?: Prisma.PlayerOrderByWithRelationInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -340,9 +340,9 @@ export type MatchLineupWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"MatchLineup"> | Date | string
   createdById?: Prisma.StringNullableFilter<"MatchLineup"> | string | null
   updatedById?: Prisma.StringNullableFilter<"MatchLineup"> | string | null
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "matchId_playerId">
 
@@ -396,9 +396,9 @@ export type MatchLineupCreateInput = {
   isStarter?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
   match: Prisma.MatchCreateNestedOneWithoutLineupsInput
   player: Prisma.PlayerCreateNestedOneWithoutMatchLineupsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchLineupsInput
 }
 
@@ -428,9 +428,9 @@ export type MatchLineupUpdateInput = {
   isStarter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
   match?: Prisma.MatchUpdateOneRequiredWithoutLineupsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutMatchLineupsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchLineupsNestedInput
 }
 
@@ -751,8 +751,8 @@ export type MatchLineupCreateWithoutPlayerInput = {
   isStarter?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  match: Prisma.MatchCreateNestedOneWithoutLineupsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
+  match: Prisma.MatchCreateNestedOneWithoutLineupsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchLineupsInput
 }
 
@@ -866,9 +866,9 @@ export type MatchLineupCreateWithoutUpdatedByInput = {
   isStarter?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
   match: Prisma.MatchCreateNestedOneWithoutLineupsInput
   player: Prisma.PlayerCreateNestedOneWithoutMatchLineupsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
 }
 
 export type MatchLineupUncheckedCreateWithoutUpdatedByInput = {
@@ -938,8 +938,8 @@ export type MatchLineupCreateWithoutMatchInput = {
   isStarter?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  player: Prisma.PlayerCreateNestedOneWithoutMatchLineupsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedMatchLineupsInput
+  player: Prisma.PlayerCreateNestedOneWithoutMatchLineupsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedMatchLineupsInput
 }
 
@@ -1009,8 +1009,8 @@ export type MatchLineupUpdateWithoutPlayerInput = {
   isStarter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  match?: Prisma.MatchUpdateOneRequiredWithoutLineupsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
+  match?: Prisma.MatchUpdateOneRequiredWithoutLineupsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchLineupsNestedInput
 }
 
@@ -1129,9 +1129,9 @@ export type MatchLineupUpdateWithoutUpdatedByInput = {
   isStarter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
   match?: Prisma.MatchUpdateOneRequiredWithoutLineupsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutMatchLineupsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
 }
 
 export type MatchLineupUncheckedUpdateWithoutUpdatedByInput = {
@@ -1189,8 +1189,8 @@ export type MatchLineupUpdateWithoutMatchInput = {
   isStarter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneRequiredWithoutMatchLineupsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedMatchLineupsNestedInput
+  player?: Prisma.PlayerUpdateOneRequiredWithoutMatchLineupsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedMatchLineupsNestedInput
 }
 
@@ -1240,9 +1240,9 @@ export type MatchLineupSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["matchLineup"]>
 
@@ -1260,9 +1260,9 @@ export type MatchLineupSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["matchLineup"]>
 
@@ -1280,9 +1280,9 @@ export type MatchLineupSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["matchLineup"]>
 
@@ -1304,30 +1304,30 @@ export type MatchLineupSelectScalar = {
 
 export type MatchLineupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "playerId" | "minutesPlayed" | "goals" | "assists" | "yellowCards" | "redCards" | "isStarter" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["matchLineup"]>
 export type MatchLineupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }
 export type MatchLineupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }
 export type MatchLineupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.MatchLineup$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.MatchLineup$updatedByArgs<ExtArgs>
 }
 
 export type $MatchLineupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MatchLineup"
   objects: {
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
     match: Prisma.$MatchPayload<ExtArgs>
     player: Prisma.$PlayerPayload<ExtArgs>
-    createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1738,9 +1738,9 @@ readonly fields: MatchLineupFieldRefs;
  */
 export interface Prisma__MatchLineupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  createdBy<T extends Prisma.MatchLineup$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchLineup$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   match<T extends Prisma.MatchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchDefaultArgs<ExtArgs>>): Prisma.Prisma__MatchClient<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   player<T extends Prisma.PlayerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayerDefaultArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.MatchLineup$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchLineup$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.MatchLineup$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchLineup$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

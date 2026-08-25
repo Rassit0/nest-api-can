@@ -14,8 +14,23 @@ export class EventQueriesService {
       eventType,
       institutionId,
       teamSeasonId,
+      teamSeasonCategoryId,
       courseSeasonId,
     } = filter;
+
+    let categoryIds: string[] | undefined;
+
+    if (teamSeasonId) {
+      const categories = await this.prisma.teamSeasonCategory.findMany({
+        where: { teamSeasonId },
+        select: { id: true },
+      });
+      categoryIds = categories.map((c) => c.id);
+    }
+
+    if (teamSeasonCategoryId) {
+      categoryIds = [teamSeasonCategoryId];
+    }
 
     return this.prisma.event.findMany({
       where: {
@@ -23,13 +38,19 @@ export class EventQueriesService {
         endDate: { lte: new Date(endDate) },
         ...(locationId && { locationId }),
         ...(eventType && { eventType }),
-        generalEvent: (institutionId || teamSeasonId || courseSeasonId)
-          ? {
-              ...(institutionId && { institutionId }),
-              ...(teamSeasonId && { teamSeasonId }),
-              ...(courseSeasonId && { courseSeasonId }),
-            }
-          : undefined,
+        ...(categoryIds && {
+          OR: [
+            { generalEvent: { teamSeasonCategoryId: { in: categoryIds } } },
+            { match: { teamSeasonCategoryId: { in: categoryIds } } },
+            { session: { sessionTeams: { some: { teamSeasonCategoryId: { in: categoryIds } } } } }
+          ]
+        }),
+        ...(!categoryIds && (institutionId || courseSeasonId) && {
+          generalEvent: {
+            ...(institutionId && { institutionId }),
+            ...(courseSeasonId && { courseSeasonId }),
+          },
+        }),
       },
       include: {
         location: true,

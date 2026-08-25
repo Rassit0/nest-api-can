@@ -57,8 +57,12 @@ export class MembershipsService {
       this.prisma.playerMembership.count({ where: { status: 'SUSPENDED' } }),
       this.prisma.studentMembership.count({ where: { status: 'ACTIVE' } }),
       this.prisma.studentMembership.count({ where: { status: 'SUSPENDED' } }),
-      this.prisma.playerMembership.count({ where: { status: { not: 'FINISHED' } } }),
-      this.prisma.studentMembership.count({ where: { status: { not: 'FINISHED' } } }),
+      this.prisma.playerMembership.count({
+        where: { status: { not: 'FINISHED' } },
+      }),
+      this.prisma.studentMembership.count({
+        where: { status: { not: 'FINISHED' } },
+      }),
     ]);
 
     return {
@@ -258,7 +262,8 @@ export class MembershipsService {
         },
         include: {
           player: { include: { person: true } },
-          teamSeason: { include: { team: true, category: true } },
+          teamSeason: { include: { team: true } },
+          teamSeasonCategories: { include: { category: true } },
         },
         take: 5,
         orderBy: { endedAt: 'asc' },
@@ -283,7 +288,7 @@ export class MembershipsService {
         id: p.id,
         type: 'Jugador',
         name: `${p.player.person.name} ${p.player.person.lastName}`,
-        program: `${p.teamSeason.team.name} - ${p.teamSeason.category.name}`,
+        program: `${p.teamSeason.team.name} - ${p.teamSeasonCategories.category.name}`,
         endedAt: p.endedAt,
       })),
       ...students.map((s) => ({
@@ -344,7 +349,9 @@ export class MembershipsService {
         id: c.id,
         amount: Number(c.amount),
         dueDate: c.dueDate,
-        personName: person ? `${person.name} ${person.lastName}` : 'Desconocido',
+        personName: person
+          ? `${person.name} ${person.lastName}`
+          : 'Desconocido',
         type,
       };
     });
@@ -426,7 +433,9 @@ export class MembershipsService {
         id: c.id,
         debt: Number(c.pendingAmount),
         dueDate: c.dueDate,
-        personName: person ? `${person.name} ${person.lastName}` : 'Desconocido',
+        personName: person
+          ? `${person.name} ${person.lastName}`
+          : 'Desconocido',
         type,
         phone: person?.phone || 'Sin número',
       };

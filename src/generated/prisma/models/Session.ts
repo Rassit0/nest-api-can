@@ -36,20 +36,20 @@ export type SessionSumAggregateOutputType = {
 
 export type SessionMinAggregateOutputType = {
   id: string | null
-  eventId: string | null
   durationMin: number | null
+  eventId: string | null
 }
 
 export type SessionMaxAggregateOutputType = {
   id: string | null
-  eventId: string | null
   durationMin: number | null
+  eventId: string | null
 }
 
 export type SessionCountAggregateOutputType = {
   id: number
-  eventId: number
   durationMin: number
+  eventId: number
   _all: number
 }
 
@@ -64,20 +64,20 @@ export type SessionSumAggregateInputType = {
 
 export type SessionMinAggregateInputType = {
   id?: true
-  eventId?: true
   durationMin?: true
+  eventId?: true
 }
 
 export type SessionMaxAggregateInputType = {
   id?: true
-  eventId?: true
   durationMin?: true
+  eventId?: true
 }
 
 export type SessionCountAggregateInputType = {
   id?: true
-  eventId?: true
   durationMin?: true
+  eventId?: true
   _all?: true
 }
 
@@ -169,8 +169,8 @@ export type SessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type SessionGroupByOutputType = {
   id: string
-  eventId: string
   durationMin: number
+  eventId: string
   _count: SessionCountAggregateOutputType | null
   _avg: SessionAvgAggregateOutputType | null
   _sum: SessionSumAggregateOutputType | null
@@ -198,22 +198,22 @@ export type SessionWhereInput = {
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   id?: Prisma.StringFilter<"Session"> | string
-  eventId?: Prisma.StringFilter<"Session"> | string
   durationMin?: Prisma.IntFilter<"Session"> | number
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  sessionTeams?: Prisma.SessionTeamListRelationFilter
-  sessionCourses?: Prisma.SessionCourseListRelationFilter
+  eventId?: Prisma.StringFilter<"Session"> | string
   bookings?: Prisma.SessionBookingListRelationFilter
+  sessionCourses?: Prisma.SessionCourseListRelationFilter
+  sessionTeams?: Prisma.SessionTeamListRelationFilter
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }
 
 export type SessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   durationMin?: Prisma.SortOrder
-  event?: Prisma.EventOrderByWithRelationInput
-  sessionTeams?: Prisma.SessionTeamOrderByRelationAggregateInput
-  sessionCourses?: Prisma.SessionCourseOrderByRelationAggregateInput
+  eventId?: Prisma.SortOrder
   bookings?: Prisma.SessionBookingOrderByRelationAggregateInput
+  sessionCourses?: Prisma.SessionCourseOrderByRelationAggregateInput
+  sessionTeams?: Prisma.SessionTeamOrderByRelationAggregateInput
+  event?: Prisma.EventOrderByWithRelationInput
 }
 
 export type SessionWhereUniqueInput = Prisma.AtLeast<{
@@ -223,16 +223,16 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   durationMin?: Prisma.IntFilter<"Session"> | number
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  sessionTeams?: Prisma.SessionTeamListRelationFilter
-  sessionCourses?: Prisma.SessionCourseListRelationFilter
   bookings?: Prisma.SessionBookingListRelationFilter
+  sessionCourses?: Prisma.SessionCourseListRelationFilter
+  sessionTeams?: Prisma.SessionTeamListRelationFilter
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
 }, "id" | "eventId">
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   durationMin?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _avg?: Prisma.SessionAvgOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
@@ -245,50 +245,50 @@ export type SessionScalarWhereWithAggregatesInput = {
   OR?: Prisma.SessionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SessionScalarWhereWithAggregatesInput | Prisma.SessionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Session"> | string
-  eventId?: Prisma.StringWithAggregatesFilter<"Session"> | string
   durationMin?: Prisma.IntWithAggregatesFilter<"Session"> | number
+  eventId?: Prisma.StringWithAggregatesFilter<"Session"> | string
 }
 
 export type SessionCreateInput = {
   id?: string
   durationMin?: number
-  event: Prisma.EventCreateNestedOneWithoutSessionInput
-  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
-  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
+  event: Prisma.EventCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateInput = {
   id?: string
-  eventId: string
   durationMin?: number
-  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
-  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
+  eventId: string
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
-  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
-  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
-  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateManyInput = {
   id?: string
-  eventId: string
   durationMin?: number
+  eventId: string
 }
 
 export type SessionUpdateManyMutationInput = {
@@ -298,8 +298,8 @@ export type SessionUpdateManyMutationInput = {
 
 export type SessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionNullableScalarRelationFilter = {
@@ -309,8 +309,8 @@ export type SessionNullableScalarRelationFilter = {
 
 export type SessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   durationMin?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
 }
 
 export type SessionAvgOrderByAggregateInput = {
@@ -319,14 +319,14 @@ export type SessionAvgOrderByAggregateInput = {
 
 export type SessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   durationMin?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
 }
 
 export type SessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   durationMin?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
 }
 
 export type SessionSumOrderByAggregateInput = {
@@ -415,17 +415,17 @@ export type SessionUpdateOneRequiredWithoutBookingsNestedInput = {
 export type SessionCreateWithoutEventInput = {
   id?: string
   durationMin?: number
-  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
-  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutEventInput = {
   id?: string
   durationMin?: number
-  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
-  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutEventInput = {
@@ -447,33 +447,33 @@ export type SessionUpdateToOneWithWhereWithoutEventInput = {
 export type SessionUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
-  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
-  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateWithoutSessionTeamsInput = {
   id?: string
   durationMin?: number
-  event: Prisma.EventCreateNestedOneWithoutSessionInput
-  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
+  event: Prisma.EventCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutSessionTeamsInput = {
   id?: string
-  eventId: string
   durationMin?: number
-  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
+  eventId: string
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutSessionTeamsInput = {
@@ -495,33 +495,33 @@ export type SessionUpdateToOneWithWhereWithoutSessionTeamsInput = {
 export type SessionUpdateWithoutSessionTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
-  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutSessionTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateWithoutSessionCoursesInput = {
   id?: string
   durationMin?: number
-  event: Prisma.EventCreateNestedOneWithoutSessionInput
-  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
   bookings?: Prisma.SessionBookingCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
+  event: Prisma.EventCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutSessionCoursesInput = {
   id?: string
-  eventId: string
   durationMin?: number
-  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
+  eventId: string
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutSessionCoursesInput = {
@@ -543,33 +543,33 @@ export type SessionUpdateToOneWithWhereWithoutSessionCoursesInput = {
 export type SessionUpdateWithoutSessionCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
-  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
   bookings?: Prisma.SessionBookingUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutSessionCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type SessionCreateWithoutBookingsInput = {
   id?: string
   durationMin?: number
-  event: Prisma.EventCreateNestedOneWithoutSessionInput
-  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamCreateNestedManyWithoutSessionInput
+  event: Prisma.EventCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateWithoutBookingsInput = {
   id?: string
-  eventId: string
   durationMin?: number
-  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
+  eventId: string
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
+  sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type SessionCreateOrConnectWithoutBookingsInput = {
@@ -591,17 +591,17 @@ export type SessionUpdateToOneWithWhereWithoutBookingsInput = {
 export type SessionUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
-  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUpdateManyWithoutSessionNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   durationMin?: Prisma.IntFieldUpdateOperationsInput | number
-  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
+  sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 
@@ -610,15 +610,15 @@ export type SessionUncheckedUpdateWithoutBookingsInput = {
  */
 
 export type SessionCountOutputType = {
-  sessionTeams: number
-  sessionCourses: number
   bookings: number
+  sessionCourses: number
+  sessionTeams: number
 }
 
 export type SessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sessionTeams?: boolean | SessionCountOutputTypeCountSessionTeamsArgs
-  sessionCourses?: boolean | SessionCountOutputTypeCountSessionCoursesArgs
   bookings?: boolean | SessionCountOutputTypeCountBookingsArgs
+  sessionCourses?: boolean | SessionCountOutputTypeCountSessionCoursesArgs
+  sessionTeams?: boolean | SessionCountOutputTypeCountSessionTeamsArgs
 }
 
 /**
@@ -634,8 +634,8 @@ export type SessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * SessionCountOutputType without action
  */
-export type SessionCountOutputTypeCountSessionTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SessionTeamWhereInput
+export type SessionCountOutputTypeCountBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionBookingWhereInput
 }
 
 /**
@@ -648,48 +648,48 @@ export type SessionCountOutputTypeCountSessionCoursesArgs<ExtArgs extends runtim
 /**
  * SessionCountOutputType without action
  */
-export type SessionCountOutputTypeCountBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SessionBookingWhereInput
+export type SessionCountOutputTypeCountSessionTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionTeamWhereInput
 }
 
 
 export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  eventId?: boolean
   durationMin?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>
-  sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
+  eventId?: boolean
   bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>
+  sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
+  sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  eventId?: boolean
   durationMin?: boolean
+  eventId?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  eventId?: boolean
   durationMin?: boolean
+  eventId?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectScalar = {
   id?: boolean
-  eventId?: boolean
   durationMin?: boolean
+  eventId?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "durationMin", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "durationMin" | "eventId", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>
-  sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
   bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>
+  sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
+  sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -702,15 +702,15 @@ export type SessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Session"
   objects: {
-    event: Prisma.$EventPayload<ExtArgs>
-    sessionTeams: Prisma.$SessionTeamPayload<ExtArgs>[]
-    sessionCourses: Prisma.$SessionCoursePayload<ExtArgs>[]
     bookings: Prisma.$SessionBookingPayload<ExtArgs>[]
+    sessionCourses: Prisma.$SessionCoursePayload<ExtArgs>[]
+    sessionTeams: Prisma.$SessionTeamPayload<ExtArgs>[]
+    event: Prisma.$EventPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    eventId: string
     durationMin: number
+    eventId: string
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1105,10 +1105,10 @@ readonly fields: SessionFieldRefs;
  */
 export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  sessionTeams<T extends Prisma.Session$sessionTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$sessionTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sessionCourses<T extends Prisma.Session$sessionCoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$sessionCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bookings<T extends Prisma.Session$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionBookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessionCourses<T extends Prisma.Session$sessionCoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$sessionCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessionTeams<T extends Prisma.Session$sessionTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$sessionTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1139,8 +1139,8 @@ export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface SessionFieldRefs {
   readonly id: Prisma.FieldRef<"Session", 'String'>
-  readonly eventId: Prisma.FieldRef<"Session", 'String'>
   readonly durationMin: Prisma.FieldRef<"Session", 'Int'>
+  readonly eventId: Prisma.FieldRef<"Session", 'String'>
 }
     
 
@@ -1537,27 +1537,27 @@ export type SessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Session.sessionTeams
+ * Session.bookings
  */
-export type Session$sessionTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Session$bookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the SessionTeam
+   * Select specific fields to fetch from the SessionBooking
    */
-  select?: Prisma.SessionTeamSelect<ExtArgs> | null
+  select?: Prisma.SessionBookingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the SessionTeam
+   * Omit specific fields from the SessionBooking
    */
-  omit?: Prisma.SessionTeamOmit<ExtArgs> | null
+  omit?: Prisma.SessionBookingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SessionTeamInclude<ExtArgs> | null
-  where?: Prisma.SessionTeamWhereInput
-  orderBy?: Prisma.SessionTeamOrderByWithRelationInput | Prisma.SessionTeamOrderByWithRelationInput[]
-  cursor?: Prisma.SessionTeamWhereUniqueInput
+  include?: Prisma.SessionBookingInclude<ExtArgs> | null
+  where?: Prisma.SessionBookingWhereInput
+  orderBy?: Prisma.SessionBookingOrderByWithRelationInput | Prisma.SessionBookingOrderByWithRelationInput[]
+  cursor?: Prisma.SessionBookingWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SessionTeamScalarFieldEnum | Prisma.SessionTeamScalarFieldEnum[]
+  distinct?: Prisma.SessionBookingScalarFieldEnum | Prisma.SessionBookingScalarFieldEnum[]
 }
 
 /**
@@ -1585,27 +1585,27 @@ export type Session$sessionCoursesArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * Session.bookings
+ * Session.sessionTeams
  */
-export type Session$bookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Session$sessionTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the SessionBooking
+   * Select specific fields to fetch from the SessionTeam
    */
-  select?: Prisma.SessionBookingSelect<ExtArgs> | null
+  select?: Prisma.SessionTeamSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the SessionBooking
+   * Omit specific fields from the SessionTeam
    */
-  omit?: Prisma.SessionBookingOmit<ExtArgs> | null
+  omit?: Prisma.SessionTeamOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SessionBookingInclude<ExtArgs> | null
-  where?: Prisma.SessionBookingWhereInput
-  orderBy?: Prisma.SessionBookingOrderByWithRelationInput | Prisma.SessionBookingOrderByWithRelationInput[]
-  cursor?: Prisma.SessionBookingWhereUniqueInput
+  include?: Prisma.SessionTeamInclude<ExtArgs> | null
+  where?: Prisma.SessionTeamWhereInput
+  orderBy?: Prisma.SessionTeamOrderByWithRelationInput | Prisma.SessionTeamOrderByWithRelationInput[]
+  cursor?: Prisma.SessionTeamWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SessionBookingScalarFieldEnum | Prisma.SessionBookingScalarFieldEnum[]
+  distinct?: Prisma.SessionTeamScalarFieldEnum | Prisma.SessionTeamScalarFieldEnum[]
 }
 
 /**

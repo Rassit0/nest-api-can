@@ -13,6 +13,7 @@ import {
   IsDateString,
   IsEnum,
   IsString,
+  Matches,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -99,19 +100,19 @@ export class CreatePlayerMembershipDto {
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description:
-      'ID de la oferta de membresía de equipo a la que pertenece esta membresía de jugador',
+      'ID de la categoría de la temporada a la que se inscribe el jugador',
   })
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'teamSeasonId',
+      constraint1: 'teamSeasonCategoryId',
     }),
   })
-  @Exists('teamSeason', 'id', {
+  @Exists('teamSeasonCategory', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'teamSeasonId',
+      constraint1: 'teamSeasonCategoryId',
     }),
   })
-  teamSeasonId: string;
+  teamSeasonCategoryId: string;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
@@ -137,6 +138,7 @@ export class CreatePlayerMembershipDto {
     { strict: true },
     { message: 'El formato debe ser ISO 8601 (2026-04-28T00:00:00.000Z)' },
   )
+  @Matches(/(Z|[+-]\d{2}:\d{2})$/, { message: 'Date must include timezone' })
   startedAt: string;
 
   @ApiProperty({

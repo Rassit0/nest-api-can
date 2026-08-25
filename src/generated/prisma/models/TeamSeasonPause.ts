@@ -206,8 +206,8 @@ export type TeamSeasonPauseWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"TeamSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"TeamSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"TeamSeasonPause"> | string | null
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -220,8 +220,8 @@ export type TeamSeasonPauseOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -237,8 +237,8 @@ export type TeamSeasonPauseWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"TeamSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"TeamSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"TeamSeasonPause"> | string | null
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -276,8 +276,8 @@ export type TeamSeasonPauseCreateInput = {
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamSeasonPausesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTeamSeasonPausesInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamSeasonPausesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTeamSeasonPausesInput
 }
 
@@ -298,8 +298,8 @@ export type TeamSeasonPauseUpdateInput = {
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamSeasonPausesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTeamSeasonPausesNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamSeasonPausesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTeamSeasonPausesNestedInput
 }
 
@@ -609,8 +609,8 @@ export type TeamSeasonPauseCreateWithoutUpdatedByInput = {
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamSeasonPausesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTeamSeasonPausesInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutTeamSeasonPausesInput
 }
 
 export type TeamSeasonPauseUncheckedCreateWithoutUpdatedByInput = {
@@ -761,8 +761,8 @@ export type TeamSeasonPauseUpdateWithoutUpdatedByInput = {
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamSeasonPausesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTeamSeasonPausesNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutTeamSeasonPausesNestedInput
 }
 
 export type TeamSeasonPauseUncheckedUpdateWithoutUpdatedByInput = {
@@ -796,8 +796,8 @@ export type TeamSeasonPauseSelect<ExtArgs extends runtime.Types.Extensions.Inter
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeasonPause"]>
 
@@ -810,8 +810,8 @@ export type TeamSeasonPauseSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeasonPause"]>
 
@@ -824,8 +824,8 @@ export type TeamSeasonPauseSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeasonPause"]>
 
@@ -842,26 +842,26 @@ export type TeamSeasonPauseSelectScalar = {
 
 export type TeamSeasonPauseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "startDate" | "endDate" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["teamSeasonPause"]>
 export type TeamSeasonPauseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }
 export type TeamSeasonPauseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }
 export type TeamSeasonPauseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.TeamSeasonPause$createdByArgs<ExtArgs>
+  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>
 }
 
 export type $TeamSeasonPausePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TeamSeasonPause"
   objects: {
-    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1267,8 +1267,8 @@ readonly fields: TeamSeasonPauseFieldRefs;
  */
 export interface Prisma__TeamSeasonPauseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.TeamSeasonPause$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonPause$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.TeamSeasonPause$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonPause$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

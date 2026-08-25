@@ -26,34 +26,34 @@ export type AggregateSessionTeam = {
 
 export type SessionTeamMinAggregateOutputType = {
   sessionId: string | null
-  teamSeasonId: string | null
+  teamSeasonCategoryId: string | null
 }
 
 export type SessionTeamMaxAggregateOutputType = {
   sessionId: string | null
-  teamSeasonId: string | null
+  teamSeasonCategoryId: string | null
 }
 
 export type SessionTeamCountAggregateOutputType = {
   sessionId: number
-  teamSeasonId: number
+  teamSeasonCategoryId: number
   _all: number
 }
 
 
 export type SessionTeamMinAggregateInputType = {
   sessionId?: true
-  teamSeasonId?: true
+  teamSeasonCategoryId?: true
 }
 
 export type SessionTeamMaxAggregateInputType = {
   sessionId?: true
-  teamSeasonId?: true
+  teamSeasonCategoryId?: true
 }
 
 export type SessionTeamCountAggregateInputType = {
   sessionId?: true
-  teamSeasonId?: true
+  teamSeasonCategoryId?: true
   _all?: true
 }
 
@@ -131,7 +131,7 @@ export type SessionTeamGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type SessionTeamGroupByOutputType = {
   sessionId: string
-  teamSeasonId: string
+  teamSeasonCategoryId: string
   _count: SessionTeamCountAggregateOutputType | null
   _min: SessionTeamMinAggregateOutputType | null
   _max: SessionTeamMaxAggregateOutputType | null
@@ -157,32 +157,32 @@ export type SessionTeamWhereInput = {
   OR?: Prisma.SessionTeamWhereInput[]
   NOT?: Prisma.SessionTeamWhereInput | Prisma.SessionTeamWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionTeam"> | string
-  teamSeasonId?: Prisma.StringFilter<"SessionTeam"> | string
+  teamSeasonCategoryId?: Prisma.StringFilter<"SessionTeam"> | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput>
 }
 
 export type SessionTeamOrderByWithRelationInput = {
   sessionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
   session?: Prisma.SessionOrderByWithRelationInput
-  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryOrderByWithRelationInput
 }
 
 export type SessionTeamWhereUniqueInput = Prisma.AtLeast<{
-  sessionId_teamSeasonId?: Prisma.SessionTeamSessionIdTeamSeasonIdCompoundUniqueInput
+  sessionId_teamSeasonCategoryId?: Prisma.SessionTeamSessionIdTeamSeasonCategoryIdCompoundUniqueInput
   AND?: Prisma.SessionTeamWhereInput | Prisma.SessionTeamWhereInput[]
   OR?: Prisma.SessionTeamWhereInput[]
   NOT?: Prisma.SessionTeamWhereInput | Prisma.SessionTeamWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionTeam"> | string
-  teamSeasonId?: Prisma.StringFilter<"SessionTeam"> | string
+  teamSeasonCategoryId?: Prisma.StringFilter<"SessionTeam"> | string
   session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonScalarRelationFilter, Prisma.TeamSeasonWhereInput>
-}, "sessionId_teamSeasonId">
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput>
+}, "sessionId_teamSeasonCategoryId">
 
 export type SessionTeamOrderByWithAggregationInput = {
   sessionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
   _count?: Prisma.SessionTeamCountOrderByAggregateInput
   _max?: Prisma.SessionTeamMaxOrderByAggregateInput
   _min?: Prisma.SessionTeamMinOrderByAggregateInput
@@ -193,32 +193,32 @@ export type SessionTeamScalarWhereWithAggregatesInput = {
   OR?: Prisma.SessionTeamScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SessionTeamScalarWhereWithAggregatesInput | Prisma.SessionTeamScalarWhereWithAggregatesInput[]
   sessionId?: Prisma.StringWithAggregatesFilter<"SessionTeam"> | string
-  teamSeasonId?: Prisma.StringWithAggregatesFilter<"SessionTeam"> | string
+  teamSeasonCategoryId?: Prisma.StringWithAggregatesFilter<"SessionTeam"> | string
 }
 
 export type SessionTeamCreateInput = {
   session: Prisma.SessionCreateNestedOneWithoutSessionTeamsInput
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSessionTeamsInput
+  teamSeasonCategory: Prisma.TeamSeasonCategoryCreateNestedOneWithoutSessionsInput
 }
 
 export type SessionTeamUncheckedCreateInput = {
   sessionId: string
-  teamSeasonId: string
+  teamSeasonCategoryId: string
 }
 
 export type SessionTeamUpdateInput = {
   session?: Prisma.SessionUpdateOneRequiredWithoutSessionTeamsNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSessionTeamsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneRequiredWithoutSessionsNestedInput
 }
 
 export type SessionTeamUncheckedUpdateInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonCategoryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionTeamCreateManyInput = {
   sessionId: string
-  teamSeasonId: string
+  teamSeasonCategoryId: string
 }
 
 export type SessionTeamUpdateManyMutationInput = {
@@ -227,7 +227,7 @@ export type SessionTeamUpdateManyMutationInput = {
 
 export type SessionTeamUncheckedUpdateManyInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonCategoryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionTeamListRelationFilter = {
@@ -240,66 +240,24 @@ export type SessionTeamOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type SessionTeamSessionIdTeamSeasonIdCompoundUniqueInput = {
+export type SessionTeamSessionIdTeamSeasonCategoryIdCompoundUniqueInput = {
   sessionId: string
-  teamSeasonId: string
+  teamSeasonCategoryId: string
 }
 
 export type SessionTeamCountOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type SessionTeamMaxOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type SessionTeamMinOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
-}
-
-export type SessionTeamCreateNestedManyWithoutTeamSeasonInput = {
-  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput> | Prisma.SessionTeamCreateWithoutTeamSeasonInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput[]
-  createMany?: Prisma.SessionTeamCreateManyTeamSeasonInputEnvelope
-  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-}
-
-export type SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonInput = {
-  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput> | Prisma.SessionTeamCreateWithoutTeamSeasonInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput[]
-  createMany?: Prisma.SessionTeamCreateManyTeamSeasonInputEnvelope
-  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-}
-
-export type SessionTeamUpdateManyWithoutTeamSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput> | Prisma.SessionTeamCreateWithoutTeamSeasonInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput[]
-  upsert?: Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonInput[]
-  createMany?: Prisma.SessionTeamCreateManyTeamSeasonInputEnvelope
-  set?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  disconnect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  delete?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  update?: Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonInput[]
-  updateMany?: Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonInput[]
-  deleteMany?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
-}
-
-export type SessionTeamUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput> | Prisma.SessionTeamCreateWithoutTeamSeasonInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonInput[]
-  upsert?: Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonInput[]
-  createMany?: Prisma.SessionTeamCreateManyTeamSeasonInputEnvelope
-  set?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  disconnect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  delete?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
-  update?: Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonInput[]
-  updateMany?: Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonInput[]
-  deleteMany?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type SessionTeamCreateNestedManyWithoutSessionInput = {
@@ -344,54 +302,54 @@ export type SessionTeamUncheckedUpdateManyWithoutSessionNestedInput = {
   deleteMany?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
 }
 
-export type SessionTeamCreateWithoutTeamSeasonInput = {
-  session: Prisma.SessionCreateNestedOneWithoutSessionTeamsInput
+export type SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.SessionTeamCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
 }
 
-export type SessionTeamUncheckedCreateWithoutTeamSeasonInput = {
-  sessionId: string
+export type SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.SessionTeamCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
 }
 
-export type SessionTeamCreateOrConnectWithoutTeamSeasonInput = {
-  where: Prisma.SessionTeamWhereUniqueInput
-  create: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput>
+export type SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.SessionTeamCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  disconnect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  delete?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  update?: Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
 }
 
-export type SessionTeamCreateManyTeamSeasonInputEnvelope = {
-  data: Prisma.SessionTeamCreateManyTeamSeasonInput | Prisma.SessionTeamCreateManyTeamSeasonInput[]
-  skipDuplicates?: boolean
-}
-
-export type SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.SessionTeamWhereUniqueInput
-  update: Prisma.XOR<Prisma.SessionTeamUpdateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedUpdateWithoutTeamSeasonInput>
-  create: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonInput>
-}
-
-export type SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.SessionTeamWhereUniqueInput
-  data: Prisma.XOR<Prisma.SessionTeamUpdateWithoutTeamSeasonInput, Prisma.SessionTeamUncheckedUpdateWithoutTeamSeasonInput>
-}
-
-export type SessionTeamUpdateManyWithWhereWithoutTeamSeasonInput = {
-  where: Prisma.SessionTeamScalarWhereInput
-  data: Prisma.XOR<Prisma.SessionTeamUpdateManyMutationInput, Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonInput>
-}
-
-export type SessionTeamScalarWhereInput = {
-  AND?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
-  OR?: Prisma.SessionTeamScalarWhereInput[]
-  NOT?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
-  sessionId?: Prisma.StringFilter<"SessionTeam"> | string
-  teamSeasonId?: Prisma.StringFilter<"SessionTeam"> | string
+export type SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput[] | Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.SessionTeamCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  disconnect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  delete?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  connect?: Prisma.SessionTeamWhereUniqueInput | Prisma.SessionTeamWhereUniqueInput[]
+  update?: Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.SessionTeamUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
 }
 
 export type SessionTeamCreateWithoutSessionInput = {
-  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutSessionTeamsInput
+  teamSeasonCategory: Prisma.TeamSeasonCategoryCreateNestedOneWithoutSessionsInput
 }
 
 export type SessionTeamUncheckedCreateWithoutSessionInput = {
-  teamSeasonId: string
+  teamSeasonCategoryId: string
 }
 
 export type SessionTeamCreateOrConnectWithoutSessionInput = {
@@ -420,89 +378,131 @@ export type SessionTeamUpdateManyWithWhereWithoutSessionInput = {
   data: Prisma.XOR<Prisma.SessionTeamUpdateManyMutationInput, Prisma.SessionTeamUncheckedUpdateManyWithoutSessionInput>
 }
 
-export type SessionTeamCreateManyTeamSeasonInput = {
+export type SessionTeamScalarWhereInput = {
+  AND?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
+  OR?: Prisma.SessionTeamScalarWhereInput[]
+  NOT?: Prisma.SessionTeamScalarWhereInput | Prisma.SessionTeamScalarWhereInput[]
+  sessionId?: Prisma.StringFilter<"SessionTeam"> | string
+  teamSeasonCategoryId?: Prisma.StringFilter<"SessionTeam"> | string
+}
+
+export type SessionTeamCreateWithoutTeamSeasonCategoryInput = {
+  session: Prisma.SessionCreateNestedOneWithoutSessionTeamsInput
+}
+
+export type SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput = {
   sessionId: string
 }
 
-export type SessionTeamUpdateWithoutTeamSeasonInput = {
-  session?: Prisma.SessionUpdateOneRequiredWithoutSessionTeamsNestedInput
+export type SessionTeamCreateOrConnectWithoutTeamSeasonCategoryInput = {
+  where: Prisma.SessionTeamWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput>
 }
 
-export type SessionTeamUncheckedUpdateWithoutTeamSeasonInput = {
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+export type SessionTeamCreateManyTeamSeasonCategoryInputEnvelope = {
+  data: Prisma.SessionTeamCreateManyTeamSeasonCategoryInput | Prisma.SessionTeamCreateManyTeamSeasonCategoryInput[]
+  skipDuplicates?: boolean
 }
 
-export type SessionTeamUncheckedUpdateManyWithoutTeamSeasonInput = {
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+export type SessionTeamUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.SessionTeamWhereUniqueInput
+  update: Prisma.XOR<Prisma.SessionTeamUpdateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedUpdateWithoutTeamSeasonCategoryInput>
+  create: Prisma.XOR<Prisma.SessionTeamCreateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedCreateWithoutTeamSeasonCategoryInput>
+}
+
+export type SessionTeamUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.SessionTeamWhereUniqueInput
+  data: Prisma.XOR<Prisma.SessionTeamUpdateWithoutTeamSeasonCategoryInput, Prisma.SessionTeamUncheckedUpdateWithoutTeamSeasonCategoryInput>
+}
+
+export type SessionTeamUpdateManyWithWhereWithoutTeamSeasonCategoryInput = {
+  where: Prisma.SessionTeamScalarWhereInput
+  data: Prisma.XOR<Prisma.SessionTeamUpdateManyMutationInput, Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryInput>
 }
 
 export type SessionTeamCreateManySessionInput = {
-  teamSeasonId: string
+  teamSeasonCategoryId: string
 }
 
 export type SessionTeamUpdateWithoutSessionInput = {
-  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutSessionTeamsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneRequiredWithoutSessionsNestedInput
 }
 
 export type SessionTeamUncheckedUpdateWithoutSessionInput = {
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonCategoryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionTeamUncheckedUpdateManyWithoutSessionInput = {
-  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonCategoryId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type SessionTeamCreateManyTeamSeasonCategoryInput = {
+  sessionId: string
+}
+
+export type SessionTeamUpdateWithoutTeamSeasonCategoryInput = {
+  session?: Prisma.SessionUpdateOneRequiredWithoutSessionTeamsNestedInput
+}
+
+export type SessionTeamUncheckedUpdateWithoutTeamSeasonCategoryInput = {
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryInput = {
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type SessionTeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  teamSeasonId?: boolean
+  teamSeasonCategoryId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionTeam"]>
 
 export type SessionTeamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  teamSeasonId?: boolean
+  teamSeasonCategoryId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionTeam"]>
 
 export type SessionTeamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
-  teamSeasonId?: boolean
+  teamSeasonCategoryId?: boolean
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionTeam"]>
 
 export type SessionTeamSelectScalar = {
   sessionId?: boolean
-  teamSeasonId?: boolean
+  teamSeasonCategoryId?: boolean
 }
 
-export type SessionTeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sessionId" | "teamSeasonId", ExtArgs["result"]["sessionTeam"]>
+export type SessionTeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sessionId" | "teamSeasonCategoryId", ExtArgs["result"]["sessionTeam"]>
 export type SessionTeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }
 export type SessionTeamIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }
 export type SessionTeamIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>
 }
 
 export type $SessionTeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SessionTeam"
   objects: {
     session: Prisma.$SessionPayload<ExtArgs>
-    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs>
+    teamSeasonCategory: Prisma.$TeamSeasonCategoryPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     sessionId: string
-    teamSeasonId: string
+    teamSeasonCategoryId: string
   }, ExtArgs["result"]["sessionTeam"]>
   composites: {}
 }
@@ -898,7 +898,7 @@ readonly fields: SessionTeamFieldRefs;
 export interface Prisma__SessionTeamClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   session<T extends Prisma.SessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  teamSeason<T extends Prisma.TeamSeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  teamSeasonCategory<T extends Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonCategoryClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -929,7 +929,7 @@ export interface Prisma__SessionTeamClient<T, Null = never, ExtArgs extends runt
  */
 export interface SessionTeamFieldRefs {
   readonly sessionId: Prisma.FieldRef<"SessionTeam", 'String'>
-  readonly teamSeasonId: Prisma.FieldRef<"SessionTeam", 'String'>
+  readonly teamSeasonCategoryId: Prisma.FieldRef<"SessionTeam", 'String'>
 }
     
 

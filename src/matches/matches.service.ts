@@ -30,27 +30,32 @@ export const matchSelect: Prisma.MatchSelect = {
       },
     },
   },
-  teamSeason: {
+  teamSeasonCategory: {
     select: {
       id: true,
       gender: true,
-      team: {
-        select: {
-          id: true,
-          name: true,
-          imageUrl: true,
-        },
-      },
-      season: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
       category: {
         select: {
           id: true,
           name: true,
+        },
+      },
+      teamSeason: {
+        select: {
+          id: true,
+          team: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+            },
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
@@ -67,8 +72,9 @@ export class MatchesService {
   ) {}
 
   async create(createMatchDto: CreateMatchDto, userId?: string) {
-    const { startDate, endDate, locationId, teamSeasonId, ...matchData } = createMatchDto;
-    
+    const { startDate, endDate, locationId, teamSeasonCategoryId, ...matchData } = createMatchDto;
+
+
     const baseData: BaseEventCreateDto = {
       eventType: EventType.MATCH,
       startDate: new Date(startDate),
@@ -81,7 +87,7 @@ export class MatchesService {
         data: {
           ...matchData,
           eventId,
-          teamSeasonId, // Fix: Use scalar to avoid XOR type mismatch with eventId
+          teamSeasonCategoryId,
         },
         select: matchSelect,
       });
@@ -109,9 +115,11 @@ export class MatchesService {
       where.OR = [
         { opponentName: { contains: search, mode: 'insensitive' } },
         {
-          teamSeason: {
-            team: {
-              name: { contains: search, mode: 'insensitive' },
+          teamSeasonCategory: {
+            teamSeason: {
+              team: {
+                name: { contains: search, mode: 'insensitive' },
+              },
             },
           },
         },
@@ -168,7 +176,7 @@ export class MatchesService {
       throw new NotFoundException('El partido solicitado no fue encontrado');
     }
 
-    const { startDate, endDate, locationId, teamSeasonId, ...matchData } = updateMatchDto;
+    const { startDate, endDate, locationId, teamSeasonCategoryId, ...matchData } = updateMatchDto;
 
     const baseData: BaseEventUpdateDto = {
       ...(startDate && { startDate: new Date(startDate) }),
@@ -176,12 +184,19 @@ export class MatchesService {
       ...(locationId !== undefined && { locationId }),
     };
 
+    let updateCategoryData = {};
+    if (teamSeasonCategoryId) {
+      updateCategoryData = {
+        teamSeasonCategory: { connect: { id: teamSeasonCategoryId } },
+      };
+    }
+
     const result = await this.eventsService.executeEventUpdate(match.eventId, baseData, userId, async (tx) => {
       return tx.match.update({
         where: { id },
         data: {
           ...matchData,
-          ...(teamSeasonId && { teamSeason: { connect: { id: teamSeasonId } } }),
+          ...updateCategoryData,
         },
         select: matchSelect,
       });

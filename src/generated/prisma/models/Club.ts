@@ -32,9 +32,9 @@ export type ClubMinAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
+  defaultAccountCategoryId: string | null
 }
 
 export type ClubMaxAggregateOutputType = {
@@ -45,9 +45,9 @@ export type ClubMaxAggregateOutputType = {
   disciplineId: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
+  defaultAccountCategoryId: string | null
 }
 
 export type ClubCountAggregateOutputType = {
@@ -58,9 +58,9 @@ export type ClubCountAggregateOutputType = {
   disciplineId: number
   createdAt: number
   updatedAt: number
-  defaultAccountCategoryId: number
   createdById: number
   updatedById: number
+  defaultAccountCategoryId: number
   _all: number
 }
 
@@ -73,9 +73,9 @@ export type ClubMinAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
-  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
+  defaultAccountCategoryId?: true
 }
 
 export type ClubMaxAggregateInputType = {
@@ -86,9 +86,9 @@ export type ClubMaxAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
-  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
+  defaultAccountCategoryId?: true
 }
 
 export type ClubCountAggregateInputType = {
@@ -99,9 +99,9 @@ export type ClubCountAggregateInputType = {
   disciplineId?: true
   createdAt?: true
   updatedAt?: true
-  defaultAccountCategoryId?: true
   createdById?: true
   updatedById?: true
+  defaultAccountCategoryId?: true
   _all?: true
 }
 
@@ -185,9 +185,9 @@ export type ClubGroupByOutputType = {
   disciplineId: string
   createdAt: Date
   updatedAt: Date
-  defaultAccountCategoryId: string | null
   createdById: string | null
   updatedById: string | null
+  defaultAccountCategoryId: string | null
   _count: ClubCountAggregateOutputType | null
   _min: ClubMinAggregateOutputType | null
   _max: ClubMaxAggregateOutputType | null
@@ -219,15 +219,15 @@ export type ClubWhereInput = {
   disciplineId?: Prisma.StringFilter<"Club"> | string
   createdAt?: Prisma.DateTimeFilter<"Club"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Club"> | Date | string
-  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
   createdById?: Prisma.StringNullableFilter<"Club"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Club"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
-  discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
-  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
-  teams?: Prisma.TeamListRelationFilter
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
+  discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  teams?: Prisma.TeamListRelationFilter
 }
 
 export type ClubOrderByWithRelationInput = {
@@ -238,15 +238,15 @@ export type ClubOrderByWithRelationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  institution?: Prisma.InstitutionOrderByWithRelationInput
-  discipline?: Prisma.DisciplineOrderByWithRelationInput
-  defaultAccountCategory?: Prisma.AccountCategoryOrderByWithRelationInput
-  teams?: Prisma.TeamOrderByRelationAggregateInput
+  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.UserOrderByWithRelationInput
+  defaultAccountCategory?: Prisma.AccountCategoryOrderByWithRelationInput
+  discipline?: Prisma.DisciplineOrderByWithRelationInput
+  institution?: Prisma.InstitutionOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
+  teams?: Prisma.TeamOrderByRelationAggregateInput
 }
 
 export type ClubWhereUniqueInput = Prisma.AtLeast<{
@@ -261,15 +261,15 @@ export type ClubWhereUniqueInput = Prisma.AtLeast<{
   disciplineId?: Prisma.StringFilter<"Club"> | string
   createdAt?: Prisma.DateTimeFilter<"Club"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Club"> | Date | string
-  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
   createdById?: Prisma.StringNullableFilter<"Club"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Club"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
-  discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
-  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
-  teams?: Prisma.TeamListRelationFilter
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  defaultAccountCategory?: Prisma.XOR<Prisma.AccountCategoryNullableScalarRelationFilter, Prisma.AccountCategoryWhereInput> | null
+  discipline?: Prisma.XOR<Prisma.DisciplineScalarRelationFilter, Prisma.DisciplineWhereInput>
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  teams?: Prisma.TeamListRelationFilter
 }, "id" | "institutionId_disciplineId_name">
 
 export type ClubOrderByWithAggregationInput = {
@@ -280,9 +280,9 @@ export type ClubOrderByWithAggregationInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClubCountOrderByAggregateInput
   _max?: Prisma.ClubMaxOrderByAggregateInput
   _min?: Prisma.ClubMinOrderByAggregateInput
@@ -299,9 +299,9 @@ export type ClubScalarWhereWithAggregatesInput = {
   disciplineId?: Prisma.StringWithAggregatesFilter<"Club"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Club"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Club"> | Date | string
-  defaultAccountCategoryId?: Prisma.StringNullableWithAggregatesFilter<"Club"> | string | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Club"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Club"> | string | null
+  defaultAccountCategoryId?: Prisma.StringNullableWithAggregatesFilter<"Club"> | string | null
 }
 
 export type ClubCreateInput = {
@@ -310,12 +310,12 @@ export type ClubCreateInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
-  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateInput = {
@@ -326,9 +326,9 @@ export type ClubUncheckedCreateInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutClubInput
 }
 
@@ -338,12 +338,12 @@ export type ClubUpdateInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
-  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateInput = {
@@ -354,9 +354,9 @@ export type ClubUncheckedUpdateInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teams?: Prisma.TeamUncheckedUpdateManyWithoutClubNestedInput
 }
 
@@ -368,9 +368,9 @@ export type ClubCreateManyInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubUpdateManyMutationInput = {
@@ -389,9 +389,9 @@ export type ClubUncheckedUpdateManyInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubListRelationFilter = {
@@ -418,9 +418,9 @@ export type ClubCountOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
 }
 
 export type ClubMaxOrderByAggregateInput = {
@@ -431,9 +431,9 @@ export type ClubMaxOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
 }
 
 export type ClubMinOrderByAggregateInput = {
@@ -444,9 +444,9 @@ export type ClubMinOrderByAggregateInput = {
   disciplineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  defaultAccountCategoryId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  defaultAccountCategoryId?: Prisma.SortOrder
 }
 
 export type ClubScalarRelationFilter = {
@@ -684,11 +684,11 @@ export type ClubCreateWithoutDisciplineInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateWithoutDisciplineInput = {
@@ -698,9 +698,9 @@ export type ClubUncheckedCreateWithoutDisciplineInput = {
   institutionId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutClubInput
 }
 
@@ -741,9 +741,9 @@ export type ClubScalarWhereInput = {
   disciplineId?: Prisma.StringFilter<"Club"> | string
   createdAt?: Prisma.DateTimeFilter<"Club"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Club"> | Date | string
-  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
   createdById?: Prisma.StringNullableFilter<"Club"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Club"> | string | null
+  defaultAccountCategoryId?: Prisma.StringNullableFilter<"Club"> | string | null
 }
 
 export type ClubCreateWithoutInstitutionInput = {
@@ -752,11 +752,11 @@ export type ClubCreateWithoutInstitutionInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
-  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateWithoutInstitutionInput = {
@@ -766,9 +766,9 @@ export type ClubUncheckedCreateWithoutInstitutionInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutClubInput
 }
 
@@ -804,10 +804,10 @@ export type ClubCreateWithoutTeamsInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
-  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
 }
 
@@ -819,9 +819,9 @@ export type ClubUncheckedCreateWithoutTeamsInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubCreateOrConnectWithoutTeamsInput = {
@@ -846,10 +846,10 @@ export type ClubUpdateWithoutTeamsInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
-  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
 }
 
@@ -861,9 +861,9 @@ export type ClubUncheckedUpdateWithoutTeamsInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubCreateWithoutCreatedByInput = {
@@ -872,11 +872,11 @@ export type ClubCreateWithoutCreatedByInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
   defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateWithoutCreatedByInput = {
@@ -887,8 +887,8 @@ export type ClubUncheckedCreateWithoutCreatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutClubInput
 }
 
@@ -908,11 +908,11 @@ export type ClubCreateWithoutUpdatedByInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
-  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  defaultAccountCategory?: Prisma.AccountCategoryCreateNestedOneWithoutClubsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateWithoutUpdatedByInput = {
@@ -923,8 +923,8 @@ export type ClubUncheckedCreateWithoutUpdatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
+  defaultAccountCategoryId?: string | null
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutClubInput
 }
 
@@ -976,11 +976,11 @@ export type ClubCreateWithoutDefaultAccountCategoryInput = {
   shortName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
-  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
-  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedClubsInput
+  discipline: Prisma.DisciplineCreateNestedOneWithoutClubsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutClubsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedClubsInput
+  teams?: Prisma.TeamCreateNestedManyWithoutClubInput
 }
 
 export type ClubUncheckedCreateWithoutDefaultAccountCategoryInput = {
@@ -1029,9 +1029,9 @@ export type ClubCreateManyDisciplineInput = {
   institutionId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubUpdateWithoutDisciplineInput = {
@@ -1040,11 +1040,11 @@ export type ClubUpdateWithoutDisciplineInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateWithoutDisciplineInput = {
@@ -1054,9 +1054,9 @@ export type ClubUncheckedUpdateWithoutDisciplineInput = {
   institutionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teams?: Prisma.TeamUncheckedUpdateManyWithoutClubNestedInput
 }
 
@@ -1067,9 +1067,9 @@ export type ClubUncheckedUpdateManyWithoutDisciplineInput = {
   institutionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubCreateManyInstitutionInput = {
@@ -1079,9 +1079,9 @@ export type ClubCreateManyInstitutionInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubUpdateWithoutInstitutionInput = {
@@ -1090,11 +1090,11 @@ export type ClubUpdateWithoutInstitutionInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
-  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateWithoutInstitutionInput = {
@@ -1104,9 +1104,9 @@ export type ClubUncheckedUpdateWithoutInstitutionInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teams?: Prisma.TeamUncheckedUpdateManyWithoutClubNestedInput
 }
 
@@ -1117,9 +1117,9 @@ export type ClubUncheckedUpdateManyWithoutInstitutionInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubCreateManyCreatedByInput = {
@@ -1130,8 +1130,8 @@ export type ClubCreateManyCreatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   updatedById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubCreateManyUpdatedByInput = {
@@ -1142,8 +1142,8 @@ export type ClubCreateManyUpdatedByInput = {
   disciplineId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  defaultAccountCategoryId?: string | null
   createdById?: string | null
+  defaultAccountCategoryId?: string | null
 }
 
 export type ClubUpdateWithoutCreatedByInput = {
@@ -1152,11 +1152,11 @@ export type ClubUpdateWithoutCreatedByInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
   defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateWithoutCreatedByInput = {
@@ -1167,8 +1167,8 @@ export type ClubUncheckedUpdateWithoutCreatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teams?: Prisma.TeamUncheckedUpdateManyWithoutClubNestedInput
 }
 
@@ -1180,8 +1180,8 @@ export type ClubUncheckedUpdateManyWithoutCreatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubUpdateWithoutUpdatedByInput = {
@@ -1190,11 +1190,11 @@ export type ClubUpdateWithoutUpdatedByInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
-  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  defaultAccountCategory?: Prisma.AccountCategoryUpdateOneWithoutClubsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateWithoutUpdatedByInput = {
@@ -1205,8 +1205,8 @@ export type ClubUncheckedUpdateWithoutUpdatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   teams?: Prisma.TeamUncheckedUpdateManyWithoutClubNestedInput
 }
 
@@ -1218,8 +1218,8 @@ export type ClubUncheckedUpdateManyWithoutUpdatedByInput = {
   disciplineId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultAccountCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClubCreateManyDefaultAccountCategoryInput = {
@@ -1240,11 +1240,11 @@ export type ClubUpdateWithoutDefaultAccountCategoryInput = {
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
-  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedClubsNestedInput
+  discipline?: Prisma.DisciplineUpdateOneRequiredWithoutClubsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutClubsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedClubsNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutClubNestedInput
 }
 
 export type ClubUncheckedUpdateWithoutDefaultAccountCategoryInput = {
@@ -1311,15 +1311,15 @@ export type ClubSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
-  teams?: boolean | Prisma.Club$teamsArgs<ExtArgs>
+  defaultAccountCategoryId?: boolean
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
+  teams?: boolean | Prisma.Club$teamsArgs<ExtArgs>
   _count?: boolean | Prisma.ClubCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["club"]>
 
@@ -1331,13 +1331,13 @@ export type ClubSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  defaultAccountCategoryId?: boolean
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["club"]>
 
@@ -1349,13 +1349,13 @@ export type ClubSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  defaultAccountCategoryId?: boolean
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["club"]>
 
@@ -1367,45 +1367,45 @@ export type ClubSelectScalar = {
   disciplineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  defaultAccountCategoryId?: boolean
   createdById?: boolean
   updatedById?: boolean
+  defaultAccountCategoryId?: boolean
 }
 
-export type ClubOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortName" | "institutionId" | "disciplineId" | "createdAt" | "updatedAt" | "defaultAccountCategoryId" | "createdById" | "updatedById", ExtArgs["result"]["club"]>
+export type ClubOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortName" | "institutionId" | "disciplineId" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "defaultAccountCategoryId", ExtArgs["result"]["club"]>
 export type ClubInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
-  teams?: boolean | Prisma.Club$teamsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
+  teams?: boolean | Prisma.Club$teamsArgs<ExtArgs>
   _count?: boolean | Prisma.ClubCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClubIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
 }
 export type ClubIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
-  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
-  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
   createdBy?: boolean | Prisma.Club$createdByArgs<ExtArgs>
+  defaultAccountCategory?: boolean | Prisma.Club$defaultAccountCategoryArgs<ExtArgs>
+  discipline?: boolean | Prisma.DisciplineDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Club$updatedByArgs<ExtArgs>
 }
 
 export type $ClubPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Club"
   objects: {
-    institution: Prisma.$InstitutionPayload<ExtArgs>
-    discipline: Prisma.$DisciplinePayload<ExtArgs>
-    defaultAccountCategory: Prisma.$AccountCategoryPayload<ExtArgs> | null
-    teams: Prisma.$TeamPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    defaultAccountCategory: Prisma.$AccountCategoryPayload<ExtArgs> | null
+    discipline: Prisma.$DisciplinePayload<ExtArgs>
+    institution: Prisma.$InstitutionPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
+    teams: Prisma.$TeamPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1415,9 +1415,9 @@ export type $ClubPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     disciplineId: string
     createdAt: Date
     updatedAt: Date
-    defaultAccountCategoryId: string | null
     createdById: string | null
     updatedById: string | null
+    defaultAccountCategoryId: string | null
   }, ExtArgs["result"]["club"]>
   composites: {}
 }
@@ -1812,12 +1812,12 @@ readonly fields: ClubFieldRefs;
  */
 export interface Prisma__ClubClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  discipline<T extends Prisma.DisciplineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DisciplineDefaultArgs<ExtArgs>>): Prisma.Prisma__DisciplineClient<runtime.Types.Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  defaultAccountCategory<T extends Prisma.Club$defaultAccountCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$defaultAccountCategoryArgs<ExtArgs>>): Prisma.Prisma__AccountCategoryClient<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  teams<T extends Prisma.Club$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Club$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  defaultAccountCategory<T extends Prisma.Club$defaultAccountCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$defaultAccountCategoryArgs<ExtArgs>>): Prisma.Prisma__AccountCategoryClient<runtime.Types.Result.GetResult<Prisma.$AccountCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  discipline<T extends Prisma.DisciplineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DisciplineDefaultArgs<ExtArgs>>): Prisma.Prisma__DisciplineClient<runtime.Types.Result.GetResult<Prisma.$DisciplinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Club$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teams<T extends Prisma.Club$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Club$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1854,9 +1854,9 @@ export interface ClubFieldRefs {
   readonly disciplineId: Prisma.FieldRef<"Club", 'String'>
   readonly createdAt: Prisma.FieldRef<"Club", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Club", 'DateTime'>
-  readonly defaultAccountCategoryId: Prisma.FieldRef<"Club", 'String'>
   readonly createdById: Prisma.FieldRef<"Club", 'String'>
   readonly updatedById: Prisma.FieldRef<"Club", 'String'>
+  readonly defaultAccountCategoryId: Prisma.FieldRef<"Club", 'String'>
 }
     
 
@@ -2253,6 +2253,25 @@ export type ClubDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Club.createdBy
+ */
+export type Club$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
  * Club.defaultAccountCategory
  */
 export type Club$defaultAccountCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2269,6 +2288,25 @@ export type Club$defaultAccountCategoryArgs<ExtArgs extends runtime.Types.Extens
    */
   include?: Prisma.AccountCategoryInclude<ExtArgs> | null
   where?: Prisma.AccountCategoryWhereInput
+}
+
+/**
+ * Club.updatedBy
+ */
+export type Club$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -2293,44 +2331,6 @@ export type Club$teamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
-}
-
-/**
- * Club.createdBy
- */
-export type Club$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * Club.updatedBy
- */
-export type Club$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

@@ -7,7 +7,7 @@ import { TeamSeasonStaffPaginationDto } from './dto/pagination.dto';
 
 export const teamSeasonStaffSelect: Prisma.TeamSeasonStaffSelect = {
   id: true,
-  teamSeasonId: true,
+  teamSeasonCategoryId: true,
   staffId: true,
   role: true,
   customRole: true,
@@ -43,8 +43,13 @@ export class TeamSeasonStaffService {
   ) {}
 
   async create(createTeamSeasonStaffDto: CreateTeamSeasonStaffDto) {
+    const { teamSeasonCategoryId, ...rest } = createTeamSeasonStaffDto;
+    
     const newSeason = await this.prisma.teamSeasonStaff.create({
-      data: createTeamSeasonStaffDto,
+      data: {
+        ...rest,
+        teamSeasonCategoryId,
+      },
       select: teamSeasonStaffSelect,
     });
 
@@ -71,7 +76,7 @@ export class TeamSeasonStaffService {
     const where: Prisma.TeamSeasonStaffWhereInput = {};
 
     if (teamSeasonId) {
-      where.teamSeasonId = teamSeasonId;
+      where.teamSeasonCategory = { teamSeasonId };
     }
 
     if (staffId) {
@@ -132,7 +137,7 @@ export class TeamSeasonStaffService {
       ...(teamSeasonId
         ? {
             teamSeasonStaffs: {
-              none: { teamSeasonId },
+              none: { teamSeasonCategory: { teamSeasonId } },
             },
           }
         : {}),
@@ -226,9 +231,20 @@ export class TeamSeasonStaffService {
     if (!teamSeasonStaff) {
       throw new NotFoundException(this.i18n.t('errors.TEAM_STAFF_NOT_FOUND'));
     }
+    const { teamSeasonCategoryId, ...rest } = updateTeamSeasonStaffDto;
+    let categoryData = {};
+    if (teamSeasonCategoryId) {
+      categoryData = {
+        teamSeasonCategoryId,
+      };
+    }
+
     const updatedTeamSeasonStaff = await this.prisma.teamSeasonStaff.update({
       where: { id },
-      data: updateTeamSeasonStaffDto,
+      data: {
+        ...rest,
+        ...categoryData,
+      },
       select: teamSeasonStaffSelect,
     });
     return {

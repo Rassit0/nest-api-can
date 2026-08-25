@@ -17,19 +17,19 @@ import { MatchResult, MatchType } from 'src/generated/prisma/client';
 export class CreateMatchDto {
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la temporada del equipo (TeamSeason)',
+    description: 'ID de la categoría de la temporada del equipo (TeamSeasonCategory)',
   })
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'teamSeasonId',
+      constraint1: 'teamSeasonCategoryId',
     }),
   })
-  @Exists('teamSeason', 'id', {
+  @Exists('teamSeasonCategory', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'teamSeasonId',
+      constraint1: 'teamSeasonCategoryId',
     }),
   })
-  teamSeasonId: string;
+  teamSeasonCategoryId: string;
 
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',

@@ -308,11 +308,11 @@ export type ProgressEvaluationWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ProgressEvaluation"> | Date | string
   createdById?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   updatedById?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
-  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
-  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
-  evaluatorStaff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
-  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  evaluatorStaff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
+  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
+  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -332,11 +332,11 @@ export type ProgressEvaluationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  player?: Prisma.PlayerOrderByWithRelationInput
-  student?: Prisma.StudentOrderByWithRelationInput
-  evaluatorStaff?: Prisma.StaffOrderByWithRelationInput
-  season?: Prisma.SeasonOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  evaluatorStaff?: Prisma.StaffOrderByWithRelationInput
+  player?: Prisma.PlayerOrderByWithRelationInput
+  season?: Prisma.SeasonOrderByWithRelationInput
+  student?: Prisma.StudentOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -359,11 +359,11 @@ export type ProgressEvaluationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ProgressEvaluation"> | Date | string
   createdById?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   updatedById?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
-  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
-  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
-  evaluatorStaff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
-  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  evaluatorStaff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
+  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
+  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -421,11 +421,11 @@ export type ProgressEvaluationCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
-  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
-  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
-  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -457,11 +457,11 @@ export type ProgressEvaluationUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
-  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
-  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
-  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -871,10 +871,10 @@ export type ProgressEvaluationCreateWithoutSeasonInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
   player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
-  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -952,10 +952,10 @@ export type ProgressEvaluationCreateWithoutPlayerInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
   evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -1012,10 +1012,10 @@ export type ProgressEvaluationCreateWithoutEvaluatorStaffInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
-  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
-  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -1072,10 +1072,10 @@ export type ProgressEvaluationCreateWithoutCreatedByInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
-  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -1116,11 +1116,11 @@ export type ProgressEvaluationCreateWithoutUpdatedByInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
-  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
-  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
-  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutUpdatedByInput = {
@@ -1192,10 +1192,10 @@ export type ProgressEvaluationCreateWithoutStudentInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
-  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
-  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
 }
 
@@ -1269,10 +1269,10 @@ export type ProgressEvaluationUpdateWithoutSeasonInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
-  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -1337,10 +1337,10 @@ export type ProgressEvaluationUpdateWithoutPlayerInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
   evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -1405,10 +1405,10 @@ export type ProgressEvaluationUpdateWithoutEvaluatorStaffInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
-  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
-  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -1490,10 +1490,10 @@ export type ProgressEvaluationUpdateWithoutCreatedByInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
-  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -1541,11 +1541,11 @@ export type ProgressEvaluationUpdateWithoutUpdatedByInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
-  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
-  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
-  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutUpdatedByInput = {
@@ -1609,10 +1609,10 @@ export type ProgressEvaluationUpdateWithoutStudentInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
-  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
-  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
 }
 
@@ -1668,11 +1668,11 @@ export type ProgressEvaluationSelect<ExtArgs extends runtime.Types.Extensions.In
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
@@ -1692,11 +1692,11 @@ export type ProgressEvaluationSelectCreateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
@@ -1716,11 +1716,11 @@ export type ProgressEvaluationSelectUpdateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
@@ -1744,38 +1744,38 @@ export type ProgressEvaluationSelectScalar = {
 
 export type ProgressEvaluationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "studentId" | "evaluatorStaffId" | "seasonId" | "evaluationDate" | "technicalScore" | "tacticalScore" | "physicalScore" | "behaviorScore" | "notes" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["progressEvaluation"]>
 export type ProgressEvaluationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }
 export type ProgressEvaluationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }
 export type ProgressEvaluationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
-  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
-  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
+  evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.ProgressEvaluation$playerArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
 }
 
 export type $ProgressEvaluationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProgressEvaluation"
   objects: {
-    player: Prisma.$PlayerPayload<ExtArgs> | null
-    student: Prisma.$StudentPayload<ExtArgs> | null
-    evaluatorStaff: Prisma.$StaffPayload<ExtArgs>
-    season: Prisma.$SeasonPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    evaluatorStaff: Prisma.$StaffPayload<ExtArgs>
+    player: Prisma.$PlayerPayload<ExtArgs> | null
+    season: Prisma.$SeasonPayload<ExtArgs>
+    student: Prisma.$StudentPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2188,11 +2188,11 @@ readonly fields: ProgressEvaluationFieldRefs;
  */
 export interface Prisma__ProgressEvaluationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  player<T extends Prisma.ProgressEvaluation$playerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$playerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  student<T extends Prisma.ProgressEvaluation$studentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$studentArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  evaluatorStaff<T extends Prisma.StaffDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StaffDefaultArgs<ExtArgs>>): Prisma.Prisma__StaffClient<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.ProgressEvaluation$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  evaluatorStaff<T extends Prisma.StaffDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StaffDefaultArgs<ExtArgs>>): Prisma.Prisma__StaffClient<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  player<T extends Prisma.ProgressEvaluation$playerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$playerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  student<T extends Prisma.ProgressEvaluation$studentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$studentArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.ProgressEvaluation$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2634,6 +2634,25 @@ export type ProgressEvaluationDeleteManyArgs<ExtArgs extends runtime.Types.Exten
 }
 
 /**
+ * ProgressEvaluation.createdBy
+ */
+export type ProgressEvaluation$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
  * ProgressEvaluation.player
  */
 export type ProgressEvaluation$playerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2669,25 +2688,6 @@ export type ProgressEvaluation$studentArgs<ExtArgs extends runtime.Types.Extensi
    */
   include?: Prisma.StudentInclude<ExtArgs> | null
   where?: Prisma.StudentWhereInput
-}
-
-/**
- * ProgressEvaluation.createdBy
- */
-export type ProgressEvaluation$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

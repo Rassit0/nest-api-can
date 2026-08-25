@@ -43,13 +43,13 @@ export type StudentDiscountMinAggregateOutputType = {
   studentMembershipId: string | null
   recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
-  seasonFeeDiscountPercent: runtime.Decimal | null
   startDate: Date | null
   endDate: Date | null
   type: $Enums.MembershipDiscountType | null
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  seasonFeeDiscountPercent: runtime.Decimal | null
   createdById: string | null
   updatedById: string | null
 }
@@ -59,13 +59,13 @@ export type StudentDiscountMaxAggregateOutputType = {
   studentMembershipId: string | null
   recurringDiscountPercent: runtime.Decimal | null
   registrationDiscountPercent: runtime.Decimal | null
-  seasonFeeDiscountPercent: runtime.Decimal | null
   startDate: Date | null
   endDate: Date | null
   type: $Enums.MembershipDiscountType | null
   reason: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  seasonFeeDiscountPercent: runtime.Decimal | null
   createdById: string | null
   updatedById: string | null
 }
@@ -75,13 +75,13 @@ export type StudentDiscountCountAggregateOutputType = {
   studentMembershipId: number
   recurringDiscountPercent: number
   registrationDiscountPercent: number
-  seasonFeeDiscountPercent: number
   startDate: number
   endDate: number
   type: number
   reason: number
   createdAt: number
   updatedAt: number
+  seasonFeeDiscountPercent: number
   createdById: number
   updatedById: number
   _all: number
@@ -105,13 +105,13 @@ export type StudentDiscountMinAggregateInputType = {
   studentMembershipId?: true
   recurringDiscountPercent?: true
   registrationDiscountPercent?: true
-  seasonFeeDiscountPercent?: true
   startDate?: true
   endDate?: true
   type?: true
   reason?: true
   createdAt?: true
   updatedAt?: true
+  seasonFeeDiscountPercent?: true
   createdById?: true
   updatedById?: true
 }
@@ -121,13 +121,13 @@ export type StudentDiscountMaxAggregateInputType = {
   studentMembershipId?: true
   recurringDiscountPercent?: true
   registrationDiscountPercent?: true
-  seasonFeeDiscountPercent?: true
   startDate?: true
   endDate?: true
   type?: true
   reason?: true
   createdAt?: true
   updatedAt?: true
+  seasonFeeDiscountPercent?: true
   createdById?: true
   updatedById?: true
 }
@@ -137,13 +137,13 @@ export type StudentDiscountCountAggregateInputType = {
   studentMembershipId?: true
   recurringDiscountPercent?: true
   registrationDiscountPercent?: true
-  seasonFeeDiscountPercent?: true
   startDate?: true
   endDate?: true
   type?: true
   reason?: true
   createdAt?: true
   updatedAt?: true
+  seasonFeeDiscountPercent?: true
   createdById?: true
   updatedById?: true
   _all?: true
@@ -240,13 +240,13 @@ export type StudentDiscountGroupByOutputType = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal
   registrationDiscountPercent: runtime.Decimal
-  seasonFeeDiscountPercent: runtime.Decimal
   startDate: Date
   endDate: Date | null
   type: $Enums.MembershipDiscountType
   reason: string | null
   createdAt: Date
   updatedAt: Date
+  seasonFeeDiscountPercent: runtime.Decimal
   createdById: string | null
   updatedById: string | null
   _count: StudentDiscountCountAggregateOutputType | null
@@ -279,17 +279,17 @@ export type StudentDiscountWhereInput = {
   studentMembershipId?: Prisma.StringFilter<"StudentDiscount"> | string
   recurringDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"StudentDiscount"> | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
   reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
-  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -298,17 +298,17 @@ export type StudentDiscountOrderByWithRelationInput = {
   studentMembershipId?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
-  seasonFeeDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  seasonFeeDiscountPercent?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -320,17 +320,17 @@ export type StudentDiscountWhereUniqueInput = Prisma.AtLeast<{
   studentMembershipId?: Prisma.StringFilter<"StudentDiscount"> | string
   recurringDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"StudentDiscount"> | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
   reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
-  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -339,13 +339,13 @@ export type StudentDiscountOrderByWithAggregationInput = {
   studentMembershipId?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
-  seasonFeeDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  seasonFeeDiscountPercent?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.StudentDiscountCountOrderByAggregateInput
@@ -363,13 +363,13 @@ export type StudentDiscountScalarWhereWithAggregatesInput = {
   studentMembershipId?: Prisma.StringWithAggregatesFilter<"StudentDiscount"> | string
   recurringDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentDiscount"> | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeWithAggregatesFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
   reason?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StudentDiscount"> | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalWithAggregatesFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"StudentDiscount"> | string | null
 }
@@ -378,15 +378,15 @@ export type StudentDiscountCreateInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
 }
 
@@ -395,13 +395,13 @@ export type StudentDiscountUncheckedCreateInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
   updatedById?: string | null
 }
@@ -410,15 +410,15 @@ export type StudentDiscountUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
 }
 
@@ -427,13 +427,13 @@ export type StudentDiscountUncheckedUpdateInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -443,13 +443,13 @@ export type StudentDiscountCreateManyInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
   updatedById?: string | null
 }
@@ -458,13 +458,13 @@ export type StudentDiscountUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type StudentDiscountUncheckedUpdateManyInput = {
@@ -472,13 +472,13 @@ export type StudentDiscountUncheckedUpdateManyInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -498,13 +498,13 @@ export type StudentDiscountCountOrderByAggregateInput = {
   studentMembershipId?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
-  seasonFeeDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  seasonFeeDiscountPercent?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -520,13 +520,13 @@ export type StudentDiscountMaxOrderByAggregateInput = {
   studentMembershipId?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
-  seasonFeeDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  seasonFeeDiscountPercent?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -536,13 +536,13 @@ export type StudentDiscountMinOrderByAggregateInput = {
   studentMembershipId?: Prisma.SortOrder
   recurringDiscountPercent?: Prisma.SortOrder
   registrationDiscountPercent?: Prisma.SortOrder
-  seasonFeeDiscountPercent?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   type?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  seasonFeeDiscountPercent?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -683,13 +683,13 @@ export type StudentDiscountCreateWithoutCreatedByInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
 }
@@ -699,13 +699,13 @@ export type StudentDiscountUncheckedCreateWithoutCreatedByInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   updatedById?: string | null
 }
 
@@ -723,15 +723,15 @@ export type StudentDiscountCreateWithoutUpdatedByInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutStudentDiscountsInput
 }
 
 export type StudentDiscountUncheckedCreateWithoutUpdatedByInput = {
@@ -739,13 +739,13 @@ export type StudentDiscountUncheckedCreateWithoutUpdatedByInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
 }
 
@@ -783,13 +783,13 @@ export type StudentDiscountScalarWhereInput = {
   studentMembershipId?: Prisma.StringFilter<"StudentDiscount"> | string
   recurringDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"StudentDiscount"> | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFilter<"StudentDiscount"> | $Enums.MembershipDiscountType
   reason?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentDiscount"> | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFilter<"StudentDiscount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
   updatedById?: Prisma.StringNullableFilter<"StudentDiscount"> | string | null
 }
@@ -814,13 +814,13 @@ export type StudentDiscountCreateWithoutStudentMembershipInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentDiscountsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentDiscountsInput
 }
@@ -829,13 +829,13 @@ export type StudentDiscountUncheckedCreateWithoutStudentMembershipInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
   updatedById?: string | null
 }
@@ -871,13 +871,13 @@ export type StudentDiscountCreateManyCreatedByInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   updatedById?: string | null
 }
 
@@ -886,13 +886,13 @@ export type StudentDiscountCreateManyUpdatedByInput = {
   studentMembershipId: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
 }
 
@@ -900,13 +900,13 @@ export type StudentDiscountUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
 }
@@ -916,13 +916,13 @@ export type StudentDiscountUncheckedUpdateWithoutCreatedByInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -931,13 +931,13 @@ export type StudentDiscountUncheckedUpdateManyWithoutCreatedByInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -945,15 +945,15 @@ export type StudentDiscountUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutStudentDiscountsNestedInput
 }
 
 export type StudentDiscountUncheckedUpdateWithoutUpdatedByInput = {
@@ -961,13 +961,13 @@ export type StudentDiscountUncheckedUpdateWithoutUpdatedByInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -976,13 +976,13 @@ export type StudentDiscountUncheckedUpdateManyWithoutUpdatedByInput = {
   studentMembershipId?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -990,13 +990,13 @@ export type StudentDiscountCreateManyStudentMembershipInput = {
   id?: string
   recurringDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate: Date | string
   endDate?: Date | string | null
   type: $Enums.MembershipDiscountType
   reason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  seasonFeeDiscountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: string | null
   updatedById?: string | null
 }
@@ -1005,13 +1005,13 @@ export type StudentDiscountUpdateWithoutStudentMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentDiscountsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentDiscountsNestedInput
 }
@@ -1020,13 +1020,13 @@ export type StudentDiscountUncheckedUpdateWithoutStudentMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1035,13 +1035,13 @@ export type StudentDiscountUncheckedUpdateManyWithoutStudentMembershipInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   recurringDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   registrationDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   type?: Prisma.EnumMembershipDiscountTypeFieldUpdateOperationsInput | $Enums.MembershipDiscountType
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seasonFeeDiscountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1053,17 +1053,17 @@ export type StudentDiscountSelect<ExtArgs extends runtime.Types.Extensions.Inter
   studentMembershipId?: boolean
   recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
-  seasonFeeDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
   type?: boolean
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  seasonFeeDiscountPercent?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
@@ -1072,17 +1072,17 @@ export type StudentDiscountSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   studentMembershipId?: boolean
   recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
-  seasonFeeDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
   type?: boolean
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  seasonFeeDiscountPercent?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
@@ -1091,17 +1091,17 @@ export type StudentDiscountSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   studentMembershipId?: boolean
   recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
-  seasonFeeDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
   type?: boolean
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  seasonFeeDiscountPercent?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentDiscount"]>
 
@@ -1110,39 +1110,39 @@ export type StudentDiscountSelectScalar = {
   studentMembershipId?: boolean
   recurringDiscountPercent?: boolean
   registrationDiscountPercent?: boolean
-  seasonFeeDiscountPercent?: boolean
   startDate?: boolean
   endDate?: boolean
   type?: boolean
   reason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  seasonFeeDiscountPercent?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type StudentDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "seasonFeeDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["studentDiscount"]>
+export type StudentDiscountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "recurringDiscountPercent" | "registrationDiscountPercent" | "startDate" | "endDate" | "type" | "reason" | "createdAt" | "updatedAt" | "seasonFeeDiscountPercent" | "createdById" | "updatedById", ExtArgs["result"]["studentDiscount"]>
 export type StudentDiscountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 export type StudentDiscountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 export type StudentDiscountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentDiscount$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentDiscount$updatedByArgs<ExtArgs>
 }
 
 export type $StudentDiscountPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StudentDiscount"
   objects: {
-    studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1150,13 +1150,13 @@ export type $StudentDiscountPayload<ExtArgs extends runtime.Types.Extensions.Int
     studentMembershipId: string
     recurringDiscountPercent: runtime.Decimal
     registrationDiscountPercent: runtime.Decimal
-    seasonFeeDiscountPercent: runtime.Decimal
     startDate: Date
     endDate: Date | null
     type: $Enums.MembershipDiscountType
     reason: string | null
     createdAt: Date
     updatedAt: Date
+    seasonFeeDiscountPercent: runtime.Decimal
     createdById: string | null
     updatedById: string | null
   }, ExtArgs["result"]["studentDiscount"]>
@@ -1553,8 +1553,8 @@ readonly fields: StudentDiscountFieldRefs;
  */
 export interface Prisma__StudentDiscountClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.StudentDiscount$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDiscount$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.StudentDiscount$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDiscount$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1589,13 +1589,13 @@ export interface StudentDiscountFieldRefs {
   readonly studentMembershipId: Prisma.FieldRef<"StudentDiscount", 'String'>
   readonly recurringDiscountPercent: Prisma.FieldRef<"StudentDiscount", 'Decimal'>
   readonly registrationDiscountPercent: Prisma.FieldRef<"StudentDiscount", 'Decimal'>
-  readonly seasonFeeDiscountPercent: Prisma.FieldRef<"StudentDiscount", 'Decimal'>
   readonly startDate: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
   readonly type: Prisma.FieldRef<"StudentDiscount", 'MembershipDiscountType'>
   readonly reason: Prisma.FieldRef<"StudentDiscount", 'String'>
   readonly createdAt: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StudentDiscount", 'DateTime'>
+  readonly seasonFeeDiscountPercent: Prisma.FieldRef<"StudentDiscount", 'Decimal'>
   readonly createdById: Prisma.FieldRef<"StudentDiscount", 'String'>
   readonly updatedById: Prisma.FieldRef<"StudentDiscount", 'String'>
 }

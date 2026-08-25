@@ -158,15 +158,15 @@ export type SessionCourseWhereInput = {
   NOT?: Prisma.SessionCourseWhereInput | Prisma.SessionCourseWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionCourse"> | string
   courseSeasonShiftId?: Prisma.StringFilter<"SessionCourse"> | string
-  session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput>
+  session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
 }
 
 export type SessionCourseOrderByWithRelationInput = {
   sessionId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
-  session?: Prisma.SessionOrderByWithRelationInput
   courseSeasonShift?: Prisma.CourseSeasonShiftOrderByWithRelationInput
+  session?: Prisma.SessionOrderByWithRelationInput
 }
 
 export type SessionCourseWhereUniqueInput = Prisma.AtLeast<{
@@ -176,8 +176,8 @@ export type SessionCourseWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SessionCourseWhereInput | Prisma.SessionCourseWhereInput[]
   sessionId?: Prisma.StringFilter<"SessionCourse"> | string
   courseSeasonShiftId?: Prisma.StringFilter<"SessionCourse"> | string
-  session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput>
+  session?: Prisma.XOR<Prisma.SessionScalarRelationFilter, Prisma.SessionWhereInput>
 }, "sessionId_courseSeasonShiftId">
 
 export type SessionCourseOrderByWithAggregationInput = {
@@ -197,8 +197,8 @@ export type SessionCourseScalarWhereWithAggregatesInput = {
 }
 
 export type SessionCourseCreateInput = {
-  session: Prisma.SessionCreateNestedOneWithoutSessionCoursesInput
   courseSeasonShift: Prisma.CourseSeasonShiftCreateNestedOneWithoutSessionCoursesInput
+  session: Prisma.SessionCreateNestedOneWithoutSessionCoursesInput
 }
 
 export type SessionCourseUncheckedCreateInput = {
@@ -207,8 +207,8 @@ export type SessionCourseUncheckedCreateInput = {
 }
 
 export type SessionCourseUpdateInput = {
-  session?: Prisma.SessionUpdateOneRequiredWithoutSessionCoursesNestedInput
   courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneRequiredWithoutSessionCoursesNestedInput
+  session?: Prisma.SessionUpdateOneRequiredWithoutSessionCoursesNestedInput
 }
 
 export type SessionCourseUncheckedUpdateInput = {
@@ -457,22 +457,22 @@ export type SessionCourseUncheckedUpdateManyWithoutSessionInput = {
 export type SessionCourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
   courseSeasonShiftId?: boolean
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
   courseSeasonShiftId?: boolean
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   sessionId?: boolean
   courseSeasonShiftId?: boolean
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionCourse"]>
 
 export type SessionCourseSelectScalar = {
@@ -482,23 +482,23 @@ export type SessionCourseSelectScalar = {
 
 export type SessionCourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sessionId" | "courseSeasonShiftId", ExtArgs["result"]["sessionCourse"]>
 export type SessionCourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }
 export type SessionCourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }
 export type SessionCourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.SessionDefaultArgs<ExtArgs>
 }
 
 export type $SessionCoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SessionCourse"
   objects: {
-    session: Prisma.$SessionPayload<ExtArgs>
     courseSeasonShift: Prisma.$CourseSeasonShiftPayload<ExtArgs>
+    session: Prisma.$SessionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     sessionId: string
@@ -897,8 +897,8 @@ readonly fields: SessionCourseFieldRefs;
  */
 export interface Prisma__SessionCourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  session<T extends Prisma.SessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   courseSeasonShift<T extends Prisma.CourseSeasonShiftDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShiftDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonShiftClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.SessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

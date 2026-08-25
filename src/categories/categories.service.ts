@@ -63,7 +63,7 @@ export class CategoriesService {
       : {};
 
     if (teamId) {
-      where.teamSeasons = { some: { teamId } };
+      where.teamSeasonCategories = { some: { teamSeason: { teamId } } };
     }
 
     if (disciplineId) {

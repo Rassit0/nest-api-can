@@ -28,27 +28,27 @@ export type GeneralEventMinAggregateOutputType = {
   id: string | null
   eventId: string | null
   institutionId: string | null
-  teamSeasonId: string | null
   courseSeasonId: string | null
   courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
 }
 
 export type GeneralEventMaxAggregateOutputType = {
   id: string | null
   eventId: string | null
   institutionId: string | null
-  teamSeasonId: string | null
   courseSeasonId: string | null
   courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
 }
 
 export type GeneralEventCountAggregateOutputType = {
   id: number
   eventId: number
   institutionId: number
-  teamSeasonId: number
   courseSeasonId: number
   courseSeasonShiftId: number
+  teamSeasonCategoryId: number
   _all: number
 }
 
@@ -57,27 +57,27 @@ export type GeneralEventMinAggregateInputType = {
   id?: true
   eventId?: true
   institutionId?: true
-  teamSeasonId?: true
   courseSeasonId?: true
   courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
 }
 
 export type GeneralEventMaxAggregateInputType = {
   id?: true
   eventId?: true
   institutionId?: true
-  teamSeasonId?: true
   courseSeasonId?: true
   courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
 }
 
 export type GeneralEventCountAggregateInputType = {
   id?: true
   eventId?: true
   institutionId?: true
-  teamSeasonId?: true
   courseSeasonId?: true
   courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
   _all?: true
 }
 
@@ -157,9 +157,9 @@ export type GeneralEventGroupByOutputType = {
   id: string
   eventId: string
   institutionId: string | null
-  teamSeasonId: string | null
   courseSeasonId: string | null
   courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
   _count: GeneralEventCountAggregateOutputType | null
   _min: GeneralEventMinAggregateOutputType | null
   _max: GeneralEventMaxAggregateOutputType | null
@@ -187,28 +187,28 @@ export type GeneralEventWhereInput = {
   id?: Prisma.StringFilter<"GeneralEvent"> | string
   eventId?: Prisma.StringFilter<"GeneralEvent"> | string
   institutionId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-  teamSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonShiftId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  institution?: Prisma.XOR<Prisma.InstitutionNullableScalarRelationFilter, Prisma.InstitutionWhereInput> | null
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonNullableScalarRelationFilter, Prisma.CourseSeasonWhereInput> | null
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  institution?: Prisma.XOR<Prisma.InstitutionNullableScalarRelationFilter, Prisma.InstitutionWhereInput> | null
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryNullableScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput> | null
 }
 
 export type GeneralEventOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   institutionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
-  event?: Prisma.EventOrderByWithRelationInput
-  institution?: Prisma.InstitutionOrderByWithRelationInput
-  teamSeason?: Prisma.TeamSeasonOrderByWithRelationInput
+  teamSeasonCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
   courseSeasonShift?: Prisma.CourseSeasonShiftOrderByWithRelationInput
+  event?: Prisma.EventOrderByWithRelationInput
+  institution?: Prisma.InstitutionOrderByWithRelationInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryOrderByWithRelationInput
 }
 
 export type GeneralEventWhereUniqueInput = Prisma.AtLeast<{
@@ -218,23 +218,23 @@ export type GeneralEventWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.GeneralEventWhereInput[]
   NOT?: Prisma.GeneralEventWhereInput | Prisma.GeneralEventWhereInput[]
   institutionId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-  teamSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonShiftId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
-  institution?: Prisma.XOR<Prisma.InstitutionNullableScalarRelationFilter, Prisma.InstitutionWhereInput> | null
-  teamSeason?: Prisma.XOR<Prisma.TeamSeasonNullableScalarRelationFilter, Prisma.TeamSeasonWhereInput> | null
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonNullableScalarRelationFilter, Prisma.CourseSeasonWhereInput> | null
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  institution?: Prisma.XOR<Prisma.InstitutionNullableScalarRelationFilter, Prisma.InstitutionWhereInput> | null
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryNullableScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput> | null
 }, "id" | "eventId">
 
 export type GeneralEventOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   institutionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.GeneralEventCountOrderByAggregateInput
   _max?: Prisma.GeneralEventMaxOrderByAggregateInput
   _min?: Prisma.GeneralEventMinOrderByAggregateInput
@@ -247,54 +247,54 @@ export type GeneralEventScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"GeneralEvent"> | string
   eventId?: Prisma.StringWithAggregatesFilter<"GeneralEvent"> | string
   institutionId?: Prisma.StringNullableWithAggregatesFilter<"GeneralEvent"> | string | null
-  teamSeasonId?: Prisma.StringNullableWithAggregatesFilter<"GeneralEvent"> | string | null
   courseSeasonId?: Prisma.StringNullableWithAggregatesFilter<"GeneralEvent"> | string | null
   courseSeasonShiftId?: Prisma.StringNullableWithAggregatesFilter<"GeneralEvent"> | string | null
+  teamSeasonCategoryId?: Prisma.StringNullableWithAggregatesFilter<"GeneralEvent"> | string | null
 }
 
 export type GeneralEventCreateInput = {
   id?: string
-  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
-  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
-  teamSeason?: Prisma.TeamSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
+  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
+  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutGeneralEventsInput
 }
 
 export type GeneralEventUncheckedCreateInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
-  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneWithoutGeneralEventsNestedInput
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
   courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
+  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutGeneralEventsNestedInput
 }
 
 export type GeneralEventUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventCreateManyInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventUpdateManyMutationInput = {
@@ -305,9 +305,9 @@ export type GeneralEventUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventListRelationFilter = {
@@ -329,27 +329,27 @@ export type GeneralEventCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   institutionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type GeneralEventMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   institutionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type GeneralEventMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   institutionId?: Prisma.SortOrder
-  teamSeasonId?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
 }
 
 export type GeneralEventCreateNestedManyWithoutInstitutionInput = {
@@ -391,48 +391,6 @@ export type GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput = {
   connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
   update?: Prisma.GeneralEventUpdateWithWhereUniqueWithoutInstitutionInput | Prisma.GeneralEventUpdateWithWhereUniqueWithoutInstitutionInput[]
   updateMany?: Prisma.GeneralEventUpdateManyWithWhereWithoutInstitutionInput | Prisma.GeneralEventUpdateManyWithWhereWithoutInstitutionInput[]
-  deleteMany?: Prisma.GeneralEventScalarWhereInput | Prisma.GeneralEventScalarWhereInput[]
-}
-
-export type GeneralEventCreateNestedManyWithoutTeamSeasonInput = {
-  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput> | Prisma.GeneralEventCreateWithoutTeamSeasonInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput[]
-  createMany?: Prisma.GeneralEventCreateManyTeamSeasonInputEnvelope
-  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-}
-
-export type GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonInput = {
-  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput> | Prisma.GeneralEventCreateWithoutTeamSeasonInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput[]
-  createMany?: Prisma.GeneralEventCreateManyTeamSeasonInputEnvelope
-  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-}
-
-export type GeneralEventUpdateManyWithoutTeamSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput> | Prisma.GeneralEventCreateWithoutTeamSeasonInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput[]
-  upsert?: Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonInput[]
-  createMany?: Prisma.GeneralEventCreateManyTeamSeasonInputEnvelope
-  set?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  disconnect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  delete?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  update?: Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonInput[]
-  updateMany?: Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonInput[]
-  deleteMany?: Prisma.GeneralEventScalarWhereInput | Prisma.GeneralEventScalarWhereInput[]
-}
-
-export type GeneralEventUncheckedUpdateManyWithoutTeamSeasonNestedInput = {
-  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput> | Prisma.GeneralEventCreateWithoutTeamSeasonInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput[]
-  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonInput[]
-  upsert?: Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonInput | Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonInput[]
-  createMany?: Prisma.GeneralEventCreateManyTeamSeasonInputEnvelope
-  set?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  disconnect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  delete?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
-  update?: Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonInput | Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonInput[]
-  updateMany?: Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonInput | Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonInput[]
   deleteMany?: Prisma.GeneralEventScalarWhereInput | Prisma.GeneralEventScalarWhereInput[]
 }
 
@@ -552,20 +510,62 @@ export type GeneralEventUncheckedUpdateOneWithoutEventNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GeneralEventUpdateToOneWithWhereWithoutEventInput, Prisma.GeneralEventUpdateWithoutEventInput>, Prisma.GeneralEventUncheckedUpdateWithoutEventInput>
 }
 
+export type GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.GeneralEventCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+}
+
+export type GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.GeneralEventCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+}
+
+export type GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.GeneralEventCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  disconnect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  delete?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  update?: Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.GeneralEventScalarWhereInput | Prisma.GeneralEventScalarWhereInput[]
+}
+
+export type GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput[] | Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.GeneralEventCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  disconnect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  delete?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  connect?: Prisma.GeneralEventWhereUniqueInput | Prisma.GeneralEventWhereUniqueInput[]
+  update?: Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.GeneralEventUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.GeneralEventScalarWhereInput | Prisma.GeneralEventScalarWhereInput[]
+}
+
 export type GeneralEventCreateWithoutInstitutionInput = {
   id?: string
-  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
-  teamSeason?: Prisma.TeamSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
+  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutGeneralEventsInput
 }
 
 export type GeneralEventUncheckedCreateWithoutInstitutionInput = {
   id?: string
   eventId: string
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventCreateOrConnectWithoutInstitutionInput = {
@@ -601,67 +601,25 @@ export type GeneralEventScalarWhereInput = {
   id?: Prisma.StringFilter<"GeneralEvent"> | string
   eventId?: Prisma.StringFilter<"GeneralEvent"> | string
   institutionId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-  teamSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
   courseSeasonShiftId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
-}
-
-export type GeneralEventCreateWithoutTeamSeasonInput = {
-  id?: string
-  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
-  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
-  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
-  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
-}
-
-export type GeneralEventUncheckedCreateWithoutTeamSeasonInput = {
-  id?: string
-  eventId: string
-  institutionId?: string | null
-  courseSeasonId?: string | null
-  courseSeasonShiftId?: string | null
-}
-
-export type GeneralEventCreateOrConnectWithoutTeamSeasonInput = {
-  where: Prisma.GeneralEventWhereUniqueInput
-  create: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput>
-}
-
-export type GeneralEventCreateManyTeamSeasonInputEnvelope = {
-  data: Prisma.GeneralEventCreateManyTeamSeasonInput | Prisma.GeneralEventCreateManyTeamSeasonInput[]
-  skipDuplicates?: boolean
-}
-
-export type GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.GeneralEventWhereUniqueInput
-  update: Prisma.XOR<Prisma.GeneralEventUpdateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedUpdateWithoutTeamSeasonInput>
-  create: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonInput>
-}
-
-export type GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonInput = {
-  where: Prisma.GeneralEventWhereUniqueInput
-  data: Prisma.XOR<Prisma.GeneralEventUpdateWithoutTeamSeasonInput, Prisma.GeneralEventUncheckedUpdateWithoutTeamSeasonInput>
-}
-
-export type GeneralEventUpdateManyWithWhereWithoutTeamSeasonInput = {
-  where: Prisma.GeneralEventScalarWhereInput
-  data: Prisma.XOR<Prisma.GeneralEventUpdateManyMutationInput, Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonInput>
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"GeneralEvent"> | string | null
 }
 
 export type GeneralEventCreateWithoutCourseSeasonInput = {
   id?: string
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
   event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
   institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
-  teamSeason?: Prisma.TeamSeasonCreateNestedOneWithoutGeneralEventsInput
-  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutGeneralEventsInput
 }
 
 export type GeneralEventUncheckedCreateWithoutCourseSeasonInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventCreateOrConnectWithoutCourseSeasonInput = {
@@ -692,18 +650,18 @@ export type GeneralEventUpdateManyWithWhereWithoutCourseSeasonInput = {
 
 export type GeneralEventCreateWithoutCourseSeasonShiftInput = {
   id?: string
+  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
   event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
   institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
-  teamSeason?: Prisma.TeamSeasonCreateNestedOneWithoutGeneralEventsInput
-  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutGeneralEventsInput
 }
 
 export type GeneralEventUncheckedCreateWithoutCourseSeasonShiftInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventCreateOrConnectWithoutCourseSeasonShiftInput = {
@@ -734,18 +692,18 @@ export type GeneralEventUpdateManyWithWhereWithoutCourseSeasonShiftInput = {
 
 export type GeneralEventCreateWithoutEventInput = {
   id?: string
-  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
-  teamSeason?: Prisma.TeamSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
   courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
+  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutGeneralEventsInput
 }
 
 export type GeneralEventUncheckedCreateWithoutEventInput = {
   id?: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventCreateOrConnectWithoutEventInput = {
@@ -766,53 +724,29 @@ export type GeneralEventUpdateToOneWithWhereWithoutEventInput = {
 
 export type GeneralEventUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneWithoutGeneralEventsNestedInput
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
   courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
+  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutGeneralEventsNestedInput
 }
 
 export type GeneralEventUncheckedUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type GeneralEventCreateManyInstitutionInput = {
+export type GeneralEventCreateWithoutTeamSeasonCategoryInput = {
   id?: string
-  eventId: string
-  teamSeasonId?: string | null
-  courseSeasonId?: string | null
-  courseSeasonShiftId?: string | null
+  courseSeason?: Prisma.CourseSeasonCreateNestedOneWithoutGeneralEventsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput
+  event: Prisma.EventCreateNestedOneWithoutGeneralEventInput
+  institution?: Prisma.InstitutionCreateNestedOneWithoutGeneralEventsInput
 }
 
-export type GeneralEventUpdateWithoutInstitutionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneWithoutGeneralEventsNestedInput
-  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
-  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
-}
-
-export type GeneralEventUncheckedUpdateWithoutInstitutionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type GeneralEventUncheckedUpdateManyWithoutInstitutionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type GeneralEventCreateManyTeamSeasonInput = {
+export type GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput = {
   id?: string
   eventId: string
   institutionId?: string | null
@@ -820,92 +754,158 @@ export type GeneralEventCreateManyTeamSeasonInput = {
   courseSeasonShiftId?: string | null
 }
 
-export type GeneralEventUpdateWithoutTeamSeasonInput = {
+export type GeneralEventCreateOrConnectWithoutTeamSeasonCategoryInput = {
+  where: Prisma.GeneralEventWhereUniqueInput
+  create: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput>
+}
+
+export type GeneralEventCreateManyTeamSeasonCategoryInputEnvelope = {
+  data: Prisma.GeneralEventCreateManyTeamSeasonCategoryInput | Prisma.GeneralEventCreateManyTeamSeasonCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type GeneralEventUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.GeneralEventWhereUniqueInput
+  update: Prisma.XOR<Prisma.GeneralEventUpdateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedUpdateWithoutTeamSeasonCategoryInput>
+  create: Prisma.XOR<Prisma.GeneralEventCreateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedCreateWithoutTeamSeasonCategoryInput>
+}
+
+export type GeneralEventUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.GeneralEventWhereUniqueInput
+  data: Prisma.XOR<Prisma.GeneralEventUpdateWithoutTeamSeasonCategoryInput, Prisma.GeneralEventUncheckedUpdateWithoutTeamSeasonCategoryInput>
+}
+
+export type GeneralEventUpdateManyWithWhereWithoutTeamSeasonCategoryInput = {
+  where: Prisma.GeneralEventScalarWhereInput
+  data: Prisma.XOR<Prisma.GeneralEventUpdateManyMutationInput, Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryInput>
+}
+
+export type GeneralEventCreateManyInstitutionInput = {
+  id?: string
+  eventId: string
+  courseSeasonId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
+}
+
+export type GeneralEventUpdateWithoutInstitutionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
-  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
   courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
   courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutGeneralEventsNestedInput
 }
 
-export type GeneralEventUncheckedUpdateWithoutTeamSeasonInput = {
+export type GeneralEventUncheckedUpdateWithoutInstitutionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type GeneralEventUncheckedUpdateManyWithoutTeamSeasonInput = {
+export type GeneralEventUncheckedUpdateManyWithoutInstitutionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
-  institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventCreateManyCourseSeasonInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventUpdateWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
   institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneWithoutGeneralEventsNestedInput
-  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutGeneralEventsNestedInput
 }
 
 export type GeneralEventUncheckedUpdateWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventUncheckedUpdateManyWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventCreateManyCourseSeasonShiftInput = {
   id?: string
   eventId: string
   institutionId?: string | null
-  teamSeasonId?: string | null
   courseSeasonId?: string | null
+  teamSeasonCategoryId?: string | null
 }
 
 export type GeneralEventUpdateWithoutCourseSeasonShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
   institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
-  teamSeason?: Prisma.TeamSeasonUpdateOneWithoutGeneralEventsNestedInput
-  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutGeneralEventsNestedInput
 }
 
 export type GeneralEventUncheckedUpdateWithoutCourseSeasonShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  teamSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type GeneralEventCreateManyTeamSeasonCategoryInput = {
+  id?: string
+  eventId: string
+  institutionId?: string | null
+  courseSeasonId?: string | null
+  courseSeasonShiftId?: string | null
+}
+
+export type GeneralEventUpdateWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeason?: Prisma.CourseSeasonUpdateOneWithoutGeneralEventsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutGeneralEventsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutGeneralEventNestedInput
+  institution?: Prisma.InstitutionUpdateOneWithoutGeneralEventsNestedInput
+}
+
+export type GeneralEventUncheckedUpdateWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  institutionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -914,92 +914,92 @@ export type GeneralEventSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   eventId?: boolean
   institutionId?: boolean
-  teamSeasonId?: boolean
   courseSeasonId?: boolean
   courseSeasonShiftId?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
+  teamSeasonCategoryId?: boolean
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["generalEvent"]>
 
 export type GeneralEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventId?: boolean
   institutionId?: boolean
-  teamSeasonId?: boolean
   courseSeasonId?: boolean
   courseSeasonShiftId?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
+  teamSeasonCategoryId?: boolean
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["generalEvent"]>
 
 export type GeneralEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventId?: boolean
   institutionId?: boolean
-  teamSeasonId?: boolean
   courseSeasonId?: boolean
   courseSeasonShiftId?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
+  teamSeasonCategoryId?: boolean
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["generalEvent"]>
 
 export type GeneralEventSelectScalar = {
   id?: boolean
   eventId?: boolean
   institutionId?: boolean
-  teamSeasonId?: boolean
   courseSeasonId?: boolean
   courseSeasonShiftId?: boolean
+  teamSeasonCategoryId?: boolean
 }
 
-export type GeneralEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "institutionId" | "teamSeasonId" | "courseSeasonId" | "courseSeasonShiftId", ExtArgs["result"]["generalEvent"]>
+export type GeneralEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "institutionId" | "courseSeasonId" | "courseSeasonShiftId" | "teamSeasonCategoryId", ExtArgs["result"]["generalEvent"]>
 export type GeneralEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }
 export type GeneralEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }
 export type GeneralEventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
-  teamSeason?: boolean | Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>
   courseSeason?: boolean | Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  institution?: boolean | Prisma.GeneralEvent$institutionArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>
 }
 
 export type $GeneralEventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "GeneralEvent"
   objects: {
-    event: Prisma.$EventPayload<ExtArgs>
-    institution: Prisma.$InstitutionPayload<ExtArgs> | null
-    teamSeason: Prisma.$TeamSeasonPayload<ExtArgs> | null
     courseSeason: Prisma.$CourseSeasonPayload<ExtArgs> | null
     courseSeasonShift: Prisma.$CourseSeasonShiftPayload<ExtArgs> | null
+    event: Prisma.$EventPayload<ExtArgs>
+    institution: Prisma.$InstitutionPayload<ExtArgs> | null
+    teamSeasonCategory: Prisma.$TeamSeasonCategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     eventId: string
     institutionId: string | null
-    teamSeasonId: string | null
     courseSeasonId: string | null
     courseSeasonShiftId: string | null
+    teamSeasonCategoryId: string | null
   }, ExtArgs["result"]["generalEvent"]>
   composites: {}
 }
@@ -1394,11 +1394,11 @@ readonly fields: GeneralEventFieldRefs;
  */
 export interface Prisma__GeneralEventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  institution<T extends Prisma.GeneralEvent$institutionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$institutionArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  teamSeason<T extends Prisma.GeneralEvent$teamSeasonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$teamSeasonArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   courseSeason<T extends Prisma.GeneralEvent$courseSeasonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$courseSeasonArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   courseSeasonShift<T extends Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$courseSeasonShiftArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonShiftClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  institution<T extends Prisma.GeneralEvent$institutionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$institutionArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teamSeasonCategory<T extends Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GeneralEvent$teamSeasonCategoryArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonCategoryClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1431,9 +1431,9 @@ export interface GeneralEventFieldRefs {
   readonly id: Prisma.FieldRef<"GeneralEvent", 'String'>
   readonly eventId: Prisma.FieldRef<"GeneralEvent", 'String'>
   readonly institutionId: Prisma.FieldRef<"GeneralEvent", 'String'>
-  readonly teamSeasonId: Prisma.FieldRef<"GeneralEvent", 'String'>
   readonly courseSeasonId: Prisma.FieldRef<"GeneralEvent", 'String'>
   readonly courseSeasonShiftId: Prisma.FieldRef<"GeneralEvent", 'String'>
+  readonly teamSeasonCategoryId: Prisma.FieldRef<"GeneralEvent", 'String'>
 }
     
 
@@ -1830,44 +1830,6 @@ export type GeneralEventDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * GeneralEvent.institution
- */
-export type GeneralEvent$institutionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Institution
-   */
-  select?: Prisma.InstitutionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Institution
-   */
-  omit?: Prisma.InstitutionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InstitutionInclude<ExtArgs> | null
-  where?: Prisma.InstitutionWhereInput
-}
-
-/**
- * GeneralEvent.teamSeason
- */
-export type GeneralEvent$teamSeasonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TeamSeason
-   */
-  select?: Prisma.TeamSeasonSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TeamSeason
-   */
-  omit?: Prisma.TeamSeasonOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeamSeasonInclude<ExtArgs> | null
-  where?: Prisma.TeamSeasonWhereInput
-}
-
-/**
  * GeneralEvent.courseSeason
  */
 export type GeneralEvent$courseSeasonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1903,6 +1865,44 @@ export type GeneralEvent$courseSeasonShiftArgs<ExtArgs extends runtime.Types.Ext
    */
   include?: Prisma.CourseSeasonShiftInclude<ExtArgs> | null
   where?: Prisma.CourseSeasonShiftWhereInput
+}
+
+/**
+ * GeneralEvent.institution
+ */
+export type GeneralEvent$institutionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Institution
+   */
+  select?: Prisma.InstitutionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Institution
+   */
+  omit?: Prisma.InstitutionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstitutionInclude<ExtArgs> | null
+  where?: Prisma.InstitutionWhereInput
+}
+
+/**
+ * GeneralEvent.teamSeasonCategory
+ */
+export type GeneralEvent$teamSeasonCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeamSeasonCategory
+   */
+  select?: Prisma.TeamSeasonCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeamSeasonCategory
+   */
+  omit?: Prisma.TeamSeasonCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamSeasonCategoryInclude<ExtArgs> | null
+  where?: Prisma.TeamSeasonCategoryWhereInput
 }
 
 /**

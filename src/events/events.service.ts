@@ -39,7 +39,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       data: {
         eventId,
         institutionId: templateData.institutionId,
-        teamSeasonId: templateData.teamSeasonId,
+        teamSeasonCategoryId: templateData.teamSeasonCategoryId,
         courseSeasonId: templateData.courseSeasonId,
       }
     });
@@ -243,7 +243,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
   // ---------------------------------------------------------
 
   async createGeneralEvent(createDto: CreateGeneralEventDto, userId?: string) {
-    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = createDto;
+    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonCategoryId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = createDto;
 
     const baseData: BaseEventCreateDto = {
       eventType: EventType.GENERAL,
@@ -257,12 +257,14 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       timezone,
     };
 
+
+
     const createSpecific = async (tx: Prisma.TransactionClient, eventId: string) => {
       return tx.generalEvent.create({
         data: {
           eventId,
           institutionId,
-          teamSeasonId,
+          teamSeasonCategoryId,
           courseSeasonId,
           courseSeasonShiftId,
         },
@@ -288,7 +290,7 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       throw new EventNotFoundException('GeneralEvent not found');
     }
 
-    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = updateDto;
+    const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonCategoryId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = updateDto;
 
     const baseData: Partial<BaseEventCreateDto> = {
       ...(startDate && { startDate: new Date(startDate) }),
@@ -305,17 +307,19 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       const mergeTemplate = (oldTemplate: any) => ({
         ...oldTemplate,
         ...(institutionId !== undefined && { institutionId }),
-        ...(teamSeasonId !== undefined && { teamSeasonId }),
+        ...(teamSeasonCategoryId !== undefined && { teamSeasonCategoryId }),
         ...(courseSeasonId !== undefined && { courseSeasonId }),
         ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
       });
 
       const occurrenceHandler = async (tx: Prisma.TransactionClient, newEventId: string, mergedTemplate: any) => {
+
+
         return tx.generalEvent.create({
           data: {
             eventId: newEventId,
             institutionId: mergedTemplate.institutionId,
-            teamSeasonId: mergedTemplate.teamSeasonId,
+            teamSeasonCategoryId: mergedTemplate.teamSeasonCategoryId,
             courseSeasonId: mergedTemplate.courseSeasonId,
             courseSeasonShiftId: mergedTemplate.courseSeasonShiftId,
           }
@@ -325,12 +329,15 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       return await this.eventSeriesService.updateSeries(id, baseData, userId, scope, mergeTemplate, occurrenceHandler);
     }
 
+
+
     const result = await this.executeEventUpdate(generalEvent.eventId, baseData, userId, async (tx) => {
       return tx.generalEvent.update({
         where: { id },
         data: {
           ...(institutionId !== undefined && { institutionId }),
-          ...(teamSeasonId !== undefined && { teamSeasonId }),
+          ...(teamSeasonCategoryId !== undefined && { teamSeasonCategoryId }),
+          ...(teamSeasonCategoryId === null && { teamSeasonCategoryId: null }),
           ...(courseSeasonId !== undefined && { courseSeasonId }),
           ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
         },

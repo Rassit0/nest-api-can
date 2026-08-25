@@ -34,13 +34,13 @@ export type EventMinAggregateOutputType = {
   eventType: $Enums.EventType | null
   status: $Enums.EventStatus | null
   color: string | null
-  eventSeriesId: string | null
-  originalStartDate: Date | null
-  exceptionType: $Enums.EventExceptionType | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  eventSeriesId: string | null
+  exceptionType: $Enums.EventExceptionType | null
+  originalStartDate: Date | null
 }
 
 export type EventMaxAggregateOutputType = {
@@ -53,13 +53,13 @@ export type EventMaxAggregateOutputType = {
   eventType: $Enums.EventType | null
   status: $Enums.EventStatus | null
   color: string | null
-  eventSeriesId: string | null
-  originalStartDate: Date | null
-  exceptionType: $Enums.EventExceptionType | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  eventSeriesId: string | null
+  exceptionType: $Enums.EventExceptionType | null
+  originalStartDate: Date | null
 }
 
 export type EventCountAggregateOutputType = {
@@ -72,13 +72,13 @@ export type EventCountAggregateOutputType = {
   eventType: number
   status: number
   color: number
-  eventSeriesId: number
-  originalStartDate: number
-  exceptionType: number
   createdAt: number
   updatedAt: number
   createdById: number
   updatedById: number
+  eventSeriesId: number
+  exceptionType: number
+  originalStartDate: number
   _all: number
 }
 
@@ -93,13 +93,13 @@ export type EventMinAggregateInputType = {
   eventType?: true
   status?: true
   color?: true
-  eventSeriesId?: true
-  originalStartDate?: true
-  exceptionType?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  eventSeriesId?: true
+  exceptionType?: true
+  originalStartDate?: true
 }
 
 export type EventMaxAggregateInputType = {
@@ -112,13 +112,13 @@ export type EventMaxAggregateInputType = {
   eventType?: true
   status?: true
   color?: true
-  eventSeriesId?: true
-  originalStartDate?: true
-  exceptionType?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  eventSeriesId?: true
+  exceptionType?: true
+  originalStartDate?: true
 }
 
 export type EventCountAggregateInputType = {
@@ -131,13 +131,13 @@ export type EventCountAggregateInputType = {
   eventType?: true
   status?: true
   color?: true
-  eventSeriesId?: true
-  originalStartDate?: true
-  exceptionType?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  eventSeriesId?: true
+  exceptionType?: true
+  originalStartDate?: true
   _all?: true
 }
 
@@ -223,13 +223,13 @@ export type EventGroupByOutputType = {
   eventType: $Enums.EventType
   status: $Enums.EventStatus
   color: string | null
-  eventSeriesId: string | null
-  originalStartDate: Date | null
-  exceptionType: $Enums.EventExceptionType
   createdAt: Date
   updatedAt: Date
   createdById: string | null
   updatedById: string | null
+  eventSeriesId: string | null
+  exceptionType: $Enums.EventExceptionType
+  originalStartDate: Date | null
   _count: EventCountAggregateOutputType | null
   _min: EventMinAggregateOutputType | null
   _max: EventMaxAggregateOutputType | null
@@ -263,20 +263,20 @@ export type EventWhereInput = {
   eventType?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   color?: Prisma.StringNullableFilter<"Event"> | string | null
-  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
-  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Event"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Event"> | string | null
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
-  eventSeries?: Prisma.XOR<Prisma.EventSeriesNullableScalarRelationFilter, Prisma.EventSeriesWhereInput> | null
-  session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
-  match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
-  generalEvent?: Prisma.XOR<Prisma.GeneralEventNullableScalarRelationFilter, Prisma.GeneralEventWhereInput> | null
+  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
+  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  eventSeries?: Prisma.XOR<Prisma.EventSeriesNullableScalarRelationFilter, Prisma.EventSeriesWhereInput> | null
+  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  generalEvent?: Prisma.XOR<Prisma.GeneralEventNullableScalarRelationFilter, Prisma.GeneralEventWhereInput> | null
+  match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
+  session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
 }
 
 export type EventOrderByWithRelationInput = {
@@ -289,20 +289,20 @@ export type EventOrderByWithRelationInput = {
   eventType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
-  eventSeriesId?: Prisma.SortOrderInput | Prisma.SortOrder
-  originalStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  exceptionType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  location?: Prisma.LocationOrderByWithRelationInput
-  eventSeries?: Prisma.EventSeriesOrderByWithRelationInput
-  session?: Prisma.SessionOrderByWithRelationInput
-  match?: Prisma.MatchOrderByWithRelationInput
-  generalEvent?: Prisma.GeneralEventOrderByWithRelationInput
+  eventSeriesId?: Prisma.SortOrderInput | Prisma.SortOrder
+  exceptionType?: Prisma.SortOrder
+  originalStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.UserOrderByWithRelationInput
+  eventSeries?: Prisma.EventSeriesOrderByWithRelationInput
+  location?: Prisma.LocationOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
+  generalEvent?: Prisma.GeneralEventOrderByWithRelationInput
+  match?: Prisma.MatchOrderByWithRelationInput
+  session?: Prisma.SessionOrderByWithRelationInput
 }
 
 export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -319,20 +319,20 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   eventType?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   color?: Prisma.StringNullableFilter<"Event"> | string | null
-  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
-  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Event"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Event"> | string | null
-  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
-  eventSeries?: Prisma.XOR<Prisma.EventSeriesNullableScalarRelationFilter, Prisma.EventSeriesWhereInput> | null
-  session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
-  match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
-  generalEvent?: Prisma.XOR<Prisma.GeneralEventNullableScalarRelationFilter, Prisma.GeneralEventWhereInput> | null
+  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
+  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  eventSeries?: Prisma.XOR<Prisma.EventSeriesNullableScalarRelationFilter, Prisma.EventSeriesWhereInput> | null
+  location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  generalEvent?: Prisma.XOR<Prisma.GeneralEventNullableScalarRelationFilter, Prisma.GeneralEventWhereInput> | null
+  match?: Prisma.XOR<Prisma.MatchNullableScalarRelationFilter, Prisma.MatchWhereInput> | null
+  session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
 }, "id" | "eventSeriesId_originalStartDate">
 
 export type EventOrderByWithAggregationInput = {
@@ -345,13 +345,13 @@ export type EventOrderByWithAggregationInput = {
   eventType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
-  eventSeriesId?: Prisma.SortOrderInput | Prisma.SortOrder
-  originalStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  exceptionType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  eventSeriesId?: Prisma.SortOrderInput | Prisma.SortOrder
+  exceptionType?: Prisma.SortOrder
+  originalStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
   _max?: Prisma.EventMaxOrderByAggregateInput
   _min?: Prisma.EventMinOrderByAggregateInput
@@ -370,13 +370,13 @@ export type EventScalarWhereWithAggregatesInput = {
   eventType?: Prisma.EnumEventTypeWithAggregatesFilter<"Event"> | $Enums.EventType
   status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
   color?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
-  eventSeriesId?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
-  originalStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeWithAggregatesFilter<"Event"> | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  eventSeriesId?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeWithAggregatesFilter<"Event"> | $Enums.EventExceptionType
+  originalStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
 }
 
 export type EventCreateInput = {
@@ -388,17 +388,17 @@ export type EventCreateInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateInput = {
@@ -411,16 +411,16 @@ export type EventUncheckedCreateInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventUpdateInput = {
@@ -432,17 +432,17 @@ export type EventUpdateInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateInput = {
@@ -455,16 +455,16 @@ export type EventUncheckedUpdateInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventCreateManyInput = {
@@ -477,13 +477,13 @@ export type EventCreateManyInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
 }
 
 export type EventUpdateManyMutationInput = {
@@ -495,10 +495,10 @@ export type EventUpdateManyMutationInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventUncheckedUpdateManyInput = {
@@ -511,13 +511,13 @@ export type EventUncheckedUpdateManyInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventListRelationFilter = {
@@ -545,13 +545,13 @@ export type EventCountOrderByAggregateInput = {
   eventType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  eventSeriesId?: Prisma.SortOrder
-  originalStartDate?: Prisma.SortOrder
-  exceptionType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  eventSeriesId?: Prisma.SortOrder
+  exceptionType?: Prisma.SortOrder
+  originalStartDate?: Prisma.SortOrder
 }
 
 export type EventMaxOrderByAggregateInput = {
@@ -564,13 +564,13 @@ export type EventMaxOrderByAggregateInput = {
   eventType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  eventSeriesId?: Prisma.SortOrder
-  originalStartDate?: Prisma.SortOrder
-  exceptionType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  eventSeriesId?: Prisma.SortOrder
+  exceptionType?: Prisma.SortOrder
+  originalStartDate?: Prisma.SortOrder
 }
 
 export type EventMinOrderByAggregateInput = {
@@ -583,13 +583,13 @@ export type EventMinOrderByAggregateInput = {
   eventType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  eventSeriesId?: Prisma.SortOrder
-  originalStartDate?: Prisma.SortOrder
-  exceptionType?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  eventSeriesId?: Prisma.SortOrder
+  exceptionType?: Prisma.SortOrder
+  originalStartDate?: Prisma.SortOrder
 }
 
 export type EventScalarRelationFilter = {
@@ -824,16 +824,16 @@ export type EventCreateWithoutLocationInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutLocationInput = {
@@ -845,16 +845,16 @@ export type EventUncheckedCreateWithoutLocationInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutLocationInput = {
@@ -896,13 +896,13 @@ export type EventScalarWhereInput = {
   eventType?: Prisma.EnumEventTypeFilter<"Event"> | $Enums.EventType
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   color?: Prisma.StringNullableFilter<"Event"> | string | null
-  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
-  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Event"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Event"> | string | null
+  eventSeriesId?: Prisma.StringNullableFilter<"Event"> | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFilter<"Event"> | $Enums.EventExceptionType
+  originalStartDate?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
 }
 
 export type EventCreateWithoutCreatedByInput = {
@@ -914,16 +914,16 @@ export type EventCreateWithoutCreatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutCreatedByInput = {
@@ -936,15 +936,15 @@ export type EventUncheckedCreateWithoutCreatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutCreatedByInput = {
@@ -966,16 +966,16 @@ export type EventCreateWithoutUpdatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutUpdatedByInput = {
@@ -988,15 +988,15 @@ export type EventUncheckedCreateWithoutUpdatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutUpdatedByInput = {
@@ -1050,16 +1050,16 @@ export type EventCreateWithoutEventSeriesInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutEventSeriesInput = {
@@ -1072,15 +1072,15 @@ export type EventUncheckedCreateWithoutEventSeriesInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutEventSeriesInput = {
@@ -1118,16 +1118,16 @@ export type EventCreateWithoutGeneralEventInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutGeneralEventInput = {
@@ -1140,15 +1140,15 @@ export type EventUncheckedCreateWithoutGeneralEventInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutGeneralEventInput = {
@@ -1176,16 +1176,16 @@ export type EventUpdateWithoutGeneralEventInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutGeneralEventInput = {
@@ -1198,15 +1198,15 @@ export type EventUncheckedUpdateWithoutGeneralEventInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventCreateWithoutSessionInput = {
@@ -1218,16 +1218,16 @@ export type EventCreateWithoutSessionInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  match?: Prisma.MatchCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutSessionInput = {
@@ -1240,15 +1240,15 @@ export type EventUncheckedCreateWithoutSessionInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  match?: Prisma.MatchUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutSessionInput = {
@@ -1276,16 +1276,16 @@ export type EventUpdateWithoutSessionInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutSessionInput = {
@@ -1298,15 +1298,15 @@ export type EventUncheckedUpdateWithoutSessionInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventCreateWithoutMatchInput = {
@@ -1318,16 +1318,16 @@ export type EventCreateWithoutMatchInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
-  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
-  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
-  session?: Prisma.SessionCreateNestedOneWithoutEventInput
-  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedEventsInput
+  eventSeries?: Prisma.EventSeriesCreateNestedOneWithoutEventsInput
+  location?: Prisma.LocationCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedEventsInput
+  generalEvent?: Prisma.GeneralEventCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionCreateNestedOneWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutMatchInput = {
@@ -1340,15 +1340,15 @@ export type EventUncheckedCreateWithoutMatchInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedCreateNestedOneWithoutEventInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutMatchInput = {
@@ -1376,16 +1376,16 @@ export type EventUpdateWithoutMatchInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutMatchInput = {
@@ -1398,15 +1398,15 @@ export type EventUncheckedUpdateWithoutMatchInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventCreateManyLocationInput = {
@@ -1418,13 +1418,13 @@ export type EventCreateManyLocationInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
 }
 
 export type EventUpdateWithoutLocationInput = {
@@ -1436,16 +1436,16 @@ export type EventUpdateWithoutLocationInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutLocationInput = {
@@ -1457,16 +1457,16 @@ export type EventUncheckedUpdateWithoutLocationInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutLocationInput = {
@@ -1478,13 +1478,13 @@ export type EventUncheckedUpdateManyWithoutLocationInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventCreateManyCreatedByInput = {
@@ -1497,12 +1497,12 @@ export type EventCreateManyCreatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
 }
 
 export type EventCreateManyUpdatedByInput = {
@@ -1515,12 +1515,12 @@ export type EventCreateManyUpdatedByInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  eventSeriesId?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
+  eventSeriesId?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
 }
 
 export type EventUpdateWithoutCreatedByInput = {
@@ -1532,16 +1532,16 @@ export type EventUpdateWithoutCreatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutCreatedByInput = {
@@ -1554,15 +1554,15 @@ export type EventUncheckedUpdateWithoutCreatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1575,12 +1575,12 @@ export type EventUncheckedUpdateManyWithoutCreatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventUpdateWithoutUpdatedByInput = {
@@ -1592,16 +1592,16 @@ export type EventUpdateWithoutUpdatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  eventSeries?: Prisma.EventSeriesUpdateOneWithoutEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutUpdatedByInput = {
@@ -1614,15 +1614,15 @@ export type EventUncheckedUpdateWithoutUpdatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1635,12 +1635,12 @@ export type EventUncheckedUpdateManyWithoutUpdatedByInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventSeriesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EventCreateManyEventSeriesInput = {
@@ -1653,12 +1653,12 @@ export type EventCreateManyEventSeriesInput = {
   eventType: $Enums.EventType
   status?: $Enums.EventStatus
   color?: string | null
-  originalStartDate?: Date | string | null
-  exceptionType?: $Enums.EventExceptionType
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  exceptionType?: $Enums.EventExceptionType
+  originalStartDate?: Date | string | null
 }
 
 export type EventUpdateWithoutEventSeriesInput = {
@@ -1670,16 +1670,16 @@ export type EventUpdateWithoutEventSeriesInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
-  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
-  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.UserUpdateOneWithoutCreatedEventsNestedInput
+  location?: Prisma.LocationUpdateOneWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedEventsNestedInput
+  generalEvent?: Prisma.GeneralEventUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutEventSeriesInput = {
@@ -1692,15 +1692,15 @@ export type EventUncheckedUpdateWithoutEventSeriesInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
-  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   generalEvent?: Prisma.GeneralEventUncheckedUpdateOneWithoutEventNestedInput
+  match?: Prisma.MatchUncheckedUpdateOneWithoutEventNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutEventSeriesInput = {
@@ -1713,12 +1713,12 @@ export type EventUncheckedUpdateManyWithoutEventSeriesInput = {
   eventType?: Prisma.EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exceptionType?: Prisma.EnumEventExceptionTypeFieldUpdateOperationsInput | $Enums.EventExceptionType
+  originalStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1733,20 +1733,20 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   eventType?: boolean
   status?: boolean
   color?: boolean
-  eventSeriesId?: boolean
-  originalStartDate?: boolean
-  exceptionType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
-  session?: boolean | Prisma.Event$sessionArgs<ExtArgs>
-  match?: boolean | Prisma.Event$matchArgs<ExtArgs>
-  generalEvent?: boolean | Prisma.Event$generalEventArgs<ExtArgs>
+  eventSeriesId?: boolean
+  exceptionType?: boolean
+  originalStartDate?: boolean
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
+  generalEvent?: boolean | Prisma.Event$generalEventArgs<ExtArgs>
+  match?: boolean | Prisma.Event$matchArgs<ExtArgs>
+  session?: boolean | Prisma.Event$sessionArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
 export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1759,16 +1759,16 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   eventType?: boolean
   status?: boolean
   color?: boolean
-  eventSeriesId?: boolean
-  originalStartDate?: boolean
-  exceptionType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  eventSeriesId?: boolean
+  exceptionType?: boolean
+  originalStartDate?: boolean
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -1782,16 +1782,16 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   eventType?: boolean
   status?: boolean
   color?: boolean
-  eventSeriesId?: boolean
-  originalStartDate?: boolean
-  exceptionType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  eventSeriesId?: boolean
+  exceptionType?: boolean
+  originalStartDate?: boolean
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -1805,48 +1805,48 @@ export type EventSelectScalar = {
   eventType?: boolean
   status?: boolean
   color?: boolean
-  eventSeriesId?: boolean
-  originalStartDate?: boolean
-  exceptionType?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  eventSeriesId?: boolean
+  exceptionType?: boolean
+  originalStartDate?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "endDate" | "locationId" | "eventType" | "status" | "color" | "eventSeriesId" | "originalStartDate" | "exceptionType" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "endDate" | "locationId" | "eventType" | "status" | "color" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "eventSeriesId" | "exceptionType" | "originalStartDate", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
-  session?: boolean | Prisma.Event$sessionArgs<ExtArgs>
-  match?: boolean | Prisma.Event$matchArgs<ExtArgs>
-  generalEvent?: boolean | Prisma.Event$generalEventArgs<ExtArgs>
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
+  generalEvent?: boolean | Prisma.Event$generalEventArgs<ExtArgs>
+  match?: boolean | Prisma.Event$matchArgs<ExtArgs>
+  session?: boolean | Prisma.Event$sessionArgs<ExtArgs>
 }
 export type EventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
 }
 export type EventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
-  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
   createdBy?: boolean | Prisma.Event$createdByArgs<ExtArgs>
+  eventSeries?: boolean | Prisma.Event$eventSeriesArgs<ExtArgs>
+  location?: boolean | Prisma.Event$locationArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Event$updatedByArgs<ExtArgs>
 }
 
 export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Event"
   objects: {
-    location: Prisma.$LocationPayload<ExtArgs> | null
-    eventSeries: Prisma.$EventSeriesPayload<ExtArgs> | null
-    session: Prisma.$SessionPayload<ExtArgs> | null
-    match: Prisma.$MatchPayload<ExtArgs> | null
-    generalEvent: Prisma.$GeneralEventPayload<ExtArgs> | null
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    eventSeries: Prisma.$EventSeriesPayload<ExtArgs> | null
+    location: Prisma.$LocationPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
+    generalEvent: Prisma.$GeneralEventPayload<ExtArgs> | null
+    match: Prisma.$MatchPayload<ExtArgs> | null
+    session: Prisma.$SessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1858,13 +1858,13 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     eventType: $Enums.EventType
     status: $Enums.EventStatus
     color: string | null
-    eventSeriesId: string | null
-    originalStartDate: Date | null
-    exceptionType: $Enums.EventExceptionType
     createdAt: Date
     updatedAt: Date
     createdById: string | null
     updatedById: string | null
+    eventSeriesId: string | null
+    exceptionType: $Enums.EventExceptionType
+    originalStartDate: Date | null
   }, ExtArgs["result"]["event"]>
   composites: {}
 }
@@ -2259,13 +2259,13 @@ readonly fields: EventFieldRefs;
  */
 export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  location<T extends Prisma.Event$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$locationArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  eventSeries<T extends Prisma.Event$eventSeriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$eventSeriesArgs<ExtArgs>>): Prisma.Prisma__EventSeriesClient<runtime.Types.Result.GetResult<Prisma.$EventSeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  session<T extends Prisma.Event$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$sessionArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  match<T extends Prisma.Event$matchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$matchArgs<ExtArgs>>): Prisma.Prisma__MatchClient<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  generalEvent<T extends Prisma.Event$generalEventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$generalEventArgs<ExtArgs>>): Prisma.Prisma__GeneralEventClient<runtime.Types.Result.GetResult<Prisma.$GeneralEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.Event$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  eventSeries<T extends Prisma.Event$eventSeriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$eventSeriesArgs<ExtArgs>>): Prisma.Prisma__EventSeriesClient<runtime.Types.Result.GetResult<Prisma.$EventSeriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  location<T extends Prisma.Event$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$locationArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Event$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  generalEvent<T extends Prisma.Event$generalEventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$generalEventArgs<ExtArgs>>): Prisma.Prisma__GeneralEventClient<runtime.Types.Result.GetResult<Prisma.$GeneralEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  match<T extends Prisma.Event$matchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$matchArgs<ExtArgs>>): Prisma.Prisma__MatchClient<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.Event$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$sessionArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2304,13 +2304,13 @@ export interface EventFieldRefs {
   readonly eventType: Prisma.FieldRef<"Event", 'EventType'>
   readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
   readonly color: Prisma.FieldRef<"Event", 'String'>
-  readonly eventSeriesId: Prisma.FieldRef<"Event", 'String'>
-  readonly originalStartDate: Prisma.FieldRef<"Event", 'DateTime'>
-  readonly exceptionType: Prisma.FieldRef<"Event", 'EventExceptionType'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Event", 'String'>
   readonly updatedById: Prisma.FieldRef<"Event", 'String'>
+  readonly eventSeriesId: Prisma.FieldRef<"Event", 'String'>
+  readonly exceptionType: Prisma.FieldRef<"Event", 'EventExceptionType'>
+  readonly originalStartDate: Prisma.FieldRef<"Event", 'DateTime'>
 }
     
 
@@ -2707,22 +2707,22 @@ export type EventDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Event.location
+ * Event.createdBy
  */
-export type Event$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Event$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Location
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.LocationSelect<ExtArgs> | null
+  select?: Prisma.UserSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Location
+   * Omit specific fields from the User
    */
-  omit?: Prisma.LocationOmit<ExtArgs> | null
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LocationInclude<ExtArgs> | null
-  where?: Prisma.LocationWhereInput
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -2745,41 +2745,41 @@ export type Event$eventSeriesArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Event.session
+ * Event.location
  */
-export type Event$sessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Event$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Session
+   * Select specific fields to fetch from the Location
    */
-  select?: Prisma.SessionSelect<ExtArgs> | null
+  select?: Prisma.LocationSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Session
+   * Omit specific fields from the Location
    */
-  omit?: Prisma.SessionOmit<ExtArgs> | null
+  omit?: Prisma.LocationOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SessionInclude<ExtArgs> | null
-  where?: Prisma.SessionWhereInput
+  include?: Prisma.LocationInclude<ExtArgs> | null
+  where?: Prisma.LocationWhereInput
 }
 
 /**
- * Event.match
+ * Event.updatedBy
  */
-export type Event$matchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Event$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Match
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.MatchSelect<ExtArgs> | null
+  select?: Prisma.UserSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Match
+   * Omit specific fields from the User
    */
-  omit?: Prisma.MatchOmit<ExtArgs> | null
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MatchInclude<ExtArgs> | null
-  where?: Prisma.MatchWhereInput
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -2802,41 +2802,41 @@ export type Event$generalEventArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Event.createdBy
+ * Event.match
  */
-export type Event$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Event$matchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the Match
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.MatchSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the Match
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.MatchOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
 }
 
 /**
- * Event.updatedBy
+ * Event.session
  */
-export type Event$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Event$sessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the Session
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.SessionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the Session
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.SessionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
+  include?: Prisma.SessionInclude<ExtArgs> | null
+  where?: Prisma.SessionWhereInput
 }
 
 /**

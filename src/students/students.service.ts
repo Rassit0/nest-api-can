@@ -159,7 +159,7 @@ export class StudentsService {
     const skip = (page - 1) * per_page;
 
     const where: Prisma.PersonWhereInput = {
-      students: { none: {} },
+      students: null,
       ...(search
         ? {
             OR: [

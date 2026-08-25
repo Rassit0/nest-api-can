@@ -1,17 +1,1544 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+model Person {
+  id             String          @id @default(uuid())
+  name           String
+  lastName       String          @map("last_name")
+  secondLastName String?         @map("second_last_name")
+  birthDate      DateTime?       @map("birth_date")
+  imageUrl       String?         @map("image_url")
+  documentType   DocumentType?   @map("document_type")
+  documentNumber String?         @unique @map("document_number")
+  phone          String?
+  email          String?         @unique
+  address        String?
+  gender         Gender?
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+  createdById    String?         @map("created_by_id")
+  updatedById    String?         @map("updated_by_id")
+  accountCharges AccountCharge[] @relation("PersonAccountCharges")
+  contactOf      PersonContact[] @relation("ContactPerson")
+  contacts       PersonContact[] @relation("PersonContacts")
+  createdBy      User?           @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy      User?           @relation("UpdatedBy", fields: [updatedById], references: [id])
+  players        Player?
+  staff          Staff?
+  students       Student?
+  transactions   Transaction[]
+  user           User?
+
+  @@map("persons")
+}
+
+model PersonContact {
+  personId           String
+  contactPersonId    String
+  relationship       ContactRelationship
+  isPrimaryContact   Boolean             @default(false)
+  isEmergencyContact Boolean             @default(false)
+  isBillingContact   Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  contactPerson      Person              @relation("ContactPerson", fields: [contactPersonId], references: [id])
+  person             Person              @relation("PersonContacts", fields: [personId], references: [id])
+
+  @@id([personId, contactPersonId])
+  @@map("person_contacts")
+}
+
+model Discipline {
+  id          String     @id @default(uuid())
+  name        String
+  icon        String
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  createdById String?    @map("created_by_id")
+  updatedById String?    @map("updated_by_id")
+  categories  Category[]
+  clubs       Club[]
+  createdBy   User?      @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?      @relation("UpdatedBy", fields: [updatedById], references: [id])
+  schools     School[]
+  seasons     Season[]
+
+  @@map("disciplines")
+}
+
+model Institution {
+  id            String               @id @default(uuid())
+  name          String
+  imageUrl      String?              @map("image_url")
+  address       String
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @updatedAt @map("updated_at")
+  googleMapsUrl String?              @map("google_maps_url")
+  latitude      Float?
+  longitude     Float?
+  createdById   String?              @map("created_by_id")
+  updatedById   String?              @map("updated_by_id")
+  clubs         Club[]
+  generalEvents GeneralEvent[]
+  contacts      InstitutionContact[]
+  createdBy     User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy     User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  schools       School[]
+  seasons       Season[]
+  shifts        Shift[]
+
+  @@map("institutions")
+}
+
+model InstitutionContact {
+  id            String      @id @default(uuid())
+  institutionId String      @map("institution_id")
+  department    String
+  contactName   String?     @map("contact_name")
+  phone         String?
+  email         String?
+  isDefault     Boolean     @default(false) @map("is_default")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  createdById   String?     @map("created_by_id")
+  updatedById   String?     @map("updated_by_id")
+  createdBy     User?       @relation("CreatedBy", fields: [createdById], references: [id])
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  updatedBy     User?       @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("institution_contacts")
+}
+
+model Shift {
+  id                 String              @id @default(uuid())
+  name               String
+  institutionId      String              @map("institution_id")
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  createdById        String?             @map("created_by_id")
+  updatedById        String?             @map("updated_by_id")
+  courseSeasonShifts CourseSeasonShift[]
+  createdBy          User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  institution        Institution         @relation(fields: [institutionId], references: [id])
+  updatedBy          User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([institutionId, name])
+  @@map("shifts")
+}
+
+model Club {
+  id                       String           @id @default(uuid())
+  name                     String
+  shortName                String?          @map("short_name")
+  institutionId            String           @map("institution_id")
+  disciplineId             String           @map("discipline_id")
+  createdAt                DateTime         @default(now()) @map("created_at")
+  updatedAt                DateTime         @updatedAt @map("updated_at")
+  createdById              String?          @map("created_by_id")
+  updatedById              String?          @map("updated_by_id")
+  defaultAccountCategoryId String?          @map("default_account_category_id")
+  createdBy                User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  defaultAccountCategory   AccountCategory? @relation("ClubDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
+  discipline               Discipline       @relation(fields: [disciplineId], references: [id])
+  institution              Institution      @relation(fields: [institutionId], references: [id])
+  updatedBy                User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+  teams                    Team[]
+
+  @@unique([institutionId, disciplineId, name])
+  @@map("clubs")
+}
+
+model Location {
+  id                  String     @id @default(uuid())
+  name                String
+  address             String
+  description         String?
+  phone               String?
+  googleMapsUrl       String?    @map("google_maps_url")
+  latitude            Float?
+  longitude           Float?
+  isInternal          Boolean    @default(false) @map("is_internal")
+  isRentable          Boolean    @default(false) @map("is_rentable")
+  createdAt           DateTime   @default(now()) @map("created_at")
+  updatedAt           DateTime   @updatedAt @map("updated_at")
+  createdById         String?    @map("created_by_id")
+  updatedById         String?    @map("updated_by_id")
+  maxConcurrentEvents Int?       @default(1) @map("max_concurrent_events")
+  parentId            String?    @map("parent_id")
+  events              Event[]
+  createdBy           User?      @relation("CreatedBy", fields: [createdById], references: [id])
+  parent              Location?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  subLocations        Location[] @relation("LocationHierarchy")
+  updatedBy           User?      @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("locations")
+}
+
+model Category {
+  id                   String               @id @default(uuid())
+  name                 String
+  description          String?
+  maxAge               Int?                 @map("max_age")
+  minAge               Int                  @map("min_age")
+  disciplineId         String               @map("discipline_id")
+  createdAt            DateTime             @default(now()) @map("created_at")
+  updatedAt            DateTime             @updatedAt @map("updated_at")
+  createdById          String?              @map("created_by_id")
+  updatedById          String?              @map("updated_by_id")
+  createdBy            User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  discipline           Discipline           @relation(fields: [disciplineId], references: [id])
+  updatedBy            User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  courseSeasonShifts   CourseSeasonShift[]
+  teamSeasonCategories TeamSeasonCategory[]
+
+  @@unique([disciplineId, name])
+  @@map("categories")
+}
+
+model Season {
+  id                  String               @id @default(uuid())
+  institutionId       String               @map("institution_id")
+  disciplineId        String               @map("discipline_id")
+  name                String
+  description         String?
+  startDate           DateTime             @map("start_date")
+  endDate             DateTime             @map("end_date")
+  status              SeasonStatus         @default(ACTIVE)
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  createdById         String?              @map("created_by_id")
+  updatedById         String?              @map("updated_by_id")
+  courseSeasons       CourseSeason[]
+  progressEvaluations ProgressEvaluation[]
+  events              SeasonEvent[]
+  createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  discipline          Discipline           @relation(fields: [disciplineId], references: [id])
+  institution         Institution          @relation(fields: [institutionId], references: [id])
+  updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  teamSeasons         TeamSeason[]
+
+  @@unique([institutionId, disciplineId, name])
+  @@map("seasons")
+}
+
+model SeasonEvent {
+  id              String          @id @default(uuid())
+  seasonId        String          @map("season_id")
+  eventType       SeasonEventType @map("event_type")
+  originalEndDate DateTime?       @map("original_end_date")
+  newEndDate      DateTime?       @map("new_end_date")
+  reason          String
+  createdAt       DateTime        @default(now()) @map("created_at")
+  createdById     String?         @map("created_by_id")
+  updatedById     String?         @map("updated_by_id")
+  createdBy       User?           @relation("CreatedBy", fields: [createdById], references: [id])
+  season          Season          @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  updatedBy       User?           @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("season_events")
+}
+
+model Team {
+  id          String       @id @default(uuid())
+  imageUrl    String?      @map("image_url")
+  name        String
+  shortName   String?      @map("short_name")
+  description String?
+  clubId      String       @map("club_id")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  createdById String?      @map("created_by_id")
+  updatedById String?      @map("updated_by_id")
+  teamSeasons TeamSeason[]
+  club        Club         @relation(fields: [clubId], references: [id])
+  createdBy   User?        @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?        @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([clubId, name])
+  @@map("teams")
+}
+
+model TeamSeason {
+  id                 String                   @id @default(uuid())
+  imageUrl           String?                  @map("image_url")
+  description        String?
+  teamId             String                   @map("team_id")
+  seasonId           String                   @map("season_id")
+  status             StatusTeamSeason         @default(DRAFT)
+  createdAt          DateTime                 @default(now()) @map("created_at")
+  updatedAt          DateTime                 @updatedAt @map("updated_at")
+  statusNotes        String?                  @map("status_notes")
+  isRegistrationOpen Boolean                  @default(true) @map("is_registration_open")
+  createdById        String?                  @map("created_by_id")
+  updatedById        String?                  @map("updated_by_id")
+  paymentPlans       PaymentPlan[]
+  playerMemberships  PlayerMembership[]
+  billingConfig      TeamSeasonBillingConfig?
+  categories         TeamSeasonCategory[]
+  teamSeasonPauses   TeamSeasonPause[]
+  createdBy          User?                    @relation("CreatedBy", fields: [createdById], references: [id])
+  season             Season                   @relation(fields: [seasonId], references: [id])
+  team               Team                     @relation(fields: [teamId], references: [id])
+  updatedBy          User?                    @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([teamId, seasonId])
+  @@map("team_seasons")
+}
+
+model TeamSeasonBillingConfig {
+  id                         String            @id @default(uuid())
+  teamSeasonId               String            @unique @map("team_season_id")
+  isEngineActive             Boolean           @default(true) @map("is_engine_active")
+  billingDay                 Int               @map("billing_day")
+  registrationFee            Decimal?          @map("registration_fee") @db.Decimal(10, 2)
+  recurringFee               Decimal?          @map("recurring_fee") @db.Decimal(10, 2)
+  seasonFee                  Decimal?          @map("season_fee") @db.Decimal(10, 2)
+  debtToleranceMonths        Int               @default(2) @map("debt_tolerance_months")
+  lateFeeEnabled             Boolean           @default(false) @map("late_fee_enabled")
+  lateFeePerDay              Decimal           @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
+  graceDays                  Int               @default(0) @map("grace_days")
+  billingType                SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
+  billingFrequency           BillingFrequency  @default(MONTHLY) @map("billing_frequency")
+  prorateFirstRecurringFee   Boolean           @default(true) @map("prorate_first_recurring_fee")
+  prorateLastRecurringFee    Boolean           @default(true) @map("prorate_last_recurring_fee")
+  prorateRegistrationFee     Boolean           @default(false) @map("prorate_registration_fee")
+  prorateSeasonFee           Boolean           @default(false) @map("prorate_season_fee")
+  chargeGenerationDaysBefore Int               @default(7) @map("charge_generation_days_before")
+  createdById                String?           @map("created_by_id")
+  updatedById                String?           @map("updated_by_id")
+  createdBy                  User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  teamSeason                 TeamSeason        @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  updatedBy                  User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("team_season_billing_configs")
+}
+
+model PaymentPlan {
+  id                           String              @id @default(uuid())
+  teamSeasonId                 String?             @map("team_season_id")
+  courseSeasonId               String?             @map("course_season_id")
+  name                         String
+  registrationDiscountPercent  Decimal             @default(0) @map("registration_discount_percent") @db.Decimal(5, 2)
+  recurringDiscountPercent     Decimal             @default(0) @map("recurring_discount_percent") @db.Decimal(5, 2)
+  seasonFeeDiscountPercent     Decimal             @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
+  isDefault                    Boolean             @default(false)
+  /// Si es true, este plan de pago agrupará toda la temporada en un solo cobro (pago completo de la temporada). Útil para ofrecer descuentos por pago adelantado en temporadas tipo "BOTH".
+  isSinglePayment              Boolean             @default(false) @map("is_single_payment")
+  /// Cantidad de cuotas que este plan adelanta/agrupa en un solo recibo. Por defecto 1 (cobro normal). Si es 6, cobra 6 ciclos juntos.
+  advanceCycles                Int                 @default(1) @map("advance_cycles")
+  /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas.
+  advanceCyclesDiscountPercent Decimal             @default(0) @map("advance_cycles_discount_percent") @db.Decimal(5, 2)
+  createdAt                    DateTime            @default(now()) @map("created_at")
+  updatedAt                    DateTime            @updatedAt @map("updated_at")
+  createdById                  String?             @map("created_by_id")
+  updatedById                  String?             @map("updated_by_id")
+  /// Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.
+  promotionalCycles            Int                 @default(0) @map("promotional_cycles")
+  courseSeason                 CourseSeason?       @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
+  createdBy                    User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  teamSeasons                  TeamSeason?         @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
+  updatedBy                    User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+  playerMemberships            PlayerMembership[]
+  studentMemberships           StudentMembership[]
+
+  @@map("payment_plans")
+}
+
+model Player {
+  id                  String               @id @default(uuid())
+  personId            String               @unique
+  isActive            Boolean              @default(true)
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  createdById         String?              @map("created_by_id")
+  updatedById         String?              @map("updated_by_id")
+  matchLineups        MatchLineup[]
+  playerMemberships   PlayerMembership[]
+  createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  person              Person               @relation(fields: [personId], references: [id])
+  updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  progressEvaluations ProgressEvaluation[]
+  sessionBookings     SessionBooking[]
+
+  @@map("players")
+}
+
+model PlayerMembership {
+  id                                String                    @id @default(uuid())
+  playerId                          String                    @map("player_id")
+  teamSeasonId                      String                    @map("team_season_id")
+  paymentPlanId                     String                    @map("payment_plan_id")
+  startedAt                         DateTime                  @map("started_at")
+  endedAt                           DateTime?                 @map("ended_at")
+  status                            PlayerMembershipStatus    @default(PENDING_ACTIVE)
+  notes                             String?
+  nextRecurringChargeGenerationDate DateTime?
+  isMigrated                        Boolean                   @default(false) @map("is_migrated")
+  createdAt                         DateTime                  @default(now()) @map("created_at")
+  updatedAt                         DateTime                  @updatedAt @map("updated_at")
+  createdById                       String?                   @map("created_by_id")
+  updatedById                       String?                   @map("updated_by_id")
+  teamSeasonCategoryId              String
+  membershipCharges                 MembershipCharge[]
+  membershipDiscounts               MembershipDiscount[]
+  createdBy                         User?                     @relation("CreatedBy", fields: [createdById], references: [id])
+  paymentPlan                       PaymentPlan               @relation(fields: [paymentPlanId], references: [id])
+  player                            Player                    @relation(fields: [playerId], references: [id])
+  teamSeasonCategories              TeamSeasonCategory        @relation(fields: [teamSeasonCategoryId, teamSeasonId], references: [id, teamSeasonId], map: "player_membership_teamSeasonCategoryId_team_se_fkey")
+  teamSeason                        TeamSeason                @relation(fields: [teamSeasonId], references: [id])
+  updatedBy                         User?                     @relation("UpdatedBy", fields: [updatedById], references: [id])
+  histories                         PlayerMembershipHistory[]
+  pauses                            PlayerMembershipPause[]
+
+  @@index([nextRecurringChargeGenerationDate])
+  @@map("player_membership")
+}
+
+model PlayerMembershipHistory {
+  id                 String                  @id @default(uuid())
+  playerMembershipId String                  @map("player_membership_id")
+  previousStatus     PlayerMembershipStatus? @map("previous_status")
+  newStatus          PlayerMembershipStatus  @map("new_status")
+  reason             String?
+  createdAt          DateTime                @default(now()) @map("created_at")
+  createdById        String?                 @map("created_by_id")
+  updatedById        String?                 @map("updated_by_id")
+  createdBy          User?                   @relation("CreatedBy", fields: [createdById], references: [id])
+  playerMembership   PlayerMembership        @relation(fields: [playerMembershipId], references: [id])
+  updatedBy          User?                   @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("player_membership_histories")
+}
+
+model PlayerMembershipPause {
+  id                 String           @id @default(uuid())
+  playerMembershipId String           @map("player_membership_id")
+  startDate          DateTime         @map("start_date")
+  endDate            DateTime         @map("end_date")
+  reason             String?
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+  createdById        String?          @map("created_by_id")
+  updatedById        String?          @map("updated_by_id")
+  createdBy          User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Cascade)
+  updatedBy          User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("player_membership_pauses")
+}
+
+model MembershipDiscount {
+  id                          String                 @id @default(uuid())
+  playerMembershipId          String                 @map("player_membership_id")
+  recurringDiscountPercent    Decimal                @map("recurring_discount_percent") @db.Decimal(5, 2)
+  registrationDiscountPercent Decimal                @map("registration_discount_percent") @db.Decimal(5, 2)
+  startDate                   DateTime               @map("start_date")
+  endDate                     DateTime?              @map("end_date")
+  type                        MembershipDiscountType
+  reason                      String?
+  createdAt                   DateTime               @default(now()) @map("created_at")
+  updatedAt                   DateTime               @updatedAt @map("updated_at")
+  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
+  createdById                 String?                @map("created_by_id")
+  updatedById                 String?                @map("updated_by_id")
+  createdBy                   User?                  @relation("CreatedBy", fields: [createdById], references: [id])
+  playerMembership            PlayerMembership       @relation(fields: [playerMembershipId], references: [id])
+  updatedBy                   User?                  @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("membership_discounts")
+}
+
+model MembershipCharge {
+  id                 String               @id @default(uuid())
+  playerMembershipId String               @map("player_membership_id")
+  chargeId           String               @map("charge_id")
+  type               TypeMembershipCharge
+  createdByCron      Boolean              @default(false) @map("created_by_cron")
+  billingYear        Int?
+  billingMonth       Int?
+  billingCycle       Int?                 @map("billing_cycle")
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  createdById        String?              @map("created_by_id")
+  updatedById        String?              @map("updated_by_id")
+  charge             Charge               @relation(fields: [chargeId], references: [id])
+  createdBy          User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  playerMembership   PlayerMembership     @relation(fields: [playerMembershipId], references: [id])
+  updatedBy          User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([playerMembershipId, type, billingMonth, billingYear, billingCycle])
+  @@map("membership_charges")
+}
+
+model Staff {
+  id                  String               @id @default(uuid())
+  personId            String               @unique @map("person_id")
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  createdById         String?              @map("created_by_id")
+  updatedById         String?              @map("updated_by_id")
+  courseSeasonStaffs  CourseSeasonStaff[]
+  progressEvaluations ProgressEvaluation[]
+  createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  person              Person               @relation(fields: [personId], references: [id])
+  updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  teamSeasonStaffs    TeamSeasonStaff[]
+
+  @@map("staff")
+}
+
+model TeamSeasonStaff {
+  id                   String              @id @default(uuid())
+  staffId              String              @map("staff_id")
+  role                 TeamSeasonStaffRole
+  customRole           String?             @map("custom_role")
+  startedAt            DateTime            @map("started_at")
+  endedAt              DateTime?           @map("ended_at")
+  isPrimary            Boolean             @default(false) @map("is_primary")
+  notes                String?
+  createdAt            DateTime            @default(now()) @map("created_at")
+  updatedAt            DateTime            @updatedAt @map("updated_at")
+  createdById          String?             @map("created_by_id")
+  updatedById          String?             @map("updated_by_id")
+  teamSeasonCategoryId String
+  createdBy            User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  staff                Staff               @relation(fields: [staffId], references: [id])
+  teamSeasonCategory   TeamSeasonCategory  @relation(fields: [teamSeasonCategoryId], references: [id], onDelete: Cascade)
+  updatedBy            User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("team_season_staff")
+}
+
+model Charge {
+  id                String             @id @default(uuid())
+  parentChargeId    String?
+  description       String?
+  amount            Decimal            @db.Decimal(10, 2)
+  pendingAmount     Decimal            @map("pending_amount") @db.Decimal(10, 2)
+  dueDate           DateTime           @map("due_date")
+  status            StatusCharge       @default(PENDING)
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  discountAmount    Decimal            @default(0) @map("discount_amount") @db.Decimal(10, 2)
+  discountReason    String?            @map("discount_reason")
+  createdById       String?            @map("created_by_id")
+  updatedById       String?            @map("updated_by_id")
+  direction         ChargeDirection    @default(RECEIVABLE)
+  chargeCategory    ChargeCategory     @default(NORMAL) @map("charge_category")
+  accountCharge     AccountCharge?
+  createdBy         User?              @relation("CreatedBy", fields: [createdById], references: [id])
+  parentCharge      Charge?            @relation("ChargeParent", fields: [parentChargeId], references: [id])
+  childCharges      Charge[]           @relation("ChargeParent")
+  updatedBy         User?              @relation("UpdatedBy", fields: [updatedById], references: [id])
+  cycleEnrollment   CycleEnrollment?
+  membershipCharges MembershipCharge[]
+  payments          Payment[]
+  sessionBooking    SessionBooking?
+  studentCharges    StudentCharge[]
+
+  @@unique([parentChargeId, chargeCategory])
+  @@map("charges")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  chargeId      String        @map("charge_id")
+  receiptSeries String        @map("receipt_series")
+  receiptNumber Int           @map("receipt_number")
+  amount        Decimal       @db.Decimal(10, 2)
+  status        String        @default("COMPLETED")
+  paymentDate   DateTime      @default(now()) @map("payment_date")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  createdById   String?       @map("created_by_id")
+  updatedById   String?       @map("updated_by_id")
+  charge        Charge        @relation(fields: [chargeId], references: [id])
+  createdBy     User?         @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy     User?         @relation("UpdatedBy", fields: [updatedById], references: [id])
+  transactions  Transaction[]
+
+  @@unique([receiptSeries, receiptNumber])
+  @@map("payments")
+}
+
+model FinancialAccount {
+  id                    String               @id @default(uuid())
+  name                  String
+  description           String?
+  type                  FinancialAccountType
+  currency              String               @default("BOB")
+  cachedBalance         Decimal              @default(0) @map("cached_balance") @db.Decimal(10, 2)
+  isActive              Boolean              @default(true) @map("is_active")
+  createdAt             DateTime             @default(now()) @map("created_at")
+  updatedAt             DateTime             @updatedAt @map("updated_at")
+  accountNumber         String?              @map("account_number")
+  isDefault             Boolean              @default(false) @map("is_default")
+  lastReconciledAt      DateTime?            @map("last_reconciled_at")
+  allowedPaymentMethods PaymentMethod[]      @default([]) @map("allowed_payment_methods")
+  cashClosures          CashClosure[]
+  transactions          Transaction[]
+
+  @@map("financial_accounts")
+}
+
+model Transaction {
+  id                     String            @id @default(uuid())
+  payerPersonId          String?           @map("payer_person_id")
+  amount                 Decimal           @db.Decimal(10, 2)
+  transactionDate        DateTime          @map("transaction_date")
+  description            String?
+  type                   TransactionType
+  paymentMethod          PaymentMethod     @map("payment_method")
+  reference              String?           @map("reference_number")
+  notes                  String?
+  status                 TransactionStatus @default(COMPLETED)
+  createdAt              DateTime          @default(now()) @map("created_at")
+  updatedAt              DateTime          @updatedAt @map("updated_at")
+  createdById            String?           @map("created_by_id")
+  updatedById            String?           @map("updated_by_id")
+  receiptNumber          Int               @map("receipt_number")
+  receiptSeries          String            @default("GEN") @map("receipt_series")
+  financialAccountId     String            @map("financial_account_id")
+  isReconciled           Boolean           @default(false) @map("is_reconciled")
+  reconciledAt           DateTime?         @map("reconciled_at")
+  referenceGroupId       String?           @map("reference_group_id")
+  isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
+  thirdPartyId           String?           @map("third_party_id")
+  paymentId              String?           @map("payment_id")
+  attachments            Attachment[]
+  internalTransferDest   InternalTransfer? @relation("TransferDestination")
+  internalTransferSource InternalTransfer? @relation("TransferSource")
+  createdBy              User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  financialAccount       FinancialAccount  @relation(fields: [financialAccountId], references: [id])
+  payerPerson            Person?           @relation(fields: [payerPersonId], references: [id])
+  payment                Payment?          @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
+  updatedBy              User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([receiptSeries, receiptNumber])
+  @@map("transactions")
+}
+
+model InternalTransfer {
+  id                       String         @id @default(uuid())
+  amount                   Decimal        @db.Decimal(10, 2)
+  description              String?
+  reference                String?
+  status                   TransferStatus @default(COMPLETED)
+  date                     DateTime       @default(now())
+  sourceTransactionId      String         @unique @map("source_transaction_id")
+  destinationTransactionId String         @unique @map("destination_transaction_id")
+  createdById              String?        @map("created_by_id")
+  createdAt                DateTime       @default(now()) @map("created_at")
+  updatedAt                DateTime       @updatedAt @map("updated_at")
+  createdBy                User?          @relation("CreatedByTransfer", fields: [createdById], references: [id])
+  destinationTransaction   Transaction    @relation("TransferDestination", fields: [destinationTransactionId], references: [id])
+  sourceTransaction        Transaction    @relation("TransferSource", fields: [sourceTransactionId], references: [id])
+
+  @@map("internal_transfers")
+}
+
+model ReceiptSequence {
+  id          String   @id @default(uuid())
+  series      String   @unique
+  description String?
+  lastValue   Int      @default(0) @map("last_value")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("receipt_sequences")
+}
+
+model User {
+  id                                String                      @id @default(uuid())
+  email                             String                      @unique
+  personId                          String?                     @unique @map("person_id")
+  roleId                            String                      @map("role_id")
+  isActive                          Boolean                     @default(true) @map("is_active")
+  createdAt                         DateTime                    @default(now()) @map("created_at")
+  updatedAt                         DateTime                    @updatedAt @map("updated_at")
+  password                          String
+  createdAccountCategories          AccountCategory[]           @relation("CreatedBy")
+  updatedAccountCategories          AccountCategory[]           @relation("UpdatedBy")
+  createdAccountCharges             AccountCharge[]             @relation("CreatedBy")
+  updatedAccountCharges             AccountCharge[]             @relation("UpdatedBy")
+  attachments                       Attachment[]
+  auditLogs                         AuditLog[]
+  cashClosuresCreated               CashClosure[]               @relation("CreatedByCashClosure")
+  cashClosuresUpdated               CashClosure[]               @relation("UpdatedByCashClosure")
+  createdCategories                 Category[]                  @relation("CreatedBy")
+  updatedCategories                 Category[]                  @relation("UpdatedBy")
+  createdCharges                    Charge[]                    @relation("CreatedBy")
+  updatedCharges                    Charge[]                    @relation("UpdatedBy")
+  createdClubs                      Club[]                      @relation("CreatedBy")
+  updatedClubs                      Club[]                      @relation("UpdatedBy")
+  createdCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("CreatedBy")
+  updatedCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("UpdatedBy")
+  createdCourseSeasonPauses         CourseSeasonPause[]         @relation("CreatedBy")
+  updatedCourseSeasonPauses         CourseSeasonPause[]         @relation("UpdatedBy")
+  createdCourseSeasonShifts         CourseSeasonShift[]         @relation("CreatedBy")
+  updatedCourseSeasonShifts         CourseSeasonShift[]         @relation("UpdatedBy")
+  createdCourseSeasonStaffs         CourseSeasonStaff[]         @relation("CreatedBy")
+  updatedCourseSeasonStaffs         CourseSeasonStaff[]         @relation("UpdatedBy")
+  createdCourseSeasons              CourseSeason[]              @relation("CreatedBy")
+  updatedCourseSeasons              CourseSeason[]              @relation("UpdatedBy")
+  createdCourses                    Course[]                    @relation("CreatedBy")
+  updatedCourses                    Course[]                    @relation("UpdatedBy")
+  createdCycleEnrollments           CycleEnrollment[]           @relation("CreatedBy")
+  updatedCycleEnrollments           CycleEnrollment[]           @relation("UpdatedBy")
+  createdDisciplines                Discipline[]                @relation("CreatedBy")
+  updatedDisciplines                Discipline[]                @relation("UpdatedBy")
+  createdEvents                     Event[]                     @relation("EventCreatedBy")
+  updatedEvents                     Event[]                     @relation("EventUpdatedBy")
+  createdInstitutionContacts        InstitutionContact[]        @relation("CreatedBy")
+  updatedInstitutionContacts        InstitutionContact[]        @relation("UpdatedBy")
+  createdInstitutions               Institution[]               @relation("CreatedBy")
+  updatedInstitutions               Institution[]               @relation("UpdatedBy")
+  createdInternalTransfers          InternalTransfer[]          @relation("CreatedByTransfer")
+  createdLocations                  Location[]                  @relation("CreatedBy")
+  updatedLocations                  Location[]                  @relation("UpdatedBy")
+  createdMatchLineups               MatchLineup[]               @relation("CreatedBy")
+  updatedMatchLineups               MatchLineup[]               @relation("UpdatedBy")
+  createdMembershipCharges          MembershipCharge[]          @relation("CreatedBy")
+  updatedMembershipCharges          MembershipCharge[]          @relation("UpdatedBy")
+  createdMembershipDiscounts        MembershipDiscount[]        @relation("CreatedBy")
+  updatedMembershipDiscounts        MembershipDiscount[]        @relation("UpdatedBy")
+  createdPaymentPlans               PaymentPlan[]               @relation("CreatedBy")
+  updatedPaymentPlans               PaymentPlan[]               @relation("UpdatedBy")
+  createdPayments                   Payment[]                   @relation("CreatedBy")
+  updatedPayments                   Payment[]                   @relation("UpdatedBy")
+  createdPermissions                Permission[]                @relation("CreatedBy")
+  updatedPermissions                Permission[]                @relation("UpdatedBy")
+  createdPersons                    Person[]                    @relation("CreatedBy")
+  updatedPersons                    Person[]                    @relation("UpdatedBy")
+  createdPlayerMemberships          PlayerMembership[]          @relation("CreatedBy")
+  updatedPlayerMemberships          PlayerMembership[]          @relation("UpdatedBy")
+  createdPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("CreatedBy")
+  updatedPlayerMembershipHistories  PlayerMembershipHistory[]   @relation("UpdatedBy")
+  createdPlayerMembershipPauses     PlayerMembershipPause[]     @relation("CreatedBy")
+  updatedPlayerMembershipPauses     PlayerMembershipPause[]     @relation("UpdatedBy")
+  createdPlayers                    Player[]                    @relation("CreatedBy")
+  updatedPlayers                    Player[]                    @relation("UpdatedBy")
+  createdProgressEvaluations        ProgressEvaluation[]        @relation("CreatedBy")
+  updatedProgressEvaluations        ProgressEvaluation[]        @relation("UpdatedBy")
+  createdRoles                      Role[]                      @relation("CreatedBy")
+  updatedRoles                      Role[]                      @relation("UpdatedBy")
+  createdSchools                    School[]                    @relation("CreatedBy")
+  updatedSchools                    School[]                    @relation("UpdatedBy")
+  createdSeasonEvents               SeasonEvent[]               @relation("CreatedBy")
+  updatedSeasonEvents               SeasonEvent[]               @relation("UpdatedBy")
+  createdSeasons                    Season[]                    @relation("CreatedBy")
+  updatedSeasons                    Season[]                    @relation("UpdatedBy")
+  createdSessionBookings            SessionBooking[]            @relation("CreatedBy")
+  updatedSessionBookings            SessionBooking[]            @relation("UpdatedBy")
+  createdSessionIncidents           SessionIncident[]           @relation("CreatedBy")
+  updatedSessionIncidents           SessionIncident[]           @relation("UpdatedBy")
+  createdShifts                     Shift[]                     @relation("CreatedBy")
+  updatedShifts                     Shift[]                     @relation("UpdatedBy")
+  createdStaffs                     Staff[]                     @relation("CreatedBy")
+  updatedStaffs                     Staff[]                     @relation("UpdatedBy")
+  createdStudentCharges             StudentCharge[]             @relation("CreatedBy")
+  updatedStudentCharges             StudentCharge[]             @relation("UpdatedBy")
+  createdStudentDiscounts           StudentDiscount[]           @relation("CreatedBy")
+  updatedStudentDiscounts           StudentDiscount[]           @relation("UpdatedBy")
+  createdStudentMembershipHistories StudentMembershipHistory[]  @relation("CreatedBy")
+  updatedStudentMembershipHistories StudentMembershipHistory[]  @relation("UpdatedBy")
+  createdStudentMembershipPauses    StudentMembershipPause[]    @relation("CreatedBy")
+  updatedStudentMembershipPauses    StudentMembershipPause[]    @relation("UpdatedBy")
+  createdStudentMemberships         StudentMembership[]         @relation("CreatedBy")
+  updatedStudentMemberships         StudentMembership[]         @relation("UpdatedBy")
+  createdStudents                   Student[]                   @relation("CreatedBy")
+  updatedStudents                   Student[]                   @relation("UpdatedBy")
+  createdTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("CreatedBy")
+  updatedTeamSeasonBillingConfigs   TeamSeasonBillingConfig[]   @relation("UpdatedBy")
+  createdTeamSeasonPauses           TeamSeasonPause[]           @relation("CreatedBy")
+  updatedTeamSeasonPauses           TeamSeasonPause[]           @relation("UpdatedBy")
+  createdTeamSeasonStaffs           TeamSeasonStaff[]           @relation("CreatedBy")
+  updatedTeamSeasonStaffs           TeamSeasonStaff[]           @relation("UpdatedBy")
+  createdTeamSeasons                TeamSeason[]                @relation("CreatedBy")
+  updatedTeamSeasons                TeamSeason[]                @relation("UpdatedBy")
+  createdTeams                      Team[]                      @relation("CreatedBy")
+  updatedTeams                      Team[]                      @relation("UpdatedBy")
+  createdTransactions               Transaction[]               @relation("CreatedBy")
+  updatedTransactions               Transaction[]               @relation("UpdatedBy")
+  person                            Person?                     @relation(fields: [personId], references: [id], onDelete: Cascade)
+  role                              Role                        @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String?
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  createdById String?          @map("created_by_id")
+  updatedById String?          @map("updated_by_id")
+  permissions RolePermission[]
+  createdBy   User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+  users       User[]
+
+  @@map("roles")
+}
+
+model Module {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  displayName String       @map("display_name")
+  icon        String?
+  sortOrder   Int          @default(0) @map("sort_order")
+  description String?
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  permissions Permission[]
+
+  @@map("modules")
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String?
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  createdById String?          @map("created_by_id")
+  updatedById String?          @map("updated_by_id")
+  moduleId    String           @map("module_id")
+  createdBy   User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  module      Module           @relation(fields: [moduleId], references: [id])
+  updatedBy   User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+  roles       RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id")
+  permissionId String     @map("permission_id")
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model School {
+  id                       String           @id @default(uuid())
+  name                     String
+  institutionId            String           @map("institution_id")
+  disciplineId             String           @map("discipline_id")
+  createdAt                DateTime         @default(now()) @map("created_at")
+  updatedAt                DateTime         @updatedAt @map("updated_at")
+  shortName                String?          @map("short_name")
+  createdById              String?          @map("created_by_id")
+  updatedById              String?          @map("updated_by_id")
+  defaultAccountCategoryId String?          @map("default_account_category_id")
+  courses                  Course[]
+  createdBy                User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  defaultAccountCategory   AccountCategory? @relation("SchoolDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
+  discipline               Discipline       @relation(fields: [disciplineId], references: [id])
+  institution              Institution      @relation(fields: [institutionId], references: [id])
+  updatedBy                User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([institutionId, disciplineId, name])
+  @@map("schools")
+}
+
+model Course {
+  id            String         @id @default(uuid())
+  imageUrl      String?        @map("image_url")
+  name          String
+  description   String?
+  schoolId      String         @map("school_id")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  shortName     String?        @map("short_name")
+  createdById   String?        @map("created_by_id")
+  updatedById   String?        @map("updated_by_id")
+  courseSeasons CourseSeason[]
+  createdBy     User?          @relation("CreatedBy", fields: [createdById], references: [id])
+  school        School         @relation(fields: [schoolId], references: [id])
+  updatedBy     User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([schoolId, name])
+  @@map("courses")
+}
+
+model CourseSeason {
+  id                 String                     @id @default(uuid())
+  imageUrl           String?                    @map("image_url")
+  description        String?
+  courseId           String                     @map("course_id")
+  seasonId           String                     @map("season_id")
+  status             StatusCourseSeason         @default(DRAFT)
+  createdAt          DateTime                   @default(now()) @map("created_at")
+  updatedAt          DateTime                   @updatedAt @map("updated_at")
+  statusNotes        String?                    @map("status_notes")
+  isRegistrationOpen Boolean                    @default(true) @map("is_registration_open")
+  createdById        String?                    @map("created_by_id")
+  updatedById        String?                    @map("updated_by_id")
+  name               String                     @default("Regular")
+  billingConfig      CourseSeasonBillingConfig?
+  pauses             CourseSeasonPause[]
+  shifts             CourseSeasonShift[]
+  course             Course                     @relation(fields: [courseId], references: [id])
+  createdBy          User?                      @relation("CreatedBy", fields: [createdById], references: [id])
+  season             Season                     @relation(fields: [seasonId], references: [id])
+  updatedBy          User?                      @relation("UpdatedBy", fields: [updatedById], references: [id])
+  cycleEnrollments   CycleEnrollment[]
+  generalEvents      GeneralEvent[]
+  paymentPlans       PaymentPlan[]
+  studentMemberships StudentMembership[]
+
+  @@unique([courseId, seasonId, name])
+  @@map("course_seasons")
+}
+
+model CourseSeasonShift {
+  id                 String              @id @default(uuid())
+  courseSeasonId     String              @map("course_season_id")
+  shiftId            String              @map("shift_id")
+  maxMembers         Int                 @map("max_members")
+  minMembers         Int                 @map("min_members")
+  isActive           Boolean             @default(true) @map("is_active")
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  createdById        String?             @map("created_by_id")
+  updatedById        String?             @map("updated_by_id")
+  categoryId         String              @map("category_id")
+  gender             ProgramGender
+  minBirthYear       Int?                @map("min_birth_year")
+  maxBirthYear       Int?                @map("max_birth_year")
+  validateAge        Boolean             @default(true) @map("validate_age")
+  pauses             CourseSeasonPause[]
+  category           Category            @relation(fields: [categoryId], references: [id])
+  courseSeason       CourseSeason        @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  createdBy          User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  shift              Shift               @relation(fields: [shiftId], references: [id])
+  updatedBy          User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+  courseSeasonStaffs CourseSeasonStaff[]
+  cycleEnrollments   CycleEnrollment[]
+  generalEvents      GeneralEvent[]
+  sessionCourses     SessionCourse[]
+  studentMemberships StudentMembership[]
+
+  @@unique([courseSeasonId, shiftId])
+  @@unique([id, courseSeasonId])
+  @@map("course_season_shifts")
+}
+
+model TeamSeasonPause {
+  id           String     @id @default(uuid())
+  teamSeasonId String     @map("team_season_id")
+  startDate    DateTime   @map("start_date")
+  endDate      DateTime   @map("end_date")
+  reason       String?
+  createdAt    DateTime   @default(now()) @map("created_at")
+  createdById  String?    @map("created_by_id")
+  updatedById  String?    @map("updated_by_id")
+  createdBy    User?      @relation("CreatedBy", fields: [createdById], references: [id])
+  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  updatedBy    User?      @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("team_season_pauses")
+}
+
+model CourseSeasonPause {
+  id                  String             @id @default(uuid())
+  courseSeasonId      String             @map("course_season_id")
+  startDate           DateTime           @map("start_date")
+  endDate             DateTime           @map("end_date")
+  reason              String?
+  createdAt           DateTime           @default(now()) @map("created_at")
+  createdById         String?            @map("created_by_id")
+  updatedById         String?            @map("updated_by_id")
+  courseSeasonShiftId String?            @map("course_season_shift_id")
+  courseSeason        CourseSeason       @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonShift   CourseSeasonShift? @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
+  createdBy           User?              @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy           User?              @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("course_season_pauses")
+}
+
+model CourseSeasonBillingConfig {
+  id                         String            @id @default(uuid())
+  courseSeasonId             String            @unique @map("course_season_id")
+  billingDay                 Int               @map("billing_day")
+  registrationFee            Decimal?          @map("registration_fee") @db.Decimal(10, 2)
+  recurringFee               Decimal?          @map("recurring_fee") @db.Decimal(10, 2)
+  seasonFee                  Decimal?          @map("season_fee") @db.Decimal(10, 2)
+  debtToleranceMonths        Int               @default(2) @map("debt_tolerance_months")
+  lateFeeEnabled             Boolean           @default(false) @map("late_fee_enabled")
+  lateFeePerDay              Decimal           @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
+  graceDays                  Int               @default(0) @map("grace_days")
+  billingType                SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
+  billingFrequency           BillingFrequency  @default(MONTHLY) @map("billing_frequency")
+  prorateFirstRecurringFee   Boolean           @default(true) @map("prorate_first_recurring_fee")
+  prorateLastRecurringFee    Boolean           @default(true) @map("prorate_last_recurring_fee")
+  prorateRegistrationFee     Boolean           @default(false) @map("prorate_registration_fee")
+  prorateSeasonFee           Boolean           @default(false) @map("prorate_season_fee")
+  createdById                String?           @map("created_by_id")
+  updatedById                String?           @map("updated_by_id")
+  prorationEnabled           Boolean           @default(true) @map("proration_enabled")
+  chargeGenerationDaysBefore Int               @default(7) @map("charge_generation_days_before")
+  isEngineActive             Boolean           @default(true) @map("is_engine_active")
+  courseSeason               CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  createdBy                  User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy                  User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("course_season_billing_configs")
+}
+
+model CourseSeasonStaff {
+  id                  String                @id @default(uuid())
+  staffId             String                @map("staff_id")
+  customRole          String?               @map("custom_role")
+  startedAt           DateTime              @map("started_at")
+  endedAt             DateTime?             @map("ended_at")
+  isPrimary           Boolean               @default(false) @map("is_primary")
+  notes               String?
+  createdAt           DateTime              @default(now()) @map("created_at")
+  updatedAt           DateTime              @updatedAt @map("updated_at")
+  role                CourseSeasonStaffRole
+  createdById         String?               @map("created_by_id")
+  updatedById         String?               @map("updated_by_id")
+  courseSeasonShiftId String                @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift     @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
+  createdBy           User?                 @relation("CreatedBy", fields: [createdById], references: [id])
+  staff               Staff                 @relation(fields: [staffId], references: [id])
+  updatedBy           User?                 @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("course_season_staff")
+}
+
+model Student {
+  id                  String               @id @default(uuid())
+  personId            String               @unique @map("person_id")
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  createdById         String?              @map("created_by_id")
+  updatedById         String?              @map("updated_by_id")
+  progressEvaluations ProgressEvaluation[]
+  sessionBookings     SessionBooking[]
+  studentMemberships  StudentMembership[]
+  createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  person              Person               @relation(fields: [personId], references: [id])
+  updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("students")
+}
+
+model StudentMembership {
+  id                                String                             @id @default(uuid())
+  studentId                         String                             @map("student_id")
+  courseSeasonId                    String                             @map("course_season_id")
+  paymentPlanId                     String                             @map("payment_plan_id")
+  startedAt                         DateTime                           @map("started_at")
+  endedAt                           DateTime?                          @map("ended_at")
+  status                            StudentMembershipStatus            @default(PENDING_ACTIVE)
+  notes                             String?
+  isMigrated                        Boolean                            @default(false) @map("is_migrated")
+  createdAt                         DateTime                           @default(now()) @map("created_at")
+  updatedAt                         DateTime                           @updatedAt @map("updated_at")
+  createdById                       String?                            @map("created_by_id")
+  updatedById                       String?                            @map("updated_by_id")
+  nextRecurringChargeGenerationDate DateTime?
+  courseSeasonShiftId               String                             @map("course_season_shift_id")
+  suspensionReason                  StudentMembershipSuspensionReason? @map("suspension_reason")
+  cycleEnrollments                  CycleEnrollment[]
+  studentCharges                    StudentCharge[]
+  studentDiscounts                  StudentDiscount[]
+  histories                         StudentMembershipHistory[]
+  pauses                            StudentMembershipPause[]
+  courseSeason                      CourseSeason                       @relation(fields: [courseSeasonId], references: [id])
+  courseSeasonShift                 CourseSeasonShift                  @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId])
+  createdBy                         User?                              @relation("CreatedBy", fields: [createdById], references: [id])
+  paymentPlan                       PaymentPlan                        @relation(fields: [paymentPlanId], references: [id])
+  student                           Student                            @relation(fields: [studentId], references: [id])
+  updatedBy                         User?                              @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@index([nextRecurringChargeGenerationDate])
+  @@map("student_memberships")
+}
+
+model StudentMembershipHistory {
+  id                  String                   @id @default(uuid())
+  studentMembershipId String                   @map("student_membership_id")
+  previousStatus      StudentMembershipStatus? @map("previous_status")
+  newStatus           StudentMembershipStatus  @map("new_status")
+  reason              String?
+  createdAt           DateTime                 @default(now()) @map("created_at")
+  createdById         String?                  @map("created_by_id")
+  updatedById         String?                  @map("updated_by_id")
+  createdBy           User?                    @relation("CreatedBy", fields: [createdById], references: [id])
+  studentMembership   StudentMembership        @relation(fields: [studentMembershipId], references: [id])
+  updatedBy           User?                    @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("student_membership_histories")
+}
+
+model StudentMembershipPause {
+  id                  String            @id @default(uuid())
+  studentMembershipId String            @map("student_membership_id")
+  startDate           DateTime          @map("start_date")
+  endDate             DateTime          @map("end_date")
+  reason              String?
+  createdAt           DateTime          @default(now()) @map("created_at")
+  updatedAt           DateTime          @updatedAt @map("updated_at")
+  createdById         String?           @map("created_by_id")
+  updatedById         String?           @map("updated_by_id")
+  createdBy           User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Cascade)
+  updatedBy           User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("student_membership_pauses")
+}
+
+model CycleEnrollment {
+  id                  String                @id @default(uuid())
+  studentMembershipId String                @map("student_membership_id")
+  chargeId            String?               @unique @map("charge_id")
+  cycleStartDate      DateTime              @map("cycle_start_date")
+  cycleEndDate        DateTime              @map("cycle_end_date")
+  effectiveStartDate  DateTime              @map("effective_start_date")
+  status              CycleEnrollmentStatus @default(PENDING)
+  createdAt           DateTime              @default(now()) @map("created_at")
+  updatedAt           DateTime              @updatedAt @map("updated_at")
+  createdById         String?               @map("created_by_id")
+  updatedById         String?               @map("updated_by_id")
+  courseSeasonId      String                @map("course_season_id")
+  courseSeasonShiftId String                @map("course_season_shift_id")
+  charge              Charge?               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
+  courseSeason        CourseSeason          @relation(fields: [courseSeasonId], references: [id])
+  courseSeasonShift   CourseSeasonShift     @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId])
+  createdBy           User?                 @relation("CreatedBy", fields: [createdById], references: [id])
+  studentMembership   StudentMembership     @relation(fields: [studentMembershipId], references: [id])
+  updatedBy           User?                 @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([studentMembershipId, cycleStartDate, cycleEndDate], name: "unique_cycle_enrollment")
+  @@map("cycle_enrollments")
+}
+
+model StudentDiscount {
+  id                          String                 @id @default(uuid())
+  studentMembershipId         String                 @map("student_membership_id")
+  recurringDiscountPercent    Decimal                @map("recurring_discount_percent") @db.Decimal(5, 2)
+  registrationDiscountPercent Decimal                @map("registration_discount_percent") @db.Decimal(5, 2)
+  startDate                   DateTime               @map("start_date")
+  endDate                     DateTime?              @map("end_date")
+  type                        MembershipDiscountType
+  reason                      String?
+  createdAt                   DateTime               @default(now()) @map("created_at")
+  updatedAt                   DateTime               @updatedAt @map("updated_at")
+  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
+  createdById                 String?                @map("created_by_id")
+  updatedById                 String?                @map("updated_by_id")
+  createdBy                   User?                  @relation("CreatedBy", fields: [createdById], references: [id])
+  studentMembership           StudentMembership      @relation(fields: [studentMembershipId], references: [id])
+  updatedBy                   User?                  @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("student_discounts")
+}
+
+model StudentCharge {
+  id                  String               @id @default(uuid())
+  studentMembershipId String               @map("student_membership_id")
+  chargeId            String               @map("charge_id")
+  type                TypeMembershipCharge
+  createdByCron       Boolean              @default(false) @map("created_by_cron")
+  billingYear         Int?
+  billingMonth        Int?
+  billingCycle        Int?                 @map("billing_cycle")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  createdById         String?              @map("created_by_id")
+  updatedById         String?              @map("updated_by_id")
+  charge              Charge               @relation(fields: [chargeId], references: [id])
+  createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
+  studentMembership   StudentMembership    @relation(fields: [studentMembershipId], references: [id])
+  updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([studentMembershipId, type, billingMonth, billingYear, billingCycle])
+  @@map("student_charges")
+}
+
+model SessionIncident {
+  id               String         @id @default(uuid())
+  sessionBookingId String         @map("session_booking_id")
+  description      String
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  createdById      String?        @map("created_by_id")
+  updatedById      String?        @map("updated_by_id")
+  createdBy        User?          @relation("CreatedBy", fields: [createdById], references: [id])
+  sessionBooking   SessionBooking @relation(fields: [sessionBookingId], references: [id], onDelete: Cascade)
+  updatedBy        User?          @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("session_incidents")
+}
+
+model ProgressEvaluation {
+  id               String   @id @default(uuid())
+  playerId         String?  @map("player_id")
+  studentId        String?  @map("student_id")
+  evaluatorStaffId String   @map("evaluator_staff_id")
+  seasonId         String   @map("season_id")
+  evaluationDate   DateTime @map("evaluation_date")
+  technicalScore   Int?     @map("technical_score")
+  tacticalScore    Int?     @map("tactical_score")
+  physicalScore    Int?     @map("physical_score")
+  behaviorScore    Int?     @map("behavior_score")
+  notes            String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  createdById      String?  @map("created_by_id")
+  updatedById      String?  @map("updated_by_id")
+  createdBy        User?    @relation("CreatedBy", fields: [createdById], references: [id])
+  evaluatorStaff   Staff    @relation(fields: [evaluatorStaffId], references: [id])
+  player           Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  season           Season   @relation(fields: [seasonId], references: [id])
+  student          Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  updatedBy        User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@map("progress_evaluations")
+}
+
+model EventSeries {
+  id                 String            @id @default(uuid())
+  recurrenceRule     String            @map("recurrence_rule")
+  timezone           String
+  eventType          EventType         @map("event_type")
+  templateData       Json              @map("template_data")
+  templateVersion    Int               @default(1) @map("template_version")
+  materializedUntil  DateTime          @map("materialized_until")
+  lastMaterializedAt DateTime?         @map("last_materialized_at")
+  status             EventSeriesStatus @default(ACTIVE)
+  createdAt          DateTime          @default(now()) @map("created_at")
+  updatedAt          DateTime          @updatedAt @map("updated_at")
+  createdById        String?           @map("created_by_id")
+  updatedById        String?           @map("updated_by_id")
+  lockedUntil        DateTime?         @map("locked_until")
+  events             Event[]
+
+  @@map("event_series")
+}
+
+model Event {
+  id                String             @id @default(uuid())
+  title             String?
+  description       String?
+  startDate         DateTime           @map("start_date")
+  endDate           DateTime           @map("end_date")
+  locationId        String?            @map("location_id")
+  eventType         EventType          @map("event_type")
+  status            EventStatus        @default(SCHEDULED)
+  color             String?
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  createdById       String?            @map("created_by_id")
+  updatedById       String?            @map("updated_by_id")
+  eventSeriesId     String?            @map("event_series_id")
+  exceptionType     EventExceptionType @default(NONE) @map("exception_type")
+  originalStartDate DateTime?          @map("original_start_date")
+  createdBy         User?              @relation("EventCreatedBy", fields: [createdById], references: [id])
+  eventSeries       EventSeries?       @relation(fields: [eventSeriesId], references: [id], onDelete: Cascade)
+  location          Location?          @relation(fields: [locationId], references: [id])
+  updatedBy         User?              @relation("EventUpdatedBy", fields: [updatedById], references: [id])
+  generalEvent      GeneralEvent?
+  match             Match?
+  session           Session?
+
+  @@unique([eventSeriesId, originalStartDate])
+  @@index([locationId, startDate, endDate])
+  @@index([startDate, endDate])
+  @@index([eventSeriesId])
+  @@map("events")
+}
+
+model GeneralEvent {
+  id                   String              @id @default(uuid())
+  eventId              String              @unique @map("event_id")
+  institutionId        String?             @map("institution_id")
+  courseSeasonId       String?             @map("course_season_id")
+  courseSeasonShiftId  String?             @map("course_season_shift_id")
+  teamSeasonCategoryId String?
+  courseSeason         CourseSeason?       @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
+  courseSeasonShift    CourseSeasonShift?  @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
+  event                Event               @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  institution          Institution?        @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  teamSeasonCategory   TeamSeasonCategory? @relation(fields: [teamSeasonCategoryId], references: [id], onDelete: Cascade)
+
+  @@map("general_events")
+}
+
+model Session {
+  id             String           @id @default(uuid())
+  durationMin    Int              @default(90) @map("duration_min")
+  eventId        String           @unique @map("event_id")
+  bookings       SessionBooking[]
+  sessionCourses SessionCourse[]
+  sessionTeams   SessionTeam[]
+  event          Event            @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model SessionTeam {
+  sessionId            String
+  teamSeasonCategoryId String
+  session              Session            @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  teamSeasonCategory   TeamSeasonCategory @relation(fields: [teamSeasonCategoryId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, teamSeasonCategoryId])
+  @@map("session_teams")
+}
+
+model SessionCourse {
+  sessionId           String
+  courseSeasonShiftId String            @map("course_season_shift_id")
+  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id])
+  session             Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, courseSeasonShiftId])
+  @@map("session_courses")
+}
+
+model SessionBooking {
+  id          String            @id @default(uuid())
+  sessionId   String            @map("session_id")
+  playerId    String?           @map("player_id")
+  studentId   String?           @map("student_id")
+  isExternal  Boolean           @default(false) @map("is_external")
+  attended    Boolean           @default(false)
+  chargeId    String?           @unique @map("charge_id")
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  createdById String?           @map("created_by_id")
+  updatedById String?           @map("updated_by_id")
+  charge      Charge?           @relation(fields: [chargeId], references: [id])
+  createdBy   User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  player      Player?           @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  session     Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  student     Student?          @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  updatedBy   User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+  incidents   SessionIncident[]
+
+  @@unique([sessionId, playerId])
+  @@unique([sessionId, studentId])
+  @@map("session_bookings")
+}
+
+model Match {
+  id                   String             @id @default(uuid())
+  opponentName         String             @map("opponent_name")
+  type                 MatchType          @default(LEAGUE)
+  ourScore             Int?               @map("our_score")
+  theirScore           Int?               @map("their_score")
+  result               MatchResult        @default(PENDING)
+  eventId              String             @unique @map("event_id")
+  teamSeasonCategoryId String
+  lineups              MatchLineup[]
+  event                Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  teamSeasonCategory   TeamSeasonCategory @relation(fields: [teamSeasonCategoryId], references: [id])
+
+  @@map("matches")
+}
+
+model MatchLineup {
+  id            String   @id @default(uuid())
+  matchId       String   @map("match_id")
+  playerId      String   @map("player_id")
+  minutesPlayed Int      @default(0) @map("minutes_played")
+  goals         Int      @default(0)
+  assists       Int      @default(0)
+  yellowCards   Int      @default(0) @map("yellow_cards")
+  redCards      Int      @default(0) @map("red_cards")
+  isStarter     Boolean  @default(false) @map("is_starter")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  createdById   String?  @map("created_by_id")
+  updatedById   String?  @map("updated_by_id")
+  createdBy     User?    @relation("CreatedBy", fields: [createdById], references: [id])
+  match         Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player        Player   @relation(fields: [playerId], references: [id])
+  updatedBy     User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@unique([matchId, playerId])
+  @@map("match_lineups")
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  entityName    String   @map("entity_name")
+  entityId      String   @map("entity_id")
+  action        String
+  oldValues     Json?    @map("old_values")
+  newValues     Json?    @map("new_values")
+  userId        String?  @map("user_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  messageKey    String?  @map("message_key")
+  messageParams Json?    @map("message_params")
+  titleKey      String?  @map("title_key")
+  type          String?
+  user          User?    @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model EventMaterializationLog {
+  id            String   @id @default(uuid())
+  eventSeriesId String   @map("event_series_id")
+  generatedDate DateTime @map("generated_date")
+  status        String
+  errorCode     String?  @map("error_code")
+  metadata      Json?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("event_materialization_logs")
+}
+
+model AccountCategory {
+  id             String            @id @default(uuid())
+  name           String
+  description    String?
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+  createdById    String?           @map("created_by_id")
+  updatedById    String?           @map("updated_by_id")
+  type           ChargeDirection
+  code           String            @unique @map("code")
+  isActive       Boolean           @default(true) @map("is_active")
+  isSystem       Boolean           @default(false) @map("is_system")
+  parentId       String?           @map("parent_id")
+  receiptSeries  String?           @map("receipt_series")
+  createdBy      User?             @relation("CreatedBy", fields: [createdById], references: [id])
+  parent         AccountCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children       AccountCategory[] @relation("CategoryHierarchy")
+  updatedBy      User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+  accountCharges AccountCharge[]
+  clubs          Club[]            @relation("ClubDefaultCategory")
+  schools        School[]          @relation("SchoolDefaultCategory")
+
+  @@map("account_categories")
+}
+
+model AccountCharge {
+  id              String                @id @default(uuid())
+  chargeId        String                @unique @map("charge_id")
+  title           String
+  categoryId      String?               @map("category_id")
+  referenceType   AccountReferenceType? @map("reference_type")
+  referenceId     String?               @map("reference_id")
+  referenceNumber String?               @map("reference_number")
+  personId        String?               @map("person_id")
+  externalEntity  String?               @map("external_entity")
+  createdAt       DateTime              @default(now()) @map("created_at")
+  updatedAt       DateTime              @updatedAt @map("updated_at")
+  createdById     String?               @map("created_by_id")
+  updatedById     String?               @map("updated_by_id")
+  category        AccountCategory?      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  charge          Charge                @relation(fields: [chargeId], references: [id], onDelete: Cascade)
+  createdBy       User?                 @relation("CreatedBy", fields: [createdById], references: [id])
+  person          Person?               @relation("PersonAccountCharges", fields: [personId], references: [id])
+  updatedBy       User?                 @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@index([personId])
+  @@index([categoryId])
+  @@map("account_charges")
+}
+
+model CashClosure {
+  id                 String           @id @default(uuid())
+  financialAccountId String           @map("financial_account_id")
+  closedAt           DateTime         @default(now()) @map("closed_at")
+  expectedBalance    Decimal          @map("expected_balance") @db.Decimal(12, 2)
+  actualBalance      Decimal          @map("actual_balance") @db.Decimal(12, 2)
+  difference         Decimal          @map("difference") @db.Decimal(12, 2)
+  observations       String?
+  createdById        String?          @map("created_by_id")
+  updatedById        String?          @map("updated_by_id")
+  createdBy          User?            @relation("CreatedByCashClosure", fields: [createdById], references: [id])
+  financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id])
+  updatedBy          User?            @relation("UpdatedByCashClosure", fields: [updatedById], references: [id])
+
+  @@index([financialAccountId, closedAt(sort: Desc)])
+  @@map("cash_closures")
+}
+
+model ThirdParty {
+  id             String         @id @default(uuid())
+  name           String
+  type           ThirdPartyType @default(PROVIDER)
+  documentType   String?        @map("document_type")
+  documentNumber String?        @map("document_number")
+  contactEmail   String?        @map("contact_email")
+  contactPhone   String?        @map("contact_phone")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+  transactions   Transaction[]
+
+  @@map("third_parties")
+}
+
+model Attachment {
+  id            String           @id @default(uuid())
+  originalName  String           @map("original_name")
+  internalName  String           @unique @map("internal_name")
+  mimeType      String           @map("mime_type")
+  sizeBytes     Int              @map("size_bytes")
+  url           String?
+  path          String?
+  transactionId String?          @map("transaction_id")
+  uploadedById  String?          @map("uploaded_by_id")
+  deletedAt     DateTime?        @map("deleted_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
+  status        AttachmentStatus @default(PENDING)
+  transaction   Transaction?     @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  uploadedBy    User?            @relation(fields: [uploadedById], references: [id])
+
+  @@index([transactionId])
+  @@map("attachments")
+}
+
+model TeamSeasonCategory {
+  id                String             @id @default(uuid())
+  teamSeasonId      String             @map("team_season_id")
+  categoryId        String             @map("category_id")
+  gender            ProgramGender
+  minBirthYear      Int?               @map("min_birth_year")
+  maxBirthYear      Int?               @map("max_birth_year")
+  minMembers        Int?               @map("min_members")
+  maxMembers        Int?               @map("max_members")
+  validateAge       Boolean            @default(true) @map("validate_age")
+  isActive          Boolean            @default(true) @map("is_active")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  createdById       String?            @map("created_by_id")
+  updatedById       String?            @map("updated_by_id")
+  generalEvents     GeneralEvent[]
+  matches           Match[]
+  player_membership PlayerMembership[]
+  sessions          SessionTeam[]
+  category          Category           @relation(fields: [categoryId], references: [id])
+  teamSeason        TeamSeason         @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  teamSeasonStaffs  TeamSeasonStaff[]
+
+  @@unique([id, teamSeasonId])
+  @@unique([teamSeasonId, categoryId, gender])
+  @@map("team_season_categories")
 }
 
 enum DocumentType {
@@ -22,41 +1549,6 @@ enum DocumentType {
 enum Gender {
   MALE
   FEMALE
-}
-
-model Person {
-  id             String        @id @default(uuid())
-  name           String
-  lastName       String        @map("last_name")
-  secondLastName String?       @map("second_last_name")
-  birthDate      DateTime?     @map("birth_date")
-  imageUrl       String?       @map("image_url")
-  documentType   DocumentType? @map("document_type")
-  documentNumber String?       @unique @map("document_number")
-  phone          String?
-  email          String?       @unique
-  address        String?
-  gender         Gender?
-  createdAt      DateTime      @default(now()) @map("created_at")
-  updatedAt      DateTime      @updatedAt @map("updated_at")
-
-  // Contactos de la persona
-  contacts       PersonContact[] @relation("PersonContacts")
-  // Personas que son contactos de la persona
-  contactOf      PersonContact[] @relation("ContactPerson")
-  players        Player[]
-  staff          Staff?
-  transactions   Transaction[]
-  students       Student[]
-  user           User?
-  accountCharges AccountCharge[] @relation("PersonAccountCharges")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("persons")
 }
 
 enum ContactRelationship {
@@ -74,227 +1566,6 @@ enum ContactRelationship {
   OTHER
 }
 
-model PersonContact {
-  // Persona a la que se le agrega el contacto
-  personId        String
-  person          Person @relation("PersonContacts", fields: [personId], references: [id])
-  // Persona que es el contacto
-  contactPersonId String
-  contactPerson   Person @relation("ContactPerson", fields: [contactPersonId], references: [id])
-
-  relationship ContactRelationship
-
-  isPrimaryContact   Boolean @default(false) // Contacto principal
-  isEmergencyContact Boolean @default(false) // Contacto de emergencia
-  isBillingContact   Boolean @default(false) // Contacto para facturación
-
-  createdAt DateTime @default(now())
-
-  @@id([personId, contactPersonId])
-  @@map("person_contacts")
-}
-
-model Discipline {
-  id         String     @id @default(uuid())
-  name       String
-  icon       String
-  clubs      Club[]
-  categories Category[]
-  seasons    Season[]
-  schools    School[]
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("disciplines")
-}
-
-model Institution {
-  id       String  @id @default(uuid())
-  name     String
-  imageUrl String? @map("image_url")
-  address  String
-
-  latitude      Float?
-  longitude     Float?
-  googleMapsUrl String? @map("google_maps_url")
-
-  createdAt     DateTime             @default(now()) @map("created_at")
-  updatedAt     DateTime             @updatedAt @map("updated_at")
-  clubs         Club[]
-  seasons       Season[]
-  schools       School[]
-  contacts      InstitutionContact[]
-  shifts        Shift[]
-  generalEvents GeneralEvent[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("institutions")
-}
-
-model InstitutionContact {
-  id            String      @id @default(uuid())
-  institutionId String      @map("institution_id")
-  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
-
-  department  String // Ej: "Administración", "Prensa", "Secretaría"
-  contactName String? @map("contact_name")
-  phone       String?
-  email       String?
-
-  isDefault Boolean @default(false) @map("is_default") // Contacto principal a mostrar en el footer
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("institution_contacts")
-}
-
-// ============================
-// TURNOS (SHIFTS)
-// ============================
-model Shift {
-  id            String      @id @default(uuid())
-  name          String // Ej: "Mañana", "Tarde", "Noche"
-  institutionId String      @map("institution_id")
-  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
-
-  courseSeasonShifts CourseSeasonShift[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([institutionId, name])
-  @@map("shifts")
-}
-
-// ============================
-// CLUBS
-// ============================
-model Club {
-  id            String      @id @default(uuid())
-  name          String
-  shortName     String?     @map("short_name")
-  institutionId String      @map("institution_id")
-  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
-  disciplineId  String      @map("discipline_id")
-  discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
-
-  defaultAccountCategoryId String?          @map("default_account_category_id")
-  defaultAccountCategory   AccountCategory? @relation("ClubDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
-
-  teams Team[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([institutionId, disciplineId, name])
-  @@map("clubs")
-}
-
-// ===================================
-// FINAL CLUBS
-// ===================================
-
-// ==================================
-// INSTALACIONES
-// ===================================
-model Location {
-  id            String  @id @default(uuid())
-  name          String
-  address       String
-  description   String?
-  phone         String?
-  googleMapsUrl String? @map("google_maps_url")
-  latitude      Float?
-  longitude     Float?
-
-  // Si es true, es una instalación interna (club, escuela, etc.)
-  // Si es false, es una instalación externa
-  isInternal Boolean  @default(false) @map("is_internal")
-  // Si es true, es una instalación que se puede rentar O ALQUILAR dependiendo si es interna o externa
-  isRentable Boolean  @default(false) @map("is_rentable")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-
-  parentId     String?    @map("parent_id")
-  parent       Location?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
-  subLocations Location[] @relation("LocationHierarchy")
-
-  maxConcurrentEvents Int? @default(1) @map("max_concurrent_events")
-
-  events Event[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("locations")
-}
-
-// ===================================
-// FINAL INSTALACIONES
-// ===================================
-
-// =================================
-// Categorias
-// =================================
-
-model Category {
-  id          String  @id @default(uuid())
-  name        String
-  description String?
-  maxAge      Int?    @map("max_age")
-  minAge      Int     @map("min_age")
-
-  disciplineId String     @map("discipline_id")
-  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  teamSeasons TeamSeason[]
-
-  createdById        String?             @map("created_by_id")
-  createdBy          User?               @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById        String?             @map("updated_by_id")
-  updatedBy          User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
-  courseSeasonShifts CourseSeasonShift[]
-
-  @@unique([disciplineId, name])
-  @@map("categories")
-}
-
-// =================================
-// Fin Categorias
-// =================================
-
-// =================================
-// TEMPORADAS
-// =================================
-
 enum SeasonStatus {
   ACTIVE
   FINISHED
@@ -307,92 +1578,14 @@ enum SeasonEventType {
   CANCELLATION
 }
 
-model Season {
-  id            String       @id @default(uuid())
-  institutionId String       @map("institution_id")
-  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Restrict)
-  disciplineId  String       @map("discipline_id")
-  discipline    Discipline   @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  name          String
-  description   String?
-  startDate     DateTime     @map("start_date")
-  endDate       DateTime     @map("end_date")
-  status        SeasonStatus @default(ACTIVE)
-
-  teamSeasons         TeamSeason[]
-  courseSeasons       CourseSeason[]
-  progressEvaluations ProgressEvaluation[]
-  events              SeasonEvent[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([institutionId, disciplineId, name])
-  @@map("seasons")
-}
-
-model SeasonEvent {
-  id        String          @id @default(uuid())
-  seasonId  String          @map("season_id")
-  season    Season          @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-  eventType SeasonEventType @map("event_type")
-
-  originalEndDate DateTime? @map("original_end_date")
-  newEndDate      DateTime? @map("new_end_date")
-
-  reason String @db.Text
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("season_events")
-}
-
-// =================================
-// FIN TEMPORADAS
-// =================================
-
 enum ProgramGender {
   MALE
   FEMALE
   MIXED
 }
 
-// =================================
-// Equipos
-// =================================
-model Team {
-  id          String       @id @default(uuid())
-  imageUrl    String?      @map("image_url")
-  name        String
-  shortName   String?      @map("short_name")
-  description String?
-  clubId      String       @map("club_id")
-  club        Club         @relation(fields: [clubId], references: [id], onDelete: Restrict)
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  teamSeasons TeamSeason[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([clubId, name])
-  @@map("teams")
-}
-
 enum StatusTeamSeason {
-  DRAFT // por ejemplo para ofertas futuras
+  DRAFT
   ACTIVE
   FINISHED
   CANCELLED
@@ -403,9 +1596,9 @@ enum StatusTeamSeason {
 /// SINGLE_ONLY: Se cobra un solo monto por toda la temporada (Ej. Campamentos de 6 semanas).
 /// BOTH: Permite planes mixtos donde el usuario puede elegir (vía PaymentPlan) si pagar por mes o por toda la temporada adelantada.
 enum SeasonBillingType {
-  MONTHLY_ONLY // Solo permite mensualidades
-  SINGLE_ONLY // Solo permite pago único (Ideal para 6 semanas)
-  BOTH // Permite que el usuario elija (usando PaymentPlans)
+  MONTHLY_ONLY
+  SINGLE_ONLY
+  BOTH
 }
 
 enum BillingFrequency {
@@ -415,278 +1608,21 @@ enum BillingFrequency {
   SINGLE
 }
 
-model TeamSeason {
-  id String @id @default(uuid())
-
-  imageUrl    String? @map("image_url")
-  description String?
-
-  maxMembers Int @map("max_members")
-  minMembers Int @map("min_members")
-
-  minBirthYear Int? @map("min_birth_year")
-  maxBirthYear Int? @map("max_birth_year")
-
-  validateAge Boolean @default(true) @map("validate_age")
-
-  teamId String @map("team_id")
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Restrict)
-
-  categoryId String   @map("category_id")
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-
-  seasonId String @map("season_id")
-  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-
-  gender ProgramGender
-
-  status      StatusTeamSeason @default(DRAFT)
-  statusNotes String?          @map("status_notes") @db.Text
-
-  isRegistrationOpen Boolean @default(true) @map("is_registration_open")
-
-  createdAt         DateTime                 @default(now()) @map("created_at")
-  updatedAt         DateTime                 @updatedAt @map("updated_at")
-  teamSeasonStaffs  TeamSeasonStaff[]
-  paymentPlans      PaymentPlan[]
-  playerMemberships PlayerMembership[]
-  sessionTeams      SessionTeam[]
-  matches           Match[]
-  generalEvents     GeneralEvent[]
-  billingConfig     TeamSeasonBillingConfig?
-  teamSeasonPauses  TeamSeasonPause[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([teamId, categoryId, seasonId, gender, status])
-  @@map("team_seasons")
-}
-
-model TeamSeasonBillingConfig {
-  id           String     @id @default(uuid())
-  teamSeasonId String     @unique @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-
-  isEngineActive Boolean @default(true) @map("is_engine_active")
-
-  billingDay      Int      @map("billing_day")
-  registrationFee Decimal? @map("registration_fee") @db.Decimal(10, 2)
-  recurringFee    Decimal? @map("recurring_fee") @db.Decimal(10, 2)
-  seasonFee       Decimal? @map("season_fee") @db.Decimal(10, 2)
-
-  debtToleranceMonths Int     @default(2) @map("debt_tolerance_months")
-  lateFeeEnabled      Boolean @default(false) @map("late_fee_enabled")
-  lateFeePerDay       Decimal @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
-  graceDays           Int     @default(0) @map("grace_days")
-
-  billingType      SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
-  billingFrequency BillingFrequency  @default(MONTHLY) @map("billing_frequency")
-
-  prorateFirstRecurringFee Boolean @default(true) @map("prorate_first_recurring_fee")
-  prorateLastRecurringFee  Boolean @default(true) @map("prorate_last_recurring_fee")
-  prorateRegistrationFee   Boolean @default(false) @map("prorate_registration_fee")
-  prorateSeasonFee         Boolean @default(false) @map("prorate_season_fee")
-
-  chargeGenerationDaysBefore Int @default(7) @map("charge_generation_days_before")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("team_season_billing_configs")
-}
-
-model PaymentPlan {
-  id                          String        @id @default(uuid())
-  teamSeasonId                String?       @map("team_season_id")
-  teamSeasons                 TeamSeason?   @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-  courseSeasonId              String?       @map("course_season_id")
-  courseSeason                CourseSeason? @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-  name                        String
-  registrationDiscountPercent Decimal       @default(0) @map("registration_discount_percent") @db.Decimal(5, 2)
-  recurringDiscountPercent    Decimal       @default(0) @map("recurring_discount_percent") @db.Decimal(5, 2)
-  seasonFeeDiscountPercent    Decimal       @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
-
-  isDefault Boolean @default(false) // si es true, es el plan por defecto
-
-  /// Si es true, este plan de pago agrupará toda la temporada en un solo cobro (pago completo de la temporada). Útil para ofrecer descuentos por pago adelantado en temporadas tipo "BOTH".
-  isSinglePayment Boolean @default(false) @map("is_single_payment")
-
-  /// Cantidad de cuotas que este plan adelanta/agrupa en un solo recibo. Por defecto 1 (cobro normal). Si es 6, cobra 6 ciclos juntos.
-  advanceCycles Int @default(1) @map("advance_cycles")
-
-  /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas.
-  advanceCyclesDiscountPercent Decimal @default(0) @map("advance_cycles_discount_percent") @db.Decimal(5, 2)
-
-  /// Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.
-  promotionalCycles Int @default(0) @map("promotional_cycles")
-
-  createdAt          DateTime            @default(now()) @map("created_at")
-  updatedAt          DateTime            @updatedAt @map("updated_at")
-  playerMemberships  PlayerMembership[]
-  studentMemberships StudentMembership[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("payment_plans")
-}
-
-// =================================
-// FIN EQUIPOS
-// =================================
-
-// =================================
-// JUGADORES Y MEMBRESIAS
-// =================================
-
-model Player {
-  id                  String               @id @default(uuid())
-  personId            String               @unique
-  person              Person               @relation(fields: [personId], references: [id])
-  isActive            Boolean              @default(true)
-  createdAt           DateTime             @default(now()) @map("created_at")
-  updatedAt           DateTime             @updatedAt @map("updated_at")
-  playerMemberships   PlayerMembership[]
-  sessionBookings     SessionBooking[]
-  matchLineups        MatchLineup[]
-  progressEvaluations ProgressEvaluation[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("players")
-}
-
 enum PlayerMembershipStatus {
-  PENDING_ACTIVE // Inscripción creada, esperando pago inicial
-  ACTIVE // Habilitado para entrenar y competir
-  SUSPENDED // Suspendido por deuda o decisión administrativa
-  WITHDRAWN // Se retiró voluntariamente durante la temporada
-  FINISHED // Finalizó la temporada
-}
-
-model PlayerMembership {
-  id           String     @id @default(uuid())
-  playerId     String     @map("player_id")
-  player       Player     @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-
-  paymentPlanId String      @map("payment_plan_id")
-  paymentPlan   PaymentPlan @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
-
-  startedAt DateTime  @map("started_at")
-  endedAt   DateTime? @map("ended_at")
-
-  status PlayerMembershipStatus @default(PENDING_ACTIVE)
-
-  notes String?
-
-  // Campo para guardar cual es la siguiente fecha del cargo
-  nextRecurringChargeGenerationDate DateTime?
-
-  // Campo para indicar que esta membresia fue migrada desde el sistema antiguo, si es true, no se le generaran cargos anteriores como los iniciales ni mensuales
-  isMigrated Boolean @default(false) @map("is_migrated")
-
-  createdAt           DateTime                  @default(now()) @map("created_at")
-  updatedAt           DateTime                  @updatedAt @map("updated_at")
-  membershipDiscounts MembershipDiscount[]
-  membershipCharges   MembershipCharge[]
-  histories           PlayerMembershipHistory[]
-  pauses              PlayerMembershipPause[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@index([nextRecurringChargeGenerationDate])
-  @@map("player_membership")
-}
-
-model PlayerMembershipHistory {
-  id                 String           @id @default(uuid())
-  playerMembershipId String           @map("player_membership_id")
-  playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
-
-  previousStatus PlayerMembershipStatus? @map("previous_status") // Null si es la creación
-  newStatus      PlayerMembershipStatus  @map("new_status")
-
-  reason String? @db.Text
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("player_membership_histories")
-}
-
-model PlayerMembershipPause {
-  id                 String           @id @default(uuid())
-  playerMembershipId String           @map("player_membership_id")
-  playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Cascade)
-
-  startDate DateTime @map("start_date")
-  endDate   DateTime @map("end_date")
-  reason    String?  @db.Text
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("player_membership_pauses")
+  PENDING_ACTIVE
+  ACTIVE
+  SUSPENDED
+  WITHDRAWN
+  FINISHED
 }
 
 enum MembershipDiscountType {
-  SCHOLARSHIP // Beca
-  SPECIAL_DISCOUNT // Descuento especial
-  FINANCIAL_AID // Ayuda económica
-  AGREEMENT // Convenio
-  EXEMPTION // Exoneración
-  OTHER // Otro
-}
-
-model MembershipDiscount {
-  id                 String           @id @default(uuid())
-  playerMembershipId String           @map("player_membership_id")
-  playerMembership   PlayerMembership @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
-
-  recurringDiscountPercent    Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
-  registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
-  seasonFeeDiscountPercent    Decimal @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
-
-  startDate DateTime  @map("start_date")
-  endDate   DateTime? @map("end_date")
-
-  type MembershipDiscountType
-
-  reason String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("membership_discounts")
+  SCHOLARSHIP
+  SPECIAL_DISCOUNT
+  FINANCIAL_AID
+  AGREEMENT
+  EXEMPTION
+  OTHER
 }
 
 enum TypeMembershipCharge {
@@ -695,60 +1631,6 @@ enum TypeMembershipCharge {
   SEASON_FEE
   LATE_FEE
   MANUAL
-}
-
-model MembershipCharge {
-  id                 String               @id @default(uuid())
-  playerMembershipId String               @map("player_membership_id")
-  playerMembership   PlayerMembership     @relation(fields: [playerMembershipId], references: [id], onDelete: Restrict)
-  chargeId           String               @map("charge_id")
-  charge             Charge               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-  type               TypeMembershipCharge
-  // todo: crear un validador para que solo acepte un cargo de tipo matricula
-
-  createdByCron Boolean @default(false) @map("created_by_cron")
-
-  billingYear  Int?
-  billingMonth Int?
-  billingCycle Int? @map("billing_cycle")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([playerMembershipId, type, billingMonth, billingYear, billingCycle])
-  @@map("membership_charges")
-}
-
-// =================================
-// FIN JUGADORES Y MEMBRESIAS
-// =================================
-
-// =================================
-// STAFF Y EQUIPOS
-// =================================
-
-model Staff {
-  id                  String               @id @default(uuid())
-  personId            String               @unique @map("person_id")
-  person              Person               @relation(fields: [personId], references: [id])
-  isActive            Boolean              @default(true) @map("is_active")
-  createdAt           DateTime             @default(now()) @map("created_at")
-  updatedAt           DateTime             @updatedAt @map("updated_at")
-  teamSeasonStaffs    TeamSeasonStaff[]
-  courseSeasonStaffs  CourseSeasonStaff[]
-  progressEvaluations ProgressEvaluation[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("staff")
 }
 
 enum TeamSeasonStaffRole {
@@ -760,45 +1642,6 @@ enum TeamSeasonStaffRole {
   OTHER
 }
 
-model TeamSeasonStaff {
-  id String @id @default(uuid())
-
-  teamSeasonId String @map("team_season_id")
-  staffId      String @map("staff_id")
-
-  role       TeamSeasonStaffRole
-  // Si el rol es OTHER, se especifica en customRole
-  customRole String?             @map("custom_role")
-
-  startedAt DateTime  @map("started_at")
-  endedAt   DateTime? @map("ended_at")
-
-  // Si es el encargado del equipo
-  isPrimary Boolean @default(false) @map("is_primary")
-
-  notes String?
-
-  teamSeason TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  staff      Staff      @relation(fields: [staffId], references: [id], onDelete: Restrict)
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("team_season_staff")
-}
-
-// =================================
-// FIN STAFF Y EQUIPOS
-// =================================
-
-// =================================
-// CARGOS
-// =================================
 enum StatusCharge {
   PENDING
   PARTIAL
@@ -817,107 +1660,10 @@ enum ChargeCategory {
   REGISTRATION
 }
 
-model Charge {
-  id String @id @default(uuid())
-
-  // Relacion para saber si un cargo es hijo de otro(Ej. Un cargo de mensualidad puede tener recargos por retraso)
-  parentChargeId String?
-  parentCharge   Charge?  @relation("ChargeParent", fields: [parentChargeId], references: [id])
-  childCharges   Charge[] @relation("ChargeParent")
-
-  description   String?
-  amount        Decimal @db.Decimal(10, 2)
-  pendingAmount Decimal @map("pending_amount") @db.Decimal(10, 2)
-
-  // Descuentos aplicados específicamente a este cargo
-  discountAmount Decimal @default(0) @map("discount_amount") @db.Decimal(10, 2)
-  discountReason String? @map("discount_reason")
-
-  dueDate        DateTime        @map("due_date") // Fecha donde vencé el cargo, se puede utilizar para calcular recargos si es de mensualidades
-  status         StatusCharge    @default(PENDING)
-  direction      ChargeDirection @default(RECEIVABLE)
-  chargeCategory ChargeCategory  @default(NORMAL) @map("charge_category")
-
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  membershipCharges MembershipCharge[]
-
-  sessionBooking SessionBooking?
-  studentCharges StudentCharge[]
-  accountCharge  AccountCharge?
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  payments        Payment[]
-  cycleEnrollment CycleEnrollment?
-
-  @@unique([parentChargeId, chargeCategory])
-  @@map("charges")
-}
-
-model Payment {
-  id       String @id @default(uuid())
-  chargeId String @map("charge_id")
-  charge   Charge @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-
-  receiptSeries String   @map("receipt_series")
-  receiptNumber Int      @map("receipt_number")
-  amount        Decimal  @db.Decimal(10, 2)
-  status        String   @default("COMPLETED")
-  paymentDate   DateTime @default(now()) @map("payment_date")
-
-  transactions Transaction[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([receiptSeries, receiptNumber])
-  @@map("payments")
-}
-
-// =================================
-// FIN CARGOS
-// =================================
-// =================================
-// TRANSACCIONES Y CUENTAS FINANCIERAS
-// =================================
-
 enum FinancialAccountType {
   CASH
   BANK
   DIGITAL_WALLET
-}
-
-model FinancialAccount {
-  id          String               @id @default(uuid())
-  name        String
-  description String?
-  type        FinancialAccountType
-  currency    String               @default("BOB")
-
-  cachedBalance    Decimal   @default(0) @map("cached_balance") @db.Decimal(10, 2)
-  isDefault        Boolean   @default(false) @map("is_default")
-  accountNumber    String?   @map("account_number")
-  lastReconciledAt DateTime? @map("last_reconciled_at")
-
-  isActive  Boolean  @default(true) @map("is_active")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  allowedPaymentMethods PaymentMethod[] @default([]) @map("allowed_payment_methods")
-
-  transactions Transaction[]
-  cashClosures CashClosure[]
-
-  @@map("financial_accounts")
 }
 
 enum TransactionType {
@@ -944,487 +1690,11 @@ enum TransactionStatus {
   CANCELLED
 }
 
-model Transaction {
-  id              String          @id @default(uuid())
-  receiptSeries   String          @default("GEN") @map("receipt_series")
-  receiptNumber   Int             @map("receipt_number")
-  payerPersonId   String?         @map("payer_person_id")
-  payerPerson     Person?         @relation(fields: [payerPersonId], references: [id])
-  amount          Decimal         @db.Decimal(10, 2)
-  transactionDate DateTime        @map("transaction_date")
-  description     String?
-  type            TransactionType
-  paymentMethod   PaymentMethod   @map("payment_method")
-  reference       String?         @map("reference_number")
-  notes           String?
-
-  // Financial Account Relation
-  financialAccountId String           @map("financial_account_id")
-  financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id])
-
-  // Payment Link (New Architecture)
-  paymentId String?  @map("payment_id")
-  payment   Payment? @relation(fields: [paymentId], references: [id], onDelete: Restrict)
-
-  // Transfers & Reconciliations
-  referenceGroupId       String?           @map("reference_group_id")
-  isReconciled           Boolean           @default(false) @map("is_reconciled")
-  reconciledAt           DateTime?         @map("reconciled_at")
-  status                 TransactionStatus @default(COMPLETED)
-  attachments            Attachment[]
-  thirdPartyId           String?           @map("third_party_id")
-  thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
-  isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
-  internalTransferSource InternalTransfer? @relation("TransferSource")
-  internalTransferDest   InternalTransfer? @relation("TransferDestination")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([receiptSeries, receiptNumber])
-  @@map("transactions")
-}
-
-// =================================
-// TRANSFERENCIAS INTERNAS
-// =================================
-
-model InternalTransfer {
-  id          String         @id @default(uuid())
-  amount      Decimal        @db.Decimal(10, 2)
-  description String?
-  reference   String?
-  status      TransferStatus @default(COMPLETED)
-  date        DateTime       @default(now())
-
-  // Relaciones
-  sourceTransactionId      String @unique @map("source_transaction_id")
-  destinationTransactionId String @unique @map("destination_transaction_id")
-
-  sourceTransaction      Transaction @relation("TransferSource", fields: [sourceTransactionId], references: [id], onDelete: Restrict)
-  destinationTransaction Transaction @relation("TransferDestination", fields: [destinationTransactionId], references: [id], onDelete: Restrict)
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedByTransfer", fields: [createdById], references: [id])
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("internal_transfers")
-}
-
-// =================================
-// SECUENCIAS DE RECIBOS/TRANSACCIONES
-// =================================
-model ReceiptSequence {
-  id          String   @id @default(uuid())
-  series      String   @unique // Ej: "EQ", "CU", "GEN"
-  description String?
-  lastValue   Int      @default(0) @map("last_value")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-
-  @@map("receipt_sequences")
-}
-
-// =================================
-// SEGURIDAD (ROLES Y PERMISOS)
-// =================================
-model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
-
-  personId String? @unique @map("person_id")
-  person   Person? @relation(fields: [personId], references: [id], onDelete: Cascade)
-
-  roleId String @map("role_id")
-  role   Role   @relation(fields: [roleId], references: [id], onDelete: Restrict)
-
-  isActive  Boolean  @default(true) @map("is_active")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdPersons                   Person[]                  @relation("CreatedBy")
-  updatedPersons                   Person[]                  @relation("UpdatedBy")
-  createdDisciplines               Discipline[]              @relation("CreatedBy")
-  updatedDisciplines               Discipline[]              @relation("UpdatedBy")
-  createdInstitutions              Institution[]             @relation("CreatedBy")
-  updatedInstitutions              Institution[]             @relation("UpdatedBy")
-  createdInstitutionContacts       InstitutionContact[]      @relation("CreatedBy")
-  updatedInstitutionContacts       InstitutionContact[]      @relation("UpdatedBy")
-  cashClosuresCreated              CashClosure[]             @relation("CreatedByCashClosure")
-  cashClosuresUpdated              CashClosure[]             @relation("UpdatedByCashClosure")
-  createdClubs                     Club[]                    @relation("CreatedBy")
-  updatedClubs                     Club[]                    @relation("UpdatedBy")
-  createdLocations                 Location[]                @relation("CreatedBy")
-  updatedLocations                 Location[]                @relation("UpdatedBy")
-  createdCategories                Category[]                @relation("CreatedBy")
-  updatedCategories                Category[]                @relation("UpdatedBy")
-  createdSeasons                   Season[]                  @relation("CreatedBy")
-  updatedSeasons                   Season[]                  @relation("UpdatedBy")
-  createdSeasonEvents              SeasonEvent[]             @relation("CreatedBy")
-  updatedSeasonEvents              SeasonEvent[]             @relation("UpdatedBy")
-  createdTeams                     Team[]                    @relation("CreatedBy")
-  updatedTeams                     Team[]                    @relation("UpdatedBy")
-  createdTeamSeasons               TeamSeason[]              @relation("CreatedBy")
-  updatedTeamSeasons               TeamSeason[]              @relation("UpdatedBy")
-  createdTeamSeasonBillingConfigs  TeamSeasonBillingConfig[] @relation("CreatedBy")
-  updatedTeamSeasonBillingConfigs  TeamSeasonBillingConfig[] @relation("UpdatedBy")
-  createdPaymentPlans              PaymentPlan[]             @relation("CreatedBy")
-  updatedPaymentPlans              PaymentPlan[]             @relation("UpdatedBy")
-  createdPlayers                   Player[]                  @relation("CreatedBy")
-  updatedPlayers                   Player[]                  @relation("UpdatedBy")
-  createdPlayerMemberships         PlayerMembership[]        @relation("CreatedBy")
-  updatedPlayerMemberships         PlayerMembership[]        @relation("UpdatedBy")
-  createdPlayerMembershipHistories PlayerMembershipHistory[] @relation("CreatedBy")
-  updatedPlayerMembershipHistories PlayerMembershipHistory[] @relation("UpdatedBy")
-  createdPlayerMembershipPauses    PlayerMembershipPause[]   @relation("CreatedBy")
-  updatedPlayerMembershipPauses    PlayerMembershipPause[]   @relation("UpdatedBy")
-  createdMembershipDiscounts       MembershipDiscount[]      @relation("CreatedBy")
-  updatedMembershipDiscounts       MembershipDiscount[]      @relation("UpdatedBy")
-  createdMembershipCharges         MembershipCharge[]        @relation("CreatedBy")
-  updatedMembershipCharges         MembershipCharge[]        @relation("UpdatedBy")
-  createdStaffs                    Staff[]                   @relation("CreatedBy")
-  updatedStaffs                    Staff[]                   @relation("UpdatedBy")
-  createdTeamSeasonStaffs          TeamSeasonStaff[]         @relation("CreatedBy")
-  updatedTeamSeasonStaffs          TeamSeasonStaff[]         @relation("UpdatedBy")
-  createdCharges                   Charge[]                  @relation("CreatedBy")
-  updatedCharges                   Charge[]                  @relation("UpdatedBy")
-
-  createdTransactions               Transaction[]               @relation("CreatedBy")
-  updatedTransactions               Transaction[]               @relation("UpdatedBy")
-  createdInternalTransfers          InternalTransfer[]          @relation("CreatedByTransfer")
-  createdRoles                      Role[]                      @relation("CreatedBy")
-  updatedRoles                      Role[]                      @relation("UpdatedBy")
-  createdPermissions                Permission[]                @relation("CreatedBy")
-  updatedPermissions                Permission[]                @relation("UpdatedBy")
-  createdSchools                    School[]                    @relation("CreatedBy")
-  updatedSchools                    School[]                    @relation("UpdatedBy")
-  createdCourses                    Course[]                    @relation("CreatedBy")
-  updatedCourses                    Course[]                    @relation("UpdatedBy")
-  createdCourseSeasons              CourseSeason[]              @relation("CreatedBy")
-  updatedCourseSeasons              CourseSeason[]              @relation("UpdatedBy")
-  createdTeamSeasonPauses           TeamSeasonPause[]           @relation("CreatedBy")
-  updatedTeamSeasonPauses           TeamSeasonPause[]           @relation("UpdatedBy")
-  createdCourseSeasonPauses         CourseSeasonPause[]         @relation("CreatedBy")
-  updatedCourseSeasonPauses         CourseSeasonPause[]         @relation("UpdatedBy")
-  createdCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("CreatedBy")
-  updatedCourseSeasonBillingConfigs CourseSeasonBillingConfig[] @relation("UpdatedBy")
-  createdCourseSeasonStaffs         CourseSeasonStaff[]         @relation("CreatedBy")
-  updatedCourseSeasonStaffs         CourseSeasonStaff[]         @relation("UpdatedBy")
-  createdStudents                   Student[]                   @relation("CreatedBy")
-  updatedStudents                   Student[]                   @relation("UpdatedBy")
-  createdStudentMemberships         StudentMembership[]         @relation("CreatedBy")
-  updatedStudentMemberships         StudentMembership[]         @relation("UpdatedBy")
-  createdStudentMembershipHistories StudentMembershipHistory[]  @relation("CreatedBy")
-  updatedStudentMembershipHistories StudentMembershipHistory[]  @relation("UpdatedBy")
-  createdStudentMembershipPauses    StudentMembershipPause[]    @relation("CreatedBy")
-  updatedStudentMembershipPauses    StudentMembershipPause[]    @relation("UpdatedBy")
-  createdStudentDiscounts           StudentDiscount[]           @relation("CreatedBy")
-  updatedStudentDiscounts           StudentDiscount[]           @relation("UpdatedBy")
-  createdStudentCharges             StudentCharge[]             @relation("CreatedBy")
-  updatedStudentCharges             StudentCharge[]             @relation("UpdatedBy")
-  createdSessionIncidents           SessionIncident[]           @relation("CreatedBy")
-  updatedSessionIncidents           SessionIncident[]           @relation("UpdatedBy")
-  createdProgressEvaluations        ProgressEvaluation[]        @relation("CreatedBy")
-  updatedProgressEvaluations        ProgressEvaluation[]        @relation("UpdatedBy")
-  createdSessionBookings            SessionBooking[]            @relation("CreatedBy")
-  updatedSessionBookings            SessionBooking[]            @relation("UpdatedBy")
-  createdMatchLineups               MatchLineup[]               @relation("CreatedBy")
-  updatedMatchLineups               MatchLineup[]               @relation("UpdatedBy")
-  createdShifts                     Shift[]                     @relation("CreatedBy")
-  updatedShifts                     Shift[]                     @relation("UpdatedBy")
-  auditLogs                         AuditLog[]
-  createdEvents                     Event[]                     @relation("EventCreatedBy")
-  updatedEvents                     Event[]                     @relation("EventUpdatedBy")
-  createdAccountCategories          AccountCategory[]           @relation("CreatedBy")
-  updatedAccountCategories          AccountCategory[]           @relation("UpdatedBy")
-  createdAccountCharges             AccountCharge[]             @relation("CreatedBy")
-  updatedAccountCharges             AccountCharge[]             @relation("UpdatedBy")
-  attachments                       Attachment[]
-  createdPayments                   Payment[]                   @relation("CreatedBy")
-  updatedPayments                   Payment[]                   @relation("UpdatedBy")
-  createdCycleEnrollments           CycleEnrollment[]           @relation("CreatedBy")
-  updatedCycleEnrollments           CycleEnrollment[]           @relation("UpdatedBy")
-  createdCourseSeasonShifts         CourseSeasonShift[]         @relation("CreatedBy")
-  updatedCourseSeasonShifts         CourseSeasonShift[]         @relation("UpdatedBy")
-
-  @@map("users")
-}
-
-model Role {
-  id          String  @id @default(uuid())
-  name        String  @unique // Ej: "ADMIN", "COACH", "PARENT", "PLAYER"
-  description String?
-
-  permissions RolePermission[]
-  users       User[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("roles")
-}
-
-model Module {
-  id          String  @id @default(uuid())
-  name        String  @unique // Ej: "BILLING", "TEAMS", "SESSIONS"
-  displayName String  @map("display_name") // Ej: "Facturación y Cobranza"
-  icon        String? // Ej: "FiDollarSign" para el menú del frontend
-  sortOrder   Int     @default(0) @map("sort_order")
-  description String?
-
-  permissions Permission[] // Relación 1:N con los permisos
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("modules")
-}
-
-model Permission {
-  id          String  @id @default(uuid())
-  name        String  @unique // Ej: "TAKE_ATTENDANCE", "CREATE_INCIDENT", "VIEW_PAYMENTS"
-  description String?
-
-  moduleId String @map("module_id")
-  module   Module @relation(fields: [moduleId], references: [id], onDelete: Restrict)
-
-  roles RolePermission[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("permissions")
-}
-
-model RolePermission {
-  roleId       String     @map("role_id")
-  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permissionId String     @map("permission_id")
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-
-  @@id([roleId, permissionId])
-  @@map("role_permissions")
-}
-
-// =================================
-// ESCUELAS Y CURSOS
-// =================================
-model School {
-  id            String      @id @default(uuid())
-  name          String
-  shortName     String?     @map("short_name")
-  institutionId String      @map("institution_id")
-  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Restrict)
-  disciplineId  String      @map("discipline_id")
-  discipline    Discipline  @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
-
-  defaultAccountCategoryId String?          @map("default_account_category_id")
-  defaultAccountCategory   AccountCategory? @relation("SchoolDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
-
-  courses Course[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([institutionId, disciplineId, name])
-  @@map("schools")
-}
-
-model Course {
-  id            String         @id @default(uuid())
-  imageUrl      String?        @map("image_url")
-  name          String
-  shortName     String?        @map("short_name")
-  description   String?
-  schoolId      String         @map("school_id")
-  school        School         @relation(fields: [schoolId], references: [id], onDelete: Restrict)
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
-  courseSeasons CourseSeason[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([schoolId, name])
-  @@map("courses")
-}
-
 enum StatusCourseSeason {
   DRAFT
   ACTIVE
   FINISHED
   CANCELLED
-}
-
-model CourseSeason {
-  id          String  @id @default(uuid())
-  name        String  @default("Regular")
-  imageUrl    String? @map("image_url")
-  description String?
-
-  courseId String @map("course_id")
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
-  seasonId String @map("season_id")
-  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-
-  status      StatusCourseSeason @default(DRAFT)
-  statusNotes String?            @map("status_notes") @db.Text
-
-  isRegistrationOpen Boolean @default(true) @map("is_registration_open")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  shifts             CourseSeasonShift[]
-  studentMemberships StudentMembership[]
-  cycleEnrollments   CycleEnrollment[]
-  paymentPlans       PaymentPlan[]
-  generalEvents      GeneralEvent[]
-  billingConfig      CourseSeasonBillingConfig?
-  pauses             CourseSeasonPause[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([courseId, seasonId, name])
-  @@map("course_seasons")
-}
-
-model CourseSeasonShift {
-  id             String       @id @default(uuid())
-  courseSeasonId String       @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  shiftId        String       @map("shift_id")
-  shift          Shift        @relation(fields: [shiftId], references: [id], onDelete: Restrict)
-
-  maxMembers Int           @map("max_members")
-  minMembers Int           @map("min_members")
-  categoryId String        @map("category_id")
-  category   Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  gender     ProgramGender
-
-  minBirthYear Int? @map("min_birth_year")
-  maxBirthYear Int? @map("max_birth_year")
-
-  validateAge Boolean @default(true) @map("validate_age")
-
-  isActive Boolean @default(true) @map("is_active")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  studentMemberships StudentMembership[]
-  cycleEnrollments   CycleEnrollment[]
-  courseSeasonStaffs CourseSeasonStaff[]
-  sessionCourses     SessionCourse[]
-  pauses             CourseSeasonPause[]
-  generalEvents      GeneralEvent[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([courseSeasonId, shiftId])
-  @@unique([id, courseSeasonId])
-  @@map("course_season_shifts")
-}
-
-model TeamSeasonPause {
-  id           String     @id @default(uuid())
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  startDate    DateTime   @map("start_date")
-  endDate      DateTime   @map("end_date")
-  reason       String?    @db.Text
-  createdAt    DateTime   @default(now()) @map("created_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("team_season_pauses")
-}
-
-model CourseSeasonPause {
-  id                  String             @id @default(uuid())
-  courseSeasonId      String             @map("course_season_id")
-  courseSeason        CourseSeason       @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  courseSeasonShiftId String?            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift? @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
-  startDate           DateTime           @map("start_date")
-  endDate             DateTime           @map("end_date")
-  reason              String?            @db.Text
-  createdAt           DateTime           @default(now()) @map("created_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("course_season_pauses")
-}
-
-model CourseSeasonBillingConfig {
-  id             String       @id @default(uuid())
-  courseSeasonId String       @unique @map("course_season_id")
-  courseSeason   CourseSeason @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-
-  isEngineActive Boolean @default(true) @map("is_engine_active")
-
-  billingDay      Int      @map("billing_day")
-  registrationFee Decimal? @map("registration_fee") @db.Decimal(10, 2)
-  recurringFee    Decimal? @map("recurring_fee") @db.Decimal(10, 2)
-  seasonFee       Decimal? @map("season_fee") @db.Decimal(10, 2)
-
-  debtToleranceMonths        Int     @default(2) @map("debt_tolerance_months")
-  lateFeeEnabled             Boolean @default(false) @map("late_fee_enabled")
-  lateFeePerDay              Decimal @default(0) @map("late_fee_per_day") @db.Decimal(10, 2)
-  graceDays                  Int     @default(0) @map("grace_days")
-  chargeGenerationDaysBefore Int     @default(7) @map("charge_generation_days_before")
-
-  billingType      SeasonBillingType @default(MONTHLY_ONLY) @map("billing_type")
-  billingFrequency BillingFrequency  @default(MONTHLY) @map("billing_frequency")
-
-  prorateFirstRecurringFee Boolean @default(true) @map("prorate_first_recurring_fee")
-  prorateLastRecurringFee  Boolean @default(true) @map("prorate_last_recurring_fee")
-  prorateRegistrationFee   Boolean @default(false) @map("prorate_registration_fee")
-  prorateSeasonFee         Boolean @default(false) @map("prorate_season_fee")
-  prorationEnabled         Boolean @default(true) @map("proration_enabled")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("course_season_billing_configs")
 }
 
 enum CourseSeasonStaffRole {
@@ -1434,52 +1704,6 @@ enum CourseSeasonStaffRole {
   VOLUNTEER
   DELEGATE
   OTHER
-}
-
-model CourseSeasonStaff {
-  id                  String                @id @default(uuid())
-  courseSeasonShiftId String                @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift     @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
-  staffId             String                @map("staff_id")
-  staff               Staff                 @relation(fields: [staffId], references: [id], onDelete: Restrict)
-  role                CourseSeasonStaffRole
-  customRole          String?               @map("custom_role")
-  startedAt           DateTime              @map("started_at")
-  endedAt             DateTime?             @map("ended_at")
-  isPrimary           Boolean               @default(false) @map("is_primary")
-  notes               String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("course_season_staff")
-}
-
-// =================================
-// ESTUDIANTES Y EVALUACIONES
-// =================================
-model Student {
-  id                  String               @id @default(uuid())
-  personId            String               @unique @map("person_id")
-  person              Person               @relation(fields: [personId], references: [id])
-  isActive            Boolean              @default(true) @map("is_active")
-  createdAt           DateTime             @default(now()) @map("created_at")
-  updatedAt           DateTime             @updatedAt @map("updated_at")
-  studentMemberships  StudentMembership[]
-  sessionBookings     SessionBooking[]
-  progressEvaluations ProgressEvaluation[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("students")
 }
 
 enum StudentMembershipStatus {
@@ -1501,223 +1725,11 @@ enum CycleEnrollmentStatus {
   CANCELLED
 }
 
-model StudentMembership {
-  id                  String            @id @default(uuid())
-  studentId           String            @map("student_id")
-  student             Student           @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  courseSeasonId      String            @map("course_season_id")
-  courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-  courseSeasonShiftId String            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId], onDelete: Restrict)
-  paymentPlanId       String            @map("payment_plan_id")
-  paymentPlan         PaymentPlan       @relation(fields: [paymentPlanId], references: [id], onDelete: Restrict)
-
-  startedAt DateTime                @map("started_at")
-  endedAt   DateTime?               @map("ended_at")
-  status    StudentMembershipStatus @default(PENDING_ACTIVE)
-  suspensionReason StudentMembershipSuspensionReason? @map("suspension_reason")
-  notes     String?
-
-  nextRecurringChargeGenerationDate DateTime?
-
-  // Campo para indicar que esta membresia fue migrada desde el sistema antiguo, si es true, no se le generaran cargos anteriores como los iniciales ni mensuales
-  isMigrated Boolean @default(false) @map("is_migrated")
-
-  createdAt        DateTime                   @default(now()) @map("created_at")
-  updatedAt        DateTime                   @updatedAt @map("updated_at")
-  studentDiscounts StudentDiscount[]
-  studentCharges   StudentCharge[]
-  pauses           StudentMembershipPause[]
-  histories        StudentMembershipHistory[]
-  cycleEnrollments CycleEnrollment[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@index([nextRecurringChargeGenerationDate])
-  @@map("student_memberships")
-}
-
-model StudentMembershipHistory {
-  id                  String            @id @default(uuid())
-  studentMembershipId String            @map("student_membership_id")
-  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
-
-  previousStatus StudentMembershipStatus? @map("previous_status") // Null si es la creación
-  newStatus      StudentMembershipStatus  @map("new_status")
-
-  reason String? @db.Text
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("student_membership_histories")
-}
-
-model StudentMembershipPause {
-  id                  String            @id @default(uuid())
-  studentMembershipId String            @map("student_membership_id")
-  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Cascade)
-
-  startDate DateTime @map("start_date")
-  endDate   DateTime @map("end_date")
-  reason    String?  @db.Text
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("student_membership_pauses")
-}
-
-model CycleEnrollment {
-  id                  String            @id @default(uuid())
-  studentMembershipId String            @map("student_membership_id")
-  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
-
-  courseSeasonId      String            @map("course_season_id")
-  courseSeason        CourseSeason      @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
-  courseSeasonShiftId String            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId, courseSeasonId], references: [id, courseSeasonId], onDelete: Restrict)
-
-  chargeId           String?               @unique @map("charge_id")
-  charge             Charge?               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-  cycleStartDate     DateTime              @map("cycle_start_date")
-  cycleEndDate       DateTime              @map("cycle_end_date")
-  effectiveStartDate DateTime              @map("effective_start_date")
-  status             CycleEnrollmentStatus @default(PENDING)
-  createdAt          DateTime              @default(now()) @map("created_at")
-  updatedAt          DateTime              @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([studentMembershipId, cycleStartDate, cycleEndDate], name: "unique_cycle_enrollment")
-  @@map("cycle_enrollments")
-}
-
-model StudentDiscount {
-  id                  String            @id @default(uuid())
-  studentMembershipId String            @map("student_membership_id")
-  studentMembership   StudentMembership @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
-
-  recurringDiscountPercent    Decimal @map("recurring_discount_percent") @db.Decimal(5, 2)
-  registrationDiscountPercent Decimal @map("registration_discount_percent") @db.Decimal(5, 2)
-  seasonFeeDiscountPercent    Decimal @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
-
-  startDate DateTime               @map("start_date")
-  endDate   DateTime?              @map("end_date")
-  type      MembershipDiscountType
-  reason    String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("student_discounts")
-}
-
-model StudentCharge {
-  id                  String               @id @default(uuid())
-  studentMembershipId String               @map("student_membership_id")
-  studentMembership   StudentMembership    @relation(fields: [studentMembershipId], references: [id], onDelete: Restrict)
-  chargeId            String               @map("charge_id")
-  charge              Charge               @relation(fields: [chargeId], references: [id], onDelete: Restrict)
-  type                TypeMembershipCharge
-
-  createdByCron Boolean @default(false) @map("created_by_cron")
-  billingYear   Int?
-  billingMonth  Int?
-  billingCycle  Int?    @map("billing_cycle")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([studentMembershipId, type, billingMonth, billingYear, billingCycle])
-  @@map("student_charges")
-}
-
-model SessionIncident {
-  id               String         @id @default(uuid())
-  sessionBookingId String         @map("session_booking_id")
-  sessionBooking   SessionBooking @relation(fields: [sessionBookingId], references: [id], onDelete: Cascade)
-
-  description String // Detalle de la actitud negativa / mala conducta
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("session_incidents")
-}
-
-model ProgressEvaluation {
-  id String @id @default(uuid())
-
-  playerId  String?  @map("player_id")
-  player    Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  studentId String?  @map("student_id")
-  student   Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
-
-  evaluatorStaffId String @map("evaluator_staff_id")
-  evaluatorStaff   Staff  @relation(fields: [evaluatorStaffId], references: [id], onDelete: Restrict)
-
-  seasonId String @map("season_id")
-  season   Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
-
-  evaluationDate DateTime @map("evaluation_date")
-
-  technicalScore Int? @map("technical_score")
-  tacticalScore  Int? @map("tactical_score")
-  physicalScore  Int? @map("physical_score")
-  behaviorScore  Int? @map("behavior_score")
-
-  notes String?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("progress_evaluations")
-}
-
-// =================================
-// MOTOR DE DISPONIBILIDAD Y CALENDARIO
-// =================================
 enum EventType {
   SESSION
   MATCH
   GENERAL
-  UNAVAILABLE // Bloqueos operativos
+  UNAVAILABLE
 }
 
 enum EventStatus {
@@ -1739,158 +1751,6 @@ enum EventExceptionType {
   CANCELLED
 }
 
-model EventSeries {
-  id             String @id @default(uuid())
-  recurrenceRule String @map("recurrence_rule")
-  timezone       String
-
-  eventType       EventType @map("event_type")
-  templateData    Json      @map("template_data")
-  templateVersion Int       @default(1) @map("template_version")
-
-  materializedUntil  DateTime          @map("materialized_until")
-  lastMaterializedAt DateTime?         @map("last_materialized_at")
-  status             EventSeriesStatus @default(ACTIVE)
-  lockedUntil        DateTime?         @map("locked_until")
-
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  createdById String?  @map("created_by_id")
-  updatedById String?  @map("updated_by_id")
-
-  events Event[]
-
-  @@map("event_series")
-}
-
-model Event {
-  id          String   @id @default(uuid())
-  title       String?
-  description String?
-  startDate   DateTime @map("start_date")
-  endDate     DateTime @map("end_date")
-
-  locationId String?   @map("location_id")
-  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
-
-  eventType EventType   @map("event_type")
-  status    EventStatus @default(SCHEDULED)
-
-  // Metadatos UI y Recurrencia Materializada
-  color String?
-
-  eventSeriesId     String?            @map("event_series_id")
-  eventSeries       EventSeries?       @relation(fields: [eventSeriesId], references: [id], onDelete: Cascade)
-  originalStartDate DateTime?          @map("original_start_date")
-  exceptionType     EventExceptionType @default(NONE) @map("exception_type")
-
-  // Relaciones hacia los contextos (Exclusive Arcs)
-  session      Session?
-  match        Match?
-  generalEvent GeneralEvent?
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("EventCreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("EventUpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([eventSeriesId, originalStartDate])
-  // Índices para O(1)
-  @@index([locationId, startDate, endDate])
-  @@index([startDate, endDate])
-  @@index([eventSeriesId])
-  @@map("events")
-}
-
-// =================================
-// CONTEXTOS DE EVENTOS
-// =================================
-model GeneralEvent {
-  id      String @id @default(uuid())
-  eventId String @unique @map("event_id")
-  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-
-  // Integridad referencial con contextos
-  institutionId       String?            @map("institution_id")
-  institution         Institution?       @relation(fields: [institutionId], references: [id], onDelete: Cascade)
-  teamSeasonId        String?            @map("team_season_id")
-  teamSeason          TeamSeason?        @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  courseSeasonId      String?            @map("course_season_id")
-  courseSeason        CourseSeason?      @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
-  courseSeasonShiftId String?            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift? @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Cascade)
-
-  @@map("general_events")
-}
-
-model Session {
-  id      String @id @default(uuid())
-  eventId String @unique @map("event_id")
-  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-
-  durationMin Int @default(90) @map("duration_min")
-
-  sessionTeams   SessionTeam[]
-  sessionCourses SessionCourse[]
-  bookings       SessionBooking[]
-
-  @@map("sessions")
-}
-
-model SessionTeam {
-  sessionId    String
-  session      Session    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-
-  @@id([sessionId, teamSeasonId])
-  @@map("session_teams")
-}
-
-model SessionCourse {
-  sessionId           String
-  session             Session           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  courseSeasonShiftId String            @map("course_season_shift_id")
-  courseSeasonShift   CourseSeasonShift @relation(fields: [courseSeasonShiftId], references: [id], onDelete: Restrict)
-
-  @@id([sessionId, courseSeasonShiftId])
-  @@map("session_courses")
-}
-
-model SessionBooking {
-  id        String  @id @default(uuid())
-  sessionId String  @map("session_id")
-  session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-
-  playerId  String?  @map("player_id")
-  player    Player?  @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  studentId String?  @map("student_id")
-  student   Student? @relation(fields: [studentId], references: [id], onDelete: Restrict)
-
-  isExternal Boolean @default(false) @map("is_external")
-  attended   Boolean @default(false)
-
-  chargeId String? @unique @map("charge_id")
-  charge   Charge? @relation(fields: [chargeId], references: [id], onDelete: SetNull)
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  incidents SessionIncident[]
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([sessionId, playerId])
-  @@unique([sessionId, studentId])
-  @@map("session_bookings")
-}
-
 enum MatchType {
   FRIENDLY
   LEAGUE
@@ -1905,186 +1765,12 @@ enum MatchResult {
   PENDING
 }
 
-model Match {
-  id      String @id @default(uuid())
-  eventId String @unique @map("event_id")
-  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-
-  teamSeasonId String     @map("team_season_id")
-  teamSeason   TeamSeason @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
-
-  opponentName String    @map("opponent_name")
-  type         MatchType @default(LEAGUE)
-
-  ourScore   Int?        @map("our_score")
-  theirScore Int?        @map("their_score")
-  result     MatchResult @default(PENDING)
-
-  lineups MatchLineup[]
-
-  @@map("matches")
-}
-
-model MatchLineup {
-  id       String @id @default(uuid())
-  matchId  String @map("match_id")
-  match    Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
-  playerId String @map("player_id")
-  player   Player @relation(fields: [playerId], references: [id], onDelete: Restrict)
-
-  minutesPlayed Int     @default(0) @map("minutes_played")
-  goals         Int     @default(0)
-  assists       Int     @default(0)
-  yellowCards   Int     @default(0) @map("yellow_cards")
-  redCards      Int     @default(0) @map("red_cards")
-  isStarter     Boolean @default(false) @map("is_starter")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@unique([matchId, playerId])
-  @@map("match_lineups")
-}
-
-model AuditLog {
-  id         String @id @default(uuid())
-  entityName String @map("entity_name")
-  entityId   String @map("entity_id")
-  action     String // CREATE, UPDATE, DELETE
-
-  // === Campos para el Dashboard e i18n ===
-  type          String? // Ej: "SUCCESS", "INFO", "WARNING" o módulos
-  titleKey      String? @map("title_key") // Ej: "audit.title.enrollment"
-  messageKey    String? @map("message_key") // Ej: "audit.message.enrollment"
-  messageParams Json?   @map("message_params") // Ej: { "player": "Facundo", "team": "Básquet U17" }
-
-  // === Campos de auditoría ===
-  oldValues Json? @map("old_values")
-  newValues Json? @map("new_values")
-
-  userId String? @map("user_id")
-  user   User?   @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("audit_logs")
-}
-
-model EventMaterializationLog {
-  id            String   @id @default(uuid())
-  eventSeriesId String   @map("event_series_id")
-  generatedDate DateTime @map("generated_date")
-  status        String
-  errorCode     String?  @map("error_code")
-  metadata      Json?
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("event_materialization_logs")
-}
-
-// =================================
-// CUENTAS UNIFICADAS (COBRAR Y PAGAR) - (Extension de Charge)
-// =================================
-
 enum AccountReferenceType {
   PURCHASE_ORDER
   CONTRACT
   EVENT
   EQUIPMENT
   OTHER
-}
-
-model AccountCategory {
-  id            String  @id @default(uuid())
-  code          String  @unique @map("code")
-  name          String
-  description   String?
-  receiptSeries String? @map("receipt_series")
-  isSystem      Boolean @default(false) @map("is_system")
-  isActive      Boolean @default(true) @map("is_active")
-
-  // Para saber si la categoría es mayormente de gastos o ingresos (opcional)
-  type ChargeDirection
-
-  parentId String?           @map("parent_id")
-  parent   AccountCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
-  children AccountCategory[] @relation("CategoryHierarchy")
-
-  accountCharges AccountCharge[]
-  schools        School[]        @relation("SchoolDefaultCategory")
-  clubs          Club[]          @relation("ClubDefaultCategory")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@map("account_categories")
-}
-
-model AccountCharge {
-  id String @id @default(uuid())
-
-  // Relación 1 a 1 con Charge
-  chargeId String @unique @map("charge_id")
-  charge   Charge @relation(fields: [chargeId], references: [id], onDelete: Cascade)
-
-  title String
-
-  categoryId String?          @map("category_id")
-  category   AccountCategory? @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-
-  referenceType   AccountReferenceType? @map("reference_type")
-  referenceId     String?               @map("reference_id")
-  referenceNumber String?               @map("reference_number")
-
-  // A quién se le debe o quién nos debe
-  personId String? @map("person_id")
-  person   Person? @relation("PersonAccountCharges", fields: [personId], references: [id])
-
-  externalEntity String? @map("external_entity")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedBy", fields: [updatedById], references: [id])
-
-  @@index([personId])
-  @@index([categoryId])
-  @@map("account_charges")
-}
-
-model CashClosure {
-  id                 String           @id @default(uuid())
-  financialAccountId String           @map("financial_account_id")
-  financialAccount   FinancialAccount @relation(fields: [financialAccountId], references: [id], onDelete: Restrict)
-
-  closedAt        DateTime @default(now()) @map("closed_at")
-  expectedBalance Decimal  @map("expected_balance") @db.Decimal(12, 2)
-  actualBalance   Decimal  @map("actual_balance") @db.Decimal(12, 2)
-  difference      Decimal  @map("difference") @db.Decimal(12, 2)
-
-  observations String? @db.Text
-
-  createdById String? @map("created_by_id")
-  createdBy   User?   @relation("CreatedByCashClosure", fields: [createdById], references: [id])
-  updatedById String? @map("updated_by_id")
-  updatedBy   User?   @relation("UpdatedByCashClosure", fields: [updatedById], references: [id])
-
-  @@index([financialAccountId, closedAt(sort: Desc)])
-  @@map("cash_closures")
 }
 
 enum ThirdPartyType {
@@ -2094,54 +1780,8 @@ enum ThirdPartyType {
   OTHER
 }
 
-model ThirdParty {
-  id             String         @id @default(uuid())
-  name           String
-  type           ThirdPartyType @default(PROVIDER)
-  documentType   String?        @map("document_type")
-  documentNumber String?        @map("document_number")
-  contactEmail   String?        @map("contact_email")
-  contactPhone   String?        @map("contact_phone")
-  transactions   Transaction[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("third_parties")
-}
-
 enum AttachmentStatus {
   PENDING
   LINKED
   DELETED
-}
-
-model Attachment {
-  id           String  @id @default(uuid())
-  originalName String  @map("original_name")
-  internalName String  @unique @map("internal_name")
-  mimeType     String  @map("mime_type")
-  sizeBytes    Int     @map("size_bytes")
-  url          String?
-  path         String?
-
-  status AttachmentStatus @default(PENDING)
-
-  // Exclusive Arcs for polymorphic associations
-  transactionId String?      @map("transaction_id")
-  transaction   Transaction? @relation(fields: [transactionId], references: [id], onDelete: Cascade)
-
-  // Future associations:
-  // personId   String?      @map("person_id")
-  // person     Person?      @relation(fields: [personId], references: [id], onDelete: Cascade)
-
-  uploadedById String? @map("uploaded_by_id")
-  uploadedBy   User?   @relation(fields: [uploadedById], references: [id])
-
-  deletedAt DateTime? @map("deleted_at")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-
-  @@index([transactionId])
-  @@map("attachments")
 }

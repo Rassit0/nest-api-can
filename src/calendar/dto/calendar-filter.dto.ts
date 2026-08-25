@@ -25,7 +25,7 @@ export class CalendarFilterDto {
   
   @IsOptional()
   @IsString()
-  teamSeasonId?: string;
+  teamSeasonCategoryId?: string;
   
   @IsOptional()
   @IsString()

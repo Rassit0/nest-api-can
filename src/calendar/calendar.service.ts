@@ -28,8 +28,8 @@ export class CalendarService {
         const sessionMeta: SessionCalendarMetadata = {
           durationMin: event.session.durationMin,
           teams: event.session.sessionTeams.map(st => ({
-            id: st.teamSeason.id,
-            name: st.teamSeason.team.name
+            id: st.teamSeasonCategory.teamSeason.id,
+            name: `${st.teamSeasonCategory.teamSeason.team.name} - ${st.teamSeasonCategory.category.name}`
           })),
           courses: event.session.sessionCourses.map(sc => ({
             id: sc.courseSeasonShift.courseSeason.id,
@@ -43,9 +43,9 @@ export class CalendarService {
           opponentName: event.match.opponentName,
           matchType: event.match.type,
           result: event.match.result,
-          team: event.match.teamSeason ? {
-            id: event.match.teamSeason.id,
-            name: event.match.teamSeason.team.name
+          team: event.match.teamSeasonCategory ? {
+            id: event.match.teamSeasonCategory.teamSeason.id,
+            name: `${event.match.teamSeasonCategory.teamSeason.team.name} - ${event.match.teamSeasonCategory.category.name}`
           } : null
         };
         metadata = matchMeta;
@@ -53,7 +53,7 @@ export class CalendarService {
       else if (event.eventType === EventType.GENERAL && event.generalEvent) {
         const genMeta: GeneralEventCalendarMetadata = {
           institutionId: event.generalEvent.institutionId,
-          teamSeasonId: event.generalEvent.teamSeasonId,
+          teamSeasonId: event.generalEvent.teamSeasonCategoryId,
           courseSeasonId: event.generalEvent.courseSeasonId
         };
         metadata = genMeta;

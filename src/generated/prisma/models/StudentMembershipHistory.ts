@@ -206,8 +206,8 @@ export type StudentMembershipHistoryWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
-  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -220,8 +220,8 @@ export type StudentMembershipHistoryOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  studentMembership?: Prisma.StudentMembershipOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -237,8 +237,8 @@ export type StudentMembershipHistoryWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"StudentMembershipHistory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"StudentMembershipHistory"> | string | null
-  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -276,8 +276,8 @@ export type StudentMembershipHistoryCreateInput = {
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
-  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentMembershipHistoriesInput
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStudentMembershipHistoriesInput
 }
 
@@ -298,8 +298,8 @@ export type StudentMembershipHistoryUpdateInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentMembershipHistoriesNestedInput
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStudentMembershipHistoriesNestedInput
 }
 
@@ -553,8 +553,8 @@ export type StudentMembershipHistoryCreateWithoutUpdatedByInput = {
   newStatus: $Enums.StudentMembershipStatus
   reason?: string | null
   createdAt?: Date | string
-  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentMembershipHistoriesInput
+  studentMembership: Prisma.StudentMembershipCreateNestedOneWithoutHistoriesInput
 }
 
 export type StudentMembershipHistoryUncheckedCreateWithoutUpdatedByInput = {
@@ -725,8 +725,8 @@ export type StudentMembershipHistoryUpdateWithoutUpdatedByInput = {
   newStatus?: Prisma.EnumStudentMembershipStatusFieldUpdateOperationsInput | $Enums.StudentMembershipStatus
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentMembershipHistoriesNestedInput
+  studentMembership?: Prisma.StudentMembershipUpdateOneRequiredWithoutHistoriesNestedInput
 }
 
 export type StudentMembershipHistoryUncheckedUpdateWithoutUpdatedByInput = {
@@ -800,8 +800,8 @@ export type StudentMembershipHistorySelect<ExtArgs extends runtime.Types.Extensi
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
@@ -814,8 +814,8 @@ export type StudentMembershipHistorySelectCreateManyAndReturn<ExtArgs extends ru
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
@@ -828,8 +828,8 @@ export type StudentMembershipHistorySelectUpdateManyAndReturn<ExtArgs extends ru
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentMembershipHistory"]>
 
@@ -846,26 +846,26 @@ export type StudentMembershipHistorySelectScalar = {
 
 export type StudentMembershipHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "previousStatus" | "newStatus" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["studentMembershipHistory"]>
 export type StudentMembershipHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type StudentMembershipHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 export type StudentMembershipHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>
+  studentMembership?: boolean | Prisma.StudentMembershipDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>
 }
 
 export type $StudentMembershipHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StudentMembershipHistory"
   objects: {
-    studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    studentMembership: Prisma.$StudentMembershipPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1271,8 +1271,8 @@ readonly fields: StudentMembershipHistoryFieldRefs;
  */
 export interface Prisma__StudentMembershipHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.StudentMembershipHistory$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipHistory$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  studentMembership<T extends Prisma.StudentMembershipDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentMembershipClient<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentMembershipHistory$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

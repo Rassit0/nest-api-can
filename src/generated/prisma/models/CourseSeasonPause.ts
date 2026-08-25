@@ -27,37 +27,37 @@ export type AggregateCourseSeasonPause = {
 export type CourseSeasonPauseMinAggregateOutputType = {
   id: string | null
   courseSeasonId: string | null
-  courseSeasonShiftId: string | null
   startDate: Date | null
   endDate: Date | null
   reason: string | null
   createdAt: Date | null
   createdById: string | null
   updatedById: string | null
+  courseSeasonShiftId: string | null
 }
 
 export type CourseSeasonPauseMaxAggregateOutputType = {
   id: string | null
   courseSeasonId: string | null
-  courseSeasonShiftId: string | null
   startDate: Date | null
   endDate: Date | null
   reason: string | null
   createdAt: Date | null
   createdById: string | null
   updatedById: string | null
+  courseSeasonShiftId: string | null
 }
 
 export type CourseSeasonPauseCountAggregateOutputType = {
   id: number
   courseSeasonId: number
-  courseSeasonShiftId: number
   startDate: number
   endDate: number
   reason: number
   createdAt: number
   createdById: number
   updatedById: number
+  courseSeasonShiftId: number
   _all: number
 }
 
@@ -65,37 +65,37 @@ export type CourseSeasonPauseCountAggregateOutputType = {
 export type CourseSeasonPauseMinAggregateInputType = {
   id?: true
   courseSeasonId?: true
-  courseSeasonShiftId?: true
   startDate?: true
   endDate?: true
   reason?: true
   createdAt?: true
   createdById?: true
   updatedById?: true
+  courseSeasonShiftId?: true
 }
 
 export type CourseSeasonPauseMaxAggregateInputType = {
   id?: true
   courseSeasonId?: true
-  courseSeasonShiftId?: true
   startDate?: true
   endDate?: true
   reason?: true
   createdAt?: true
   createdById?: true
   updatedById?: true
+  courseSeasonShiftId?: true
 }
 
 export type CourseSeasonPauseCountAggregateInputType = {
   id?: true
   courseSeasonId?: true
-  courseSeasonShiftId?: true
   startDate?: true
   endDate?: true
   reason?: true
   createdAt?: true
   createdById?: true
   updatedById?: true
+  courseSeasonShiftId?: true
   _all?: true
 }
 
@@ -174,13 +174,13 @@ export type CourseSeasonPauseGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type CourseSeasonPauseGroupByOutputType = {
   id: string
   courseSeasonId: string
-  courseSeasonShiftId: string | null
   startDate: Date
   endDate: Date
   reason: string | null
   createdAt: Date
   createdById: string | null
   updatedById: string | null
+  courseSeasonShiftId: string | null
   _count: CourseSeasonPauseCountAggregateOutputType | null
   _min: CourseSeasonPauseMinAggregateOutputType | null
   _max: CourseSeasonPauseMaxAggregateOutputType | null
@@ -207,13 +207,13 @@ export type CourseSeasonPauseWhereInput = {
   NOT?: Prisma.CourseSeasonPauseWhereInput | Prisma.CourseSeasonPauseWhereInput[]
   id?: Prisma.StringFilter<"CourseSeasonPause"> | string
   courseSeasonId?: Prisma.StringFilter<"CourseSeasonPause"> | string
-  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   startDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   endDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   reason?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -223,13 +223,13 @@ export type CourseSeasonPauseWhereInput = {
 export type CourseSeasonPauseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
-  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
   courseSeason?: Prisma.CourseSeasonOrderByWithRelationInput
   courseSeasonShift?: Prisma.CourseSeasonShiftOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
@@ -242,13 +242,13 @@ export type CourseSeasonPauseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CourseSeasonPauseWhereInput[]
   NOT?: Prisma.CourseSeasonPauseWhereInput | Prisma.CourseSeasonPauseWhereInput[]
   courseSeasonId?: Prisma.StringFilter<"CourseSeasonPause"> | string
-  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   startDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   endDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   reason?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   courseSeason?: Prisma.XOR<Prisma.CourseSeasonScalarRelationFilter, Prisma.CourseSeasonWhereInput>
   courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -258,13 +258,13 @@ export type CourseSeasonPauseWhereUniqueInput = Prisma.AtLeast<{
 export type CourseSeasonPauseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
-  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CourseSeasonPauseCountOrderByAggregateInput
   _max?: Prisma.CourseSeasonPauseMaxOrderByAggregateInput
   _min?: Prisma.CourseSeasonPauseMinOrderByAggregateInput
@@ -276,13 +276,13 @@ export type CourseSeasonPauseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CourseSeasonPauseScalarWhereWithAggregatesInput | Prisma.CourseSeasonPauseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CourseSeasonPause"> | string
   courseSeasonId?: Prisma.StringWithAggregatesFilter<"CourseSeasonPause"> | string
-  courseSeasonShiftId?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonPause"> | string | null
   startDate?: Prisma.DateTimeWithAggregatesFilter<"CourseSeasonPause"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"CourseSeasonPause"> | Date | string
   reason?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonPause"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonPause"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableWithAggregatesFilter<"CourseSeasonPause"> | string | null
 }
 
 export type CourseSeasonPauseCreateInput = {
@@ -300,13 +300,13 @@ export type CourseSeasonPauseCreateInput = {
 export type CourseSeasonPauseUncheckedCreateInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseUpdateInput = {
@@ -324,25 +324,25 @@ export type CourseSeasonPauseUpdateInput = {
 export type CourseSeasonPauseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseCreateManyInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseUpdateManyMutationInput = {
@@ -356,13 +356,13 @@ export type CourseSeasonPauseUpdateManyMutationInput = {
 export type CourseSeasonPauseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseListRelationFilter = {
@@ -378,37 +378,37 @@ export type CourseSeasonPauseOrderByRelationAggregateInput = {
 export type CourseSeasonPauseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
-  courseSeasonShiftId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
 export type CourseSeasonPauseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
-  courseSeasonShiftId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
 export type CourseSeasonPauseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
-  courseSeasonShiftId?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
 }
 
 export type CourseSeasonPauseCreateNestedManyWithoutCreatedByInput = {
@@ -593,12 +593,12 @@ export type CourseSeasonPauseCreateWithoutCreatedByInput = {
 export type CourseSeasonPauseUncheckedCreateWithoutCreatedByInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseCreateOrConnectWithoutCreatedByInput = {
@@ -625,12 +625,12 @@ export type CourseSeasonPauseCreateWithoutUpdatedByInput = {
 export type CourseSeasonPauseUncheckedCreateWithoutUpdatedByInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseCreateOrConnectWithoutUpdatedByInput = {
@@ -665,13 +665,13 @@ export type CourseSeasonPauseScalarWhereInput = {
   NOT?: Prisma.CourseSeasonPauseScalarWhereInput | Prisma.CourseSeasonPauseScalarWhereInput[]
   id?: Prisma.StringFilter<"CourseSeasonPause"> | string
   courseSeasonId?: Prisma.StringFilter<"CourseSeasonPause"> | string
-  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   startDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   endDate?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   reason?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseSeasonPause"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"CourseSeasonPause"> | string | null
 }
 
 export type CourseSeasonPauseUpsertWithWhereUniqueWithoutUpdatedByInput = {
@@ -703,13 +703,13 @@ export type CourseSeasonPauseCreateWithoutCourseSeasonInput = {
 
 export type CourseSeasonPauseUncheckedCreateWithoutCourseSeasonInput = {
   id?: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseCreateOrConnectWithoutCourseSeasonInput = {
@@ -789,23 +789,23 @@ export type CourseSeasonPauseUpdateManyWithWhereWithoutCourseSeasonShiftInput = 
 export type CourseSeasonPauseCreateManyCreatedByInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseCreateManyUpdatedByInput = {
   id?: string
   courseSeasonId: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseUpdateWithoutCreatedByInput = {
@@ -822,23 +822,23 @@ export type CourseSeasonPauseUpdateWithoutCreatedByInput = {
 export type CourseSeasonPauseUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseUpdateWithoutUpdatedByInput = {
@@ -855,34 +855,34 @@ export type CourseSeasonPauseUpdateWithoutUpdatedByInput = {
 export type CourseSeasonPauseUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseCreateManyCourseSeasonInput = {
   id?: string
-  courseSeasonShiftId?: string | null
   startDate: Date | string
   endDate: Date | string
   reason?: string | null
   createdAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  courseSeasonShiftId?: string | null
 }
 
 export type CourseSeasonPauseUpdateWithoutCourseSeasonInput = {
@@ -898,24 +898,24 @@ export type CourseSeasonPauseUpdateWithoutCourseSeasonInput = {
 
 export type CourseSeasonPauseUncheckedUpdateWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CourseSeasonPauseCreateManyCourseSeasonShiftInput = {
@@ -967,13 +967,13 @@ export type CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonShiftInput = 
 export type CourseSeasonPauseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseSeasonId?: boolean
-  courseSeasonShiftId?: boolean
   startDate?: boolean
   endDate?: boolean
   reason?: boolean
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  courseSeasonShiftId?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonPause$courseSeasonShiftArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonPause$createdByArgs<ExtArgs>
@@ -983,13 +983,13 @@ export type CourseSeasonPauseSelect<ExtArgs extends runtime.Types.Extensions.Int
 export type CourseSeasonPauseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseSeasonId?: boolean
-  courseSeasonShiftId?: boolean
   startDate?: boolean
   endDate?: boolean
   reason?: boolean
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  courseSeasonShiftId?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonPause$courseSeasonShiftArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonPause$createdByArgs<ExtArgs>
@@ -999,13 +999,13 @@ export type CourseSeasonPauseSelectCreateManyAndReturn<ExtArgs extends runtime.T
 export type CourseSeasonPauseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseSeasonId?: boolean
-  courseSeasonShiftId?: boolean
   startDate?: boolean
   endDate?: boolean
   reason?: boolean
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  courseSeasonShiftId?: boolean
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonPause$courseSeasonShiftArgs<ExtArgs>
   createdBy?: boolean | Prisma.CourseSeasonPause$createdByArgs<ExtArgs>
@@ -1015,16 +1015,16 @@ export type CourseSeasonPauseSelectUpdateManyAndReturn<ExtArgs extends runtime.T
 export type CourseSeasonPauseSelectScalar = {
   id?: boolean
   courseSeasonId?: boolean
-  courseSeasonShiftId?: boolean
   startDate?: boolean
   endDate?: boolean
   reason?: boolean
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  courseSeasonShiftId?: boolean
 }
 
-export type CourseSeasonPauseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "courseSeasonShiftId" | "startDate" | "endDate" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["courseSeasonPause"]>
+export type CourseSeasonPauseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseSeasonId" | "startDate" | "endDate" | "reason" | "createdAt" | "createdById" | "updatedById" | "courseSeasonShiftId", ExtArgs["result"]["courseSeasonPause"]>
 export type CourseSeasonPauseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
   courseSeasonShift?: boolean | Prisma.CourseSeasonPause$courseSeasonShiftArgs<ExtArgs>
@@ -1055,13 +1055,13 @@ export type $CourseSeasonPausePayload<ExtArgs extends runtime.Types.Extensions.I
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     courseSeasonId: string
-    courseSeasonShiftId: string | null
     startDate: Date
     endDate: Date
     reason: string | null
     createdAt: Date
     createdById: string | null
     updatedById: string | null
+    courseSeasonShiftId: string | null
   }, ExtArgs["result"]["courseSeasonPause"]>
   composites: {}
 }
@@ -1491,13 +1491,13 @@ export interface Prisma__CourseSeasonPauseClient<T, Null = never, ExtArgs extend
 export interface CourseSeasonPauseFieldRefs {
   readonly id: Prisma.FieldRef<"CourseSeasonPause", 'String'>
   readonly courseSeasonId: Prisma.FieldRef<"CourseSeasonPause", 'String'>
-  readonly courseSeasonShiftId: Prisma.FieldRef<"CourseSeasonPause", 'String'>
   readonly startDate: Prisma.FieldRef<"CourseSeasonPause", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"CourseSeasonPause", 'DateTime'>
   readonly reason: Prisma.FieldRef<"CourseSeasonPause", 'String'>
   readonly createdAt: Prisma.FieldRef<"CourseSeasonPause", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"CourseSeasonPause", 'String'>
   readonly updatedById: Prisma.FieldRef<"CourseSeasonPause", 'String'>
+  readonly courseSeasonShiftId: Prisma.FieldRef<"CourseSeasonPause", 'String'>
 }
     
 

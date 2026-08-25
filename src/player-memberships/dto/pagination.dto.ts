@@ -41,13 +41,27 @@ export class PlayerMembershipsPaginationDto extends PaginationDto {
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {}),
   })
+  @Exists('teamSeasonCategory', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'teamSeasonCategoryId',
+    }),
+  })
+  @IsOptional()
+  teamSeasonCategoryId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtrar por TeamSeason global',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {}),
+  })
   @Exists('teamSeason', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
       constraint1: 'teamSeasonId',
     }),
   })
   @IsOptional()
-  teamSeasonId: string;
+  teamSeasonId?: string;
 
   @ApiPropertyOptional({
     // example: '550e8400-e29b-41d4-a716-446655440000',

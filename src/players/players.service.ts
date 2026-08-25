@@ -189,7 +189,7 @@ export class PlayersService {
     const skip = (page - 1) * per_page;
 
     const where: Prisma.PersonWhereInput = {
-      players: { none: {} },
+      players: null,
       ...(search
         ? {
             OR: [

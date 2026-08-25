@@ -14,7 +14,7 @@ export class CalendarQueriesService {
       eventTypes,
       locationId,
       institutionId,
-      teamSeasonId,
+      teamSeasonCategoryId,
       courseSeasonId,
     } = filter;
 
@@ -28,26 +28,26 @@ export class CalendarQueriesService {
 
     // Si pasaron filtros específicos de dominios (team, institution, course),
     // aplicamos filtro "OR" cruzando las entidades relacionadas que puedan tenerlos.
-    if (institutionId || teamSeasonId || courseSeasonId) {
+    if (institutionId || teamSeasonCategoryId || courseSeasonId) {
       where.OR = [
         {
           generalEvent: {
             ...(institutionId && { institutionId }),
-            ...(teamSeasonId && { teamSeasonId }),
+            ...(teamSeasonCategoryId && { teamSeasonCategoryId }),
             ...(courseSeasonId && { courseSeasonId }),
           },
         },
         {
           session: {
             OR: [
-              { sessionTeams: { some: { teamSeasonId: teamSeasonId } } },
+              { sessionTeams: { some: { teamSeasonCategoryId } } },
               { sessionCourses: { some: { courseSeasonShift: { courseSeasonId: courseSeasonId } } } }
             ]
           }
         },
         {
           match: {
-            ...(teamSeasonId && { teamSeasonId })
+            ...(teamSeasonCategoryId && { teamSeasonCategoryId })
           }
         }
       ];
@@ -76,10 +76,11 @@ export class CalendarQueriesService {
             durationMin: true,
             sessionTeams: {
               select: {
-                teamSeason: {
+                teamSeasonCategory: {
                   select: {
                     id: true,
-                    team: { select: { name: true } }
+                    teamSeason: { select: { id: true, team: { select: { name: true } } } },
+                    category: { select: { name: true } }
                   }
                 }
               }
@@ -106,10 +107,11 @@ export class CalendarQueriesService {
             opponentName: true,
             type: true,
             result: true,
-            teamSeason: {
+            teamSeasonCategory: {
               select: {
                 id: true,
-                team: { select: { name: true } }
+                teamSeason: { select: { id: true, team: { select: { name: true } } } },
+                category: { select: { name: true } }
               }
             }
           }
@@ -118,7 +120,7 @@ export class CalendarQueriesService {
         generalEvent: {
           select: {
             institutionId: true,
-            teamSeasonId: true,
+            teamSeasonCategoryId: true,
             courseSeasonId: true,
           }
         }

@@ -222,8 +222,8 @@ export type TeamWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Team"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Team"> | string | null
-  club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
+  club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -239,8 +239,8 @@ export type TeamOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  club?: Prisma.ClubOrderByWithRelationInput
   teamSeasons?: Prisma.TeamSeasonOrderByRelationAggregateInput
+  club?: Prisma.ClubOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -260,8 +260,8 @@ export type TeamWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Team"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Team"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Team"> | string | null
-  club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   teamSeasons?: Prisma.TeamSeasonListRelationFilter
+  club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "clubId_name">
@@ -306,8 +306,8 @@ export type TeamCreateInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTeamsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTeamsInput
 }
@@ -334,8 +334,8 @@ export type TeamUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTeamsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTeamsNestedInput
 }
@@ -733,8 +733,8 @@ export type TeamCreateWithoutCreatedByInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTeamsInput
 }
 
@@ -769,8 +769,8 @@ export type TeamCreateWithoutUpdatedByInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   teamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTeamsInput
 }
 
@@ -911,8 +911,8 @@ export type TeamUpdateWithoutCreatedByInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTeamsNestedInput
 }
 
@@ -949,8 +949,8 @@ export type TeamUpdateWithoutUpdatedByInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   teamSeasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTeamsNestedInput
 }
 
@@ -1021,8 +1021,8 @@ export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Team$teamSeasonsArgs<ExtArgs>
+  club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Team$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Team$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
@@ -1075,8 +1075,8 @@ export type TeamSelectScalar = {
 
 export type TeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "name" | "shortName" | "description" | "clubId" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["team"]>
 export type TeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   teamSeasons?: boolean | Prisma.Team$teamSeasonsArgs<ExtArgs>
+  club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.Team$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Team$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
@@ -1095,8 +1095,8 @@ export type TeamIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $TeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Team"
   objects: {
-    club: Prisma.$ClubPayload<ExtArgs>
     teamSeasons: Prisma.$TeamSeasonPayload<ExtArgs>[]
+    club: Prisma.$ClubPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
@@ -1505,8 +1505,8 @@ readonly fields: TeamFieldRefs;
  */
 export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  club<T extends Prisma.ClubDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubDefaultArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teamSeasons<T extends Prisma.Team$teamSeasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$teamSeasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  club<T extends Prisma.ClubDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubDefaultArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.Team$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Team$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**

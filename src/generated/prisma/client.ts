@@ -377,3 +377,8 @@ export type ThirdParty = Prisma.ThirdPartyModel
  * 
  */
 export type Attachment = Prisma.AttachmentModel
+/**
+ * Model TeamSeasonCategory
+ * 
+ */
+export type TeamSeasonCategory = Prisma.TeamSeasonCategoryModel

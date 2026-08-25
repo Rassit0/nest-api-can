@@ -256,8 +256,8 @@ export type CashClosureWhereInput = {
   observations?: Prisma.StringNullableFilter<"CashClosure"> | string | null
   createdById?: Prisma.StringNullableFilter<"CashClosure"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CashClosure"> | string | null
-  financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -271,8 +271,8 @@ export type CashClosureOrderByWithRelationInput = {
   observations?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -289,8 +289,8 @@ export type CashClosureWhereUniqueInput = Prisma.AtLeast<{
   observations?: Prisma.StringNullableFilter<"CashClosure"> | string | null
   createdById?: Prisma.StringNullableFilter<"CashClosure"> | string | null
   updatedById?: Prisma.StringNullableFilter<"CashClosure"> | string | null
-  financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -333,8 +333,8 @@ export type CashClosureCreateInput = {
   actualBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   difference: runtime.Decimal | runtime.DecimalJsLike | number | string
   observations?: string | null
-  financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutCashClosuresInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCashClosuresCreatedInput
+  financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutCashClosuresInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutCashClosuresUpdatedInput
 }
 
@@ -357,8 +357,8 @@ export type CashClosureUpdateInput = {
   actualBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   difference?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutCashClosuresNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCashClosuresCreatedNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutCashClosuresNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutCashClosuresUpdatedNestedInput
 }
 
@@ -693,8 +693,8 @@ export type CashClosureCreateWithoutUpdatedByInput = {
   actualBalance: runtime.Decimal | runtime.DecimalJsLike | number | string
   difference: runtime.Decimal | runtime.DecimalJsLike | number | string
   observations?: string | null
-  financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutCashClosuresInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCashClosuresCreatedInput
+  financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutCashClosuresInput
 }
 
 export type CashClosureUncheckedCreateWithoutUpdatedByInput = {
@@ -856,8 +856,8 @@ export type CashClosureUpdateWithoutUpdatedByInput = {
   actualBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   difference?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutCashClosuresNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCashClosuresCreatedNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutCashClosuresNestedInput
 }
 
 export type CashClosureUncheckedUpdateWithoutUpdatedByInput = {
@@ -894,8 +894,8 @@ export type CashClosureSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   observations?: boolean
   createdById?: boolean
   updatedById?: boolean
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["cashClosure"]>
 
@@ -909,8 +909,8 @@ export type CashClosureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   observations?: boolean
   createdById?: boolean
   updatedById?: boolean
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["cashClosure"]>
 
@@ -924,8 +924,8 @@ export type CashClosureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   observations?: boolean
   createdById?: boolean
   updatedById?: boolean
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["cashClosure"]>
 
@@ -943,26 +943,26 @@ export type CashClosureSelectScalar = {
 
 export type CashClosureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "financialAccountId" | "closedAt" | "expectedBalance" | "actualBalance" | "difference" | "observations" | "createdById" | "updatedById", ExtArgs["result"]["cashClosure"]>
 export type CashClosureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }
 export type CashClosureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }
 export type CashClosureIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.CashClosure$createdByArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.CashClosure$updatedByArgs<ExtArgs>
 }
 
 export type $CashClosurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CashClosure"
   objects: {
-    financialAccount: Prisma.$FinancialAccountPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    financialAccount: Prisma.$FinancialAccountPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1369,8 +1369,8 @@ readonly fields: CashClosureFieldRefs;
  */
 export interface Prisma__CashClosureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  financialAccount<T extends Prisma.FinancialAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FinancialAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.CashClosure$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CashClosure$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  financialAccount<T extends Prisma.FinancialAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FinancialAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.CashClosure$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CashClosure$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

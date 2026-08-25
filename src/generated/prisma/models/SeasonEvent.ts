@@ -214,8 +214,8 @@ export type SeasonEventWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"SeasonEvent"> | Date | string
   createdById?: Prisma.StringNullableFilter<"SeasonEvent"> | string | null
   updatedById?: Prisma.StringNullableFilter<"SeasonEvent"> | string | null
-  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -229,8 +229,8 @@ export type SeasonEventOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  season?: Prisma.SeasonOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  season?: Prisma.SeasonOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -247,8 +247,8 @@ export type SeasonEventWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"SeasonEvent"> | Date | string
   createdById?: Prisma.StringNullableFilter<"SeasonEvent"> | string | null
   updatedById?: Prisma.StringNullableFilter<"SeasonEvent"> | string | null
-  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -289,8 +289,8 @@ export type SeasonEventCreateInput = {
   newEndDate?: Date | string | null
   reason: string
   createdAt?: Date | string
-  season: Prisma.SeasonCreateNestedOneWithoutEventsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonEventsInput
+  season: Prisma.SeasonCreateNestedOneWithoutEventsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSeasonEventsInput
 }
 
@@ -313,8 +313,8 @@ export type SeasonEventUpdateInput = {
   newEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  season?: Prisma.SeasonUpdateOneRequiredWithoutEventsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonEventsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutEventsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSeasonEventsNestedInput
 }
 
@@ -641,8 +641,8 @@ export type SeasonEventCreateWithoutUpdatedByInput = {
   newEndDate?: Date | string | null
   reason: string
   createdAt?: Date | string
-  season: Prisma.SeasonCreateNestedOneWithoutEventsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedSeasonEventsInput
+  season: Prisma.SeasonCreateNestedOneWithoutEventsInput
 }
 
 export type SeasonEventUncheckedCreateWithoutUpdatedByInput = {
@@ -804,8 +804,8 @@ export type SeasonEventUpdateWithoutUpdatedByInput = {
   newEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  season?: Prisma.SeasonUpdateOneRequiredWithoutEventsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedSeasonEventsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutEventsNestedInput
 }
 
 export type SeasonEventUncheckedUpdateWithoutUpdatedByInput = {
@@ -842,8 +842,8 @@ export type SeasonEventSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["seasonEvent"]>
 
@@ -857,8 +857,8 @@ export type SeasonEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["seasonEvent"]>
 
@@ -872,8 +872,8 @@ export type SeasonEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["seasonEvent"]>
 
@@ -891,26 +891,26 @@ export type SeasonEventSelectScalar = {
 
 export type SeasonEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "seasonId" | "eventType" | "originalEndDate" | "newEndDate" | "reason" | "createdAt" | "createdById" | "updatedById", ExtArgs["result"]["seasonEvent"]>
 export type SeasonEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }
 export type SeasonEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }
 export type SeasonEventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.SeasonEvent$createdByArgs<ExtArgs>
+  season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.SeasonEvent$updatedByArgs<ExtArgs>
 }
 
 export type $SeasonEventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SeasonEvent"
   objects: {
-    season: Prisma.$SeasonPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    season: Prisma.$SeasonPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1317,8 +1317,8 @@ readonly fields: SeasonEventFieldRefs;
  */
 export interface Prisma__SeasonEventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.SeasonEvent$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonEvent$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.SeasonEvent$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonEvent$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

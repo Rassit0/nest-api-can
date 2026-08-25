@@ -230,8 +230,8 @@ export type InstitutionContactWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"InstitutionContact"> | Date | string
   createdById?: Prisma.StringNullableFilter<"InstitutionContact"> | string | null
   updatedById?: Prisma.StringNullableFilter<"InstitutionContact"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -247,8 +247,8 @@ export type InstitutionContactOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  institution?: Prisma.InstitutionOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  institution?: Prisma.InstitutionOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -267,8 +267,8 @@ export type InstitutionContactWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"InstitutionContact"> | Date | string
   createdById?: Prisma.StringNullableFilter<"InstitutionContact"> | string | null
   updatedById?: Prisma.StringNullableFilter<"InstitutionContact"> | string | null
-  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  institution?: Prisma.XOR<Prisma.InstitutionScalarRelationFilter, Prisma.InstitutionWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -315,8 +315,8 @@ export type InstitutionContactCreateInput = {
   isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutContactsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionContactsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutContactsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedInstitutionContactsInput
 }
 
@@ -343,8 +343,8 @@ export type InstitutionContactUpdateInput = {
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutContactsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionContactsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutContactsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedInstitutionContactsNestedInput
 }
 
@@ -693,8 +693,8 @@ export type InstitutionContactCreateWithoutUpdatedByInput = {
   isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  institution: Prisma.InstitutionCreateNestedOneWithoutContactsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionContactsInput
+  institution: Prisma.InstitutionCreateNestedOneWithoutContactsInput
 }
 
 export type InstitutionContactUncheckedCreateWithoutUpdatedByInput = {
@@ -878,8 +878,8 @@ export type InstitutionContactUpdateWithoutUpdatedByInput = {
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  institution?: Prisma.InstitutionUpdateOneRequiredWithoutContactsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionContactsNestedInput
+  institution?: Prisma.InstitutionUpdateOneRequiredWithoutContactsNestedInput
 }
 
 export type InstitutionContactUncheckedUpdateWithoutUpdatedByInput = {
@@ -922,8 +922,8 @@ export type InstitutionContactSelect<ExtArgs extends runtime.Types.Extensions.In
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["institutionContact"]>
 
@@ -939,8 +939,8 @@ export type InstitutionContactSelectCreateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["institutionContact"]>
 
@@ -956,8 +956,8 @@ export type InstitutionContactSelectUpdateManyAndReturn<ExtArgs extends runtime.
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["institutionContact"]>
 
@@ -977,26 +977,26 @@ export type InstitutionContactSelectScalar = {
 
 export type InstitutionContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "institutionId" | "department" | "contactName" | "phone" | "email" | "isDefault" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["institutionContact"]>
 export type InstitutionContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }
 export type InstitutionContactIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }
 export type InstitutionContactIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.InstitutionContact$createdByArgs<ExtArgs>
+  institution?: boolean | Prisma.InstitutionDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.InstitutionContact$updatedByArgs<ExtArgs>
 }
 
 export type $InstitutionContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InstitutionContact"
   objects: {
-    institution: Prisma.$InstitutionPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
+    institution: Prisma.$InstitutionPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1405,8 +1405,8 @@ readonly fields: InstitutionContactFieldRefs;
  */
 export interface Prisma__InstitutionContactClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.InstitutionContact$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionContact$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  institution<T extends Prisma.InstitutionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionDefaultArgs<ExtArgs>>): Prisma.Prisma__InstitutionClient<runtime.Types.Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.InstitutionContact$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InstitutionContact$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

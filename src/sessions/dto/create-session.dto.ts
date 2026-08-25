@@ -95,17 +95,17 @@ export class CreateSessionDto {
     type: [String],
     example: ['550e8400-e29b-41d4-a716-446655440000'],
     description:
-      'Arreglo de IDs de temporadas de equipos asociados (TeamSeason)',
+      'Arreglo de IDs de categorías de temporadas de equipos asociados (TeamSeasonCategory)',
   })
   @IsOptional()
   @IsArray({
-    message: 'teamSeasonIds debe ser un arreglo',
+    message: 'teamSeasonCategoryIds debe ser un arreglo',
   })
   @IsUUID('4', {
     each: true,
-    message: 'Cada elemento de teamSeasonIds debe ser un UUID válido',
+    message: 'Cada elemento de teamSeasonCategoryIds debe ser un UUID válido',
   })
-  teamSeasonIds?: string[];
+  teamSeasonCategoryIds?: string[];
 
   @ApiPropertyOptional({
     type: [String],

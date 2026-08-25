@@ -164,7 +164,7 @@ export class PaymentsMatrixService {
         season: true,
         billingConfig: true,
         team: true,
-        category: true,
+        categories: { include: { category: true } },
         playerMemberships: {
           include: {
             player: {
@@ -268,9 +268,9 @@ export class PaymentsMatrixService {
     return {
       group: {
         id: teamSeason.id,
-        name: `${teamSeason.team.name} - ${teamSeason.category.name}`,
+        name: `${teamSeason.team.name} - ${teamSeason.categories.map(c => c.category.name).join(', ')}`,
         type: 'TEAM_SEASON',
-        category: teamSeason.category.name,
+        category: teamSeason.categories.map(c => c.category.name).join(', '),
       },
       periods,
       students: Array.from(studentMap.values()).sort((a, b) => a.name.localeCompare(b.name)),

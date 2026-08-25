@@ -619,16 +619,6 @@ export class TeamSeasonResponseDto {
   description?: string;
 
   @ApiProperty({
-    example: 1,
-  })
-  maxMembers: number;
-
-  @ApiProperty({
-    example: 1,
-  })
-  minMembers: number;
-
-  @ApiProperty({
     example: 'string',
   })
   teamId: string;
@@ -641,27 +631,12 @@ export class TeamSeasonResponseDto {
   @ApiProperty({
     example: 'string',
   })
-  categoryId: string;
-
-  @ApiProperty({
-    example: 'any',
-  })
-  category: any;
-
-  @ApiProperty({
-    example: 'string',
-  })
   seasonId: string;
 
   @ApiProperty({
     example: 'any',
   })
   season: any;
-
-  @ApiProperty({
-    example: 'any',
-  })
-  gender: any;
 
   @ApiProperty({
     example: 1,
@@ -722,7 +697,7 @@ export class TeamSeasonResponseDto {
     isArray: true,
     example: 'any',
   })
-  teamSeasonStaffs: any[];
+  teamSeasonCategories: any[];
 
   @ApiProperty({
     isArray: true,
@@ -735,6 +710,85 @@ export class TeamSeasonResponseDto {
     example: 'any',
   })
   playerMemberships: any[];
+}
+
+export class TeamSeasonCategoryResponseDto {
+  @ApiProperty({
+    example: 'string',
+  })
+  id: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  teamSeasonId: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  categoryId: string;
+
+  @ApiProperty({
+    example: 'any',
+  })
+  category: any;
+
+  @ApiProperty({
+    example: 'any',
+  })
+  gender: any;
+
+  @ApiProperty({
+    example: 1,
+  })
+  minBirthYear: number;
+
+  @ApiProperty({
+    example: 1,
+  })
+  maxBirthYear: number;
+
+  @ApiProperty({
+    example: 1,
+  })
+  minMembers: number;
+
+  @ApiProperty({
+    example: 1,
+  })
+  maxMembers: number;
+
+  @ApiProperty({
+    example: true,
+  })
+  validateAge: boolean;
+
+  @ApiProperty({
+    example: true,
+  })
+  isActive: boolean;
+
+  @ApiProperty({
+    example: '2024-01-01T00:00:00Z',
+  })
+  createdAt: Date;
+
+  @ApiProperty({
+    example: '2024-01-01T00:00:00Z',
+  })
+  updatedAt: Date;
+
+  @ApiProperty({
+    isArray: true,
+    example: 'any',
+  })
+  playerMemberships: any[];
+
+  @ApiProperty({
+    isArray: true,
+    example: 'any',
+  })
+  teamSeasonStaffs: any[];
 
   @ApiProperty({
     isArray: true,
@@ -746,13 +800,13 @@ export class TeamSeasonResponseDto {
     isArray: true,
     example: 'any',
   })
-  scheduleTeams: any[];
+  matches: any[];
 
   @ApiProperty({
     isArray: true,
     example: 'any',
   })
-  matches: any[];
+  generalEvents: any[];
 }
 
 export class PaymentPlanResponseDto {
@@ -909,6 +963,16 @@ export class PlayerMembershipResponseDto {
     example: 'any',
   })
   teamSeason: any;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  teamSeasonCategoryId: string;
+
+  @ApiProperty({
+    example: 'any',
+  })
+  teamSeasonCategory: any;
 
   @ApiProperty({
     example: 'string',

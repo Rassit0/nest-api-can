@@ -42,12 +42,12 @@ export type AttachmentMinAggregateOutputType = {
   sizeBytes: number | null
   url: string | null
   path: string | null
-  status: $Enums.AttachmentStatus | null
   transactionId: string | null
   uploadedById: string | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.AttachmentStatus | null
 }
 
 export type AttachmentMaxAggregateOutputType = {
@@ -58,12 +58,12 @@ export type AttachmentMaxAggregateOutputType = {
   sizeBytes: number | null
   url: string | null
   path: string | null
-  status: $Enums.AttachmentStatus | null
   transactionId: string | null
   uploadedById: string | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.AttachmentStatus | null
 }
 
 export type AttachmentCountAggregateOutputType = {
@@ -74,12 +74,12 @@ export type AttachmentCountAggregateOutputType = {
   sizeBytes: number
   url: number
   path: number
-  status: number
   transactionId: number
   uploadedById: number
   deletedAt: number
   createdAt: number
   updatedAt: number
+  status: number
   _all: number
 }
 
@@ -100,12 +100,12 @@ export type AttachmentMinAggregateInputType = {
   sizeBytes?: true
   url?: true
   path?: true
-  status?: true
   transactionId?: true
   uploadedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type AttachmentMaxAggregateInputType = {
@@ -116,12 +116,12 @@ export type AttachmentMaxAggregateInputType = {
   sizeBytes?: true
   url?: true
   path?: true
-  status?: true
   transactionId?: true
   uploadedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type AttachmentCountAggregateInputType = {
@@ -132,12 +132,12 @@ export type AttachmentCountAggregateInputType = {
   sizeBytes?: true
   url?: true
   path?: true
-  status?: true
   transactionId?: true
   uploadedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -235,12 +235,12 @@ export type AttachmentGroupByOutputType = {
   sizeBytes: number
   url: string | null
   path: string | null
-  status: $Enums.AttachmentStatus
   transactionId: string | null
   uploadedById: string | null
   deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  status: $Enums.AttachmentStatus
   _count: AttachmentCountAggregateOutputType | null
   _avg: AttachmentAvgAggregateOutputType | null
   _sum: AttachmentSumAggregateOutputType | null
@@ -274,12 +274,12 @@ export type AttachmentWhereInput = {
   sizeBytes?: Prisma.IntFilter<"Attachment"> | number
   url?: Prisma.StringNullableFilter<"Attachment"> | string | null
   path?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
   transactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   uploadedById?: Prisma.StringNullableFilter<"Attachment"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Attachment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
+  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
   transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
   uploadedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -292,12 +292,12 @@ export type AttachmentOrderByWithRelationInput = {
   sizeBytes?: Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
   path?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   transaction?: Prisma.TransactionOrderByWithRelationInput
   uploadedBy?: Prisma.UserOrderByWithRelationInput
 }
@@ -313,12 +313,12 @@ export type AttachmentWhereUniqueInput = Prisma.AtLeast<{
   sizeBytes?: Prisma.IntFilter<"Attachment"> | number
   url?: Prisma.StringNullableFilter<"Attachment"> | string | null
   path?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
   transactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   uploadedById?: Prisma.StringNullableFilter<"Attachment"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Attachment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
+  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
   transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
   uploadedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "internalName">
@@ -331,12 +331,12 @@ export type AttachmentOrderByWithAggregationInput = {
   sizeBytes?: Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
   path?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.AttachmentCountOrderByAggregateInput
   _avg?: Prisma.AttachmentAvgOrderByAggregateInput
   _max?: Prisma.AttachmentMaxOrderByAggregateInput
@@ -355,12 +355,12 @@ export type AttachmentScalarWhereWithAggregatesInput = {
   sizeBytes?: Prisma.IntWithAggregatesFilter<"Attachment"> | number
   url?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   path?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
-  status?: Prisma.EnumAttachmentStatusWithAggregatesFilter<"Attachment"> | $Enums.AttachmentStatus
   transactionId?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   uploadedById?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Attachment"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Attachment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Attachment"> | Date | string
+  status?: Prisma.EnumAttachmentStatusWithAggregatesFilter<"Attachment"> | $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateInput = {
@@ -371,10 +371,10 @@ export type AttachmentCreateInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
   transaction?: Prisma.TransactionCreateNestedOneWithoutAttachmentsInput
   uploadedBy?: Prisma.UserCreateNestedOneWithoutAttachmentsInput
 }
@@ -387,12 +387,12 @@ export type AttachmentUncheckedCreateInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   transactionId?: string | null
   uploadedById?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentUpdateInput = {
@@ -403,10 +403,10 @@ export type AttachmentUpdateInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transaction?: Prisma.TransactionUpdateOneWithoutAttachmentsNestedInput
   uploadedBy?: Prisma.UserUpdateOneWithoutAttachmentsNestedInput
 }
@@ -419,12 +419,12 @@ export type AttachmentUncheckedUpdateInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateManyInput = {
@@ -435,12 +435,12 @@ export type AttachmentCreateManyInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   transactionId?: string | null
   uploadedById?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentUpdateManyMutationInput = {
@@ -451,10 +451,10 @@ export type AttachmentUpdateManyMutationInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentUncheckedUpdateManyInput = {
@@ -465,12 +465,12 @@ export type AttachmentUncheckedUpdateManyInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentListRelationFilter = {
@@ -491,12 +491,12 @@ export type AttachmentCountOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   url?: Prisma.SortOrder
   path?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttachmentAvgOrderByAggregateInput = {
@@ -511,12 +511,12 @@ export type AttachmentMaxOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   url?: Prisma.SortOrder
   path?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttachmentMinOrderByAggregateInput = {
@@ -527,12 +527,12 @@ export type AttachmentMinOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   url?: Prisma.SortOrder
   path?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type AttachmentSumOrderByAggregateInput = {
@@ -635,10 +635,10 @@ export type AttachmentCreateWithoutTransactionInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
   uploadedBy?: Prisma.UserCreateNestedOneWithoutAttachmentsInput
 }
 
@@ -650,11 +650,11 @@ export type AttachmentUncheckedCreateWithoutTransactionInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   uploadedById?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateOrConnectWithoutTransactionInput = {
@@ -694,12 +694,12 @@ export type AttachmentScalarWhereInput = {
   sizeBytes?: Prisma.IntFilter<"Attachment"> | number
   url?: Prisma.StringNullableFilter<"Attachment"> | string | null
   path?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
   transactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   uploadedById?: Prisma.StringNullableFilter<"Attachment"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Attachment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
+  status?: Prisma.EnumAttachmentStatusFilter<"Attachment"> | $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateWithoutUploadedByInput = {
@@ -710,10 +710,10 @@ export type AttachmentCreateWithoutUploadedByInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
   transaction?: Prisma.TransactionCreateNestedOneWithoutAttachmentsInput
 }
 
@@ -725,11 +725,11 @@ export type AttachmentUncheckedCreateWithoutUploadedByInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   transactionId?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateOrConnectWithoutUploadedByInput = {
@@ -766,11 +766,11 @@ export type AttachmentCreateManyTransactionInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   uploadedById?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentUpdateWithoutTransactionInput = {
@@ -781,10 +781,10 @@ export type AttachmentUpdateWithoutTransactionInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   uploadedBy?: Prisma.UserUpdateOneWithoutAttachmentsNestedInput
 }
 
@@ -796,11 +796,11 @@ export type AttachmentUncheckedUpdateWithoutTransactionInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentUncheckedUpdateManyWithoutTransactionInput = {
@@ -811,11 +811,11 @@ export type AttachmentUncheckedUpdateManyWithoutTransactionInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentCreateManyUploadedByInput = {
@@ -826,11 +826,11 @@ export type AttachmentCreateManyUploadedByInput = {
   sizeBytes: number
   url?: string | null
   path?: string | null
-  status?: $Enums.AttachmentStatus
   transactionId?: string | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.AttachmentStatus
 }
 
 export type AttachmentUpdateWithoutUploadedByInput = {
@@ -841,10 +841,10 @@ export type AttachmentUpdateWithoutUploadedByInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transaction?: Prisma.TransactionUpdateOneWithoutAttachmentsNestedInput
 }
 
@@ -856,11 +856,11 @@ export type AttachmentUncheckedUpdateWithoutUploadedByInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 export type AttachmentUncheckedUpdateManyWithoutUploadedByInput = {
@@ -871,11 +871,11 @@ export type AttachmentUncheckedUpdateManyWithoutUploadedByInput = {
   sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAttachmentStatusFieldUpdateOperationsInput | $Enums.AttachmentStatus
 }
 
 
@@ -888,12 +888,12 @@ export type AttachmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   sizeBytes?: boolean
   url?: boolean
   path?: boolean
-  status?: boolean
   transactionId?: boolean
   uploadedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   transaction?: boolean | Prisma.Attachment$transactionArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
@@ -906,12 +906,12 @@ export type AttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   sizeBytes?: boolean
   url?: boolean
   path?: boolean
-  status?: boolean
   transactionId?: boolean
   uploadedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   transaction?: boolean | Prisma.Attachment$transactionArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
@@ -924,12 +924,12 @@ export type AttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   sizeBytes?: boolean
   url?: boolean
   path?: boolean
-  status?: boolean
   transactionId?: boolean
   uploadedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   transaction?: boolean | Prisma.Attachment$transactionArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
@@ -942,15 +942,15 @@ export type AttachmentSelectScalar = {
   sizeBytes?: boolean
   url?: boolean
   path?: boolean
-  status?: boolean
   transactionId?: boolean
   uploadedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
 }
 
-export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "originalName" | "internalName" | "mimeType" | "sizeBytes" | "url" | "path" | "status" | "transactionId" | "uploadedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["attachment"]>
+export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "originalName" | "internalName" | "mimeType" | "sizeBytes" | "url" | "path" | "transactionId" | "uploadedById" | "deletedAt" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["attachment"]>
 export type AttachmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transaction?: boolean | Prisma.Attachment$transactionArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
@@ -978,12 +978,12 @@ export type $AttachmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     sizeBytes: number
     url: string | null
     path: string | null
-    status: $Enums.AttachmentStatus
     transactionId: string | null
     uploadedById: string | null
     deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    status: $Enums.AttachmentStatus
   }, ExtArgs["result"]["attachment"]>
   composites: {}
 }
@@ -1416,12 +1416,12 @@ export interface AttachmentFieldRefs {
   readonly sizeBytes: Prisma.FieldRef<"Attachment", 'Int'>
   readonly url: Prisma.FieldRef<"Attachment", 'String'>
   readonly path: Prisma.FieldRef<"Attachment", 'String'>
-  readonly status: Prisma.FieldRef<"Attachment", 'AttachmentStatus'>
   readonly transactionId: Prisma.FieldRef<"Attachment", 'String'>
   readonly uploadedById: Prisma.FieldRef<"Attachment", 'String'>
   readonly deletedAt: Prisma.FieldRef<"Attachment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Attachment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Attachment", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Attachment", 'AttachmentStatus'>
 }
     
 
