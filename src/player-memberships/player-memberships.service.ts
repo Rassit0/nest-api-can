@@ -1031,13 +1031,13 @@ export class PlayerMembershipsService {
       throw new BadRequestException('El jugador se encuentra inactivo');
     }
 
-    if (!player.person.birthDate) {
-      throw new BadRequestException(
-        'La fecha de nacimiento del jugador no fue encontrada',
-      );
-    }
-
     if (offering.validateAge !== false) {
+      if (!player.person.birthDate) {
+        throw new BadRequestException(
+          'La fecha de nacimiento del jugador no fue encontrada',
+        );
+      }
+
       if (offering.minBirthYear || offering.maxBirthYear) {
         const birthYear = player.person.birthDate.getFullYear();
         if (offering.maxBirthYear && birthYear > offering.maxBirthYear) {
@@ -1089,6 +1089,23 @@ export class PlayerMembershipsService {
         `La fecha de inicio enviada (${sent}) está fuera del rango permitido. Debe estar entre el ${start} y el ${end} (Fechas de la Temporada).`,
       );
     }
+  }
+
+  async getTeamSeasonCategories(teamSeasonId: string) {
+    const categories = await this.prisma.teamSeasonCategory.findMany({
+      where: { teamSeasonId },
+      include: {
+        category: true,
+      },
+      orderBy: {
+        category: { name: 'asc' },
+      },
+    });
+
+    return {
+      message: 'Categorías obtenidas correctamente',
+      data: categories,
+    };
   }
 
   async getPlayersOptions(paginationDto: PlayersOptionsPaginationDto) {

@@ -44,6 +44,7 @@ export const SystemModules = [
   'INTERNAL_TRANSFERS',
   'CASH_CLOSURES',
   'SYSTEM',
+  'REPORTS',
 ] as const;
 
 export type SystemModuleName = (typeof SystemModules)[number];
@@ -88,7 +89,10 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   STUDENT_MEMBERSHIPS: crud('STUDENT_MEMBERSHIPS'),
   PLAYER_MEMBERSHIPS: crud('PLAYER_MEMBERSHIPS'),
   MEMBERSHIP_DISCOUNTS: crud('MEMBERSHIP_DISCOUNTS'),
-  MEMBERSHIP_CHARGES: [...crud('MEMBERSHIP_CHARGES'), 'OVERRIDE_MEMBERSHIP_CHARGES'],
+  MEMBERSHIP_CHARGES: [
+    ...crud('MEMBERSHIP_CHARGES'),
+    'OVERRIDE_MEMBERSHIP_CHARGES',
+  ],
   STUDENT_CHARGES: [...crud('STUDENT_CHARGES'), 'OVERRIDE_STUDENT_CHARGES'],
   STUDENT_DISCOUNTS: crud('STUDENT_DISCOUNTS'),
   TRANSACTIONS: crud('TRANSACTIONS'),
@@ -110,6 +114,7 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   // Módulos especiales que no tienen CRUD completo
   AUDIT_LOGS: ['READ_AUDIT_LOGS'],
   DASHBOARD: ['READ_DASHBOARD'],
+  REPORTS: ['READ_REPORTS'],
   SYSTEM: ['MANAGE_ALL'],
 };
 

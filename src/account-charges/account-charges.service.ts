@@ -283,10 +283,6 @@ export class AccountChargesService {
     const searchTerms = search ? search.trim().split(/\s+/) : [];
 
     const where: Prisma.PersonWhereInput = {
-      OR: [
-        { players: { isNot: null } },
-        { students: { isNot: null } },
-      ],
       ...(searchTerms.length > 0
         ? {
             AND: searchTerms.map((term) => ({

@@ -20,6 +20,7 @@ import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dt
 import { TransactionsMapper } from './transactions.mapper';
 import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
+import { syncPlayerMembershipStatus } from 'src/common/helpers/sync-player-membership.helper';
 
 export const transactionSelect = {
   id: true,
@@ -335,6 +336,7 @@ export class TransactionsService {
         });
 
         await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
+        await syncPlayerMembershipStatus(prisma, charge.id, newStatus);
       }
 
       if (attachmentIds && attachmentIds.length > 0) {
@@ -572,6 +574,11 @@ export class TransactionsService {
           });
 
           await syncCycleEnrollmentStatus(
+            prisma,
+            transaction.payment.chargeId,
+            newStatus,
+          );
+          await syncPlayerMembershipStatus(
             prisma,
             transaction.payment.chargeId,
             newStatus,

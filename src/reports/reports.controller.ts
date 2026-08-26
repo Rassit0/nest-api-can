@@ -3,6 +3,9 @@ import { Response, Request } from 'express';
 import { ReportRegistry } from './core/registry/report.registry';
 import { PaymentsMatrixService } from './payments-matrix.service';
 import { PaymentsMatrixPdfService } from './payments-matrix-pdf.service';
+import { MonthlyCashflowService } from './monthly-cashflow.service';
+import { MonthlyCashflowExcelService } from './monthly-cashflow-excel.service';
+import { MonthlyCashflowQueryDto } from './dto/monthly-cashflow.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
@@ -13,7 +16,9 @@ export class ReportsController {
   constructor(
     private readonly registry: ReportRegistry,
     private readonly paymentsMatrixService: PaymentsMatrixService,
-    private readonly paymentsMatrixPdfService: PaymentsMatrixPdfService
+    private readonly paymentsMatrixPdfService: PaymentsMatrixPdfService,
+    private readonly monthlyCashflowService: MonthlyCashflowService,
+    private readonly monthlyCashflowExcelService: MonthlyCashflowExcelService,
   ) {}
 
   @Get()
@@ -104,5 +109,22 @@ export class ReportsController {
     );
     result.pipe(res);
     result.end();
+  }
+
+  @Get('monthly-cashflow')
+  @RequirePermissions('READ_REPORTS')
+  async getMonthlyCashflow(
+    @Query() query: MonthlyCashflowQueryDto,
+    @Res() res: Response,
+  ) {
+    const data = await this.monthlyCashflowService.getCashflowData(query);
+    const buffer = await this.monthlyCashflowExcelService.generateExcel(data);
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=Informe_Flujo_Caja_Mensual_${query.year}_${query.month.toString().padStart(2, '0')}.xlsx`,
+    );
+    res.send(buffer);
   }
 }

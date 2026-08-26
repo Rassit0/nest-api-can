@@ -856,7 +856,11 @@ export class StudentMembershipsService {
       this.prisma.studentDiscount.deleteMany({
         where: { studentMembershipId: id },
       }),
-      // 4. Borrar la tabla pivote de cargos
+      // 4. Borrar enrollments a los ciclos (si los hubiera)
+      this.prisma.cycleEnrollment.deleteMany({
+        where: { studentMembershipId: id },
+      }),
+      // 5. Borrar la tabla pivote de cargos
       this.prisma.studentCharge.deleteMany({
         where: { studentMembershipId: id },
       }),

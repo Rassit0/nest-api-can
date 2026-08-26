@@ -93,6 +93,16 @@ export class PlayerMembershipsController {
     return await this.playerMembershipsService.getPlayersOptions(paginationDto);
   }
 
+  @Get('team-season/:id/categories')
+  @ApiOperation({
+    summary: 'Listar categorías de una temporada de equipo',
+    description: 'Retorna las categorías disponibles para inscribir en la temporada dada.',
+  })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
+  async getTeamSeasonCategories(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.playerMembershipsService.getTeamSeasonCategories(id);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener inscripción de jugador por ID',
