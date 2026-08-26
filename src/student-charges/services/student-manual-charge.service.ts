@@ -86,7 +86,7 @@ export class StudentManualChargeService {
     const dueDate = DateUtils.getEndOfLocalDayInUTC(dto.dueDate);
 
     await this.prisma.$transaction(async (tx) => {
-      await tx.charge.create({
+      const charge = await tx.charge.create({
         data: StudentChargeFactory.buildManualChargePayload(
           membership.id,
           dto.amount,
@@ -94,6 +94,15 @@ export class StudentManualChargeService {
           dto.description,
           dueDate,
         ),
+      });
+
+      await tx.accountCharge.create({
+        data: {
+          chargeId: charge.id,
+          title: dto.description,
+          categoryId: dto.categoryId,
+          personId: membership.student.personId,
+        },
       });
     });
 

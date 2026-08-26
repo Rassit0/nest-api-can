@@ -10,6 +10,7 @@ export const playerMembershipInclude = {
   teamSeason: {
     include: { season: true, billingConfig: true, teamSeasonPauses: true },
   },
+  player: { select: { personId: true } },
 } as const;
 
 @Injectable()

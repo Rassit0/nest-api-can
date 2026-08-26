@@ -15,6 +15,7 @@ import {
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { TransactionsService } from 'src/transactions/transactions.service';
 import { AccountChargesPaginationDto } from './dto/pagination.dto';
+import { PersonsOptionsPaginationDto } from './dto/persons-options-pagination.dto';
 
 @Injectable()
 export class AccountChargesService {
@@ -37,6 +38,29 @@ export class AccountChargesService {
       immediatePayment,
       ...accountData
     } = createAccountChargeDto;
+
+    const category = await this.prisma.accountCategory.findUnique({
+      where: { id: accountData.categoryId },
+    });
+
+    if (!category) {
+      throw new BadRequestException('La categoría seleccionada no existe');
+    }
+    if (!category.isActive) {
+      throw new BadRequestException('La categoría seleccionada no está activa');
+    }
+    if (category.type !== direction) {
+      throw new BadRequestException('La categoría no corresponde con el tipo de transacción');
+    }
+
+    if (accountData.personId) {
+      const person = await this.prisma.person.findUnique({
+        where: { id: accountData.personId },
+      });
+      if (!person) {
+        throw new BadRequestException('La persona especificada no existe');
+      }
+    }
 
     const newAccountCharge = await this.prisma.$transaction(async (tx) => {
       // 1. Delegar al ChargeService para la lógica financiera
@@ -84,6 +108,7 @@ export class AccountChargesService {
             description: description || title,
             chargeId: chargeResult.data.id,
             attachmentIds: immediatePayment.attachmentIds,
+            payerPersonId: immediatePayment.payerPersonId,
           },
           tx,
         );
@@ -243,5 +268,80 @@ export class AccountChargesService {
     });
 
     return { message: 'Cuenta cancelada lógicamente (Estado: CANCELLED)' };
+  }
+
+  async getPersonsOptions(paginationDto: PersonsOptionsPaginationDto) {
+    const {
+      per_page = 10,
+      page = 1,
+      search,
+      orderBy = 'asc',
+      gender,
+    } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const searchTerms = search ? search.trim().split(/\s+/) : [];
+
+    const where: Prisma.PersonWhereInput = {
+      OR: [
+        { players: { isNot: null } },
+        { students: { isNot: null } },
+      ],
+      ...(searchTerms.length > 0
+        ? {
+            AND: searchTerms.map((term) => ({
+              OR: [
+                { name: { contains: term, mode: 'insensitive' } },
+                { lastName: { contains: term, mode: 'insensitive' } },
+                { secondLastName: { contains: term, mode: 'insensitive' } },
+                { documentNumber: { contains: term, mode: 'insensitive' } },
+              ],
+            })),
+          }
+        : {}),
+      ...(gender && { gender }),
+    };
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.person.findMany({
+        where,
+        take: per_page,
+        skip,
+        orderBy: { name: orderBy },
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          secondLastName: true,
+          documentNumber: true,
+          gender: true,
+          birthDate: true,
+          imageUrl: true,
+        },
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / per_page);
+    const currentPage = totalItems === 0 ? 0 : page;
+
+    return {
+      message: 'Personas obtenidas exitosamente',
+      data: persons.map((person) => ({
+        ...person,
+        fullName:
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim(),
+      })),
+      meta: {
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+        nextPage: page < totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
   }
 }

@@ -7,14 +7,15 @@ export type PlayerMembershipWithRelations = Prisma.PlayerMembershipGetPayload<{
     paymentPlan: true;
     membershipDiscounts: true;
     pauses: true;
-    teamSeason: {
-      include: {
-        season: true;
-        billingConfig: true;
-        teamSeasonPauses: true;
+      teamSeason: {
+        include: {
+          season: true;
+          billingConfig: true;
+          teamSeasonPauses: true;
+        };
       };
+      player: { select: { personId: true } };
     };
-  };
 }> & {
   chargeRegistrationOnMigration?: boolean;
   chargeCurrentMonthOnMigration?: boolean;

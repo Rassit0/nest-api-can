@@ -23,6 +23,10 @@ export class ImmediatePaymentDto {
   @IsOptional()
   @IsUUID('4', { each: true })
   attachmentIds?: string[];
+
+  @IsOptional()
+  @IsUUID('4')
+  payerPersonId?: string;
 }
 
 export class CreateAccountChargeDto {
@@ -48,8 +52,8 @@ export class CreateAccountChargeDto {
   direction: ChargeDirection;
 
   @IsUUID()
-  @IsOptional()
-  categoryId?: string;
+  @IsNotEmpty()
+  categoryId: string;
 
   @IsEnum(AccountReferenceType)
   @IsOptional()

@@ -14,6 +14,7 @@ export const studentMembershipInclude = {
   courseSeason: {
     include: { season: true, billingConfig: true, pauses: true },
   },
+  student: { select: { personId: true } },
 } as const;
 
 @Injectable()

@@ -86,7 +86,7 @@ export class MembershipManualChargeService {
     const dueDate = DateUtils.getEndOfLocalDayInUTC(dto.dueDate);
 
     await this.prisma.$transaction(async (tx) => {
-      await tx.charge.create({
+      const charge = await tx.charge.create({
         data: MembershipChargeFactory.buildManualChargePayload(
           membership.id,
           dto.amount,
@@ -94,6 +94,15 @@ export class MembershipManualChargeService {
           dto.description,
           dueDate,
         ),
+      });
+
+      await tx.accountCharge.create({
+        data: {
+          chargeId: charge.id,
+          title: dto.description,
+          categoryId: dto.categoryId,
+          personId: membership.player.personId,
+        },
       });
     });
 

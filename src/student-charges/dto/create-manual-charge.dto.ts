@@ -42,4 +42,12 @@ export class CreateManualChargeDto {
   @IsDateString()
   @IsNotEmpty()
   dueDate: string;
+
+  @ApiProperty({
+    description: 'ID de la categoría contable (Requerido)',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsUUID()
+  @IsNotEmpty()
+  categoryId: string;
 }

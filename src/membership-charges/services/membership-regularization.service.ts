@@ -39,6 +39,7 @@ export class MembershipRegularizationService {
             teamSeasonPauses: true,
           },
         },
+        player: { select: { personId: true } },
       },
     });
 
@@ -83,6 +84,7 @@ export class MembershipRegularizationService {
             teamSeasonPauses: true,
           },
         },
+        player: { select: { personId: true } },
       },
     });
 

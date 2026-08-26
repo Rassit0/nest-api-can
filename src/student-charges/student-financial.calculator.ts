@@ -15,6 +15,7 @@ export type StudentMembershipWithRelations =
           pauses: true;
         };
       };
+      student: { select: { personId: true } };
     };
   }> & {
     chargeRegistrationOnMigration?: boolean;
