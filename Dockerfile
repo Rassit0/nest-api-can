@@ -20,12 +20,12 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY package*.json ./
 
-# Instalamos solo las dependencias de producción
-RUN npm ci --omit=dev
-
-# Copiamos lo compilado y el esquema de Prisma
+# Copiamos lo compilado primero para obligar a BuildKit a esperar a que termine el builder y no correr 'npm ci' en paralelo (evita OOM)
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
+
+# Instalamos solo las dependencias de producción
+RUN npm ci --omit=dev
 
 # Copiamos tu cliente de Prisma personalizado generado en src/
 COPY --from=builder /app/src/generated ./src/generated
