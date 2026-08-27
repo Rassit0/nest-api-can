@@ -316,6 +316,7 @@ export class PlayerMembershipsService {
       sortField = 'createdAt',
       playerId,
       teamSeasonCategoryId,
+      teamSeasonId,
       paymentPlanId,
       status,
     } = paginationDto;
@@ -330,6 +331,10 @@ export class PlayerMembershipsService {
 
     if (teamSeasonCategoryId) {
       where.teamSeasonCategoryId = teamSeasonCategoryId;
+    }
+
+    if (teamSeasonId) {
+      where.teamSeasonId = teamSeasonId;
     }
 
     if (paymentPlanId) {
