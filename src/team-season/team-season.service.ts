@@ -413,7 +413,7 @@ export class TeamSeasonService {
   }
 
   async update(id: string, updateTeamSeasonDto: UpdateTeamSeasonDto) {
-    const { ...rest } = updateTeamSeasonDto;
+    const { categories, ...rest } = updateTeamSeasonDto;
     
     const teamSeason = await this.prisma.teamSeason.findUnique({
       where: { id },
@@ -433,6 +433,27 @@ export class TeamSeasonService {
       throw new BadRequestException(
         'No se puede editar una temporada de equipo que ya finalizó o fue cancelada',
       );
+    }
+
+    if (categories !== undefined) {
+      if (teamSeason.status !== StatusTeamSeason.DRAFT) {
+        throw new BadRequestException(
+          'Las categorías solo pueden ser modificadas cuando la temporada está en estado DRAFT',
+        );
+      }
+
+      if (categories.length === 0) {
+        throw new BadRequestException('Debe especificar al menos una categoría');
+      }
+
+      const uniqueCategoryKeys = new Set(
+        categories.map((c) => `${c.categoryId}-${c.gender}`),
+      );
+      if (uniqueCategoryKeys.size !== categories.length) {
+        throw new BadRequestException(
+          'No se pueden incluir categorías duplicadas con el mismo género',
+        );
+      }
     }
 
     if (teamSeason.status === StatusTeamSeason.ACTIVE) {
@@ -524,6 +545,23 @@ export class TeamSeasonService {
                   create: billingConfig,
                   update: billingConfig,
                 },
+              },
+            }
+          : {}),
+        ...(categories !== undefined
+          ? {
+              categories: {
+                deleteMany: {},
+                create: categories.map((c) => ({
+                  categoryId: c.categoryId,
+                  gender: c.gender,
+                  validateAge: c.validateAge ?? true,
+                  minBirthYear: c.minBirthYear,
+                  maxBirthYear: c.maxBirthYear,
+                  minMembers: c.minMembers,
+                  maxMembers: c.maxMembers,
+                  isActive: c.isActive ?? true,
+                })),
               },
             }
           : {}),

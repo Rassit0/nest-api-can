@@ -65,6 +65,14 @@ export const transactionSelect = {
             select: {
               title: true,
               category: { select: { name: true } },
+              person: {
+                select: {
+                  id: true,
+                  name: true,
+                  lastName: true,
+                  documentNumber: true,
+                },
+              },
             },
           },
           membershipCharges: { select: { id: true } },
@@ -393,10 +401,12 @@ export class TransactionsService {
           isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
         });
 
+
+
     return {
       message: 'Transacción registrada con éxito',
       data: {
-        transaction: TransactionsMapper.toDomain(createdTransaction as any),
+        transaction: TransactionsMapper.toDomain(createdTransaction.transaction as any),
         paymentData: processedTransactions
           .map((pt) => pt.providerResponse)
           .filter(Boolean), // Datos del QR si aplica

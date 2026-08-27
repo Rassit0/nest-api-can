@@ -16,7 +16,7 @@ export class AccountingDashboardService {
     const pendingStatuses = [StatusCharge.PENDING, StatusCharge.PARTIAL];
 
     const { treasury, receivables, payables, income, expenses, periodResultByCurrency } =
-      await this.analytics.getAccountingSummary();
+      await this.analytics.getAccountingSummary(params);
 
     const nextWeek = new Date();
     nextWeek.setDate(today.getDate() + 7);
@@ -91,7 +91,7 @@ export class AccountingDashboardService {
 
     // Default to BOB for the dashboard totals to avoid breaking the frontend entirely
     const availableBalance = treasury.liquidityByCurrency['BOB'] || 0;
-    const periodResult = periodResultByCurrency['BOB'] || 0;
+    const periodResult = periodIncome - periodExpenses;
 
     return {
       data: {

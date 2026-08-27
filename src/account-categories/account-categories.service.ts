@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAccountCategoryDto } from './dto/create-account-category.dto';
 import { UpdateAccountCategoryDto } from './dto/update-account-category.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -13,7 +13,7 @@ export class AccountCategoriesService {
   async create(createAccountCategoryDto: CreateAccountCategoryDto, userId?: string) {
     let { code, ...rest } = createAccountCategoryDto;
 
-    if (!code) {
+    if (!code || code.trim() === '') {
       code = rest.name.replace(/\s+/g, '').substring(0, 4).toUpperCase();
       let isUnique = false;
       let suffix = 1;
@@ -30,8 +30,9 @@ export class AccountCategoriesService {
       }
       code = finalCode;
     } else {
+      code = code.trim().toUpperCase();
       const existing = await this.prisma.accountCategory.findUnique({ where: { code } });
-      if (existing) throw new Error('Ya existe una categoría con este código.');
+      if (existing) throw new ConflictException(`Ya existe una categoría con el código ${code}.`);
     }
 
     const newCategory = await this.prisma.accountCategory.create({
@@ -49,7 +50,7 @@ export class AccountCategoriesService {
   }
 
   async findAll(paginationDto: AccountCategoriesPaginationDto) {
-    const { per_page = 10, page = 1, search, type, orderBy = 'asc' } = paginationDto;
+    const { per_page = 10, page = 1, search, type, orderBy = 'asc', sortField = 'name' } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.AccountCategoryWhereInput = {};
@@ -63,13 +64,16 @@ export class AccountCategoriesService {
       ];
     }
 
+    const validSortFields = ['name', 'description', 'type', 'code'];
+    const field = validSortFields.includes(sortField) ? sortField : 'name';
+
     const [total, data] = await Promise.all([
       this.prisma.accountCategory.count({ where }),
       this.prisma.accountCategory.findMany({
         where,
         skip,
         take: per_page,
-        orderBy: { name: orderBy },
+        orderBy: { [field]: orderBy },
       }),
     ]);
 
@@ -88,6 +92,19 @@ export class AccountCategoriesService {
 
   async update(id: string, updateAccountCategoryDto: UpdateAccountCategoryDto, userId?: string) {
     await this.findOne(id);
+    
+    if (updateAccountCategoryDto.code !== undefined) {
+      if (updateAccountCategoryDto.code.trim() === '') {
+        delete updateAccountCategoryDto.code;
+      } else {
+        updateAccountCategoryDto.code = updateAccountCategoryDto.code.trim().toUpperCase();
+        const existing = await this.prisma.accountCategory.findUnique({ where: { code: updateAccountCategoryDto.code } });
+        if (existing && existing.id !== id) {
+          throw new ConflictException(`Ya existe otra categoría con el código ${updateAccountCategoryDto.code}.`);
+        }
+      }
+    }
+
     const updatedCategory = await this.prisma.accountCategory.update({
       where: { id },
       data: {

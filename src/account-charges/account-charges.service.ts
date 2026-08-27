@@ -93,9 +93,9 @@ export class AccountChargesService {
         },
       });
 
-      // 3. Liquidar inmediatamente si el usuario lo pidió
+      let immediateTransaction = null;
       if (immediatePayment) {
-        await this.transactionsService.create(
+        immediateTransaction = await this.transactionsService.create(
           {
             amount,
             type:
@@ -114,12 +114,15 @@ export class AccountChargesService {
         );
       }
 
-      return createdAccountCharge;
+      return {
+        ...createdAccountCharge,
+        immediateTransaction,
+      };
     });
 
     return {
       message: 'Cuenta registrada exitosamente',
-      data: newAccountCharge,
+      data: newAccountCharge as any,
     };
   }
 

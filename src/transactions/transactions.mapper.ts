@@ -24,6 +24,12 @@ export interface MappedTransaction {
     name: string;
     documentNumber: string | null;
   } | null;
+  payerPerson: {
+    id: string;
+    name: string;
+    lastName: string | null;
+    documentNumber: string | null;
+  } | null;
   attachments: {
     id: string;
     originalName: string;
@@ -68,24 +74,35 @@ export class TransactionsMapper {
       }
     }
 
-    return {
-      id: transaction.id,
-      paymentId: transaction.paymentId || null,
-      type: transaction.type,
-      amount: Number(transaction.amount),
-      concept,
-      category,
-      origin,
-      paymentMethod: transaction.paymentMethod,
-      transactionDate: transaction.transactionDate,
-      status: transaction.status,
-      receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,
-      receiptNumber: transaction.payment?.receiptNumber || transaction.receiptNumber,
-      reference: transaction.reference,
-      financialAccountName: (transaction as any).financialAccount?.name || null,
-      thirdParty: transaction.thirdParty || null,
-      attachments: transaction.attachments || [],
-      createdAt: transaction.createdAt,
-    };
+      let mappedThirdParty = transaction.thirdParty || null;
+      if (!mappedThirdParty && transaction.payment?.charge?.accountCharge?.person) {
+        const p = transaction.payment.charge.accountCharge.person;
+        mappedThirdParty = {
+          id: p.id,
+          name: `${p.name} ${p.lastName || ''}`.trim(),
+          documentNumber: p.documentNumber || null,
+        };
+      }
+
+      return {
+        id: transaction.id,
+        paymentId: transaction.paymentId || null,
+        type: transaction.type,
+        amount: Number(transaction.amount),
+        concept,
+        category,
+        origin,
+        paymentMethod: transaction.paymentMethod,
+        transactionDate: transaction.transactionDate,
+        status: transaction.status,
+        receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,
+        receiptNumber: transaction.payment?.receiptNumber || transaction.receiptNumber,
+        reference: transaction.reference,
+        financialAccountName: (transaction as any).financialAccount?.name || null,
+        thirdParty: mappedThirdParty,
+        payerPerson: (transaction as any).payerPerson || null,
+        attachments: transaction.attachments || [],
+        createdAt: transaction.createdAt,
+      };
   }
 }

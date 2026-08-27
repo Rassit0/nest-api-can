@@ -1,0 +1,169 @@
+PrismaClientValidationError: 
+Invalid `this.prisma.teamSeason.update()` invocation in
+D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\team-season\team-season.service.ts:537:62
+
+  534 
+  535 const { billingConfig, ...teamSeasonData } = rest;
+  536 
+→ 537 const updatedTeamCategory = await this.prisma.teamSeason.update({
+        where: {
+          id: "96cc1db8-7cf6-48a5-8356-602b00da1396"
+        },
+        data: {
+          description: null,
+          status: "ACTIVE",
+          billingConfig: {
+            upsert: {
+              create: {
+                billingDay: 1,
+                registrationFee: "30",
+                recurringFee: "150",
+                seasonFee: null,
+                billingType: "MONTHLY_ONLY",
+                billingFrequency: "MONTHLY",
+                debtToleranceMonths: 2,
+                prorateFirstRecurringFee: false,
+                prorateLastRecurringFee: false,
+                prorateRegistrationFee: false,
+                prorateSeasonFee: false,
+                lateFeeEnabled: true,
+                lateFeePerDay: "1",
+                graceDays: 10
+              },
+              update: {
+                billingDay: 1,
+                registrationFee: "30",
+                recurringFee: "150",
+                seasonFee: null,
+                billingType: "MONTHLY_ONLY",
+                billingFrequency: "MONTHLY",
+                debtToleranceMonths: 2,
+                prorateFirstRecurringFee: false,
+                prorateLastRecurringFee: false,
+                prorateRegistrationFee: false,
+                prorateSeasonFee: false,
+                lateFeeEnabled: true,
+                lateFeePerDay: "1",
+                graceDays: 10
+              }
+            }
+          },
+          teamSeasonCategories: {
+          ~~~~~~~~~~~~~~~~~~~~
+            deleteMany: {},
+            create: [
+              {
+                categoryId: "280dff7c-77fd-4de1-9180-d890a5f49b1a",
+                gender: "MIXED",
+                validateAge: false,
+                minBirthYear: null,
+                maxBirthYear: null,
+                minMembers: 6,
+                maxMembers: 14,
+                isActive: true
+              }
+            ]
+          },
+          updatedById: "ba778394-85b7-4689-81c7-61cfcc7a7819",
+      ?   id?: String | StringFieldUpdateOperationsInput,
+      ?   imageUrl?: String | NullableStringFieldUpdateOperationsInput | Null,
+      ?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+      ?   updatedAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+      ?   statusNotes?: String | NullableStringFieldUpdateOperationsInput | Null,
+      ?   isRegistrationOpen?: Boolean | BoolFieldUpdateOperationsInput,
+      ?   paymentPlans?: PaymentPlanUpdateManyWithoutTeamSeasonsNestedInput,
+      ?   playerMemberships?: PlayerMembershipUpdateManyWithoutTeamSeasonNestedInput,
+      ?   categories?: TeamSeasonCategoryUpdateManyWithoutTeamSeasonNestedInput,
+      ?   teamSeasonPauses?: TeamSeasonPauseUpdateManyWithoutTeamSeasonNestedInput,
+      ?   createdBy?: UserUpdateOneWithoutCreatedTeamSeasonsNestedInput,
+      ?   season?: SeasonUpdateOneRequiredWithoutTeamSeasonsNestedInput,
+      ?   team?: TeamUpdateOneRequiredWithoutTeamSeasonsNestedInput,
+      ?   updatedBy?: UserUpdateOneWithoutUpdatedTeamSeasonsNestedInput
+        },
+        select: {
+          id: true,
+          team: {
+            select: {
+              id: true,
+              name: true
+            }
+          },
+          season: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              startDate: true,
+              endDate: true
+            }
+          },
+          description: true,
+          status: true,
+          isRegistrationOpen: true,
+          billingConfig: true,
+          categories: {
+            select: {
+              id: true,
+              categoryId: true,
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  minAge: true,
+                  maxAge: true
+                }
+              },
+              gender: true,
+              minBirthYear: true,
+              maxBirthYear: true,
+              minMembers: true,
+              maxMembers: true,
+              validateAge: true,
+              isActive: true,
+              _count: {
+                select: {
+                  player_membership: {
+                    where: {
+                      OR: [
+                        {
+                          status: "SUSPENDED"
+                        },
+                        {
+                          status: "ACTIVE"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          _count: {
+            select: {
+              playerMemberships: {
+                where: {
+                  OR: [
+                    {
+                      status: "SUSPENDED"
+                    },
+                    {
+                      status: "ACTIVE"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          createdAt: true,
+          updatedAt: true
+        }
+      })
+
+Unknown argument `teamSeasonCategories`. Available options are marked with ?.
+    at throwValidationException (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:45:9)
+    at ei.handleRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at ei.handleAndLogRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at ei.request (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at async Array.update (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\prisma.service.ts:127:28)
+    at async a (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:833:24)
+    at async TeamSeasonService.update (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\team-season\team-season.service.ts:537:33)

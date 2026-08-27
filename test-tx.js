@@ -1,0 +1,1 @@
+const { PrismaClient } = require('./src/generated/prisma/client'); const prisma = new PrismaClient(); async function main() { const t = await prisma.transaction.findFirst({ orderBy: { createdAt: 'desc' }, include: { payment: true } }); console.log(JSON.stringify(t, null, 2)); } main().finally(() => prisma.\$disconnect());

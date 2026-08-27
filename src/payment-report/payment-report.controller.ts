@@ -67,4 +67,46 @@ export class PaymentReportController {
     pdfDoc.pipe(response);
     pdfDoc.end();
   }
+
+  @Get('transaction/:transactionId')
+  @ApiOperation({ summary: 'Generar recibo de transacción', description: 'Genera un PDF con el recibo consolidado de la transacción (formato estándar con 2 copias).' })
+  @ApiParam({ name: 'transactionId', description: 'UUID de la transacción' })
+  @ApiProduces('application/pdf')
+  @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
+  async getTransactionReport(
+    @Res() response: Response,
+    @Param('transactionId') transactionId: string,
+  ) {
+    const pdfDoc =
+      await this.paymentReportService.getTransactionByIdReport(
+        transactionId,
+        false // No es single
+      );
+
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Transaction-Report';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
+
+  @Get('transaction/:transactionId/single')
+  @ApiOperation({ summary: 'Generar recibo de transacción (Versión Móvil)', description: 'Genera un PDF con el recibo consolidado de la transacción en formato pequeño optimizado para compartir.' })
+  @ApiParam({ name: 'transactionId', description: 'UUID de la transacción' })
+  @ApiProduces('application/pdf')
+  @RequirePermissions('READ_TRANSACTIONS', 'CREATE_TRANSACTIONS')
+  async getSingleTransactionReport(
+    @Res() response: Response,
+    @Param('transactionId') transactionId: string,
+  ) {
+    const pdfDoc =
+      await this.paymentReportService.getTransactionByIdReport(
+        transactionId,
+        true // Es single
+      );
+
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Transaction-Report-Single';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
 }

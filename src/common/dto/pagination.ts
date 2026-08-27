@@ -45,4 +45,11 @@ export class PaginationDto {
   @IsOptional()
   @IsEnum(OrderBy)
   orderBy?: OrderBy = OrderBy.ASC;
+
+  @ApiPropertyOptional({
+    description: 'Campo por el cual ordenar',
+  })
+  @IsOptional()
+  @IsString()
+  sortField?: string;
 }

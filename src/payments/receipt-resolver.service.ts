@@ -124,7 +124,7 @@ export class ReceiptResolverService {
 
     // 1. AccountCharge explícito
     if (charge.accountCharge && charge.accountCharge.category) {
-      return charge.accountCharge.category.receiptSeries || 'GEN';
+      return charge.accountCharge.category.code || 'GEN';
     }
 
     // 2. StudentCharge (Escuela)
