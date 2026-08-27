@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
-import { AddDiscountDto } from './dto/add-discount.dto';
+import { AddAdjustmentDto } from './dto/add-adjustment.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { ChargesPaginationDto } from './dto/pagination.dto';
@@ -18,8 +18,8 @@ export const chargeSelect: Prisma.ChargeSelect = {
   description: true,
   amount: true,
   pendingAmount: true,
-  discountAmount: true,
-  discountReason: true,
+  adjustmentAmount: true,
+  adjustmentReason: true,
   dueDate: true,
   status: true,
   parentChargeId: true,
@@ -99,7 +99,7 @@ export const chargeSelect: Prisma.ChargeSelect = {
 
 function mapChargeForFrontend(charge: any) {
   const amount = Number(charge.amount);
-  const discountAmount = Number(charge.discountAmount || 0);
+  const adjustmentAmount = Number(charge.adjustmentAmount || 0);
 
   const paidAmount = charge.payments
     ? charge.payments
@@ -108,17 +108,17 @@ function mapChargeForFrontend(charge: any) {
     : 0;
 
   const isFullyPaidWithMoney = paidAmount >= amount;
-  const hasDiscount = discountAmount > 0;
+  const hasAdjustment = adjustmentAmount !== 0;
 
-  const canEditDiscount = charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
-  const canRemoveDiscount = hasDiscount && charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
+  const canEditAdjustment = charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
+  const canRemoveAdjustment = hasAdjustment && charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
 
   const { payments, ...chargeWithoutPayments } = charge;
 
   return {
     ...chargeWithoutPayments,
-    canEditDiscount,
-    canRemoveDiscount,
+    canEditAdjustment,
+    canRemoveAdjustment,
   };
 }
 
@@ -316,19 +316,24 @@ export class ChargesService {
 
     if (rest.amount !== undefined) {
       const newAmount = Number(rest.amount);
-      const discount = Number(charge.discountAmount || 0);
+      const adjustment = Number(charge.adjustmentAmount || 0);
+      const newExpectedTotal = newAmount + adjustment;
 
-      if (discount > newAmount) {
+      if (newExpectedTotal < 0) {
         throw new BadRequestException(
-          'El nuevo monto base no puede ser menor al descuento ya aplicado.',
+          'El nuevo monto base sumado al ajuste no puede ser negativo.',
         );
       }
 
-      let newPending = newAmount - discount;
+      const oldExpectedTotal = Number(charge.amount) + Number(charge.adjustmentAmount || 0);
+      const paidAmount = oldExpectedTotal - Number(charge.pendingAmount);
+
+      let newPending = newExpectedTotal - paidAmount;
       if (newPending < 0) newPending = 0;
 
       data.pendingAmount = newPending;
       if (newPending === 0) data.status = StatusCharge.PAID;
+      else if (paidAmount > 0) data.status = StatusCharge.PARTIAL;
       else data.status = StatusCharge.PENDING;
     }
 
@@ -415,7 +420,7 @@ export class ChargesService {
     };
   }
 
-  async addDiscount(id: string, addDiscountDto: AddDiscountDto) {
+  async addAdjustment(id: string, addAdjustmentDto: AddAdjustmentDto) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
       include: { payments: true },
@@ -425,15 +430,17 @@ export class ChargesService {
     }
 
     const amount = Number(charge.amount);
-    const newDiscount = Number(addDiscountDto.discountAmount);
+    const newAdjustment = Number(addAdjustmentDto.adjustmentAmount);
+    
+    const newExpectedTotal = amount + newAdjustment;
 
-    if (newDiscount > amount) {
+    if (newExpectedTotal < 0) {
       throw new BadRequestException(
-        'El descuento no puede ser mayor al monto original del cargo',
+        'El total esperado (monto + ajuste) no puede ser negativo',
       );
     }
 
-    const oldDiscount = Number(charge.discountAmount || 0);
+    const oldAdjustment = Number(charge.adjustmentAmount || 0);
 
     const paidAmount = charge.payments
       ? charge.payments
@@ -441,7 +448,8 @@ export class ChargesService {
           .reduce((sum, p) => sum + Number(p.amount), 0)
       : 0;
 
-    const isFullyPaidWithMoney = paidAmount >= amount;
+    const oldExpectedTotal = amount + oldAdjustment;
+    const isFullyPaidWithMoney = paidAmount >= oldExpectedTotal;
 
     if (charge.status === 'CANCELLED') {
       throw new BadRequestException('No se puede modificar un cargo cancelado.');
@@ -449,11 +457,9 @@ export class ChargesService {
 
     if (isFullyPaidWithMoney) {
       throw new BadRequestException(
-        'No se puede modificar el descuento de un cargo que ya fue pagado completamente con dinero real.',
+        'No se puede modificar el ajuste de un cargo que ya fue pagado completamente con dinero real.',
       );
     }
-
-    const newExpectedTotal = amount - newDiscount;
 
     let newPending = newExpectedTotal - paidAmount;
     if (newPending < 0) {
@@ -473,8 +479,8 @@ export class ChargesService {
       const updated = await tx.charge.update({
         where: { id },
         data: {
-          discountAmount: newDiscount,
-          discountReason: addDiscountDto.discountReason,
+          adjustmentAmount: newAdjustment,
+          adjustmentReason: addAdjustmentDto.adjustmentReason,
           pendingAmount: newPending,
           status: newStatus,
         },
@@ -485,12 +491,12 @@ export class ChargesService {
     });
 
     return {
-      message: 'Descuento agregado exitosamente',
+      message: 'Ajuste agregado exitosamente',
       data: mapChargeForFrontend(updatedCharge),
     };
   }
 
-  async removeDiscount(id: string) {
+  async removeAdjustment(id: string) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
       include: { payments: true },
@@ -499,9 +505,9 @@ export class ChargesService {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
     }
 
-    const oldDiscount = Number(charge.discountAmount || 0);
-    if (oldDiscount === 0) {
-      throw new BadRequestException('El cargo no tiene un descuento aplicado');
+    const oldAdjustment = Number(charge.adjustmentAmount || 0);
+    if (oldAdjustment === 0) {
+      throw new BadRequestException('El cargo no tiene un ajuste aplicado');
     }
 
     const amount = Number(charge.amount);
@@ -511,7 +517,8 @@ export class ChargesService {
           .reduce((sum, p) => sum + Number(p.amount), 0)
       : 0;
 
-    const isFullyPaidWithMoney = paidAmount >= amount;
+    const oldExpectedTotal = amount + oldAdjustment;
+    const isFullyPaidWithMoney = paidAmount >= oldExpectedTotal;
 
     if (charge.status === 'CANCELLED') {
       throw new BadRequestException('No se puede modificar un cargo cancelado.');
@@ -519,11 +526,11 @@ export class ChargesService {
 
     if (isFullyPaidWithMoney) {
       throw new BadRequestException(
-        'No se puede remover el descuento de un cargo que ya fue pagado completamente con dinero real.',
+        'No se puede remover el ajuste de un cargo que ya fue pagado completamente con dinero real.',
       );
     }
 
-    const newExpectedTotal = amount; // Sin descuento
+    const newExpectedTotal = amount; // Sin ajuste
 
     let newPending = newExpectedTotal - paidAmount;
     if (newPending < 0) {
@@ -543,8 +550,8 @@ export class ChargesService {
       const updated = await tx.charge.update({
         where: { id },
         data: {
-          discountAmount: 0,
-          discountReason: null,
+          adjustmentAmount: 0,
+          adjustmentReason: null,
           pendingAmount: newPending,
           status: newStatus,
         },
@@ -555,7 +562,7 @@ export class ChargesService {
     });
 
     return {
-      message: 'Descuento eliminado exitosamente',
+      message: 'Ajuste eliminado exitosamente',
       data: mapChargeForFrontend(updatedCharge),
     };
   }

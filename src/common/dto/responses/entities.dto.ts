@@ -1316,13 +1316,13 @@ export class ChargeResponseDto {
   @ApiProperty({
     example: 'any',
   })
-  discountAmount: any;
+  adjustmentAmount: any;
 
   @ApiProperty({
     required: false,
     example: 'string',
   })
-  discountReason?: string;
+  adjustmentReason?: string;
 
   @ApiProperty({
     example: '2024-01-01T00:00:00Z',

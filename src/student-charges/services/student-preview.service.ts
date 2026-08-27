@@ -113,7 +113,7 @@ export class StudentPreviewService {
                }
                
                // 6. Calcular importe On-Demand
-               const { netAmount, baseAmount, discountAmount, discountPercent, appliedDiscounts } = calculateOnDemandCycleFee(
+               const { netAmount, baseAmount, adjustmentAmount, discountPercent, appliedDiscounts } = calculateOnDemandCycleFee(
                   membership,
                   currentCycle,
                   finalBillableDays,
@@ -156,7 +156,7 @@ export class StudentPreviewService {
                       netAmount,
                       baseAmount,
                       description,
-                      discountAmount,
+                      adjustmentAmount,
                       discountPercent,
                       currentCycle.cycleStartDate, // dueDate es el inicio del ciclo
                       currentCycle.billingYear,
@@ -198,7 +198,7 @@ export class StudentPreviewService {
     const {
       netAmount,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       discountPercent,
       appliedDiscounts,
     } = calculateRegistrationFee(membership);
@@ -211,7 +211,7 @@ export class StudentPreviewService {
         netAmount,
         baseAmount,
         description,
-        discountAmount,
+        adjustmentAmount,
         discountPercent,
         membership.startedAt,
       ),
@@ -262,7 +262,7 @@ export class StudentPreviewService {
         singlePayment.netAmount,
         singlePayment.baseAmount,
         singlePayment.description,
-        singlePayment.discountAmount,
+        singlePayment.adjustmentAmount,
         singlePayment.discountPercent,
         membership.startedAt,
       ),
@@ -270,14 +270,14 @@ export class StudentPreviewService {
   }
 
   public buildChargesBreakdown(
-    charges: { amount: number; baseAmount?: number; discountAmount?: number }[],
+    charges: { amount: number; baseAmount?: number; adjustmentAmount?: number }[],
   ) {
     const totalBaseAmount = charges.reduce(
       (sum, c) => sum + (c.baseAmount || 0),
       0,
     );
     const totalDiscountAmount = charges.reduce(
-      (sum, c) => sum + (c.discountAmount || 0),
+      (sum, c) => sum + (c.adjustmentAmount || 0),
       0,
     );
     const totalNetAmount = charges.reduce((sum, c) => sum + c.amount, 0);

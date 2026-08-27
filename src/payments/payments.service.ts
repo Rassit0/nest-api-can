@@ -74,6 +74,7 @@ export class PaymentsService {
       transactions: item.transactions.map((t) => ({
         ...t,
         amount: Number(t.amount),
+        financialAccountName: (t as any).financialAccount?.name || null,
       })),
     }));
 
@@ -96,6 +97,7 @@ export class PaymentsService {
       transactions: payment.transactions.map((t) => ({
         ...t,
         amount: Number(t.amount),
+        financialAccountName: (t as any).financialAccount?.name || null,
       })),
     };
   }
@@ -132,9 +134,9 @@ export class PaymentsService {
       const charge = payment.charge;
       const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
       const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
-      const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-
-      const expectedTotal = chargeAmount - discountAmount;
+      const adjustmentAmount = Number(charge.adjustmentAmount?.toNumber() || 0);
+  
+      const expectedTotal = chargeAmount + adjustmentAmount;
       const newPendingAmount = Number((currentPending + paymentAmount).toFixed(2));
       let newStatus = charge.status;
 

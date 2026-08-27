@@ -103,14 +103,14 @@ export class StudentEnrollmentService {
                if (regFeeCalculation.baseAmount && regFeeCalculation.baseAmount > 0) {
                    baseRegistrationAmount = regFeeCalculation.baseAmount;
                    totalRegistrationAmount = regFeeCalculation.netAmount;
-                   registrationDiscount = regFeeCalculation.discountAmount;
+                   registrationDiscount = regFeeCalculation.adjustmentAmount;
                    
                    // Creamos el cargo de matrícula genérico
                    const registrationCharge = await db.charge.create({
                       data: {
-                          amount: totalRegistrationAmount,
+                          amount: baseRegistrationAmount,
                           pendingAmount: totalRegistrationAmount,
-                          discountAmount: registrationDiscount,
+                          adjustmentAmount: registrationDiscount,
                           description: 'Inscripción',
                           status: totalRegistrationAmount > 0 ? StatusCharge.PENDING : StatusCharge.PAID,
                           dueDate: DateUtils.getEndOfUTCDay(membership.startedAt),

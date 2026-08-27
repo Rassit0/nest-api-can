@@ -10,13 +10,13 @@ export class StudentChargeFactory {
     membershipId: string,
     type: TypeMembershipCharge,
     baseAmount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     description: string,
     dueDate: Date,
     billingYear: number,
     billingMonth: number,
     billingCycle?: number | null,
-    discountReason?: string | null,
+    adjustmentReason?: string | null,
   ): Prisma.ChargeCreateInput {
     // Protección contra Race Conditions en Postgres (null != null)
     let safeBillingCycle = billingCycle;
@@ -34,9 +34,9 @@ export class StudentChargeFactory {
     return {
       description,
       amount: baseAmount,
-      discountAmount: discountAmount,
-      discountReason: discountReason || null,
-      pendingAmount: Math.max(0, baseAmount - discountAmount),
+      adjustmentAmount: adjustmentAmount,
+      adjustmentReason: adjustmentReason || null,
+      pendingAmount: Math.max(0, baseAmount + adjustmentAmount),
       dueDate,
       status: StatusCharge.PENDING,
       studentCharges: {
@@ -54,93 +54,93 @@ export class StudentChargeFactory {
   static buildRegistrationChargePayload(
     membershipId: string,
     baseAmount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     description: string,
     dueDate: Date,
-    discountReason?: string | null,
+    adjustmentReason?: string | null,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
       TypeMembershipCharge.REGISTRATION,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       description,
       dueDate,
       dueDate.getUTCFullYear(),
       dueDate.getUTCMonth() + 1,
       null,
-      discountReason,
+      adjustmentReason,
     );
   }
 
   static buildSeasonChargePayload(
     membershipId: string,
     baseAmount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     description: string,
     dueDate: Date,
     startBillingYear: number,
     startBillingMonth: number,
-    discountReason?: string | null,
+    adjustmentReason?: string | null,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
       TypeMembershipCharge.SEASON_FEE,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       description,
       dueDate,
       startBillingYear,
       startBillingMonth,
       null,
-      discountReason,
+      adjustmentReason,
     );
   }
 
   static buildManualChargePayload(
     membershipId: string,
     baseAmount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     description: string,
     dueDate: Date,
-    discountReason?: string | null,
+    adjustmentReason?: string | null,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
       TypeMembershipCharge.MANUAL,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       description,
       dueDate,
       dueDate.getUTCFullYear(),
       dueDate.getUTCMonth() + 1,
       null,
-      discountReason,
+      adjustmentReason,
     );
   }
 
   static buildRecurringChargePayload(
     membershipId: string,
     baseAmount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     description: string,
     groupDueDate: Date,
     billingYear: number,
     billingMonth: number,
     billingCycle: number | null,
-    discountReason?: string | null,
+    adjustmentReason?: string | null,
   ): Prisma.ChargeCreateInput {
     return this.createChargePayload(
       membershipId,
       TypeMembershipCharge.RECURRING_FEE,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       description,
       groupDueDate,
       billingYear,
       billingMonth,
       billingCycle,
-      discountReason,
+      adjustmentReason,
     );
   }
 }

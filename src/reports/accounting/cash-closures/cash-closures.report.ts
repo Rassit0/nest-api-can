@@ -34,8 +34,8 @@ export class CashClosuresReport implements ReportHandler, OnModuleInit {
     let periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
 
     if (params?.start && params?.end) {
-      periodStart = new Date(`${params.start}T00:00:00`);
-      periodEnd = new Date(`${params.end}T23:59:59.999`);
+      periodStart = new Date(params.start);
+      periodEnd = new Date(params.end);
     }
 
     // 1. Data Fetching desde el servicio de dominio Analítico (Tesorería)

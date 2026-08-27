@@ -25,7 +25,7 @@ import { ChargesService } from './charges.service';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
 import { ChargesPaginationDto } from './dto/pagination.dto';
-import { AddDiscountDto } from './dto/add-discount.dto';
+import { AddAdjustmentDto } from './dto/add-adjustment.dto';
 import {
   ApiStandardResponse,
   ApiStandardCreatedResponse,
@@ -73,40 +73,40 @@ export class ChargesController {
     return await this.chargesService.findAll(paginationDto);
   }
 
-  @Patch(':id/discount')
+  @Patch(':id/adjustment')
   @ApiOperation({
-    summary: 'Agregar descuento a un cargo',
-    description: 'Aplica un descuento específico a un cargo existente.',
+    summary: 'Agregar ajuste a un cargo',
+    description: 'Aplica un recargo o descuento específico a un cargo existente.',
   })
   @ApiParam({
     name: 'id',
     description: 'ID del cargo (UUID)',
     format: 'uuid',
   })
-  @ApiBody({ type: AddDiscountDto })
-  @ApiStandardResponse(ChargeResponseDto, 'Descuento agregado exitosamente.')
+  @ApiBody({ type: AddAdjustmentDto })
+  @ApiStandardResponse(ChargeResponseDto, 'Ajuste agregado exitosamente.')
   @RequirePermissions('UPDATE_CHARGES')
-  async addDiscount(
+  async addAdjustment(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() addDiscountDto: AddDiscountDto,
+    @Body() addAdjustmentDto: AddAdjustmentDto,
   ) {
-    return await this.chargesService.addDiscount(id, addDiscountDto);
+    return await this.chargesService.addAdjustment(id, addAdjustmentDto);
   }
 
-  @Delete(':id/discount')
+  @Delete(':id/adjustment')
   @ApiOperation({
-    summary: 'Eliminar descuento de un cargo',
-    description: 'Remueve el descuento aplicado a un cargo específico.',
+    summary: 'Eliminar ajuste de un cargo',
+    description: 'Remueve el ajuste aplicado a un cargo específico.',
   })
   @ApiParam({
     name: 'id',
     description: 'ID del cargo (UUID)',
     format: 'uuid',
   })
-  @ApiStandardResponse(ChargeResponseDto, 'Descuento eliminado exitosamente.')
+  @ApiStandardResponse(ChargeResponseDto, 'Ajuste eliminado exitosamente.')
   @RequirePermissions('DELETE_CHARGES')
-  async removeDiscount(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.chargesService.removeDiscount(id);
+  async removeAdjustment(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.chargesService.removeAdjustment(id);
   }
 
   @Get(':id')

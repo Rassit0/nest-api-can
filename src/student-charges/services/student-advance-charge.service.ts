@@ -117,10 +117,10 @@ export class StudentAdvanceChargeService {
         cycleTotalDays
       );
 
-      const discountReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
+      const adjustmentReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
 
       subtotal += cycleFee.baseAmount;
-      totalDiscounts += cycleFee.discountAmount;
+      totalDiscounts += cycleFee.adjustmentAmount;
       total += cycleFee.netAmount;
 
       let description = buildCycleDescription(
@@ -137,8 +137,8 @@ export class StudentAdvanceChargeService {
         cycleEndDate: cycle.cycleEndDate,
         effectiveStartDate: effectiveStart,
         baseAmount: cycleFee.baseAmount,
-        discountAmount: cycleFee.discountAmount,
-        discountReason: discountReason,
+        adjustmentAmount: cycleFee.adjustmentAmount,
+        adjustmentReason: adjustmentReason,
         amount: cycleFee.netAmount,
         dueDate: new Date(Date.UTC(effectiveStart.getUTCFullYear(), effectiveStart.getUTCMonth(), effectiveStart.getUTCDate(), 23, 59, 59, 999)),
         totalDays: cycleTotalDays,

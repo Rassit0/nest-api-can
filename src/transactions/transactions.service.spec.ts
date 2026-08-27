@@ -210,7 +210,7 @@ describe('TransactionsService', () => {
         id: 'charge-1',
         amount: { toNumber: () => 100 },
         pendingAmount: { toNumber: () => 100 },
-        discountAmount: null,
+        adjustmentAmount: null,
         status: StatusCharge.PENDING,
       });
 
@@ -241,7 +241,7 @@ describe('TransactionsService', () => {
         id: 'charge-1',
         amount: { toNumber: () => 100 },
         pendingAmount: { toNumber: () => 100 },
-        discountAmount: null,
+        adjustmentAmount: null,
         status: StatusCharge.PENDING,
       });
 
@@ -283,7 +283,7 @@ describe('TransactionsService', () => {
         id: 'charge-1',
         amount: { toNumber: () => 100 },
         pendingAmount: { toNumber: () => 0 }, // It was PAID
-        discountAmount: null,
+        adjustmentAmount: null,
         status: StatusCharge.PAID,
       });
 

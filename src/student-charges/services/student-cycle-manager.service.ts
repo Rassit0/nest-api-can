@@ -129,15 +129,15 @@ export class StudentCycleManagerService {
       // 5. Calcular monto y descuentos
       let netAmount = 0,
         baseAmount = 0,
-        discountAmount = 0,
+        adjustmentAmount = 0,
         description = 'Cuota regular',
-        discountReason = '';
+        adjustmentReason = '';
 
       if (options.overrideChargeAmount !== undefined) {
         netAmount = options.overrideChargeAmount;
         baseAmount = options.overrideChargeAmount;
-        discountAmount = 0;
-        discountReason = '';
+        adjustmentAmount = 0;
+        adjustmentReason = '';
         description = buildCycleDescription(
           currentCycle.cycleStartDate,
           currentCycle.cycleEndDate,
@@ -161,9 +161,9 @@ export class StudentCycleManagerService {
         if (singlePayment.hasSinglePaymentAmount) {
           netAmount = singlePayment.netAmount;
           baseAmount = singlePayment.baseAmount;
-          discountAmount = singlePayment.discountAmount;
+          adjustmentAmount = singlePayment.adjustmentAmount;
           description = singlePayment.description;
-          discountReason = singlePayment.appliedDiscounts?.map((d) => d.reason).filter(Boolean).join(', ') || '';
+          adjustmentReason = singlePayment.appliedDiscounts?.map((d) => d.reason).filter(Boolean).join(', ') || '';
         }
       } else {
         const calc = calculateOnDemandCycleFee(
@@ -174,8 +174,8 @@ export class StudentCycleManagerService {
         );
         netAmount = calc.netAmount;
         baseAmount = calc.baseAmount;
-        discountAmount = calc.discountAmount;
-        discountReason = calc.appliedDiscounts?.map((d) => d.reason).filter(Boolean).join(', ') || '';
+        adjustmentAmount = calc.adjustmentAmount;
+        adjustmentReason = calc.appliedDiscounts?.map((d) => d.reason).filter(Boolean).join(', ') || '';
         description = buildCycleDescription(
           currentCycle.cycleStartDate,
           currentCycle.cycleEndDate,
@@ -197,8 +197,8 @@ export class StudentCycleManagerService {
           data: {
             amount: netAmount,
             pendingAmount: netAmount,
-            discountAmount: discountAmount,
-            discountReason: discountReason !== '' ? discountReason : null,
+            adjustmentAmount: adjustmentAmount,
+            adjustmentReason: adjustmentReason !== '' ? adjustmentReason : null,
             description: description,
             status: netAmount > 0 ? StatusCharge.PENDING : StatusCharge.PAID,
             dueDate: DateUtils.getEndOfUTCDay(currentCycle.cycleStartDate),

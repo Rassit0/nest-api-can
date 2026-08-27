@@ -54,64 +54,73 @@ describe('ChargesService - Discount Logic', () => {
 
   const setupCharge = (
     amount: number,
-    discountAmount: number,
+    adjustmentAmount: number,
     pendingAmount: number,
     payments: Array<{ amount: number; status: string }> = [],
   ) => {
     prisma.charge.findUnique.mockResolvedValue({
       id: 'test-id',
       amount: amount,
-      discountAmount: discountAmount,
+      adjustmentAmount: adjustmentAmount,
       pendingAmount: pendingAmount,
       payments: payments,
     });
   };
 
-  describe('addDiscount() and removeDiscount() rules', () => {
-    it('1. Cargo de Bs. 100 sin descuento', async () => {
-      // Un cargo nuevo: amount 100, pending 100
-      setupCharge(100, 0, 100, []);
-      
-      // Simulamos que se agrega un descuento de 0 (sólo para disparar el cálculo)
-      await service.addDiscount('test-id', { discountAmount: 0 });
+  describe('addAdjustment() and removeAdjustment() rules (Nueva semántica)', () => {
+    it('Caso A — Sin ajuste (amount = 500, adjustmentAmount = 0)', async () => {
+      setupCharge(500, 0, 500, []);
+      await service.addAdjustment('test-id', { adjustmentAmount: 0 });
 
       expect(updateDataSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            pendingAmount: 100,
+            adjustmentAmount: 0,
+            pendingAmount: 500,
             status: StatusCharge.PENDING,
           }),
         }),
       );
     });
 
-    it('2. Pago real de Bs. 40', async () => {
-      // amount 100, pending 60, payments=[{amount: 40, status: 'COMPLETED'}]
-      setupCharge(100, 0, 60, [{ amount: 40, status: 'COMPLETED' }]);
-      
-      await service.addDiscount('test-id', { discountAmount: 0 });
+    it('Caso B — Descuento (amount = 500, adjustmentAmount = -50)', async () => {
+      setupCharge(500, 0, 500, []);
+      await service.addAdjustment('test-id', { adjustmentAmount: -50 });
 
       expect(updateDataSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            pendingAmount: 60,
-            status: StatusCharge.PARTIAL,
+            adjustmentAmount: -50,
+            pendingAmount: 450,
+            status: StatusCharge.PENDING,
           }),
         }),
       );
     });
 
-    it('3. Descuento de Bs. 60 sobre el caso anterior (PAID, reversible)', async () => {
-      // Caso 2: ya pagó 40. Ahora le aplicamos 60 de descuento.
-      setupCharge(100, 0, 60, [{ amount: 40, status: 'COMPLETED' }]);
+    it('Caso C — Recargo (amount = 500, adjustmentAmount = 50)', async () => {
+      setupCharge(500, 0, 500, []);
+      await service.addAdjustment('test-id', { adjustmentAmount: 50 });
 
-      await service.addDiscount('test-id', { discountAmount: 60, discountReason: 'Beca' });
-
-      // paidAmount = 40. newExpectedTotal = 100 - 60 = 40. newPending = 40 - 40 = 0.
       expect(updateDataSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            discountAmount: 60,
+            adjustmentAmount: 50,
+            pendingAmount: 550,
+            status: StatusCharge.PENDING,
+          }),
+        }),
+      );
+    });
+
+    it('Caso D — Descuento completo (amount = 500, adjustmentAmount = -500)', async () => {
+      setupCharge(500, 0, 500, []);
+      await service.addAdjustment('test-id', { adjustmentAmount: -500 });
+
+      expect(updateDataSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            adjustmentAmount: -500,
             pendingAmount: 0,
             status: StatusCharge.PAID,
           }),
@@ -119,91 +128,62 @@ describe('ChargesService - Discount Logic', () => {
       );
     });
 
-    it('4. Cargo de Bs. 100 con descuento de Bs. 100', async () => {
-      setupCharge(100, 0, 100, []);
-
-      await service.addDiscount('test-id', { discountAmount: 100 });
-
-      // paidAmount = 0. newExpectedTotal = 100 - 100 = 0. newPending = 0 - 0 = 0.
-      expect(updateDataSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            discountAmount: 100,
-            pendingAmount: 0,
-            status: StatusCharge.PAID,
-          }),
-        }),
-      );
-    });
-
-    it('5. Cargo de Bs. 100 pagado completamente con dinero real', async () => {
-      // paidAmount = 100.
-      setupCharge(100, 0, 0, [{ amount: 100, status: 'COMPLETED' }]);
-
-      // Si intentamos agregar un descuento a un cargo ya pagado completamente con dinero real,
-      // el sistema debe rechazarlo con un BadRequestException, protegiendo el pago.
+    it('Caso E — Descuento que deja total negativo (amount = 500, adjustmentAmount = -501)', async () => {
+      setupCharge(500, 0, 500, []);
       await expect(
-        service.addDiscount('test-id', { discountAmount: 50 }),
+        service.addAdjustment('test-id', { adjustmentAmount: -501 }),
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('6. Cargo de Bs. 100, pago 50 y descuento 50', async () => {
-      // Estado actual: pago 50, descuento 50, pending = 0
-      setupCharge(100, 50, 0, [{ amount: 50, status: 'COMPLETED' }]);
+    it('Caso F — Edición con pagos existentes', async () => {
+      // Estado actual: amount = 500, adjustmentAmount = -50, pendingAmount = 100
+      // expectedTotal = 450. paidAmount = 450 - 100 = 350.
+      setupCharge(500, -50, 100, [{ amount: 350, status: 'COMPLETED' }]);
 
-      // Al remover el descuento, el expectedTotal vuelve a 100.
-      // paidAmount es 50. newPending = 100 - 50 = 50. status = PARTIAL.
-      await service.removeDiscount('test-id');
+      // Modificamos a adjustmentAmount = -20
+      // newExpectedTotal = 480. newPending = 480 - 350 = 130.
+      await service.addAdjustment('test-id', { adjustmentAmount: -20 });
 
       expect(updateDataSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            discountAmount: 0,
-            pendingAmount: 50,
+            adjustmentAmount: -20,
+            pendingAmount: 130,
             status: StatusCharge.PARTIAL,
           }),
         }),
       );
     });
 
-    it('7. Reversión de un descuento que había liquidado el cargo (100%)', async () => {
-      // Cargo de 100, con descuento de 100, pagos 0.
-      setupCharge(100, 100, 0, []);
+    it('Caso G — Cargo con recargo, pagos existentes', async () => {
+      // amount = 500, adjustmentAmount = 50, pendingAmount = 350
+      // expectedTotal = 550. paidAmount = 550 - 350 = 200.
+      setupCharge(500, 50, 350, [{ amount: 200, status: 'COMPLETED' }]);
 
-      // Se remueve el descuento
-      await service.removeDiscount('test-id');
+      // Removemos el ajuste
+      // newExpectedTotal = 500. newPending = 500 - 200 = 300.
+      await service.removeAdjustment('test-id');
 
-      // expectedTotal = 100. paidAmount = 0. newPending = 100. status = PENDING.
       expect(updateDataSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            discountAmount: 0,
-            pendingAmount: 100,
-            status: StatusCharge.PENDING,
+            adjustmentAmount: 0,
+            pendingAmount: 300,
+            status: StatusCharge.PARTIAL,
           }),
         }),
       );
     });
 
-    it('8. Reversión de pago combinada con descuento (cancelación de pago)', async () => {
-      // Si un pago de 50 es cancelado, no debe sumarse al paidAmount.
-      // Cargo 100, descuento 0. Pagos: uno de 50 CANCELLED.
-      setupCharge(100, 0, 100, [{ amount: 50, status: 'CANCELLED' }]);
+    it('Caso H — isFullyPaidWithMoney (evaluado contra expectedTotal)', async () => {
+      // amount = 500, adjustmentAmount = -50, pendingAmount = 0
+      // expectedTotal = 450. paidAmount = 450.
+      // Ya pagó 450, no pagó 500. Pero 450 >= expectedTotal, por lo que está completamente pagado.
+      setupCharge(500, -50, 0, [{ amount: 450, status: 'COMPLETED' }]);
 
-      await service.addDiscount('test-id', { discountAmount: 50 });
-
-      // paidAmount = 0 (porque no hay pagos COMPLETED).
-      // newExpectedTotal = 100 - 50 = 50.
-      // newPending = 50. status = PARTIAL? No, status = PENDING.
-      expect(updateDataSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            discountAmount: 50,
-            pendingAmount: 50,
-            status: StatusCharge.PENDING,
-          }),
-        }),
-      );
+      await expect(
+        service.addAdjustment('test-id', { adjustmentAmount: 0 }),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

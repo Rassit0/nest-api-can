@@ -112,7 +112,7 @@ export class PaymentReportService {
        };
     });
 
-    const paymentMethodString = distributions.map(d => `${d.paymentMethod} (${d.amount} Bs) - ${d.financialAccountName}`).join('\n');
+    const paymentMethodString = distributions.map(d => `${d.paymentMethod}: ${d.amount} Bs.`).join('\n');
 
     const data = {
       receiptSeries: payment.receiptSeries,
@@ -201,7 +201,7 @@ export class PaymentReportService {
          financialAccountName: transaction.financialAccount?.name || 'Cuenta',
     }];
     
-    const paymentMethodString = distributions.map(d => `${d.paymentMethod} (${d.amount} Bs) - ${d.financialAccountName}`).join('\n');
+    const paymentMethodString = distributions.map(d => `${d.paymentMethod}: ${d.amount} Bs.`).join('\n');
 
     const data = {
       receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,

@@ -133,12 +133,6 @@ export function buildRecurringDescription(
   billingMonth: number,
   monthName: string,
 ): string {
-  const isEnrollmentMonth =
-    billingYear === startedAt.getUTCFullYear() &&
-    billingMonth - 1 === startedAt.getUTCMonth();
-  if (isEnrollmentMonth) {
-    return 'Primer Mes - ' + monthName + ' ' + billingYear;
-  }
   return 'Mes - ' + monthName + ' ' + billingYear;
 }
 

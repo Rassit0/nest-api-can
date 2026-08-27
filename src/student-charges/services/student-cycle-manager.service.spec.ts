@@ -239,7 +239,7 @@ describe('StudentCycleManagerService', () => {
       // Verify Charge was created with EXACTLY 150 despite late enrollment
       const chargeCall = mockTx.charge.create.mock.calls[0][0];
       expect(chargeCall.data.amount).toEqual(150);
-      expect(chargeCall.data.discountAmount).toEqual(0);
+      expect(chargeCall.data.adjustmentAmount).toEqual(0);
       expect(chargeCall.data.description).not.toContain('Prorrateado');
       
       const studentChargeCall = mockTx.studentCharge.create.mock.calls[0][0];

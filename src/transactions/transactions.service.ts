@@ -323,8 +323,8 @@ export class TransactionsService {
         const applied = Number(totalPaymentAmount.toFixed(2));
         const newPendingAmount = Number((currentPending - applied).toFixed(2));
         const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
-        const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-        const expectedTotal = chargeAmount - discountAmount;
+        const adjustmentAmount = Number(charge.adjustmentAmount?.toNumber() || 0);
+        const expectedTotal = chargeAmount + adjustmentAmount;
 
         let newStatus = charge.status;
         if (newPendingAmount <= 0) {
@@ -559,9 +559,9 @@ export class TransactionsService {
           );
           const applied = Number(transaction.amount.toNumber().toFixed(2));
           const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
-          const discountAmount = Number(charge.discountAmount?.toNumber() || 0);
-
-          const expectedTotal = chargeAmount - discountAmount;
+          const adjustmentAmount = Number(charge.adjustmentAmount?.toNumber() || 0);
+  
+          const expectedTotal = chargeAmount + adjustmentAmount;
 
           const newPendingAmount = Number(
             (currentPending + applied).toFixed(2),

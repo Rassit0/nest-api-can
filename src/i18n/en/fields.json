@@ -28,6 +28,8 @@
         "CREDIT_CARD": "Credit Card",
         "DEBIT_CARD": "Debit Card",
         "CHECK": "Check",
+        "QR": "QR",
+        "TRANSFER": "Transfer",
         "OTHER": "Other"
     }
 }

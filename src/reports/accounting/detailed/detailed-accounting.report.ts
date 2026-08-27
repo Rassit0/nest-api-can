@@ -184,18 +184,42 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         number = t.payment.receiptNumber || 0;
 
         const cat = resolveEffectiveCategoryFromPayload(t.payment.charge);
+          
+        let entityName: string | undefined;
+        let entityId: string | undefined;
+
+        if (t.payment.charge?.studentCharges?.[0]?.studentMembership?.courseSeason?.course?.school) {
+          const school = t.payment.charge.studentCharges[0].studentMembership.courseSeason.course.school;
+          entityName = school.name;
+          entityId = school.id;
+        } else if (t.payment.charge?.membershipCharges?.[0]?.playerMembership?.teamSeason?.team?.club) {
+          const club = t.payment.charge.membershipCharges[0].playerMembership.teamSeason.team.club;
+          entityName = club.name;
+          entityId = club.id;
+        }
+
+        const getChildName = (entName: string | undefined, catName: string | undefined, ser: string, defaultName: string) => {
+          const baseName = entName || catName;
+          if (!baseName) return defaultName;
+          let prefix = '';
+          if (ser.includes('MAT')) prefix = 'Matrícula de ';
+          else if (ser.includes('REC')) prefix = 'Recargo de ';
+          return `${prefix}${baseName}`;
+        };
         
         // 1. Determinar el grupo padre (ESCUELAS, EQUIPOS, PERSONALIZADOS, HISTÓRICO)
         if (series.startsWith('ESC')) {
           parentId = 'VIRTUAL_ESCUELAS';
           parentName = 'ESCUELAS';
-          childId = series;
-          childName = series;
+          const resolvedId = entityId || (cat ? cat.id : series);
+          childId = `${resolvedId}_${series}`;
+          childName = getChildName(entityName, cat?.name, series, series);
         } else if (series.startsWith('EQP')) {
           parentId = 'VIRTUAL_EQUIPOS';
           parentName = 'EQUIPOS';
-          childId = series;
-          childName = series;
+          const resolvedId = entityId || (cat ? cat.id : series);
+          childId = `${resolvedId}_${series}`;
+          childName = getChildName(entityName, cat?.name, series, series);
         } else if (cat && cat.code !== 'ESC' && cat.code !== 'EQP') {
           // Si es una categoría contable personalizada y está activa
           if (cat.isActive) {
@@ -208,14 +232,14 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
             parentId = 'VIRTUAL_HISTORICAL';
             parentName = 'OTROS / HISTÓRICO';
             childId = series;
-            childName = `Histórico (${series})`;
+            childName = `Histórico`;
           }
         } else {
           // Histórico genérico (EQ, CU, GEN, etc.)
           parentId = 'VIRTUAL_HISTORICAL';
           parentName = 'OTROS / HISTÓRICO';
           childId = series;
-          childName = `Histórico (${series})`;
+          childName = `Histórico`;
         }
       }
 
@@ -223,12 +247,17 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
 
       // Track document to avoid double accounting
       if (!cGroup.documentIds.has(docId)) {
-        cGroup.documentIds.add(docId);
         pGroup.documentIds.add(docId);
+        cGroup.documentIds.add(docId);
+        
+        // Actualizar rango de recibos para el PADRE y CHILD
+        if (number > 0) {
+          if (pGroup.minReceipt === null || number < pGroup.minReceipt) pGroup.minReceipt = number;
+          if (pGroup.maxReceipt === null || number > pGroup.maxReceipt) pGroup.maxReceipt = number;
 
-        // Update min/max ONLY for the specific series group (child)
-        if (cGroup.minReceipt === null || number < cGroup.minReceipt) cGroup.minReceipt = number;
-        if (cGroup.maxReceipt === null || number > cGroup.maxReceipt) cGroup.maxReceipt = number;
+          if (cGroup.minReceipt === null || number < cGroup.minReceipt) cGroup.minReceipt = number;
+          if (cGroup.maxReceipt === null || number > cGroup.maxReceipt) cGroup.maxReceipt = number;
+        }
       }
 
       // Financial amounts
@@ -364,7 +393,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         { text: String(rowIndex++), style: 'tableCellCenter' },
         { text: pGroup.categoryName.toUpperCase(), style: 'tableCell', bold: true },
         { text: '', style: 'tableCellCenter' },
-        { text: '', style: 'tableCellCenter' },
+        { text: pGroup.minReceipt !== null && pGroup.maxReceipt !== null ? `${pGroup.minReceipt} - ${pGroup.maxReceipt}` : '', style: 'tableCellCenter', bold: true },
         { text: String(pGroup.documentIds.size), style: 'tableCellCenter', bold: true },
       ];
 

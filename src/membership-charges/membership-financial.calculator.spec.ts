@@ -86,7 +86,7 @@ describe('MembershipFinancialCalculator', () => {
       expect(result.baseAmount).toBe(100);
       expect(result.netAmount).toBe(100);
       expect(result.discountPercent).toBe(0);
-      expect(result.discountAmount).toBe(0);
+      expect(result.adjustmentAmount).toBe(0);
       expect(result.appliedDiscounts.length).toBe(0);
     });
 
@@ -100,7 +100,7 @@ describe('MembershipFinancialCalculator', () => {
       expect(result.baseAmount).toBe(100);
       expect(result.netAmount).toBe(80);
       expect(result.discountPercent).toBe(20);
-      expect(result.discountAmount).toBe(20);
+      expect(result.adjustmentAmount).toBe(20);
       expect(result.appliedDiscounts[0].reason).toBe('Plan de pago');
     });
 
@@ -114,7 +114,7 @@ describe('MembershipFinancialCalculator', () => {
       expect(result.baseAmount).toBe(100);
       expect(result.netAmount).toBe(0);
       expect(result.discountPercent).toBe(100);
-      expect(result.discountAmount).toBe(100);
+      expect(result.adjustmentAmount).toBe(100);
     });
 
     it('should calculate prorated registration fee correctly', () => {

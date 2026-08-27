@@ -174,7 +174,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharge?.amount).toBe(200);
       expect(recCharge?.description).toContain(
-        'Primer Mes',
+        'Mes',
       );
     });
 
@@ -237,7 +237,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       );
       expect(recCharges.length).toBe(3);
       expect(recCharges[0].amount).toBe(0); // 100% discount
-      expect(recCharges[0].discountAmount).toBe(200);
+      expect(recCharges[0].adjustmentAmount).toBe(200);
     });
 
     it('Caso 4: Pago Único de Temporada (isSinglePayment = true)', async () => {
@@ -276,7 +276,7 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
         (c: PreviewCharge) => c.type === TypeMembershipCharge.SEASON_FEE,
       );
       expect(seasonCharge?.amount).toBe(1800); // 2000 - 10%
-      expect(seasonCharge?.discountAmount).toBe(200);
+      expect(seasonCharge?.adjustmentAmount).toBe(200);
     });
 
     it('Caso 5: Prorrateo primera cuota (Ingreso a mitad de mes)', async () => {

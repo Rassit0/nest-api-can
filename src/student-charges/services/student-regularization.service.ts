@@ -90,8 +90,8 @@ export class StudentRegularizationService {
           billingCycle: cycle.billingCycle,
           baseAmount: calc.baseAmount,
           netAmount: calc.netAmount,
-          discountAmount: calc.discountAmount,
-          discountReason: null,
+          adjustmentAmount: calc.adjustmentAmount,
+          adjustmentReason: null,
           title: buildCycleDescription(cycle.cycleStartDate, cycle.cycleEndDate, frequency),
         });
       }

@@ -89,7 +89,7 @@ export const studentMembershipSelect = {
         select: {
           pendingAmount: true,
           amount: true,
-          discountAmount: true,
+          adjustmentAmount: true,
         },
       },
     },
@@ -117,7 +117,7 @@ const mapMembershipWithTotal = (membership: StudentMembershipWithCharges) => {
           sum +
           (Number(current.charge.amount) -
             Number(current.charge.pendingAmount) -
-            Number(current.charge.discountAmount || 0)),
+            Number(current.charge.adjustmentAmount || 0)),
         0,
       ) || 0
     ).toFixed(2),
@@ -421,7 +421,7 @@ export class StudentMembershipsService {
             select: {
               amount: true,
               pendingAmount: true,
-              discountAmount: true,
+              adjustmentAmount: true,
             },
           },
         },
@@ -460,7 +460,7 @@ export class StudentMembershipsService {
             sum +
             (Number(mc.charge.amount) -
               (Number(mc.charge.pendingAmount) || 0) -
-              (Number(mc.charge.discountAmount) || 0)),
+              (Number(mc.charge.adjustmentAmount) || 0)),
           0,
         )
         .toFixed(2),
@@ -829,7 +829,7 @@ export class StudentMembershipsService {
       (mc) =>
         (mc.charge.status !== StatusCharge.PENDING &&
           mc.charge.status !== StatusCharge.CANCELLED) ||
-        (Number(mc.charge.amount) - Number(mc.charge.discountAmount)) > Number(mc.charge.pendingAmount) ||
+        (Number(mc.charge.amount) + Number(mc.charge.adjustmentAmount)) > Number(mc.charge.pendingAmount) ||
         mc.charge.payments.length > 0 ||
         mc.charge.childCharges.length > 0,
     );

@@ -120,13 +120,13 @@ export class MembershipRegularizationService {
     const amountToCharge = dto.overrideAmount !== undefined ? dto.overrideAmount : targetCycle.netAmount;
     
     // Si overrideAmount fue proveído, ignoramos el descuento del ciclo oficial para que el Total a pagar sea exacto.
-    const discountAmount = dto.overrideAmount !== undefined ? 0 : targetCycle.discountAmount;
+    const adjustmentAmount = dto.overrideAmount !== undefined ? 0 : targetCycle.adjustmentAmount;
     const baseAmount = dto.overrideAmount !== undefined ? dto.overrideAmount : targetCycle.baseAmount;
 
     const chargePayload = MembershipChargeFactory.buildRecurringChargePayload(
       membershipId,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       targetCycle.description,
       targetCycle.dueDate,
       targetCycle.billingYear,

@@ -71,7 +71,7 @@ export class MembershipPreviewService {
         cycle.netAmount,
         cycle.baseAmount,
         cycle.description,
-        cycle.discountAmount,
+        cycle.adjustmentAmount,
         cycle.discountPercent,
         cycle.dueDate,
         cycle.billingYear,
@@ -102,7 +102,7 @@ export class MembershipPreviewService {
     const {
       netAmount,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       discountPercent,
       appliedDiscounts,
     } = calculateRegistrationFee(membership);
@@ -115,7 +115,7 @@ export class MembershipPreviewService {
         netAmount,
         baseAmount,
         description,
-        discountAmount,
+        adjustmentAmount,
         discountPercent,
         membership.startedAt,
       ),
@@ -155,7 +155,7 @@ export class MembershipPreviewService {
         singlePayment.netAmount,
         singlePayment.baseAmount,
         singlePayment.description,
-        singlePayment.discountAmount,
+        singlePayment.adjustmentAmount,
         singlePayment.discountPercent,
         membership.startedAt,
       ),
@@ -232,7 +232,7 @@ export class MembershipPreviewService {
             cycle.netAmount,
             cycle.baseAmount,
             cycle.description,
-            cycle.discountAmount,
+            cycle.adjustmentAmount,
             cycle.discountPercent,
             existingCharges ? firstDueDate : cycle.dueDate,
             cycle.billingYear,
@@ -269,14 +269,14 @@ export class MembershipPreviewService {
   }
 
   public buildChargesBreakdown(
-    charges: { amount: number; baseAmount?: number; discountAmount?: number }[],
+    charges: { amount: number; baseAmount?: number; adjustmentAmount?: number }[],
   ) {
     const totalBaseAmount = charges.reduce(
       (sum, c) => sum + (c.baseAmount || 0),
       0,
     );
     const totalDiscountAmount = charges.reduce(
-      (sum, c) => sum + (c.discountAmount || 0),
+      (sum, c) => sum + (c.adjustmentAmount || 0),
       0,
     );
     const totalNetAmount = charges.reduce((sum, c) => sum + c.amount, 0);

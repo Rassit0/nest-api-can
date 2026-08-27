@@ -29,13 +29,13 @@ export type AggregateCharge = {
 export type ChargeAvgAggregateOutputType = {
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
+  adjustmentAmount: runtime.Decimal | null
 }
 
 export type ChargeSumAggregateOutputType = {
   amount: runtime.Decimal | null
   pendingAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
+  adjustmentAmount: runtime.Decimal | null
 }
 
 export type ChargeMinAggregateOutputType = {
@@ -48,8 +48,8 @@ export type ChargeMinAggregateOutputType = {
   status: $Enums.StatusCharge | null
   createdAt: Date | null
   updatedAt: Date | null
-  discountAmount: runtime.Decimal | null
-  discountReason: string | null
+  adjustmentAmount: runtime.Decimal | null
+  adjustmentReason: string | null
   createdById: string | null
   updatedById: string | null
   direction: $Enums.ChargeDirection | null
@@ -66,8 +66,8 @@ export type ChargeMaxAggregateOutputType = {
   status: $Enums.StatusCharge | null
   createdAt: Date | null
   updatedAt: Date | null
-  discountAmount: runtime.Decimal | null
-  discountReason: string | null
+  adjustmentAmount: runtime.Decimal | null
+  adjustmentReason: string | null
   createdById: string | null
   updatedById: string | null
   direction: $Enums.ChargeDirection | null
@@ -84,8 +84,8 @@ export type ChargeCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
-  discountAmount: number
-  discountReason: number
+  adjustmentAmount: number
+  adjustmentReason: number
   createdById: number
   updatedById: number
   direction: number
@@ -97,13 +97,13 @@ export type ChargeCountAggregateOutputType = {
 export type ChargeAvgAggregateInputType = {
   amount?: true
   pendingAmount?: true
-  discountAmount?: true
+  adjustmentAmount?: true
 }
 
 export type ChargeSumAggregateInputType = {
   amount?: true
   pendingAmount?: true
-  discountAmount?: true
+  adjustmentAmount?: true
 }
 
 export type ChargeMinAggregateInputType = {
@@ -116,8 +116,8 @@ export type ChargeMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  discountAmount?: true
-  discountReason?: true
+  adjustmentAmount?: true
+  adjustmentReason?: true
   createdById?: true
   updatedById?: true
   direction?: true
@@ -134,8 +134,8 @@ export type ChargeMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  discountAmount?: true
-  discountReason?: true
+  adjustmentAmount?: true
+  adjustmentReason?: true
   createdById?: true
   updatedById?: true
   direction?: true
@@ -152,8 +152,8 @@ export type ChargeCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  discountAmount?: true
-  discountReason?: true
+  adjustmentAmount?: true
+  adjustmentReason?: true
   createdById?: true
   updatedById?: true
   direction?: true
@@ -257,8 +257,8 @@ export type ChargeGroupByOutputType = {
   status: $Enums.StatusCharge
   createdAt: Date
   updatedAt: Date
-  discountAmount: runtime.Decimal
-  discountReason: string | null
+  adjustmentAmount: runtime.Decimal
+  adjustmentReason: string | null
   createdById: string | null
   updatedById: string | null
   direction: $Enums.ChargeDirection
@@ -298,8 +298,8 @@ export type ChargeWhereInput = {
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
-  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
+  adjustmentAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
   direction?: Prisma.EnumChargeDirectionFilter<"Charge"> | $Enums.ChargeDirection
@@ -326,8 +326,8 @@ export type ChargeOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  discountReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
+  adjustmentReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   direction?: Prisma.SortOrder
@@ -358,8 +358,8 @@ export type ChargeWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
-  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
+  adjustmentAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
   direction?: Prisma.EnumChargeDirectionFilter<"Charge"> | $Enums.ChargeDirection
@@ -386,8 +386,8 @@ export type ChargeOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  discountReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
+  adjustmentReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   direction?: Prisma.SortOrder
@@ -412,8 +412,8 @@ export type ChargeScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumStatusChargeWithAggregatesFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Charge"> | Date | string
-  discountAmount?: Prisma.DecimalWithAggregatesFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
+  adjustmentAmount?: Prisma.DecimalWithAggregatesFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Charge"> | string | null
   direction?: Prisma.EnumChargeDirectionWithAggregatesFilter<"Charge"> | $Enums.ChargeDirection
@@ -429,8 +429,8 @@ export type ChargeCreateInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -455,8 +455,8 @@ export type ChargeUncheckedCreateInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -479,8 +479,8 @@ export type ChargeUpdateInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -505,8 +505,8 @@ export type ChargeUncheckedUpdateInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -530,8 +530,8 @@ export type ChargeCreateManyInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -547,8 +547,8 @@ export type ChargeUpdateManyMutationInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
 }
@@ -563,8 +563,8 @@ export type ChargeUncheckedUpdateManyInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -606,8 +606,8 @@ export type ChargeCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  discountReason?: Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
+  adjustmentReason?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   direction?: Prisma.SortOrder
@@ -617,7 +617,7 @@ export type ChargeCountOrderByAggregateInput = {
 export type ChargeAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
 }
 
 export type ChargeMaxOrderByAggregateInput = {
@@ -630,8 +630,8 @@ export type ChargeMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  discountReason?: Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
+  adjustmentReason?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   direction?: Prisma.SortOrder
@@ -648,8 +648,8 @@ export type ChargeMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  discountReason?: Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
+  adjustmentReason?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   direction?: Prisma.SortOrder
@@ -659,7 +659,7 @@ export type ChargeMinOrderByAggregateInput = {
 export type ChargeSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   pendingAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
+  adjustmentAmount?: Prisma.SortOrder
 }
 
 export type ChargeCreateNestedOneWithoutMembershipChargesInput = {
@@ -913,8 +913,8 @@ export type ChargeCreateWithoutMembershipChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -938,8 +938,8 @@ export type ChargeUncheckedCreateWithoutMembershipChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -977,8 +977,8 @@ export type ChargeUpdateWithoutMembershipChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1002,8 +1002,8 @@ export type ChargeUncheckedUpdateWithoutMembershipChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1025,8 +1025,8 @@ export type ChargeCreateWithoutChildChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1050,8 +1050,8 @@ export type ChargeUncheckedCreateWithoutChildChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1078,8 +1078,8 @@ export type ChargeCreateWithoutParentChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1102,8 +1102,8 @@ export type ChargeUncheckedCreateWithoutParentChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1147,8 +1147,8 @@ export type ChargeUpdateWithoutChildChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1172,8 +1172,8 @@ export type ChargeUncheckedUpdateWithoutChildChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1215,8 +1215,8 @@ export type ChargeScalarWhereInput = {
   status?: Prisma.EnumStatusChargeFilter<"Charge"> | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Charge"> | Date | string
-  discountAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.StringNullableFilter<"Charge"> | string | null
+  adjustmentAmount?: Prisma.DecimalFilter<"Charge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.StringNullableFilter<"Charge"> | string | null
   createdById?: Prisma.StringNullableFilter<"Charge"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Charge"> | string | null
   direction?: Prisma.EnumChargeDirectionFilter<"Charge"> | $Enums.ChargeDirection
@@ -1232,8 +1232,8 @@ export type ChargeCreateWithoutPaymentsInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1257,8 +1257,8 @@ export type ChargeUncheckedCreateWithoutPaymentsInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1296,8 +1296,8 @@ export type ChargeUpdateWithoutPaymentsInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1321,8 +1321,8 @@ export type ChargeUncheckedUpdateWithoutPaymentsInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1344,8 +1344,8 @@ export type ChargeCreateWithoutCreatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1369,8 +1369,8 @@ export type ChargeUncheckedCreateWithoutCreatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
@@ -1402,8 +1402,8 @@ export type ChargeCreateWithoutUpdatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1427,8 +1427,8 @@ export type ChargeUncheckedCreateWithoutUpdatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
@@ -1492,8 +1492,8 @@ export type ChargeCreateWithoutCycleEnrollmentInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1517,8 +1517,8 @@ export type ChargeUncheckedCreateWithoutCycleEnrollmentInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1556,8 +1556,8 @@ export type ChargeUpdateWithoutCycleEnrollmentInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1581,8 +1581,8 @@ export type ChargeUncheckedUpdateWithoutCycleEnrollmentInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1604,8 +1604,8 @@ export type ChargeCreateWithoutStudentChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1629,8 +1629,8 @@ export type ChargeUncheckedCreateWithoutStudentChargesInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1668,8 +1668,8 @@ export type ChargeUpdateWithoutStudentChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1693,8 +1693,8 @@ export type ChargeUncheckedUpdateWithoutStudentChargesInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1716,8 +1716,8 @@ export type ChargeCreateWithoutSessionBookingInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeCreateNestedOneWithoutChargeInput
@@ -1741,8 +1741,8 @@ export type ChargeUncheckedCreateWithoutSessionBookingInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1780,8 +1780,8 @@ export type ChargeUpdateWithoutSessionBookingInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1805,8 +1805,8 @@ export type ChargeUncheckedUpdateWithoutSessionBookingInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1828,8 +1828,8 @@ export type ChargeCreateWithoutAccountChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedChargesInput
@@ -1853,8 +1853,8 @@ export type ChargeUncheckedCreateWithoutAccountChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1892,8 +1892,8 @@ export type ChargeUpdateWithoutAccountChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   createdBy?: Prisma.UserUpdateOneWithoutCreatedChargesNestedInput
@@ -1917,8 +1917,8 @@ export type ChargeUncheckedUpdateWithoutAccountChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -1940,8 +1940,8 @@ export type ChargeCreateManyParentChargeInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
@@ -1957,8 +1957,8 @@ export type ChargeUpdateWithoutParentChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -1981,8 +1981,8 @@ export type ChargeUncheckedUpdateWithoutParentChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -2005,8 +2005,8 @@ export type ChargeUncheckedUpdateManyWithoutParentChargeInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
@@ -2023,8 +2023,8 @@ export type ChargeCreateManyCreatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   updatedById?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
@@ -2040,8 +2040,8 @@ export type ChargeCreateManyUpdatedByInput = {
   status?: $Enums.StatusCharge
   createdAt?: Date | string
   updatedAt?: Date | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: string | null
+  adjustmentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: string | null
   createdById?: string | null
   direction?: $Enums.ChargeDirection
   chargeCategory?: $Enums.ChargeCategory
@@ -2056,8 +2056,8 @@ export type ChargeUpdateWithoutCreatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -2081,8 +2081,8 @@ export type ChargeUncheckedUpdateWithoutCreatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
@@ -2105,8 +2105,8 @@ export type ChargeUncheckedUpdateManyWithoutCreatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
@@ -2121,8 +2121,8 @@ export type ChargeUpdateWithoutUpdatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
   accountCharge?: Prisma.AccountChargeUpdateOneWithoutChargeNestedInput
@@ -2146,8 +2146,8 @@ export type ChargeUncheckedUpdateWithoutUpdatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
@@ -2170,8 +2170,8 @@ export type ChargeUncheckedUpdateManyWithoutUpdatedByInput = {
   status?: Prisma.EnumStatusChargeFieldUpdateOperationsInput | $Enums.StatusCharge
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adjustmentAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  adjustmentReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   direction?: Prisma.EnumChargeDirectionFieldUpdateOperationsInput | $Enums.ChargeDirection
   chargeCategory?: Prisma.EnumChargeCategoryFieldUpdateOperationsInput | $Enums.ChargeCategory
@@ -2245,8 +2245,8 @@ export type ChargeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  discountAmount?: boolean
-  discountReason?: boolean
+  adjustmentAmount?: boolean
+  adjustmentReason?: boolean
   createdById?: boolean
   updatedById?: boolean
   direction?: boolean
@@ -2274,8 +2274,8 @@ export type ChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  discountAmount?: boolean
-  discountReason?: boolean
+  adjustmentAmount?: boolean
+  adjustmentReason?: boolean
   createdById?: boolean
   updatedById?: boolean
   direction?: boolean
@@ -2295,8 +2295,8 @@ export type ChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  discountAmount?: boolean
-  discountReason?: boolean
+  adjustmentAmount?: boolean
+  adjustmentReason?: boolean
   createdById?: boolean
   updatedById?: boolean
   direction?: boolean
@@ -2316,15 +2316,15 @@ export type ChargeSelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  discountAmount?: boolean
-  discountReason?: boolean
+  adjustmentAmount?: boolean
+  adjustmentReason?: boolean
   createdById?: boolean
   updatedById?: boolean
   direction?: boolean
   chargeCategory?: boolean
 }
 
-export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "dueDate" | "status" | "createdAt" | "updatedAt" | "discountAmount" | "discountReason" | "createdById" | "updatedById" | "direction" | "chargeCategory", ExtArgs["result"]["charge"]>
+export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "parentChargeId" | "description" | "amount" | "pendingAmount" | "dueDate" | "status" | "createdAt" | "updatedAt" | "adjustmentAmount" | "adjustmentReason" | "createdById" | "updatedById" | "direction" | "chargeCategory", ExtArgs["result"]["charge"]>
 export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accountCharge?: boolean | Prisma.Charge$accountChargeArgs<ExtArgs>
   createdBy?: boolean | Prisma.Charge$createdByArgs<ExtArgs>
@@ -2373,8 +2373,8 @@ export type $ChargePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: $Enums.StatusCharge
     createdAt: Date
     updatedAt: Date
-    discountAmount: runtime.Decimal
-    discountReason: string | null
+    adjustmentAmount: runtime.Decimal
+    adjustmentReason: string | null
     createdById: string | null
     updatedById: string | null
     direction: $Enums.ChargeDirection
@@ -2821,8 +2821,8 @@ export interface ChargeFieldRefs {
   readonly status: Prisma.FieldRef<"Charge", 'StatusCharge'>
   readonly createdAt: Prisma.FieldRef<"Charge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Charge", 'DateTime'>
-  readonly discountAmount: Prisma.FieldRef<"Charge", 'Decimal'>
-  readonly discountReason: Prisma.FieldRef<"Charge", 'String'>
+  readonly adjustmentAmount: Prisma.FieldRef<"Charge", 'Decimal'>
+  readonly adjustmentReason: Prisma.FieldRef<"Charge", 'String'>
   readonly createdById: Prisma.FieldRef<"Charge", 'String'>
   readonly updatedById: Prisma.FieldRef<"Charge", 'String'>
   readonly direction: Prisma.FieldRef<"Charge", 'ChargeDirection'>

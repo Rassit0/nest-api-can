@@ -24,7 +24,7 @@ export type PlayerMembershipWithRelations = Prisma.PlayerMembershipGetPayload<{
 export interface FinancialCalculationResult {
   baseAmount: number;
   discountPercent: number;
-  discountAmount: number;
+  adjustmentAmount: number;
   netAmount: number;
   appliedDiscounts: {
     percent: number;
@@ -96,17 +96,17 @@ export function calculateRegistrationFee(
   );
   const baseAmountRounded = Number(base.toFixed(2));
 
-  const discountAmount = Number(
+  const adjustmentAmount = -Number(
     ((baseAmountRounded * discount) / 100).toFixed(2),
   );
   const netAmount = Number(
-    Math.max(0, baseAmountRounded - discountAmount).toFixed(2),
+    Math.max(0, baseAmountRounded + adjustmentAmount).toFixed(2),
   );
 
   return {
     baseAmount: baseAmountRounded,
     discountPercent: Number(discount.toFixed(2)),
-    discountAmount,
+    adjustmentAmount,
     netAmount,
     appliedDiscounts,
   };
@@ -277,17 +277,17 @@ export function calculateRecurringFeeForDate(
   );
   const baseAmountRounded = Number(base.toFixed(2));
 
-  const discountAmount = Number(
+  const adjustmentAmount = Number(
     ((baseAmountRounded * discount) / 100).toFixed(2),
   );
   const netAmount = Number(
-    Math.max(0, baseAmountRounded - discountAmount).toFixed(2),
+    Math.max(0, baseAmountRounded + adjustmentAmount).toFixed(2),
   );
 
   return {
     baseAmount: baseAmountRounded,
     discountPercent: Number(discount.toFixed(2)),
-    discountAmount,
+    adjustmentAmount,
     netAmount,
     appliedDiscounts,
   };
@@ -375,11 +375,11 @@ export function calculateSinglePaymentFee(
   }
 
   const baseAmountRounded = Number(baseAmount.toFixed(2));
-  const discountAmount = Number(
+  const adjustmentAmount = -Number(
     ((baseAmountRounded * discountPercent) / 100).toFixed(2),
   );
   const netAmount = Number(
-    Math.max(0, baseAmountRounded - discountAmount).toFixed(2),
+    Math.max(0, baseAmountRounded + adjustmentAmount).toFixed(2),
   );
 
   let description = 'Pago Completo - Temporada';
@@ -396,7 +396,7 @@ export function calculateSinglePaymentFee(
   return {
     baseAmount: Number(baseAmount.toFixed(2)),
     discountPercent: Number(discountPercent.toFixed(2)),
-    discountAmount,
+    adjustmentAmount,
     netAmount,
     appliedDiscounts,
     description,

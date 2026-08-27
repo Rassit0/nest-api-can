@@ -19,7 +19,7 @@ export interface SimulatedCycle {
   billingCycle: number | null;
   isFirstCycle: boolean;
   baseAmount: number;
-  discountAmount: number;
+  adjustmentAmount: number;
   discountPercent: number;
   netAmount: number;
   appliedDiscounts: {
@@ -133,7 +133,7 @@ export function simulateAllCycles(
     const {
       netAmount,
       baseAmount,
-      discountAmount,
+      adjustmentAmount,
       discountPercent,
       appliedDiscounts,
     } = calculateRecurringFeeForDate(
@@ -158,7 +158,7 @@ export function simulateAllCycles(
       billingCycle,
       isFirstCycle,
       baseAmount: baseAmount || 0,
-      discountAmount: discountAmount || 0,
+      adjustmentAmount: adjustmentAmount || 0,
       discountPercent: discountPercent || 0,
       netAmount,
       appliedDiscounts,
