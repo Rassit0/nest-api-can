@@ -793,7 +793,7 @@ export class PlayerMembershipsService {
     }
 
     const offering = await this.getTeamMembershipOffering(
-      membership.teamSeasonId,
+      membership.teamSeasonCategoryId,
     );
 
     await this.validateOfferingCapacity(offering.id, offering.maxMembers);
