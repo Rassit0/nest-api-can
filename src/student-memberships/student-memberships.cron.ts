@@ -8,6 +8,8 @@ import { PAYMENT_DEADLINE_HOURS } from 'src/common/helpers/cycle-enrollment.help
 import { StatusCharge } from 'src/generated/prisma/client';
 import { StudentMembershipsService } from './student-memberships.service';
 
+import { DateUtils } from 'src/utils/date.utils';
+
 @Injectable()
 export class StudentMembershipsCron {
   private readonly logger = new Logger(StudentMembershipsCron.name);
@@ -23,8 +25,7 @@ export class StudentMembershipsCron {
   })
   async handleMembershipPauses() {
     this.logger.log('Verificando pausas de membresías de estudiantes...');
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    const today = DateUtils.getStartOfLocalDayInUTC(new Date());
 
     // 1. Activar pausas (individuales o de grupo) que comienzan hoy o antes y que la membresía sigue activa
     const membershipsToSuspend = await this.prisma.studentMembership.findMany({

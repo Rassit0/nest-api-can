@@ -107,7 +107,8 @@ function mapChargeForFrontend(charge: any) {
         .reduce((sum: number, p: any) => sum + Number(p.amount), 0)
     : 0;
 
-  const isFullyPaidWithMoney = paidAmount >= amount;
+  const expectedTotal = amount + adjustmentAmount;
+  const isFullyPaidWithMoney = paidAmount > 0 && paidAmount >= expectedTotal;
   const hasAdjustment = adjustmentAmount !== 0;
 
   const canEditAdjustment = charge.status !== 'CANCELLED' && !isFullyPaidWithMoney;
@@ -449,7 +450,7 @@ export class ChargesService {
       : 0;
 
     const oldExpectedTotal = amount + oldAdjustment;
-    const isFullyPaidWithMoney = paidAmount >= oldExpectedTotal;
+    const isFullyPaidWithMoney = paidAmount > 0 && paidAmount >= oldExpectedTotal;
 
     if (charge.status === 'CANCELLED') {
       throw new BadRequestException('No se puede modificar un cargo cancelado.');
@@ -518,7 +519,7 @@ export class ChargesService {
       : 0;
 
     const oldExpectedTotal = amount + oldAdjustment;
-    const isFullyPaidWithMoney = paidAmount >= oldExpectedTotal;
+    const isFullyPaidWithMoney = paidAmount > 0 && paidAmount >= oldExpectedTotal;
 
     if (charge.status === 'CANCELLED') {
       throw new BadRequestException('No se puede modificar un cargo cancelado.');

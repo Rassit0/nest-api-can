@@ -49,6 +49,36 @@ const chargeInclude = {
 export class LateFeeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findChargeForLateFee(
+    chargeId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<ChargeWithLateFeeRelations | null> {
+    const client = tx || this.prisma;
+    return client.charge.findUnique({
+      where: { id: chargeId },
+      include: chargeInclude,
+    });
+  }
+
+  async findPendingLateFeeCharge(
+    tx: Prisma.TransactionClient,
+    parentChargeId: string,
+  ) {
+    return tx.charge.findFirst({
+      where: {
+        parentChargeId,
+        status: {
+          in: [StatusCharge.PENDING, StatusCharge.PARTIAL],
+        },
+        membershipCharges: {
+          some: {
+            type: TypeMembershipCharge.LATE_FEE,
+          },
+        },
+      },
+    });
+  }
+
   async findOverdueCharges(
     evaluationDate: Date,
   ): Promise<ChargeWithLateFeeRelations[]> {

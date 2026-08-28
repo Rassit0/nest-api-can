@@ -58,30 +58,176 @@ export class MembershipLateFeeService {
   }
 
   /**
-   * Lógica interna para evaluar y aplicar la mora a un cargo individual
+   * Lógica interna para evaluar y aplicar la mora a un cargo individual (CRON)
    */
   private async processChargeLateFee(
     tx: Prisma.TransactionClient,
     baseCharge: ChargeWithLateFeeRelations,
     evaluationDate: Date,
   ) {
+    const preview = this.calculateLateFee(baseCharge, evaluationDate);
+    if (preview.totalLateFeeAmount <= 0) return;
+
+    const existingLateFeeCharge = await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
+
+    if (existingLateFeeCharge) {
+      if (
+        existingLateFeeCharge.status === StatusCharge.PENDING ||
+        existingLateFeeCharge.status === StatusCharge.PARTIAL ||
+        existingLateFeeCharge.status === StatusCharge.PAID
+      ) {
+        const previousAmount = Number(existingLateFeeCharge.amount);
+        const difference = preview.totalLateFeeAmount - previousAmount;
+
+        if (difference > 0) {
+          await this.lateFeeRepo.updateLateFeeCharge(
+            tx,
+            existingLateFeeCharge.id,
+            {
+              amount: preview.totalLateFeeAmount,
+              pendingAmount: Number(existingLateFeeCharge.pendingAmount) + difference,
+              status:
+                existingLateFeeCharge.status === StatusCharge.PAID
+                  ? StatusCharge.PARTIAL
+                  : existingLateFeeCharge.status,
+              description: `Recargo por Mora - ${preview.penaltyDays} x ${preview.lateFeePerDay}/día`,
+            },
+          );
+        }
+      }
+    } else {
+      const membershipChargeRelation = baseCharge.membershipCharges[0];
+      await this.lateFeeRepo.createLateFeeCharge(tx, {
+        parentChargeId: baseCharge.id,
+        chargeCategory: 'LATE_FEE',
+        description: `Recargo por Mora - ${preview.penaltyDays} días de retraso`,
+        amount: preview.totalLateFeeAmount,
+        pendingAmount: preview.totalLateFeeAmount,
+        dueDate: evaluationDate,
+        status: StatusCharge.PENDING,
+        membershipCharges: {
+          create: {
+            type: TypeMembershipCharge.LATE_FEE,
+            playerMembershipId: membershipChargeRelation.playerMembershipId,
+            createdByCron: true,
+          },
+        },
+      });
+    }
+  }
+
+  /**
+   * Genera una previsualización matemática de la mora actual sin persistirla.
+   */
+  async previewLateFee(chargeId: string) {
+    const baseCharge = await this.lateFeeRepo.findChargeForLateFee(chargeId);
+    if (!baseCharge) {
+      import('@nestjs/common').then(m => { throw new m.NotFoundException('Cargo no encontrado'); });
+    }
+    
+    // Validar que el cargo base no sea ya una mora
+    if (baseCharge.membershipCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
+      import('@nestjs/common').then(m => { throw new m.BadRequestException('El cargo seleccionado ya es un recargo por mora.'); });
+    }
+
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+    const preview = this.calculateLateFee(baseCharge, evaluationDate);
+    
+    if (preview.totalLateFeeAmount <= 0) {
+      import('@nestjs/common').then(m => { throw new m.BadRequestException('No hay recargo aplicable en este momento (periodo de gracia activo o cargo no vencido).'); });
+    }
+
+    const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(this.prisma, chargeId);
+
+    return {
+      chargeId: baseCharge.id,
+      dueDate: baseCharge.dueDate,
+      daysPassed: preview.elapsedDays,
+      graceDays: Number(baseCharge.membershipCharges[0]?.playerMembership?.teamSeason?.billingConfig?.graceDays || 0),
+      punishableDays: preview.penaltyDays,
+      lateFeePerDay: preview.lateFeePerDay,
+      totalLateFeeAmount: preview.totalLateFeeAmount,
+      originalAmount: Number(baseCharge.amount),
+      alreadyHasLateFee: !!existingLateFee,
+    };
+  }
+
+  /**
+   * Aplica un recargo por mora de forma manual (On Demand).
+   */
+  async applyLateFee(chargeId: string) {
+    return await this.prisma.$transaction(async (tx) => {
+      const baseCharge = await this.lateFeeRepo.findChargeForLateFee(chargeId, tx);
+      if (!baseCharge) {
+        import('@nestjs/common').then(m => { throw new m.NotFoundException('Cargo no encontrado'); });
+      }
+
+      if (baseCharge.membershipCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
+        import('@nestjs/common').then(m => { throw new m.BadRequestException('El cargo seleccionado ya es un recargo por mora.'); });
+      }
+
+      const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+      const preview = this.calculateLateFee(baseCharge, evaluationDate);
+
+      if (preview.totalLateFeeAmount <= 0) {
+        import('@nestjs/common').then(m => { throw new m.BadRequestException('El monto de mora calculado es 0 o menor.'); });
+      }
+
+      const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(tx, chargeId);
+      if (existingLateFee) {
+        import('@nestjs/common').then(m => { throw new m.BadRequestException('Ya existe un recargo por mora pendiente de pago para este cargo. Cancele o pague el recargo actual antes de generar uno nuevo.'); });
+      }
+
+      const membershipChargeRelation = baseCharge.membershipCharges[0];
+      
+      const newCharge = await this.lateFeeRepo.createLateFeeCharge(tx, {
+        parentChargeId: baseCharge.id,
+        chargeCategory: 'LATE_FEE',
+        description: `Recargo Mora Membresía - ${preview.penaltyDays} dias de retraso a ${preview.lateFeePerDay}/dia`,
+        amount: preview.totalLateFeeAmount,
+        pendingAmount: preview.totalLateFeeAmount,
+        dueDate: new Date(),
+        status: StatusCharge.PENDING,
+        membershipCharges: {
+          create: {
+            type: TypeMembershipCharge.LATE_FEE,
+            playerMembershipId: membershipChargeRelation.playerMembershipId,
+            createdByCron: false,
+          },
+        },
+      });
+
+      return {
+        message: 'Recargo por mora aplicado exitosamente.',
+        data: newCharge,
+      };
+    });
+  }
+
+  /**
+   * Función pura para calcular matemáticamente la mora.
+   */
+  public calculateLateFee(
+    baseCharge: ChargeWithLateFeeRelations,
+    evaluationDate: Date = DateUtils.getEndOfLocalDayInUTC(new Date()),
+  ) {
     const membershipChargeRelation = baseCharge.membershipCharges[0];
-    if (!membershipChargeRelation) return;
+    if (!membershipChargeRelation) {
+      return { baseChargeId: baseCharge.id, elapsedDays: 0, penaltyDays: 0, lateFeePerDay: 0, totalLateFeeAmount: 0 };
+    }
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
     if (
       !teamSeason ||
       !teamSeason.billingConfig?.lateFeeEnabled ||
       teamSeason.billingConfig?.isEngineActive === false
-    )
-      return;
+    ) {
+      return { baseChargeId: baseCharge.id, elapsedDays: 0, penaltyDays: 0, lateFeePerDay: 0, totalLateFeeAmount: 0 };
+    }
 
     const dueDate = DateUtils.getEndOfLocalDayInUTC(baseCharge.dueDate);
-
     const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
-    const individualPauses =
-      membershipChargeRelation.playerMembership?.pauses || [];
-
+    const individualPauses = membershipChargeRelation.playerMembership?.pauses || [];
     const allPauses = [...teamSeasonPauses, ...individualPauses];
     let pausedDays = 0;
 
@@ -92,8 +238,7 @@ export class MembershipLateFeeService {
           const pEnd = DateUtils.getEndOfLocalDayInUTC(p.endDate);
           return {
             start: pStart < dueDate ? dueDate.getTime() : pStart.getTime(),
-            end:
-              pEnd > evaluationDate ? evaluationDate.getTime() : pEnd.getTime(),
+            end: pEnd > evaluationDate ? evaluationDate.getTime() : pEnd.getTime(),
           };
         })
         .filter((i) => i.start <= i.end);
@@ -112,72 +257,35 @@ export class MembershipLateFeeService {
         }
 
         for (const m of merged) {
-          pausedDays +=
-            Math.round((m.end - m.start) / (1000 * 60 * 60 * 24)) + 1;
+          pausedDays += Math.round((m.end - m.start) / (1000 * 60 * 60 * 24)) + 1;
         }
       }
     }
 
-    const elapsedDays =
-      this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays;
-
+    const elapsedDays = Math.max(0, this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays);
     const graceDays = Number(teamSeason.billingConfig?.graceDays || 0);
 
-    if (elapsedDays <= graceDays) return;
+    if (elapsedDays <= graceDays) {
+      return {
+        baseChargeId: baseCharge.id,
+        elapsedDays,
+        penaltyDays: 0,
+        lateFeePerDay: Number(teamSeason.billingConfig?.lateFeePerDay || 0),
+        totalLateFeeAmount: 0,
+      };
+    }
 
     const penaltyDays = elapsedDays - graceDays;
     const lateFeePerDay = Number(teamSeason.billingConfig?.lateFeePerDay || 0);
-    const targetLateFeeAmount = penaltyDays * lateFeePerDay;
+    const totalLateFeeAmount = penaltyDays * lateFeePerDay;
 
-    if (targetLateFeeAmount <= 0) return;
-
-    const existingLateFeeCharge =
-      await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
-
-    if (existingLateFeeCharge) {
-      if (
-        existingLateFeeCharge.status === StatusCharge.PENDING ||
-        existingLateFeeCharge.status === StatusCharge.PARTIAL ||
-        existingLateFeeCharge.status === StatusCharge.PAID
-      ) {
-        const previousAmount = Number(existingLateFeeCharge.amount);
-        const difference = targetLateFeeAmount - previousAmount;
-
-        if (difference > 0) {
-          await this.lateFeeRepo.updateLateFeeCharge(
-            tx,
-            existingLateFeeCharge.id,
-            {
-              amount: targetLateFeeAmount,
-              pendingAmount:
-                Number(existingLateFeeCharge.pendingAmount) + difference,
-              status:
-                existingLateFeeCharge.status === StatusCharge.PAID
-                  ? StatusCharge.PARTIAL
-                  : existingLateFeeCharge.status,
-              description: `Recargo por Mora - ${penaltyDays} x ${lateFeePerDay}/día`,
-            },
-          );
-        }
-      }
-    } else {
-      await this.lateFeeRepo.createLateFeeCharge(tx, {
-        parentChargeId: baseCharge.id,
-        chargeCategory: 'LATE_FEE',
-        description: `Recargo por Mora - ${penaltyDays} días de retraso`,
-        amount: targetLateFeeAmount,
-        pendingAmount: targetLateFeeAmount,
-        dueDate: evaluationDate,
-        status: StatusCharge.PENDING,
-        membershipCharges: {
-          create: {
-            type: TypeMembershipCharge.LATE_FEE,
-            playerMembershipId: membershipChargeRelation.playerMembershipId,
-            createdByCron: true,
-          },
-        },
-      });
-    }
+    return {
+      baseChargeId: baseCharge.id,
+      elapsedDays,
+      penaltyDays,
+      lateFeePerDay,
+      totalLateFeeAmount,
+    };
   }
 
   private calculateElapsedDays(dueDate: Date, evaluationDate: Date) {

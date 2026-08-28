@@ -130,7 +130,7 @@ export class MembershipChargesService {
    */
   async applyDailyMembershipCharges() {
     this.logger.log('Iniciando proceso diario de cálculo de cargos...');
-    const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
 
     const memberships =
       await this.membershipRepo.getMembershipsForDailyGeneration(
