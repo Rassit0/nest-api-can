@@ -1,4 +1,4 @@
-import {
+﻿import {
   Injectable,
   Logger,
   BadRequestException,
@@ -41,10 +41,18 @@ export class StudentLateFeeService {
       );
     }
 
+    if (baseCharge.status === StatusCharge.CANCELLED) {
+      throw new BadRequestException('No se puede generar mora sobre un cargo anulado.');
+    }
+
+    if (baseCharge.studentCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
+      throw new BadRequestException('El cargo seleccionado ya es un recargo por mora.');
+    }
+
     return this.calculateLateFee(baseCharge);
   }
 
-  async applyLateFee(chargeId: string) {
+  async applyLateFee(chargeId: string, customAmount?: number) {
     return await this.prisma.$transaction(async (tx) => {
       const baseCharge = await this.lateFeeRepo.findChargeForLateFee(
         chargeId,
@@ -56,11 +64,21 @@ export class StudentLateFeeService {
         );
       }
 
+      if (baseCharge.status === StatusCharge.CANCELLED) {
+        throw new BadRequestException('No se puede generar mora sobre un cargo anulado.');
+      }
+
+      if (baseCharge.studentCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
+        throw new BadRequestException('El cargo seleccionado ya es un recargo por mora.');
+      }
+
       const preview = this.calculateLateFee(baseCharge);
 
-      if (preview.totalLateFeeAmount <= 0) {
+      const finalAmount = customAmount !== undefined ? customAmount : preview.totalLateFeeAmount;
+
+      if (finalAmount <= 0) {
         throw new BadRequestException(
-          'El monto de mora calculado es 0 o menor.',
+          'El monto de mora es 0 o menor.',
         );
       }
 
@@ -76,12 +94,16 @@ export class StudentLateFeeService {
 
       const studentChargeRelation = baseCharge.studentCharges[0];
 
+      const description = customAmount !== undefined 
+        ? 'Mora por atraso (Monto Personalizado)' 
+        : 'Mora por atraso';
+
       const newCharge = await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,
         chargeCategory: 'LATE_FEE',
-        description: `Recargo Mora Curso - ${preview.penaltyDays} dias de retraso a ${preview.lateFeePerDay}/dia`,
-        amount: preview.totalLateFeeAmount,
-        pendingAmount: preview.totalLateFeeAmount,
+        description,
+        amount: finalAmount,
+        pendingAmount: finalAmount,
         dueDate: new Date(),
         status: StatusCharge.PENDING,
         studentCharges: {
@@ -103,15 +125,6 @@ export class StudentLateFeeService {
   private calculateLateFee(
     baseCharge: StudentChargeWithLateFeeRelations,
   ): LateFeePreview {
-    if (
-      baseCharge.status === StatusCharge.PAID ||
-      baseCharge.status === StatusCharge.CANCELLED
-    ) {
-      throw new BadRequestException(
-        `No se puede calcular mora sobre un cargo en estado ${baseCharge.status}.`,
-      );
-    }
-
     const studentChargeRelation = baseCharge.studentCharges[0];
     if (!studentChargeRelation) {
       throw new BadRequestException(
@@ -211,3 +224,5 @@ export class StudentLateFeeService {
     return Math.round(diffTime / (1000 * 60 * 60 * 24));
   }
 }
+
+

@@ -105,9 +105,9 @@ const mapMembershipWithTotal = (membership: PlayerMembershipWithCharges) => {
       membership.membershipCharges?.reduce(
         (sum, current) =>
           sum +
-          (Number(current.charge.amount) -
-            Number(current.charge.pendingAmount) -
-            Number(current.charge.adjustmentAmount || 0)),
+          (Number(current.charge.amount) +
+            Number(current.charge.adjustmentAmount || 0) -
+            Number(current.charge.pendingAmount)),
         0,
       ) || 0
     ).toFixed(2),

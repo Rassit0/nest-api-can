@@ -476,9 +476,10 @@ export class TransactionsService {
         where,
         skip,
         take: per_page,
-        orderBy: {
-          [sortField || 'createdAt']: orderBy,
-        },
+        orderBy: [
+          { [sortField || 'transactionDate']: orderBy || 'desc' },
+          { createdAt: 'desc' }
+        ],
         select: transactionSelect,
       }),
       this.prisma.transaction.count({ where }),

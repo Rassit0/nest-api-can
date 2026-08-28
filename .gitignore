@@ -1,5 +1,5 @@
 # Base de datos
-postgres/
+/postgres/
 
 # compiled output
 /dist

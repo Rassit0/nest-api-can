@@ -1,9 +1,10 @@
-import { Controller, Post, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { Controller, Post, Param, ParseUUIDPipe, UseGuards, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { StudentLateFeeService } from './student-late-fee.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { ApplyLateFeeDto } from './dto/apply-late-fee.dto';
 
 @ApiTags('Student Late Fees')
 @Controller('student-charges')
@@ -36,7 +37,10 @@ export class StudentLateFeeController {
   @ApiParam({ name: 'id', description: 'ID del cargo base' })
   @ApiResponse({ status: 201, description: 'Recargo aplicado exitosamente.' })
   @RequirePermissions('CREATE_STUDENT_CHARGES')
-  async applyLateFee(@Param('id', ParseUUIDPipe) chargeId: string) {
-    return await this.studentLateFeeService.applyLateFee(chargeId);
+  async applyLateFee(
+    @Param('id', ParseUUIDPipe) chargeId: string,
+    @Body() dto: ApplyLateFeeDto,
+  ) {
+    return await this.studentLateFeeService.applyLateFee(chargeId, dto.customAmount);
   }
 }

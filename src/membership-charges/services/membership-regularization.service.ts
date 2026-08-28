@@ -10,6 +10,8 @@ import { simulateAllCycles, SimulatedCycle } from '../membership-cycles.engine';
 import { TypeMembershipCharge, Prisma } from 'src/generated/prisma/client';
 import { MembershipChargeFactory } from '../membership-charge.factory';
 import { RegularizeMembershipChargeDto } from '../dto/regularize-membership-charge.dto';
+import { calculateRegistrationFee } from '../membership-financial.calculator';
+import { formatDiscountsDescription } from '../membership-billing.utils';
 
 
 export interface RegularizableCycle extends SimulatedCycle {
@@ -53,6 +55,34 @@ export class MembershipRegularizationService {
 
     const regularizableCycles: RegularizableCycle[] = [];
     const currentDate = new Date();
+
+    const registrationFeeBase = Number(membership.teamSeason?.billingConfig?.registrationFee || 0);
+    if (registrationFeeBase > 0 && !existingChargesSet.has('REGISTRATION')) {
+      const regCalc = calculateRegistrationFee(membership);
+      let description = 'Matrícula de inscripción';
+      const discountsDesc = formatDiscountsDescription(regCalc.appliedDiscounts);
+      if (discountsDesc) {
+        description += discountsDesc;
+      }
+
+      regularizableCycles.push({
+        cycleId: 'REGISTRATION',
+        cycleCounter: 0,
+        dueDate: membership.startedAt,
+        theoreticalDueDate: membership.startedAt,
+        nextDueDate: membership.startedAt,
+        billingYear: membership.startedAt.getUTCFullYear(),
+        billingMonth: membership.startedAt.getUTCMonth() + 1,
+        billingCycle: null,
+        isFirstCycle: true,
+        baseAmount: regCalc.baseAmount,
+        adjustmentAmount: regCalc.adjustmentAmount,
+        discountPercent: regCalc.discountPercent,
+        netAmount: regCalc.netAmount,
+        appliedDiscounts: regCalc.appliedDiscounts,
+        description: description,
+      });
+    }
 
     for (const cycle of allCycles) {
       const cycleKey = this.buildCycleKey(cycle, frequency);
@@ -99,13 +129,42 @@ export class MembershipRegularizationService {
     let targetCycle: SimulatedCycle | undefined;
     const currentDate = new Date();
 
-    for (const cycle of allCycles) {
-      if (this.buildCycleKey(cycle, frequency) === dto.cycleId) {
-        if (cycle.dueDate > currentDate) {
-          throw new BadRequestException('No puedes regularizar un ciclo futuro.');
+    if (dto.cycleId === 'REGISTRATION') {
+      const registrationFeeBase = Number(membership.teamSeason?.billingConfig?.registrationFee || 0);
+      if (registrationFeeBase <= 0) {
+        throw new BadRequestException('Esta temporada no requiere matrícula.');
+      }
+      const regCalc = calculateRegistrationFee(membership);
+      let description = 'Matrícula de inscripción';
+      const discountsDesc = formatDiscountsDescription(regCalc.appliedDiscounts);
+      if (discountsDesc) {
+        description += discountsDesc;
+      }
+      targetCycle = {
+        cycleCounter: 0,
+        dueDate: membership.startedAt,
+        theoreticalDueDate: membership.startedAt,
+        nextDueDate: membership.startedAt,
+        billingYear: membership.startedAt.getUTCFullYear(),
+        billingMonth: membership.startedAt.getUTCMonth() + 1,
+        billingCycle: null,
+        isFirstCycle: true,
+        baseAmount: regCalc.baseAmount,
+        adjustmentAmount: regCalc.adjustmentAmount,
+        discountPercent: regCalc.discountPercent,
+        netAmount: regCalc.netAmount,
+        appliedDiscounts: regCalc.appliedDiscounts,
+        description: description,
+      };
+    } else {
+      for (const cycle of allCycles) {
+        if (this.buildCycleKey(cycle, frequency) === dto.cycleId) {
+          if (cycle.dueDate > currentDate) {
+            throw new BadRequestException('No puedes regularizar un ciclo futuro.');
+          }
+          targetCycle = cycle;
+          break;
         }
-        targetCycle = cycle;
-        break;
       }
     }
 
@@ -123,17 +182,30 @@ export class MembershipRegularizationService {
     const adjustmentAmount = dto.overrideAmount !== undefined ? 0 : targetCycle.adjustmentAmount;
     const baseAmount = dto.overrideAmount !== undefined ? dto.overrideAmount : targetCycle.baseAmount;
 
-    const chargePayload = MembershipChargeFactory.buildRecurringChargePayload(
-      membershipId,
-      baseAmount,
-      adjustmentAmount,
-      targetCycle.description,
-      targetCycle.dueDate,
-      targetCycle.billingYear,
-      targetCycle.billingMonth,
-      targetCycle.billingCycle,
-      null,
-    );
+    let chargePayload: Prisma.ChargeCreateInput;
+
+    if (dto.cycleId === 'REGISTRATION') {
+      chargePayload = MembershipChargeFactory.buildRegistrationChargePayload(
+        membershipId,
+        baseAmount,
+        adjustmentAmount,
+        targetCycle.description,
+        targetCycle.dueDate,
+        null,
+      );
+    } else {
+      chargePayload = MembershipChargeFactory.buildRecurringChargePayload(
+        membershipId,
+        baseAmount,
+        adjustmentAmount,
+        targetCycle.description,
+        targetCycle.dueDate,
+        targetCycle.billingYear,
+        targetCycle.billingMonth,
+        targetCycle.billingCycle,
+        null,
+      );
+    }
 
     // Sobrescribir createdByCron para marcarlo como regularización manual
     chargePayload.membershipCharges.create['createdByCron'] = false;
@@ -156,16 +228,19 @@ export class MembershipRegularizationService {
     const existing = await this.chargeRepo.fetchExistingCharges(
       this.prisma,
       membershipId,
-      [TypeMembershipCharge.RECURRING_FEE],
+      [TypeMembershipCharge.RECURRING_FEE, TypeMembershipCharge.REGISTRATION],
     );
     return new Set(
-      existing.map((c) =>
-        this.buildCycleKey({
-          billingYear: c.billingYear,
-          billingMonth: c.billingMonth,
+      existing.map((c) => {
+        if (c.type === TypeMembershipCharge.REGISTRATION) {
+          return 'REGISTRATION';
+        }
+        return this.buildCycleKey({
+          billingYear: c.billingYear as number,
+          billingMonth: c.billingMonth as number,
           billingCycle: c.billingCycle,
-        }, frequency),
-      ),
+        }, frequency);
+      }),
     );
   }
 

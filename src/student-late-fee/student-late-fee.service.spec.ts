@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+﻿import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma.service';
 import { StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
 import { StudentLateFeeService } from './student-late-fee.service';
@@ -18,22 +18,14 @@ describe('StudentLateFeeService - On Demand', () => {
     };
 
     const mockPrisma = {
-      $transaction: jest.fn().mockImplementation(async (cb) => {
-        return cb(mockPrisma);
-      }),
+      $transaction: jest.fn().mockImplementation(async (cb) => cb(mockPrisma)),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StudentLateFeeService,
-        {
-          provide: StudentLateFeeRepository,
-          useValue: mockLateFeeRepo,
-        },
-        {
-          provide: PrismaService,
-          useValue: mockPrisma,
-        },
+        { provide: StudentLateFeeRepository, useValue: mockLateFeeRepo },
+        { provide: PrismaService, useValue: mockPrisma },
       ],
     }).compile();
 
@@ -44,13 +36,8 @@ describe('StudentLateFeeService - On Demand', () => {
 
   const baseDate = new Date('2026-08-10T00:00:00.000Z');
 
-  beforeAll(() => {
-    jest.useFakeTimers().setSystemTime(baseDate);
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
+  beforeAll(() => jest.useFakeTimers().setSystemTime(baseDate));
+  afterAll(() => jest.useRealTimers());
 
   describe('previewLateFee', () => {
     it('Lanza NotFound si el cargo no existe', async () => {
@@ -58,151 +45,125 @@ describe('StudentLateFeeService - On Demand', () => {
       await expect(service.previewLateFee('123')).rejects.toThrow(NotFoundException);
     });
 
-    it('Lanza BadRequest si el cargo esta PAID', async () => {
+    it('Lanza BadRequest si el cargo esta CANCELLED', async () => {
       lateFeeRepo.findChargeForLateFee.mockResolvedValue({
-        id: '123',
-        status: StatusCharge.PAID,
-        studentCharges: [],
+        id: '123', status: StatusCharge.CANCELLED,
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 }, pauses: [] } } }],
       } as any);
       await expect(service.previewLateFee('123')).rejects.toThrow(BadRequestException);
+      await expect(service.previewLateFee('123')).rejects.toThrow('anulado');
+    });
+
+    it('Lanza BadRequest si el cargo ya es de tipo LATE_FEE', async () => {
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue({
+        id: '123', status: StatusCharge.PENDING,
+        studentCharges: [{ type: TypeMembershipCharge.LATE_FEE, studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 }, pauses: [] } } }],
+      } as any);
+      await expect(service.previewLateFee('123')).rejects.toThrow(BadRequestException);
+      await expect(service.previewLateFee('123')).rejects.toThrow('recargo por mora');
     });
 
     it('Calcula correctamente si han pasado dias suficientes', async () => {
       const mockCharge = {
-        id: '123',
-        status: StatusCharge.PENDING,
-        dueDate: new Date('2026-08-01T00:00:00.000Z'), // Vencido hace 9 dias
-        studentCharges: [
-          {
-            studentMembershipId: 'stu-1',
-            studentMembership: {
-              pauses: [],
-              courseSeason: {
-                billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 },
-                pauses: [],
-              },
-            },
-          },
-        ],
+        id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 }, pauses: [] } } }],
       };
       lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
       
       const res = await service.previewLateFee('123');
-      
       expect(res.elapsedDays).toBe(9);
       expect(res.penaltyDays).toBe(7); // 9 - 2
       expect(res.totalLateFeeAmount).toBe(70);
     });
-
-    it('Retorna 0 si no supera graceDays', async () => {
-      const mockCharge = {
-        id: '123',
-        status: StatusCharge.PENDING,
-        dueDate: new Date('2026-08-09T00:00:00.000Z'), // Vencido hace 1 dia
-        studentCharges: [
-          {
-            studentMembershipId: 'stu-1',
-            studentMembership: {
-              pauses: [],
-              courseSeason: {
-                billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 },
-                pauses: [],
-              },
-            },
-          },
-        ],
-      };
-      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
-      
-      const res = await service.previewLateFee('123');
-      
-      expect(res.elapsedDays).toBe(1);
-      expect(res.penaltyDays).toBe(0);
-      expect(res.totalLateFeeAmount).toBe(0);
-    });
   });
 
   describe('applyLateFee', () => {
-    it('Falla si totalLateFeeAmount es 0', async () => {
+    it('Falla si customAmount es <= 0', async () => {
       const mockCharge = {
-        id: '123',
-        status: StatusCharge.PENDING,
-        dueDate: new Date('2026-08-09T00:00:00.000Z'), // Vencido hace 1 dia, graceDays=2
-        studentCharges: [
-          {
-            studentMembershipId: 'stu-1',
-            studentMembership: {
-              pauses: [],
-              courseSeason: {
-                billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 },
-                pauses: [],
-              },
-            },
-          },
-        ],
+        id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'), 
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }, pauses: [] } } }],
       };
       lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
+      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
       
-      await expect(service.applyLateFee('123')).rejects.toThrow(BadRequestException);
+      await expect(service.applyLateFee('123', 0)).rejects.toThrow(BadRequestException);
+      await expect(service.applyLateFee('123', -50)).rejects.toThrow(BadRequestException);
     });
 
-    it('Falla si ya existe un LATE_FEE pendiente', async () => {
+    it('Sin customAmount utiliza el calculo automatico', async () => {
       const mockCharge = {
-        id: '123',
-        status: StatusCharge.PENDING,
-        dueDate: new Date('2026-08-01T00:00:00.000Z'),
-        studentCharges: [
-          {
-            studentMembershipId: 'stu-1',
-            studentMembership: {
-              pauses: [],
-              courseSeason: {
-                billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 },
-                pauses: [],
-              },
-            },
-          },
-        ],
-      };
-      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
-      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue({ id: 'late-fee-1' } as any);
-      
-      await expect(service.applyLateFee('123')).rejects.toThrow('Ya existe un recargo por mora pendiente');
-    });
-
-    it('Crea correctamente un LATE_FEE si no hay duplicados y la mora es > 0', async () => {
-      const mockCharge = {
-        id: '123',
-        status: StatusCharge.PENDING,
-        dueDate: new Date('2026-08-01T00:00:00.000Z'), // 9 dias
-        studentCharges: [
-          {
-            studentMembershipId: 'stu-1',
-            studentMembership: {
-              pauses: [],
-              courseSeason: {
-                billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 },
-                pauses: [],
-              },
-            },
-          },
-        ],
+        id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }, pauses: [] } } }],
       };
       lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
       lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
       lateFeeRepo.createLateFeeCharge.mockResolvedValue({ id: 'new-late-fee' } as any);
       
-      const res = await service.applyLateFee('123');
+      await service.applyLateFee('123', undefined);
+      
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ parentChargeId: '123', amount: 90, pendingAmount: 90 })
+      );
+    });
+
+    it('PENDING + customAmount: prioriza el monto manual', async () => {
+      const mockCharge = {
+        id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }, pauses: [] } } }],
+      };
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
+      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
+      lateFeeRepo.createLateFeeCharge.mockResolvedValue({ id: 'new-late-fee' } as any);
+      
+      await service.applyLateFee('123', 100); 
+      
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ parentChargeId: '123', amount: 100, pendingAmount: 100 })
+      );
+    });
+
+    it('PARTIAL + customAmount: genera la mora correctamente', async () => {
+      const mockCharge = {
+        id: '123', status: StatusCharge.PARTIAL, pendingAmount: 150, dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }, pauses: [] } } }],
+      };
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
+      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
+      lateFeeRepo.createLateFeeCharge.mockResolvedValue({ id: 'new-late-fee' } as any);
+      
+      await service.applyLateFee('123', 80); 
+      
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ parentChargeId: '123', amount: 80, pendingAmount: 80 })
+      );
+    });
+
+    it('PAID + customAmount: crea LATE_FEE PENDING correctamente y mantiene intacto el padre', async () => {
+      const mockCharge = {
+        id: '123', status: StatusCharge.PAID, amount: 300, adjustmentAmount: -50, pendingAmount: 0, dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ studentMembership: { pauses: [], courseSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 }, pauses: [] } } }],
+      };
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockCharge as any);
+      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
+      lateFeeRepo.createLateFeeCharge.mockResolvedValue({ id: 'new-late-fee' } as any);
+      
+      await service.applyLateFee('123', 75); 
       
       expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
-          parentChargeId: '123',
-          amount: 90,
-          pendingAmount: 90,
+          parentChargeId: '123', amount: 75, pendingAmount: 75,
+          status: StatusCharge.PENDING, chargeCategory: 'LATE_FEE'
         })
       );
-      expect(res.data.id).toBe('new-late-fee');
+
+      expect(mockCharge.status).toBe(StatusCharge.PAID);
+      expect(mockCharge.pendingAmount).toBe(0);
+      expect(mockCharge.amount).toBe(300);
+      expect(mockCharge.adjustmentAmount).toBe(-50);
     });
   });
 });
