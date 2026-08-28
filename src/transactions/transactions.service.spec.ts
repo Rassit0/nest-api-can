@@ -6,6 +6,8 @@ import { BadRequestException } from '@nestjs/common';
 import { PaymentMethod, TransactionType, StatusCharge, CycleEnrollmentStatus } from '../generated/prisma/client';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 
+import { ReceiptResolverService } from '../payments/receipt-resolver.service';
+
 describe('TransactionsService', () => {
   let service: TransactionsService;
   let prisma: PrismaService;
@@ -30,6 +32,14 @@ describe('TransactionsService', () => {
           provide: FinancialAccountsService,
           useValue: {
             applyMovement: jest.fn(),
+          },
+        },
+        {
+          provide: ReceiptResolverService,
+          useValue: {
+            resolveReceiptNumber: jest.fn(),
+            resolveReceiptForCharge: jest.fn().mockResolvedValue({ receiptSeries: 'GEN', receiptNumber: 1 }),
+            nextReceiptNumber: jest.fn().mockResolvedValue(1),
           },
         },
       ],
@@ -182,19 +192,28 @@ describe('TransactionsService', () => {
         payment: {
           create: jest.fn().mockResolvedValue({ id: 'payment-1' }),
           delete: jest.fn(),
+          update: jest.fn(),
         },
         transaction: {
           create: jest.fn().mockResolvedValue({ id: 'tx-1' }),
           findUnique: jest.fn().mockResolvedValue({ id: 'tx-1' }),
           count: jest.fn().mockResolvedValue(0),
           delete: jest.fn(),
+          update: jest.fn(),
         },
         attachment: {
           findMany: jest.fn().mockResolvedValue([]),
         },
         cycleEnrollment: {
+          findMany: jest.fn().mockResolvedValue([{ id: 'env-1', createdAt: new Date(), studentMembership: { courseSeasonShiftId: 'shift-1' } }]),
           updateMany: jest.fn(),
+          update: jest.fn(),
+          count: jest.fn().mockResolvedValue(0),
         },
+        membershipCharge: {
+          findMany: jest.fn().mockResolvedValue([]),
+        },
+        $queryRaw: jest.fn().mockResolvedValue([{ maxMembers: 10 }]),
       };
 
       jest.spyOn(prisma, '$transaction').mockImplementation(async (callback: any) => {
@@ -229,7 +248,7 @@ describe('TransactionsService', () => {
           data: expect.objectContaining({ status: StatusCharge.PAID, pendingAmount: 0 }),
         })
       );
-      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+      expect(transactionCallbackPrisma.cycleEnrollment.update).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { status: 'CONFIRMED' },
         })
@@ -260,7 +279,7 @@ describe('TransactionsService', () => {
           data: expect.objectContaining({ status: StatusCharge.PARTIAL, pendingAmount: 50 }),
         })
       );
-      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+      expect(transactionCallbackPrisma.cycleEnrollment.update).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { status: 'PENDING' },
         })
@@ -294,11 +313,66 @@ describe('TransactionsService', () => {
           data: expect.objectContaining({ status: StatusCharge.PENDING, pendingAmount: 100 }),
         })
       );
-      expect(transactionCallbackPrisma.cycleEnrollment.updateMany).toHaveBeenCalledWith(
+      expect(transactionCallbackPrisma.cycleEnrollment.update).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { status: 'PENDING' },
         })
       );
+    });
+
+    it('Caso A & B — Soft Delete y No eliminación física', async () => {
+      const mockTx = {
+        id: 'tx-1',
+        amount: { toNumber: () => 100 },
+        paymentId: 'pay-1',
+        status: 'COMPLETED',
+        payment: { chargeId: 'charge-1' },
+      };
+      
+      jest.spyOn(prisma.transaction, 'findUnique').mockResolvedValue(mockTx as any);
+
+      transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
+        id: 'charge-1',
+        amount: { toNumber: () => 100 },
+        pendingAmount: { toNumber: () => 0 },
+        adjustmentAmount: null,
+        status: StatusCharge.PAID,
+      });
+
+      await service.remove('tx-1');
+
+      expect(transactionCallbackPrisma.transaction.delete).not.toHaveBeenCalled();
+      expect(transactionCallbackPrisma.payment.delete).not.toHaveBeenCalled();
+      
+      expect(transactionCallbackPrisma.transaction.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: 'tx-1' },
+          data: { status: 'CANCELLED' }
+        })
+      );
+      
+      expect(transactionCallbackPrisma.payment.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: 'pay-1' },
+          data: { status: 'CANCELLED' }
+        })
+      );
+    });
+
+    it('Caso C — Doble anulación', async () => {
+      const mockTx = {
+        id: 'tx-1',
+        amount: { toNumber: () => 100 },
+        paymentId: 'pay-1',
+        status: 'CANCELLED',
+        payment: { chargeId: 'charge-1' },
+      };
+      
+      jest.spyOn(prisma.transaction, 'findUnique').mockResolvedValue(mockTx as any);
+
+      await expect(service.remove('tx-1')).rejects.toThrow(BadRequestException);
+      expect(transactionCallbackPrisma.charge.update).not.toHaveBeenCalled();
+      expect(transactionCallbackPrisma.transaction.update).not.toHaveBeenCalled();
     });
   });
 });

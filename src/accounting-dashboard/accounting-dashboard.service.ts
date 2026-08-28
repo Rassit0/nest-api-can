@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { StatusCharge, TransactionType } from 'src/generated/prisma/client';
+import { StatusCharge, TransactionType, TransactionStatus } from 'src/generated/prisma/client';
 import { AccountingAnalyticsService } from 'src/accounting-analytics/accounting-analytics.service';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class AccountingDashboardService {
     if (pendingAccountPayables > 0) alerts.push({ context: 'AccountCharges', count: pendingAccountPayables, label: pendingAccountPayables === 1 ? 'Obligación de pago pendiente' : 'Obligaciones de pago pendientes', href: '/admin/accounting/payables?status=PENDING', severity: 'danger', type: 'PAYABLE' });
 
     const transactions = await this.prisma.transaction.findMany({
-      where: { transactionDate: { gte: periodStart, lte: periodEnd }, isInternalTransfer: false },
+      where: { transactionDate: { gte: periodStart, lte: periodEnd }, isInternalTransfer: false, status: TransactionStatus.COMPLETED },
       select: { amount: true, type: true, transactionDate: true },
     });
 

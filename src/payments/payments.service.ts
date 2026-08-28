@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
 import { TransactionsPaginationDto } from 'src/transactions/dto/pagination.dto';
@@ -115,6 +115,11 @@ export class PaymentsService {
       throw new NotFoundException(`Pago con ID ${id} no encontrado`);
     }
 
+    if (payment.status === 'CANCELLED') {
+      throw new BadRequestException('El pago ya se encuentra anulado');
+    }
+
+    
     return await this.prisma.$transaction(async (prisma) => {
       // 1. Fail-Safe matemAtico
       const paymentAmount = Number(payment.amount.toNumber().toFixed(2));
@@ -126,7 +131,7 @@ export class PaymentsService {
       if (paymentAmount !== Number(transactionsSum.toFixed(2))) {
         this.logger.error(`Fail-Safe disparado en removePayment para ID ${id}. Monto del pago: ${paymentAmount}, Suma transacciones: ${transactionsSum}`);
         throw new InternalServerErrorException(
-          'Inconsistencia financiera detectada. El monto del pago no coincide con la suma de sus transacciones. OperaciA3n abortada.',
+          'Inconsistencia financiera detectada. El monto del pago no coincide con la suma de sus transacciones. Operación abortada.',
         );
       }
 
@@ -156,7 +161,7 @@ export class PaymentsService {
 
       await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
 
-      // 3. Revertir saldos en cuentas financieras (por Transaction) y eliminar Transactions
+      // 3. Revertir saldos en cuentas financieras (por Transaction) y anular Transactions
       for (const t of payment.transactions) {
         if (t.financialAccountId && t.status === 'COMPLETED') {
           // Si fue ingreso, al mandar negativo se decrementa el balance en applyMovement
@@ -168,14 +173,16 @@ export class PaymentsService {
           );
         }
 
-        await prisma.transaction.delete({
+        await prisma.transaction.update({
           where: { id: t.id },
+          data: { status: 'CANCELLED' },
         });
       }
 
-      // 4. Eliminar Payment
-      const deletedPayment = await prisma.payment.delete({
+      // 4. Anular Payment
+      const deletedPayment = await prisma.payment.update({
         where: { id },
+        data: { status: 'CANCELLED' },
       });
 
       return {

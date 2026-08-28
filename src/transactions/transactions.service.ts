@@ -546,6 +546,10 @@ export class TransactionsService {
       throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
     }
 
+    if (transaction.status === 'CANCELLED') {
+      throw new BadRequestException('La transacción ya se encuentra anulada');
+    }
+
     // Usar transacción de Prisma para asegurar consistencia
     return await this.prisma.$transaction(async (prisma) => {
       // Revertir cargos
@@ -595,7 +599,7 @@ export class TransactionsService {
           );
         }
 
-        // Eliminar payment si esta es la única transacción
+        // Anular payment si esta es la única transacción
         const otherTx = await prisma.transaction.count({
           where: {
             paymentId: transaction.paymentId,
@@ -603,8 +607,9 @@ export class TransactionsService {
           },
         });
         if (otherTx === 0) {
-          await prisma.payment.delete({
+          await prisma.payment.update({
             where: { id: transaction.paymentId },
+            data: { status: 'CANCELLED' },
           });
         }
       }
@@ -622,9 +627,10 @@ export class TransactionsService {
         );
       }
 
-      // Eliminar transacción
-      const deletedTransaction = await prisma.transaction.delete({
+      // Anular transacción
+      const deletedTransaction = await prisma.transaction.update({
         where: { id },
+        data: { status: 'CANCELLED' },
         select: transactionSelect,
       });
 
