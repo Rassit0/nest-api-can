@@ -1524,6 +1524,8 @@ model TeamSeasonCategory {
   maxMembers        Int?               @map("max_members")
   validateAge       Boolean            @default(true) @map("validate_age")
   isActive          Boolean            @default(true) @map("is_active")
+  status            TeamSeasonCategoryStatus @default(ACTIVE)
+  endedAt           DateTime?          @map("ended_at")
   createdAt         DateTime           @default(now()) @map("created_at")
   updatedAt         DateTime           @updatedAt @map("updated_at")
   createdById       String?            @map("created_by_id")
@@ -1589,6 +1591,11 @@ enum StatusTeamSeason {
   ACTIVE
   FINISHED
   CANCELLED
+}
+
+enum TeamSeasonCategoryStatus {
+  ACTIVE
+  FINISHED
 }
 
 /// Define cómo se estructurará la cobranza de la temporada.

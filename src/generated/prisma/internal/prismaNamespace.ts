@@ -6681,6 +6681,8 @@ export const TeamSeasonCategoryScalarFieldEnum = {
   maxMembers: 'maxMembers',
   validateAge: 'validateAge',
   isActive: 'isActive',
+  status: 'status',
+  endedAt: 'endedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
@@ -7322,6 +7324,20 @@ export type EnumAttachmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'AttachmentStatus[]'
  */
 export type ListEnumAttachmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TeamSeasonCategoryStatus'
+ */
+export type EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamSeasonCategoryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TeamSeasonCategoryStatus[]'
+ */
+export type ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamSeasonCategoryStatus[]'>
     
 
 /**

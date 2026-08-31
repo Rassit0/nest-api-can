@@ -1268,6 +1268,8 @@ export const TeamSeasonCategoryScalarFieldEnum = {
   maxMembers: 'maxMembers',
   validateAge: 'validateAge',
   isActive: 'isActive',
+  status: 'status',
+  endedAt: 'endedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',

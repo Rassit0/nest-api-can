@@ -80,6 +80,14 @@ export const StatusTeamSeason = {
 export type StatusTeamSeason = (typeof StatusTeamSeason)[keyof typeof StatusTeamSeason]
 
 
+export const TeamSeasonCategoryStatus = {
+  ACTIVE: 'ACTIVE',
+  FINISHED: 'FINISHED'
+} as const
+
+export type TeamSeasonCategoryStatus = (typeof TeamSeasonCategoryStatus)[keyof typeof TeamSeasonCategoryStatus]
+
+
 export const SeasonBillingType = {
   MONTHLY_ONLY: 'MONTHLY_ONLY',
   SINGLE_ONLY: 'SINGLE_ONLY',

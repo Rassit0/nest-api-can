@@ -15,6 +15,7 @@ import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 import { TeamSeasonCategoryService } from './team-season-category.service';
 import { CreateTeamSeasonCategoryDto } from './dto/create-team-season-category.dto';
 import { UpdateTeamSeasonCategoryDto } from './dto/update-team-season-category.dto';
+import { FinishEarlyTeamSeasonCategoryDto } from './dto/finish-early-team-season-category.dto';
 import { ApiStandardResponse } from '../common/decorators/api-responses.decorator';
 
 @ApiTags('Team Season Categories')
@@ -92,5 +93,17 @@ export class TeamSeasonCategoryController {
     @Param('categoryId', ParseUUIDPipe) categoryId: string,
   ) {
     return this.teamSeasonCategoryService.deactivate(teamSeasonId, categoryId);
+  }
+
+  @Post(':categoryId/finish-early')
+  @ApiOperation({ summary: 'Finalizar anticipadamente una categoría' })
+  @RequirePermissions('UPDATE_TEAM_SEASONS')
+  @ApiStandardResponse(Object)
+  finishEarly(
+    @Param('teamSeasonId', ParseUUIDPipe) teamSeasonId: string,
+    @Param('categoryId', ParseUUIDPipe) categoryId: string,
+    @Body() dto: FinishEarlyTeamSeasonCategoryDto,
+  ) {
+    return this.teamSeasonCategoryService.finishEarly(categoryId, dto);
   }
 }

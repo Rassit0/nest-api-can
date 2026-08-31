@@ -14,6 +14,7 @@ import {
   StatusTeamSeason,
   SeasonStatus,
   StatusCharge,
+  TeamSeasonCategoryStatus,
 } from 'src/generated/prisma/client';
 import { FinalizeTeamSeasonDto } from './dto/finalize-team-season.dto';
 import { CancelTeamSeasonDto } from './dto/cancel-team-season.dto';
@@ -917,7 +918,10 @@ export class TeamSeasonService {
           },
         },
         categories: {
-          where: { isActive: true },
+          where: { 
+            isActive: true,
+            ...(isHistorical ? {} : { status: TeamSeasonCategoryStatus.ACTIVE }),
+          },
           select: {
             id: true,
             gender: true,

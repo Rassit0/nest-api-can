@@ -12,6 +12,7 @@ import {
   Prisma,
   StatusTeamSeason,
   StatusCharge,
+  TeamSeasonCategoryStatus,
 } from 'src/generated/prisma/client';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 
@@ -969,6 +970,12 @@ export class PlayerMembershipsService {
     if (!offering) {
       throw new NotFoundException(
         'La oferta de membresía de equipo no fue encontrada',
+      );
+    }
+
+    if (offering.status === TeamSeasonCategoryStatus.FINISHED) {
+      throw new BadRequestException(
+        'No se puede crear una membresía en una categoría finalizada.',
       );
     }
 

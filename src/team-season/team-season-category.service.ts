@@ -1,12 +1,14 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateTeamSeasonCategoryDto } from './dto/create-team-season-category.dto';
 import { UpdateTeamSeasonCategoryDto } from './dto/update-team-season-category.dto';
-import { Prisma, PlayerMembershipStatus } from 'src/generated/prisma/client';
+import { FinishEarlyTeamSeasonCategoryDto } from './dto/finish-early-team-season-category.dto';
+import { Prisma, PlayerMembershipStatus, StatusCharge, TeamSeasonCategoryStatus } from 'src/generated/prisma/client';
 
 export const teamSeasonCategorySelect: Prisma.TeamSeasonCategorySelect = {
   id: true,
@@ -25,6 +27,8 @@ export const teamSeasonCategorySelect: Prisma.TeamSeasonCategorySelect = {
   maxMembers: true,
   validateAge: true,
   isActive: true,
+  status: true,
+  endedAt: true,
   _count: {
     select: {
       player_membership: {
@@ -225,5 +229,121 @@ export class TeamSeasonCategoryService {
       data: deactivatedCategory,
       message: 'Categoría desactivada exitosamente',
     };
+  }
+
+  async finishEarly(categoryId: string, dto: FinishEarlyTeamSeasonCategoryDto) {
+    const endedAt = new Date();
+    const endedAtYear = endedAt.getUTCFullYear();
+    const endedAtMonth = endedAt.getUTCMonth() + 1;
+
+    return this.prisma.$transaction(async (tx) => {
+      // 1. Validar y actualizar categoría (CondiciA3n atA3mica)
+      const updateResult = await tx.teamSeasonCategory.updateMany({
+        where: {
+          id: categoryId,
+          status: TeamSeasonCategoryStatus.ACTIVE,
+        },
+        data: {
+          status: TeamSeasonCategoryStatus.FINISHED,
+          endedAt,
+        },
+      });
+
+      if (updateResult.count === 0) {
+        // Puede no existir o ya estar terminada. Comprobamos su existencia real
+        const existing = await tx.teamSeasonCategory.findUnique({
+          where: { id: categoryId },
+        });
+        if (!existing) {
+          throw new NotFoundException('La categoría no fue encontrada');
+        }
+        throw new ConflictException('La categoría ya se encuentra finalizada');
+      }
+
+      // Obtener la categoría actualizada para el response
+      const updatedCategory = await tx.teamSeasonCategory.findUnique({
+        where: { id: categoryId },
+        select: teamSeasonCategorySelect,
+      });
+
+      // 2. Obtener membresA-as afectadas
+      const affectedMemberships = await tx.playerMembership.findMany({
+        where: {
+          teamSeasonCategoryId: categoryId,
+          status: {
+            in: [
+              PlayerMembershipStatus.ACTIVE,
+              PlayerMembershipStatus.PENDING_ACTIVE,
+              PlayerMembershipStatus.SUSPENDED,
+            ],
+          },
+        },
+      });
+
+      if (affectedMemberships.length > 0) {
+        const membershipIds = affectedMemberships.map((m) => m.id);
+
+        // 3. Finalizar membresA-as
+        await tx.playerMembership.updateMany({
+          where: { id: { in: membershipIds } },
+          data: {
+            status: PlayerMembershipStatus.FINISHED,
+            endedAt,
+            nextRecurringChargeGenerationDate: null,
+          },
+        });
+
+        // 4. Crear historiales
+        await tx.playerMembershipHistory.createMany({
+          data: affectedMemberships.map((membership) => ({
+            playerMembershipId: membership.id,
+            previousStatus: membership.status,
+            newStatus: PlayerMembershipStatus.FINISHED,
+            reason: dto.notes || 'Finalización anticipada de categoría',
+          })),
+        });
+
+        // 5. Encontrar cargos futuros (PENDING)
+        const pendingCharges = await tx.membershipCharge.findMany({
+          where: {
+            playerMembershipId: { in: membershipIds },
+            charge: {
+              status: StatusCharge.PENDING,
+            },
+          },
+          include: {
+            charge: true,
+          },
+        });
+
+        const futureChargeIds = pendingCharges
+          .filter((mc) => {
+            if (mc.billingYear != null && mc.billingMonth != null) {
+              return (
+                mc.billingYear > endedAtYear ||
+                (mc.billingYear === endedAtYear && mc.billingMonth > endedAtMonth)
+              );
+            }
+            // Fallback
+            return mc.charge.dueDate > endedAt;
+          })
+          .map((mc) => mc.chargeId);
+
+        if (futureChargeIds.length > 0) {
+          // 6. Cancelar cargos
+          await tx.charge.updateMany({
+            where: { id: { in: futureChargeIds } },
+            data: {
+              status: StatusCharge.CANCELLED,
+            },
+          });
+        }
+      }
+
+      return {
+        data: updatedCategory,
+        message: 'Categoría finalizada anticipadamente con éxito',
+      };
+    });
   }
 }

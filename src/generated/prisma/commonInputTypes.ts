@@ -1014,6 +1014,23 @@ export type EnumAttachmentStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAttachmentStatusFilter<$PrismaModel>
 }
 
+export type EnumTeamSeasonCategoryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonCategoryStatus | Prisma.EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel> | $Enums.TeamSeasonCategoryStatus
+}
+
+export type EnumTeamSeasonCategoryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonCategoryStatus | Prisma.EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonCategoryStatusWithAggregatesFilter<$PrismaModel> | $Enums.TeamSeasonCategoryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1960,6 +1977,23 @@ export type NestedEnumAttachmentStatusWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAttachmentStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAttachmentStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonCategoryStatus | Prisma.EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel> | $Enums.TeamSeasonCategoryStatus
+}
+
+export type NestedEnumTeamSeasonCategoryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamSeasonCategoryStatus | Prisma.EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamSeasonCategoryStatus[] | Prisma.ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamSeasonCategoryStatusWithAggregatesFilter<$PrismaModel> | $Enums.TeamSeasonCategoryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamSeasonCategoryStatusFilter<$PrismaModel>
 }
 
 
