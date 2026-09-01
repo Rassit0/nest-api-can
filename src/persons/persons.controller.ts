@@ -37,6 +37,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 
+import { SecretarySummaryResponseDto } from './dto/secretary-summary.dto';
+
 @ApiTags('Persons')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'), UserRoleGuard)
@@ -71,6 +73,26 @@ export class PersonsController {
   @RequirePermissions('READ_PERSONS')
   async findAll(@Query() paginationDto: PersonPaginationDto) {
     return await this.personsService.findAll(paginationDto);
+  }
+
+  @Get(':id/secretary-summary')
+  @ApiOperation({
+    summary: 'Obtener resumen de secretaría por ID de persona',
+    description:
+      'Retorna un resumen integral para la secretaria: Perfil, membresías activas y cargos pendientes.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la persona (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(
+    SecretarySummaryResponseDto,
+    'Resumen de secretaría obtenido exitosamente.',
+  )
+  @RequirePermissions('READ_PERSONS')
+  async getSecretarySummary(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.personsService.getSecretarySummary(id);
   }
 
   @Get(':id')

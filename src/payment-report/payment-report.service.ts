@@ -167,7 +167,8 @@ export class PaymentReportService {
     if (!transaction) throw new NotFoundException(`Transaction with id ${transactionId} not found`);
 
     const year = transaction.transactionDate.getFullYear();
-    const paddedNumber = transaction.receiptNumber.toString().padStart(7, '0');
+    const actualReceiptNumber = transaction.payment?.receiptNumber || transaction.receiptNumber;
+    const paddedNumber = actualReceiptNumber.toString().padStart(7, '0');
     const receiptNumber = `${paddedNumber}/${year}`;
 
     const numericAmount = transaction.amount.toNumber();
