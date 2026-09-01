@@ -68,7 +68,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                             course: {
                               include: {
                                 school: {
-                                  include: { defaultAccountCategory: { include: { parent: true } } },
+                                  include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
                                 },
                               },
                             },
@@ -87,7 +87,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                             team: {
                               include: {
                                 club: {
-                                  include: { defaultAccountCategory: { include: { parent: true } } },
+                                  include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
                                 },
                               },
                             },
@@ -187,24 +187,31 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           
         let entityName: string | undefined;
         let entityId: string | undefined;
+        let disciplineName: string | undefined;
 
         if (t.payment.charge?.studentCharges?.[0]?.studentMembership?.courseSeason?.course?.school) {
           const school = t.payment.charge.studentCharges[0].studentMembership.courseSeason.course.school;
           entityName = school.name;
           entityId = school.id;
+          disciplineName = school.discipline?.name;
         } else if (t.payment.charge?.membershipCharges?.[0]?.playerMembership?.teamSeason?.team?.club) {
           const club = t.payment.charge.membershipCharges[0].playerMembership.teamSeason.team.club;
           entityName = club.name;
           entityId = club.id;
+          disciplineName = club.discipline?.name;
         }
 
-        const getChildName = (entName: string | undefined, catName: string | undefined, ser: string, defaultName: string) => {
+        const getChildName = (entName: string | undefined, catName: string | undefined, ser: string, defaultName: string, discName?: string) => {
           const baseName = entName || catName;
           if (!baseName) return defaultName;
+          let suffix = '';
+          if (discName) {
+            suffix = ` (${discName.toUpperCase()})`;
+          }
           let prefix = '';
           if (ser.includes('MAT')) prefix = 'Matrícula de ';
           else if (ser.includes('REC')) prefix = 'Recargo de ';
-          return `${prefix}${baseName}`;
+          return `${prefix}${baseName}${suffix}`;
         };
         
         // 1. Determinar el grupo padre (ESCUELAS, EQUIPOS, PERSONALIZADOS, HISTÓRICO)
@@ -213,13 +220,13 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           parentName = 'ESCUELAS';
           const resolvedId = entityId || (cat ? cat.id : series);
           childId = `${resolvedId}_${series}`;
-          childName = getChildName(entityName, cat?.name, series, series);
+          childName = getChildName(entityName, cat?.name, series, series, disciplineName);
         } else if (series.startsWith('EQP')) {
           parentId = 'VIRTUAL_EQUIPOS';
           parentName = 'EQUIPOS';
           const resolvedId = entityId || (cat ? cat.id : series);
           childId = `${resolvedId}_${series}`;
-          childName = getChildName(entityName, cat?.name, series, series);
+          childName = getChildName(entityName, cat?.name, series, series, disciplineName);
         } else if (cat && cat.code !== 'ESC' && cat.code !== 'EQP') {
           // Si es una categoría contable personalizada y está activa
           if (cat.isActive) {
@@ -275,8 +282,15 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       pGroup.total += effectiveAmt;
     }
 
+    const groups = Array.from(parentMap.values()).sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+    
+    // Sort children inside each parent by their visible name (categoryName)
+    for (const group of groups) {
+      group.children.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+    }
+
     return {
-      groups: Array.from(parentMap.values()).sort((a, b) => a.categoryName.localeCompare(b.categoryName)),
+      groups,
       activeAccounts: Array.from(activeAccountNames).sort()
     };
   }

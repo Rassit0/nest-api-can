@@ -327,7 +327,7 @@ export class StudentMembershipsService {
       page = 1,
       search,
       orderBy = 'asc',
-      sortField = 'createdAt',
+      sortField = 'lastName',
       courseSeasonId,
       courseSeasonShiftId,
       studentId,
@@ -403,7 +403,13 @@ export class StudentMembershipsService {
         where,
         take: per_page,
         skip,
-        orderBy: { [sortField]: orderBy },
+        orderBy:
+          sortField === 'lastName' || sortField === 'name'
+            ? [
+                { student: { person: { lastName: orderBy } } },
+                { student: { person: { name: orderBy } } },
+              ]
+            : { [sortField]: orderBy },
         select: studentMembershipSelect,
       }),
       this.prisma.studentMembership.count({ where }),

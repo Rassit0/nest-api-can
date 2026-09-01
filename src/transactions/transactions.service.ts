@@ -21,6 +21,7 @@ import { TransactionsMapper } from './transactions.mapper';
 import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 import { syncPlayerMembershipStatus } from 'src/common/helpers/sync-player-membership.helper';
+import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 
 export const transactionSelect = {
   id: true,
@@ -224,10 +225,22 @@ export class TransactionsService {
       let charge = null;
 
       if (isPayment) {
+        // El Charge debe bloquearse antes de leer/calcular pendingAmount.
+        // Payments, reversos y Late Fees realizan Read-Modify-Write sobre
+        // este mismo saldo. El lock evita Lost Updates bajo concurrencia.
+        const lockedCharge = await lockChargeForUpdate(prisma, mainChargeId);
+
         charge = await prisma.charge.findUnique({
           where: { id: mainChargeId },
           include: { membershipCharges: true, studentCharges: true },
         });
+
+        if (charge) {
+          charge.amount = new Prisma.Decimal(lockedCharge.amount.toString());
+          charge.pendingAmount = new Prisma.Decimal(lockedCharge.pendingAmount.toString());
+          charge.status = lockedCharge.status;
+          charge.adjustmentAmount = lockedCharge.adjustmentAmount ? new Prisma.Decimal(lockedCharge.adjustmentAmount.toString()) : null;
+        }
 
         if (!charge)
           throw new NotFoundException(
@@ -555,10 +568,20 @@ export class TransactionsService {
     return await this.prisma.$transaction(async (prisma) => {
       // Revertir cargos
       if (transaction.payment) {
+        // El Charge debe bloquearse antes de leer/calcular pendingAmount.
+        // Payments, reversos y Late Fees realizan Read-Modify-Write sobre
+        // este mismo saldo. El lock evita Lost Updates bajo concurrencia.
+        const lockedCharge = await lockChargeForUpdate(prisma, transaction.payment.chargeId);
+
         const charge = await prisma.charge.findUnique({
           where: { id: transaction.payment.chargeId },
         });
         if (charge) {
+          charge.amount = new Prisma.Decimal(lockedCharge.amount.toString());
+          charge.pendingAmount = new Prisma.Decimal(lockedCharge.pendingAmount.toString());
+          charge.status = lockedCharge.status;
+          charge.adjustmentAmount = lockedCharge.adjustmentAmount ? new Prisma.Decimal(lockedCharge.adjustmentAmount.toString()) : null;
+
           const currentPending = Number(
             charge.pendingAmount.toNumber().toFixed(2),
           );

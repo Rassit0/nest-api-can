@@ -776,17 +776,19 @@ model User {
 }
 
 model Role {
-  id          String           @id @default(uuid())
-  name        String           @unique
-  description String?
-  createdAt   DateTime         @default(now()) @map("created_at")
-  updatedAt   DateTime         @updatedAt @map("updated_at")
-  createdById String?          @map("created_by_id")
-  updatedById String?          @map("updated_by_id")
-  permissions RolePermission[]
-  createdBy   User?            @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedBy   User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
-  users       User[]
+  id           String           @id @default(uuid())
+  name         String           @unique
+  description  String?
+  isSystem     Boolean          @default(false) @map("is_system")
+  isSuperAdmin Boolean          @default(false) @map("is_super_admin")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+  createdById  String?          @map("created_by_id")
+  updatedById  String?          @map("updated_by_id")
+  permissions  RolePermission[]
+  createdBy    User?            @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy    User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
+  users        User[]
 
   @@map("roles")
 }
@@ -1514,28 +1516,28 @@ model Attachment {
 }
 
 model TeamSeasonCategory {
-  id                String             @id @default(uuid())
-  teamSeasonId      String             @map("team_season_id")
-  categoryId        String             @map("category_id")
+  id                String                   @id @default(uuid())
+  teamSeasonId      String                   @map("team_season_id")
+  categoryId        String                   @map("category_id")
   gender            ProgramGender
-  minBirthYear      Int?               @map("min_birth_year")
-  maxBirthYear      Int?               @map("max_birth_year")
-  minMembers        Int?               @map("min_members")
-  maxMembers        Int?               @map("max_members")
-  validateAge       Boolean            @default(true) @map("validate_age")
-  isActive          Boolean            @default(true) @map("is_active")
+  minBirthYear      Int?                     @map("min_birth_year")
+  maxBirthYear      Int?                     @map("max_birth_year")
+  minMembers        Int?                     @map("min_members")
+  maxMembers        Int?                     @map("max_members")
+  validateAge       Boolean                  @default(true) @map("validate_age")
+  isActive          Boolean                  @default(true) @map("is_active")
   status            TeamSeasonCategoryStatus @default(ACTIVE)
-  endedAt           DateTime?          @map("ended_at")
-  createdAt         DateTime           @default(now()) @map("created_at")
-  updatedAt         DateTime           @updatedAt @map("updated_at")
-  createdById       String?            @map("created_by_id")
-  updatedById       String?            @map("updated_by_id")
+  endedAt           DateTime?                @map("ended_at")
+  createdAt         DateTime                 @default(now()) @map("created_at")
+  updatedAt         DateTime                 @updatedAt @map("updated_at")
+  createdById       String?                  @map("created_by_id")
+  updatedById       String?                  @map("updated_by_id")
   generalEvents     GeneralEvent[]
   matches           Match[]
   player_membership PlayerMembership[]
   sessions          SessionTeam[]
-  category          Category           @relation(fields: [categoryId], references: [id])
-  teamSeason        TeamSeason         @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
+  category          Category                 @relation(fields: [categoryId], references: [id])
+  teamSeason        TeamSeason               @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
   teamSeasonStaffs  TeamSeasonStaff[]
 
   @@unique([id, teamSeasonId])

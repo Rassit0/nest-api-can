@@ -6,6 +6,7 @@ import {
   StatusCharge,
   TypeMembershipCharge,
 } from 'src/generated/prisma/client';
+import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 
 export type StudentChargeWithLateFeeRelations = Prisma.ChargeGetPayload<{
   include: {
@@ -83,7 +84,7 @@ export class StudentLateFeeRepository {
     tx: Prisma.TransactionClient,
     parentChargeId: string,
   ) {
-    return tx.charge.findFirst({
+    const charge = await tx.charge.findFirst({
       where: {
         parentChargeId,
         studentCharges: {
@@ -93,6 +94,20 @@ export class StudentLateFeeRepository {
         },
       },
     });
+
+    if (!charge) return null;
+
+    // INFO: El Charge debe bloquearse antes de leer/calcular amount/pendingAmount.
+    // Late Fees modifican amount, pendingAmount y status. Sin lock, concurrencia 
+    // con pagos causaría Lost Updates.
+    const lockedCharge = await lockChargeForUpdate(tx, charge.id);
+    
+    charge.amount = new Prisma.Decimal(lockedCharge.amount.toString());
+    charge.pendingAmount = new Prisma.Decimal(lockedCharge.pendingAmount.toString());
+    charge.status = lockedCharge.status;
+    charge.adjustmentAmount = lockedCharge.adjustmentAmount ? new Prisma.Decimal(lockedCharge.adjustmentAmount.toString()) : null;
+
+    return charge;
   }
 
   async updateLateFeeCharge(

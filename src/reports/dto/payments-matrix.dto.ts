@@ -8,6 +8,9 @@ export interface PaymentMatrixPeriodDto {
 export interface PaymentMatrixPaymentDetailDto {
   amount: number;
   date: string;
+  receiptNumber: string;
+  chargeType: 'REGISTRATION' | 'RECURRING_FEE' | 'LATE_FEE' | 'MANUAL';
+  description?: string;
 }
 
 export interface PaymentMatrixPeriodDataDto {
@@ -18,6 +21,7 @@ export interface PaymentMatrixPeriodDataDto {
 export interface PaymentMatrixStudentDto {
   id: string;
   name: string;
+  registration?: PaymentMatrixPeriodDataDto;
   // Key represents the period 'key'
   paymentsByPeriod: Record<string, PaymentMatrixPeriodDataDto>;
 }

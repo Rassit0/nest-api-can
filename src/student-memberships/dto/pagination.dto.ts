@@ -6,14 +6,14 @@ import { StudentMembershipStatus } from '../../generated/prisma/enums';
 export class StudentMembershipsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Campo por el cual ordenar los resultados',
-    default: 'createdAt',
-    enum: ['startedAt', 'status', 'createdAt', 'id'],
+    default: 'lastName',
+    enum: ['startedAt', 'status', 'createdAt', 'id', 'lastName'],
   })
   @IsOptional()
-  @IsIn(['startedAt', 'status', 'createdAt', 'id'], {
-    message: 'Columnas permitidas: startedAt, status, createdAt, id',
+  @IsIn(['startedAt', 'status', 'createdAt', 'id', 'lastName'], {
+    message: 'Columnas permitidas: startedAt, status, createdAt, id, lastName',
   })
-  sortField?: string = 'createdAt';
+  sortField?: string = 'lastName';
 
   @ApiPropertyOptional({
     description: 'Filtrar por curso de la temporada',

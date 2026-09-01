@@ -314,7 +314,7 @@ export class PlayerMembershipsService {
       page = 1,
       search,
       orderBy = 'asc',
-      sortField = 'createdAt',
+      sortField = 'lastName',
       playerId,
       teamSeasonCategoryId,
       teamSeasonId,
@@ -396,7 +396,13 @@ export class PlayerMembershipsService {
         where,
         take: per_page,
         skip,
-        orderBy: { [sortField]: orderBy },
+        orderBy:
+          sortField === 'lastName' || sortField === 'name'
+            ? [
+                { player: { person: { lastName: orderBy } } },
+                { player: { person: { name: orderBy } } },
+              ]
+            : { [sortField]: orderBy },
         select: playerMembershipSelect,
       }),
       this.prisma.playerMembership.count({ where }),

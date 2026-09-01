@@ -1,4 +1,4 @@
-﻿import {
+import {
   Injectable,
   Logger,
   BadRequestException,
@@ -94,9 +94,11 @@ export class StudentLateFeeService {
 
       const studentChargeRelation = baseCharge.studentCharges[0];
 
+      const baseDesc = baseCharge.description?.trim() || 'Cargo original';
+
       const description = customAmount !== undefined 
-        ? 'Mora por atraso (Monto Personalizado)' 
-        : 'Mora por atraso';
+        ? `Mora sobre: ${baseDesc} (Monto personalizado)` 
+        : `Mora sobre: ${baseDesc}`;
 
       const newCharge = await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,

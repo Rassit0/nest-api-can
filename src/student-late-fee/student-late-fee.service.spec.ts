@@ -1,4 +1,4 @@
-﻿import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma.service';
 import { StatusCharge, TypeMembershipCharge } from 'src/generated/prisma/client';
 import { StudentLateFeeService } from './student-late-fee.service';
@@ -164,6 +164,90 @@ describe('StudentLateFeeService - On Demand', () => {
       expect(mockCharge.pendingAmount).toBe(0);
       expect(mockCharge.amount).toBe(300);
       expect(mockCharge.adjustmentAmount).toBe(-50);
+    });
+  });
+
+  describe('Generación de Descripción Contextual', () => {
+    let mockBaseCharge: any;
+
+    beforeEach(() => {
+      mockBaseCharge = {
+        id: 'charge-1',
+        description: 'Cuota Mes - Julio 2026',
+        status: StatusCharge.PENDING,
+        dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        studentCharges: [{ 
+          type: TypeMembershipCharge.REGISTRATION, 
+          studentMembershipId: 'mem-1',
+          studentMembership: { 
+            pauses: [], 
+            courseSeason: { 
+              billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 5 }, 
+              pauses: [] 
+            } 
+          } 
+        }],
+      };
+      lateFeeRepo.findPendingLateFeeCharge.mockResolvedValue(null);
+      lateFeeRepo.createLateFeeCharge.mockResolvedValue({ id: 'new-late-fee' } as any);
+    });
+
+    it('Caso 1: Descripción normal', async () => {
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026',
+        })
+      );
+    });
+
+    it('Caso 2: Descripción personalizada (customAmount)', async () => {
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1', 100);
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026 (Monto personalizado)',
+        })
+      );
+    });
+
+    it('Caso 3: Descripción NULL', async () => {
+      mockBaseCharge.description = null;
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
+    });
+
+    it('Caso 4: Descripción vacía', async () => {
+      mockBaseCharge.description = '';
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
+    });
+
+    it('Caso 5: Descripción con espacios', async () => {
+      mockBaseCharge.description = '   ';
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
     });
   });
 });

@@ -1,0 +1,1 @@
+import { PrismaClient } from './src/generated/prisma/client'; const prisma = new PrismaClient(); async function run() { const user = await prisma.user.findUnique({where: {id: 'ba778394-85b7-4689-81c7-61cfcc7a7819'}}); console.log('USER:', user); } run().catch(console.error).finally(() => prisma.$disconnect());

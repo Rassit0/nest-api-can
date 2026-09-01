@@ -9,6 +9,7 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -52,41 +53,26 @@ export class RolesController {
   @Post()
   @ApiOperation({
     summary: 'Crear un nuevo rol y asignarle permisos',
-    description:
-      'Registra un rol en el sistema y asocia los IDs de los permisos pasados en el cuerpo.',
   })
   @ApiStandardCreatedResponse(
     RoleResponseDto,
     'Rol creado y permisos mapeados con éxito.',
   )
   @RequirePermissions('CREATE_ROLES')
-  async create(@Body() createRoleDto: CreateRoleDto) {
-    return await this.rolesService.create(createRoleDto);
+  async create(@Body() createRoleDto: CreateRoleDto, @Req() req: any) {
+    return await this.rolesService.create(createRoleDto, req.user);
   }
 
   @Get('permissions/array')
   @ApiOperation({
     summary: 'Obtener lista de permisos en formato de array por rol',
-    description:
-      'Retorna todos los permisos del sistema asociados a un rol específico en formato de array. Opcionalmente puede filtrarse por módulo.',
   })
-  @ApiQuery({
-    name: 'roleId',
-    required: true,
-    description: 'ID del rol para buscar permisos (UUID)',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'moduleName',
-    required: false,
-    description: 'Nombre del módulo para filtrar permisos (ej. USERS)',
-    type: String,
-  })
+  @ApiQuery({ name: 'roleId', required: true, type: String })
+  @ApiQuery({ name: 'moduleName', required: false, type: String })
   @ApiOkResponse({
     description: 'Array de nombres de permisos obtenidos exitosamente.',
     type: [String],
   })
-  // @RequirePermissions('READ_ROLES')
   async getAllPermissions(
     @Query('roleId', ParseUUIDPipe) roleId: string,
     @Query('moduleName') moduleName?: string,
@@ -97,8 +83,6 @@ export class RolesController {
   @Get('permissions')
   @ApiOperation({
     summary: 'Obtener lista de permisos paginada',
-    description:
-      'Retorna los permisos de forma paginada. Opcionalmente filtrable por roleId.',
   })
   @ApiPaginatedResponse(
     PermissionResponseDto,
@@ -114,8 +98,6 @@ export class RolesController {
   @Get()
   @ApiOperation({
     summary: 'Obtener lista de roles',
-    description:
-      'Retorna una lista paginada y filtrable de todos los roles cargados.',
   })
   @ApiPaginatedResponse(
     RoleResponseDto,
@@ -129,14 +111,8 @@ export class RolesController {
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener un rol por ID',
-    description:
-      'Busca y retorna los detalles de un rol específico con sus permisos asociados.',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del rol a consultar (UUID)',
-    format: 'uuid',
-  })
+  @ApiParam({ name: 'id', format: 'uuid' })
   @ApiStandardResponse(RoleResponseDto, 'Rol encontrado exitosamente.')
   @RequirePermissions('READ_ROLES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
@@ -146,14 +122,8 @@ export class RolesController {
   @Patch(':id')
   @ApiOperation({
     summary: 'Actualizar un rol y sus permisos',
-    description:
-      'Actualiza los metadatos de un rol y rehace la relación de permisos de forma transaccional.',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del rol a actualizar (UUID)',
-    format: 'uuid',
-  })
+  @ApiParam({ name: 'id', format: 'uuid' })
   @ApiBody({ type: UpdateRoleDto })
   @ApiStandardResponse(
     RoleResponseDto,
@@ -163,24 +133,19 @@ export class RolesController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRoleDto: UpdateRoleDto,
+    @Req() req: any,
   ) {
-    return await this.rolesService.update(id, updateRoleDto);
+    return await this.rolesService.update(id, updateRoleDto, req.user);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: 'Eliminar un rol',
-    description:
-      'Remueve un rol del sistema y limpia las relaciones asociadas por cascada.',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del rol a eliminar (UUID)',
-    format: 'uuid',
-  })
+  @ApiParam({ name: 'id', format: 'uuid' })
   @ApiStandardResponse(RoleResponseDto, 'Rol eliminado con éxito.')
   @RequirePermissions('DELETE_ROLES')
-  async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.rolesService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string, @Req() req: any) {
+    return await this.rolesService.remove(id, req.user);
   }
 }

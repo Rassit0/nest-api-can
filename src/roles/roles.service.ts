@@ -3,6 +3,7 @@ import {
   Logger,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
   Inject,
 } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -18,6 +19,8 @@ export const roleSelect: Prisma.RoleSelect = {
   id: true,
   name: true,
   description: true,
+  isSystem: true,
+  isSuperAdmin: true,
   createdAt: true,
   updatedAt: true,
   permissions: {
@@ -42,11 +45,38 @@ export class RolesService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async create(createRoleDto: CreateRoleDto) {
+  private async enforceRbacDelegation(
+    actor: any,
+    targetPermissionIds: string[],
+  ) {
+    if (actor?.role?.isSuperAdmin) return; // SuperAdmin bypasses this rule
+
+    // Actor's permissions array (injected by UserRoleGuard)
+    const actorPermissions = new Set(actor.permissions || []);
+
+    if (targetPermissionIds.length === 0) return;
+
+    // Fetch the string names of the target permissions being granted
+    const targetPerms = await this.prisma.permission.findMany({
+      where: { id: { in: targetPermissionIds } },
+      select: { name: true },
+    });
+
+    for (const p of targetPerms) {
+      if (!actorPermissions.has(p.name)) {
+        throw new ForbiddenException(
+          `Delegación de permisos denegada: No posees el permiso '${p.name}' que intentas conceder.`,
+        );
+      }
+    }
+  }
+
+  async create(createRoleDto: CreateRoleDto, actor: any) {
     const { name, description, permissionIds } = createRoleDto;
 
     if (permissionIds) {
       await this.validatePermissionsDependencies(permissionIds);
+      await this.enforceRbacDelegation(actor, permissionIds);
     }
 
     const newRole = await this.prisma.role.create({
@@ -121,18 +151,24 @@ export class RolesService {
     };
   }
 
-  async update(id: string, updateRoleDto: UpdateRoleDto) {
+  async update(id: string, updateRoleDto: UpdateRoleDto, actor: any) {
     const role = await this.prisma.role.findUnique({
       where: { id },
     });
-    if (!role) {
-      throw new NotFoundException('El rol solicitado no fue encontrado');
-    }
+    if (!role) throw new NotFoundException('El rol solicitado no fue encontrado');
 
     const { name, description, permissionIds } = updateRoleDto;
 
+    // Proteccion del propio rol (un admin normal no puede cambiar sus propios permisos)
+    if (id === actor.roleId && !actor?.role?.isSuperAdmin) {
+      if (permissionIds !== undefined) {
+        throw new ForbiddenException('No puedes modificar los permisos de tu propio rol');
+      }
+    }
+
     if (permissionIds) {
       await this.validatePermissionsDependencies(permissionIds);
+      await this.enforceRbacDelegation(actor, permissionIds);
     }
 
     const updatedRole = await this.prisma.$transaction(async (tx) => {
@@ -158,7 +194,6 @@ export class RolesService {
       });
     });
 
-    // Invalida la caché de permisos de este rol
     await this.cacheManager.del(`role_${id}_access`);
 
     return {
@@ -167,12 +202,22 @@ export class RolesService {
     };
   }
 
-  async remove(id: string) {
+  async remove(id: string, actor: any) {
     const role = await this.prisma.role.findUnique({
       where: { id },
     });
-    if (!role) {
-      throw new NotFoundException('El rol solicitado no fue encontrado');
+    if (!role) throw new NotFoundException('El rol solicitado no fue encontrado');
+
+    if (role.isSystem) {
+      throw new ForbiddenException('No se pueden eliminar roles protegidos por el sistema');
+    }
+
+    const usersCount = await this.prisma.user.count({
+      where: { roleId: id },
+    });
+
+    if (usersCount > 0) {
+      throw new ForbiddenException('No se puede eliminar un rol que tiene usuarios asignados (activos o inactivos)');
     }
 
     const deletedRole = await this.prisma.role.delete({
@@ -180,7 +225,6 @@ export class RolesService {
       select: roleSelect,
     });
 
-    // Invalida la caché de permisos de este rol
     await this.cacheManager.del(`role_${id}_access`);
 
     return {
@@ -279,7 +323,6 @@ export class RolesService {
   private async validatePermissionsDependencies(permissionIds: string[]) {
     if (!permissionIds || permissionIds.length === 0) return;
 
-    // Obtener los detalles de los permisos solicitados
     const permissions = await this.prisma.permission.findMany({
       where: { id: { in: permissionIds } },
       select: {
@@ -288,7 +331,6 @@ export class RolesService {
       },
     });
 
-    // Agrupar los permisos solicitados por módulo
     const permissionsByModule = permissions.reduce(
       (acc, perm) => {
         const modName = perm.module.name;
@@ -299,14 +341,11 @@ export class RolesService {
       {} as Record<string, typeof permissions>,
     );
 
-    // Validar cada módulo
     for (const [moduleName, perms] of Object.entries(permissionsByModule)) {
-      // Si este módulo tiene una acción de modificación o un permiso personalizado...
       const hasModifyAction = perms.some(
         (p) => !p.name.startsWith('READ_') && p.name !== 'MANAGE_ALL',
       );
 
-      // ...obligatoriamente debe tener una acción de lectura incluida en el array.
       const hasReadAction = perms.some((p) => p.name.startsWith('READ_'));
 
       if (hasModifyAction && !hasReadAction) {

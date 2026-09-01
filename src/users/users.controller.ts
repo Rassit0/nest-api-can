@@ -9,16 +9,13 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiBody,
   ApiParam,
-  ApiOkResponse,
-  ApiCreatedResponse,
-  ApiBadRequestResponse,
-  ApiNotFoundResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -50,11 +47,26 @@ export class UsersController {
   })
   @ApiStandardCreatedResponse(
     UserResponseDto,
-    'Usuario creado exitosamente con la contraseña encriptada SHA-256.',
+    'Usuario creado exitosamente. Retorna la contraseña temporal en data.tempPassword.',
   )
   @RequirePermissions('CREATE_USERS')
-  async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto, @Req() req: any) {
+    return await this.usersService.create(createUserDto, req.user);
+  }
+
+  @Get('persons/options')
+  @ApiOperation({
+    summary: 'Obtener lista de opciones de personas para select/autocomplete',
+  })
+  // It checks either CREATE or UPDATE at controller level. Or we can just use an OR guard.
+  // We'll use one and check inside, or just require a basic one. Usually CREATE or UPDATE.
+  @RequirePermissions('CREATE_USERS')
+  async getPersonOptions(
+    @Query('search') search?: string,
+    @Query('page') page = 1,
+    @Query('limit') limit = 20,
+  ) {
+    return await this.usersService.getPersonOptions(search, page, limit);
   }
 
   @Get()
@@ -75,14 +87,8 @@ export class UsersController {
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener un usuario por ID',
-    description:
-      'Busca y retorna la información de seguridad de un usuario específico junto con su persona y rol.',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del usuario a consultar (UUID)',
-    format: 'uuid',
-  })
+  @ApiParam({ name: 'id', format: 'uuid' })
   @ApiStandardResponse(UserResponseDto, 'Usuario encontrado exitosamente.')
   @RequirePermissions('READ_USERS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
@@ -92,38 +98,38 @@ export class UsersController {
   @Patch(':id')
   @ApiOperation({
     summary: 'Actualizar un usuario específico',
-    description:
-      'Modifica datos de credenciales, rol o vinculación a persona de un usuario por su ID.',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del usuario a actualizar (UUID)',
-    format: 'uuid',
-  })
+  @ApiParam({ name: 'id', format: 'uuid' })
   @ApiBody({ type: UpdateUserDto })
   @ApiStandardResponse(UserResponseDto, 'Usuario actualizado exitosamente.')
   @RequirePermissions('UPDATE_USERS')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
+    @Req() req: any,
   ) {
-    return await this.usersService.update(id, updateUserDto);
+    return await this.usersService.update(id, updateUserDto, req.user);
   }
 
-  @Delete(':id')
+  @Patch(':id/deactivate')
   @ApiOperation({
-    summary: 'Eliminar un usuario',
-    description:
-      'Elimina de manera permanente la cuenta de usuario del sistema.',
+    summary: 'Desactivar un usuario',
   })
-  @ApiParam({
-    name: 'id',
-    description: 'ID del usuario a eliminar (UUID)',
-    format: 'uuid',
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiStandardResponse(UserResponseDto, 'Usuario desactivado exitosamente.')
+  @RequirePermissions('DEACTIVATE_USERS')
+  async deactivate(@Param('id', ParseUUIDPipe) id: string, @Req() req: any) {
+    return await this.usersService.deactivate(id, req.user);
+  }
+
+  @Patch(':id/reactivate')
+  @ApiOperation({
+    summary: 'Reactivar un usuario',
   })
-  @ApiStandardResponse(UserResponseDto, 'Usuario eliminado exitosamente.')
-  @RequirePermissions('DELETE_USERS')
-  async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.usersService.remove(id);
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiStandardResponse(UserResponseDto, 'Usuario reactivado exitosamente.')
+  @RequirePermissions('DEACTIVATE_USERS')
+  async reactivate(@Param('id', ParseUUIDPipe) id: string, @Req() req: any) {
+    return await this.usersService.reactivate(id, req.user);
   }
 }

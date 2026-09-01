@@ -15,7 +15,7 @@ export class PdfReportBuilder {
     tableExample: { margin: [0, 5, 0, 15] },
     tableHeader: {
       bold: true,
-      fontSize: 11,
+      fontSize: 7,
       color: 'black',
       fillColor: '#f2f2f2',
     },
@@ -25,12 +25,21 @@ export class PdfReportBuilder {
 
   private title: string;
   private pageOrientation: 'portrait' | 'landscape' = 'portrait';
+  private pageSize: string = 'LETTER';
+  private pageMargins: [number, number, number, number] | undefined;
 
-  constructor(title: string, options?: { pageOrientation?: 'portrait' | 'landscape' }) {
+  constructor(
+    title: string,
+    options?: {
+      pageOrientation?: 'portrait' | 'landscape';
+      pageSize?: string;
+      pageMargins?: [number, number, number, number];
+    },
+  ) {
     this.title = title;
-    if (options?.pageOrientation) {
-      this.pageOrientation = options.pageOrientation;
-    }
+    if (options?.pageOrientation) this.pageOrientation = options.pageOrientation;
+    if (options?.pageSize) this.pageSize = options.pageSize;
+    if (options?.pageMargins) this.pageMargins = options.pageMargins;
   }
 
   addCover(data: {
@@ -144,7 +153,8 @@ export class PdfReportBuilder {
     title?: string;
     headers: string[];
     rows: any[][];
-    widths?: string[];
+    widths?: (string | number)[];
+    layout?: string | any;
   }) {
     if (data.title) {
       this.content.push({ text: data.title, style: 'subheader' });
@@ -165,7 +175,7 @@ export class PdfReportBuilder {
         widths: data.widths || data.headers.map(() => '*'),
         body: tableBody,
       },
-      layout: 'lightHorizontalLines',
+      layout: data.layout !== undefined ? data.layout : 'lightHorizontalLines',
     });
 
     return this;
@@ -186,11 +196,13 @@ export class PdfReportBuilder {
       info: {
         title: this.title,
       },
+      pageSize: this.pageSize as any,
       pageOrientation: this.pageOrientation,
+      pageMargins: this.pageMargins || [40, 40, 40, 40],
       content: this.content,
       styles: this.styles,
       defaultStyle: {
-        fontSize: 10,
+        fontSize: 8,
       },
       footer: (currentPage, pageCount) => {
         return {

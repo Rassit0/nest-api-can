@@ -65,10 +65,11 @@ export class ReportsController {
   @RequirePermissions('READ_TEAM_SEASONS')
   async getTeamSeasonPaymentsMatrix(
     @Param('teamSeasonId') teamSeasonId: string,
+    @Query('teamSeasonCategoryId') teamSeasonCategoryId: string,
     @Req() req: Request & { user: any },
   ) {
     const institutionId = req.user.institutionId;
-    return await this.paymentsMatrixService.getTeamSeasonMatrix(institutionId, teamSeasonId);
+    return await this.paymentsMatrixService.getTeamSeasonMatrix(institutionId, teamSeasonId, teamSeasonCategoryId);
   }
 
   @Get('payments-matrix/course-season-shifts/:shiftId/pdf')
@@ -95,12 +96,13 @@ export class ReportsController {
   @RequirePermissions('READ_TEAM_SEASONS')
   async getTeamSeasonPaymentsMatrixPdf(
     @Param('teamSeasonId') teamSeasonId: string,
+    @Query('teamSeasonCategoryId') teamSeasonCategoryId: string,
     @Req() req: Request & { user: any },
     @Res() res: Response,
   ) {
     const institutionId = req.user.institutionId;
     const userName = req.user.name || 'Sistema';
-    const result = await this.paymentsMatrixPdfService.generateTeamSeasonPdf(institutionId, teamSeasonId, userName);
+    const result = await this.paymentsMatrixPdfService.generateTeamSeasonPdf(institutionId, teamSeasonId, userName, teamSeasonCategoryId);
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(

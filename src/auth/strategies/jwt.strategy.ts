@@ -32,6 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         id: true,
         isActive: true,
         email: true,
+        roleId: true,
       },
     });
 
@@ -46,7 +47,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: user.id,
       email: user.email,
       isActive: user.isActive,
-      roleId: roleId,
+      roleId: user.roleId, // Utilizar roleId de la BD y no del payload
     };
   }
 }

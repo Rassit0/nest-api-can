@@ -71,6 +71,31 @@ export class PaymentsMatrixService {
               include: {
                 person: true
               }
+            },
+            studentCharges: {
+              where: {
+                type: {
+                  in: [
+                    TypeMembershipCharge.REGISTRATION,
+                    TypeMembershipCharge.LATE_FEE,
+                  ]
+                }
+              },
+              include: {
+                charge: {
+                  include: {
+                    parentCharge: {
+                      include: {
+                        studentCharges: true
+                      }
+                    },
+                    payments: {
+                      where: { status: 'COMPLETED' },
+                      select: { amount: true, paymentDate: true, receiptSeries: true, receiptNumber: true }
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -78,7 +103,7 @@ export class PaymentsMatrixService {
           include: {
             payments: {
               where: { status: 'COMPLETED' }, // Unica condición, Hard deletes controlan las reversiones
-              select: { amount: true, paymentDate: true }
+              select: { amount: true, paymentDate: true, receiptSeries: true, receiptNumber: true }
             }
           }
         }
@@ -90,7 +115,7 @@ export class PaymentsMatrixService {
 
     for (const enrollment of enrollments) {
       const studentId = enrollment.studentMembership.student.id;
-      const studentName = `${enrollment.studentMembership.student.person.name} ${enrollment.studentMembership.student.person.lastName}`.trim();
+      const studentName = `${enrollment.studentMembership.student.person.lastName} ${enrollment.studentMembership.student.person.name}`.trim();
 
       if (!studentMap.has(studentId)) {
         studentMap.set(studentId, {
@@ -98,12 +123,52 @@ export class PaymentsMatrixService {
           name: studentName,
           paymentsByPeriod: {},
         });
+
+        const studentDto = studentMap.get(studentId)!;
+        // Procesar Matrícula si existe en el membership (solo una vez por estudiante)
+        for (const mCharge of enrollment.studentMembership.studentCharges) {
+          if (!mCharge.charge) continue;
+
+          let isRegistration = false;
+          if (mCharge.type === TypeMembershipCharge.REGISTRATION) {
+            isRegistration = true;
+          } else if (mCharge.type === TypeMembershipCharge.LATE_FEE) {
+            const parentMembershipCharge = mCharge.charge.parentCharge?.studentCharges?.[0];
+            if (parentMembershipCharge && parentMembershipCharge.type === TypeMembershipCharge.REGISTRATION) {
+              isRegistration = true;
+            }
+          }
+
+          if (isRegistration) {
+            let totalPaid = 0;
+            const payments = mCharge.charge.payments.map(p => {
+              const amt = Number(p.amount);
+              totalPaid += amt;
+              let formattedReceipt = '';
+              if (p.receiptSeries && p.receiptNumber) {
+                formattedReceipt = `${p.receiptSeries}-${p.receiptNumber.toString().padStart(5, '0')}`;
+              }
+              return {
+                amount: amt,
+                date: p.paymentDate.toISOString(),
+                receiptNumber: formattedReceipt,
+                chargeType: mCharge.type as any,
+                description: mCharge.charge?.description || undefined,
+              };
+            });
+
+            if (!studentDto.registration) {
+              studentDto.registration = { totalPaid: 0, payments: [] };
+            }
+            studentDto.registration.totalPaid += totalPaid;
+            studentDto.registration.payments.push(...payments);
+          }
+        }
       }
 
       const studentDto = studentMap.get(studentId)!;
 
-      // Determinar a qué periodo pertenece este charge basándonos en las fechas
-      // CourseSeason usa explícitamente cycleStartDate y cycleEndDate
+      // Continuación: Determinar a qué periodo pertenece este charge basándonos en las fechas
       const matchedCycle = absoluteCycles.find(
         c => 
           c.cycleStartDate.getTime() === enrollment.cycleStartDate.getTime() &&
@@ -117,9 +182,15 @@ export class PaymentsMatrixService {
         const payments = enrollment.charge.payments.map(p => {
           const amt = Number(p.amount);
           totalPaid += amt;
+          let formattedReceipt = '';
+          if (p.receiptSeries && p.receiptNumber) {
+            formattedReceipt = `${p.receiptSeries}-${p.receiptNumber.toString().padStart(5, '0')}`;
+          }
           return {
             amount: amt,
-            date: p.paymentDate.toISOString()
+            date: p.paymentDate.toISOString(),
+            receiptNumber: formattedReceipt,
+            chargeType: 'RECURRING_FEE' as const,
           };
         });
 
@@ -149,7 +220,8 @@ export class PaymentsMatrixService {
 
   async getTeamSeasonMatrix(
     institutionId: string,
-    teamSeasonId: string
+    teamSeasonId: string,
+    teamSeasonCategoryId?: string
   ): Promise<PaymentsMatrixResponseDto> {
     const teamSeason = await this.prisma.teamSeason.findFirst({
       where: {
@@ -166,6 +238,7 @@ export class PaymentsMatrixService {
         team: true,
         categories: { include: { category: true } },
         playerMemberships: {
+          where: teamSeasonCategoryId ? { teamSeasonCategoryId } : undefined,
           include: {
             player: {
               include: {
@@ -174,14 +247,26 @@ export class PaymentsMatrixService {
             },
             membershipCharges: {
               where: {
-                type: TypeMembershipCharge.RECURRING_FEE,
+                type: {
+                  in: [
+                    TypeMembershipCharge.RECURRING_FEE,
+                    TypeMembershipCharge.REGISTRATION,
+                    TypeMembershipCharge.LATE_FEE,
+                    TypeMembershipCharge.MANUAL,
+                  ]
+                }
               },
               include: {
                 charge: {
                   include: {
+                    parentCharge: {
+                      include: {
+                        membershipCharges: true
+                      }
+                    },
                     payments: {
                       where: { status: 'COMPLETED' },
-                      select: { amount: true, paymentDate: true }
+                      select: { amount: true, paymentDate: true, receiptSeries: true, receiptNumber: true }
                     }
                   }
                 }
@@ -216,7 +301,7 @@ export class PaymentsMatrixService {
 
     for (const membership of teamSeason.playerMemberships) {
       const studentId = membership.player.id;
-      const studentName = `${membership.player.person.name} ${membership.player.person.lastName}`.trim();
+      const studentName = `${membership.player.person.lastName} ${membership.player.person.name}`.trim();
 
       if (!studentMap.has(studentId)) {
         studentMap.set(studentId, {
@@ -231,15 +316,36 @@ export class PaymentsMatrixService {
       for (const mCharge of membership.membershipCharges) {
         if (!mCharge.charge) continue;
 
-        // Para TeamSeason, la correspondencia del periodo se da por año, mes y ciclo de facturación
-        const key = frequency === 'MONTHLY'
-          ? `${mCharge.billingYear}-${mCharge.billingMonth}`
-          : `${mCharge.billingYear}-${mCharge.billingMonth}-${mCharge.billingCycle || 1}`;
+        let bYear = mCharge.billingYear;
+        let bMonth = mCharge.billingMonth;
+        let bCycle = mCharge.billingCycle;
 
-        // Verificamos que este periodo sea parte de los periodos absolutos de la temporada
-        // (Podría haber cargos extra-temporada pero los omitimos en este reporte estructurado, 
-        // o los mostramos si se requiere, pero el PDF debe tener columnas definidas).
-        if (!periods.some(p => p.key === key)) {
+        let isRegistration = false;
+
+        if (mCharge.type === TypeMembershipCharge.REGISTRATION) {
+          isRegistration = true;
+        } else if (mCharge.type === TypeMembershipCharge.LATE_FEE) {
+          const parentMembershipCharge = mCharge.charge.parentCharge?.membershipCharges?.[0];
+          if (parentMembershipCharge) {
+            if (parentMembershipCharge.type === TypeMembershipCharge.REGISTRATION) {
+              isRegistration = true;
+            } else {
+              bYear = parentMembershipCharge.billingYear;
+              bMonth = parentMembershipCharge.billingMonth;
+              bCycle = parentMembershipCharge.billingCycle;
+            }
+          }
+        } else if (mCharge.type === TypeMembershipCharge.MANUAL) {
+          bYear = mCharge.createdAt.getUTCFullYear();
+          bMonth = mCharge.createdAt.getUTCMonth() + 1;
+          bCycle = 1;
+        }
+
+        const key = frequency === 'MONTHLY'
+          ? `${bYear}-${bMonth}`
+          : `${bYear}-${bMonth}-${bCycle || 1}`;
+
+        if (!isRegistration && !periods.some(p => p.key === key)) {
            continue; 
         }
 
@@ -247,30 +353,55 @@ export class PaymentsMatrixService {
         const payments = mCharge.charge.payments.map(p => {
           const amt = Number(p.amount);
           totalPaid += amt;
+          
+          let formattedReceipt = '';
+          if (p.receiptSeries && p.receiptNumber) {
+            formattedReceipt = `${p.receiptSeries}-${p.receiptNumber.toString().padStart(5, '0')}`;
+          }
+
           return {
             amount: amt,
-            date: p.paymentDate.toISOString()
+            date: p.paymentDate.toISOString(),
+            receiptNumber: formattedReceipt,
+            chargeType: mCharge.type as any,
+            description: mCharge.charge?.description || undefined,
           };
         });
 
-        if (!studentDto.paymentsByPeriod[key]) {
-          studentDto.paymentsByPeriod[key] = {
-            totalPaid: 0,
-            payments: [],
-          };
+        if (isRegistration) {
+          if (!studentDto.registration) {
+            studentDto.registration = {
+              totalPaid: 0,
+              payments: [],
+            };
+          }
+          studentDto.registration.totalPaid += totalPaid;
+          studentDto.registration.payments.push(...payments);
+        } else {
+          if (!studentDto.paymentsByPeriod[key]) {
+            studentDto.paymentsByPeriod[key] = {
+              totalPaid: 0,
+              payments: [],
+            };
+          }
+          studentDto.paymentsByPeriod[key].totalPaid += totalPaid;
+          studentDto.paymentsByPeriod[key].payments.push(...payments);
         }
-
-        studentDto.paymentsByPeriod[key].totalPaid += totalPaid;
-        studentDto.paymentsByPeriod[key].payments.push(...payments);
       }
     }
+
+    const displayCategories = teamSeasonCategoryId 
+      ? teamSeason.categories.filter(c => c.id === teamSeasonCategoryId)
+      : teamSeason.categories;
 
     return {
       group: {
         id: teamSeason.id,
-        name: `${teamSeason.team.name} - ${teamSeason.categories.map(c => c.category.name).join(', ')}`,
+        name: teamSeason.team.name,
         type: 'TEAM_SEASON',
-        category: teamSeason.categories.map(c => c.category.name).join(', '),
+        category: displayCategories.length > 0 
+          ? displayCategories.map(c => c.category.name).join(', ')
+          : 'Todas las categorías',
       },
       periods,
       students: Array.from(studentMap.values()).sort((a, b) => a.name.localeCompare(b.name)),

@@ -1,4 +1,4 @@
-﻿import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { MembershipLateFeeService } from './membership-late-fee.service';
 import { PrismaService } from 'src/prisma.service';
 import {
@@ -449,6 +449,128 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect(mockCharge.amount).toBe(300);
         expect(mockCharge.adjustmentAmount).toBe(-50);
       });
+    });
+  });
+
+  describe('Generación de Descripción Contextual', () => {
+    let mockBaseCharge: any;
+
+    beforeEach(() => {
+      mockBaseCharge = {
+        id: 'charge-1',
+        description: 'Cuota Mes - Julio 2026',
+        status: StatusCharge.PENDING,
+        dueDate: new Date('2026-08-01T00:00:00.000Z'),
+        membershipCharges: [{ 
+          type: TypeMembershipCharge.REGISTRATION, 
+          playerMembershipId: 'mem-1',
+          playerMembership: { 
+            pauses: [], 
+            teamSeason: { 
+              billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 5 }, 
+              teamSeasonPauses: [] 
+            } 
+          } 
+        }],
+      };
+      lateFeeRepo.findExistingLateFeeCharge = jest.fn().mockResolvedValue(null);
+      lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
+      lateFeeRepo.createLateFeeCharge = jest.fn().mockResolvedValue({ id: 'new-late-fee' } as any);
+      lateFeeRepo.findOverdueCharges = jest.fn().mockResolvedValue([mockBaseCharge]);
+      lateFeeRepo.findChargeForLateFee = jest.fn();
+      lateFeeRepo.updateLateFeeCharge = jest.fn();
+    });
+
+    it('Caso 1 y 7: Mora manual - Descripción normal', async () => {
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026',
+        })
+      );
+    });
+
+    it('Caso 2 y 7: Mora manual - Descripción personalizada (customAmount)', async () => {
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1', 100);
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026 (Monto personalizado)',
+        })
+      );
+    });
+
+    it('Caso 3: Descripción NULL', async () => {
+      mockBaseCharge.description = null;
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
+    });
+
+    it('Caso 4: Descripción vacía', async () => {
+      mockBaseCharge.description = '';
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
+    });
+
+    it('Caso 5: Descripción con espacios', async () => {
+      mockBaseCharge.description = '   ';
+      lateFeeRepo.findChargeForLateFee.mockResolvedValue(mockBaseCharge);
+      await service.applyLateFee('charge-1');
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cargo original',
+        })
+      );
+    });
+
+    it('Caso 6: Mora automática - Creación', async () => {
+      // Mock para simular 10 días vencidos (1 de Agosto vencimiento, 11 de Agosto eval)
+      jest.useFakeTimers().setSystemTime(new Date('2026-08-11T00:00:00.000Z'));
+      await service.applyDailyLateFees();
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026 (8 días de retraso)',
+        })
+      );
+      jest.useRealTimers();
+    });
+
+    it('Caso 6: Mora automática - Actualización', async () => {
+      jest.useFakeTimers().setSystemTime(new Date('2026-08-11T00:00:00.000Z'));
+      const existingLateFee = {
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 30,
+        pendingAmount: 30,
+      };
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(existingLateFee as any);
+      await service.applyDailyLateFees();
+      
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({
+          description: 'Mora sobre: Cuota Mes - Julio 2026 (8 x 5/día)',
+        })
+      );
+      jest.useRealTimers();
     });
   });
 });

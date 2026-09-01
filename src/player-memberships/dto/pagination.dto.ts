@@ -9,15 +9,15 @@ import { PlayerMembershipStatus } from '../../generated/prisma/enums';
 export class PlayerMembershipsPaginationDto extends PaginationDto {
   @ApiPropertyOptional({
     example: 'createdAt',
-    enum: ['startedAt', 'endedAt', 'createdAt', 'id'],
+    enum: ['startedAt', 'endedAt', 'createdAt', 'id', 'lastName'],
   })
   @IsOptional()
-  @IsIn(['startedAt', 'endedAt', 'createdAt', 'id'], {
+  @IsIn(['startedAt', 'endedAt', 'createdAt', 'id', 'lastName'], {
     message: i18nValidationMessage('validation.IS_IN', {
       validValues: 'createdAt, id',
     }),
   })
-  sortField?: string = 'createdAt';
+  sortField?: string = 'lastName';
 
   @ApiPropertyOptional({
     // example: '550e8400-e29b-41d4-a716-446655440000',

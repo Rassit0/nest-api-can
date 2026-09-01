@@ -1,4 +1,4 @@
-﻿import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import {
   Prisma,
@@ -77,6 +77,10 @@ export class MembershipLateFeeService {
         existingLateFeeCharge.status === StatusCharge.PAID
       ) {
         const previousAmount = Number(existingLateFeeCharge.amount);
+        
+        // `difference` representa únicamente la mora aún no materializada.
+        // Al calcularla sobre el Charge bloqueado, una ejecución concurrente
+        // observa el monto actualizado y no vuelve a generar la misma mora.
         const difference = preview.totalLateFeeAmount - previousAmount;
 
         if (difference > 0) {
@@ -90,7 +94,7 @@ export class MembershipLateFeeService {
                 existingLateFeeCharge.status === StatusCharge.PAID
                   ? StatusCharge.PARTIAL
                   : existingLateFeeCharge.status,
-              description: `Recargo por Mora - ${preview.penaltyDays} x ${preview.lateFeePerDay}/dÃ­a`,
+              description: `Mora sobre: ${baseCharge.description?.trim() || 'Cargo original'} (${preview.penaltyDays} x ${preview.lateFeePerDay}/día)`,
             },
           );
         }
@@ -100,7 +104,7 @@ export class MembershipLateFeeService {
       await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,
         chargeCategory: 'LATE_FEE',
-        description: `Recargo por Mora - ${preview.penaltyDays} dÃ­as de retraso`,
+        description: `Mora sobre: ${baseCharge.description?.trim() || 'Cargo original'} (${preview.penaltyDays} días de retraso)`,
         amount: preview.totalLateFeeAmount,
         pendingAmount: preview.totalLateFeeAmount,
         dueDate: evaluationDate,
@@ -192,9 +196,11 @@ export class MembershipLateFeeService {
 
       const membershipChargeRelation = baseCharge.membershipCharges[0];
       
+      const baseDesc = baseCharge.description?.trim() || 'Cargo original';
+      
       const description = customAmount !== undefined 
-        ? 'Mora por atraso (Monto Personalizado)' 
-        : 'Mora por atraso';
+        ? `Mora sobre: ${baseDesc} (Monto personalizado)` 
+        : `Mora sobre: ${baseDesc}`;
 
       const newCharge = await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,

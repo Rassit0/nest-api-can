@@ -3,6 +3,7 @@ import {
   Logger,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -26,6 +27,8 @@ export const userSelect: Prisma.UserSelect = {
       id: true,
       name: true,
       description: true,
+      isSystem: true,
+      isSuperAdmin: true,
     },
   },
   person: {
@@ -46,20 +49,12 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   private hashPassword(password: string): string {
-    // Encripta el
     return bcrypt.hashSync(password, 10);
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const {
-      email,
-      password,
-      confirmPassword: _,
-      personId,
-      roleId,
-    } = createUserDto;
+  async create(createUserDto: CreateUserDto, actor: any) {
+    const { email, personId, roleId } = createUserDto;
 
-    // Verificar si el correo ya existe
     const exists = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -67,7 +62,17 @@ export class UsersService {
       throw new BadRequestException('errors.EMAIL_ALREADY_EXISTS');
     }
 
-    const passwordHash = this.hashPassword(password);
+    // Role verification
+    const targetRole = await this.prisma.role.findUnique({ where: { id: roleId } });
+    if (!targetRole) throw new NotFoundException('Role not found');
+    
+    // Check if non-superadmin is trying to assign a SuperAdmin role
+    if (targetRole.isSuperAdmin && !actor?.role?.isSuperAdmin) {
+      throw new ForbiddenException('No tienes permisos para asignar este rol');
+    }
+
+    const tempPassword = crypto.randomBytes(8).toString('hex');
+    const passwordHash = this.hashPassword(tempPassword);
 
     const newUser = await this.prisma.user.create({
       data: {
@@ -81,18 +86,53 @@ export class UsersService {
 
     return {
       message: 'Usuario creado exitosamente',
-      data: newUser,
+      data: {
+        ...newUser,
+        tempPassword, // Return cleartext password only once
+      },
     };
   }
 
+  async getPersonOptions(search?: string, page = 1, limit = 20) {
+    const skip = (page - 1) * limit;
+    const where: Prisma.PersonWhereInput = {};
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { lastName: { contains: search, mode: 'insensitive' } },
+        { documentNumber: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    const [persons, totalItems] = await Promise.all([
+      this.prisma.person.findMany({
+        where,
+        take: limit,
+        skip,
+        select: {
+          id: true,
+          name: true,
+          lastName: true,
+          documentNumber: true,
+          imageUrl: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    const mapped = persons.map((p) => ({
+      id: p.id,
+      fullName: `${p.name} ${p.lastName}`,
+      documentNumber: p.documentNumber,
+      imageUrl: p.imageUrl,
+    }));
+
+    return createPaginationResult(mapped, totalItems, page, limit, 'Personas obtenidas');
+  }
+
   async findAll(paginationDto: UsersPaginationDto) {
-    const {
-      per_page = 10,
-      page = 1,
-      search,
-      orderBy = 'asc',
-      sortField = 'email',
-    } = paginationDto;
+    const { per_page = 10, page = 1, search, orderBy = 'asc', sortField = 'email' } = paginationDto;
     const skip = (page - 1) * per_page;
 
     const where: Prisma.UserWhereInput = {};
@@ -127,13 +167,7 @@ export class UsersService {
       this.prisma.user.count({ where }),
     ]);
 
-    return createPaginationResult(
-      users,
-      totalItems,
-      page,
-      per_page,
-      'Usuarios obtenidos exitosamente',
-    );
+    return createPaginationResult(users, totalItems, page, per_page, 'Usuarios obtenidos exitosamente');
   }
 
   async findOne(id: string) {
@@ -150,29 +184,36 @@ export class UsersService {
     };
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto, actor: any) {
     const user = await this.prisma.user.findUnique({
       where: { id },
+      include: { role: true },
     });
-    if (!user) {
-      throw new NotFoundException('errors.USER_NOT_FOUND');
-    }
+    if (!user) throw new NotFoundException('errors.USER_NOT_FOUND');
 
-    const { email, password, personId, roleId } = updateUserDto;
+    const { email, personId, roleId } = updateUserDto;
 
-    // Verificar unicidad de email si se actualiza
-    if (email && email !== user.email) {
-      const emailExists = await this.prisma.user.findUnique({
-        where: { email },
-      });
-      if (emailExists) {
-        throw new BadRequestException('errors.EMAIL_ALREADY_EXISTS');
+    // Self role change restriction
+    if (roleId && roleId !== user.roleId) {
+      if (id === actor.id) {
+        throw new ForbiddenException('No puedes modificar tu propio rol');
+      }
+
+      // Check assignment permissions
+      const targetRole = await this.prisma.role.findUnique({ where: { id: roleId } });
+      if (!targetRole) throw new NotFoundException('Role not found');
+      
+      if (targetRole.isSuperAdmin && !actor?.role?.isSuperAdmin) {
+        throw new ForbiddenException('No tienes permisos para asignar este rol');
       }
     }
 
-    const data: Prisma.UserUpdateInput = {
-      email,
-    };
+    if (email && email !== user.email) {
+      const emailExists = await this.prisma.user.findUnique({ where: { email } });
+      if (emailExists) throw new BadRequestException('errors.EMAIL_ALREADY_EXISTS');
+    }
+
+    const data: Prisma.UserUpdateInput = { email };
 
     if (personId !== undefined) {
       if (personId === null) {
@@ -186,15 +227,42 @@ export class UsersService {
       data.role = { connect: { id: roleId } };
     }
 
-    if (password) {
-      data.password = this.hashPassword(password);
-    }
+    const isDowngradingSuperAdmin = roleId && roleId !== user.roleId && user.role.isSuperAdmin;
 
-    const updatedUser = await this.prisma.user.update({
-      where: { id },
-      data,
-      select: userSelect,
-    });
+    let updatedUser;
+
+    if (isDowngradingSuperAdmin) {
+      updatedUser = await this.prisma.$transaction(
+        async (tx) => {
+          const activeSuperAdminsCount = await tx.user.count({
+            where: {
+              isActive: true,
+              role: { isSuperAdmin: true },
+              id: { not: id },
+            },
+          });
+
+          if (activeSuperAdminsCount < 1) {
+            throw new ForbiddenException(
+              'Operación abortada: El sistema quedaría sin Super Administradores activos',
+            );
+          }
+
+          return await tx.user.update({
+            where: { id },
+            data,
+            select: userSelect,
+          });
+        },
+        { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+      );
+    } else {
+      updatedUser = await this.prisma.user.update({
+        where: { id },
+        data,
+        select: userSelect,
+      });
+    }
 
     return {
       message: 'Usuario actualizado exitosamente',
@@ -202,22 +270,78 @@ export class UsersService {
     };
   }
 
-  async remove(id: string) {
+  async deactivate(id: string, actor: any) {
+    if (id === actor.id) {
+      throw new ForbiddenException('No puedes desactivarte a ti mismo');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: { role: true },
+    });
+    if (!user) throw new NotFoundException('errors.USER_NOT_FOUND');
+
+    let deactivatedUser;
+
+    if (user.role.isSuperAdmin) {
+      deactivatedUser = await this.prisma.$transaction(
+        async (tx) => {
+          const activeSuperAdminsCount = await tx.user.count({
+            where: {
+              isActive: true,
+              role: { isSuperAdmin: true },
+              id: { not: id },
+            },
+          });
+
+          if (activeSuperAdminsCount < 1) {
+            throw new ForbiddenException(
+              'Operación abortada: El sistema quedaría sin Super Administradores activos',
+            );
+          }
+
+          return await tx.user.update({
+            where: { id },
+            data: { isActive: false },
+            select: userSelect,
+          });
+        },
+        { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+      );
+    } else {
+      deactivatedUser = await this.prisma.user.update({
+        where: { id },
+        data: { isActive: false },
+        select: userSelect,
+      });
+    }
+
+    return {
+      message: 'Usuario desactivado exitosamente',
+      data: deactivatedUser,
+    };
+  }
+
+  async reactivate(id: string, actor: any) {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
-    if (!user) {
-      throw new NotFoundException('errors.USER_NOT_FOUND');
-    }
+    if (!user) throw new NotFoundException('errors.USER_NOT_FOUND');
 
-    const deletedUser = await this.prisma.user.delete({
+    const reactivatedUser = await this.prisma.user.update({
       where: { id },
+      data: { isActive: true },
       select: userSelect,
     });
 
     return {
-      message: 'Usuario eliminado exitosamente',
-      data: deletedUser,
+      message: 'Usuario reactivado exitosamente',
+      data: reactivatedUser,
     };
+  }
+
+  // checkLastSuperAdminProtection se eliminó a favor de transacciones atómicas directas
+  async remove(id: string) {
+    throw new BadRequestException('El borrado físico de usuarios no está permitido');
   }
 }

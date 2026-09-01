@@ -5,6 +5,7 @@ import { TransactionsPaginationDto } from 'src/transactions/dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
+import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 
 export const paymentSelect = {
   id: true,
@@ -136,7 +137,18 @@ export class PaymentsService {
       }
 
       // 2. Revertir saldo del Charge (Solo 1 vez, usando el payment.amount total)
+      // El Charge debe bloquearse antes de leer/calcular pendingAmount.
+      // Payments, reversos y Late Fees realizan Read-Modify-Write sobre
+      // este mismo saldo. El lock evita Lost Updates bajo concurrencia.
+      // Usar exclusivamente el estado obtenido después del FOR UPDATE.
+      const lockedCharge = await lockChargeForUpdate(prisma, payment.chargeId);
+
       const charge = payment.charge;
+      charge.amount = new Prisma.Decimal(lockedCharge.amount.toString());
+      charge.pendingAmount = new Prisma.Decimal(lockedCharge.pendingAmount.toString());
+      charge.status = lockedCharge.status;
+      charge.adjustmentAmount = lockedCharge.adjustmentAmount ? new Prisma.Decimal(lockedCharge.adjustmentAmount.toString()) : null;
+
       const currentPending = Number(charge.pendingAmount.toNumber().toFixed(2));
       const chargeAmount = Number(charge.amount.toNumber().toFixed(2));
       const adjustmentAmount = Number(charge.adjustmentAmount?.toNumber() || 0);
