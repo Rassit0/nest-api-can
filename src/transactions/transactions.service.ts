@@ -77,8 +77,46 @@ export const transactionSelect = {
               },
             },
           },
-          membershipCharges: { select: { id: true } },
-          studentCharges: { select: { id: true } },
+          membershipCharges: {
+            select: {
+              playerMembership: {
+                select: {
+                  player: {
+                    select: {
+                      person: {
+                        select: {
+                          id: true,
+                          name: true,
+                          lastName: true,
+                          documentNumber: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          studentCharges: {
+            select: {
+              studentMembership: {
+                select: {
+                  student: {
+                    select: {
+                      person: {
+                        select: {
+                          id: true,
+                          name: true,
+                          lastName: true,
+                          documentNumber: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           sessionBooking: { select: { id: true } },
         },
       },
