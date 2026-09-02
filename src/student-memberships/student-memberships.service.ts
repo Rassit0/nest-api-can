@@ -46,7 +46,14 @@ export const studentMembershipSelect = {
     select: {
       course: {
         select: {
+          id: true,
           name: true,
+          schoolId: true,
+          school: {
+            select: {
+              disciplineId: true,
+            },
+          },
         },
       },
       season: {
@@ -214,6 +221,7 @@ export class StudentMembershipsService {
       chargeCurrentMonthOnMigration,
       chargeRegistration,
       chargeInitialCycle,
+      forceFullCycleFee,
       ...createData
     } = createDto;
 
@@ -261,6 +269,7 @@ export class StudentMembershipsService {
           chargeCurrentMonthOnMigration,
           chargeRegistration,
           chargeInitialCycle,
+          forceFullCycleFee,
         },
         tx,
       );
@@ -372,16 +381,21 @@ export class StudentMembershipsService {
     }
 
     if (search) {
-      where.student = {
-        person: {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { lastName: { contains: search, mode: 'insensitive' } },
-            { secondLastName: { contains: search, mode: 'insensitive' } },
-            { documentNumber: { contains: search, mode: 'insensitive' } },
-          ],
-        },
-      };
+      const searchTerms = search.trim().split(/\s+/);
+      if (searchTerms.length > 0) {
+        where.student = {
+          person: {
+            AND: searchTerms.map(term => ({
+              OR: [
+                { name: { contains: term, mode: 'insensitive' } },
+                { lastName: { contains: term, mode: 'insensitive' } },
+                { secondLastName: { contains: term, mode: 'insensitive' } },
+                { documentNumber: { contains: term, mode: 'insensitive' } },
+              ],
+            })),
+          },
+        };
+      }
     }
 
     const globalWhere: Prisma.StudentMembershipWhereInput = {};
@@ -816,7 +830,9 @@ export class StudentMembershipsService {
             charge: {
               include: {
                 payments: true,
-                childCharges: true,
+                childCharges: {
+                  include: { payments: true },
+                },
               },
             },
           },
@@ -830,14 +846,11 @@ export class StudentMembershipsService {
       );
     }
 
-    // Validar que no hayan cargos pagados, parcialmente pagados, o transacciones de pago vinculadas.
+    // Validar que no hayan pagos vinculados (incluso cancelados) ya que bloquean el borrado por constraints de DB
     const hasTransactionsOrPaid = membership.studentCharges.some(
       (mc) =>
-        (mc.charge.status !== StatusCharge.PENDING &&
-          mc.charge.status !== StatusCharge.CANCELLED) ||
-        (Number(mc.charge.amount) + Number(mc.charge.adjustmentAmount)) > Number(mc.charge.pendingAmount) ||
         mc.charge.payments.length > 0 ||
-        mc.charge.childCharges.length > 0,
+        mc.charge.childCharges.some((cc) => cc.payments.length > 0),
     );
 
     if (hasTransactionsOrPaid) {
@@ -848,6 +861,9 @@ export class StudentMembershipsService {
 
     // Si llegamos aquí, es 100% seguro eliminar la membresía y limpiar el historial y los cargos.
     const chargeIds = membership.studentCharges.map((mc) => mc.chargeId);
+    const childChargeIds = membership.studentCharges.flatMap((mc) =>
+      mc.charge.childCharges.map((cc) => cc.id),
+    );
 
     await this.prisma.$transaction([
       // 1. Borrar historial de pausas
@@ -870,7 +886,15 @@ export class StudentMembershipsService {
       this.prisma.studentCharge.deleteMany({
         where: { studentMembershipId: id },
       }),
-      // 5. Borrar los cargos reales vinculados a la membresía (ya no tendrán referencias)
+      // 6. Borrar cargos hijos (moras, etc)
+      ...(childChargeIds.length > 0
+        ? [
+            this.prisma.charge.deleteMany({
+              where: { id: { in: childChargeIds } },
+            }),
+          ]
+        : []),
+      // 7. Borrar los cargos reales vinculados a la membresía (ya no tendrán referencias)
       this.prisma.charge.deleteMany({
         where: { id: { in: chargeIds } },
       }),

@@ -14,6 +14,9 @@ import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
 import { StudentEnrollmentService } from './services/student-enrollment.service';
 import { StudentManualChargeService } from './services/student-manual-charge.service';
 import { StudentAdvanceChargeService } from './services/student-advance-charge.service';
+import { buildValidOccupancyCondition } from 'src/common/helpers/capacity.helper';
+import { getAbsoluteSeasonCycles } from './student-billing.utils';
+import { CycleCapacityDto } from './dto/cycle-capacity.dto';
 
 /**
  * Servicio central orquestador de cargos (charges) para membresías de estudiantes.
@@ -135,6 +138,7 @@ export class StudentChargesService {
       chargeCurrentMonthOnMigration?: boolean;
       chargeRegistration?: boolean;
       chargeInitialCycle?: boolean;
+      forceFullCycleFee?: boolean;
     },
     tx?: Prisma.TransactionClient,
   ) {
@@ -194,14 +198,18 @@ export class StudentChargesService {
     return this.manualChargeService.createManualCharge(dto);
   }
 
+  async getAvailableCycles(membershipId: string) {
+    return this.advanceChargeService.getAvailableCycles(membershipId);
+  }
+
   /**
    * Simula N ciclos hacia adelante sin guardarlos en la base de datos.
    * Util para mostrarle al usuario un preview de "Pagar 3 cuotas por adelantado".
    */
-  async previewAdvanceCharges(membershipId: string, quantity: number) {
+  async previewAdvanceCharges(membershipId: string, cycles: { cycleStartDate: Date; enrollmentDate?: string }[]) {
     return this.advanceChargeService.previewAdvanceCharges(
       membershipId,
-      quantity,
+      cycles,
     );
   }
 
@@ -209,10 +217,103 @@ export class StudentChargesService {
    * Concreta la generación física (persistida) de N cuotas por adelantado
    * bajo el contexto de un solo agrupamiento transaccional.
    */
-  async purchaseAdvanceCycles(membershipId: string, quantity: number) {
+  async purchaseAdvanceCycles(membershipId: string, cycles: { cycleStartDate: Date; enrollmentDate?: string }[]) {
     return this.advanceChargeService.purchaseAdvanceCycles(
       membershipId,
-      quantity,
+      cycles
     );
+  }
+
+  async getCycleCapacity(courseSeasonId: string, shiftId?: string): Promise<CycleCapacityDto[]> {
+    // 1. Validar la existencia de la temporada y obtener configuración
+    const courseSeason = await this.prisma.courseSeason.findUnique({
+      where: { id: courseSeasonId },
+      include: {
+        season: true,
+        shifts: {
+          include: { shift: true },
+          where: shiftId ? { id: shiftId } : undefined,
+        },
+        billingConfig: true,
+      },
+    });
+
+    if (!courseSeason) {
+      throw new BadRequestException('La temporada de curso no fue encontrada');
+    }
+
+    if (shiftId && courseSeason.shifts.length === 0) {
+      throw new BadRequestException('El turno especificado no existe o no pertenece a esta temporada');
+    }
+
+    // 2. Generar los ciclos base usando la misma función del motor financiero
+    const seasonStartDate = courseSeason.season.startDate;
+    const seasonEndDate = courseSeason.season.endDate;
+    const billingFrequency = courseSeason.billingConfig?.billingFrequency || 'MONTHLY';
+
+    const absoluteCycles = getAbsoluteSeasonCycles(seasonStartDate, seasonEndDate, billingFrequency);
+
+    // 3. Ejecutar consulta de ocupación usando groupBy de Prisma y validOccupancyCondition (sin N+1)
+    const validOccupancyCondition = buildValidOccupancyCondition();
+
+    const aggregations = await this.prisma.cycleEnrollment.groupBy({
+      by: ['courseSeasonShiftId', 'cycleStartDate', 'cycleEndDate'],
+      where: {
+        courseSeasonShift: { courseSeasonId },
+        ...(shiftId && { courseSeasonShiftId: shiftId }),
+        ...validOccupancyCondition,
+      },
+      _count: { _all: true },
+    });
+
+    // 4. Mapeo O(1) de las agregaciones para cruce eficiente
+    const occupancyMap = new Map<string, number>();
+    for (const agg of aggregations) {
+      // Usar ambas fechas + shiftId garantiza que no hay falsos positivos entre turnos o ciclos
+      const key = `${agg.courseSeasonShiftId}_${agg.cycleStartDate.getTime()}_${agg.cycleEndDate.getTime()}`;
+      occupancyMap.set(key, agg._count._all);
+    }
+
+    const capacityResponse: CycleCapacityDto[] = [];
+
+    // 5. Cruzar cada turno de la temporada con cada ciclo temporal
+    for (const shift of courseSeason.shifts) {
+      for (const cycle of absoluteCycles) {
+        const key = `${shift.id}_${cycle.cycleStartDate.getTime()}_${cycle.cycleEndDate.getTime()}`;
+        const occupiedSpots = occupancyMap.get(key) || 0;
+        const maxMembers = shift.maxMembers;
+
+        let availableSpots: number | null = null;
+        let status: 'AVAILABLE' | 'FULL' = 'AVAILABLE';
+
+        if (maxMembers !== null) {
+          availableSpots = Math.max(0, maxMembers - occupiedSpots);
+          if (availableSpots === 0) {
+            status = 'FULL';
+          }
+        }
+
+        capacityResponse.push({
+          cycleStartDate: cycle.cycleStartDate,
+          cycleEndDate: cycle.cycleEndDate,
+          shiftId: shift.id,
+          shiftName: shift.shift?.name || 'Desconocido',
+          maxMembers,
+          occupiedSpots,
+          availableSpots,
+          status,
+        });
+      }
+    }
+
+    // Ordenar de manera determinística: primero por turno, luego cronológicamente por ciclo
+    capacityResponse.sort((a, b) => {
+      if (a.shiftName !== b.shiftName) {
+        return a.shiftName.localeCompare(b.shiftName);
+      }
+      return a.cycleStartDate.getTime() - b.cycleStartDate.getTime();
+    });
+
+    return capacityResponse;
   }
 }

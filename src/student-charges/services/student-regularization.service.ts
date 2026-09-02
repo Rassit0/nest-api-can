@@ -72,13 +72,11 @@ export class StudentRegularizationService {
       const cycleKey = this.buildCycleKey(cycle, frequency);
       if (!existingChargesSet.has(cycleKey) && cycle.cycleStartDate <= currentDate) {
         
-        const cycleTotalDays = Math.max(1, (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY);
         // Para regularización histórica, asumimos que se cobra el ciclo completo (factor = 1)
         const calc = calculateOnDemandCycleFee(
             membership as any,
             cycle,
-            cycleTotalDays,
-            cycleTotalDays
+            1.0
         );
 
         regularizableCycles.push({
@@ -155,12 +153,10 @@ export class StudentRegularizationService {
           throw new BadRequestException('No puedes regularizar un ciclo futuro o que aún no ha iniciado.');
         }
         targetCycle = cycle;
-        const cycleTotalDays = Math.max(1, (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY);
         targetCalc = calculateOnDemandCycleFee(
             membership as any,
             cycle,
-            cycleTotalDays,
-            cycleTotalDays
+            1.0
         );
         break;
       }

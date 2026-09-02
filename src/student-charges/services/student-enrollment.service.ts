@@ -31,6 +31,7 @@ export class StudentEnrollmentService {
       chargeInitialCycle?: boolean;
       chargeRegistrationOnMigration?: boolean;
       chargeCurrentMonthOnMigration?: boolean;
+      forceFullCycleFee?: boolean;
     },
     tx?: Prisma.TransactionClient,
   ) {
@@ -137,6 +138,7 @@ export class StudentEnrollmentService {
             chargeInitialCycle,
             isSeasonFeeOnly,
             billingFrequency,
+            forceFullCycleFee: options?.forceFullCycleFee,
           },
           db
         );

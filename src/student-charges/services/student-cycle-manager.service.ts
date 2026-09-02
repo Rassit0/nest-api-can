@@ -5,6 +5,7 @@ import {
   AbsoluteCycle,
   calculateEffectiveBillablePeriod,
   calculateBillableDaysWithPauses,
+  calculateCycleFeeFactor,
   MILLISECONDS_IN_DAY,
   buildCycleDescription,
 } from '../student-billing.utils';
@@ -19,6 +20,7 @@ export interface EnrollmentFinancialOptions {
   isSeasonFeeOnly: boolean;
   billingFrequency: string;
   overrideChargeAmount?: number;
+  forceFullCycleFee?: boolean;
 }
 
 @Injectable()
@@ -67,6 +69,9 @@ export class StudentCycleManagerService {
         continue;
       }
 
+      const fs = require('fs');
+      fs.appendFileSync('enrollment-debug.log', `[DEBUG] validateCourseSeasonCapacity start for cycle ${i}\n`);
+
       // 2. Validar capacidad
       await validateCourseSeasonCapacity(
         tx,
@@ -75,10 +80,14 @@ export class StudentCycleManagerService {
         currentCycle.cycleEndDate,
       );
 
-      // 3. Determinar periodo efectivo utilizando enrollmentDate explícito
+      fs.appendFileSync('enrollment-debug.log', `[DEBUG] validateCourseSeasonCapacity end for cycle ${i}\n`);
+
+      const cycleEnrollmentDate = currentCycle.requestedEnrollmentDate || enrollmentDate;
+
+      // 3. Determinar periodo efectivo utilizando cycleEnrollmentDate
       const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(
         currentCycle,
-        enrollmentDate,
+        cycleEnrollmentDate,
         seasonEndDate,
       );
 
@@ -86,45 +95,13 @@ export class StudentCycleManagerService {
         continue; // Fuera de temporada o ciclo inválido
       }
 
-      // 4. Calcular días facturables y prorrateos
-      const { billableDays } = calculateBillableDaysWithPauses(
+      // 4. Determinar factor de cobro usando la nueva regla de mitad de ciclo
+      const feeFactor = calculateCycleFeeFactor(
+        currentCycle.cycleStartDate,
+        currentCycle.cycleEndDate,
         effectiveStart,
-        effectiveEnd,
-        allPauses,
+        options.forceFullCycleFee
       );
-      const cycleTotalDays =
-        (currentCycle.cycleEndDate.getTime() - currentCycle.cycleStartDate.getTime()) /
-        MILLISECONDS_IN_DAY;
-
-      let finalBillableDays = billableDays;
-
-      // Aplicar reglas específicas de configuración del season
-      if (
-        i === 0 &&
-        membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false
-      ) {
-        const { billableDays: billableDaysWithoutLateEntry } =
-          calculateBillableDaysWithPauses(currentCycle.cycleStartDate, effectiveEnd, allPauses);
-        finalBillableDays = billableDaysWithoutLateEntry;
-      }
-
-      const isTruncatedEnd = currentCycle.cycleEndDate.getTime() > seasonEndDate.getTime();
-      if (
-        isTruncatedEnd &&
-        membership.courseSeason.billingConfig?.prorateLastRecurringFee === false
-      ) {
-        const startForProrating =
-          i === 0 && membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false
-            ? currentCycle.cycleStartDate
-            : effectiveStart;
-
-        const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(
-          startForProrating,
-          currentCycle.cycleEndDate,
-          allPauses,
-        );
-        finalBillableDays = fullCycleBillableDays;
-      }
 
       // 5. Calcular monto y descuentos
       let netAmount = 0,
@@ -169,8 +146,7 @@ export class StudentCycleManagerService {
         const calc = calculateOnDemandCycleFee(
           membership,
           currentCycle,
-          finalBillableDays,
-          cycleTotalDays,
+          feeFactor,
         );
         netAmount = calc.netAmount;
         baseAmount = calc.baseAmount;
@@ -182,8 +158,8 @@ export class StudentCycleManagerService {
           options.billingFrequency,
         );
 
-        if (finalBillableDays < cycleTotalDays) {
-          description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+        if (feeFactor === 0.5) {
+          description += ` — Inscripción pasada la mitad del ciclo (50%)`;
         }
       }
 

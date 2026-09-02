@@ -1,4 +1,4 @@
-import { getAbsoluteSeasonCycles, calculateCycleDates, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses } from './student-billing.utils';
+import { getAbsoluteSeasonCycles, calculateCycleDates, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor } from './student-billing.utils';
 import { DateUtils } from 'src/utils/date.utils';
 
 describe('student-billing.utils', () => {
@@ -224,6 +224,55 @@ describe('student-billing.utils', () => {
         expect(res.pauseDays).toBe(10);
         expect(res.billableDays).toBe(21);
       });
+    });
+  });
+
+  describe('calculateCycleFeeFactor (Regla 50% mitad del ciclo)', () => {
+    const cycleStart = new Date(Date.UTC(2026, 8, 1)); // 01-Sep
+    const cycleEnd = new Date(Date.UTC(2026, 9, 1)); // 01-Oct
+    // Midpoint: 2026-09-16T00:00:00.000Z
+
+    it('Caso A: enrollmentDate < cycleStartDate -> 100%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 7, 20));
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate)).toBe(1.0);
+    });
+
+    it('Caso B: enrollmentDate === cycleStartDate -> 100%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 8, 1));
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate)).toBe(1.0);
+    });
+
+    it('Caso C: enrollmentDate < midpoint -> 100%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 8, 10)); // 10-Sep
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate)).toBe(1.0);
+    });
+
+    it('Caso D: enrollmentDate === midpoint -> 100%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 8, 16)); // 16-Sep 00:00:00
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate)).toBe(1.0);
+    });
+
+    it('Caso E: enrollmentDate > midpoint -> 50%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 8, 17)); // 17-Sep
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate)).toBe(0.5);
+    });
+
+    it('Caso F: enrollmentDate > midpoint pero forceFullCycleFee = true -> 100%', () => {
+      const enrollmentDate = new Date(Date.UTC(2026, 8, 17));
+      expect(calculateCycleFeeFactor(cycleStart, cycleEnd, enrollmentDate, true)).toBe(1.0);
+    });
+
+    it('Caso I/J/K: Funciona matemáticamente para ciclo semanal (WEEKLY)', () => {
+      const weeklyStart = new Date(Date.UTC(2026, 8, 1)); // 01-Sep
+      const weeklyEnd = new Date(Date.UTC(2026, 8, 8)); // 08-Sep
+      // Midpoint: 4.5 días (04-Sep 12:00:00 o 05-Sep 00:00:00 dependiendo)
+      // 1 + 7/2 = 4.5 -> 04-Sep 12:00:00
+      
+      const antes = new Date(Date.UTC(2026, 8, 3));
+      const despues = new Date(Date.UTC(2026, 8, 6));
+
+      expect(calculateCycleFeeFactor(weeklyStart, weeklyEnd, antes)).toBe(1.0);
+      expect(calculateCycleFeeFactor(weeklyStart, weeklyEnd, despues)).toBe(0.5);
     });
   });
 });

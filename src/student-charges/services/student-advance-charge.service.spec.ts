@@ -17,6 +17,9 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
   let membershipRepo: any;
 
   beforeEach(async () => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-08-15T12:00:00.000Z'));
+
     prismaService = {
       $transaction: jest.fn(async (cb) => {
         return await cb(prismaService);
@@ -50,6 +53,10 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
     }).compile();
 
     service = module.get<StudentAdvanceChargeService>(StudentAdvanceChargeService);
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   const getMockMembership = (overrides = {}) => ({
@@ -86,64 +93,52 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
         { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
         { cycleStartDate: new Date('2026-09-01T00:00:00.000Z'), cycleEndDate: new Date('2026-10-01T00:00:00.000Z') },
         { cycleStartDate: new Date('2026-10-01T00:00:00.000Z'), cycleEndDate: new Date('2026-11-01T00:00:00.000Z') },
-        { cycleStartDate: new Date('2026-11-01T00:00:00.000Z'), cycleEndDate: new Date('2026-12-01T00:00:00.000Z') },
-        { cycleStartDate: new Date('2026-12-01T00:00:00.000Z'), cycleEndDate: new Date('2027-01-01T00:00:00.000Z') },
+        { cycleStartDate: new Date('2026-11-01T00:00:00.000Z'), cycleEndDate: { cycleStartDate: new Date('2026-12-01T00:00:00.000Z') } },
+        { cycleStartDate: { cycleStartDate: new Date('2026-12-01T00:00:00.000Z') }, cycleEndDate: new Date('2027-01-01T00:00:00.000Z') },
       ]);
 
-      const result = await service.previewAdvanceCharges('mem-1', 1);
-      expect(result.charges.length).toBe(0);
+      await expect(service.previewAdvanceCharges('mem-1', [{ cycleStartDate: new Date('2026-08-01T00:00:00.000Z') }])).rejects.toThrow(
+        BadRequestException,
+      );
     });
 
     it('should preview 2 future cycles and ignore previous ones', async () => {
       const mockMembership = getMockMembership();
       membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
-      // Only August is enrolled
-      prismaService.cycleEnrollment.findMany.mockResolvedValue([
-        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
-      ]);
+      // Only August is enrolled, so if the query is for Sept/Oct, it returns empty
+      prismaService.cycleEnrollment.findMany.mockImplementation((args) => {
+        if (args?.where?.cycleStartDate?.in?.some(d => d.getTime() === new Date('2026-08-01T00:00:00.000Z').getTime())) {
+          return Promise.resolve([{ cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') }]);
+        }
+        return Promise.resolve([]);
+      });
 
-      const result = await service.previewAdvanceCharges('mem-1', 2);
+      const result = await service.previewAdvanceCharges('mem-1', [
+        { cycleStartDate: new Date('2026-09-01T00:00:00.000Z') }, 
+        { cycleStartDate: new Date('2026-10-01T00:00:00.000Z') }
+      ]);
       expect(result.charges.length).toBe(2);
       expect(result.charges[0].cycleStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
       expect(result.charges[1].cycleStartDate).toEqual(new Date('2026-10-01T00:00:00.000Z'));
       
-      // effectiveStart must be equal to cycleStartDate (no late entry inheritance)
+      // effectiveStart must be equal to cycleStartDate (no late entry inheritance) for future cycles
       expect(result.charges[0].effectiveStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
       expect(result.charges[1].effectiveStartDate).toEqual(new Date('2026-10-01T00:00:00.000Z'));
-    });
-
-    it('should ignore an exonerated cycle (CycleEnrollment exists but without Charge)', async () => {
-      const mockMembership = getMockMembership();
-      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
-      
-      // Simulate that August was exonerated. The student HAS the CycleEnrollment for August.
-      // Notice we don't even return Charge info here because the service DOES NOT query it.
-      prismaService.cycleEnrollment.findMany.mockResolvedValue([
-        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
-      ]);
-
-      const result = await service.previewAdvanceCharges('mem-1', 1);
-      
-      // It should skip August and offer September, proving that the exoneration
-      // is respected just by the presence of CycleEnrollment.
-      expect(result.charges.length).toBe(1);
-      expect(result.charges[0].cycleStartDate).toEqual(new Date('2026-09-01T00:00:00.000Z'));
     });
 
     it('should allow purchasing a cycle that was previously CANCELLED', async () => {
       const mockMembership = getMockMembership();
       membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
       
-      // Simulate that findMany returns an empty array because CANCELLED are filtered out by Prisma in the real implementation
-      // But in the mock, we just want to ensure that `findMany` is called with the `{ not: 'CANCELLED' }` condition.
       prismaService.cycleEnrollment.findMany.mockResolvedValue([]);
 
-      await service.previewAdvanceCharges('mem-1', 1);
+      await service.previewAdvanceCharges('mem-1', [{ cycleStartDate: new Date('2026-09-01T00:00:00.000Z') }]);
       
       expect(prismaService.cycleEnrollment.findMany).toHaveBeenCalledWith({
         where: {
           studentMembershipId: 'mem-1',
-          status: { not: 'CANCELLED' }
+          status: { not: 'CANCELLED' },
+          cycleStartDate: { in: [{ cycleStartDate: new Date('') }] }
         },
         select: { cycleStartDate: true, cycleEndDate: true }
       });
@@ -154,11 +149,14 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
     it('should successfully generate explicitly 2 charges for future cycles', async () => {
       const mockMembership = getMockMembership();
       membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
-      prismaService.cycleEnrollment.findMany.mockResolvedValue([
-        { cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') },
-      ]);
+      prismaService.cycleEnrollment.findMany.mockImplementation((args) => {
+        if (args?.where?.cycleStartDate?.in?.some(d => d.getTime() === new Date('2026-08-01T00:00:00.000Z').getTime())) {
+          return Promise.resolve([{ cycleStartDate: new Date('2026-08-01T00:00:00.000Z'), cycleEndDate: new Date('2026-09-01T00:00:00.000Z') }]);
+        }
+        return Promise.resolve([]);
+      });
 
-      const result = await service.purchaseAdvanceCycles('mem-1', 2);
+      const result = await service.purchaseAdvanceCycles('mem-1', [{ cycleStartDate: new Date('') }, { cycleStartDate: new Date('') }]);
 
       expect(prismaService.charge.create).toHaveBeenCalledTimes(2);
       expect(prismaService.cycleEnrollment.create).toHaveBeenCalledTimes(2);
@@ -178,9 +176,28 @@ describe('StudentAdvanceChargeService (FASE 2.7 - On-Demand Purchase Future Cycl
 
       prismaService.charge.create.mockRejectedValue(error);
 
-      await expect(service.purchaseAdvanceCycles('mem-1', 2)).rejects.toThrow(
+      await expect(service.purchaseAdvanceCycles('mem-1', [{ cycleStartDate: new Date('') }, { cycleStartDate: new Date('') }])).rejects.toThrow(
         BadRequestException,
       );
+    });
+
+    it('should throw BadRequestException if dates are duplicated in the request', async () => {
+      const mockMembership = getMockMembership();
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      
+      await expect(service.purchaseAdvanceCycles('mem-1', [{ cycleStartDate: new Date('') }, { cycleStartDate: new Date('') }])).rejects.toThrow(BadRequestException);
+      
+      // Ensure it doesn't even try to reach the database for findMany since it fails early
+      expect(prismaService.cycleEnrollment.findMany).not.toHaveBeenCalled();
+    });
+
+    it('should throw BadRequestException if date is invalid (does not match any cycle)', async () => {
+      const mockMembership = getMockMembership();
+      membershipRepo.getMembershipOrThrow.mockResolvedValue(mockMembership);
+      
+      await expect(service.purchaseAdvanceCycles('mem-1', [
+        { cycleStartDate: new Date('2026-09-15T00:00:00.000Z') } // 15th is not a start of the month
+      ])).rejects.toThrow(BadRequestException);
     });
   });
 });

@@ -13,6 +13,7 @@ import {
   Prisma,
   StatusCharge,
   CycleEnrollmentStatus,
+  PaymentMethod,
 } from 'src/generated/prisma/client';
 import { PaymentStrategyFactory } from './strategies/payment-strategy.factory';
 import { ReceiptResolverService } from 'src/payments/receipt-resolver.service';
@@ -232,7 +233,22 @@ export class TransactionsService {
 
         charge = await prisma.charge.findUnique({
           where: { id: mainChargeId },
-          include: { membershipCharges: true, studentCharges: true },
+          include: { 
+            membershipCharges: {
+              include: {
+                playerMembership: {
+                  include: { player: true }
+                }
+              }
+            }, 
+            studentCharges: {
+              include: {
+                studentMembership: {
+                  include: { student: true }
+                }
+              }
+            } 
+          },
         });
 
         if (charge) {
@@ -291,6 +307,16 @@ export class TransactionsService {
         // Payment created
       }
 
+      let resolvedPayerPersonId = rest.payerPersonId;
+
+      if (isPayment && charge) {
+        if (charge.studentCharges?.length > 0) {
+          resolvedPayerPersonId = charge.studentCharges[0].studentMembership?.student?.personId || resolvedPayerPersonId;
+        } else if (charge.membershipCharges?.length > 0) {
+          resolvedPayerPersonId = charge.membershipCharges[0].playerMembership?.player?.personId || resolvedPayerPersonId;
+        }
+      }
+
       const createdTransactions = [];
 
       for (const t of processedTransactions) {
@@ -304,6 +330,7 @@ export class TransactionsService {
         const transaction = await prisma.transaction.create({
           data: {
             ...rest,
+            payerPersonId: resolvedPayerPersonId,
             transactionDate: rest.transactionDate
               ? new Date(rest.transactionDate).toISOString()
               : new Date().toISOString(),
@@ -437,7 +464,8 @@ export class TransactionsService {
       payerPersonId,
       chargeId,
       type,
-      paymentMethod,
+      paymentMethods,
+      financialAccountIds,
       startDate,
       endDate,
       origin,
@@ -450,7 +478,8 @@ export class TransactionsService {
     const where: Prisma.TransactionWhereInput = {
       ...(payerPersonId && { payerPersonId }),
       ...(type && { type }),
-      ...(paymentMethod && { paymentMethod }),
+      ...(paymentMethods?.length && { paymentMethod: { in: paymentMethods } }),
+      ...(financialAccountIds?.length && { financialAccountId: { in: financialAccountIds } }),
       ...(createdById && { createdById }),
       ...((startDate || endDate) && {
         transactionDate: {
@@ -730,6 +759,12 @@ export class TransactionsService {
         nextPage: page < totalPages ? page + 1 : null,
         prevPage: page > 1 ? page - 1 : null,
       },
+    };
+  }
+
+  getPaymentMethods() {
+    return {
+      data: Object.values(PaymentMethod),
     };
   }
 }

@@ -66,6 +66,16 @@ export class TransactionsController {
     return await this.transactionsService.findAll(paginationDto);
   }
 
+  @Get('payment-methods')
+  @ApiOperation({
+    summary: 'Listar métodos de pago soportados',
+    description: 'Retorna una lista con todos los métodos de pago aceptados.',
+  })
+  @RequirePermissions('READ_TRANSACTIONS')
+  getPaymentMethods() {
+    return this.transactionsService.getPaymentMethods();
+  }
+
   @Get('persons-options')
   @ApiOperation({
     summary: 'Listar opciones de personas',

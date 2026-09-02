@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsOptional, IsUUID, IsEnum, IsDateString, IsISO8601 } from 'class-validator';
+import { Transform } from 'class-transformer';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PaginationDto } from 'src/common/dto/pagination';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -53,10 +54,17 @@ export class TransactionsPaginationDto extends PaginationDto {
   @IsOptional()
   type?: TransactionType;
 
-  @ApiPropertyOptional({ enum: PaymentMethod })
-  @IsEnum(PaymentMethod)
+  @ApiPropertyOptional({ enum: PaymentMethod, isArray: true, description: 'Filtrar por métodos de pago (acepta un string separado por comas o arreglo)' })
+  @IsEnum(PaymentMethod, { each: true })
+  @Transform(({ value }) => Array.isArray(value) ? value : value?.split(','))
   @IsOptional()
-  paymentMethod?: PaymentMethod;
+  paymentMethods?: PaymentMethod[];
+
+  @ApiPropertyOptional({ type: [String], description: 'Filtrar por cuentas contables / financieras (acepta un string separado por comas o arreglo)' })
+  @IsUUID('4', { each: true })
+  @Transform(({ value }) => Array.isArray(value) ? value : value?.split(','))
+  @IsOptional()
+  financialAccountIds?: string[];
 
   @ApiPropertyOptional()
   @IsISO8601({ strict: true }, { message: 'startDate must be a valid ISO 8601 string' })

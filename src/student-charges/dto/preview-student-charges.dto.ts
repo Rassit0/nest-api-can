@@ -110,6 +110,15 @@ export class PreviewStudentChargesDto {
   chargeCurrentMonthOnMigration?: boolean;
 
   @ApiPropertyOptional({
+    description:
+      'Si es true, se ignora la fecha de inicio y se cobra la mensualidad completa sin prorrateo.',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  forceFullCycleFee?: boolean;
+
+  @ApiPropertyOptional({
     description: '¿Generar cargo por inscripción/matrícula? Default: true',
     example: true,
   })

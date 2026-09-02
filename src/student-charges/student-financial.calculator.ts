@@ -408,17 +408,10 @@ export function calculateSinglePaymentFee(
 export function calculateOnDemandCycleFee(
   membership: StudentMembershipWithRelations,
   cycle: AbsoluteCycle,
-  billableDays: number,
-  totalCycleDays: number,
+  feeFactor: number = 1.0,
 ): FinancialCalculationResult {
   let base = Number(membership.courseSeason.billingConfig?.recurringFee || 0);
-  let factor = 1;
-
-  if (totalCycleDays > 0) {
-    factor = Math.max(0, billableDays / totalCycleDays);
-  }
-
-  base = base * factor;
+  base = base * feeFactor;
 
   const appliedDiscounts: {
     percent: number;

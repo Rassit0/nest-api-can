@@ -5,7 +5,7 @@ import {
   calculateSinglePaymentFee,
   calculateOnDemandCycleFee,
 } from '../student-financial.calculator';
-import { formatDiscountsDescription, getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions } from '../student-billing.utils';
+import { formatDiscountsDescription, getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions } from '../student-billing.utils';
 import { DateUtils } from 'src/utils/date.utils';
 import {
   TypeMembershipCharge,
@@ -98,26 +98,18 @@ export class StudentPreviewService {
                
                if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
                
-               // 5. Integrar pausas
-               const allPauses = [
-                 ...(membership.pauses || []),
-                 ...(membership.courseSeason.pauses || []),
-               ];
-               const { billableDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
-               const cycleTotalDays = (currentCycle.cycleEndDate.getTime() - currentCycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
-               
-               let finalBillableDays = billableDays;
-               if (i === 0 && membership.courseSeason.billingConfig?.prorateFirstRecurringFee === false) {
-                  const { billableDays: billableDaysWithoutLateEntry } = calculateBillableDaysWithPauses(currentCycle.cycleStartDate, effectiveEnd, allPauses);
-                  finalBillableDays = billableDaysWithoutLateEntry;
-               }
+               const feeFactor = calculateCycleFeeFactor(
+                  currentCycle.cycleStartDate,
+                  currentCycle.cycleEndDate,
+                  effectiveStart,
+                  false // en preview normal no forzamos prorrateo, pero si hubiera, se pasaría `options.forceFullCycleFee` (aunque el resolver actualmente ya lo evalúa)
+               );
                
                // 6. Calcular importe On-Demand
                const { netAmount, baseAmount, adjustmentAmount, discountPercent, appliedDiscounts } = calculateOnDemandCycleFee(
                   membership,
                   currentCycle,
-                  finalBillableDays,
-                  cycleTotalDays
+                  feeFactor
                );
                
                // Si prorrateó por entrar tarde y no está en la configuración permitida
@@ -129,8 +121,8 @@ export class StudentPreviewService {
                   billingFrequency
                );
                
-               if (finalBillableDays < cycleTotalDays) {
-                 description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+               if (feeFactor === 0.5) {
+                 description += ` — Inscripción pasada la mitad del ciclo (50%)`;
                }
                description += formatDiscountsDescription(appliedDiscounts);
                

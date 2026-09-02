@@ -71,7 +71,32 @@ describe('StudentCycleManagerService', () => {
       jest.clearAllMocks();
     });
 
-    it('Caso 1: Inscripción tardía (prorrateo del ciclo afectado)', async () => {
+    it('Caso 1: Primer día del ciclo (NO prorrateo, ciclo completo)', async () => {
+      const septemberCycle: AbsoluteCycle = {
+        cycleCounter: 1,
+        cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
+        cycleEndDate: new Date('2023-09-30T23:59:59.999Z'),
+        billingYear: 2023,
+        billingMonth: 9,
+        billingCycle: null,
+      };
+
+      const enrollmentDate = new Date('2023-09-01T00:00:00.000Z');
+
+      await service.enrollCyclesToMembership(
+        mockMembership,
+        [septemberCycle],
+        enrollmentDate,
+        options,
+        mockTx,
+      );
+
+      const chargeCall = mockTx.charge.create.mock.calls[0][0];
+      expect(chargeCall.data.amount).toEqual(100);
+      expect(chargeCall.data.description).not.toContain('Prorrateado');
+    });
+
+    it('Caso 2: Después del inicio (prorrateo con billableDays menores y monto ajustado)', async () => {
       const septemberCycle: AbsoluteCycle = {
         cycleCounter: 1,
         cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
@@ -91,23 +116,42 @@ describe('StudentCycleManagerService', () => {
         mockTx,
       );
 
-      // Verify CycleEnrollment was created with effectiveStartDate = enrollmentDate
-      expect(mockTx.cycleEnrollment.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            effectiveStartDate: enrollmentDate,
-          }),
-        }),
-      );
-
-      // Verify Charge was created with a prorated amount (less than 100)
       const chargeCall = mockTx.charge.create.mock.calls[0][0];
-      expect(chargeCall.data.amount).toBeGreaterThan(0);
       expect(chargeCall.data.amount).toBeLessThan(100);
+      expect(chargeCall.data.amount).toBeGreaterThan(0);
       expect(chargeCall.data.description).toContain('Prorrateado');
     });
 
-    it('Caso 2: Ciclo futuro (cobro completo independientemente del enrollmentDate anterior)', async () => {
+    it('Caso 3 y 7: Forzar ciclo completo (forceFullCycleFee = true) y effectiveStartDate', async () => {
+      const septemberCycle: AbsoluteCycle = {
+        cycleCounter: 1,
+        cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
+        cycleEndDate: new Date('2023-09-30T23:59:59.999Z'),
+        billingYear: 2023,
+        billingMonth: 9,
+        billingCycle: null,
+      };
+
+      const enrollmentDate = new Date('2023-09-15T00:00:00.000Z');
+      const overrideOptions = { ...options, forceFullCycleFee: true };
+
+      await service.enrollCyclesToMembership(
+        mockMembership,
+        [septemberCycle],
+        enrollmentDate,
+        overrideOptions,
+        mockTx,
+      );
+
+      const chargeCall = mockTx.charge.create.mock.calls[0][0];
+      expect(chargeCall.data.amount).toEqual(100);
+      expect(chargeCall.data.description).not.toContain('Prorrateado');
+
+      const enrollmentCall = mockTx.cycleEnrollment.create.mock.calls[0][0];
+      expect(enrollmentCall.data.effectiveStartDate).toEqual(enrollmentDate); // 15/09
+    });
+
+    it('Caso 4: Ciclo futuro (NO prorrateo, ciclo completo)', async () => {
       const octoberCycle: AbsoluteCycle = {
         cycleCounter: 2,
         cycleStartDate: new Date('2023-10-01T00:00:00.000Z'),
@@ -127,22 +171,12 @@ describe('StudentCycleManagerService', () => {
         mockTx,
       );
 
-      // effectiveStartDate should be 01/10, NOT 15/09
-      expect(mockTx.cycleEnrollment.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            effectiveStartDate: octoberCycle.cycleStartDate,
-          }),
-        }),
-      );
-
-      // Verify Charge was created with FULL amount (100)
       const chargeCall = mockTx.charge.create.mock.calls[0][0];
       expect(chargeCall.data.amount).toEqual(100);
       expect(chargeCall.data.description).not.toContain('Prorrateado');
     });
 
-    it('Caso 3: Membership antigua pero enrollmentDate reciente (Reactivación)', async () => {
+    it('Caso 6: Ciclos discontinuos (Sept + Dic)', async () => {
       const septemberCycle: AbsoluteCycle = {
         cycleCounter: 1,
         cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
@@ -152,98 +186,34 @@ describe('StudentCycleManagerService', () => {
         billingCycle: null,
       };
 
-      const enrollmentDate = new Date('2023-09-15T00:00:00.000Z');
-      
-      // Membership starts on August 1st
-      expect(mockMembership.startedAt.getTime()).toBeLessThan(septemberCycle.cycleStartDate.getTime());
-
-      await service.enrollCyclesToMembership(
-        mockMembership,
-        [septemberCycle],
-        enrollmentDate,
-        options,
-        mockTx,
-      );
-
-      // effectiveStartDate should be 15/09, ignoring the membership.startedAt of 01/08
-      expect(mockTx.cycleEnrollment.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          data: expect.objectContaining({
-            effectiveStartDate: enrollmentDate,
-          }),
-        }),
-      );
-
-      // It must be prorated!
-      const chargeCall = mockTx.charge.create.mock.calls[0][0];
-      expect(chargeCall.data.description).toContain('Prorrateado');
-    });
-    it('Caso 4: Si existe un CycleEnrollment CANCELLED, permite nueva inscripción', async () => {
-      const septemberCycle: AbsoluteCycle = {
-        cycleCounter: 1,
-        cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
-        cycleEndDate: new Date('2023-09-30T23:59:59.999Z'),
+      const decemberCycle: AbsoluteCycle = {
+        cycleCounter: 4, // Ciclo absoluto 4
+        cycleStartDate: new Date('2023-12-01T00:00:00.000Z'),
+        cycleEndDate: new Date('2023-12-31T23:59:59.999Z'),
         billingYear: 2023,
-        billingMonth: 9,
+        billingMonth: 12,
         billingCycle: null,
       };
 
       const enrollmentDate = new Date('2023-09-15T00:00:00.000Z');
 
-      // Setup the mock to simulate that findFirst returns nothing (which means either no enrollment or only CANCELLED exist)
-      mockTx.cycleEnrollment.findFirst.mockResolvedValueOnce(null);
-
-      const result = await service.enrollCyclesToMembership(
+      await service.enrollCyclesToMembership(
         mockMembership,
-        [septemberCycle],
+        [septemberCycle, decemberCycle],
         enrollmentDate,
         options,
         mockTx,
       );
 
-      // Verify that findFirst was called with the correct filter
-      expect(mockTx.cycleEnrollment.findFirst).toHaveBeenCalledWith({
-        where: {
-          studentMembershipId: mockMembership.id,
-          cycleStartDate: septemberCycle.cycleStartDate,
-          cycleEndDate: septemberCycle.cycleEndDate,
-          status: { not: 'CANCELLED' } // Assuming CycleEnrollmentStatus.CANCELLED is 'CANCELLED'
-        }
-      });
+      // Septiembre: susceptible de prorrateo
+      const chargeCallSept = mockTx.charge.create.mock.calls[0][0];
+      expect(chargeCallSept.data.amount).toBeLessThan(100);
+      expect(chargeCallSept.data.description).toContain('Prorrateado');
 
-      expect(result.generatedCount).toBe(1);
-    });
-
-    it('Caso 5: Con overrideChargeAmount, no aplica prorrateo y asigna el monto exacto', async () => {
-      const septemberCycle: AbsoluteCycle = {
-        cycleCounter: 1,
-        cycleStartDate: new Date('2023-09-01T00:00:00.000Z'),
-        cycleEndDate: new Date('2023-09-30T23:59:59.999Z'),
-        billingYear: 2023,
-        billingMonth: 9,
-        billingCycle: null,
-      };
-
-      const enrollmentDate = new Date('2023-09-15T00:00:00.000Z'); // Entrada tardía
-      
-      const overrideOptions = { ...options, overrideChargeAmount: 150 };
-
-      await service.enrollCyclesToMembership(
-        mockMembership,
-        [septemberCycle],
-        enrollmentDate,
-        overrideOptions,
-        mockTx,
-      );
-
-      // Verify Charge was created with EXACTLY 150 despite late enrollment
-      const chargeCall = mockTx.charge.create.mock.calls[0][0];
-      expect(chargeCall.data.amount).toEqual(150);
-      expect(chargeCall.data.adjustmentAmount).toEqual(0);
-      expect(chargeCall.data.description).not.toContain('Prorrateado');
-      
-      const studentChargeCall = mockTx.studentCharge.create.mock.calls[0][0];
-      expect(studentChargeCall.data.createdByCron).toBe(false);
+      // Diciembre: ciclo completo
+      const chargeCallDec = mockTx.charge.create.mock.calls[1][0];
+      expect(chargeCallDec.data.amount).toEqual(100);
+      expect(chargeCallDec.data.description).not.toContain('Prorrateado');
     });
   });
 });

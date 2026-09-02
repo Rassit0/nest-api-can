@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   ForbiddenException,
+  Query,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { StudentRegularizationService } from './services/student-regularization.service';
@@ -23,6 +24,7 @@ import {
   ApiPaginatedResponse,
 } from '../common/decorators/api-responses.decorator';
 import { StudentChargeResponseDto } from '../common/dto/responses/entities.dto';
+import { CycleCapacityDto } from './dto/cycle-capacity.dto';
 import { PreviewStudentChargesDto } from './dto/preview-student-charges.dto';
 import { CreateManualChargeDto } from './dto/create-manual-charge.dto';
 import {
@@ -32,6 +34,7 @@ import {
   ApiBody,
   ApiParam,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { CreateMassiveManualChargeDto } from './dto/create-massive-manual-charge.dto';
 import { PreviewAdvanceChargesDto } from './dto/preview-advance-charges.dto';
@@ -101,6 +104,30 @@ export class StudentChargesController {
     };
   }
 
+  @Get('course-seasons/:courseSeasonId/cycle-capacity')
+  @ApiOperation({
+    summary: 'Visualizar la capacidad por ciclo de una temporada',
+    description: 'Devuelve la ocupación y disponibilidad agregada temporalmente para cada ciclo de la temporada especificada.',
+  })
+  @ApiParam({ name: 'courseSeasonId', description: 'ID de la temporada del curso' })
+  @ApiQuery({ name: 'shiftId', required: false, description: 'ID del turno (opcional, para filtrar)' })
+  @ApiResponse({
+    status: 200,
+    description: 'Capacidad por ciclo obtenida.',
+    type: [CycleCapacityDto],
+  })
+  @RequirePermissions('READ_COURSE_SEASONS') // Mismo permiso utilizado para leer temporadas
+  async getCycleCapacity(
+    @Param('courseSeasonId') courseSeasonId: string,
+    @Query('shiftId') shiftId?: string,
+  ) {
+    const data = await this.studentChargesService.getCycleCapacity(courseSeasonId, shiftId);
+    return {
+      message: 'Capacidad por ciclo obtenida exitosamente.',
+      data,
+    };
+  }
+
   @Post('manual')
   @ApiOperation({
     summary: 'Generar un cargo manual',
@@ -134,6 +161,26 @@ export class StudentChargesController {
     return await this.studentChargesService.createMassiveManualCharge(dto);
   }
 
+  @Get('advance/:membershipId/available-cycles')
+  @ApiOperation({
+    summary: 'Obtener ciclos disponibles para adelantar',
+    description:
+      'Retorna la lista de ciclos (cuotas) futuras disponibles para ser compradas por adelantado.',
+  })
+  @ApiParam({ name: 'membershipId', description: 'ID de la membresía' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de ciclos obtenida.',
+  })
+  @RequirePermissions('READ_STUDENT_CHARGES')
+  async getAvailableCycles(@Param('membershipId') membershipId: string) {
+    const data = await this.studentChargesService.getAvailableCycles(membershipId);
+    return {
+      message: 'Ciclos disponibles obtenidos',
+      data,
+    };
+  }
+
   @Post('advance/:membershipId/preview')
   @ApiOperation({
     summary: 'Previsualizar cuotas adelantadas',
@@ -154,7 +201,10 @@ export class StudentChargesController {
   ) {
     const data = await this.studentChargesService.previewAdvanceCharges(
       membershipId,
-      dto.quantity,
+      dto.cycles.map(c => ({
+        cycleStartDate: new Date(c.cycleStartDate),
+        enrollmentDate: c.enrollmentDate ? c.enrollmentDate : undefined,
+      })),
     );
     return {
       message: 'Previsualización de cuotas adelantadas obtenida',
@@ -166,7 +216,7 @@ export class StudentChargesController {
   @ApiOperation({
     summary: 'Comprar ciclos adelantados',
     description:
-      'Inscribe y registra en la base de datos la compra adelantada de los próximos N ciclos para una membresía específica.',
+      'Inscribe y registra en la base de datos la compra adelantada de ciclos seleccionados para una membresía específica.',
   })
   @ApiParam({ name: 'membershipId', description: 'ID de la membresía' })
   @ApiBody({ type: PurchaseAdvanceCyclesDto })
@@ -182,7 +232,10 @@ export class StudentChargesController {
   ) {
     const data = await this.studentChargesService.purchaseAdvanceCycles(
       membershipId,
-      dto.quantity,
+      dto.cycles.map(c => ({
+        cycleStartDate: new Date(c.cycleStartDate),
+        enrollmentDate: c.enrollmentDate ? c.enrollmentDate : undefined,
+      })),
     );
     return {
       message: data.message,

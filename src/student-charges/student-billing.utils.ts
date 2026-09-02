@@ -246,6 +246,32 @@ export interface AbsoluteCycle {
   billingYear: number;
   billingMonth: number;
   billingCycle: number;
+  requestedEnrollmentDate?: Date;
+}
+
+/**
+ * Regla de prorrateo por mitad de ciclo
+ */
+export function calculateCycleFeeFactor(
+  cycleStartDate: Date,
+  cycleEndDate: Date,
+  enrollmentDate: Date,
+  forceFullCycleFee: boolean = false
+): number {
+  if (forceFullCycleFee) {
+    return 1.0;
+  }
+
+  const cycleStartMs = cycleStartDate.getTime();
+  const cycleEndMs = cycleEndDate.getTime();
+  const cycleMidpointMs = cycleStartMs + (cycleEndMs - cycleStartMs) / 2;
+  const enrollmentMs = enrollmentDate.getTime();
+
+  if (enrollmentMs > cycleMidpointMs) {
+    return 0.5;
+  }
+
+  return 1.0;
 }
 
 /**

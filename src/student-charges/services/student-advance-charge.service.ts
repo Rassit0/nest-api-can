@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { StudentMembershipRepository } from '../repositories/student-membership.repository';
 import { StudentCourseSeasonValidator } from '../validators/student-course-season.validator';
 import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
-import { getAbsoluteSeasonCycles, findCycleContainingDate, MILLISECONDS_IN_DAY, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, buildCycleDescription } from '../student-billing.utils';
+import { getAbsoluteSeasonCycles, findCycleContainingDate, MILLISECONDS_IN_DAY, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, buildCycleDescription } from '../student-billing.utils';
 import { calculateOnDemandCycleFee } from '../student-financial.calculator';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 import { TypeMembershipCharge, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
@@ -33,7 +33,72 @@ export class StudentAdvanceChargeService {
     return membership;
   }
 
-  private async getUnenrolledCycles(membership: any, quantity: number) {
+  private async getValidCyclesForPurchase(membership: any, requestedCycles: { cycleStartDate: Date; enrollmentDate?: string }[], tx: any = this.prisma) {
+    // 1. Validar duplicados en la entrada
+    const uniqueDates = new Set(requestedCycles.map(c => c.cycleStartDate.getTime()));
+    if (uniqueDates.size !== requestedCycles.length) {
+      throw new BadRequestException('Se detectaron fechas de ciclo duplicadas en la solicitud.');
+    }
+
+    const allCycles = getAbsoluteSeasonCycles(
+      membership.courseSeason.season.startDate,
+      membership.courseSeason.season.endDate,
+      membership.courseSeason.billingConfig.billingFrequency
+    );
+
+    // 2. Validar que todas las fechas correspondan a un ciclo absoluto válido
+    const validCyclesToPurchase = [];
+    for (const reqCycle of requestedCycles) {
+      const cycle = allCycles.find(c => c.cycleStartDate.getTime() === reqCycle.cycleStartDate.getTime());
+      if (!cycle) {
+        throw new BadRequestException(`La fecha ${reqCycle.cycleStartDate.toISOString()} no corresponde a un inicio de ciclo válido en esta temporada.`);
+      }
+      validCyclesToPurchase.push({
+        ...cycle,
+        requestedEnrollmentDate: reqCycle.enrollmentDate ? new Date(reqCycle.enrollmentDate) : undefined,
+      });
+    }
+
+    // 3. Ignorar (o rechazar) ciclos que ya terminaron antes de que el estudiante se inscribiera
+    const cyclesAfterStart = validCyclesToPurchase.filter(cycle => 
+      cycle.cycleEndDate.getTime() > membership.startedAt.getTime()
+    );
+
+    if (cyclesAfterStart.length !== validCyclesToPurchase.length) {
+      throw new BadRequestException('No se pueden comprar ciclos que finalizaron antes de la inscripción del estudiante.');
+    }
+
+    for (const cycle of validCyclesToPurchase) {
+      if (cycle.requestedEnrollmentDate) {
+        if (cycle.requestedEnrollmentDate.getTime() < cycle.cycleStartDate.getTime() || cycle.requestedEnrollmentDate.getTime() > cycle.cycleEndDate.getTime()) {
+           throw new BadRequestException(`La fecha de inscripción seleccionada (${cycle.requestedEnrollmentDate.toISOString()}) debe estar dentro del rango del ciclo (${cycle.cycleStartDate.toISOString()} - ${cycle.cycleEndDate.toISOString()}).`);
+        }
+      }
+    }
+
+    // 4. Validar que no se estén comprando ciclos ya inscritos (usando tx)
+    const existingEnrollments = await tx.cycleEnrollment.findMany({
+      where: { 
+        studentMembershipId: membership.id,
+        status: { not: CycleEnrollmentStatus.CANCELLED },
+        cycleStartDate: { in: requestedCycles.map(c => c.cycleStartDate) }
+      },
+      select: { cycleStartDate: true, cycleEndDate: true }
+    });
+
+    if (existingEnrollments.length > 0) {
+      throw new BadRequestException('Uno o más ciclos seleccionados ya se encuentran registrados en la membresía.');
+    }
+
+    return validCyclesToPurchase;
+  }
+
+  /**
+   * Obtiene la lista de ciclos disponibles para ser adelantados.
+   */
+  async getAvailableCycles(membershipId: string) {
+    const membership = await this.validateAndGetMembershipForAdvance(membershipId);
+    
     const allCycles = getAbsoluteSeasonCycles(
       membership.courseSeason.season.startDate,
       membership.courseSeason.season.endDate,
@@ -48,37 +113,28 @@ export class StudentAdvanceChargeService {
       select: { cycleStartDate: true, cycleEndDate: true }
     });
 
-    const unenrolledCycles = allCycles.filter(cycle => {
-      // Ignore cycles that ended before the student's membership started
-      if (cycle.cycleEndDate.getTime() <= membership.startedAt.getTime()) {
-        return false;
-      }
+    const cyclesWithStatus = allCycles
+      .filter(cycle => cycle.cycleEndDate.getTime() > membership.startedAt.getTime())
+      .map(cycle => {
+        const isEnrolled = existingEnrollments.some(e => 
+          e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
+          e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
+        );
+        return {
+          ...cycle,
+          isEnrolled
+        };
+      });
 
-      return !existingEnrollments.some(e => 
-        e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
-        e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
-      );
-    });
-
-    if (unenrolledCycles.length === 0) {
-      return [];
-    }
-
-    if (unenrolledCycles.length < quantity) {
-      throw new BadRequestException(
-        `Solo quedan ${unenrolledCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
-      );
-    }
-
-    return unenrolledCycles.slice(0, quantity);
+    return cyclesWithStatus;
   }
 
   /**
    * Genera el Preview On-Demand de la compra explícita de ciclos futuros.
    */
-  async previewAdvanceCharges(membershipId: string, quantity: number) {
+  async previewAdvanceCharges(membershipId: string, requestedCycles: { cycleStartDate: Date; enrollmentDate?: string }[]) {
     const membership = await this.validateAndGetMembershipForAdvance(membershipId);
-    const cyclesToPurchase = await this.getUnenrolledCycles(membership, quantity);
+    const cyclesToPurchase = await this.getValidCyclesForPurchase(membership, requestedCycles);
 
     if (cyclesToPurchase.length === 0) {
       return { charges: [], breakdown: { totalBaseAmount: 0, totalDiscount: 0, totalNetAmount: 0 } };
@@ -96,25 +152,26 @@ export class StudentAdvanceChargeService {
 
     for (let i = 0; i < cyclesToPurchase.length; i++) {
       const cycle = cyclesToPurchase[i];
-      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, new Date(), membership.courseSeason.season.endDate);
+      // Para adelantos, usamos el requestedEnrollmentDate del ciclo, o la fecha actual
+      const simulatedEnrollmentDate = cycle.requestedEnrollmentDate || new Date();
+      const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(cycle, simulatedEnrollmentDate, membership.courseSeason.season.endDate);
       
       if (effectiveStart >= effectiveEnd) continue; // Fuera de temporada
 
       const { billableDays, pauseDays } = calculateBillableDaysWithPauses(effectiveStart, effectiveEnd, allPauses);
       const cycleTotalDays = (cycle.cycleEndDate.getTime() - cycle.cycleStartDate.getTime()) / MILLISECONDS_IN_DAY;
 
-      let finalBillableDays = billableDays;
-      const isTruncatedEnd = cycle.cycleEndDate.getTime() > membership.courseSeason.season.endDate.getTime();
-      if (isTruncatedEnd && membership.courseSeason.billingConfig?.prorateLastRecurringFee === false) {
-          const { billableDays: fullCycleBillableDays } = calculateBillableDaysWithPauses(effectiveStart, cycle.cycleEndDate, allPauses);
-          finalBillableDays = fullCycleBillableDays;
-      }
+      const feeFactor = calculateCycleFeeFactor(
+        cycle.cycleStartDate,
+        cycle.cycleEndDate,
+        effectiveStart,
+        false // En preview de adelantos, no hay forceFullCycleFee
+      );
 
       const cycleFee = calculateOnDemandCycleFee(
         membership,
         cycle,
-        finalBillableDays,
-        cycleTotalDays
+        feeFactor
       );
 
       const adjustmentReason = cycleFee.appliedDiscounts?.map(d => d.reason).filter(Boolean).join(', ');
@@ -128,10 +185,9 @@ export class StudentAdvanceChargeService {
          cycle.cycleEndDate,
          membership.courseSeason.billingConfig.billingFrequency
       );
-      if (finalBillableDays < cycleTotalDays) {
-        description += ` — Prorrateado: ${finalBillableDays} de ${cycleTotalDays} días`;
+      if (feeFactor === 0.5) {
+        description += ` — Inscripción pasada la mitad del ciclo (50%)`;
       }
-
       previewCharges.push({
         cycleStartDate: cycle.cycleStartDate,
         cycleEndDate: cycle.cycleEndDate,
@@ -144,7 +200,7 @@ export class StudentAdvanceChargeService {
         totalDays: cycleTotalDays,
         billableDays,
         pauseDays,
-        description: `Adelanto de Cuota: ${description}`
+        description: `Inscripción a ciclo: ${description}`
       });
     }
 
@@ -161,63 +217,34 @@ export class StudentAdvanceChargeService {
   /**
    * Concreta la compra explícita On-Demand de ciclos futuros.
    */
-  async purchaseAdvanceCycles(membershipId: string, quantity: number) {
+  async purchaseAdvanceCycles(membershipId: string, requestedCycles: { cycleStartDate: Date; enrollmentDate?: string }[]) {
     const membership = await this.validateAndGetMembershipForAdvance(membershipId);
     
     // Verificamos antes de entrar a la transacción para validaciones tempranas
-    await this.getUnenrolledCycles(membership, quantity);
+    await this.getValidCyclesForPurchase(membership, requestedCycles);
 
     try {
       let generatedCount = 0;
       await this.prisma.$transaction(async (tx) => {
         // En la transacción resolvemos de nuevo los disponibles para asegurar que no nos ganen por concurrencia
-        const existingEnrollments = await tx.cycleEnrollment.findMany({
-            where: { 
-              studentMembershipId: membership.id,
-              status: { not: CycleEnrollmentStatus.CANCELLED }
-            },
-            select: { cycleStartDate: true, cycleEndDate: true }
-        });
+        const cyclesToPurchase = await this.getValidCyclesForPurchase(membership, requestedCycles, tx);
 
-        const allCycles = getAbsoluteSeasonCycles(
-            membership.courseSeason.season.startDate,
-            membership.courseSeason.season.endDate,
-            membership.courseSeason.billingConfig.billingFrequency
-        );
-
-        const unenrolledCycles = allCycles.filter(cycle => {
-            // Ignore cycles that ended before the student's membership started
-            if (cycle.cycleEndDate.getTime() <= membership.startedAt.getTime()) {
-              return false;
-            }
-
-            return !existingEnrollments.some(e => 
-              e.cycleStartDate.getTime() === cycle.cycleStartDate.getTime() &&
-              e.cycleEndDate.getTime() === cycle.cycleEndDate.getTime()
-            );
-        });
-
-        if (unenrolledCycles.length === 0) {
+        if (cyclesToPurchase.length === 0) {
             return; // Ya no hay ciclos
         }
-        if (unenrolledCycles.length < quantity) {
-            throw new BadRequestException(
-                `Solo quedan ${unenrolledCycles.length} cuotas disponibles en la temporada. No se pueden adelantar ${quantity}.`,
-            );
-        }
 
-        const cyclesToPurchase = unenrolledCycles.slice(0, quantity);
         // Delegar la creación al orquestador central
         const options = {
           chargeInitialCycle: true, // Siempre cobramos en un adelanto
           isSeasonFeeOnly: false, // Adelantos siempre son RECURRING
-          billingFrequency: membership.courseSeason.billingConfig.billingFrequency
+          billingFrequency: membership.courseSeason.billingConfig.billingFrequency,
+          forceFullCycleFee: false // Por ahora, la compra de adelantos usa forceFullCycleFee=false, a menos que se añada al DTO.
         };
 
         const result = await this.cycleManager.enrollCyclesToMembership(
           membership,
           cyclesToPurchase,
-          new Date(), // La fecha de inscripción material (hoy) para la compra de adelantos
+          new Date(), // enrollmentDate parameter ya no se usa fijamente
           options,
           tx
         );

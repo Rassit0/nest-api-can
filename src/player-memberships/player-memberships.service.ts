@@ -40,7 +40,14 @@ export const playerMembershipSelect = {
     select: {
       team: {
         select: {
+          id: true,
           name: true,
+          clubId: true,
+          club: {
+            select: {
+              disciplineId: true,
+            },
+          },
         },
       },
       season: {
@@ -55,6 +62,7 @@ export const playerMembershipSelect = {
     select: {
       category: {
         select: {
+          id: true,
           name: true,
         },
       },

@@ -213,7 +213,13 @@ describe('TransactionsService', () => {
         membershipCharge: {
           findMany: jest.fn().mockResolvedValue([]),
         },
-        $queryRaw: jest.fn().mockResolvedValue([{ maxMembers: 10 }]),
+        $queryRaw: jest.fn().mockResolvedValue([{
+          id: 'charge-1',
+          amount: { toString: () => '100' },
+          pending_amount: { toString: () => '100' },
+          adjustment_amount: null,
+          status: 'PENDING'
+        }]),
       };
 
       jest.spyOn(prisma, '$transaction').mockImplementation(async (callback: any) => {
@@ -296,6 +302,13 @@ describe('TransactionsService', () => {
       
       // first call outside transaction
       jest.spyOn(prisma.transaction, 'findUnique').mockResolvedValue(mockTx as any);
+      transactionCallbackPrisma.$queryRaw.mockResolvedValue([{
+          id: 'charge-1',
+          amount: { toString: () => '100' },
+          pending_amount: { toString: () => '0' },
+          adjustment_amount: null,
+          status: 'PAID'
+      }]);
 
       // inside transaction
       transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
@@ -330,6 +343,13 @@ describe('TransactionsService', () => {
       };
       
       jest.spyOn(prisma.transaction, 'findUnique').mockResolvedValue(mockTx as any);
+      transactionCallbackPrisma.$queryRaw.mockResolvedValue([{
+          id: 'charge-1',
+          amount: { toString: () => '100' },
+          pending_amount: { toString: () => '0' },
+          adjustment_amount: null,
+          status: 'PAID'
+      }]);
 
       transactionCallbackPrisma.charge.findUnique.mockResolvedValue({
         id: 'charge-1',

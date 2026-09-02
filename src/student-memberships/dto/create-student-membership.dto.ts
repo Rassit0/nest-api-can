@@ -181,6 +181,14 @@ export class CreateStudentMembershipDto {
   startedAt: Date;
 
   @ApiPropertyOptional({
+    description: 'Si es true, ignora los días ausentes iniciales y cobra la tarifa regular íntegra del primer ciclo intersectado.',
+    default: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  forceFullCycleFee?: boolean;
+
+  @ApiPropertyOptional({
     example: '2026-12-31T00:00:00.000Z',
     description: 'Fecha de fin de la membresía',
     nullable: true,
