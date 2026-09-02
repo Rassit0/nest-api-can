@@ -308,7 +308,7 @@ export class AccountChargesService {
         where,
         take: per_page,
         skip,
-        orderBy: { name: orderBy },
+        orderBy: [{ name: orderBy }, { id: 'asc' }],
         select: {
           id: true,
           name: true,
