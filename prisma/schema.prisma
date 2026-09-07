@@ -613,6 +613,9 @@ model Transaction {
   isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
   thirdPartyId           String?           @map("third_party_id")
   paymentId              String?           @map("payment_id")
+  reversesId             String?           @unique @map("reverses_id")
+  balanceBefore          Decimal?          @map("balance_before") @db.Decimal(10, 2)
+  balanceAfter           Decimal?          @map("balance_after") @db.Decimal(10, 2)
   attachments            Attachment[]
   internalTransferDest   InternalTransfer? @relation("TransferDestination")
   internalTransferSource InternalTransfer? @relation("TransferSource")
@@ -622,6 +625,8 @@ model Transaction {
   payment                Payment?          @relation(fields: [paymentId], references: [id], onDelete: Restrict)
   thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
   updatedBy              User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
+  reverses               Transaction?      @relation("TransactionReversal", fields: [reversesId], references: [id])
+  reversedBy             Transaction?      @relation("TransactionReversal")
 
   @@unique([receiptSeries, receiptNumber])
   @@map("transactions")

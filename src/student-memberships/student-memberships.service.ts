@@ -180,18 +180,26 @@ export class StudentMembershipsService {
   ) {}
 
   async create(createDto: CreateStudentMembershipDto) {
+    if (!createDto.studentId && !createDto.personIdToCreateProfile) {
+      throw new BadRequestException(
+        'Se debe proveer studentId o personIdToCreateProfile',
+      );
+    }
+    if (createDto.studentId && createDto.personIdToCreateProfile) {
+      throw new BadRequestException(
+        'No se puede enviar studentId y personIdToCreateProfile simultáneamente',
+      );
+    }
+
     await this.validatePaymentPlan(
       createDto.paymentPlanId,
       createDto.courseSeasonId,
     );
 
-    const [student, offeringData] = await Promise.all([
-      this.getStudent(createDto.studentId),
-      this.getCourseMembershipOfferingAndShift(
-        createDto.courseSeasonId,
-        createDto.courseSeasonShiftId,
-      ),
-    ]);
+    const offeringData = await this.getCourseMembershipOfferingAndShift(
+      createDto.courseSeasonId,
+      createDto.courseSeasonShiftId,
+    );
     const offering = offeringData.courseSeason;
     const shift = offeringData.shift;
 
@@ -203,21 +211,6 @@ export class StudentMembershipsService {
 
     await this.validateOfferingCapacity(shift.id, shift.maxMembers);
 
-    await this.validateDuplicateMembership(
-      createDto.studentId,
-      createDto.courseSeasonId,
-    );
-
-    this.validateStudentEligibility(student, shift);
-
-    if (createDto.studentDiscounts && createDto.studentDiscounts.length > 0) {
-      this.validateDiscountDates(
-        createDto.studentDiscounts,
-        offering.season.startDate,
-        offering.season.endDate,
-      );
-    }
-
     const {
       studentDiscounts,
       chargeRegistrationOnMigration,
@@ -225,11 +218,63 @@ export class StudentMembershipsService {
       chargeRegistration,
       chargeInitialCycle,
       forceFullCycleFee,
+      personIdToCreateProfile,
+      studentId,
       ...createData
     } = createDto;
 
     return await this.prisma.$transaction(
       async (tx) => {
+        let student;
+        let finalStudentId = studentId;
+
+        if (personIdToCreateProfile) {
+          const person = await tx.person.findUnique({
+            where: { id: personIdToCreateProfile },
+          });
+          if (!person) {
+            throw new NotFoundException('Persona no encontrada');
+          }
+
+          const existingStudent = await tx.student.findUnique({
+            where: { personId: personIdToCreateProfile },
+          });
+          if (existingStudent) {
+            throw new BadRequestException('Ya existe un registro con los datos proporcionados');
+          }
+
+          student = await tx.student.create({
+            data: { personId: personIdToCreateProfile, isActive: true },
+            include: { person: true },
+          });
+          finalStudentId = student.id;
+        } else {
+          student = await tx.student.findUnique({
+            where: { id: finalStudentId },
+            include: { person: true },
+          });
+          if (!student) {
+            throw new NotFoundException(`Estudiante con id ${finalStudentId} no encontrado`);
+          }
+        }
+
+        await this.validateDuplicateMembership(
+          finalStudentId,
+          createDto.courseSeasonId,
+          undefined,
+          tx,
+        );
+
+        this.validateStudentEligibility(student as any, shift);
+
+        if (studentDiscounts && studentDiscounts.length > 0) {
+          this.validateDiscountDates(
+            studentDiscounts,
+            offering.season.startDate,
+            offering.season.endDate,
+          );
+        }
+
         // Adquirir lock pesimista sobre CourseSeason tempranamente para serializar
         // la concurrencia y evitar FK deadlocks al insertar StudentMembership.
         await tx.$queryRaw`
@@ -242,6 +287,7 @@ export class StudentMembershipsService {
         const membership = await tx.studentMembership.create({
           data: {
             ...createData,
+            studentId: finalStudentId,
             status: createData.status ?? StudentMembershipStatus.ACTIVE,
             ...(studentDiscounts &&
               studentDiscounts.length > 0 && {
@@ -1261,8 +1307,9 @@ export class StudentMembershipsService {
     studentId: string,
     courseSeasonId: string,
     currentMembershipId?: string,
+    tx: Prisma.TransactionClient = this.prisma,
   ) {
-    const existingMembership = await this.prisma.studentMembership.findFirst({
+    const existingMembership = await tx.studentMembership.findFirst({
       where: {
         studentId,
         courseSeasonId,

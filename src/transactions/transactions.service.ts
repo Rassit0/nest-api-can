@@ -39,6 +39,9 @@ export const transactionSelect = {
   reference: true,
   notes: true,
   status: true,
+  balanceBefore: true,
+  balanceAfter: true,
+  reversesId: true,
   createdAt: true,
   updatedAt: true,
   financialAccount: {
@@ -497,6 +500,20 @@ export class TransactionsService {
           prisma,
         );
 
+        let balanceBefore: number | null = null;
+        let balanceAfter: number | null = null;
+
+        if (t.financialAccountId) {
+          const movement = await this.financialAccountsService.applyMovement(
+            t.financialAccountId,
+            t.amount,
+            rest.type,
+            prisma,
+          );
+          balanceBefore = movement.balanceBefore;
+          balanceAfter = movement.balanceAfter;
+        }
+
         const transaction = await prisma.transaction.create({
           data: {
             ...rest,
@@ -512,17 +529,11 @@ export class TransactionsService {
             financialAccountId: t.financialAccountId,
             reference: t.reference,
             paymentId: createdPayment?.id || null,
+            balanceBefore,
+            balanceAfter,
           },
         });
 
-        if (t.financialAccountId) {
-          await this.financialAccountsService.applyMovement(
-            t.financialAccountId,
-            t.amount,
-            rest.type,
-            prisma,
-          );
-        }
         createdTransactions.push(transaction);
       }
 
@@ -732,9 +743,44 @@ export class TransactionsService {
       this.prisma.transaction.count({ where }),
     ]);
 
-    const mappedItems = items.map((item) =>
+    const rawMapped = items.map((item) =>
       TransactionsMapper.toDomain(item as any),
     );
+
+    // Agrupar items por paymentId para la vista de frontend
+    const mappedItems: any[] = [];
+    const groups = new Map<string, any>();
+
+    for (const t of rawMapped) {
+      if (t.paymentId) {
+        if (groups.has(t.paymentId)) {
+          const group = groups.get(t.paymentId)!;
+          group.amount += t.amount;
+          group._isGrouped = true;
+          group._groupedDetails.push({
+            method: t.paymentMethod,
+            account: t.financialAccountName || 'Sin asignar',
+            amount: t.amount,
+          });
+        } else {
+          const newGroup = {
+            ...t,
+            _isGrouped: false,
+            _groupedDetails: [
+              {
+                method: t.paymentMethod,
+                account: t.financialAccountName || 'Sin asignar',
+                amount: t.amount,
+              },
+            ],
+          };
+          groups.set(t.paymentId, newGroup);
+          mappedItems.push(newGroup);
+        }
+      } else {
+        mappedItems.push(t);
+      }
+    }
 
     return createPaginationResult(mappedItems, totalItems, page, per_page);
   }
@@ -800,6 +846,30 @@ export class TransactionsService {
 
     // Usar transacción de Prisma para asegurar consistencia
     return await this.prisma.$transaction(async (prisma) => {
+      // 1. Bloquear la transacción original para evitar doble reversión concurrente
+      const lockedTx = (await prisma.$queryRaw`
+        SELECT id, status
+        FROM transactions
+        WHERE id = ${id}
+        FOR UPDATE
+      `) as { id: string; status: string }[];
+
+      if (!lockedTx || lockedTx.length === 0) {
+        throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
+      }
+
+      if (lockedTx[0].status === 'CANCELLED') {
+        throw new BadRequestException('La transacción ya se encuentra anulada');
+      }
+
+      // Verificar si ya existe una reversa
+      const existingReversal = await prisma.transaction.findFirst({
+        where: { reversesId: id },
+      });
+      if (existingReversal) {
+        throw new BadRequestException('La transacción ya ha sido reversada');
+      }
+
       // Revertir cargos
       if (transaction.payment) {
         // El Charge debe bloquearse antes de leer/calcular pendingAmount.
@@ -881,20 +951,28 @@ export class TransactionsService {
         }
       }
 
+      let balanceBefore: number | null = null;
+      let balanceAfter: number | null = null;
+
       // Revertir el saldo de la caja / banco asociada
       if (
         transaction.financialAccountId &&
         transaction.status === 'COMPLETED'
       ) {
-        await this.financialAccountsService.applyMovement(
+        const reverseType =
+          transaction.type === 'INCOME' ? 'EXPENSE' : 'INCOME';
+
+        const movement = await this.financialAccountsService.applyMovement(
           transaction.financialAccountId,
-          -Number(transaction.amount),
-          transaction.type,
+          transaction.amount,
+          reverseType,
           prisma,
         );
+        balanceBefore = movement.balanceBefore;
+        balanceAfter = movement.balanceAfter;
       }
 
-      // Anular transacción
+      // Anular transacción original
       const deletedTransaction = await prisma.transaction.update({
         where: { id },
         data: { status: 'CANCELLED' },

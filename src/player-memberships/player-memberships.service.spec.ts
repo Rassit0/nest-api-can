@@ -32,6 +32,28 @@ describe('PlayerMembershipsService - create', () => {
     prisma = module.get<PrismaService>(PrismaService);
   });
 
+  it('debe fallar si no se envía ni playerId ni personIdToCreateProfile (Ningún ID)', async () => {
+    await expect(
+      service.create({
+        teamSeasonCategoryId: 'cat-1',
+        paymentPlanId: 'plan-1',
+        startedAt: new Date(),
+      } as any),
+    ).rejects.toThrow(BadRequestException);
+  });
+
+  it('debe fallar si se envían ambos IDs simultáneamente', async () => {
+    await expect(
+      service.create({
+        teamSeasonCategoryId: 'cat-1',
+        paymentPlanId: 'plan-1',
+        playerId: 'player-1',
+        personIdToCreateProfile: 'person-1',
+        startedAt: new Date(),
+      } as any),
+    ).rejects.toThrow(BadRequestException);
+  });
+
   it('debe rechazar la creacion si la categoria esta FINISHED', async () => {
     (prisma.teamSeasonCategory.findUnique as jest.Mock).mockResolvedValue({
       id: 'cat-1',

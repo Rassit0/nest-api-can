@@ -71,7 +71,10 @@ export class MonthlyCashflowService {
         where: {
           type: 'INCOME',
           isInternalTransfer: false,
-          status: TransactionStatus.COMPLETED,
+          OR: [
+            { status: TransactionStatus.COMPLETED },
+            { status: 'CANCELLED', reversedBy: { isNot: null } },
+          ],
           transactionDate: { lt: startDate },
         },
       }),
@@ -80,7 +83,10 @@ export class MonthlyCashflowService {
         where: {
           type: 'EXPENSE',
           isInternalTransfer: false,
-          status: TransactionStatus.COMPLETED,
+          OR: [
+            { status: TransactionStatus.COMPLETED },
+            { status: 'CANCELLED', reversedBy: { isNot: null } },
+          ],
           transactionDate: { lt: startDate },
         },
       }),
@@ -93,7 +99,10 @@ export class MonthlyCashflowService {
     const transactions = await this.prisma.transaction.findMany({
       where: {
         transactionDate: { gte: startDate, lt: endDate },
-        status: TransactionStatus.COMPLETED,
+        OR: [
+          { status: TransactionStatus.COMPLETED },
+          { status: 'CANCELLED', reversedBy: { isNot: null } },
+        ],
       },
       select: {
         id: true,

@@ -235,6 +235,11 @@ export class PaymentReportService {
 
     if (!transaction) throw new NotFoundException(`Transaction with id ${transactionId} not found`);
 
+    // Si la transacción es parte de un pago múltiple/distribuido, delegamos al reporte del pago completo.
+    if (transaction.paymentId) {
+      return this.getPaymentByIdReport(transaction.paymentId, isSingle);
+    }
+
     const year = transaction.transactionDate.getFullYear();
     const actualReceiptNumber = transaction.payment?.receiptNumber || transaction.receiptNumber;
     const paddedNumber = actualReceiptNumber.toString().padStart(7, '0');
@@ -300,7 +305,12 @@ export class PaymentReportService {
       type: transaction.type,
     };
 
-    const docDefinition = transactionByIdReport({ data: data as any, isSingle });
+    // -- ANTIGUO CODIGO INDIVIDUAL (Conservado por solicitud) --
+    // const docDefinition = transactionByIdReport({ data: data as any, isSingle });
+    // -----------------------------------------------------------
+
+    // Ahora utilizamos el formato consolidado para recibos de transacción
+    const docDefinition = consolidatedReceiptReport({ data: [data] as any });
     const doc = this.printerService.createPdf(docDefinition);
     return doc;
   }

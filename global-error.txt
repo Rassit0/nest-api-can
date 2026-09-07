@@ -1,0 +1,41 @@
+PrismaClientValidationError: 
+Invalid `prisma.transaction.create()` invocation in
+D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\transactions\transactions.service.ts:940:34
+
+  937 balanceAfter = movement.balanceAfter;
+  938 
+  939 // Crear nueva transacción de reversa
+→ 940 await prisma.transaction.create({
+        data: {
+          amount: new Prisma.Decimal("200"),
+          type: "EXPENSE",
+          status: "COMPLETED",
+          transactionDate: new Date("2026-09-07T13:31:21.245Z"),
+          paymentMethod: "QR",
+          financialAccountId: "d7e173bd-f5e3-4dbf-9245-57835d0c3fef",
+          description: "Reversión de tx: 31cba4b7-8dea-4018-a602-ff22837d375c",
+          notes: null,
+          reference: null,
+          payerPersonId: null,
+          thirdPartyId: null,
+          isReconciled: false,
+          reversesId: "31cba4b7-8dea-4018-a602-ff22837d375c",
+          balanceBefore: 12627.42,
+          balanceAfter: 12427.42,
+          createdById: "ba778394-85b7-4689-81c7-61cfcc7a7819",
+          updatedById: "ba778394-85b7-4689-81c7-61cfcc7a7819",
+      +   receiptNumber: Int
+        }
+      })
+
+Argument `receiptNumber` is missing.
+    at throwValidationException (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\core\errorRendering\throwValidationException.ts:45:9)
+    at ei.handleRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:202:7)
+    at ei.handleAndLogRequestError (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at ei.request (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at async Array.create (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\prisma.service.ts:76:28)
+    at async a (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:833:24)
+    at async <anonymous> (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\transactions\transactions.service.ts:940:9)
+    at async Proxy._transactionWithCallback (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:722:18)
+    at async TransactionsService.remove (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\transactions\transactions.service.ts:813:12)
+    at async TransactionsController.remove (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\transactions\transactions.controller.ts:145:12)

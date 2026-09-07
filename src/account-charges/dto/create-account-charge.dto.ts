@@ -9,16 +9,24 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AccountReferenceType, ChargeDirection, PaymentMethod } from 'src/generated/prisma/client';
-import { ValidateNested } from 'class-validator';
+import { ValidateNested, ValidateIf } from 'class-validator';
+import { SplitTransactionDto } from 'src/transactions/dto/create-transaction.dto';
 
 export class ImmediatePaymentDto {
+  @ValidateIf((o) => !o.splitTransactions || o.splitTransactions.length === 0)
   @IsEnum(PaymentMethod)
-  @IsNotEmpty()
-  paymentMethod: PaymentMethod;
+  @IsNotEmpty({ message: 'El método de pago es obligatorio si no hay splitTransactions' })
+  paymentMethod?: PaymentMethod;
 
+  @ValidateIf((o) => !o.splitTransactions || o.splitTransactions.length === 0)
   @IsString()
-  @IsNotEmpty()
-  financialAccountId: string;
+  @IsNotEmpty({ message: 'La cuenta financiera es obligatoria si no hay splitTransactions' })
+  financialAccountId?: string;
+
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => SplitTransactionDto)
+  splitTransactions?: SplitTransactionDto[];
 
   @IsOptional()
   @IsUUID('4', { each: true })

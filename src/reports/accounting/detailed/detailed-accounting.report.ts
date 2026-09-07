@@ -44,33 +44,23 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
   }
 
   private async getAccountingTransactions(start: Date, end: Date) {
-    return this.prisma.transaction.findMany({
-      where: {
-        transactionDate: { gte: start, lte: end },
-        isInternalTransfer: false,
-        status: 'COMPLETED',
-      },
+    const paymentInclude = {
       include: {
-        financialAccount: { select: { name: true } },
-        payment: {
+        charge: {
           include: {
-            charge: {
+            accountCharge: {
+              include: { category: { include: { parent: true } } },
+            },
+            studentCharges: {
               include: {
-                accountCharge: {
-                  include: { category: { include: { parent: true } } },
-                },
-                studentCharges: {
+                studentMembership: {
                   include: {
-                    studentMembership: {
+                    courseSeason: {
                       include: {
-                        courseSeason: {
+                        course: {
                           include: {
-                            course: {
-                              include: {
-                                school: {
-                                  include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
-                                },
-                              },
+                            school: {
+                              include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
                             },
                           },
                         },
@@ -78,18 +68,18 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                     },
                   },
                 },
-                membershipCharges: {
+              },
+            },
+            membershipCharges: {
+              include: {
+                playerMembership: {
                   include: {
-                    playerMembership: {
+                    teamSeason: {
                       include: {
-                        teamSeason: {
+                        team: {
                           include: {
-                            team: {
-                              include: {
-                                club: {
-                                  include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
-                                },
-                              },
+                            club: {
+                              include: { defaultAccountCategory: { include: { parent: true } }, discipline: true },
                             },
                           },
                         },
@@ -100,6 +90,24 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
               },
             },
           },
+        },
+      },
+    };
+
+    return this.prisma.transaction.findMany({
+      where: {
+        transactionDate: { gte: start, lte: end },
+        isInternalTransfer: false,
+        OR: [
+          { status: 'COMPLETED' },
+          { status: 'CANCELLED', reversedBy: { isNot: null } },
+        ],
+      },
+      include: {
+        financialAccount: { select: { name: true } },
+        payment: paymentInclude,
+        reverses: {
+          include: { payment: paymentInclude },
         },
       },
       orderBy: {
@@ -178,24 +186,29 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       let series = t.receiptSeries || 'GEN';
       let number = t.receiptNumber || 0;
 
-      if (t.payment) {
-        docId = t.payment.id;
-        series = t.payment.receiptSeries || 'GEN';
-        number = t.payment.receiptNumber || 0;
+      let payment = t.payment;
+      if (t.reversesId && t.reverses?.payment) {
+        payment = t.reverses.payment;
+      }
 
-        const cat = resolveEffectiveCategoryFromPayload(t.payment.charge);
+      if (payment) {
+        docId = t.reversesId ? t.id : payment.id;
+        series = payment.receiptSeries || 'GEN';
+        number = payment.receiptNumber || 0;
+
+        const cat = resolveEffectiveCategoryFromPayload(payment.charge);
           
         let entityName: string | undefined;
         let entityId: string | undefined;
         let disciplineName: string | undefined;
 
-        if (t.payment.charge?.studentCharges?.[0]?.studentMembership?.courseSeason?.course?.school) {
-          const school = t.payment.charge.studentCharges[0].studentMembership.courseSeason.course.school;
+        if (payment.charge?.studentCharges?.[0]?.studentMembership?.courseSeason?.course?.school) {
+          const school = payment.charge.studentCharges[0].studentMembership.courseSeason.course.school;
           entityName = school.name;
           entityId = school.id;
           disciplineName = school.discipline?.name;
-        } else if (t.payment.charge?.membershipCharges?.[0]?.playerMembership?.teamSeason?.team?.club) {
-          const club = t.payment.charge.membershipCharges[0].playerMembership.teamSeason.team.club;
+        } else if (payment.charge?.membershipCharges?.[0]?.playerMembership?.teamSeason?.team?.club) {
+          const club = payment.charge.membershipCharges[0].playerMembership.teamSeason.team.club;
           entityName = club.name;
           entityId = club.id;
           disciplineName = club.discipline?.name;

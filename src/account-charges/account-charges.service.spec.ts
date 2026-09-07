@@ -182,7 +182,6 @@ describe('AccountChargesService', () => {
           payerPersonId: 'payer-1',
         }),
         expect.anything(),
-        expect.anything(),
       );
     });
 
@@ -223,7 +222,6 @@ describe('AccountChargesService', () => {
         expect.objectContaining({
           payerPersonId: 'payer-1',
         }),
-        expect.anything(),
         expect.anything(),
       );
     });

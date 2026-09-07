@@ -20,7 +20,9 @@ describe('StudentMembershipsService', () => {
         findUnique: jest.fn(),
         update: jest.fn().mockImplementation((data) => data.data),
         findMany: jest.fn(),
+        findFirst: jest.fn().mockResolvedValue(null),
         count: jest.fn(),
+        create: jest.fn(),
       },
       courseSeason: {
         findUnique: jest.fn(),
@@ -34,6 +36,16 @@ describe('StudentMembershipsService', () => {
       },
       studentCharge: {
         findMany: jest.fn().mockResolvedValue([]),
+      },
+      student: {
+        findUnique: jest.fn(),
+        create: jest.fn(),
+      },
+      person: {
+        findUnique: jest.fn(),
+      },
+      paymentPlan: {
+        findUnique: jest.fn().mockResolvedValue({ id: 'plan-id', courseSeasonId: 'season-id', active: true }),
       },
     };
 
@@ -52,6 +64,77 @@ describe('StudentMembershipsService', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe('create', () => {
+    const defaultCreateDto = {
+      courseSeasonId: 'season-id',
+      courseSeasonShiftId: 'shift-id',
+      paymentPlanId: 'plan-id',
+      startedAt: new Date('2026-08-01') as any, // Cast to any or just pass the date string depending on the validation, wait, the DTO says Type(() => Date) so it's a Date.
+      isMigrated: false,
+    };
+
+    it('debe fallar si no se envía ni studentId ni personIdToCreateProfile (Ningún ID)', async () => {
+      await expect(service.create(defaultCreateDto)).rejects.toThrow(BadRequestException);
+    });
+
+    it('debe fallar si se envían ambos IDs simultáneamente', async () => {
+      await expect(service.create({ ...defaultCreateDto, studentId: 'student-id', personIdToCreateProfile: 'person-id' })).rejects.toThrow(BadRequestException);
+    });
+
+    it('debe crear un estudiante y fallar si personIdToCreateProfile falla en validación (Rollback test simulated)', async () => {
+      prismaMock.courseSeason.findUnique.mockResolvedValue({ id: 'season-id', course: { billingConfig: {} }, season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') }, maxMembers: 10 });
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({ 
+        id: 'shift-id', 
+        courseSeasonId: 'season-id',
+        gender: 'MIXED',
+        shift: { gender: 'MIXED' },
+        courseSeason: { 
+          id: 'season-id', 
+          course: { billingConfig: {} }, 
+          season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') }, 
+          status: 'ACTIVE' 
+        }
+      });
+      prismaMock.person.findUnique.mockResolvedValue({ id: 'person-id' });
+      prismaMock.student.findUnique.mockResolvedValue(null);
+      prismaMock.student.create.mockResolvedValue({ id: 'new-student-id' });
+
+      // Simular un fallo en capacity validation para forzar throw dentro de transaction
+      prismaMock.$queryRaw = jest.fn();
+      prismaMock.studentMembership.findMany.mockResolvedValue([]); // not duplicate
+      prismaMock.studentMembership.create = jest.fn().mockRejectedValue(new BadRequestException('Error test rollback'));
+
+      await expect(service.create({ ...defaultCreateDto, personIdToCreateProfile: 'person-id' })).rejects.toThrow(BadRequestException);
+      expect(prismaMock.student.create).toHaveBeenCalledWith({ data: { personId: 'person-id', isActive: true }, include: { person: true } });
+    });
+
+    it('debe continuar con studentId existente (Profile existing)', async () => {
+      prismaMock.courseSeason.findUnique.mockResolvedValue({ id: 'season-id', course: { billingConfig: {} }, season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') }, maxMembers: 10 });
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({ 
+        id: 'shift-id', 
+        courseSeasonId: 'season-id',
+        gender: 'MIXED',
+        shift: { gender: 'MIXED' },
+        courseSeason: { 
+          id: 'season-id', 
+          course: { billingConfig: {} }, 
+          season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') }, 
+          status: 'ACTIVE' 
+        }
+      });
+      prismaMock.student.findUnique.mockResolvedValue({ id: 'existing-student-id', isActive: true, person: { gender: 'MIXED' } });
+      prismaMock.$queryRaw = jest.fn();
+      prismaMock.studentMembership.findMany.mockResolvedValue([]);
+      prismaMock.studentMembership.create = jest.fn().mockResolvedValue({ id: 'mem-1' });
+      studentChargesServiceMock.generateChargesForNewMembership = jest.fn();
+
+      await service.create({ ...defaultCreateDto, studentId: 'existing-student-id' });
+      
+      expect(prismaMock.student.create).not.toHaveBeenCalled();
+      expect(prismaMock.studentMembership.create).toHaveBeenCalled();
+    });
   });
 
   describe('transferShift', () => {

@@ -224,11 +224,12 @@ export class MembershipChargesService {
       chargeRegistrationOnMigration?: boolean;
       chargeCurrentMonthOnMigration?: boolean;
     },
+    tx?: Prisma.TransactionClient,
   ) {
     const membership =
-      await this.membershipRepo.getMembershipById(membershipId);
-    if (!membership) return;
-    if (!membership.teamSeason.billingConfig?.isEngineActive) return;
+      await this.membershipRepo.getMembershipById(membershipId, tx);
+    if (!membership) return [];
+    if (!membership.teamSeason.billingConfig?.isEngineActive) return [];
 
     const generationMembership = {
       ...membership,
@@ -243,16 +244,19 @@ export class MembershipChargesService {
     const evaluationDate = DateUtils.getEndOfUTCDay(new Date());
 
     try {
-      await this.prisma.$transaction(async (tx) => {
-        await this.generationService.ensureMembershipCharges(
-          tx,
+      const execute = async (t: Prisma.TransactionClient) => {
+        return await this.generationService.ensureMembershipCharges(
+          t,
           generationMembership,
           evaluationDate,
         );
-      });
+      };
+
+      const result = tx ? await execute(tx) : await this.prisma.$transaction(execute);
       this.logger.log(
         `Cargos generados/actualizados para nueva membresía ${membershipId}`,
       );
+      return result;
     } catch (error) {
       if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
         this.logger.warn(
@@ -263,7 +267,9 @@ export class MembershipChargesService {
           `Error generando cargos para nueva membresía ID ${membershipId}:`,
           error,
         );
+        throw error;
       }
+      return [];
     }
   }
 

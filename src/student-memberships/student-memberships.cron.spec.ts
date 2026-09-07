@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StudentMembershipsCron } from './student-memberships.cron';
 import { PrismaService } from 'src/prisma.service';
 import { StudentMembershipStatus, CycleEnrollmentStatus, StudentMembershipSuspensionReason } from 'src/generated/prisma/client';
+import { ChargesService } from 'src/charges/charges.service';
+import { StudentMembershipsService } from './student-memberships.service';
 
 describe('StudentMembershipsCron', () => {
   let cron: StudentMembershipsCron;
@@ -22,6 +24,14 @@ describe('StudentMembershipsCron', () => {
         {
           provide: PrismaService,
           useValue: prisma,
+        },
+        {
+          provide: ChargesService,
+          useValue: {},
+        },
+        {
+          provide: StudentMembershipsService,
+          useValue: {},
         },
       ],
     }).compile();

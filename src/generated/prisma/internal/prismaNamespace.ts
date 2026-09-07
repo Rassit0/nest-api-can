@@ -6024,7 +6024,10 @@ export const TransactionScalarFieldEnum = {
   referenceGroupId: 'referenceGroupId',
   isInternalTransfer: 'isInternalTransfer',
   thirdPartyId: 'thirdPartyId',
-  paymentId: 'paymentId'
+  paymentId: 'paymentId',
+  reversesId: 'reversesId',
+  balanceBefore: 'balanceBefore',
+  balanceAfter: 'balanceAfter'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]

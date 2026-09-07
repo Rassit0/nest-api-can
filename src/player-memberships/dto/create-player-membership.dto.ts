@@ -14,6 +14,7 @@ import {
   IsEnum,
   IsString,
   Matches,
+  ValidateIf,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -80,11 +81,28 @@ export class MembershipDiscountDto {
 }
 
 export class CreatePlayerMembershipDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
+    description: 'ID de la persona si se requiere crear el perfil de jugador on-the-fly'
+  })
+  @ValidateIf((o) => !o.playerId)
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'personIdToCreateProfile',
+    }),
+  })
+  @Exists('person', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'personIdToCreateProfile',
+    }),
+  })
+  personIdToCreateProfile?: string;
+
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description:
-      'ID del jugador al que pertenece esta membresía de jugador a equipo',
+      'ID del jugador al que pertenece esta membresía de jugador a equipo. Requerido si no se envía personIdToCreateProfile',
   })
+  @ValidateIf((o) => !o.personIdToCreateProfile)
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
       constraint1: 'playerId',
@@ -95,7 +113,7 @@ export class CreatePlayerMembershipDto {
       constraint1: 'playerId',
     }),
   })
-  playerId: string;
+  playerId?: string;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

@@ -40,23 +40,38 @@ export class InternalTransfersService {
 
       const transactionDate = date ? new Date(date) : new Date();
 
-      // 2. Crear Transacción de Egreso (Salida)
+      // 2. Aplicar movimientos a los saldos primero (obteniendo lock determinista según orden)
+      const isSourceFirst = sourceAccountId.localeCompare(destinationAccountId) < 0;
+      
+      let sourceMov, destMov;
+      
+      if (isSourceFirst) {
+        sourceMov = await this.financialAccountsService.applyMovement(sourceAccountId, amount, TransactionType.EXPENSE, tx);
+        destMov = await this.financialAccountsService.applyMovement(destinationAccountId, amount, TransactionType.INCOME, tx);
+      } else {
+        destMov = await this.financialAccountsService.applyMovement(destinationAccountId, amount, TransactionType.INCOME, tx);
+        sourceMov = await this.financialAccountsService.applyMovement(sourceAccountId, amount, TransactionType.EXPENSE, tx);
+      }
+
+      // 3. Crear Transacción de Egreso (Salida)
       const sourceTransaction = await tx.transaction.create({
         data: {
           financialAccountId: sourceAccountId,
           amount,
           type: TransactionType.EXPENSE,
-          description: description || `Transferencia hacia ${destAccount.name}`,
+          description: description || `Transferencia a ${destAccount.name}`,
           reference,
           transactionDate,
           paymentMethod: 'TRANSFER',
           isInternalTransfer: true,
           receiptSeries: 'TR',
           receiptNumber: Math.floor(Math.random() * 1000000), // Podríamos usar una secuencia real
+          balanceBefore: sourceMov.balanceBefore,
+          balanceAfter: sourceMov.balanceAfter,
         },
       });
 
-      // 3. Crear Transacción de Ingreso (Entrada)
+      // 4. Crear Transacción de Ingreso (Entrada)
       const destTransaction = await tx.transaction.create({
         data: {
           financialAccountId: destinationAccountId,
@@ -69,10 +84,12 @@ export class InternalTransfersService {
           isInternalTransfer: true,
           receiptSeries: 'TR',
           receiptNumber: Math.floor(Math.random() * 1000000),
+          balanceBefore: destMov.balanceBefore,
+          balanceAfter: destMov.balanceAfter,
         },
       });
 
-      // 4. Crear la Entidad de Transferencia
+      // 5. Crear la Entidad de Transferencia
       const transfer = await tx.internalTransfer.create({
         data: {
           amount,
@@ -84,10 +101,6 @@ export class InternalTransfersService {
           status: TransferStatus.COMPLETED, // Podría ser PENDING en el futuro
         },
       });
-
-      // 5. Aplicar los movimientos a los saldos
-      await this.financialAccountsService.applyMovement(sourceAccountId, amount, TransactionType.EXPENSE, tx);
-      await this.financialAccountsService.applyMovement(destinationAccountId, amount, TransactionType.INCOME, tx);
 
       return transfer;
     });
@@ -149,7 +162,36 @@ export class InternalTransfersService {
     }
 
     return await this.prisma.$transaction(async (tx) => {
-      // 1. Marcar transacciones como CANCELLED
+      // 0. Bloquear la transferencia para evitar cancelación concurrente
+      const lockedTransfer = (await tx.$queryRaw`
+        SELECT id, status
+        FROM internal_transfers
+        WHERE id = ${id}
+        FOR UPDATE
+      `) as { id: string; status: string }[];
+
+      if (!lockedTransfer || lockedTransfer.length === 0) {
+        throw new NotFoundException(`Transferencia con ID ${id} no encontrada`);
+      }
+
+      if (lockedTransfer[0].status === 'CANCELLED') {
+        throw new BadRequestException('Esta transferencia ya fue anulada');
+      }
+
+      // Orden determinista para locks en cuentas
+      const isSourceFirst = transfer.sourceTransaction.financialAccountId.localeCompare(transfer.destinationTransaction.financialAccountId) < 0;
+      
+      let sourceReversalMov, destReversalMov;
+      
+      if (isSourceFirst) {
+        sourceReversalMov = await this.financialAccountsService.applyMovement(transfer.sourceTransaction.financialAccountId, transfer.amount, TransactionType.INCOME, tx);
+        destReversalMov = await this.financialAccountsService.applyMovement(transfer.destinationTransaction.financialAccountId, transfer.amount, TransactionType.EXPENSE, tx);
+      } else {
+        destReversalMov = await this.financialAccountsService.applyMovement(transfer.destinationTransaction.financialAccountId, transfer.amount, TransactionType.EXPENSE, tx);
+        sourceReversalMov = await this.financialAccountsService.applyMovement(transfer.sourceTransaction.financialAccountId, transfer.amount, TransactionType.INCOME, tx);
+      }
+
+      // 1. Marcar transacciones originales como CANCELLED
       await tx.transaction.update({
         where: { id: transfer.sourceTransactionId },
         data: { status: 'CANCELLED' },
@@ -159,9 +201,38 @@ export class InternalTransfersService {
         data: { status: 'CANCELLED' },
       });
 
-      // 2. Revertir saldos (El origen era un GASTO, revertimos con -Monto. El destino era INGRESO, revertimos con -Monto)
-      await this.financialAccountsService.applyMovement(transfer.sourceTransaction.financialAccountId, -Number(transfer.amount), transfer.sourceTransaction.type, tx);
-      await this.financialAccountsService.applyMovement(transfer.destinationTransaction.financialAccountId, -Number(transfer.amount), transfer.destinationTransaction.type, tx);
+      // 2. Crear transacciones de reversa (con saldos historicos)
+      await tx.transaction.create({
+        data: {
+          amount: transfer.amount,
+          type: TransactionType.INCOME,
+          status: 'COMPLETED',
+          transactionDate: new Date(),
+          paymentMethod: transfer.sourceTransaction.paymentMethod,
+          financialAccountId: transfer.sourceTransaction.financialAccountId,
+          description: `Reversión de transferencia: ${transfer.id}`,
+          isInternalTransfer: true,
+          reversesId: transfer.sourceTransaction.id,
+          balanceBefore: sourceReversalMov.balanceBefore,
+          balanceAfter: sourceReversalMov.balanceAfter,
+        } as Prisma.TransactionUncheckedCreateInput,
+      });
+
+      await tx.transaction.create({
+        data: {
+          amount: transfer.amount,
+          type: TransactionType.EXPENSE,
+          status: 'COMPLETED',
+          transactionDate: new Date(),
+          paymentMethod: transfer.destinationTransaction.paymentMethod,
+          financialAccountId: transfer.destinationTransaction.financialAccountId,
+          description: `Reversión de transferencia: ${transfer.id}`,
+          isInternalTransfer: true,
+          reversesId: transfer.destinationTransaction.id,
+          balanceBefore: destReversalMov.balanceBefore,
+          balanceAfter: destReversalMov.balanceAfter,
+        } as Prisma.TransactionUncheckedCreateInput,
+      });
 
       // 3. Marcar transferencia como CANCELLED
       return await tx.internalTransfer.update({

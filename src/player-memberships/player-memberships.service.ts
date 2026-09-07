@@ -178,6 +178,17 @@ export class PlayerMembershipsService {
   ) {}
 
   async create(createDto: CreatePlayerMembershipDto) {
+    if (!createDto.playerId && !createDto.personIdToCreateProfile) {
+      throw new BadRequestException(
+        'Se debe proveer playerId o personIdToCreateProfile',
+      );
+    }
+    if (createDto.playerId && createDto.personIdToCreateProfile) {
+      throw new BadRequestException(
+        'No se puede enviar playerId y personIdToCreateProfile simultáneamente',
+      );
+    }
+
     const offering = await this.getTeamMembershipOffering(
       createDto.teamSeasonCategoryId,
     );
@@ -187,8 +198,6 @@ export class PlayerMembershipsService {
       offering.teamSeasonId,
     );
 
-    const player = await this.getPlayer(createDto.playerId);
-
     this.validateMembershipStartDate(
       new Date(createDto.startedAt),
       offering.teamSeason.season.startDate,
@@ -197,71 +206,124 @@ export class PlayerMembershipsService {
 
     await this.validateOfferingCapacity(offering.id, offering.maxMembers);
 
-    await this.validateDuplicateMembership(
-      createDto.playerId,
-      offering.teamSeasonId,
-    );
-
-    this.validatePlayerEligibility(player, offering);
-
-    if (
-      createDto.membershipDiscounts &&
-      createDto.membershipDiscounts.length > 0
-    ) {
-      this.validateDiscountDates(
-        createDto.membershipDiscounts,
-        offering.teamSeason.season.startDate,
-        offering.teamSeason.season.endDate,
-      );
-    }
-
     const {
       membershipDiscounts,
       chargeRegistrationOnMigration,
       chargeCurrentMonthOnMigration,
+      personIdToCreateProfile,
+      playerId,
       ...createData
     } = createDto;
 
-    const membership = await this.prisma.playerMembership.create({
-      data: {
-        ...createData,
-        teamSeasonId: offering.teamSeasonId,
-        ...(membershipDiscounts &&
-          membershipDiscounts.length > 0 && {
-            membershipDiscounts: {
-              create: membershipDiscounts.map((d) => ({
-                ...d,
-                startDate: new Date(d.startDate),
-                endDate: d.endDate ? new Date(d.endDate) : null,
-              })),
+    return await this.prisma.$transaction(
+      async (tx) => {
+        let player;
+        let finalPlayerId = playerId;
+
+        if (personIdToCreateProfile) {
+          const person = await tx.person.findUnique({
+            where: { id: personIdToCreateProfile },
+          });
+          if (!person) {
+            throw new NotFoundException('Persona no encontrada');
+          }
+
+          const existingPlayer = await tx.player.findUnique({
+            where: { personId: personIdToCreateProfile },
+          });
+          if (existingPlayer) {
+            throw new BadRequestException('Ya existe un registro con los datos proporcionados');
+          }
+
+          player = await tx.player.create({
+            data: { personId: personIdToCreateProfile, isActive: true },
+            include: { person: true },
+          });
+          finalPlayerId = player.id;
+        } else {
+          player = await tx.player.findUnique({
+            where: { id: finalPlayerId },
+            include: { person: true },
+          });
+          if (!player) {
+            throw new NotFoundException(`Jugador con id ${finalPlayerId} no encontrado`);
+          }
+        }
+
+        await this.validateDuplicateMembership(
+          finalPlayerId,
+          offering.teamSeasonId,
+          undefined,
+          tx,
+        );
+
+        this.validatePlayerEligibility(player as any, offering);
+
+        if (
+          membershipDiscounts &&
+          membershipDiscounts.length > 0
+        ) {
+          this.validateDiscountDates(
+            membershipDiscounts,
+            offering.teamSeason.season.startDate,
+            offering.teamSeason.season.endDate,
+          );
+        }
+
+        // Adquirir lock pesimista sobre TeamSeasonCategory tempranamente para serializar
+        // la concurrencia y evitar FK deadlocks al insertar PlayerMembership.
+        await tx.$queryRaw`
+        SELECT 1 
+        FROM team_season_categories 
+        WHERE id = ${createDto.teamSeasonCategoryId} 
+        FOR UPDATE
+      `;
+
+        const membership = await tx.playerMembership.create({
+          data: {
+            ...createData,
+            playerId: finalPlayerId,
+            teamSeasonId: offering.teamSeasonId,
+            ...(membershipDiscounts &&
+              membershipDiscounts.length > 0 && {
+                membershipDiscounts: {
+                  create: membershipDiscounts.map((d) => ({
+                    ...d,
+                    startDate: new Date(d.startDate),
+                    endDate: d.endDate ? new Date(d.endDate) : null,
+                  })),
+                },
+              }),
+            histories: {
+              create: {
+                previousStatus: null,
+                newStatus:
+                  createData.status ?? PlayerMembershipStatus.PENDING_ACTIVE,
+                reason: createData.notes ?? 'Creación de membresía',
+              },
             },
-          }),
-        histories: {
-          create: {
-            previousStatus: null,
-            newStatus:
-              createData.status ?? PlayerMembershipStatus.PENDING_ACTIVE,
-            reason: createData.notes ?? 'Creación de membresía',
           },
-        },
-      },
-      select: playerMembershipSelect,
-    });
+          select: playerMembershipSelect,
+        });
 
-    // Generar cargos inmediatamente después de crear la membresía
-    const generatedChargeIds = await this.membershipChargesService.generateChargesForNewMembership(
-      membership.id,
-      {
-        chargeRegistrationOnMigration: createDto.chargeRegistrationOnMigration,
-        chargeCurrentMonthOnMigration: createDto.chargeCurrentMonthOnMigration,
+        // Generar cargos inmediatamente después de crear la membresía
+        const generatedChargeIds = await this.membershipChargesService.generateChargesForNewMembership(
+          membership.id,
+          {
+            chargeRegistrationOnMigration: createDto.chargeRegistrationOnMigration,
+            chargeCurrentMonthOnMigration: createDto.chargeCurrentMonthOnMigration,
+          },
+          tx,
+        );
+
+        return {
+          message: 'Membresía creada exitosamente',
+          data: mapMembershipWithTotal(membership),
+          generatedChargeIds,
+        };
       },
+      { timeout: 15000 },
     );
-
-    return {
-      message: 'Membresía creada exitosamente',
-      data: mapMembershipWithTotal(membership),
-      generatedChargeIds,
-    };
   }
 
   private calculateAge(birthDate: Date, referenceDate: Date): number {
@@ -1023,8 +1085,9 @@ export class PlayerMembershipsService {
     playerId: string,
     teamSeasonId: string,
     currentMembershipId?: string,
+    tx: Prisma.TransactionClient = this.prisma,
   ) {
-    const existingMembership = await this.prisma.playerMembership.findFirst({
+    const existingMembership = await tx.playerMembership.findFirst({
       where: {
         playerId,
         teamSeasonId,

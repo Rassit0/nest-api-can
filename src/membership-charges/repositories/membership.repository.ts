@@ -34,8 +34,9 @@ export class MembershipRepository {
 
   async getMembershipById(
     id: string,
+    tx: Prisma.TransactionClient = this.prisma,
   ): Promise<PlayerMembershipWithRelations | null> {
-    return this.prisma.playerMembership.findUnique({
+    return tx.playerMembership.findUnique({
       where: { id },
       include: playerMembershipInclude,
     });

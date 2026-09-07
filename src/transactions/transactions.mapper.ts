@@ -18,6 +18,9 @@ export interface MappedTransaction {
   receiptSeries: string;
   receiptNumber: number;
   reference: string | null;
+  reversesId: string | null;
+  balanceBefore: number | null;
+  balanceAfter: number | null;
   financialAccountName: string | null;
   thirdParty: {
     id: string;
@@ -112,6 +115,9 @@ export class TransactionsMapper {
         receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,
         receiptNumber: transaction.payment?.receiptNumber || transaction.receiptNumber,
         reference: transaction.reference,
+        reversesId: transaction.reversesId || null,
+        balanceBefore: transaction.balanceBefore != null ? Number(transaction.balanceBefore) : null,
+        balanceAfter: transaction.balanceAfter != null ? Number(transaction.balanceAfter) : null,
         financialAccountName: (transaction as any).financialAccount?.name || null,
         thirdParty: mappedThirdParty,
         payerPerson: (transaction as any).payerPerson || null,

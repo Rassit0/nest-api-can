@@ -18,29 +18,62 @@ export class FinancialAccountsService {
     amount: number | Prisma.Decimal,
     type: TransactionType,
     tx: Prisma.TransactionClient,
-  ): Promise<FinancialAccount> {
-    const account = await tx.financialAccount.findUnique({
-      where: { id: financialAccountId },
-    });
+  ): Promise<{ account: FinancialAccount; balanceBefore: number; balanceAfter: number }> {
+    // 1. SELECT FOR UPDATE para bloquear la fila de la cuenta
+    const lockedAccounts = (await tx.$queryRaw`
+      SELECT id, cached_balance AS "cachedBalance", is_active AS "isActive"
+      FROM financial_accounts
+      WHERE id = ${financialAccountId}
+      FOR UPDATE
+    `) as { id: string; cachedBalance: Prisma.Decimal; isActive: boolean }[];
 
-    if (!account) {
+    if (!lockedAccounts || lockedAccounts.length === 0) {
       throw new NotFoundException(`Cuenta financiera con ID ${financialAccountId} no encontrada`);
     }
 
+    const account = lockedAccounts[0];
+
     if (!account.isActive) {
-      throw new Error(`La cuenta financiera ${account.name} se encuentra inactiva.`);
+      throw new Error(`La cuenta financiera se encuentra inactiva.`);
     }
 
     const numericAmount = typeof amount === 'number' ? amount : amount.toNumber();
+    
+    // Obtener todas las cuentas activas para calcular el saldo global (Dashboard)
+    const allActiveAccounts = await tx.financialAccount.findMany({
+      where: { isActive: true },
+      select: { cachedBalance: true }
+    });
+    
+    let globalBalanceBefore = 0;
+    for (const acc of allActiveAccounts) {
+      globalBalanceBefore += Number(acc.cachedBalance || 0);
+    }
+    
+    const globalBalanceAfter =
+      type === TransactionType.INCOME
+        ? globalBalanceBefore + numericAmount
+        : globalBalanceBefore - numericAmount;
 
-    return tx.financialAccount.update({
+    // Calcular el saldo individual para actualizar internamente
+    const individualBalanceBefore = Number(account.cachedBalance);
+    const individualBalanceAfter =
+      type === TransactionType.INCOME
+        ? individualBalanceBefore + numericAmount
+        : individualBalanceBefore - numericAmount;
+
+    const updatedAccount = await tx.financialAccount.update({
       where: { id: financialAccountId },
       data: {
-        cachedBalance: {
-          [type === TransactionType.INCOME ? 'increment' : 'decrement']: numericAmount,
-        },
+        cachedBalance: individualBalanceAfter,
       },
     });
+
+    return {
+      account: updatedAccount,
+      balanceBefore: globalBalanceBefore,
+      balanceAfter: globalBalanceAfter,
+    };
   }
 
   /**
@@ -115,6 +148,8 @@ export class FinancialAccountsService {
 
       // Si hay saldo inicial, crear el asiento de apertura
       if (initialBalance && initialBalance > 0) {
+        const movement = await this.applyMovement(account.id, initialBalance, TransactionType.INCOME, tx);
+
         await tx.transaction.create({
           data: {
             amount: initialBalance,
@@ -126,18 +161,12 @@ export class FinancialAccountsService {
             paymentMethod: 'CASH',
             receiptSeries: 'OPBAL',
             receiptNumber: Math.floor(Date.now() % 1000000000),
-            // Asumiendo que hay una descripción o similar opcional, 
-            // de lo contrario, transaction no requiere descripción en este contexto básico.
+            balanceBefore: movement.balanceBefore,
+            balanceAfter: movement.balanceAfter,
           },
         });
 
-        // Actualizar el cachedBalance con el saldo inicial
-        await tx.financialAccount.update({
-          where: { id: account.id },
-          data: { cachedBalance: initialBalance },
-        });
-        
-        account.cachedBalance = new Prisma.Decimal(initialBalance);
+        account.cachedBalance = new Prisma.Decimal(movement.balanceAfter);
       }
 
       return account;

@@ -8,6 +8,7 @@ import {
   IsString,
   IsUUID,
   IsBoolean,
+  ValidateIf,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
@@ -77,12 +78,28 @@ export class StudentDiscountDto {
   @IsString()
   reason?: string | null;
 }
-
 export class CreateStudentMembershipDto {
-  @ApiProperty({
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID del estudiante (Student)',
+  @ApiPropertyOptional({
+    description: 'ID de la persona si se requiere crear el perfil de estudiante on-the-fly'
   })
+  @ValidateIf((o) => !o.studentId)
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'personIdToCreateProfile',
+    }),
+  })
+  @Exists('person', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'personIdToCreateProfile',
+    }),
+  })
+  personIdToCreateProfile?: string;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del estudiante (Student). Requerido si no se envía personIdToCreateProfile',
+  })
+  @ValidateIf((o) => !o.personIdToCreateProfile)
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
       constraint1: 'studentId',
@@ -93,12 +110,7 @@ export class CreateStudentMembershipDto {
       constraint1: 'studentId',
     }),
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'studentId',
-    }),
-  })
-  studentId: string;
+  studentId?: string;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

@@ -104,6 +104,7 @@ export class AccountChargesService {
                 : TransactionType.EXPENSE,
             paymentMethod: immediatePayment.paymentMethod,
             financialAccountId: immediatePayment.financialAccountId,
+            splitTransactions: immediatePayment.splitTransactions,
             transactionDate: immediatePayment.transactionDate 
               ? immediatePayment.transactionDate.toISOString() 
               : new Date().toISOString(),

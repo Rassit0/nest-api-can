@@ -252,6 +252,9 @@ export class PersonsService {
                   },
                 },
               },
+              membershipCharges: {
+                include: { charge: true },
+              },
             },
             orderBy: { startedAt: 'desc' },
           })
@@ -278,6 +281,7 @@ export class PersonsService {
                   shift: true,
                 },
               },
+              cycleEnrollments: true,
             },
             orderBy: { startedAt: 'desc' },
           })
@@ -377,6 +381,22 @@ export class PersonsService {
           teamName: pm.teamSeasonCategories.teamSeason.team.name,
           status: pm.status,
           startedAt: pm.startedAt,
+          totalPendingAmount: Number(
+            (pm.membershipCharges?.reduce(
+              (sum, current) => sum + Number(current.charge.pendingAmount),
+              0,
+            ) || 0).toFixed(2)
+          ),
+          totalPaidAmount: Number(
+            (pm.membershipCharges?.reduce(
+              (sum, current) =>
+                sum +
+                (Number(current.charge.amount) +
+                  Number(current.charge.adjustmentAmount || 0) -
+                  Number(current.charge.pendingAmount)),
+              0,
+            ) || 0).toFixed(2)
+          ),
         })),
         studentMemberships: studentMemberships.map((sm) => {
           return {
@@ -388,6 +408,7 @@ export class PersonsService {
             shiftName: sm.courseSeasonShift?.shift?.name ?? null,
             shiftStartTime: null,
             shiftEndTime: null,
+            cycleEnrollments: sm.cycleEnrollments,
           };
         }),
         pendingCharges: charges.map((charge) => {
