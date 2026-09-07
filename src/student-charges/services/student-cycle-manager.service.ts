@@ -8,6 +8,7 @@ import {
   calculateCycleFeeFactor,
   MILLISECONDS_IN_DAY,
   buildCycleDescription,
+  getStudentContext,
 } from '../student-billing.utils';
 import {
   calculateOnDemandCycleFee,
@@ -116,11 +117,11 @@ export class StudentCycleManagerService {
         baseAmount = options.overrideChargeAmount;
         adjustmentAmount = 0;
         adjustmentReason = '';
-        description = buildCycleDescription(
+        description = `${getStudentContext(membership)} ${buildCycleDescription(
           currentCycle.cycleStartDate,
           currentCycle.cycleEndDate,
           options.billingFrequency,
-        );
+        )}`.trim();
       } else if (options.isSeasonFeeOnly) {
         const singlePaymentBaseAmount = Number(
           membership.courseSeason.billingConfig?.seasonFee || 0,
@@ -153,11 +154,11 @@ export class StudentCycleManagerService {
         baseAmount = calc.baseAmount;
         adjustmentAmount = calc.adjustmentAmount;
         adjustmentReason = calc.appliedDiscounts?.map((d) => d.reason).filter(Boolean).join(', ') || '';
-        description = buildCycleDescription(
+        description = `${getStudentContext(membership)} ${buildCycleDescription(
           currentCycle.cycleStartDate,
           currentCycle.cycleEndDate,
           options.billingFrequency,
-        );
+        )}`.trim();
 
         if (feeFactor === 0.5) {
           description += ` — Inscripción pasada la mitad del ciclo (50%)`;

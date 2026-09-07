@@ -82,6 +82,9 @@ export function simulateAllCycles(
       billingCycle,
     );
 
+    const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
+    description = `[${teamContext}] ${description}`;
+
     if (
       isFirstCycle &&
       nextDueDate &&

@@ -5,7 +5,7 @@ import {
   calculateSinglePaymentFee,
   calculateOnDemandCycleFee,
 } from '../student-financial.calculator';
-import { formatDiscountsDescription, getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions } from '../student-billing.utils';
+import { formatDiscountsDescription, getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions, getStudentContext } from '../student-billing.utils';
 import { DateUtils } from 'src/utils/date.utils';
 import {
   TypeMembershipCharge,
@@ -115,11 +115,11 @@ export class StudentPreviewService {
                // Si prorrateó por entrar tarde y no está en la configuración permitida
                // (Esta regla puede refinarse, pero por ahora mostramos lo calculado)
 
-               let description = buildCycleDescription(
+               let description = `${getStudentContext(membership)} ${buildCycleDescription(
                   currentCycle.cycleStartDate,
                   currentCycle.cycleEndDate,
                   billingFrequency
-               );
+               )}`.trim();
                
                if (feeFactor === 0.5) {
                  description += ` — Inscripción pasada la mitad del ciclo (50%)`;
@@ -133,7 +133,7 @@ export class StudentPreviewService {
                     PreviewChargeFactory.buildRecurringCharge(
                       0,
                       0,
-                      buildCycleDescription(currentCycle.cycleStartDate, currentCycle.cycleEndDate, billingFrequency) + ' — Sin cobro / Exonerado',
+                      `${getStudentContext(membership)} ${buildCycleDescription(currentCycle.cycleStartDate, currentCycle.cycleEndDate, billingFrequency)} — Sin cobro / Exonerado`.trim(),
                       0,
                       0,
                       currentCycle.cycleStartDate,

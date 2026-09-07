@@ -39,8 +39,10 @@ export class MembershipRegularizationService {
             season: true,
             billingConfig: true,
             teamSeasonPauses: true,
+            team: { select: { name: true } },
           },
         },
+        teamSeasonCategories: { include: { category: { select: { name: true } } } },
         player: { select: { personId: true } },
       },
     });
@@ -112,8 +114,10 @@ export class MembershipRegularizationService {
             season: true,
             billingConfig: true,
             teamSeasonPauses: true,
+            team: { select: { name: true } },
           },
         },
+        teamSeasonCategories: { include: { category: { select: { name: true } } } },
         player: { select: { personId: true } },
       },
     });

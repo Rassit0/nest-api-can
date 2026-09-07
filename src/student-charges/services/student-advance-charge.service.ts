@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { StudentMembershipRepository } from '../repositories/student-membership.repository';
 import { StudentCourseSeasonValidator } from '../validators/student-course-season.validator';
 import { PrismaErrorUtils } from 'src/utils/prisma-error.util';
-import { getAbsoluteSeasonCycles, findCycleContainingDate, MILLISECONDS_IN_DAY, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, buildCycleDescription } from '../student-billing.utils';
+import { getAbsoluteSeasonCycles, findCycleContainingDate, MILLISECONDS_IN_DAY, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, calculateCycleFeeFactor, buildCycleDescription, getStudentContext } from '../student-billing.utils';
 import { calculateOnDemandCycleFee } from '../student-financial.calculator';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 import { TypeMembershipCharge, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
@@ -180,11 +180,11 @@ export class StudentAdvanceChargeService {
       totalDiscounts += cycleFee.adjustmentAmount;
       total += cycleFee.netAmount;
 
-      let description = buildCycleDescription(
-         cycle.cycleStartDate,
-         cycle.cycleEndDate,
-         membership.courseSeason.billingConfig.billingFrequency
-      );
+      let description = `${getStudentContext(membership)} ${buildCycleDescription(
+        cycle.cycleStartDate,
+        cycle.cycleEndDate,
+        membership.courseSeason.billingConfig.billingFrequency,
+      )}`.trim();
       if (feeFactor === 0.5) {
         description += ` — Inscripción pasada la mitad del ciclo (50%)`;
       }

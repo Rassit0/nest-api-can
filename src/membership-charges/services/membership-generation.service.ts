@@ -61,8 +61,9 @@ export class MembershipGenerationService {
       calculateRegistrationFee(membership);
     if (baseAmount <= 0) return null;
 
+    const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
     const description =
-      'Inscripción' + formatDiscountsDescription(appliedDiscounts);
+      `[${teamContext}] Inscripción` + formatDiscountsDescription(appliedDiscounts);
     const charge = await tx.charge.create({
       data: MembershipChargeFactory.buildRegistrationChargePayload(
         membership.id,
@@ -223,12 +224,14 @@ export class MembershipGenerationService {
         singlePaymentDiscountPercent,
       );
       if (singlePayment.hasSinglePaymentAmount) {
+        const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
+        const description = `[${teamContext}] ${singlePayment.description}`;
         const charge = await tx.charge.create({
           data: MembershipChargeFactory.buildSeasonChargePayload(
             membership.id,
             singlePayment.baseAmount,
             singlePayment.baseAmount - singlePayment.netAmount,
-            singlePayment.description,
+            description,
             membership.startedAt,
             startBillingYear,
             startBillingMonth,

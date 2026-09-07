@@ -5,7 +5,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { getAbsoluteSeasonCycles, buildCycleDescription, MILLISECONDS_IN_DAY } from '../student-billing.utils';
+import { getAbsoluteSeasonCycles, buildCycleDescription, MILLISECONDS_IN_DAY, getStudentContext } from '../student-billing.utils';
 import { TypeMembershipCharge, Prisma } from 'src/generated/prisma/client';
 import { StudentChargeFactory } from '../student-charge.factory';
 import { RegularizeStudentChargeDto } from '../dto/regularize-student-charge.dto';
@@ -90,7 +90,7 @@ export class StudentRegularizationService {
           netAmount: calc.netAmount,
           adjustmentAmount: calc.adjustmentAmount,
           adjustmentReason: null,
-          title: buildCycleDescription(cycle.cycleStartDate, cycle.cycleEndDate, frequency),
+          title: `${getStudentContext(membership)} ${buildCycleDescription(cycle.cycleStartDate, cycle.cycleEndDate, frequency)}`.trim(),
         });
       }
     }

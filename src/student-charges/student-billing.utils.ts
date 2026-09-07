@@ -136,6 +136,11 @@ export function buildRecurringDescription(
   return 'Mes - ' + monthName + ' ' + billingYear;
 }
 
+export function getStudentContext(membership: any): string {
+  if (!membership?.courseSeason?.course) return '';
+  return `[${membership.courseSeason.course.name} - ${membership.courseSeason.season.name} - ${membership.courseSeasonShift?.shift?.name || 'Turno'}]`;
+}
+
 export function buildCycleDescription(
   cycleStartDate: Date,
   cycleEndDate: Date,

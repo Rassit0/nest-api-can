@@ -8,8 +8,9 @@ export const playerMembershipInclude = {
   membershipDiscounts: true,
   pauses: true,
   teamSeason: {
-    include: { season: true, billingConfig: true, teamSeasonPauses: true },
+    include: { season: true, billingConfig: true, teamSeasonPauses: true, team: { select: { name: true } } },
   },
+  teamSeasonCategories: { include: { category: { select: { name: true } } } },
   player: { select: { personId: true } },
 } as const;
 
@@ -117,7 +118,7 @@ export class MembershipRepository {
   async getTeamSeasonOrThrow(id: string) {
     const teamSeason = await this.prisma.teamSeason.findUnique({
       where: { id },
-      include: { season: true, billingConfig: true, teamSeasonPauses: true },
+      include: { season: true, billingConfig: true, teamSeasonPauses: true, team: { select: { name: true } } },
     });
     if (!teamSeason)
       throw new BadRequestException('Temporada de equipo no encontrada');

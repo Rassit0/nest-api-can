@@ -4,7 +4,7 @@ import { StudentMembershipRepository } from '../repositories/student-membership.
 import { StudentPreviewService } from './student-preview.service';
 import { DateUtils } from 'src/utils/date.utils';
 import { Prisma, TypeMembershipCharge, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
-import { getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions } from '../student-billing.utils';
+import { getAbsoluteSeasonCycles, findCycleContainingDate, calculateEffectiveBillablePeriod, calculateBillableDaysWithPauses, MILLISECONDS_IN_DAY, buildCycleDescription, resolveFinancialEnrollmentOptions, getStudentContext } from '../student-billing.utils';
 import { calculateOnDemandCycleFee, calculateRegistrationFee, calculateSinglePaymentFee } from '../student-financial.calculator';
 import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper';
 
@@ -113,7 +113,7 @@ export class StudentEnrollmentService {
                           amount: baseRegistrationAmount,
                           pendingAmount: totalRegistrationAmount,
                           adjustmentAmount: registrationDiscount,
-                          description: 'Inscripción',
+                          description: `${getStudentContext(membership)} Inscripción`.trim(),
                           status: totalRegistrationAmount > 0 ? StatusCharge.PENDING : StatusCharge.PAID,
                           dueDate: DateUtils.getEndOfUTCDay(membership.startedAt),
                       }
