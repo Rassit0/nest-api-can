@@ -24,7 +24,10 @@ export const consolidatedReceiptReport = (options: {
   } else if (uniqueBeneficiaries.size > 1) {
     beneficiaryName = 'Varios';
   }
-  const printDate = new Date().toLocaleDateString('es-BO');
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = String(currentDate.getFullYear());
 
   const buildHeaderBlock = (): Content => {
     let title = firstData.type === 'EXPENSE' ? 'COMPROB. EGRESO' : 'APORTE VOLUNTARIO';
@@ -50,16 +53,33 @@ export const consolidatedReceiptReport = (options: {
           stack: [
             { text: title, bold: true, fontSize: 7, alignment: 'right', margin: [0, 0, 0, 3] },
             {
-              text: [ { text: 'PAGADOR: ', bold: true, fontSize: 5 }, { text: payerName, fontSize: 5 } ],
-              alignment: 'right', margin: [0, 0, 0, 1],
-            },
-            {
-              text: [ { text: 'BENEFICIARIO: ', bold: true, fontSize: 5 }, { text: beneficiaryName, fontSize: 5 } ],
-              alignment: 'right', margin: [0, 0, 0, 1],
-            },
-            {
-              text: [ { text: 'FECHA: ', bold: true, fontSize: 5 }, { text: printDate, fontSize: 5 } ],
-              alignment: 'right',
+              columns: [
+                { width: '*', text: '' },
+                {
+                  width: 'auto',
+                  table: {
+                    widths: [20, 20, 30],
+                    body: [
+                      [
+                        { text: day, fontSize: 8, alignment: 'center', bold: true },
+                        { text: month, fontSize: 8, alignment: 'center', bold: true },
+                        { text: year, fontSize: 8, alignment: 'center', bold: true }
+                      ],
+                      [
+                        { text: 'DÍA', fontSize: 4, alignment: 'center' },
+                        { text: 'MES', fontSize: 4, alignment: 'center' },
+                        { text: 'AÑO', fontSize: 4, alignment: 'center' }
+                      ]
+                    ]
+                  },
+                  layout: {
+                    hLineWidth: () => 0.5,
+                    vLineWidth: () => 0.5,
+                    hLineColor: () => '#444444',
+                    vLineColor: () => '#444444',
+                  }
+                }
+              ],
             },
           ],
         },
@@ -129,13 +149,6 @@ export const consolidatedReceiptReport = (options: {
   const buildCopyStack = (isCopy: boolean): Content[] => {
     return [
       buildHeaderBlock(),
-      {
-        text: isCopy ? 'Copia: Secretaría' : 'Copia: Cliente',
-        fontSize: 5,
-        color: '#666666',
-        alignment: 'right',
-        margin: [0, -5, 0, 5],
-      },
       {
         table: {
           headerRows: 1,
