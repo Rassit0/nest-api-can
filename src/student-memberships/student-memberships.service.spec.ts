@@ -40,6 +40,7 @@ describe('StudentMembershipsService', () => {
       student: {
         findUnique: jest.fn(),
         create: jest.fn(),
+        upsert: jest.fn(),
       },
       person: {
         findUnique: jest.fn(),
@@ -98,8 +99,7 @@ describe('StudentMembershipsService', () => {
         }
       });
       prismaMock.person.findUnique.mockResolvedValue({ id: 'person-id' });
-      prismaMock.student.findUnique.mockResolvedValue(null);
-      prismaMock.student.create.mockResolvedValue({ id: 'new-student-id' });
+      prismaMock.student.upsert.mockResolvedValue({ id: 'new-student-id' });
 
       // Simular un fallo en capacity validation para forzar throw dentro de transaction
       prismaMock.$queryRaw = jest.fn();
@@ -107,7 +107,12 @@ describe('StudentMembershipsService', () => {
       prismaMock.studentMembership.create = jest.fn().mockRejectedValue(new BadRequestException('Error test rollback'));
 
       await expect(service.create({ ...defaultCreateDto, personIdToCreateProfile: 'person-id' })).rejects.toThrow(BadRequestException);
-      expect(prismaMock.student.create).toHaveBeenCalledWith({ data: { personId: 'person-id', isActive: true }, include: { person: true } });
+      expect(prismaMock.student.upsert).toHaveBeenCalledWith({
+        where: { personId: 'person-id' },
+        update: {},
+        create: { personId: 'person-id', isActive: true },
+        include: { person: true }
+      });
     });
 
     it('debe continuar con studentId existente (Profile existing)', async () => {

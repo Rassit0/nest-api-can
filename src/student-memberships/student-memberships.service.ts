@@ -236,15 +236,10 @@ export class StudentMembershipsService {
             throw new NotFoundException('Persona no encontrada');
           }
 
-          const existingStudent = await tx.student.findUnique({
+          student = await tx.student.upsert({
             where: { personId: personIdToCreateProfile },
-          });
-          if (existingStudent) {
-            throw new BadRequestException('Ya existe un registro con los datos proporcionados');
-          }
-
-          student = await tx.student.create({
-            data: { personId: personIdToCreateProfile, isActive: true },
+            update: {},
+            create: { personId: personIdToCreateProfile, isActive: true },
             include: { person: true },
           });
           finalStudentId = student.id;

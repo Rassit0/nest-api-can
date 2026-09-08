@@ -228,15 +228,10 @@ export class PlayerMembershipsService {
             throw new NotFoundException('Persona no encontrada');
           }
 
-          const existingPlayer = await tx.player.findUnique({
+          player = await tx.player.upsert({
             where: { personId: personIdToCreateProfile },
-          });
-          if (existingPlayer) {
-            throw new BadRequestException('Ya existe un registro con los datos proporcionados');
-          }
-
-          player = await tx.player.create({
-            data: { personId: personIdToCreateProfile, isActive: true },
+            update: {},
+            create: { personId: personIdToCreateProfile, isActive: true },
             include: { person: true },
           });
           finalPlayerId = player.id;
