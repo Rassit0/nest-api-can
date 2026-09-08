@@ -32,7 +32,23 @@ export class CreateTeamSeasonStaffDto {
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la temporada del equipo',
+    description: 'ID de la temporada del equipo (TeamSeason) para validación de pertenencia',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'teamSeasonId',
+    }),
+  })
+  @Exists('teamSeason', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'teamSeasonId',
+    }),
+  })
+  teamSeasonId: string;
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del miembro del personal (Staff)',
   })
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {

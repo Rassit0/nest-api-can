@@ -6,6 +6,8 @@ import { PaymentsMatrixPdfService } from './payments-matrix-pdf.service';
 import { MonthlyCashflowService } from './monthly-cashflow.service';
 import { MonthlyCashflowExcelService } from './monthly-cashflow-excel.service';
 import { MonthlyCashflowQueryDto } from './dto/monthly-cashflow.dto';
+import { MonthlyAccountingExcelService } from './monthly-accounting-excel.service';
+import { MonthlyAccountingQueryDto } from './dto/monthly-accounting.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
@@ -19,6 +21,7 @@ export class ReportsController {
     private readonly paymentsMatrixPdfService: PaymentsMatrixPdfService,
     private readonly monthlyCashflowService: MonthlyCashflowService,
     private readonly monthlyCashflowExcelService: MonthlyCashflowExcelService,
+    private readonly monthlyAccountingExcelService: MonthlyAccountingExcelService,
   ) {}
 
   @Get()
@@ -128,5 +131,23 @@ export class ReportsController {
       `attachment; filename=Informe_Flujo_Caja_Mensual_${query.year}_${query.month.toString().padStart(2, '0')}.xlsx`,
     );
     res.send(buffer);
+  }
+
+  @Get('monthly-accounting')
+  @RequirePermissions('READ_REPORTS')
+  async getMonthlyAccounting(
+    @Query() query: MonthlyAccountingQueryDto,
+    @Res() res: Response,
+  ) {
+    const workbook = await this.monthlyAccountingExcelService.generateExcel(query);
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=Informe_Contable_Mensual_${query.year}_${query.month.toString().padStart(2, '0')}.xlsx`,
+    );
+    
+    await workbook.xlsx.write(res);
+    res.end();
   }
 }

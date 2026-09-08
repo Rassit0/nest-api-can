@@ -118,7 +118,7 @@ export class StudentMembershipsCron {
   }
 
   // Ejecutar cada hora para verificar expiraciones (o cada 15 min según necesidad)
-  @Cron('0 * * * *', {
+  @Cron('0 3 * * *', {
     timeZone: envs.appTimezone,
   })
   async processExpiredPendingCycles() {

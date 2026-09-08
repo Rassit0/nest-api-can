@@ -32,6 +32,22 @@ export class CreateCourseSeasonStaffDto {
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID de la temporada del curso (CourseSeason) para validación de pertenencia',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'courseSeasonId',
+    }),
+  })
+  @Exists('courseSeason', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'courseSeasonId',
+    }),
+  })
+  courseSeasonId: string;
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID del miembro del personal (Staff)',
   })
   @IsUUID('4', {

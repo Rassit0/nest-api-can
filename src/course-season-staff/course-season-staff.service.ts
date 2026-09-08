@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, ConflictException } from '@nestjs/common';
 import { CreateCourseSeasonStaffDto } from './dto/create-course-season-staff.dto';
 import { UpdateCourseSeasonStaffDto } from './dto/update-course-season-staff.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -19,6 +19,11 @@ export const courseSeasonStaffSelect: Prisma.CourseSeasonStaffSelect = {
   courseSeasonShift: {
     select: {
       id: true,
+      shift: {
+        select: {
+          name: true,
+        },
+      },
       courseSeason: {
         select: {
           id: true,
@@ -61,7 +66,31 @@ export class CourseSeasonStaffService {
   ) {}
 
   async create(createCourseSeasonStaffDto: CreateCourseSeasonStaffDto) {
-    const { courseSeasonShiftId, isPrimary } = createCourseSeasonStaffDto;
+    const { courseSeasonShiftId, courseSeasonId, staffId, isPrimary, ...rest } = createCourseSeasonStaffDto;
+
+    const shift = await this.prisma.courseSeasonShift.findUnique({
+      where: { id: courseSeasonShiftId },
+      select: { courseSeasonId: true },
+    });
+
+    if (!shift) {
+      throw new NotFoundException(this.i18n.t('messages.NOT_FOUND'));
+    }
+
+    if (shift.courseSeasonId !== courseSeasonId) {
+      throw new NotFoundException('El turno no pertenece a la temporada especificada');
+    }
+
+    const existingStaff = await this.prisma.courseSeasonStaff.findFirst({
+      where: {
+        courseSeasonShiftId,
+        staffId,
+      },
+    });
+
+    if (existingStaff) {
+      throw new ConflictException('Este personal ya está asignado a este turno');
+    }
 
     const newStaffAssoc = await this.prisma.$transaction(async (tx) => {
       // Si se marca como primario, remover la bandera de los demás
@@ -73,7 +102,12 @@ export class CourseSeasonStaffService {
       }
 
       return await tx.courseSeasonStaff.create({
-        data: createCourseSeasonStaffDto,
+        data: {
+          ...rest,
+          staffId,
+          courseSeasonShiftId,
+          isPrimary,
+        },
         select: courseSeasonStaffSelect,
       });
     });

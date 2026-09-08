@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, ConflictException } from '@nestjs/common';
 import { CreateTeamSeasonStaffDto } from './dto/create-team-season-staff.dto';
 import { UpdateTeamSeasonStaffDto } from './dto/update-team-season-staff.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -17,6 +17,17 @@ export const teamSeasonStaffSelect: Prisma.TeamSeasonStaffSelect = {
   notes: true,
   createdAt: true,
   updatedAt: true,
+  teamSeasonCategory: {
+    select: {
+      id: true,
+      gender: true,
+      category: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  },
   staff: {
     select: {
       person: {
@@ -43,11 +54,40 @@ export class TeamSeasonStaffService {
   ) {}
 
   async create(createTeamSeasonStaffDto: CreateTeamSeasonStaffDto) {
-    const { teamSeasonCategoryId, ...rest } = createTeamSeasonStaffDto;
-    
+    const { teamSeasonCategoryId, teamSeasonId, staffId, ...rest } = createTeamSeasonStaffDto;
+
+    const category = await this.prisma.teamSeasonCategory.findUnique({
+      where: { id: teamSeasonCategoryId },
+      select: { teamSeasonId: true, status: true },
+    });
+
+    if (!category) {
+      throw new NotFoundException(this.i18n.t('messages.NOT_FOUND'));
+    }
+
+    if (category.teamSeasonId !== teamSeasonId) {
+      throw new NotFoundException('La categoría no pertenece a la temporada especificada');
+    }
+
+    if (category.status === 'FINISHED') {
+      throw new ConflictException('No se puede asignar personal a una categoría finalizada');
+    }
+
+    const existingStaff = await this.prisma.teamSeasonStaff.findFirst({
+      where: {
+        teamSeasonCategoryId,
+        staffId,
+      },
+    });
+
+    if (existingStaff) {
+      throw new ConflictException('Este personal ya está asignado a esta categoría');
+    }
+
     const newSeason = await this.prisma.teamSeasonStaff.create({
       data: {
         ...rest,
+        staffId,
         teamSeasonCategoryId,
       },
       select: teamSeasonStaffSelect,

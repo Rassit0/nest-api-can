@@ -98,6 +98,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       where: {
         transactionDate: { gte: start, lte: end },
         isInternalTransfer: false,
+        type: 'INCOME',
         OR: [
           { status: 'COMPLETED' },
           { status: 'CANCELLED', reversedBy: { isNot: null } },
@@ -313,7 +314,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     let start = params.start ? new Date(params.start) : new Date(today.getFullYear(), today.getMonth(), 1);
     let end = params.end ? new Date(params.end) : new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
 
-    if (params.end) {
+    if (params.end && typeof params.end === 'string' && !params.end.includes('T')) {
       end.setUTCHours(23, 59, 59, 999);
     }
 

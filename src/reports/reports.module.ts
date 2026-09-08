@@ -6,6 +6,8 @@ import { PaymentsMatrixService } from './payments-matrix.service';
 import { PaymentsMatrixPdfService } from './payments-matrix-pdf.service';
 import { MonthlyCashflowService } from './monthly-cashflow.service';
 import { MonthlyCashflowExcelService } from './monthly-cashflow-excel.service';
+import { MonthlyAccountingService } from './monthly-accounting.service';
+import { MonthlyAccountingExcelService } from './monthly-accounting-excel.service';
 import { PrinterModule } from '../printer/printer.module';
 
 @Module({
@@ -15,7 +17,9 @@ import { PrinterModule } from '../printer/printer.module';
     PaymentsMatrixService, 
     PaymentsMatrixPdfService,
     MonthlyCashflowService,
-    MonthlyCashflowExcelService
+    MonthlyCashflowExcelService,
+    MonthlyAccountingService,
+    MonthlyAccountingExcelService
   ],
 })
 export class ReportsModule {}
