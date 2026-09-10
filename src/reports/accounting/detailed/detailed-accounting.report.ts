@@ -500,6 +500,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           expenseData.groups,
           expenseData.activeAccounts,
           grandTotalExpense,
+          true
         ),
       );
     }
@@ -542,7 +543,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
               border: [false, false, false, true],
             },
             {
-              text: `Bs ${grandTotalExpense.toFixed(2)}`,
+              text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs ${grandTotalExpense.toFixed(2)}`,
               alignment: 'right',
               border: [false, false, false, true],
             },
@@ -621,7 +622,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
   ): Content {
     const logo = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
     const incomeFmt = grandTotalIncome.toFixed(2);
-    const expenseFmt = grandTotalExpense.toFixed(2);
+    const expenseFmt = grandTotalExpense > 0 ? `- ${grandTotalExpense.toFixed(2)}` : grandTotalExpense.toFixed(2);
     const balanceFmt = (grandTotalIncome - grandTotalExpense).toFixed(2);
 
     const dateFormatter = new Intl.DateTimeFormat('es-BO', {
@@ -679,7 +680,12 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     groups: AggregatedGroup[],
     activeAccounts: string[],
     grandTotal: number,
+    isExpense: boolean = false,
   ): Content {
+    const formatAmount = (val: number) => {
+      const formatted = val.toFixed(2);
+      return isExpense && val !== 0 ? `- ${formatted}` : formatted;
+    };
     const headerRow: any[] = [
       { text: 'N°', style: 'tableHeader' },
       { text: 'GRUPOS CONCEPTO', style: 'tableHeader' },
@@ -725,14 +731,14 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       activeAccounts.forEach((acc) => {
         const val = pGroup.accounts[acc] || 0;
         pRow.push({
-          text: val.toFixed(2),
+          text: formatAmount(val),
           style: 'tableCellRight',
           bold: true,
         });
       });
 
       pRow.push({
-        text: pGroup.total.toFixed(2),
+        text: formatAmount(pGroup.total),
         style: 'tableCellRight',
         bold: true,
       });
@@ -759,10 +765,10 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
 
         activeAccounts.forEach((acc) => {
           const val = cGroup.accounts[acc] || 0;
-          cRow.push({ text: val.toFixed(2), style: 'tableCellRight' });
+          cRow.push({ text: formatAmount(val), style: 'tableCellRight' });
         });
 
-        cRow.push({ text: cGroup.total.toFixed(2), style: 'tableCellRight' });
+        cRow.push({ text: formatAmount(cGroup.total), style: 'tableCellRight' });
         body.push(cRow);
       }
     }
@@ -789,14 +795,14 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
 
     activeAccounts.forEach((acc) => {
       totalRow.push({
-        text: totalsByAcc[acc].toFixed(2),
+        text: formatAmount(totalsByAcc[acc]),
         style: 'boldRight',
         border: [true, true, true, true],
       });
     });
 
     totalRow.push({
-      text: `Bs ${grandTotal.toFixed(2)}`,
+      text: isExpense && grandTotal !== 0 ? `- Bs ${grandTotal.toFixed(2)}` : `Bs ${grandTotal.toFixed(2)}`,
       style: 'boldRight',
       border: [true, true, true, true],
       fillColor: '#f2f2f2',
