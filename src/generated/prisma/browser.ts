@@ -357,3 +357,13 @@ export type Attachment = Prisma.AttachmentModel
  * 
  */
 export type TeamSeasonCategory = Prisma.TeamSeasonCategoryModel
+/**
+ * Model News
+ * 
+ */
+export type News = Prisma.NewsModel
+/**
+ * Model Banner
+ * 
+ */
+export type Banner = Prisma.BannerModel

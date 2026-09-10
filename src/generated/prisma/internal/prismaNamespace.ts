@@ -457,7 +457,9 @@ export const ModelName = {
   CashClosure: 'CashClosure',
   ThirdParty: 'ThirdParty',
   Attachment: 'Attachment',
-  TeamSeasonCategory: 'TeamSeasonCategory'
+  TeamSeasonCategory: 'TeamSeasonCategory',
+  News: 'News',
+  Banner: 'Banner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -473,7 +475,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "banner"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5509,6 +5511,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    News: {
+      payload: Prisma.$NewsPayload<ExtArgs>
+      fields: Prisma.NewsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NewsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NewsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        findFirst: {
+          args: Prisma.NewsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NewsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        findMany: {
+          args: Prisma.NewsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        create: {
+          args: Prisma.NewsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        createMany: {
+          args: Prisma.NewsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NewsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        delete: {
+          args: Prisma.NewsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        update: {
+          args: Prisma.NewsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        deleteMany: {
+          args: Prisma.NewsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NewsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NewsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>[]
+        }
+        upsert: {
+          args: Prisma.NewsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsPayload>
+        }
+        aggregate: {
+          args: Prisma.NewsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNews>
+        }
+        groupBy: {
+          args: Prisma.NewsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NewsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsCountAggregateOutputType> | number
+        }
+      }
+    }
+    Banner: {
+      payload: Prisma.$BannerPayload<ExtArgs>
+      fields: Prisma.BannerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BannerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BannerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        findFirst: {
+          args: Prisma.BannerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BannerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        findMany: {
+          args: Prisma.BannerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+        }
+        create: {
+          args: Prisma.BannerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        createMany: {
+          args: Prisma.BannerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BannerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+        }
+        delete: {
+          args: Prisma.BannerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        update: {
+          args: Prisma.BannerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        deleteMany: {
+          args: Prisma.BannerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BannerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BannerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+        }
+        upsert: {
+          args: Prisma.BannerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+        }
+        aggregate: {
+          args: Prisma.BannerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBanner>
+        }
+        groupBy: {
+          args: Prisma.BannerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BannerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BannerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BannerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -6697,6 +6847,43 @@ export const TeamSeasonCategoryScalarFieldEnum = {
 export type TeamSeasonCategoryScalarFieldEnum = (typeof TeamSeasonCategoryScalarFieldEnum)[keyof typeof TeamSeasonCategoryScalarFieldEnum]
 
 
+export const NewsScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  excerpt: 'excerpt',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  category: 'category',
+  tags: 'tags',
+  authorName: 'authorName',
+  status: 'status',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
+
+
+export const BannerScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  ctaText: 'ctaText',
+  redirectTo: 'redirectTo',
+  image16x9: 'image16x9',
+  image1x1: 'image1x1',
+  image3x4: 'image3x4',
+  category: 'category',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BannerScalarFieldEnum = (typeof BannerScalarFieldEnum)[keyof typeof BannerScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -7345,6 +7532,20 @@ export type EnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel> = FieldRefIn
 export type ListEnumTeamSeasonCategoryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamSeasonCategoryStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'NewsStatus'
+ */
+export type EnumNewsStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'NewsStatus[]'
+ */
+export type ListEnumNewsStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -7500,6 +7701,8 @@ export type GlobalOmitConfig = {
   thirdParty?: Prisma.ThirdPartyOmit
   attachment?: Prisma.AttachmentOmit
   teamSeasonCategory?: Prisma.TeamSeasonCategoryOmit
+  news?: Prisma.NewsOmit
+  banner?: Prisma.BannerOmit
 }
 
 /* Types for Logging */

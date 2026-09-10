@@ -361,3 +361,12 @@ export const AttachmentStatus = {
 } as const
 
 export type AttachmentStatus = (typeof AttachmentStatus)[keyof typeof AttachmentStatus]
+
+
+export const NewsStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type NewsStatus = (typeof NewsStatus)[keyof typeof NewsStatus]

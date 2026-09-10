@@ -40,6 +40,7 @@ import { MatchLineupsModule } from './match-lineups/match-lineups.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
+import { PublicModule } from './public/public.module';
 import { AccountingDashboardModule } from './accounting-dashboard/accounting-dashboard.module';
 import { AccountingAnalyticsModule } from './accounting-analytics/accounting-analytics.module';
 import { ReportsModule } from './reports/reports.module';
@@ -77,6 +78,8 @@ import { InternalTransfersModule } from './internal-transfers/internal-transfers
 import { StorageModule } from './storage/storage.module';
 import { ThirdPartiesModule } from './third-parties/third-parties.module';
 import { PaymentsModule } from './payments/payments.module';
+import { NewsModule } from './news/news.module';
+import { BannersModule } from './banners/banners.module';
 
 @Module({
   imports: [
@@ -137,6 +140,7 @@ import { PaymentsModule } from './payments/payments.module';
     ProgressEvaluationsModule,
     TransactionsModule,
     AuthModule,
+    PublicModule,
     ShiftsModule,
     PrinterModule,
     ReportsModule,
@@ -153,6 +157,8 @@ import { PaymentsModule } from './payments/payments.module';
     StorageModule,
     ThirdPartiesModule,
     PaymentsModule,
+    NewsModule,
+    BannersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

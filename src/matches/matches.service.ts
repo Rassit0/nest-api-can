@@ -2,7 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma, EventType } from 'src/generated/prisma/client';
+import { Prisma, EventType, EventStatus, TeamSeasonCategoryStatus, StatusTeamSeason, SeasonStatus } from 'src/generated/prisma/client';
 import { MatchesPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { EventsService } from 'src/events/events.service';
@@ -221,6 +221,113 @@ export class MatchesService {
     return {
       message: 'Partido eliminado exitosamente',
       data: { id },
+    };
+  }
+  async findPublicFixture() {
+    const commonWhere = {
+      teamSeasonCategory: {
+        status: TeamSeasonCategoryStatus.ACTIVE,
+        teamSeason: {
+          status: StatusTeamSeason.ACTIVE,
+          season: {
+            status: SeasonStatus.ACTIVE,
+          },
+        },
+      },
+    };
+
+    const publicSelect = {
+      id: true,
+      opponentName: true,
+      ourScore: true,
+      theirScore: true,
+      result: true,
+      event: {
+        select: {
+          startDate: true,
+          status: true,
+          location: {
+            select: { name: true },
+          },
+        },
+      },
+      teamSeasonCategory: {
+        select: {
+          category: { select: { name: true } },
+          teamSeason: {
+            select: {
+              team: {
+                select: {
+                  name: true,
+                  imageUrl: true,
+                  club: {
+                    select: {
+                      discipline: { select: { name: true } },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const [recentMatches, upcomingMatches] = await Promise.all([
+      // Resultados recientes
+      this.prisma.match.findMany({
+        where: {
+          ...commonWhere,
+          event: {
+            startDate: { lt: new Date() },
+            status: EventStatus.COMPLETED,
+          },
+        },
+        orderBy: { event: { startDate: 'desc' } },
+        take: 6,
+        select: publicSelect,
+      }),
+      // Próximos partidos
+      this.prisma.match.findMany({
+        where: {
+          ...commonWhere,
+          event: {
+            startDate: { gte: new Date() },
+            status: EventStatus.SCHEDULED,
+          },
+        },
+        orderBy: { event: { startDate: 'asc' } },
+        take: 6,
+        select: publicSelect,
+      }),
+    ]);
+
+    const formatMatch = (match: any) => ({
+      id: match.id,
+      category: match.teamSeasonCategory?.category?.name || 'General',
+      locationName: match.event?.location?.name || 'Sede CAN',
+      date: match.event?.startDate?.toISOString() || new Date().toISOString(),
+      homeTeam: {
+        name: match.teamSeasonCategory?.teamSeason?.team?.name || 'CAN',
+        imageUrl: match.teamSeasonCategory?.teamSeason?.team?.imageUrl || null,
+      },
+      awayTeam: {
+        name: match.opponentName,
+      },
+      ourScore: match.ourScore,
+      theirScore: match.theirScore,
+      status: match.event?.status === EventStatus.COMPLETED ? 'PLAYED' : 'PENDING',
+      discipline: match.teamSeasonCategory?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
+    });
+
+    const data = [
+      ...recentMatches.map(formatMatch),
+      ...upcomingMatches.map(formatMatch),
+    ];
+
+    return {
+      message: 'Fixture público obtenido exitosamente',
+      data,
     };
   }
 }

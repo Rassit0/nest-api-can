@@ -8,5 +8,6 @@ import { EventsModule } from 'src/events/events.module';
   imports: [EventsModule],
   controllers: [MatchesController],
   providers: [MatchesService, PrismaService],
+  exports: [MatchesService],
 })
 export class MatchesModule {}

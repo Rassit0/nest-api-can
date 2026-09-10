@@ -43,7 +43,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     );
   }
 
-  private async getAccountingTransactions(start: Date, end: Date) {
+  private async getIncomeTransactions(start: Date, end: Date) {
     const paymentInclude = {
       include: {
         charge: {
@@ -110,6 +110,57 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         reverses: {
           include: { payment: paymentInclude },
         },
+      },
+      orderBy: {
+        transactionDate: 'asc'
+      }
+    });
+  }
+
+  private async getExpenseTransactions(start: Date, end: Date) {
+    return this.prisma.transaction.findMany({
+      where: {
+        transactionDate: { gte: start, lte: end },
+        isInternalTransfer: false,
+        type: 'EXPENSE',
+        OR: [
+          { status: 'COMPLETED' },
+          { status: 'CANCELLED', reversedBy: { isNot: null } },
+        ],
+      },
+      include: {
+        financialAccount: { select: { name: true } },
+        thirdParty: { select: { name: true } },
+        payment: {
+          include: {
+            charge: {
+              include: {
+                accountCharge: {
+                  include: {
+                    person: { select: { name: true, lastName: true } },
+                  }
+                }
+              }
+            }
+          }
+        },
+        reverses: {
+          include: {
+            payment: {
+              include: {
+                charge: {
+                  include: {
+                    accountCharge: {
+                      include: {
+                        person: { select: { name: true, lastName: true } },
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       orderBy: {
         transactionDate: 'asc'
@@ -318,77 +369,118 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       end.setUTCHours(23, 59, 59, 999);
     }
 
-    const transactions = await this.getAccountingTransactions(start, end);
+    const incomeTxs = await this.getIncomeTransactions(start, end);
+    const expenseTxs = await this.getExpenseTransactions(start, end);
     const transfers = await this.getAccountingTransfers(start, end);
 
-    const { groups, activeAccounts } = this.groupAccountingData(transactions);
+    const incomeData = this.groupAccountingData(incomeTxs);
 
-    let grandTotal = 0;
-    for (const g of groups) {
-      grandTotal += g.total;
+    let grandTotalIncome = 0;
+    for (const g of incomeData.groups) {
+      grandTotalIncome += g.total;
     }
+
+    let grandTotalExpense = 0;
+    for (const t of expenseTxs) {
+      grandTotalExpense += Number(t.amount || 0);
+    }
+
+    const content: Content[] = [
+      this.buildHeader(start, end, grandTotalIncome, grandTotalExpense),
+      { text: '\n' },
+    ];
+
+    if (incomeData.groups.length > 0) {
+      content.push({ text: 'INGRESOS', style: 'sectionTitle', margin: [0, 0, 0, 5] });
+      content.push(this.buildTable(incomeData.groups, incomeData.activeAccounts, grandTotalIncome));
+    }
+
+    if (expenseTxs.length > 0) {
+      content.push({ text: '\nEGRESOS', style: 'sectionTitle', margin: [0, 10, 0, 5] });
+      content.push(this.buildExpenseTable(expenseTxs, grandTotalExpense));
+    }
+
+    if (transfers.length > 0) {
+      content.push({ text: '\nMOVIMIENTOS INTERNOS Y RECLASIFICACIONES', style: 'sectionTitle', margin: [0, 10, 0, 5] });
+      content.push(this.buildTransfersTable(transfers));
+    }
+
+    const balance = grandTotalIncome - grandTotalExpense;
+    content.push({ text: '\nRESUMEN DEL PERIODO', style: 'sectionTitle', margin: [0, 15, 0, 5] });
+    content.push({
+      table: {
+        widths: ['*', 'auto'],
+        body: [
+          [{ text: 'TOTAL INGRESOS', bold: true, border: [false, false, false, false] }, { text: `Bs ${grandTotalIncome.toFixed(2)}`, alignment: 'right', border: [false, false, false, false] }],
+          [{ text: 'TOTAL EGRESOS', bold: true, border: [false, false, false, true] }, { text: `Bs ${grandTotalExpense.toFixed(2)}`, alignment: 'right', border: [false, false, false, true] }],
+          [{ text: 'SALDO NETO DEL PERIODO', bold: true, border: [false, false, false, false] }, { text: `Bs ${balance.toFixed(2)}`, alignment: 'right', bold: true, fillColor: '#f2f2f2', border: [true, true, true, true] }]
+        ]
+      }
+    });
 
     const docDefinition: TDocumentDefinitions = {
       pageSize: 'A4',
       pageOrientation: 'portrait',
-      pageMargins: [30, 30, 30, 30],
+      pageMargins: [20, 20, 20, 30],
+      footer: function(currentPage: number, pageCount: number) {
+        return {
+          text: `Página ${currentPage} de ${pageCount}`,
+          alignment: 'center',
+          fontSize: 8,
+          margin: [0, 10, 0, 0]
+        };
+      },
       defaultStyle: {
         fontSize: 10,
       },
-      content: [
-        this.buildHeader(start, end, grandTotal),
-        { text: '\n' },
-        this.buildTable(groups, activeAccounts, grandTotal),
-        transfers.length > 0 ? { text: '\n\nMOVIMIENTOS INTERNOS Y RECLASIFICACIONES', style: 'sectionTitle', margin: [0, 10, 0, 5] } : '',
-        transfers.length > 0 ? this.buildTransfersTable(transfers) : '',
-      ],
+      content,
       styles: {
         sectionTitle: { bold: true, fontSize: 12, color: 'black' },
-        tableHeader: { bold: true, fontSize: 9, color: 'black', alignment: 'center', margin: [0, 4, 0, 4] },
-        tableCell: { fontSize: 9, margin: [0, 4, 0, 4] },
-        tableCellRight: { fontSize: 9, alignment: 'right', margin: [0, 4, 4, 4] },
-        tableCellCenter: { fontSize: 9, alignment: 'center', margin: [0, 4, 0, 4] },
-        boldRight: { bold: true, alignment: 'right', fontSize: 10, margin: [0, 4, 4, 4] },
+        tableHeader: { bold: true, fontSize: 8, color: 'black', alignment: 'center', margin: [0, 2, 0, 2] },
+        tableCell: { fontSize: 8, margin: [0, 2, 0, 2] },
+        tableCellRight: { fontSize: 8, alignment: 'right', margin: [0, 2, 4, 2] },
+        tableCellCenter: { fontSize: 8, alignment: 'center', margin: [0, 2, 0, 2] },
+        boldRight: { bold: true, alignment: 'right', fontSize: 9, margin: [0, 2, 4, 2] },
       },
     };
 
     return this.printer.createPdf(docDefinition);
   }
 
-  private buildHeader(start: Date, end: Date, grandTotal: number): Content {
+  private buildHeader(start: Date, end: Date, grandTotalIncome: number, grandTotalExpense: number): Content {
     const logo = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
-    const totalFmt = grandTotal.toFixed(2);
+    const incomeFmt = grandTotalIncome.toFixed(2);
+    const expenseFmt = grandTotalExpense.toFixed(2);
+    const balanceFmt = (grandTotalIncome - grandTotalExpense).toFixed(2);
     
-    const dateFormatter = new Intl.DateTimeFormat('es-BO', { day: '2-digit', month: 'short', year: 'numeric' });
+    const dateFormatter = new Intl.DateTimeFormat('es-BO', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'America/La_Paz' });
     const dateStr = `${dateFormatter.format(start)} - ${dateFormatter.format(end)}`;
     
     return {
       columns: [
         {
           image: logo,
-          width: 80,
+          width: 50,
           margin: [0, 0, 10, 0],
         },
         {
           stack: [
-            { text: 'CLUB ATLETICO NACIONAL', bold: true, fontSize: 16, alignment: 'center' },
-            { text: 'Fundado el 17 de Octubre de 1935', bold: true, fontSize: 10, alignment: 'center', margin: [0, 2, 0, 2] },
-            { text: 'CAN Oruro - Telf. 2-52-33388', bold: true, fontSize: 9, alignment: 'center' },
-            { text: 'Oruro - BOLIVIA', bold: true, fontSize: 9, alignment: 'center' },
+            { text: 'CLUB ATLETICO NACIONAL', bold: true, fontSize: 12, alignment: 'center' },
+            { text: 'Fundado el 17 de Octubre de 1935 | CAN Oruro - Telf. 2-52-33388 | Oruro - BOLIVIA', fontSize: 8, alignment: 'center', margin: [0, 2, 0, 2] },
             { 
-              text: `INFORME de Ingresos Resumen (Total Bs ${totalFmt}) = Periodo ${dateStr}`, 
+              text: `INFORME DETALLADO (Ingresos Bs ${incomeFmt} | Egresos Bs ${expenseFmt} | Saldo Bs ${balanceFmt}) = Periodo ${dateStr}`, 
               bold: true, 
-              fontSize: 10, 
+              fontSize: 9, 
               alignment: 'center',
-              margin: [0, 10, 0, 0]
+              margin: [0, 5, 0, 0]
             }
           ],
           width: '*',
-          margin: [0, 0, 40, 0]
+          margin: [0, 0, 10, 0]
         },
         {
-          width: 80,
-          text: '* Detalle Financiero Consolidado',
+          width: 50,
+          text: '* Detalle Financiero',
           fontSize: 7,
           alignment: 'right',
           italics: true,
@@ -436,7 +528,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       for (const cGroup of pGroup.children) {
         const cRow: any[] = [
           { text: String(rowIndex++), style: 'tableCellCenter' },
-          { text: `* ${cGroup.categoryName.toUpperCase()}`, style: 'tableCell', margin: [10, 4, 0, 4] },
+          { text: `* ${cGroup.categoryName.toUpperCase()}`, style: 'tableCell', margin: [10, 2, 0, 2] },
           { text: cGroup.receiptSeries, style: 'tableCellCenter' },
           { text: cGroup.minReceipt !== null && cGroup.maxReceipt !== null ? `${cGroup.minReceipt} - ${cGroup.maxReceipt}` : 'ninguno', style: 'tableCellCenter' },
           { text: String(cGroup.documentIds.size), style: 'tableCellCenter' },
@@ -483,6 +575,84 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       table: {
         headerRows: 1,
         widths,
+        body
+      }
+    };
+  }
+
+  private buildExpenseTable(expenses: any[], grandTotal: number): Content {
+    const headerRow: any[] = [
+      { text: 'N°', style: 'tableHeader' },
+      { text: 'FECHA', style: 'tableHeader' },
+      { text: 'DOCUMENTO', style: 'tableHeader' },
+      { text: 'PROVEEDOR / CONCEPTO', style: 'tableHeader' },
+      { text: 'DESCRIPCIÓN', style: 'tableHeader' },
+      { text: 'CUENTA', style: 'tableHeader' },
+      { text: 'IMPORTE', style: 'tableHeader' },
+    ];
+
+    const body: any[] = [headerRow];
+    let rowIndex = 1;
+
+    for (const tx of expenses) {
+      const dateStr = new Intl.DateTimeFormat('es-BO', { timeZone: 'America/La_Paz', day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(tx.transactionDate));
+      
+      let docSeries = tx.receiptSeries;
+      let docNumber = tx.receiptNumber;
+      let thirdPartyName = tx.thirdParty?.name;
+
+      let payment = tx.payment;
+      if (tx.reversesId && tx.reverses?.payment) {
+        payment = tx.reverses.payment;
+      }
+
+      if (payment) {
+        docSeries = payment.receiptSeries || docSeries;
+        docNumber = payment.receiptNumber || docNumber;
+
+        const accCharge = payment.charge?.accountCharge;
+        if (accCharge) {
+          if (accCharge.person) {
+            thirdPartyName = `${accCharge.person.name} ${accCharge.person.lastName}`;
+          } else if (accCharge.externalEntity) {
+            thirdPartyName = accCharge.externalEntity;
+          }
+        }
+      }
+
+      const documentStr = docSeries && docNumber ? `${docSeries}-${docNumber}` : 'S/D';
+      const conceptStr = thirdPartyName || tx.description || 'Sin concepto';
+      const descStr = tx.description || '';
+      const accStr = tx.financialAccount?.name || 'Desconocida';
+      const amt = Number(tx.amount || 0);
+
+      body.push([
+        { text: String(rowIndex++), style: 'tableCellCenter' },
+        { text: dateStr, style: 'tableCellCenter' },
+        { text: documentStr, style: 'tableCellCenter' },
+        { text: conceptStr.toUpperCase(), style: 'tableCell' },
+        { text: descStr, style: 'tableCell' },
+        { text: accStr, style: 'tableCellCenter' },
+        { text: `- ${amt.toFixed(2)}`, style: 'tableCellRight' },
+      ]);
+    }
+
+    const totalRow: any[] = [
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: '', border: [false, false, false, false] },
+      { text: 'TOTAL:', style: 'boldRight', border: [false, false, false, false] },
+      { text: `- Bs ${grandTotal.toFixed(2)}`, style: 'boldRight', border: [true, true, true, true], fillColor: '#f2f2f2' },
+    ];
+
+    body.push(totalRow);
+
+    return {
+      table: {
+        headerRows: 1,
+        widths: ['auto', 'auto', 'auto', '*', '*', 'auto', 'auto'],
         body
       }
     };

@@ -10,5 +10,6 @@ import { NestjsFormDataModule } from 'nestjs-form-data';
   imports: [NestjsFormDataModule.config({ isGlobal: true })],
   controllers: [TeamSeasonsController, TeamSeasonCategoryController],
   providers: [TeamSeasonService, TeamSeasonCategoryService, PrismaService],
+  exports: [TeamSeasonService],
 })
 export class TeamSeasonModule {}

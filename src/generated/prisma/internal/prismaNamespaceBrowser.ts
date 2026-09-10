@@ -116,7 +116,9 @@ export const ModelName = {
   CashClosure: 'CashClosure',
   ThirdParty: 'ThirdParty',
   Attachment: 'Attachment',
-  TeamSeasonCategory: 'TeamSeasonCategory'
+  TeamSeasonCategory: 'TeamSeasonCategory',
+  News: 'News',
+  Banner: 'Banner'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1282,6 +1284,43 @@ export const TeamSeasonCategoryScalarFieldEnum = {
 } as const
 
 export type TeamSeasonCategoryScalarFieldEnum = (typeof TeamSeasonCategoryScalarFieldEnum)[keyof typeof TeamSeasonCategoryScalarFieldEnum]
+
+
+export const NewsScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  excerpt: 'excerpt',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  category: 'category',
+  tags: 'tags',
+  authorName: 'authorName',
+  status: 'status',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
+
+
+export const BannerScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  ctaText: 'ctaText',
+  redirectTo: 'redirectTo',
+  image16x9: 'image16x9',
+  image1x1: 'image1x1',
+  image3x4: 'image3x4',
+  category: 'category',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BannerScalarFieldEnum = (typeof BannerScalarFieldEnum)[keyof typeof BannerScalarFieldEnum]
 
 
 export const SortOrder = {

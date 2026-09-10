@@ -1799,3 +1799,53 @@ enum AttachmentStatus {
   LINKED
   DELETED
 }
+
+enum NewsStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model News {
+  id         String   @id @default(uuid())
+  slug       String   @unique
+  title      String
+  excerpt    String
+  content    String   @db.Text
+  imageUrl   String?  @map("image_url")
+  category   String?
+  tags       String[]
+  authorName String?  @map("author_name")
+
+  status      NewsStatus @default(DRAFT)
+  publishedAt DateTime?  @map("published_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([publishedAt])
+  @@map("news")
+}
+
+model Banner {
+  id         String  @id @default(uuid())
+  title      String
+  ctaText    String? @map("cta_text")
+  redirectTo String? @map("redirect_to")
+
+  image16x9 String  @map("image_16x9")
+  image1x1  String? @map("image_1x1")
+  image3x4  String? @map("image_3x4")
+
+  category  String?
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([isActive])
+  @@index([sortOrder])
+  @@map("banners")
+}

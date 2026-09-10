@@ -1135,6 +1135,119 @@ export class CourseSeasonsService {
     return { message: 'Pausa eliminada correctamente' };
   }
 
+  async findPublic() {
+    const courseSeasons = await this.prisma.courseSeason.findMany({
+      where: {
+        status: StatusCourseSeason.ACTIVE,
+        isRegistrationOpen: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        course: {
+          select: {
+            name: true,
+            school: {
+              select: {
+                discipline: { select: { name: true } },
+              },
+            },
+          },
+        },
+        billingConfig: {
+          select: {
+            registrationFee: true,
+            recurringFee: true,
+            seasonFee: true,
+            billingType: true,
+          },
+        },
+        shifts: {
+          where: { isActive: true },
+          select: {
+            id: true,
+            maxMembers: true,
+            category: {
+              select: {
+                minAge: true,
+                maxAge: true,
+              },
+            },
+            shift: {
+              select: {
+                name: true,
+              },
+            },
+            courseSeasonStaffs: {
+              take: 1,
+              orderBy: { isPrimary: 'desc' },
+              select: {
+                staff: {
+                  select: {
+                    person: {
+                      select: {
+                        name: true,
+                        lastName: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            _count: {
+              select: {
+                studentMemberships: {
+                  where: {
+                    status: { in: ['ACTIVE', 'SUSPENDED'] },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const mapped = courseSeasons.flatMap((cs) => {
+      let regFee = 0;
+      let monthFee = 0;
+      if (cs.billingConfig) {
+        regFee = Number(cs.billingConfig.registrationFee || 0);
+        if (cs.billingConfig.billingType === 'SINGLE_ONLY') {
+          monthFee = Number(cs.billingConfig.seasonFee || 0);
+        } else {
+          monthFee = Number(cs.billingConfig.recurringFee || 0);
+        }
+      }
+
+      return cs.shifts.map((shift) => {
+        const primaryStaff = shift.courseSeasonStaffs[0]?.staff.person;
+        const professorName = primaryStaff 
+          ? `${primaryStaff.name} ${primaryStaff.lastName}`.trim() 
+          : 'Profesor asignado';
+
+        return {
+          id: shift.id,
+          name: `${cs.course.name} - ${cs.name}`,
+          discipline: cs.course.school.discipline.name,
+          minAge: shift.category.minAge,
+          maxAge: shift.category.maxAge,
+          schedule: shift.shift.name,
+          professor: professorName,
+          capacity: shift.maxMembers,
+          enrolled: shift._count.studentMemberships,
+          registrationFee: regFee,
+          monthlyFee: monthFee,
+        };
+      });
+    });
+
+    return {
+      message: 'Cursos públicos obtenidos exitosamente',
+      data: mapped,
+    };
+  }
+
   // Phase 7: Toggle Registration
   async toggleRegistration(id: string, isRegistrationOpen: boolean) {
     const courseSeason = await this.prisma.courseSeason.findUnique({
