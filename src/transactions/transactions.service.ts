@@ -856,13 +856,13 @@ export class TransactionsService {
       throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
     }
 
-    if (transaction.status === 'CANCELLED') {
-      throw new BadRequestException('La transacción ya se encuentra anulada');
-    }
-
     // Si la transacción pertenece a un recibo (Payment), anulamos el recibo completo
     if (transaction.paymentId) {
       return await this.paymentsService.removePayment(transaction.paymentId);
+    }
+
+    if (transaction.status === 'CANCELLED') {
+      throw new BadRequestException('La transacción ya se encuentra anulada');
     }
 
     // Usar transacción de Prisma para asegurar consistencia
