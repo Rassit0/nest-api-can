@@ -9,4 +9,11 @@ export class AccountCategoriesPaginationDto extends PaginationDto {
   @IsOptional()
   @IsString()
   type?: string;
+
+  @ApiPropertyOptional({
+    description: 'Excluir categorías del sistema',
+  })
+  @IsOptional()
+  @IsString()
+  excludeSystem?: string;
 }

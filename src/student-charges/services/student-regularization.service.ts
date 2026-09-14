@@ -90,7 +90,7 @@ export class StudentRegularizationService {
           netAmount: calc.netAmount,
           adjustmentAmount: calc.adjustmentAmount,
           adjustmentReason: null,
-          title: `${getStudentContext(membership)} ${buildCycleDescription(cycle.cycleStartDate, cycle.cycleEndDate, frequency)}`.trim(),
+          title: getStudentContext(membership, buildCycleDescription(cycle.cycleStartDate, cycle.cycleEndDate, frequency)).trim(),
         });
       }
     }

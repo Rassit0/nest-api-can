@@ -61,9 +61,12 @@ export class MembershipGenerationService {
       calculateRegistrationFee(membership);
     if (baseAmount <= 0) return null;
 
-    const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
-    const description =
-      `[${teamContext}] Inscripción` + formatDiscountsDescription(appliedDiscounts);
+    const disciplineName = membership.teamSeason.team?.club?.discipline?.name || 'Disciplina';
+    const teamName = membership.teamSeason.team?.name || 'Equipo';
+    const seasonName = membership.teamSeason.season.name;
+    const categoryName = membership.teamSeasonCategories?.category?.name || 'Categoría';
+
+    const description = `Inscripción - Equipo de ${disciplineName} (${teamName}, ${categoryName} - ${seasonName})` + formatDiscountsDescription(appliedDiscounts);
     const charge = await tx.charge.create({
       data: MembershipChargeFactory.buildRegistrationChargePayload(
         membership.id,
@@ -224,8 +227,12 @@ export class MembershipGenerationService {
         singlePaymentDiscountPercent,
       );
       if (singlePayment.hasSinglePaymentAmount) {
-        const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
-        const description = `[${teamContext}] ${singlePayment.description}`;
+        const disciplineName = membership.teamSeason.team?.club?.discipline?.name || 'Disciplina';
+        const teamName = membership.teamSeason.team?.name || 'Equipo';
+        const seasonName = membership.teamSeason.season.name;
+        const categoryName = membership.teamSeasonCategories?.category?.name || 'Categoría';
+
+        const description = `${singlePayment.description} - Equipo de ${disciplineName} (${teamName}, ${categoryName} - ${seasonName})`;
         const charge = await tx.charge.create({
           data: MembershipChargeFactory.buildSeasonChargePayload(
             membership.id,

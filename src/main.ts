@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { I18nValidationPipe, I18nService } from 'nestjs-i18n';
 import { I18nValidationFilter } from './common/filters/i18n-validation/i18n-validation.filter';
@@ -11,7 +13,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { envs } from './config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
+    prefix: '/uploads/',
+  });
 
   app.setGlobalPrefix('api');
 
@@ -31,7 +37,7 @@ async function bootstrap() {
 
   // Habilitar CORS
   app.enableCors({
-    origin: 'http://localhost:3000', // El puerto de tu frontend
+    origin: envs.frontendUrls, // Orígenes permitidos desde las variables de entorno
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

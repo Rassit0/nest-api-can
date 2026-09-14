@@ -24,6 +24,7 @@ import {
 import { ChargesService } from './charges.service';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
+import { UpdateDueDateDto } from './dto/update-due-date.dto';
 import { ChargesPaginationDto } from './dto/pagination.dto';
 import { AddAdjustmentDto } from './dto/add-adjustment.dto';
 import {
@@ -124,6 +125,26 @@ export class ChargesController {
   @RequirePermissions('READ_CHARGES')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.chargesService.findOne(id);
+  }
+
+  @Patch(':id/due-date')
+  @ApiOperation({
+    summary: 'Actualizar fecha de vencimiento de un cargo',
+    description: 'Actualiza de manera segura y dedicada la fecha de vencimiento de un cargo sin modificar su estado contable.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del cargo a actualizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: UpdateDueDateDto })
+  @ApiStandardResponse(ChargeResponseDto, 'Fecha de vencimiento actualizada exitosamente.')
+  @RequirePermissions('UPDATE_CHARGES')
+  async updateDueDate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateDueDateDto: UpdateDueDateDto,
+  ) {
+    return await this.chargesService.updateDueDate(id, updateDueDateDto);
   }
 
   @Patch(':id')

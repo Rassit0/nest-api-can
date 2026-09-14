@@ -12,7 +12,7 @@ export const studentMembershipInclude = {
   studentDiscounts: true,
   pauses: true,
   courseSeason: {
-    include: { season: true, billingConfig: true, pauses: true, course: { select: { name: true } } },
+    include: { season: true, billingConfig: true, pauses: true, course: { select: { name: true, school: { include: { discipline: { select: { name: true } } } } } } },
   },
   courseSeasonShift: { include: { shift: { select: { name: true } } } },
   student: { select: { personId: true } },
@@ -62,7 +62,7 @@ export class StudentMembershipRepository {
   async getCourseSeasonOrThrow(id: string) {
     const courseSeason = await this.prisma.courseSeason.findUnique({
       where: { id },
-      include: { season: true, billingConfig: true, pauses: true, course: { select: { name: true } } },
+      include: { season: true, billingConfig: true, pauses: true, course: { select: { name: true, school: { include: { discipline: { select: { name: true } } } } } } },
     });
     if (!courseSeason)
       throw new BadRequestException('Temporada de curso no encontrada');

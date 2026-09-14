@@ -57,6 +57,9 @@ export class AccountCategoriesService {
     if (type) {
       where.type = type as any;
     }
+    if (paginationDto.excludeSystem === 'true') {
+      where.isSystem = false;
+    }
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },

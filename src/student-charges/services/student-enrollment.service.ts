@@ -113,7 +113,7 @@ export class StudentEnrollmentService {
                           amount: baseRegistrationAmount,
                           pendingAmount: totalRegistrationAmount,
                           adjustmentAmount: registrationDiscount,
-                          description: `${getStudentContext(membership)} Inscripción`.trim(),
+                          description: getStudentContext(membership, 'Inscripción').trim(),
                           status: totalRegistrationAmount > 0 ? StatusCharge.PENDING : StatusCharge.PAID,
                           dueDate: DateUtils.getEndOfUTCDay(membership.startedAt),
                       }

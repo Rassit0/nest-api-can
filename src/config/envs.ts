@@ -4,6 +4,7 @@ import * as joi from 'joi';
 interface EnvVars {
   PORT: number;
   DATABASE_URL: string;
+  FRONTEND_URLS: string;
   JWT_SECRET: string;
   APP_TIMEZONE: string;
   STORAGE_DRIVER: string;
@@ -20,6 +21,7 @@ const envsSchema = joi
     // Aqui se definen las variables de entorno que se van a usar
     PORT: joi.number().required(),
     DATABASE_URL: joi.string().required(),
+    FRONTEND_URLS: joi.string().default('http://localhost:3000'),
     JWT_SECRET: joi.string().required(),
     APP_TIMEZONE: joi.string().default('America/La_Paz'),
     STORAGE_DRIVER: joi.string().valid('local', 's3').default('local'),
@@ -68,6 +70,7 @@ const envVars: EnvVars = value;
 export const envs = {
   port: envVars.PORT,
   databaseUrl: envVars.DATABASE_URL,
+  frontendUrls: envVars.FRONTEND_URLS.split(','),
   jwtSecret: envVars.JWT_SECRET,
   appTimezone: envVars.APP_TIMEZONE,
   

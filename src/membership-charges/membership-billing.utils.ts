@@ -134,7 +134,7 @@ export function buildRecurringDescription(
   billingMonth: number,
   monthName: string,
 ): string {
-  return 'Mes - ' + monthName + ' ' + billingYear;
+  return 'Cuota ' + monthName + ' ' + billingYear;
 }
 
 export function buildCycleDescription(

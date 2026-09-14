@@ -180,11 +180,14 @@ export class StudentAdvanceChargeService {
       totalDiscounts += cycleFee.adjustmentAmount;
       total += cycleFee.netAmount;
 
-      let description = `${getStudentContext(membership)} ${buildCycleDescription(
-        cycle.cycleStartDate,
-        cycle.cycleEndDate,
-        membership.courseSeason.billingConfig.billingFrequency,
-      )}`.trim();
+      let description = getStudentContext(
+        membership,
+        buildCycleDescription(
+          cycle.cycleStartDate,
+          cycle.cycleEndDate,
+          membership.courseSeason.billingConfig.billingFrequency,
+        ),
+      ).trim();
       if (feeFactor === 0.5) {
         description += ` — Inscripción pasada la mitad del ciclo (50%)`;
       }

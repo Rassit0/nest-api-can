@@ -133,12 +133,18 @@ export function buildRecurringDescription(
   billingMonth: number,
   monthName: string,
 ): string {
-  return 'Mes - ' + monthName + ' ' + billingYear;
+  return 'Cuota ' + monthName + ' ' + billingYear;
 }
 
-export function getStudentContext(membership: any): string {
-  if (!membership?.courseSeason?.course) return '';
-  return `[${membership.courseSeason.course.name} - ${membership.courseSeason.season.name} - ${membership.courseSeasonShift?.shift?.name || 'Turno'}]`;
+export function getStudentContext(membership: any, baseDescription: string = ''): string {
+  if (!membership?.courseSeason?.course) return baseDescription;
+  const disciplineName = membership.courseSeason.course.school?.discipline?.name || 'Disciplina';
+  const courseName = membership.courseSeason.course.name;
+  const seasonName = membership.courseSeason.season.name;
+  const shiftName = membership.courseSeasonShift?.shift?.name || 'Turno';
+  
+  const prefix = baseDescription ? `${baseDescription} - ` : '';
+  return `${prefix}Curso de ${disciplineName} (${courseName}, ${shiftName} - ${seasonName})`;
 }
 
 export function buildCycleDescription(

@@ -115,11 +115,14 @@ export class StudentPreviewService {
                // Si prorrateó por entrar tarde y no está en la configuración permitida
                // (Esta regla puede refinarse, pero por ahora mostramos lo calculado)
 
-               let description = `${getStudentContext(membership)} ${buildCycleDescription(
-                  currentCycle.cycleStartDate,
-                  currentCycle.cycleEndDate,
-                  billingFrequency
-               )}`.trim();
+               let description = getStudentContext(
+                  membership,
+                  buildCycleDescription(
+                     currentCycle.cycleStartDate,
+                     currentCycle.cycleEndDate,
+                     billingFrequency
+                  )
+               ).trim();
                
                if (feeFactor === 0.5) {
                  description += ` — Inscripción pasada la mitad del ciclo (50%)`;
@@ -133,7 +136,10 @@ export class StudentPreviewService {
                     PreviewChargeFactory.buildRecurringCharge(
                       0,
                       0,
-                      `${getStudentContext(membership)} ${buildCycleDescription(currentCycle.cycleStartDate, currentCycle.cycleEndDate, billingFrequency)} — Sin cobro / Exonerado`.trim(),
+                    getStudentContext(
+                      membership,
+                      buildCycleDescription(currentCycle.cycleStartDate, currentCycle.cycleEndDate, billingFrequency) + ' — Sin cobro / Exonerado'
+                    ),
                       0,
                       0,
                       currentCycle.cycleStartDate,

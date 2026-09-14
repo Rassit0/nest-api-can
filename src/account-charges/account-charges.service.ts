@@ -52,6 +52,9 @@ export class AccountChargesService {
     if (category.type !== direction) {
       throw new BadRequestException('La categoría no corresponde con el tipo de transacción');
     }
+    if (category.isSystem) {
+      throw new BadRequestException('No se pueden crear cargos manuales con categorías del sistema');
+    }
 
     if (accountData.personId) {
       const person = await this.prisma.person.findUnique({

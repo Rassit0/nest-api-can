@@ -122,9 +122,33 @@ export class PaymentsService {
 
     
     return await this.prisma.$transaction(async (prisma) => {
-      // 1. Fail-Safe matemAtico
-      const paymentAmount = Number(payment.amount.toNumber().toFixed(2));
-      const transactionsSum = payment.transactions.reduce(
+      // 0. Bloquear el Charge primero para serializar peticiones concurrentes
+      // El Charge debe bloquearse antes de leer/calcular pendingAmount.
+      // Payments, reversos y Late Fees realizan Read-Modify-Write sobre este saldo.
+      // Al bloquearlo al inicio, cualquier petición concurrente para este mismo recibo quedará en espera.
+      const lockedCharge = await lockChargeForUpdate(prisma, payment.chargeId);
+
+      // 0.5. Re-leer el Payment y sus transacciones dentro de la transacción segura
+      const currentPayment = await prisma.payment.findUnique({
+        where: { id },
+        include: {
+          transactions: true,
+          charge: true,
+        },
+      });
+
+      if (!currentPayment) {
+        throw new NotFoundException(`Pago con ID ${id} no encontrado durante la anulación`);
+      }
+
+      // Re-verificar el estado para prevenir doble devolución (Idempotencia concurrente)
+      if (currentPayment.status === 'CANCELLED') {
+        throw new BadRequestException('El pago ya se encuentra anulado');
+      }
+
+      // 1. Fail-Safe matemático
+      const paymentAmount = Number(currentPayment.amount.toNumber().toFixed(2));
+      const transactionsSum = currentPayment.transactions.reduce(
         (sum, t) => sum + Number(t.amount.toNumber().toFixed(2)),
         0,
       );
@@ -136,14 +160,15 @@ export class PaymentsService {
         );
       }
 
-      // 2. Revertir saldo del Charge (Solo 1 vez, usando el payment.amount total)
-      // El Charge debe bloquearse antes de leer/calcular pendingAmount.
-      // Payments, reversos y Late Fees realizan Read-Modify-Write sobre
-      // este mismo saldo. El lock evita Lost Updates bajo concurrencia.
-      // Usar exclusivamente el estado obtenido después del FOR UPDATE.
-      const lockedCharge = await lockChargeForUpdate(prisma, payment.chargeId);
+      // 1.5. Calcular monto a devolver basado SÓLO en transacciones activas
+      const activeTransactions = currentPayment.transactions.filter(t => t.status === 'COMPLETED');
+      const amountToRefund = activeTransactions.reduce(
+        (sum, t) => sum + Number(t.amount.toNumber().toFixed(2)),
+        0,
+      );
 
-      const charge = payment.charge;
+      // 2. Revertir saldo del Charge usando exclusivamente el estado obtenido después del FOR UPDATE.
+      const charge = currentPayment.charge;
       charge.amount = new Prisma.Decimal(lockedCharge.amount.toString());
       charge.pendingAmount = new Prisma.Decimal(lockedCharge.pendingAmount.toString());
       charge.status = lockedCharge.status;
@@ -154,7 +179,7 @@ export class PaymentsService {
       const adjustmentAmount = Number(charge.adjustmentAmount?.toNumber() || 0);
   
       const expectedTotal = chargeAmount + adjustmentAmount;
-      const newPendingAmount = Number((currentPending + paymentAmount).toFixed(2));
+      const newPendingAmount = Number((currentPending + amountToRefund).toFixed(2));
       let newStatus = charge.status;
 
       if (newPendingAmount >= expectedTotal) {
@@ -174,7 +199,7 @@ export class PaymentsService {
       await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
 
       // 3. Revertir saldos en cuentas financieras (por Transaction) y anular Transactions
-      for (const t of payment.transactions) {
+      for (const t of currentPayment.transactions) {
         if (t.financialAccountId && t.status === 'COMPLETED') {
           // Si fue ingreso, al mandar negativo se decrementa el balance en applyMovement
           await this.financialAccountsService.applyMovement(

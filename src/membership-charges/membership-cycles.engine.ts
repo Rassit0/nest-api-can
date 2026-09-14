@@ -82,8 +82,17 @@ export function simulateAllCycles(
       billingCycle,
     );
 
-    const teamContext = `${membership.teamSeason.team?.name || 'Equipo'} - ${membership.teamSeason.season.name} - ${membership.teamSeasonCategories?.category?.name || 'Categoría'}`;
-    description = `[${teamContext}] ${description}`;
+    const disciplineName = membership.teamSeason.team?.club?.discipline?.name || 'Disciplina';
+    const teamName = membership.teamSeason.team?.name || 'Equipo';
+    const seasonName = membership.teamSeason.season.name;
+    const categoryName = membership.teamSeasonCategories?.category?.name || 'Categoría';
+
+    let cleanDesc = description.trim();
+    if (cleanDesc.startsWith('Mes - ')) {
+      cleanDesc = cleanDesc.replace('Mes - ', 'Cuota ');
+    }
+
+    description = `${cleanDesc} - Equipo de ${disciplineName} (${teamName}, ${categoryName} - ${seasonName})`;
 
     if (
       isFirstCycle &&

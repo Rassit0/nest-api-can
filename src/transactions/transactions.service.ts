@@ -19,6 +19,7 @@ import {
 } from 'src/generated/prisma/client';
 import { PaymentStrategyFactory } from './strategies/payment-strategy.factory';
 import { ReceiptResolverService } from 'src/payments/receipt-resolver.service';
+import { PaymentsService } from 'src/payments/payments.service';
 
 import { TransactionsMapper } from './transactions.mapper';
 import { FinancialAccountsService } from 'src/financial-accounts/financial-accounts.service';
@@ -157,6 +158,7 @@ export class TransactionsService {
     private readonly prisma: PrismaService,
     private readonly financialAccountsService: FinancialAccountsService,
     private readonly receiptResolver: ReceiptResolverService,
+    private readonly paymentsService: PaymentsService,
   ) {}
 
   async createBulk(
@@ -842,6 +844,11 @@ export class TransactionsService {
 
     if (transaction.status === 'CANCELLED') {
       throw new BadRequestException('La transacción ya se encuentra anulada');
+    }
+
+    // Si la transacción pertenece a un recibo (Payment), anulamos el recibo completo
+    if (transaction.paymentId) {
+      return await this.paymentsService.removePayment(transaction.paymentId);
     }
 
     // Usar transacción de Prisma para asegurar consistencia

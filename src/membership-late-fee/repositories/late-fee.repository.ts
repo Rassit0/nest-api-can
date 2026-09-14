@@ -166,8 +166,19 @@ export class LateFeeRepository {
     tx: Prisma.TransactionClient,
     data: Prisma.ChargeUncheckedCreateInput,
   ) {
-    await tx.charge.create({
-      data,
-    });
+    try {
+      await tx.charge.create({
+        data,
+      });
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        // Ignoramos la restricción única asumiendo que otro worker/proceso ya la creó.
+        return;
+      }
+      throw error;
+    }
   }
 }

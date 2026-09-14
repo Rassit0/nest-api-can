@@ -12,7 +12,7 @@ export type PlayerMembershipWithRelations = Prisma.PlayerMembershipGetPayload<{
           season: true,
           billingConfig: true,
           teamSeasonPauses: true,
-          team: { select: { name: true } },
+          team: { select: { name: true, club: { include: { discipline: { select: { name: true } } } } } },
         },
       },
       teamSeasonCategories: { include: { category: { select: { name: true } } } },

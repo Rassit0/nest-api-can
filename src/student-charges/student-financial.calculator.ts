@@ -13,7 +13,12 @@ export type StudentMembershipWithRelations =
           season: true,
           billingConfig: true,
           pauses: true,
-          course: { select: { name: true } },
+          course: {
+            select: {
+              name: true,
+              school: { include: { discipline: { select: { name: true } } } },
+            },
+          },
         },
       },
       courseSeasonShift: { include: { shift: { select: { name: true } } } },
@@ -388,7 +393,7 @@ export function calculateSinglePaymentFee(
   );
 
   const { getStudentContext } = require('./student-billing.utils');
-  let description = `${getStudentContext(membership)} Pago Completo - Temporada`.trim();
+  let description = getStudentContext(membership, 'Pago Completo - Temporada');
   if (factor < 1) {
     description += ` (Prorrateado: cubre ${activeDays} de ${totalDays} días)`;
   }

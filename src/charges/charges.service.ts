@@ -6,12 +6,14 @@ import {
 } from '@nestjs/common';
 import { CreateChargeDto } from './dto/create-charge.dto';
 import { UpdateChargeDto } from './dto/update-charge.dto';
+import { UpdateDueDateDto } from './dto/update-due-date.dto';
 import { AddAdjustmentDto } from './dto/add-adjustment.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { ChargesPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
+import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 
 export const chargeSelect: Prisma.ChargeSelect = {
   id: true,
@@ -39,6 +41,11 @@ export const chargeSelect: Prisma.ChargeSelect = {
       amount: true,
       pendingAmount: true,
       status: true,
+    },
+  },
+  accountCharge: {
+    select: {
+      id: true,
     },
   },
   membershipCharges: {
@@ -293,6 +300,33 @@ export class ChargesService {
     };
   }
 
+  async updateDueDate(id: string, updateDueDateDto: UpdateDueDateDto) {
+    const charge = await this.prisma.charge.findUnique({
+      where: { id },
+    });
+    
+    if (!charge) {
+      throw new NotFoundException('El cargo solicitado no fue encontrado');
+    }
+
+    if (charge.status === StatusCharge.CANCELLED) {
+      throw new BadRequestException('No se puede modificar un cargo anulado.');
+    }
+
+    const updated = await this.prisma.charge.update({
+      where: { id },
+      data: {
+        dueDate: new Date(updateDueDateDto.dueDate),
+      },
+      select: chargeSelect,
+    });
+
+    return {
+      message: 'Fecha de vencimiento actualizada exitosamente',
+      data: mapChargeForFrontend(updated),
+    };
+  }
+
   async update(id: string, updateChargeDto: UpdateChargeDto) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
@@ -377,52 +411,73 @@ export class ChargesService {
   }
 
   async remove(id: string) {
-    const charge = await this.prisma.charge.findUnique({
-      where: { id },
-      include: {
-        membershipCharges: true,
-        studentCharges: true,
-        payments: true,
-      },
-    });
-
-    if (!charge) {
-      throw new NotFoundException('El cargo solicitado no fue encontrado');
-    }
-
-    const isManual =
-      charge.membershipCharges.some((mc) => mc.type === 'MANUAL') ||
-      charge.studentCharges.some((sc) => sc.type === 'MANUAL');
-
-    if (!isManual) {
-      throw new BadRequestException(
-        'Solo se pueden eliminar cargos creados de forma manual.',
-      );
-    }
-
-    if (charge.payments && charge.payments.length > 0) {
-      throw new BadRequestException(
-        'No se puede eliminar el cargo porque tiene transacciones (pagos) asociadas.',
-      );
-    }
-
     const deletedCharge = await this.prisma.$transaction(async (tx) => {
-      if (charge.membershipCharges.length > 0) {
-        await tx.membershipCharge.deleteMany({
-          where: { chargeId: id },
-        });
-      }
+      // 1. Bloquear el cargo para evitar modificaciones concurrentes (ej: creación de pagos simultánea)
+      await lockChargeForUpdate(tx, id);
 
-      if (charge.studentCharges.length > 0) {
-        await tx.studentCharge.deleteMany({
-          where: { chargeId: id },
-        });
-      }
-
-      return tx.charge.delete({
+      // 2. Leer las dependencias con estado íntegro
+      const charge = await tx.charge.findUnique({
         where: { id },
-        select: chargeSelect,
+        include: {
+          membershipCharges: true,
+          studentCharges: true,
+          payments: true,
+          accountCharge: true,
+        },
       });
+
+      if (!charge) {
+        throw new NotFoundException('El cargo solicitado no fue encontrado');
+      }
+
+      const isManual =
+        charge.membershipCharges.some((mc) => mc.type === 'MANUAL') ||
+        charge.studentCharges.some((sc) => sc.type === 'MANUAL') ||
+        charge.accountCharge !== null;
+
+      if (!isManual) {
+        throw new BadRequestException(
+          'Solo se pueden eliminar cargos creados de forma manual.',
+        );
+      }
+
+      const hasCompletedPayments = charge.payments.some(
+        (p) => p.status === 'COMPLETED',
+      );
+      if (hasCompletedPayments) {
+        throw new BadRequestException(
+          'No se puede eliminar el cargo porque tiene transacciones (pagos) completadas asociadas.',
+        );
+      }
+
+      const hasHistoricalPayments = charge.payments.length > 0;
+
+      if (hasHistoricalPayments) {
+        // Soft delete para conservar historial y referencias
+        return tx.charge.update({
+          where: { id },
+          data: { status: StatusCharge.CANCELLED },
+          select: chargeSelect,
+        });
+      } else {
+        // Hard delete
+        if (charge.membershipCharges.length > 0) {
+          await tx.membershipCharge.deleteMany({
+            where: { chargeId: id },
+          });
+        }
+
+        if (charge.studentCharges.length > 0) {
+          await tx.studentCharge.deleteMany({
+            where: { chargeId: id },
+          });
+        }
+
+        return tx.charge.delete({
+          where: { id },
+          select: chargeSelect,
+        });
+      }
     });
 
     return {
