@@ -4,12 +4,14 @@ import { UpdateTeamDto } from './dto/update-team.dto';
 import { Prisma } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { TeamsPaginationDto } from './dto/pagination.dto';
+import { StorageService } from '../storage/storage.service';
 
 export const teamSelect: Prisma.TeamSelect = {
   id: true,
   name: true,
   shortName: true,
   description: true,
+  imageUrl: true,
   createdAt: true,
   updatedAt: true,
   club: {
@@ -31,12 +33,25 @@ export const teamSelect: Prisma.TeamSelect = {
 export class TeamsService {
   private readonly logger = new Logger('ClubsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
-  async create(createTeamDto: CreateTeamDto) {
-    const { imageUrl, ...rest } = createTeamDto;
+  async create(createTeamDto: CreateTeamDto, image?: Express.Multer.File) {
+    const { imageUrl: _, ...rest } = createTeamDto;
+    
+    let imageUrl = null;
+    if (image) {
+      const uploadResult = await this.storageService.uploadFile(image, 'teams');
+      imageUrl = uploadResult.url;
+    }
+
     const newTeam = await this.prisma.team.create({
-      data: rest,
+      data: {
+        ...rest,
+        ...(imageUrl && { imageUrl }),
+      },
       select: teamSelect,
     });
 
@@ -111,19 +126,39 @@ export class TeamsService {
     return { data: team, message: 'Equipo obtenido exitosamente' };
   }
 
-  async update(id: string, updateTeamDto: UpdateTeamDto) {
-    const { imageUrl, ...rest } = updateTeamDto;
+  async update(id: string, updateTeamDto: UpdateTeamDto, image?: Express.Multer.File) {
+    const { imageUrl: _, ...rest } = updateTeamDto;
     const team = await this.findOne(id);
     if (!team) {
       throw new NotFoundException('El equipo no fue encontrado');
     }
+    
+    let newImageUrl = undefined;
+    if (image) {
+      const uploadResult = await this.storageService.uploadFile(image, 'teams');
+      newImageUrl = uploadResult.url;
+    }
+
     const updatedTeam = await this.prisma.team.update({
       where: { id },
       data: {
         ...rest,
+        ...(newImageUrl !== undefined && { imageUrl: newImageUrl }),
       },
       select: teamSelect,
     });
+    
+    // Cleanup old image if it was replaced
+    if (newImageUrl && team.data.imageUrl) {
+      try {
+        const internalName = this.storageService.extractInternalNameFromUrl(team.data.imageUrl);
+        if (internalName) {
+          await this.storageService.deleteFile(internalName);
+        }
+      } catch (e) {
+        this.logger.error(`Error al eliminar imagen anterior de equipo ${id}`, e);
+      }
+    }
 
     return {
       message: 'Equipo actualizado exitosamente',

@@ -9,11 +9,14 @@ import { UpdateClubDto } from './dto/update-club.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { ClubsPaginationDto } from './dto/pagination.dto';
+import { StorageService } from '../storage/storage.service';
 
 export const clubSelect: Prisma.ClubSelect = {
   id: true,
   name: true,
   shortName: true,
+  imageUrl: true,
+  isExternal: true,
   createdAt: true,
   updatedAt: true,
   institution: {
@@ -35,9 +38,12 @@ export const clubSelect: Prisma.ClubSelect = {
 export class ClubsService {
   private readonly logger = new Logger('ClubsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
-  async create(createClubDto: CreateClubDto) {
+  async create(createClubDto: CreateClubDto, image?: Express.Multer.File) {
     const institution = await this.prisma.institution.findFirst({
       select: {
         id: true,
@@ -46,10 +52,18 @@ export class ClubsService {
     if (!institution) {
       throw new NotFoundException('La organización no fue encontrada');
     }
+    
+    let imageUrl = null;
+    if (image) {
+      const uploadResult = await this.storageService.uploadFile(image, 'clubs');
+      imageUrl = uploadResult.url;
+    }
+
     const newClub = await this.prisma.club.create({
       data: {
         ...createClubDto,
         institutionId: institution.id,
+        ...(imageUrl && { imageUrl }),
       },
       select: clubSelect,
     });
@@ -125,7 +139,7 @@ export class ClubsService {
     return { data: club, message: 'Club obtenido exitosamente' };
   }
 
-  async update(id: string, updateClubDto: UpdateClubDto) {
+  async update(id: string, updateClubDto: UpdateClubDto, image?: Express.Multer.File) {
     const club = await this.prisma.club.findUnique({
       where: { id },
     });
@@ -161,15 +175,34 @@ export class ClubsService {
         'No se puede cambiar la disciplina porque el club tiene equipos y categorías relacionadas.',
       );
     }
+    
+    let newImageUrl = undefined;
+    if (image) {
+      const uploadResult = await this.storageService.uploadFile(image, 'clubs');
+      newImageUrl = uploadResult.url;
+    }
 
     const updatedClub = await this.prisma.club.update({
       where: { id },
       data: {
         ...updateClubDto,
         institutionId: institution.id,
+        ...(newImageUrl !== undefined && { imageUrl: newImageUrl }),
       },
       select: clubSelect,
     });
+    
+    // Cleanup old image if it was replaced
+    if (newImageUrl && club.imageUrl) {
+      try {
+        const internalName = this.storageService.extractInternalNameFromUrl(club.imageUrl);
+        if (internalName) {
+          await this.storageService.deleteFile(internalName);
+        }
+      } catch (e) {
+        this.logger.error(`Error al eliminar imagen anterior de club ${id}`, e);
+      }
+    }
 
     return {
       message: 'Club actualizado exitosamente',
@@ -197,6 +230,8 @@ export class ClubsService {
       select: {
         id: true,
         name: true,
+        imageUrl: true,
+        isExternal: true,
         discipline: {
           select: {
             id: true,

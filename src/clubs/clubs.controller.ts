@@ -9,6 +9,9 @@ import {
   ParseUUIDPipe,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +23,7 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiBearerAuth,
+  ApiConsumes,
 } from '@nestjs/swagger';
 import { ClubsService } from './clubs.service';
 import { CreateClubDto } from './dto/create-club.dto';
@@ -34,6 +38,14 @@ import { ClubResponseDto } from '../common/dto/responses/entities.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RequirePermissions } from 'src/auth/decorators/permissions.decorator';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+const imageFileFilter = (req: any, file: any, cb: any) => {
+  if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
+    return cb(new BadRequestException('Solo se permiten imágenes (jpg, jpeg, png, webp)'), false);
+  }
+  cb(null, true);
+};
 
 @ApiTags('Clubs')
 @ApiBearerAuth()
@@ -49,12 +61,20 @@ export class ClubsController {
     description:
       'Registra un club en el sistema asignándole una disciplina y vinculándolo a una institución.',
   })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('image', {
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: imageFileFilter,
+  }))
   @ApiStandardCreatedResponse(
     ClubResponseDto,
     'Club deportivo creado con éxito.',
   )
-  async create(@Body() createClubDto: CreateClubDto) {
-    return await this.clubsService.create(createClubDto);
+  async create(
+    @Body() createClubDto: CreateClubDto,
+    @UploadedFile() image?: Express.Multer.File,
+  ) {
+    return await this.clubsService.create(createClubDto, image);
   }
 
   @Get()
@@ -99,13 +119,19 @@ export class ClubsController {
     description: 'ID del club a actualizar (UUID)',
     format: 'uuid',
   })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('image', {
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: imageFileFilter,
+  }))
   @ApiBody({ type: UpdateClubDto })
   @ApiStandardResponse(ClubResponseDto, 'Club deportivo actualizado con éxito.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateClubDto: UpdateClubDto,
+    @UploadedFile() image?: Express.Multer.File,
   ) {
-    return await this.clubsService.update(id, updateClubDto);
+    return await this.clubsService.update(id, updateClubDto, image);
   }
 
   @Delete(':id')

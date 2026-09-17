@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsOptional, IsString, IsUUID, MinLength, IsBoolean } from 'class-validator';
+import { Transform } from 'class-transformer';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
@@ -48,4 +49,17 @@ export class CreateClubDto {
     }),
   })
   disciplineId: string;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si es un club externo (no asociado directamente al colegio CAN)',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
+  isExternal?: boolean;
 }

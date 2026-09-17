@@ -145,6 +145,7 @@ model Club {
   updatedById              String?          @map("updated_by_id")
   defaultAccountCategoryId String?          @map("default_account_category_id")
   isExternal               Boolean          @default(false) @map("is_external")
+  imageUrl                 String?          @map("image_url")
   createdBy                User?            @relation("CreatedBy", fields: [createdById], references: [id])
   defaultAccountCategory   AccountCategory? @relation("ClubDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
   discipline               Discipline       @relation(fields: [disciplineId], references: [id])

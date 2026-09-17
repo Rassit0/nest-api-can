@@ -10,7 +10,6 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
-import { HasMimeType, IsFile, MaxFileSize } from 'nestjs-form-data';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { ProgramGender } from 'src/generated/prisma/enums';
@@ -71,18 +70,7 @@ export class CreateTeamDto {
     description: 'Imagen del equipo (JPEG o PNG, máximo 5MB)',
   })
   @IsOptional()
-  @IsFile()
-  @MaxFileSize(5e6, {
-    message: i18nValidationMessage('validation.MAX_FILE_SIZE', {
-      constraint1: '5MB',
-    }),
-  })
-  @HasMimeType(['image/jpeg', 'image/png'], {
-    message: i18nValidationMessage('validation.WRONG_FILE_TYPE', {
-      constraint1: 'JPEG o PNG',
-    }),
-  })
-  imageUrl?: File | null;
+  imageUrl?: any;
 
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',

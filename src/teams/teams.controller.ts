@@ -27,7 +27,15 @@ import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { TeamsPaginationDto } from './dto/pagination.dto';
-import { FormDataRequest } from 'nestjs-form-data';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
+
+const imageFileFilter = (req: any, file: any, cb: any) => {
+  if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
+    return cb(new BadRequestException('Solo se permiten imágenes (jpg, jpeg, png, webp)'), false);
+  }
+  cb(null, true);
+};
 import {
   ApiStandardResponse,
   ApiStandardCreatedResponse,
@@ -53,10 +61,16 @@ export class TeamsController {
       'Registra un equipo (club, género, etc.) con su logo y metadatos.',
   })
   @ApiConsumes('multipart/form-data')
-  @FormDataRequest()
+  @UseInterceptors(FileInterceptor('image', {
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: imageFileFilter,
+  }))
   @ApiStandardCreatedResponse(TeamResponseDto, 'Equipo creado exitosamente.')
-  async create(@Body() createTeamDto: CreateTeamDto) {
-    return this.teamsService.create(createTeamDto);
+  async create(
+    @Body() createTeamDto: CreateTeamDto,
+    @UploadedFile() image?: Express.Multer.File,
+  ) {
+    return this.teamsService.create(createTeamDto, image);
   }
 
   @Get()
@@ -162,14 +176,18 @@ export class TeamsController {
     format: 'uuid',
   })
   @ApiConsumes('multipart/form-data')
-  @FormDataRequest()
+  @UseInterceptors(FileInterceptor('image', {
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: imageFileFilter,
+  }))
   @ApiBody({ type: UpdateTeamDto })
   @ApiStandardResponse(TeamResponseDto, 'Equipo actualizado exitosamente.')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTeamDto: UpdateTeamDto,
+    @UploadedFile() image?: Express.Multer.File,
   ) {
-    return this.teamsService.update(id, updateTeamDto);
+    return this.teamsService.update(id, updateTeamDto, image);
   }
 
   @Delete(':id')

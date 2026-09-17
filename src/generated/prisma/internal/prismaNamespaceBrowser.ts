@@ -246,7 +246,8 @@ export const ClubScalarFieldEnum = {
   createdById: 'createdById',
   updatedById: 'updatedById',
   defaultAccountCategoryId: 'defaultAccountCategoryId',
-  isExternal: 'isExternal'
+  isExternal: 'isExternal',
+  imageUrl: 'imageUrl'
 } as const
 
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
