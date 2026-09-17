@@ -459,7 +459,10 @@ export const ModelName = {
   Attachment: 'Attachment',
   TeamSeasonCategory: 'TeamSeasonCategory',
   News: 'News',
-  Banner: 'Banner'
+  HeroBanner: 'HeroBanner',
+  HomeDiscipline: 'HomeDiscipline',
+  NewsCategory: 'NewsCategory',
+  Promotion: 'Promotion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -475,7 +478,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "banner"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5585,77 +5588,299 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Banner: {
-      payload: Prisma.$BannerPayload<ExtArgs>
-      fields: Prisma.BannerFieldRefs
+    HeroBanner: {
+      payload: Prisma.$HeroBannerPayload<ExtArgs>
+      fields: Prisma.HeroBannerFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.BannerFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload> | null
+          args: Prisma.HeroBannerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.BannerFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         findFirst: {
-          args: Prisma.BannerFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload> | null
+          args: Prisma.HeroBannerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.BannerFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         findMany: {
-          args: Prisma.BannerFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+          args: Prisma.HeroBannerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>[]
         }
         create: {
-          args: Prisma.BannerCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         createMany: {
-          args: Prisma.BannerCreateManyArgs<ExtArgs>
+          args: Prisma.HeroBannerCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.BannerCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+          args: Prisma.HeroBannerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>[]
         }
         delete: {
-          args: Prisma.BannerDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         update: {
-          args: Prisma.BannerUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         deleteMany: {
-          args: Prisma.BannerDeleteManyArgs<ExtArgs>
+          args: Prisma.HeroBannerDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.BannerUpdateManyArgs<ExtArgs>
+          args: Prisma.HeroBannerUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.BannerUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>[]
+          args: Prisma.HeroBannerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>[]
         }
         upsert: {
-          args: Prisma.BannerUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$BannerPayload>
+          args: Prisma.HeroBannerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroBannerPayload>
         }
         aggregate: {
-          args: Prisma.BannerAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateBanner>
+          args: Prisma.HeroBannerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHeroBanner>
         }
         groupBy: {
-          args: Prisma.BannerGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BannerGroupByOutputType>[]
+          args: Prisma.HeroBannerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroBannerGroupByOutputType>[]
         }
         count: {
-          args: Prisma.BannerCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BannerCountAggregateOutputType> | number
+          args: Prisma.HeroBannerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroBannerCountAggregateOutputType> | number
+        }
+      }
+    }
+    HomeDiscipline: {
+      payload: Prisma.$HomeDisciplinePayload<ExtArgs>
+      fields: Prisma.HomeDisciplineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HomeDisciplineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HomeDisciplineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        findFirst: {
+          args: Prisma.HomeDisciplineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HomeDisciplineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        findMany: {
+          args: Prisma.HomeDisciplineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>[]
+        }
+        create: {
+          args: Prisma.HomeDisciplineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        createMany: {
+          args: Prisma.HomeDisciplineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HomeDisciplineCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>[]
+        }
+        delete: {
+          args: Prisma.HomeDisciplineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        update: {
+          args: Prisma.HomeDisciplineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        deleteMany: {
+          args: Prisma.HomeDisciplineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HomeDisciplineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HomeDisciplineUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>[]
+        }
+        upsert: {
+          args: Prisma.HomeDisciplineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HomeDisciplinePayload>
+        }
+        aggregate: {
+          args: Prisma.HomeDisciplineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHomeDiscipline>
+        }
+        groupBy: {
+          args: Prisma.HomeDisciplineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HomeDisciplineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HomeDisciplineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HomeDisciplineCountAggregateOutputType> | number
+        }
+      }
+    }
+    NewsCategory: {
+      payload: Prisma.$NewsCategoryPayload<ExtArgs>
+      fields: Prisma.NewsCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NewsCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NewsCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.NewsCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NewsCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.NewsCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.NewsCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.NewsCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NewsCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.NewsCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        update: {
+          args: Prisma.NewsCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.NewsCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NewsCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NewsCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.NewsCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.NewsCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNewsCategory>
+        }
+        groupBy: {
+          args: Prisma.NewsCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NewsCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    Promotion: {
+      payload: Prisma.$PromotionPayload<ExtArgs>
+      fields: Prisma.PromotionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PromotionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PromotionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        findFirst: {
+          args: Prisma.PromotionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PromotionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        findMany: {
+          args: Prisma.PromotionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>[]
+        }
+        create: {
+          args: Prisma.PromotionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        createMany: {
+          args: Prisma.PromotionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PromotionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>[]
+        }
+        delete: {
+          args: Prisma.PromotionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        update: {
+          args: Prisma.PromotionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PromotionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PromotionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PromotionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PromotionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromotionPayload>
+        }
+        aggregate: {
+          args: Prisma.PromotionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePromotion>
+        }
+        groupBy: {
+          args: Prisma.PromotionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PromotionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PromotionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PromotionCountAggregateOutputType> | number
         }
       }
     }
@@ -5751,11 +5976,11 @@ export const InstitutionScalarFieldEnum = {
   name: 'name',
   imageUrl: 'imageUrl',
   address: 'address',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  googleMapsUrl: 'googleMapsUrl',
   latitude: 'latitude',
   longitude: 'longitude',
+  googleMapsUrl: 'googleMapsUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5803,7 +6028,8 @@ export const ClubScalarFieldEnum = {
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
-  defaultAccountCategoryId: 'defaultAccountCategoryId'
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
+  isExternal: 'isExternal'
 } as const
 
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
@@ -5822,10 +6048,10 @@ export const LocationScalarFieldEnum = {
   isRentable: 'isRentable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById',
+  parentId: 'parentId',
   maxConcurrentEvents: 'maxConcurrentEvents',
-  parentId: 'parentId'
+  createdById: 'createdById',
+  updatedById: 'updatedById'
 } as const
 
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
@@ -5903,10 +6129,10 @@ export const TeamSeasonScalarFieldEnum = {
   teamId: 'teamId',
   seasonId: 'seasonId',
   status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   statusNotes: 'statusNotes',
   isRegistrationOpen: 'isRegistrationOpen',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -5952,11 +6178,11 @@ export const PaymentPlanScalarFieldEnum = {
   isSinglePayment: 'isSinglePayment',
   advanceCycles: 'advanceCycles',
   advanceCyclesDiscountPercent: 'advanceCyclesDiscountPercent',
+  promotionalCycles: 'promotionalCycles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById',
-  promotionalCycles: 'promotionalCycles'
+  updatedById: 'updatedById'
 } as const
 
 export type PaymentPlanScalarFieldEnum = (typeof PaymentPlanScalarFieldEnum)[keyof typeof PaymentPlanScalarFieldEnum]
@@ -6030,13 +6256,13 @@ export const MembershipDiscountScalarFieldEnum = {
   playerMembershipId: 'playerMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6100,12 +6326,12 @@ export const ChargeScalarFieldEnum = {
   description: 'description',
   amount: 'amount',
   pendingAmount: 'pendingAmount',
+  adjustmentAmount: 'adjustmentAmount',
+  adjustmentReason: 'adjustmentReason',
   dueDate: 'dueDate',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  adjustmentAmount: 'adjustmentAmount',
-  adjustmentReason: 'adjustmentReason',
   createdById: 'createdById',
   updatedById: 'updatedById',
   direction: 'direction',
@@ -6153,6 +6379,7 @@ export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFiel
 
 export const TransactionScalarFieldEnum = {
   id: 'id',
+  receiptNumber: 'receiptNumber',
   payerPersonId: 'payerPersonId',
   amount: 'amount',
   transactionDate: 'transactionDate',
@@ -6166,7 +6393,6 @@ export const TransactionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
-  receiptNumber: 'receiptNumber',
   receiptSeries: 'receiptSeries',
   financialAccountId: 'financialAccountId',
   isReconciled: 'isReconciled',
@@ -6175,9 +6401,9 @@ export const TransactionScalarFieldEnum = {
   isInternalTransfer: 'isInternalTransfer',
   thirdPartyId: 'thirdPartyId',
   paymentId: 'paymentId',
-  reversesId: 'reversesId',
+  balanceAfter: 'balanceAfter',
   balanceBefore: 'balanceBefore',
-  balanceAfter: 'balanceAfter'
+  reversesId: 'reversesId'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -6215,12 +6441,12 @@ export type ReceiptSequenceScalarFieldEnum = (typeof ReceiptSequenceScalarFieldE
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  password: 'password',
   personId: 'personId',
   roleId: 'roleId',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  password: 'password'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6230,12 +6456,12 @@ export const RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  isSystem: 'isSystem',
-  isSuperAdmin: 'isSuperAdmin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  isSuperAdmin: 'isSuperAdmin',
+  isSystem: 'isSystem'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
@@ -6259,11 +6485,11 @@ export const PermissionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  moduleId: 'moduleId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById',
-  moduleId: 'moduleId'
+  updatedById: 'updatedById'
 } as const
 
 export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -6280,11 +6506,11 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  shortName: 'shortName',
   createdById: 'createdById',
   updatedById: 'updatedById',
   defaultAccountCategoryId: 'defaultAccountCategoryId'
@@ -6297,11 +6523,11 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   schoolId: 'schoolId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  shortName: 'shortName',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6316,10 +6542,10 @@ export const CourseSeasonScalarFieldEnum = {
   courseId: 'courseId',
   seasonId: 'seasonId',
   status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   statusNotes: 'statusNotes',
   isRegistrationOpen: 'isRegistrationOpen',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
   name: 'name'
@@ -6334,16 +6560,16 @@ export const CourseSeasonShiftScalarFieldEnum = {
   shiftId: 'shiftId',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById',
   categoryId: 'categoryId',
   gender: 'gender',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
-  validateAge: 'validateAge'
+  validateAge: 'validateAge',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
 } as const
 
 export type CourseSeasonShiftScalarFieldEnum = (typeof CourseSeasonShiftScalarFieldEnum)[keyof typeof CourseSeasonShiftScalarFieldEnum]
@@ -6408,6 +6634,7 @@ export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBilli
 export const CourseSeasonStaffScalarFieldEnum = {
   id: 'id',
   staffId: 'staffId',
+  role: 'role',
   customRole: 'customRole',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -6415,7 +6642,6 @@ export const CourseSeasonStaffScalarFieldEnum = {
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  role: 'role',
   createdById: 'createdById',
   updatedById: 'updatedById',
   courseSeasonShiftId: 'courseSeasonShiftId'
@@ -6512,13 +6738,13 @@ export const StudentDiscountScalarFieldEnum = {
   studentMembershipId: 'studentMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -6634,8 +6860,8 @@ export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[k
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  durationMin: 'durationMin',
-  eventId: 'eventId'
+  eventId: 'eventId',
+  durationMin: 'durationMin'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -6676,12 +6902,13 @@ export type SessionBookingScalarFieldEnum = (typeof SessionBookingScalarFieldEnu
 
 export const MatchScalarFieldEnum = {
   id: 'id',
-  opponentName: 'opponentName',
-  type: 'type',
-  ourScore: 'ourScore',
-  theirScore: 'theirScore',
-  result: 'result',
   eventId: 'eventId',
+  type: 'type',
+  result: 'result',
+  awayScore: 'awayScore',
+  awayTeamId: 'awayTeamId',
+  homeScore: 'homeScore',
+  homeTeamId: 'homeTeamId',
   teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
@@ -6712,14 +6939,14 @@ export const AuditLogScalarFieldEnum = {
   entityName: 'entityName',
   entityId: 'entityId',
   action: 'action',
+  type: 'type',
+  titleKey: 'titleKey',
+  messageKey: 'messageKey',
+  messageParams: 'messageParams',
   oldValues: 'oldValues',
   newValues: 'newValues',
   userId: 'userId',
-  createdAt: 'createdAt',
-  messageKey: 'messageKey',
-  messageParams: 'messageParams',
-  titleKey: 'titleKey',
-  type: 'type'
+  createdAt: 'createdAt'
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
@@ -6836,12 +7063,12 @@ export const TeamSeasonCategoryScalarFieldEnum = {
   maxMembers: 'maxMembers',
   validateAge: 'validateAge',
   isActive: 'isActive',
-  status: 'status',
-  endedAt: 'endedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  endedAt: 'endedAt',
+  status: 'status'
 } as const
 
 export type TeamSeasonCategoryScalarFieldEnum = (typeof TeamSeasonCategoryScalarFieldEnum)[keyof typeof TeamSeasonCategoryScalarFieldEnum]
@@ -6854,19 +7081,20 @@ export const NewsScalarFieldEnum = {
   excerpt: 'excerpt',
   content: 'content',
   imageUrl: 'imageUrl',
-  category: 'category',
+  legacyCategory: 'legacyCategory',
   tags: 'tags',
   authorName: 'authorName',
   status: 'status',
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
 } as const
 
 export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
-export const BannerScalarFieldEnum = {
+export const HeroBannerScalarFieldEnum = {
   id: 'id',
   title: 'title',
   ctaText: 'ctaText',
@@ -6874,14 +7102,57 @@ export const BannerScalarFieldEnum = {
   image16x9: 'image16x9',
   image1x1: 'image1x1',
   image3x4: 'image3x4',
-  category: 'category',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type BannerScalarFieldEnum = (typeof BannerScalarFieldEnum)[keyof typeof BannerScalarFieldEnum]
+export type HeroBannerScalarFieldEnum = (typeof HeroBannerScalarFieldEnum)[keyof typeof HeroBannerScalarFieldEnum]
+
+
+export const HomeDisciplineScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  redirectTo: 'redirectTo',
+  image4x3: 'image4x3',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeDisciplineScalarFieldEnum = (typeof HomeDisciplineScalarFieldEnum)[keyof typeof HomeDisciplineScalarFieldEnum]
+
+
+export const NewsCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsCategoryScalarFieldEnum = (typeof NewsCategoryScalarFieldEnum)[keyof typeof NewsCategoryScalarFieldEnum]
+
+
+export const PromotionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  ctaText: 'ctaText',
+  redirectTo: 'redirectTo',
+  image16x9: 'image16x9',
+  image1x1: 'image1x1',
+  image3x4: 'image3x4',
+  position: 'position',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -7546,6 +7817,20 @@ export type EnumNewsStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 export type ListEnumNewsStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'PromotionPosition'
+ */
+export type EnumPromotionPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromotionPosition'>
+    
+
+
+/**
+ * Reference to a field of type 'PromotionPosition[]'
+ */
+export type ListEnumPromotionPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromotionPosition[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -7702,7 +7987,10 @@ export type GlobalOmitConfig = {
   attachment?: Prisma.AttachmentOmit
   teamSeasonCategory?: Prisma.TeamSeasonCategoryOmit
   news?: Prisma.NewsOmit
-  banner?: Prisma.BannerOmit
+  heroBanner?: Prisma.HeroBannerOmit
+  homeDiscipline?: Prisma.HomeDisciplineOmit
+  newsCategory?: Prisma.NewsCategoryOmit
+  promotion?: Prisma.PromotionOmit
 }
 
 /* Types for Logging */

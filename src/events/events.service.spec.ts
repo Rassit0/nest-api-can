@@ -39,6 +39,9 @@ describe('EventsService (Orchestrator)', () => {
     generalEvent: {
       findUnique: jest.fn(),
     },
+    courseSeasonShift: {
+      findUnique: jest.fn(),
+    },
   };
 
   const mockAvailabilityEngine = {
@@ -155,6 +158,163 @@ describe('EventsService (Orchestrator)', () => {
       await expect(
         service.executeEventUpdate('missing-id', {}, 'user-1', async () => ({}))
       ).rejects.toThrow(EventNotFoundException);
+    });
+  });
+
+  describe('validateGeneralEventContext', () => {
+    it('should pass with Institution only', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: 'inst-1',
+          teamSeasonCategoryId: null,
+          courseSeasonId: null,
+          courseSeasonShiftId: null,
+        })
+      ).resolves.not.toThrow();
+    });
+
+    it('should pass with TeamSeasonCategory only', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: null,
+          teamSeasonCategoryId: 'team-1',
+          courseSeasonId: null,
+          courseSeasonShiftId: null,
+        })
+      ).resolves.not.toThrow();
+    });
+
+    it('should pass with CourseSeason only', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: null,
+          teamSeasonCategoryId: null,
+          courseSeasonId: 'course-1',
+          courseSeasonShiftId: null,
+        })
+      ).resolves.not.toThrow();
+    });
+
+    it('should pass with CourseSeason + valid CourseSeasonShift', async () => {
+      (prisma.courseSeasonShift.findUnique as jest.Mock).mockResolvedValueOnce({
+        courseSeasonId: 'course-1',
+      });
+
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: null,
+          teamSeasonCategoryId: null,
+          courseSeasonId: 'course-1',
+          courseSeasonShiftId: 'shift-1',
+        })
+      ).resolves.not.toThrow();
+    });
+
+    it('should reject Institution + TeamSeasonCategory', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: 'inst-1',
+          teamSeasonCategoryId: 'team-1',
+          courseSeasonId: null,
+          courseSeasonShiftId: null,
+        })
+      ).rejects.toThrow(EventValidationException);
+    });
+
+    it('should reject Institution + CourseSeason', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: 'inst-1',
+          teamSeasonCategoryId: null,
+          courseSeasonId: 'course-1',
+          courseSeasonShiftId: null,
+        })
+      ).rejects.toThrow(EventValidationException);
+    });
+
+    it('should reject TeamSeasonCategory + CourseSeason', async () => {
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: null,
+          teamSeasonCategoryId: 'team-1',
+          courseSeasonId: 'course-1',
+          courseSeasonShiftId: null,
+        })
+      ).rejects.toThrow(EventValidationException);
+    });
+
+    it('should reject Shift belonging to wrong CourseSeason', async () => {
+      (prisma.courseSeasonShift.findUnique as jest.Mock).mockResolvedValueOnce({
+        courseSeasonId: 'another-course-1',
+      });
+
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: null,
+          teamSeasonCategoryId: null,
+          courseSeasonId: 'course-1',
+          courseSeasonShiftId: 'shift-1',
+        })
+      ).rejects.toThrow(EventValidationException);
+    });
+
+    it('should reject UPDATE context change if previous context is not explicitly cleared', async () => {
+      // Simulate an update payload where we set teamSeasonCategoryId but didn't nullify the existing institutionId
+      const previousGeneralEvent = {
+        institutionId: 'inst-1',
+        teamSeasonCategoryId: null,
+        courseSeasonId: null,
+        courseSeasonShiftId: null,
+      };
+
+      const updatePayload = {
+        teamSeasonCategoryId: 'team-1',
+        // Omitted institutionId: null
+      };
+
+      // Service logic simulates merging
+      const finalInstitutionId = updatePayload['institutionId'] !== undefined ? updatePayload['institutionId'] : previousGeneralEvent.institutionId;
+      const finalTeamSeasonCategoryId = updatePayload.teamSeasonCategoryId !== undefined ? updatePayload.teamSeasonCategoryId : previousGeneralEvent.teamSeasonCategoryId;
+      const finalCourseSeasonId = updatePayload['courseSeasonId'] !== undefined ? updatePayload['courseSeasonId'] : previousGeneralEvent.courseSeasonId;
+      const finalCourseSeasonShiftId = updatePayload['courseSeasonShiftId'] !== undefined ? updatePayload['courseSeasonShiftId'] : previousGeneralEvent.courseSeasonShiftId;
+
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: finalInstitutionId,
+          teamSeasonCategoryId: finalTeamSeasonCategoryId,
+          courseSeasonId: finalCourseSeasonId,
+          courseSeasonShiftId: finalCourseSeasonShiftId,
+        })
+      ).rejects.toThrow(EventValidationException);
+    });
+
+    it('should accept UPDATE context change if previous context IS explicitly cleared', async () => {
+      // Simulate an update payload where we set teamSeasonCategoryId AND nullify the existing institutionId
+      const previousGeneralEvent = {
+        institutionId: 'inst-1',
+        teamSeasonCategoryId: null,
+        courseSeasonId: null,
+        courseSeasonShiftId: null,
+      };
+
+      const updatePayload = {
+        institutionId: null,
+        teamSeasonCategoryId: 'team-1',
+      };
+
+      const finalInstitutionId = updatePayload.institutionId !== undefined ? updatePayload.institutionId : previousGeneralEvent.institutionId;
+      const finalTeamSeasonCategoryId = updatePayload.teamSeasonCategoryId !== undefined ? updatePayload.teamSeasonCategoryId : previousGeneralEvent.teamSeasonCategoryId;
+      const finalCourseSeasonId = updatePayload['courseSeasonId'] !== undefined ? updatePayload['courseSeasonId'] : previousGeneralEvent.courseSeasonId;
+      const finalCourseSeasonShiftId = updatePayload['courseSeasonShiftId'] !== undefined ? updatePayload['courseSeasonShiftId'] : previousGeneralEvent.courseSeasonShiftId;
+
+      await expect(
+        (service as any).validateGeneralEventContext({
+          institutionId: finalInstitutionId,
+          teamSeasonCategoryId: finalTeamSeasonCategoryId,
+          courseSeasonId: finalCourseSeasonId,
+          courseSeasonShiftId: finalCourseSeasonShiftId,
+        })
+      ).resolves.not.toThrow();
     });
   });
 });

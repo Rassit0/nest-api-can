@@ -175,6 +175,35 @@ export class TeamsService {
     };
   }
 
+  async getTeamsOptions() {
+    const teams = await this.prisma.team.findMany({
+      select: {
+        id: true,
+        name: true,
+        shortName: true,
+        imageUrl: true,
+        club: {
+          select: {
+            id: true,
+            name: true,
+            isExternal: true,
+            discipline: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: { name: 'asc' },
+    });
+
+    return {
+      data: teams,
+      message: 'Equipos obtenidos exitosamente',
+    };
+  }
+
   async getClubContext(clubId: string) {
     const club = await this.prisma.club.findUnique({
       where: { id: clubId },

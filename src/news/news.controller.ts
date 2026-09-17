@@ -8,6 +8,13 @@ import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 import { ApiTags, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+const imageFileFilter = (req: any, file: any, cb: any) => {
+  if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
+    return cb(new BadRequestException('Solo se permiten imágenes (jpg, jpeg, png, webp)'), false);
+  }
+  cb(null, true);
+};
+
 @ApiTags('News (Admin)')
 @Controller('news')
 @ApiBearerAuth()
@@ -17,27 +24,16 @@ export class NewsController {
 
   @Post()
   @RequirePermissions('CREATE_NEWS')
-  create(@Body() createNewsDto: CreateNewsDto) {
-    return this.newsService.create(createNewsDto);
-  }
-
-  @Post('upload-image')
-  @RequirePermissions('CREATE_NEWS')
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file', {
+  @UseInterceptors(FileInterceptor('cover', {
     limits: { fileSize: 5 * 1024 * 1024 },
-    fileFilter: (req, file, cb) => {
-      if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
-        return cb(new BadRequestException('Solo se permiten imágenes (jpg, jpeg, png, webp)'), false);
-      }
-      cb(null, true);
-    }
+    fileFilter: imageFileFilter,
   }))
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      throw new BadRequestException('No se envió ningún archivo');
-    }
-    return this.newsService.uploadImage(file);
+  create(
+    @Body() createNewsDto: CreateNewsDto,
+    @UploadedFile() cover?: Express.Multer.File
+  ) {
+    return this.newsService.create(createNewsDto, cover);
   }
 
   @Get()
@@ -54,8 +50,17 @@ export class NewsController {
 
   @Patch(':id')
   @RequirePermissions('UPDATE_NEWS')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateNewsDto: UpdateNewsDto) {
-    return this.newsService.update(id, updateNewsDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('cover', {
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: imageFileFilter,
+  }))
+  update(
+    @Param('id', ParseUUIDPipe) id: string, 
+    @Body() updateNewsDto: UpdateNewsDto,
+    @UploadedFile() cover?: Express.Multer.File
+  ) {
+    return this.newsService.update(id, updateNewsDto, cover);
   }
 
   @Delete(':id')

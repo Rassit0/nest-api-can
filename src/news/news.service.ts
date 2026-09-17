@@ -1,68 +1,158 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { NewsStatus } from '../generated/prisma/client';
-import { IStorageProvider } from '../storage/interfaces/storage-provider.interface';
-import { Inject } from '@nestjs/common';
-import { STORAGE_PROVIDER } from '../storage/storage.service';
+import { StorageService } from '../storage/storage.service';
+import { generateSlug } from '../common/utils/slug.util';
 
 @Injectable()
 export class NewsService {
+  private readonly logger = new Logger(NewsService.name);
+
   constructor(
     private readonly prisma: PrismaService,
-    @Inject(STORAGE_PROVIDER) private readonly storageProvider: IStorageProvider,
+    private readonly storageService: StorageService,
   ) {}
 
-  // Generación simple de slug basada en título si se necesita, aunque asume que puede pasarse del frontend o auto-generarse.
-  private generateSlug(title: string): string {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now();
+  // Removido generateSlug privado, ahora se usa el compartido
+
+  private async deleteSafe(url: string) {
+    const internalName = this.storageService.extractInternalNameFromUrl(url);
+    if (internalName) {
+      try {
+        await this.storageService.deleteFile(internalName);
+      } catch (err) {
+        this.logger.error(`Failed to delete old file: ${internalName}`, err);
+      }
+    }
   }
 
-  async create(createNewsDto: CreateNewsDto) {
-    const slug = this.generateSlug(createNewsDto.title);
-    return this.prisma.news.create({
-      data: {
-        ...createNewsDto,
-        slug,
-      },
-    });
+  async create(createNewsDto: CreateNewsDto, cover?: Express.Multer.File) {
+    const slug = generateSlug(createNewsDto.title) + '-' + Date.now();
+    let uploadedInternalName: string | null = null;
+    let imageUrl: string | undefined = undefined;
+
+    try {
+      if (cover) {
+        const result = await this.storageService.uploadFile(cover, 'news');
+        uploadedInternalName = result.internalName;
+        imageUrl = result.url;
+      }
+
+      return await this.prisma.news.create({
+        data: {
+          ...createNewsDto,
+          slug,
+          ...(imageUrl ? { imageUrl } : {}),
+        },
+      });
+    } catch (error) {
+      if (uploadedInternalName) {
+        try {
+          await this.storageService.deleteFile(uploadedInternalName);
+        } catch (e) {
+          this.logger.error(`Compensatory deletion failed for: ${uploadedInternalName}`, e);
+        }
+      }
+      throw error;
+    }
   }
 
   async findAll() {
-    return this.prisma.news.findMany({
+    const news = await this.prisma.news.findMany({
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true }
+        }
+      },
       orderBy: { createdAt: 'desc' },
+    });
+    return news.map(n => {
+      const { categoryId, ...rest } = n;
+      return rest;
     });
   }
 
   async findOne(id: string) {
-    const news = await this.prisma.news.findUnique({ where: { id } });
+    const news = await this.prisma.news.findUnique({ 
+      where: { id },
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true }
+        }
+      }
+    });
     if (!news) throw new NotFoundException('Noticia no encontrada');
-    return news;
+    const { categoryId, ...rest } = news;
+    return rest;
   }
 
-  async update(id: string, updateNewsDto: UpdateNewsDto) {
-    return this.prisma.news.update({
-      where: { id },
-      data: updateNewsDto,
-    });
+  async update(id: string, updateNewsDto: UpdateNewsDto, cover?: Express.Multer.File) {
+    const oldNews = await this.findOne(id);
+    let uploadedInternalName: string | null = null;
+    let newImageUrl: string | undefined = undefined;
+
+    try {
+      if (cover) {
+        const result = await this.storageService.uploadFile(cover, 'news');
+        uploadedInternalName = result.internalName;
+        newImageUrl = result.url;
+      }
+
+      const { removeImageUrl, ...dataToUpdate } = updateNewsDto;
+
+      const updated = await this.prisma.news.update({
+        where: { id },
+        data: {
+          ...dataToUpdate,
+          ...(newImageUrl
+            ? { imageUrl: newImageUrl }
+            : removeImageUrl
+              ? { imageUrl: null }
+              : {}),
+        },
+      });
+
+      if (newImageUrl && oldNews.imageUrl) {
+        await this.deleteSafe(oldNews.imageUrl);
+      } else if (removeImageUrl && oldNews.imageUrl) {
+        await this.deleteSafe(oldNews.imageUrl);
+      }
+
+      return updated;
+    } catch (error) {
+      if (uploadedInternalName) {
+        try {
+          await this.storageService.deleteFile(uploadedInternalName);
+        } catch (e) {
+          this.logger.error(`Compensatory deletion failed for: ${uploadedInternalName}`, e);
+        }
+      }
+      throw error;
+    }
   }
 
   async remove(id: string) {
-    return this.prisma.news.delete({ where: { id } });
-  }
-
-  async uploadImage(file: Express.Multer.File): Promise<{ url: string }> {
-    const result = await this.storageProvider.uploadFile(file, 'news');
-    return { url: result.url };
+    const news = await this.findOne(id);
+    const deleted = await this.prisma.news.delete({ where: { id } });
+    
+    if (news.imageUrl) {
+      await this.deleteSafe(news.imageUrl);
+    }
+    
+    return deleted;
   }
 
   // --- MÉTODOS PÚBLICOS ---
 
-  async findPublic() {
-    return this.prisma.news.findMany({
+  async findPublic(categoryId?: string, limit?: number) {
+    const take = limit ? Math.min(Math.max(limit, 1), 50) : 20;
+    
+    const news = await this.prisma.news.findMany({
       where: {
         status: NewsStatus.PUBLISHED,
+        ...(categoryId ? { categoryId } : {}),
         OR: [
           { publishedAt: { lte: new Date() } },
           { publishedAt: null }
@@ -74,14 +164,21 @@ export class NewsService {
         title: true,
         excerpt: true,
         imageUrl: true,
-        category: true,
+        category: {
+          select: { id: true, name: true, slug: true }
+        },
         publishedAt: true,
       },
       orderBy: {
         publishedAt: 'desc',
       },
-      take: 20, // Límite razonable por defecto sin paginación compleja
+      take,
     });
+    return news.map(n => ({
+      ...n,
+      category: n.category ? n.category.name : null,
+      categoryId: n.category ? n.category.id : null,
+    }));
   }
 
   async findPublicBySlug(slug: string) {
@@ -101,7 +198,9 @@ export class NewsService {
         excerpt: true,
         content: true,
         imageUrl: true,
-        category: true,
+        category: {
+          select: { id: true, name: true, slug: true }
+        },
         tags: true,
         authorName: true,
         publishedAt: true,
@@ -112,6 +211,9 @@ export class NewsService {
       throw new NotFoundException('Noticia no encontrada o no disponible');
     }
 
-    return news;
+    return {
+      ...news,
+      category: news.category ? news.category.name : null,
+    };
   }
 }

@@ -706,20 +706,25 @@ export class TransactionsService {
             { payerPerson: { name: { contains: word, mode: 'insensitive' } } },
             { payerPerson: { lastName: { contains: word, mode: 'insensitive' } } },
             { payerPerson: { secondLastName: { contains: word, mode: 'insensitive' } } },
+            { payerPerson: { documentNumber: { contains: word, mode: 'insensitive' } } },
             // ThirdParty (Beneficiario directo)
             { thirdParty: { name: { contains: word, mode: 'insensitive' } } },
+            { thirdParty: { documentNumber: { contains: word, mode: 'insensitive' } } },
             // Beneficiario derivado de AccountCharge
             { payment: { charge: { accountCharge: { person: { name: { contains: word, mode: 'insensitive' } } } } } },
             { payment: { charge: { accountCharge: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } },
             { payment: { charge: { accountCharge: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } },
+            { payment: { charge: { accountCharge: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } },
             // Beneficiario derivado de Student
             { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { name: { contains: word, mode: 'insensitive' } } } } } } } } },
             { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } } } } },
             { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } } } } },
+            { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } } } } },
             // Beneficiario derivado de Player
             { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { name: { contains: word, mode: 'insensitive' } } } } } } } } },
             { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } } } } },
             { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } } } } },
+            { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } } } } },
           ];
 
           if (isNumeric) {

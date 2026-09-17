@@ -19,7 +19,8 @@ export const matchLineupSelect: Prisma.MatchLineupSelect = {
   match: {
     select: {
       id: true,
-      opponentName: true,
+      homeTeamId: true,
+      awayTeamId: true,
       event: { select: { startDate: true } },
       type: true,
     },
@@ -86,7 +87,12 @@ export class MatchLineupsService {
         },
         {
           match: {
-            opponentName: { contains: search, mode: 'insensitive' },
+            homeTeam: { name: { contains: search, mode: 'insensitive' } },
+          },
+        },
+        {
+          match: {
+            awayTeam: { name: { contains: search, mode: 'insensitive' } },
           },
         },
       ];

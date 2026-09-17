@@ -118,7 +118,10 @@ export const ModelName = {
   Attachment: 'Attachment',
   TeamSeasonCategory: 'TeamSeasonCategory',
   News: 'News',
-  Banner: 'Banner'
+  HeroBanner: 'HeroBanner',
+  HomeDiscipline: 'HomeDiscipline',
+  NewsCategory: 'NewsCategory',
+  Promotion: 'Promotion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -190,11 +193,11 @@ export const InstitutionScalarFieldEnum = {
   name: 'name',
   imageUrl: 'imageUrl',
   address: 'address',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  googleMapsUrl: 'googleMapsUrl',
   latitude: 'latitude',
   longitude: 'longitude',
+  googleMapsUrl: 'googleMapsUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -242,7 +245,8 @@ export const ClubScalarFieldEnum = {
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
-  defaultAccountCategoryId: 'defaultAccountCategoryId'
+  defaultAccountCategoryId: 'defaultAccountCategoryId',
+  isExternal: 'isExternal'
 } as const
 
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
@@ -261,10 +265,10 @@ export const LocationScalarFieldEnum = {
   isRentable: 'isRentable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById',
+  parentId: 'parentId',
   maxConcurrentEvents: 'maxConcurrentEvents',
-  parentId: 'parentId'
+  createdById: 'createdById',
+  updatedById: 'updatedById'
 } as const
 
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
@@ -342,10 +346,10 @@ export const TeamSeasonScalarFieldEnum = {
   teamId: 'teamId',
   seasonId: 'seasonId',
   status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   statusNotes: 'statusNotes',
   isRegistrationOpen: 'isRegistrationOpen',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -391,11 +395,11 @@ export const PaymentPlanScalarFieldEnum = {
   isSinglePayment: 'isSinglePayment',
   advanceCycles: 'advanceCycles',
   advanceCyclesDiscountPercent: 'advanceCyclesDiscountPercent',
+  promotionalCycles: 'promotionalCycles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById',
-  promotionalCycles: 'promotionalCycles'
+  updatedById: 'updatedById'
 } as const
 
 export type PaymentPlanScalarFieldEnum = (typeof PaymentPlanScalarFieldEnum)[keyof typeof PaymentPlanScalarFieldEnum]
@@ -469,13 +473,13 @@ export const MembershipDiscountScalarFieldEnum = {
   playerMembershipId: 'playerMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -539,12 +543,12 @@ export const ChargeScalarFieldEnum = {
   description: 'description',
   amount: 'amount',
   pendingAmount: 'pendingAmount',
+  adjustmentAmount: 'adjustmentAmount',
+  adjustmentReason: 'adjustmentReason',
   dueDate: 'dueDate',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  adjustmentAmount: 'adjustmentAmount',
-  adjustmentReason: 'adjustmentReason',
   createdById: 'createdById',
   updatedById: 'updatedById',
   direction: 'direction',
@@ -592,6 +596,7 @@ export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFiel
 
 export const TransactionScalarFieldEnum = {
   id: 'id',
+  receiptNumber: 'receiptNumber',
   payerPersonId: 'payerPersonId',
   amount: 'amount',
   transactionDate: 'transactionDate',
@@ -605,7 +610,6 @@ export const TransactionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
-  receiptNumber: 'receiptNumber',
   receiptSeries: 'receiptSeries',
   financialAccountId: 'financialAccountId',
   isReconciled: 'isReconciled',
@@ -614,9 +618,9 @@ export const TransactionScalarFieldEnum = {
   isInternalTransfer: 'isInternalTransfer',
   thirdPartyId: 'thirdPartyId',
   paymentId: 'paymentId',
-  reversesId: 'reversesId',
+  balanceAfter: 'balanceAfter',
   balanceBefore: 'balanceBefore',
-  balanceAfter: 'balanceAfter'
+  reversesId: 'reversesId'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -654,12 +658,12 @@ export type ReceiptSequenceScalarFieldEnum = (typeof ReceiptSequenceScalarFieldE
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  password: 'password',
   personId: 'personId',
   roleId: 'roleId',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  password: 'password'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -669,12 +673,12 @@ export const RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  isSystem: 'isSystem',
-  isSuperAdmin: 'isSuperAdmin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  isSuperAdmin: 'isSuperAdmin',
+  isSystem: 'isSystem'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
@@ -698,11 +702,11 @@ export const PermissionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  moduleId: 'moduleId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById',
-  moduleId: 'moduleId'
+  updatedById: 'updatedById'
 } as const
 
 export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -719,11 +723,11 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const SchoolScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   institutionId: 'institutionId',
   disciplineId: 'disciplineId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  shortName: 'shortName',
   createdById: 'createdById',
   updatedById: 'updatedById',
   defaultAccountCategoryId: 'defaultAccountCategoryId'
@@ -736,11 +740,11 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   schoolId: 'schoolId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  shortName: 'shortName',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -755,10 +759,10 @@ export const CourseSeasonScalarFieldEnum = {
   courseId: 'courseId',
   seasonId: 'seasonId',
   status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   statusNotes: 'statusNotes',
   isRegistrationOpen: 'isRegistrationOpen',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdById: 'createdById',
   updatedById: 'updatedById',
   name: 'name'
@@ -773,16 +777,16 @@ export const CourseSeasonShiftScalarFieldEnum = {
   shiftId: 'shiftId',
   maxMembers: 'maxMembers',
   minMembers: 'minMembers',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdById: 'createdById',
-  updatedById: 'updatedById',
   categoryId: 'categoryId',
   gender: 'gender',
   minBirthYear: 'minBirthYear',
   maxBirthYear: 'maxBirthYear',
-  validateAge: 'validateAge'
+  validateAge: 'validateAge',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
 } as const
 
 export type CourseSeasonShiftScalarFieldEnum = (typeof CourseSeasonShiftScalarFieldEnum)[keyof typeof CourseSeasonShiftScalarFieldEnum]
@@ -847,6 +851,7 @@ export type CourseSeasonBillingConfigScalarFieldEnum = (typeof CourseSeasonBilli
 export const CourseSeasonStaffScalarFieldEnum = {
   id: 'id',
   staffId: 'staffId',
+  role: 'role',
   customRole: 'customRole',
   startedAt: 'startedAt',
   endedAt: 'endedAt',
@@ -854,7 +859,6 @@ export const CourseSeasonStaffScalarFieldEnum = {
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  role: 'role',
   createdById: 'createdById',
   updatedById: 'updatedById',
   courseSeasonShiftId: 'courseSeasonShiftId'
@@ -951,13 +955,13 @@ export const StudentDiscountScalarFieldEnum = {
   studentMembershipId: 'studentMembershipId',
   recurringDiscountPercent: 'recurringDiscountPercent',
   registrationDiscountPercent: 'registrationDiscountPercent',
+  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   startDate: 'startDate',
   endDate: 'endDate',
   type: 'type',
   reason: 'reason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  seasonFeeDiscountPercent: 'seasonFeeDiscountPercent',
   createdById: 'createdById',
   updatedById: 'updatedById'
 } as const
@@ -1073,8 +1077,8 @@ export type GeneralEventScalarFieldEnum = (typeof GeneralEventScalarFieldEnum)[k
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  durationMin: 'durationMin',
-  eventId: 'eventId'
+  eventId: 'eventId',
+  durationMin: 'durationMin'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -1115,12 +1119,13 @@ export type SessionBookingScalarFieldEnum = (typeof SessionBookingScalarFieldEnu
 
 export const MatchScalarFieldEnum = {
   id: 'id',
-  opponentName: 'opponentName',
-  type: 'type',
-  ourScore: 'ourScore',
-  theirScore: 'theirScore',
-  result: 'result',
   eventId: 'eventId',
+  type: 'type',
+  result: 'result',
+  awayScore: 'awayScore',
+  awayTeamId: 'awayTeamId',
+  homeScore: 'homeScore',
+  homeTeamId: 'homeTeamId',
   teamSeasonCategoryId: 'teamSeasonCategoryId'
 } as const
 
@@ -1151,14 +1156,14 @@ export const AuditLogScalarFieldEnum = {
   entityName: 'entityName',
   entityId: 'entityId',
   action: 'action',
+  type: 'type',
+  titleKey: 'titleKey',
+  messageKey: 'messageKey',
+  messageParams: 'messageParams',
   oldValues: 'oldValues',
   newValues: 'newValues',
   userId: 'userId',
-  createdAt: 'createdAt',
-  messageKey: 'messageKey',
-  messageParams: 'messageParams',
-  titleKey: 'titleKey',
-  type: 'type'
+  createdAt: 'createdAt'
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
@@ -1275,12 +1280,12 @@ export const TeamSeasonCategoryScalarFieldEnum = {
   maxMembers: 'maxMembers',
   validateAge: 'validateAge',
   isActive: 'isActive',
-  status: 'status',
-  endedAt: 'endedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  updatedById: 'updatedById'
+  updatedById: 'updatedById',
+  endedAt: 'endedAt',
+  status: 'status'
 } as const
 
 export type TeamSeasonCategoryScalarFieldEnum = (typeof TeamSeasonCategoryScalarFieldEnum)[keyof typeof TeamSeasonCategoryScalarFieldEnum]
@@ -1293,19 +1298,20 @@ export const NewsScalarFieldEnum = {
   excerpt: 'excerpt',
   content: 'content',
   imageUrl: 'imageUrl',
-  category: 'category',
+  legacyCategory: 'legacyCategory',
   tags: 'tags',
   authorName: 'authorName',
   status: 'status',
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
 } as const
 
 export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
-export const BannerScalarFieldEnum = {
+export const HeroBannerScalarFieldEnum = {
   id: 'id',
   title: 'title',
   ctaText: 'ctaText',
@@ -1313,14 +1319,57 @@ export const BannerScalarFieldEnum = {
   image16x9: 'image16x9',
   image1x1: 'image1x1',
   image3x4: 'image3x4',
-  category: 'category',
   isActive: 'isActive',
   sortOrder: 'sortOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type BannerScalarFieldEnum = (typeof BannerScalarFieldEnum)[keyof typeof BannerScalarFieldEnum]
+export type HeroBannerScalarFieldEnum = (typeof HeroBannerScalarFieldEnum)[keyof typeof HeroBannerScalarFieldEnum]
+
+
+export const HomeDisciplineScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  redirectTo: 'redirectTo',
+  image4x3: 'image4x3',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeDisciplineScalarFieldEnum = (typeof HomeDisciplineScalarFieldEnum)[keyof typeof HomeDisciplineScalarFieldEnum]
+
+
+export const NewsCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NewsCategoryScalarFieldEnum = (typeof NewsCategoryScalarFieldEnum)[keyof typeof NewsCategoryScalarFieldEnum]
+
+
+export const PromotionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  ctaText: 'ctaText',
+  redirectTo: 'redirectTo',
+  image16x9: 'image16x9',
+  image1x1: 'image1x1',
+  image3x4: 'image3x4',
+  position: 'position',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
 
 
 export const SortOrder = {

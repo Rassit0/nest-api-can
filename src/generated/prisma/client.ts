@@ -388,7 +388,22 @@ export type TeamSeasonCategory = Prisma.TeamSeasonCategoryModel
  */
 export type News = Prisma.NewsModel
 /**
- * Model Banner
+ * Model HeroBanner
  * 
  */
-export type Banner = Prisma.BannerModel
+export type HeroBanner = Prisma.HeroBannerModel
+/**
+ * Model HomeDiscipline
+ * 
+ */
+export type HomeDiscipline = Prisma.HomeDisciplineModel
+/**
+ * Model NewsCategory
+ * 
+ */
+export type NewsCategory = Prisma.NewsCategoryModel
+/**
+ * Model Promotion
+ * 
+ */
+export type Promotion = Prisma.PromotionModel

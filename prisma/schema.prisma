@@ -78,11 +78,11 @@ model Institution {
   name          String
   imageUrl      String?              @map("image_url")
   address       String
-  createdAt     DateTime             @default(now()) @map("created_at")
-  updatedAt     DateTime             @updatedAt @map("updated_at")
-  googleMapsUrl String?              @map("google_maps_url")
   latitude      Float?
   longitude     Float?
+  googleMapsUrl String?              @map("google_maps_url")
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @updatedAt @map("updated_at")
   createdById   String?              @map("created_by_id")
   updatedById   String?              @map("updated_by_id")
   clubs         Club[]
@@ -144,6 +144,7 @@ model Club {
   createdById              String?          @map("created_by_id")
   updatedById              String?          @map("updated_by_id")
   defaultAccountCategoryId String?          @map("default_account_category_id")
+  isExternal               Boolean          @default(false) @map("is_external")
   createdBy                User?            @relation("CreatedBy", fields: [createdById], references: [id])
   defaultAccountCategory   AccountCategory? @relation("ClubDefaultCategory", fields: [defaultAccountCategoryId], references: [id], onDelete: Restrict)
   discipline               Discipline       @relation(fields: [disciplineId], references: [id])
@@ -168,10 +169,10 @@ model Location {
   isRentable          Boolean    @default(false) @map("is_rentable")
   createdAt           DateTime   @default(now()) @map("created_at")
   updatedAt           DateTime   @updatedAt @map("updated_at")
+  parentId            String?    @map("parent_id")
+  maxConcurrentEvents Int?       @default(1) @map("max_concurrent_events")
   createdById         String?    @map("created_by_id")
   updatedById         String?    @map("updated_by_id")
-  maxConcurrentEvents Int?       @default(1) @map("max_concurrent_events")
-  parentId            String?    @map("parent_id")
   events              Event[]
   createdBy           User?      @relation("CreatedBy", fields: [createdById], references: [id])
   parent              Location?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
@@ -256,6 +257,8 @@ model Team {
   updatedAt   DateTime     @updatedAt @map("updated_at")
   createdById String?      @map("created_by_id")
   updatedById String?      @map("updated_by_id")
+  awayMatches Match[]      @relation("MatchAwayTeam")
+  homeMatches Match[]      @relation("MatchHomeTeam")
   teamSeasons TeamSeason[]
   club        Club         @relation(fields: [clubId], references: [id])
   createdBy   User?        @relation("CreatedBy", fields: [createdById], references: [id])
@@ -272,10 +275,10 @@ model TeamSeason {
   teamId             String                   @map("team_id")
   seasonId           String                   @map("season_id")
   status             StatusTeamSeason         @default(DRAFT)
-  createdAt          DateTime                 @default(now()) @map("created_at")
-  updatedAt          DateTime                 @updatedAt @map("updated_at")
   statusNotes        String?                  @map("status_notes")
   isRegistrationOpen Boolean                  @default(true) @map("is_registration_open")
+  createdAt          DateTime                 @default(now()) @map("created_at")
+  updatedAt          DateTime                 @updatedAt @map("updated_at")
   createdById        String?                  @map("created_by_id")
   updatedById        String?                  @map("updated_by_id")
   paymentPlans       PaymentPlan[]
@@ -335,12 +338,12 @@ model PaymentPlan {
   advanceCycles                Int                 @default(1) @map("advance_cycles")
   /// Porcentaje de descuento aplicado a las cuotas agrupadas/adelantadas.
   advanceCyclesDiscountPercent Decimal             @default(0) @map("advance_cycles_discount_percent") @db.Decimal(5, 2)
+  /// Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.
+  promotionalCycles            Int                 @default(0) @map("promotional_cycles")
   createdAt                    DateTime            @default(now()) @map("created_at")
   updatedAt                    DateTime            @updatedAt @map("updated_at")
   createdById                  String?             @map("created_by_id")
   updatedById                  String?             @map("updated_by_id")
-  /// Cantidad de ciclos (dentro de los agrupados) a los que se aplica el descuento adelantado.
-  promotionalCycles            Int                 @default(0) @map("promotional_cycles")
   courseSeason                 CourseSeason?       @relation(fields: [courseSeasonId], references: [id], onDelete: Restrict)
   createdBy                    User?               @relation("CreatedBy", fields: [createdById], references: [id])
   teamSeasons                  TeamSeason?         @relation(fields: [teamSeasonId], references: [id], onDelete: Restrict)
@@ -439,13 +442,13 @@ model MembershipDiscount {
   playerMembershipId          String                 @map("player_membership_id")
   recurringDiscountPercent    Decimal                @map("recurring_discount_percent") @db.Decimal(5, 2)
   registrationDiscountPercent Decimal                @map("registration_discount_percent") @db.Decimal(5, 2)
+  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
   startDate                   DateTime               @map("start_date")
   endDate                     DateTime?              @map("end_date")
   type                        MembershipDiscountType
   reason                      String?
   createdAt                   DateTime               @default(now()) @map("created_at")
   updatedAt                   DateTime               @updatedAt @map("updated_at")
-  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
   createdById                 String?                @map("created_by_id")
   updatedById                 String?                @map("updated_by_id")
   createdBy                   User?                  @relation("CreatedBy", fields: [createdById], references: [id])
@@ -523,12 +526,12 @@ model Charge {
   description       String?
   amount            Decimal            @db.Decimal(10, 2)
   pendingAmount     Decimal            @map("pending_amount") @db.Decimal(10, 2)
+  adjustmentAmount  Decimal            @default(0) @map("adjustment_amount") @db.Decimal(10, 2)
+  adjustmentReason  String?            @map("adjustment_reason")
   dueDate           DateTime           @map("due_date")
   status            StatusCharge       @default(PENDING)
   createdAt         DateTime           @default(now()) @map("created_at")
   updatedAt         DateTime           @updatedAt @map("updated_at")
-  adjustmentAmount  Decimal            @default(0) @map("adjustment_amount") @db.Decimal(10, 2)
-  adjustmentReason  String?            @map("adjustment_reason")
   createdById       String?            @map("created_by_id")
   updatedById       String?            @map("updated_by_id")
   direction         ChargeDirection    @default(RECEIVABLE)
@@ -591,6 +594,7 @@ model FinancialAccount {
 
 model Transaction {
   id                     String            @id @default(uuid())
+  receiptNumber          Int               @map("receipt_number")
   payerPersonId          String?           @map("payer_person_id")
   amount                 Decimal           @db.Decimal(10, 2)
   transactionDate        DateTime          @map("transaction_date")
@@ -604,7 +608,6 @@ model Transaction {
   updatedAt              DateTime          @updatedAt @map("updated_at")
   createdById            String?           @map("created_by_id")
   updatedById            String?           @map("updated_by_id")
-  receiptNumber          Int               @map("receipt_number")
   receiptSeries          String            @default("GEN") @map("receipt_series")
   financialAccountId     String            @map("financial_account_id")
   isReconciled           Boolean           @default(false) @map("is_reconciled")
@@ -613,9 +616,9 @@ model Transaction {
   isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
   thirdPartyId           String?           @map("third_party_id")
   paymentId              String?           @map("payment_id")
-  reversesId             String?           @unique @map("reverses_id")
-  balanceBefore          Decimal?          @map("balance_before") @db.Decimal(10, 2)
   balanceAfter           Decimal?          @map("balance_after") @db.Decimal(10, 2)
+  balanceBefore          Decimal?          @map("balance_before") @db.Decimal(10, 2)
+  reversesId             String?           @unique @map("reverses_id")
   attachments            Attachment[]
   internalTransferDest   InternalTransfer? @relation("TransferDestination")
   internalTransferSource InternalTransfer? @relation("TransferSource")
@@ -623,10 +626,10 @@ model Transaction {
   financialAccount       FinancialAccount  @relation(fields: [financialAccountId], references: [id])
   payerPerson            Person?           @relation(fields: [payerPersonId], references: [id])
   payment                Payment?          @relation(fields: [paymentId], references: [id], onDelete: Restrict)
-  thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
-  updatedBy              User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
   reverses               Transaction?      @relation("TransactionReversal", fields: [reversesId], references: [id])
   reversedBy             Transaction?      @relation("TransactionReversal")
+  thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
+  updatedBy              User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([receiptSeries, receiptNumber])
   @@map("transactions")
@@ -665,12 +668,12 @@ model ReceiptSequence {
 model User {
   id                                String                      @id @default(uuid())
   email                             String                      @unique
+  password                          String
   personId                          String?                     @unique @map("person_id")
   roleId                            String                      @map("role_id")
   isActive                          Boolean                     @default(true) @map("is_active")
   createdAt                         DateTime                    @default(now()) @map("created_at")
   updatedAt                         DateTime                    @updatedAt @map("updated_at")
-  password                          String
   createdAccountCategories          AccountCategory[]           @relation("CreatedBy")
   updatedAccountCategories          AccountCategory[]           @relation("UpdatedBy")
   createdAccountCharges             AccountCharge[]             @relation("CreatedBy")
@@ -784,12 +787,12 @@ model Role {
   id           String           @id @default(uuid())
   name         String           @unique
   description  String?
-  isSystem     Boolean          @default(false) @map("is_system")
-  isSuperAdmin Boolean          @default(false) @map("is_super_admin")
   createdAt    DateTime         @default(now()) @map("created_at")
   updatedAt    DateTime         @updatedAt @map("updated_at")
   createdById  String?          @map("created_by_id")
   updatedById  String?          @map("updated_by_id")
+  isSuperAdmin Boolean          @default(false) @map("is_super_admin")
+  isSystem     Boolean          @default(false) @map("is_system")
   permissions  RolePermission[]
   createdBy    User?            @relation("CreatedBy", fields: [createdById], references: [id])
   updatedBy    User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
@@ -816,11 +819,11 @@ model Permission {
   id          String           @id @default(uuid())
   name        String           @unique
   description String?
+  moduleId    String           @map("module_id")
   createdAt   DateTime         @default(now()) @map("created_at")
   updatedAt   DateTime         @updatedAt @map("updated_at")
   createdById String?          @map("created_by_id")
   updatedById String?          @map("updated_by_id")
-  moduleId    String           @map("module_id")
   createdBy   User?            @relation("CreatedBy", fields: [createdById], references: [id])
   module      Module           @relation(fields: [moduleId], references: [id])
   updatedBy   User?            @relation("UpdatedBy", fields: [updatedById], references: [id])
@@ -842,11 +845,11 @@ model RolePermission {
 model School {
   id                       String           @id @default(uuid())
   name                     String
+  shortName                String?          @map("short_name")
   institutionId            String           @map("institution_id")
   disciplineId             String           @map("discipline_id")
   createdAt                DateTime         @default(now()) @map("created_at")
   updatedAt                DateTime         @updatedAt @map("updated_at")
-  shortName                String?          @map("short_name")
   createdById              String?          @map("created_by_id")
   updatedById              String?          @map("updated_by_id")
   defaultAccountCategoryId String?          @map("default_account_category_id")
@@ -865,11 +868,11 @@ model Course {
   id            String         @id @default(uuid())
   imageUrl      String?        @map("image_url")
   name          String
+  shortName     String?        @map("short_name")
   description   String?
   schoolId      String         @map("school_id")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
-  shortName     String?        @map("short_name")
   createdById   String?        @map("created_by_id")
   updatedById   String?        @map("updated_by_id")
   courseSeasons CourseSeason[]
@@ -888,10 +891,10 @@ model CourseSeason {
   courseId           String                     @map("course_id")
   seasonId           String                     @map("season_id")
   status             StatusCourseSeason         @default(DRAFT)
-  createdAt          DateTime                   @default(now()) @map("created_at")
-  updatedAt          DateTime                   @updatedAt @map("updated_at")
   statusNotes        String?                    @map("status_notes")
   isRegistrationOpen Boolean                    @default(true) @map("is_registration_open")
+  createdAt          DateTime                   @default(now()) @map("created_at")
+  updatedAt          DateTime                   @updatedAt @map("updated_at")
   createdById        String?                    @map("created_by_id")
   updatedById        String?                    @map("updated_by_id")
   name               String                     @default("Regular")
@@ -917,16 +920,16 @@ model CourseSeasonShift {
   shiftId            String              @map("shift_id")
   maxMembers         Int                 @map("max_members")
   minMembers         Int                 @map("min_members")
-  isActive           Boolean             @default(true) @map("is_active")
-  createdAt          DateTime            @default(now()) @map("created_at")
-  updatedAt          DateTime            @updatedAt @map("updated_at")
-  createdById        String?             @map("created_by_id")
-  updatedById        String?             @map("updated_by_id")
   categoryId         String              @map("category_id")
   gender             ProgramGender
   minBirthYear       Int?                @map("min_birth_year")
   maxBirthYear       Int?                @map("max_birth_year")
   validateAge        Boolean             @default(true) @map("validate_age")
+  isActive           Boolean             @default(true) @map("is_active")
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  createdById        String?             @map("created_by_id")
+  updatedById        String?             @map("updated_by_id")
   pauses             CourseSeasonPause[]
   category           Category            @relation(fields: [categoryId], references: [id])
   courseSeason       CourseSeason        @relation(fields: [courseSeasonId], references: [id], onDelete: Cascade)
@@ -1010,6 +1013,7 @@ model CourseSeasonBillingConfig {
 model CourseSeasonStaff {
   id                  String                @id @default(uuid())
   staffId             String                @map("staff_id")
+  role                CourseSeasonStaffRole
   customRole          String?               @map("custom_role")
   startedAt           DateTime              @map("started_at")
   endedAt             DateTime?             @map("ended_at")
@@ -1017,7 +1021,6 @@ model CourseSeasonStaff {
   notes               String?
   createdAt           DateTime              @default(now()) @map("created_at")
   updatedAt           DateTime              @updatedAt @map("updated_at")
-  role                CourseSeasonStaffRole
   createdById         String?               @map("created_by_id")
   updatedById         String?               @map("updated_by_id")
   courseSeasonShiftId String                @map("course_season_shift_id")
@@ -1143,13 +1146,13 @@ model StudentDiscount {
   studentMembershipId         String                 @map("student_membership_id")
   recurringDiscountPercent    Decimal                @map("recurring_discount_percent") @db.Decimal(5, 2)
   registrationDiscountPercent Decimal                @map("registration_discount_percent") @db.Decimal(5, 2)
+  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
   startDate                   DateTime               @map("start_date")
   endDate                     DateTime?              @map("end_date")
   type                        MembershipDiscountType
   reason                      String?
   createdAt                   DateTime               @default(now()) @map("created_at")
   updatedAt                   DateTime               @updatedAt @map("updated_at")
-  seasonFeeDiscountPercent    Decimal                @default(0) @map("season_fee_discount_percent") @db.Decimal(5, 2)
   createdById                 String?                @map("created_by_id")
   updatedById                 String?                @map("updated_by_id")
   createdBy                   User?                  @relation("CreatedBy", fields: [createdById], references: [id])
@@ -1292,8 +1295,8 @@ model GeneralEvent {
 
 model Session {
   id             String           @id @default(uuid())
-  durationMin    Int              @default(90) @map("duration_min")
   eventId        String           @unique @map("event_id")
+  durationMin    Int              @default(90) @map("duration_min")
   bookings       SessionBooking[]
   sessionCourses SessionCourse[]
   sessionTeams   SessionTeam[]
@@ -1349,15 +1352,18 @@ model SessionBooking {
 
 model Match {
   id                   String             @id @default(uuid())
-  opponentName         String             @map("opponent_name")
-  type                 MatchType          @default(LEAGUE)
-  ourScore             Int?               @map("our_score")
-  theirScore           Int?               @map("their_score")
-  result               MatchResult        @default(PENDING)
   eventId              String             @unique @map("event_id")
-  teamSeasonCategoryId String
+  type                 MatchType          @default(LEAGUE)
+  result               MatchResult        @default(PENDING)
+  awayScore            Int?               @map("away_score")
+  awayTeamId           String             @map("away_team_id")
+  homeScore            Int?               @map("home_score")
+  homeTeamId           String             @map("home_team_id")
+  teamSeasonCategoryId String             @map("team_season_category_id")
   lineups              MatchLineup[]
+  awayTeam             Team               @relation("MatchAwayTeam", fields: [awayTeamId], references: [id])
   event                Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  homeTeam             Team               @relation("MatchHomeTeam", fields: [homeTeamId], references: [id])
   teamSeasonCategory   TeamSeasonCategory @relation(fields: [teamSeasonCategoryId], references: [id])
 
   @@map("matches")
@@ -1391,14 +1397,14 @@ model AuditLog {
   entityName    String   @map("entity_name")
   entityId      String   @map("entity_id")
   action        String
+  type          String?
+  titleKey      String?  @map("title_key")
+  messageKey    String?  @map("message_key")
+  messageParams Json?    @map("message_params")
   oldValues     Json?    @map("old_values")
   newValues     Json?    @map("new_values")
   userId        String?  @map("user_id")
   createdAt     DateTime @default(now()) @map("created_at")
-  messageKey    String?  @map("message_key")
-  messageParams Json?    @map("message_params")
-  titleKey      String?  @map("title_key")
-  type          String?
   user          User?    @relation(fields: [userId], references: [id])
 
   @@map("audit_logs")
@@ -1531,12 +1537,12 @@ model TeamSeasonCategory {
   maxMembers        Int?                     @map("max_members")
   validateAge       Boolean                  @default(true) @map("validate_age")
   isActive          Boolean                  @default(true) @map("is_active")
-  status            TeamSeasonCategoryStatus @default(ACTIVE)
-  endedAt           DateTime?                @map("ended_at")
   createdAt         DateTime                 @default(now()) @map("created_at")
   updatedAt         DateTime                 @updatedAt @map("updated_at")
   createdById       String?                  @map("created_by_id")
   updatedById       String?                  @map("updated_by_id")
+  endedAt           DateTime?                @map("ended_at")
+  status            TeamSeasonCategoryStatus @default(ACTIVE)
   generalEvents     GeneralEvent[]
   matches           Match[]
   player_membership PlayerMembership[]
@@ -1548,6 +1554,97 @@ model TeamSeasonCategory {
   @@unique([id, teamSeasonId])
   @@unique([teamSeasonId, categoryId, gender])
   @@map("team_season_categories")
+}
+
+model News {
+  id             String        @id @default(uuid())
+  slug           String        @unique
+  title          String
+  excerpt        String
+  content        String
+  imageUrl       String?       @map("image_url")
+  legacyCategory String?       @map("category")
+  tags           String[]
+  authorName     String?       @map("author_name")
+  status         NewsStatus    @default(DRAFT)
+  publishedAt    DateTime?     @map("published_at")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  categoryId     String?       @map("category_id")
+  category       NewsCategory? @relation(fields: [categoryId], references: [id])
+
+  @@index([status])
+  @@index([publishedAt])
+  @@map("news")
+}
+
+model HeroBanner {
+  id         String   @id @default(uuid())
+  title      String
+  ctaText    String?  @map("cta_text")
+  redirectTo String?  @map("redirect_to")
+  image16x9  String   @map("image_16x9")
+  image1x1   String?  @map("image_1x1")
+  image3x4   String?  @map("image_3x4")
+  isActive   Boolean  @default(true) @map("is_active")
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([isActive])
+  @@index([sortOrder])
+  @@map("hero_banners")
+}
+
+model HomeDiscipline {
+  id         String   @id @default(uuid())
+  title      String
+  redirectTo String?  @map("redirect_to")
+  image4x3   String   @map("image_4x3")
+  isActive   Boolean  @default(true) @map("is_active")
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([isActive])
+  @@index([sortOrder])
+  @@map("home_disciplines")
+}
+
+model NewsCategory {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  isActive  Boolean  @default(true) @map("is_active")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  news      News[]
+
+  @@map("news_categories")
+}
+
+model Promotion {
+  id         String            @id @default(uuid())
+  title      String
+  ctaText    String?           @map("cta_text")
+  redirectTo String?           @map("redirect_to")
+  image16x9  String            @map("image_16x9")
+  image1x1   String?           @map("image_1x1")
+  image3x4   String?           @map("image_3x4")
+  position   PromotionPosition
+  isActive   Boolean           @default(true) @map("is_active")
+  createdAt  DateTime          @default(now()) @map("created_at")
+  updatedAt  DateTime          @updatedAt @map("updated_at")
+
+  @@index([position])
+  @@index([position, isActive])
+  @@map("promotions")
+}
+
+enum PromotionPosition {
+  PROMO_1
+  PROMO_2
 }
 
 enum DocumentType {
@@ -1804,48 +1901,4 @@ enum NewsStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
-}
-
-model News {
-  id         String   @id @default(uuid())
-  slug       String   @unique
-  title      String
-  excerpt    String
-  content    String   @db.Text
-  imageUrl   String?  @map("image_url")
-  category   String?
-  tags       String[]
-  authorName String?  @map("author_name")
-
-  status      NewsStatus @default(DRAFT)
-  publishedAt DateTime?  @map("published_at")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@index([status])
-  @@index([publishedAt])
-  @@map("news")
-}
-
-model Banner {
-  id         String  @id @default(uuid())
-  title      String
-  ctaText    String? @map("cta_text")
-  redirectTo String? @map("redirect_to")
-
-  image16x9 String  @map("image_16x9")
-  image1x1  String? @map("image_1x1")
-  image3x4  String? @map("image_3x4")
-
-  category  String?
-  isActive  Boolean @default(true) @map("is_active")
-  sortOrder Int     @default(0) @map("sort_order")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@index([isActive])
-  @@index([sortOrder])
-  @@map("banners")
 }

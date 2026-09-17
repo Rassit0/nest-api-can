@@ -2,6 +2,7 @@ import { Injectable, Inject, NotFoundException, ForbiddenException, Logger } fro
 import { IStorageProvider } from './interfaces/storage-provider.interface';
 import { PrismaService } from '../prisma.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { ImageProcessorService, ImageProcessingOptions } from './image/image-processor.service';
 
 export const STORAGE_PROVIDER = 'STORAGE_PROVIDER';
 
@@ -13,18 +14,20 @@ export class StorageService {
     @Inject(STORAGE_PROVIDER)
     private readonly storageProvider: IStorageProvider,
     private readonly prisma: PrismaService,
+    private readonly imageProcessor: ImageProcessorService,
   ) {}
 
-  async uploadFile(file: Express.Multer.File, folder?: string) {
-    return this.storageProvider.uploadFile(file, folder);
+  async uploadFile(file: Express.Multer.File, folder?: string, options?: ImageProcessingOptions) {
+    const processedFile = await this.imageProcessor.processImage(file, options);
+    return this.storageProvider.uploadFile(processedFile, folder);
   }
 
-  async uploadMultipleFiles(files: Express.Multer.File[], userId?: string) {
+  async uploadMultipleFiles(files: Express.Multer.File[], userId?: string, options?: ImageProcessingOptions) {
     const uploadedAttachments = [];
 
     for (const file of files) {
       // 1. Guardar físicamente
-      const uploadResult = await this.uploadFile(file, 'attachments');
+      const uploadResult = await this.uploadFile(file, 'attachments', options);
       
       // 2. Crear registro en BD con estado PENDING
       const attachment = await this.prisma.attachment.create({
@@ -75,6 +78,23 @@ export class StorageService {
 
   getFileUrl(internalName: string) {
     return this.storageProvider.getFileUrl(internalName);
+  }
+
+  /**
+   * Intenta derivar el internalName a partir de una URL conocida.
+   * Utiliza una expresión regular estricta para garantizar que solo se 
+   * devuelvan llaves con el formato folder/uuid.ext esperado.
+   */
+  extractInternalNameFromUrl(url: string): string | null {
+    if (!url) return null;
+    // Busca: (banners|hero-banners|home-disciplines|promotions|news|attachments)/<UUIDv4>.<ext> al final de la URL
+    const regex = /(banners|hero-banners|home-disciplines|promotions|news|attachments)\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\.[a-zA-Z0-9]+$/;
+    const match = url.match(regex);
+    return match ? match[0] : null;
+  }
+
+  async deleteFile(internalName: string) {
+    return this.storageProvider.deleteFile(internalName);
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_3AM)

@@ -5,7 +5,11 @@ import { TeamSeasonModule } from '../team-season/team-season.module';
 import { CourseSeasonsModule } from '../course-seasons/course-seasons.module';
 import { MatchesModule } from '../matches/matches.module';
 import { NewsModule } from '../news/news.module';
-import { BannersModule } from '../banners/banners.module';
+import { HeroBannersModule } from '../hero-banners/hero-banners.module';
+import { HomeDisciplinesModule } from '../home-disciplines/home-disciplines.module';
+
+import { NewsCategoriesModule } from '../news-categories/news-categories.module';
+import { PromotionsModule } from '../promotions/promotions.module';
 
 @Module({
   imports: [
@@ -14,7 +18,10 @@ import { BannersModule } from '../banners/banners.module';
     CourseSeasonsModule,
     MatchesModule,
     NewsModule,
-    BannersModule
+    HeroBannersModule,
+    HomeDisciplinesModule,
+    NewsCategoriesModule,
+    PromotionsModule
   ],
   controllers: [PublicController],
 })

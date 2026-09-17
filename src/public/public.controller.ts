@@ -5,7 +5,10 @@ import { TeamSeasonService } from '../team-season/team-season.service';
 import { CourseSeasonsService } from '../course-seasons/course-seasons.service';
 import { MatchesService } from '../matches/matches.service';
 import { NewsService } from '../news/news.service';
-import { BannersService } from '../banners/banners.service';
+import { HeroBannersService } from '../hero-banners/hero-banners.service';
+import { HomeDisciplinesService } from '../home-disciplines/home-disciplines.service';
+import { NewsCategoriesService } from '../news-categories/news-categories.service';
+import { PromotionsService } from '../promotions/promotions.service';
 
 @ApiTags('Public')
 @Controller('public')
@@ -16,7 +19,10 @@ export class PublicController {
     private readonly courseSeasonsService: CourseSeasonsService,
     private readonly matchesService: MatchesService,
     private readonly newsService: NewsService,
-    private readonly bannersService: BannersService,
+    private readonly heroBannersService: HeroBannersService,
+    private readonly homeDisciplinesService: HomeDisciplinesService,
+    private readonly newsCategoriesService: NewsCategoriesService,
+    private readonly promotionsService: PromotionsService,
   ) {}
 
   @Get('institutions/default')
@@ -60,14 +66,29 @@ export class PublicController {
     return await this.matchesService.findPublicFixture();
   }
 
+  @Get('news-categories')
+  @ApiOperation({
+    summary: 'Listar categorías de noticias públicas',
+    description: 'Retorna las categorías activas de noticias para el portal web.',
+  })
+  @ApiOkResponse({ description: 'Categorías de noticias públicas obtenidas correctamente.' })
+  async findPublicNewsCategories() {
+    return await this.newsCategoriesService.findActive();
+  }
+
   @Get('news')
   @ApiOperation({
     summary: 'Listar noticias públicas',
     description: 'Retorna listado de noticias publicadas para el portal web.',
   })
   @ApiOkResponse({ description: 'Noticias públicas obtenidas correctamente.' })
-  async findPublicNews() {
-    return await this.newsService.findPublic();
+  async findPublicNews(
+    @Query('categoryId') categoryId?: string,
+    @Query('limit') limit?: string,
+  ) {
+    const limitNumber = limit ? parseInt(limit, 10) : undefined;
+    const finalLimit = limitNumber && !isNaN(limitNumber) ? limitNumber : undefined;
+    return await this.newsService.findPublic(categoryId, finalLimit);
   }
 
   @Get('news/:slug')
@@ -80,14 +101,36 @@ export class PublicController {
     return await this.newsService.findPublicBySlug(slug);
   }
 
-  @Get('banners')
+  @Get('hero-banners')
   @ApiOperation({
-    summary: 'Listar banners públicos',
-    description: 'Retorna listado de banners activos ordenados para el portal web.',
+    summary: 'Listar hero banners públicos',
+    description: 'Retorna listado de hero banners activos ordenados para el portal web.',
   })
-  @ApiOkResponse({ description: 'Banners públicos obtenidos correctamente.' })
-  async findPublicBanners() {
-    return await this.bannersService.findPublic();
+  @ApiOkResponse({ description: 'Hero Banners públicos obtenidos correctamente.' })
+  async findPublicHeroBanners() {
+    const all = await this.heroBannersService.findAll();
+    return all.filter(b => b.isActive).sort((a, b) => a.sortOrder - b.sortOrder);
+  }
+
+  @Get('home-disciplines')
+  @ApiOperation({
+    summary: 'Listar home disciplines públicos',
+    description: 'Retorna listado de disciplinas de inicio activas ordenadas para el portal web.',
+  })
+  @ApiOkResponse({ description: 'Home Disciplines públicos obtenidos correctamente.' })
+  async findPublicHomeDisciplines() {
+    const all = await this.homeDisciplinesService.findAll();
+    return all.filter(d => d.isActive).sort((a, b) => a.sortOrder - b.sortOrder);
+  }
+
+  @Get('promotions')
+  @ApiOperation({
+    summary: 'Obtener promociones públicas',
+    description: 'Retorna las promociones activas (PROMO_1 y PROMO_2) para el portal web.',
+  })
+  @ApiOkResponse({ description: 'Promociones obtenidas correctamente.' })
+  async findPublicPromotions() {
+    return await this.promotionsService.findPublic();
   }
 }
 

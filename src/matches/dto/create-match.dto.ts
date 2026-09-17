@@ -1,18 +1,17 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
-  IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
-  IsString,
   IsUUID,
   Min,
+  IsISO8601,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
-import { MatchResult, MatchType } from 'src/generated/prisma/client';
+import { MatchType } from 'src/generated/prisma/client';
 
 export class CreateMatchDto {
   @ApiProperty({
@@ -50,20 +49,36 @@ export class CreateMatchDto {
   locationId?: string | null;
 
   @ApiProperty({
-    example: 'Club Atlético Rival',
-    description: 'Nombre del equipo rival',
+    example: '550e8400-e29b-41d4-a716-446655440001',
+    description: 'ID del equipo local (Team)',
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'opponentName',
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'homeTeamId',
     }),
   })
-  @IsString({
-    message: i18nValidationMessage('validation.IS_STRING', {
-      constraint1: 'opponentName',
+  @Exists('team', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'homeTeamId',
     }),
   })
-  opponentName: string;
+  homeTeamId: string;
+
+  @ApiProperty({
+    example: '550e8400-e29b-41d4-a716-446655440002',
+    description: 'ID del equipo visitante (Team)',
+  })
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'awayTeamId',
+    }),
+  })
+  @Exists('team', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'awayTeamId',
+    }),
+  })
+  awayTeamId: string;
 
   @ApiProperty({
     example: '2026-06-30T15:00:00.000Z',
@@ -74,22 +89,20 @@ export class CreateMatchDto {
       constraint1: 'startDate',
     }),
   })
-  @IsDate({
+  @IsISO8601({ strict: true }, {
     message: i18nValidationMessage('validation.IS_DATE', {
       constraint1: 'startDate',
     }),
   })
-  @Type(() => Date)
-  startDate: Date;
+  startDate: string;
 
   @ApiProperty({
     example: '2026-06-30T17:00:00.000Z',
     description: 'Fecha y hora de fin del partido',
   })
   @IsNotEmpty()
-  @IsDate()
-  @Type(() => Date)
-  endDate: Date;
+  @IsISO8601({ strict: true })
+  endDate: string;
 
   @ApiProperty({
     enum: MatchType,
@@ -106,55 +119,41 @@ export class CreateMatchDto {
 
   @ApiPropertyOptional({
     example: 2,
-    description: 'Marcador de nuestro equipo',
+    description: 'Marcador del equipo local',
     nullable: true,
   })
   @IsOptional()
   @IsInt({
     message: i18nValidationMessage('validation.IS_INT', {
-      constraint1: 'ourScore',
+      constraint1: 'homeScore',
     }),
   })
   @Min(0, {
     message: i18nValidationMessage('validation.MIN_VALUE', {
-      constraint1: 'ourScore',
+      constraint1: 'homeScore',
       constraint2: 0,
     }),
   })
   @Type(() => Number)
-  ourScore?: number | null;
+  homeScore?: number | null;
 
   @ApiPropertyOptional({
     example: 1,
-    description: 'Marcador del equipo rival',
+    description: 'Marcador del equipo visitante',
     nullable: true,
   })
   @IsOptional()
   @IsInt({
     message: i18nValidationMessage('validation.IS_INT', {
-      constraint1: 'theirScore',
+      constraint1: 'awayScore',
     }),
   })
   @Min(0, {
     message: i18nValidationMessage('validation.MIN_VALUE', {
-      constraint1: 'theirScore',
+      constraint1: 'awayScore',
       constraint2: 0,
     }),
   })
   @Type(() => Number)
-  theirScore?: number | null;
-
-  @ApiPropertyOptional({
-    enum: MatchResult,
-    example: MatchResult.PENDING,
-    description: 'Resultado del partido (WIN, LOSS, DRAW, PENDING)',
-    default: MatchResult.PENDING,
-  })
-  @IsOptional()
-  @IsEnum(MatchResult, {
-    message: i18nValidationMessage('validation.IS_ENUM', {
-      constraint1: 'result',
-    }),
-  })
-  result?: MatchResult = MatchResult.PENDING;
+  awayScore?: number | null;
 }

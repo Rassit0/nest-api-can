@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const PromotionPosition = {
+  PROMO_1: 'PROMO_1',
+  PROMO_2: 'PROMO_2'
+} as const
+
+export type PromotionPosition = (typeof PromotionPosition)[keyof typeof PromotionPosition]
+
+
 export const DocumentType = {
   CI: 'CI',
   NIT: 'NIT'

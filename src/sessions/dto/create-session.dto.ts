@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsDate,
   IsInt,
+  IsISO8601,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -54,22 +54,24 @@ export class CreateSessionDto {
       constraint1: 'startDate',
     }),
   })
-  @IsDate({
-    message: i18nValidationMessage('validation.IS_DATE', {
+  @IsISO8601({ strict: true, strictSeparator: true }, {
+    message: i18nValidationMessage('validation.IS_ISO8601', {
       constraint1: 'startDate',
     }),
   })
-  @Type(() => Date)
-  startDate: Date;
+  startDate: string;
 
   @ApiProperty({
     example: '2026-06-30T17:00:00.000Z',
     description: 'Fecha y hora de fin de la sesion',
   })
   @IsNotEmpty()
-  @IsDate()
-  @Type(() => Date)
-  endDate: Date;
+  @IsISO8601({ strict: true, strictSeparator: true }, {
+    message: i18nValidationMessage('validation.IS_ISO8601', {
+      constraint1: 'endDate',
+    }),
+  })
+  endDate: string;
 
   @ApiPropertyOptional({
     example: 90,

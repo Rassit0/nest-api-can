@@ -18,13 +18,10 @@ export class CreateNewsDto {
   @IsString()
   content: string;
 
-  @IsString()
-  @IsOptional()
-  imageUrl?: string;
 
   @IsString()
   @IsOptional()
-  category?: string;
+  categoryId?: string;
 
   @IsArray()
   @IsString({ each: true })

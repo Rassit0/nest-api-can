@@ -51,10 +51,10 @@ export type LocationMinAggregateOutputType = {
   isRentable: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  parentId: string | null
+  maxConcurrentEvents: number | null
   createdById: string | null
   updatedById: string | null
-  maxConcurrentEvents: number | null
-  parentId: string | null
 }
 
 export type LocationMaxAggregateOutputType = {
@@ -70,10 +70,10 @@ export type LocationMaxAggregateOutputType = {
   isRentable: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  parentId: string | null
+  maxConcurrentEvents: number | null
   createdById: string | null
   updatedById: string | null
-  maxConcurrentEvents: number | null
-  parentId: string | null
 }
 
 export type LocationCountAggregateOutputType = {
@@ -89,10 +89,10 @@ export type LocationCountAggregateOutputType = {
   isRentable: number
   createdAt: number
   updatedAt: number
+  parentId: number
+  maxConcurrentEvents: number
   createdById: number
   updatedById: number
-  maxConcurrentEvents: number
-  parentId: number
   _all: number
 }
 
@@ -122,10 +122,10 @@ export type LocationMinAggregateInputType = {
   isRentable?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  maxConcurrentEvents?: true
   createdById?: true
   updatedById?: true
-  maxConcurrentEvents?: true
-  parentId?: true
 }
 
 export type LocationMaxAggregateInputType = {
@@ -141,10 +141,10 @@ export type LocationMaxAggregateInputType = {
   isRentable?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  maxConcurrentEvents?: true
   createdById?: true
   updatedById?: true
-  maxConcurrentEvents?: true
-  parentId?: true
 }
 
 export type LocationCountAggregateInputType = {
@@ -160,10 +160,10 @@ export type LocationCountAggregateInputType = {
   isRentable?: true
   createdAt?: true
   updatedAt?: true
+  parentId?: true
+  maxConcurrentEvents?: true
   createdById?: true
   updatedById?: true
-  maxConcurrentEvents?: true
-  parentId?: true
   _all?: true
 }
 
@@ -266,10 +266,10 @@ export type LocationGroupByOutputType = {
   isRentable: boolean
   createdAt: Date
   updatedAt: Date
+  parentId: string | null
+  maxConcurrentEvents: number | null
   createdById: string | null
   updatedById: string | null
-  maxConcurrentEvents: number | null
-  parentId: string | null
   _count: LocationCountAggregateOutputType | null
   _avg: LocationAvgAggregateOutputType | null
   _sum: LocationSumAggregateOutputType | null
@@ -308,10 +308,10 @@ export type LocationWhereInput = {
   isRentable?: Prisma.BoolFilter<"Location"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
+  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
+  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
   createdById?: Prisma.StringNullableFilter<"Location"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Location"> | string | null
-  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
-  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
   events?: Prisma.EventListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   parent?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
@@ -332,10 +332,10 @@ export type LocationOrderByWithRelationInput = {
   isRentable?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxConcurrentEvents?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  maxConcurrentEvents?: Prisma.SortOrderInput | Prisma.SortOrder
-  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   events?: Prisma.EventOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   parent?: Prisma.LocationOrderByWithRelationInput
@@ -359,10 +359,10 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
   isRentable?: Prisma.BoolFilter<"Location"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
+  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
+  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
   createdById?: Prisma.StringNullableFilter<"Location"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Location"> | string | null
-  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
-  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
   events?: Prisma.EventListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   parent?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
@@ -383,10 +383,10 @@ export type LocationOrderByWithAggregationInput = {
   isRentable?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxConcurrentEvents?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  maxConcurrentEvents?: Prisma.SortOrderInput | Prisma.SortOrder
-  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LocationCountOrderByAggregateInput
   _avg?: Prisma.LocationAvgOrderByAggregateInput
   _max?: Prisma.LocationMaxOrderByAggregateInput
@@ -410,10 +410,10 @@ export type LocationScalarWhereWithAggregatesInput = {
   isRentable?: Prisma.BoolWithAggregatesFilter<"Location"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Location"> | Date | string
+  parentId?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
+  maxConcurrentEvents?: Prisma.IntNullableWithAggregatesFilter<"Location"> | number | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
-  maxConcurrentEvents?: Prisma.IntNullableWithAggregatesFilter<"Location"> | number | null
-  parentId?: Prisma.StringNullableWithAggregatesFilter<"Location"> | string | null
 }
 
 export type LocationCreateInput = {
@@ -450,10 +450,10 @@ export type LocationUncheckedCreateInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
-  parentId?: string | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutLocationInput
   subLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
 }
@@ -492,10 +492,10 @@ export type LocationUncheckedUpdateInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   events?: Prisma.EventUncheckedUpdateManyWithoutLocationNestedInput
   subLocations?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -513,10 +513,10 @@ export type LocationCreateManyInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
-  parentId?: string | null
 }
 
 export type LocationUpdateManyMutationInput = {
@@ -548,10 +548,10 @@ export type LocationUncheckedUpdateManyInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LocationNullableScalarRelationFilter = {
@@ -582,10 +582,10 @@ export type LocationCountOrderByAggregateInput = {
   isRentable?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  maxConcurrentEvents?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  maxConcurrentEvents?: Prisma.SortOrder
-  parentId?: Prisma.SortOrder
 }
 
 export type LocationAvgOrderByAggregateInput = {
@@ -607,10 +607,10 @@ export type LocationMaxOrderByAggregateInput = {
   isRentable?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  maxConcurrentEvents?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  maxConcurrentEvents?: Prisma.SortOrder
-  parentId?: Prisma.SortOrder
 }
 
 export type LocationMinOrderByAggregateInput = {
@@ -626,10 +626,10 @@ export type LocationMinOrderByAggregateInput = {
   isRentable?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
+  maxConcurrentEvents?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  maxConcurrentEvents?: Prisma.SortOrder
-  parentId?: Prisma.SortOrder
 }
 
 export type LocationSumOrderByAggregateInput = {
@@ -837,10 +837,10 @@ export type LocationUncheckedCreateWithoutSubLocationsInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
-  parentId?: string | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutLocationInput
 }
 
@@ -882,9 +882,9 @@ export type LocationUncheckedCreateWithoutParentInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutLocationInput
   subLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
 }
@@ -943,10 +943,10 @@ export type LocationUncheckedUpdateWithoutSubLocationsInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   events?: Prisma.EventUncheckedUpdateManyWithoutLocationNestedInput
 }
 
@@ -982,10 +982,10 @@ export type LocationScalarWhereInput = {
   isRentable?: Prisma.BoolFilter<"Location"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
+  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
+  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
   createdById?: Prisma.StringNullableFilter<"Location"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Location"> | string | null
-  maxConcurrentEvents?: Prisma.IntNullableFilter<"Location"> | number | null
-  parentId?: Prisma.StringNullableFilter<"Location"> | string | null
 }
 
 export type LocationCreateWithoutCreatedByInput = {
@@ -1021,9 +1021,9 @@ export type LocationUncheckedCreateWithoutCreatedByInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  updatedById?: string | null
-  maxConcurrentEvents?: number | null
   parentId?: string | null
+  maxConcurrentEvents?: number | null
+  updatedById?: string | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutLocationInput
   subLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1071,9 +1071,9 @@ export type LocationUncheckedCreateWithoutUpdatedByInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdById?: string | null
-  maxConcurrentEvents?: number | null
   parentId?: string | null
+  maxConcurrentEvents?: number | null
+  createdById?: string | null
   events?: Prisma.EventUncheckedCreateNestedManyWithoutLocationInput
   subLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
 }
@@ -1153,10 +1153,10 @@ export type LocationUncheckedCreateWithoutEventsInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  parentId?: string | null
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
-  parentId?: string | null
   subLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutParentInput
 }
 
@@ -1209,10 +1209,10 @@ export type LocationUncheckedUpdateWithoutEventsInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subLocations?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
 }
 
@@ -1229,9 +1229,9 @@ export type LocationCreateManyParentInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  maxConcurrentEvents?: number | null
   createdById?: string | null
   updatedById?: string | null
-  maxConcurrentEvents?: number | null
 }
 
 export type LocationUpdateWithoutParentInput = {
@@ -1267,9 +1267,9 @@ export type LocationUncheckedUpdateWithoutParentInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   events?: Prisma.EventUncheckedUpdateManyWithoutLocationNestedInput
   subLocations?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1287,9 +1287,9 @@ export type LocationUncheckedUpdateManyWithoutParentInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type LocationCreateManyCreatedByInput = {
@@ -1305,9 +1305,9 @@ export type LocationCreateManyCreatedByInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  updatedById?: string | null
-  maxConcurrentEvents?: number | null
   parentId?: string | null
+  maxConcurrentEvents?: number | null
+  updatedById?: string | null
 }
 
 export type LocationCreateManyUpdatedByInput = {
@@ -1323,9 +1323,9 @@ export type LocationCreateManyUpdatedByInput = {
   isRentable?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdById?: string | null
-  maxConcurrentEvents?: number | null
   parentId?: string | null
+  maxConcurrentEvents?: number | null
+  createdById?: string | null
 }
 
 export type LocationUpdateWithoutCreatedByInput = {
@@ -1361,9 +1361,9 @@ export type LocationUncheckedUpdateWithoutCreatedByInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   events?: Prisma.EventUncheckedUpdateManyWithoutLocationNestedInput
   subLocations?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1381,9 +1381,9 @@ export type LocationUncheckedUpdateManyWithoutCreatedByInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LocationUpdateWithoutUpdatedByInput = {
@@ -1419,9 +1419,9 @@ export type LocationUncheckedUpdateWithoutUpdatedByInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   events?: Prisma.EventUncheckedUpdateManyWithoutLocationNestedInput
   subLocations?: Prisma.LocationUncheckedUpdateManyWithoutParentNestedInput
 }
@@ -1439,9 +1439,9 @@ export type LocationUncheckedUpdateManyWithoutUpdatedByInput = {
   isRentable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxConcurrentEvents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1497,10 +1497,10 @@ export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   isRentable?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  maxConcurrentEvents?: boolean
   createdById?: boolean
   updatedById?: boolean
-  maxConcurrentEvents?: boolean
-  parentId?: boolean
   events?: boolean | Prisma.Location$eventsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Location$createdByArgs<ExtArgs>
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
@@ -1522,10 +1522,10 @@ export type LocationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isRentable?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  maxConcurrentEvents?: boolean
   createdById?: boolean
   updatedById?: boolean
-  maxConcurrentEvents?: boolean
-  parentId?: boolean
   createdBy?: boolean | Prisma.Location$createdByArgs<ExtArgs>
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Location$updatedByArgs<ExtArgs>
@@ -1544,10 +1544,10 @@ export type LocationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isRentable?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  maxConcurrentEvents?: boolean
   createdById?: boolean
   updatedById?: boolean
-  maxConcurrentEvents?: boolean
-  parentId?: boolean
   createdBy?: boolean | Prisma.Location$createdByArgs<ExtArgs>
   parent?: boolean | Prisma.Location$parentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Location$updatedByArgs<ExtArgs>
@@ -1566,13 +1566,13 @@ export type LocationSelectScalar = {
   isRentable?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  parentId?: boolean
+  maxConcurrentEvents?: boolean
   createdById?: boolean
   updatedById?: boolean
-  maxConcurrentEvents?: boolean
-  parentId?: boolean
 }
 
-export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "description" | "phone" | "googleMapsUrl" | "latitude" | "longitude" | "isInternal" | "isRentable" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "maxConcurrentEvents" | "parentId", ExtArgs["result"]["location"]>
+export type LocationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "description" | "phone" | "googleMapsUrl" | "latitude" | "longitude" | "isInternal" | "isRentable" | "createdAt" | "updatedAt" | "parentId" | "maxConcurrentEvents" | "createdById" | "updatedById", ExtArgs["result"]["location"]>
 export type LocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   events?: boolean | Prisma.Location$eventsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Location$createdByArgs<ExtArgs>
@@ -1614,10 +1614,10 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     isRentable: boolean
     createdAt: Date
     updatedAt: Date
+    parentId: string | null
+    maxConcurrentEvents: number | null
     createdById: string | null
     updatedById: string | null
-    maxConcurrentEvents: number | null
-    parentId: string | null
   }, ExtArgs["result"]["location"]>
   composites: {}
 }
@@ -2058,10 +2058,10 @@ export interface LocationFieldRefs {
   readonly isRentable: Prisma.FieldRef<"Location", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Location", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Location", 'DateTime'>
+  readonly parentId: Prisma.FieldRef<"Location", 'String'>
+  readonly maxConcurrentEvents: Prisma.FieldRef<"Location", 'Int'>
   readonly createdById: Prisma.FieldRef<"Location", 'String'>
   readonly updatedById: Prisma.FieldRef<"Location", 'String'>
-  readonly maxConcurrentEvents: Prisma.FieldRef<"Location", 'Int'>
-  readonly parentId: Prisma.FieldRef<"Location", 'String'>
 }
     
 

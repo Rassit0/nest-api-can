@@ -41,11 +41,11 @@ export type InstitutionMinAggregateOutputType = {
   name: string | null
   imageUrl: string | null
   address: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  googleMapsUrl: string | null
   latitude: number | null
   longitude: number | null
+  googleMapsUrl: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
 }
@@ -55,11 +55,11 @@ export type InstitutionMaxAggregateOutputType = {
   name: string | null
   imageUrl: string | null
   address: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  googleMapsUrl: string | null
   latitude: number | null
   longitude: number | null
+  googleMapsUrl: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
 }
@@ -69,11 +69,11 @@ export type InstitutionCountAggregateOutputType = {
   name: number
   imageUrl: number
   address: number
-  createdAt: number
-  updatedAt: number
-  googleMapsUrl: number
   latitude: number
   longitude: number
+  googleMapsUrl: number
+  createdAt: number
+  updatedAt: number
   createdById: number
   updatedById: number
   _all: number
@@ -95,11 +95,11 @@ export type InstitutionMinAggregateInputType = {
   name?: true
   imageUrl?: true
   address?: true
-  createdAt?: true
-  updatedAt?: true
-  googleMapsUrl?: true
   latitude?: true
   longitude?: true
+  googleMapsUrl?: true
+  createdAt?: true
+  updatedAt?: true
   createdById?: true
   updatedById?: true
 }
@@ -109,11 +109,11 @@ export type InstitutionMaxAggregateInputType = {
   name?: true
   imageUrl?: true
   address?: true
-  createdAt?: true
-  updatedAt?: true
-  googleMapsUrl?: true
   latitude?: true
   longitude?: true
+  googleMapsUrl?: true
+  createdAt?: true
+  updatedAt?: true
   createdById?: true
   updatedById?: true
 }
@@ -123,11 +123,11 @@ export type InstitutionCountAggregateInputType = {
   name?: true
   imageUrl?: true
   address?: true
-  createdAt?: true
-  updatedAt?: true
-  googleMapsUrl?: true
   latitude?: true
   longitude?: true
+  googleMapsUrl?: true
+  createdAt?: true
+  updatedAt?: true
   createdById?: true
   updatedById?: true
   _all?: true
@@ -224,11 +224,11 @@ export type InstitutionGroupByOutputType = {
   name: string
   imageUrl: string | null
   address: string
-  createdAt: Date
-  updatedAt: Date
-  googleMapsUrl: string | null
   latitude: number | null
   longitude: number | null
+  googleMapsUrl: string | null
+  createdAt: Date
+  updatedAt: Date
   createdById: string | null
   updatedById: string | null
   _count: InstitutionCountAggregateOutputType | null
@@ -261,11 +261,11 @@ export type InstitutionWhereInput = {
   name?: Prisma.StringFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   address?: Prisma.StringFilter<"Institution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
   clubs?: Prisma.ClubListRelationFilter
@@ -283,11 +283,11 @@ export type InstitutionOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   clubs?: Prisma.ClubOrderByRelationAggregateInput
@@ -308,11 +308,11 @@ export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   address?: Prisma.StringFilter<"Institution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
   clubs?: Prisma.ClubListRelationFilter
@@ -330,11 +330,11 @@ export type InstitutionOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InstitutionCountOrderByAggregateInput
@@ -352,11 +352,11 @@ export type InstitutionScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   address?: Prisma.StringWithAggregatesFilter<"Institution"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
-  googleMapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   latitude?: Prisma.FloatNullableWithAggregatesFilter<"Institution"> | number | null
   longitude?: Prisma.FloatNullableWithAggregatesFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Institution"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Institution"> | string | null
 }
@@ -366,11 +366,11 @@ export type InstitutionCreateInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -386,11 +386,11 @@ export type InstitutionUncheckedCreateInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -406,11 +406,11 @@ export type InstitutionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -426,11 +426,11 @@ export type InstitutionUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -446,11 +446,11 @@ export type InstitutionCreateManyInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
 }
@@ -460,11 +460,11 @@ export type InstitutionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InstitutionUncheckedUpdateManyInput = {
@@ -472,11 +472,11 @@ export type InstitutionUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -486,11 +486,11 @@ export type InstitutionCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  googleMapsUrl?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -505,11 +505,11 @@ export type InstitutionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  googleMapsUrl?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -519,11 +519,11 @@ export type InstitutionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  googleMapsUrl?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+  googleMapsUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -736,11 +736,11 @@ export type InstitutionCreateWithoutContactsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
@@ -755,11 +755,11 @@ export type InstitutionUncheckedCreateWithoutContactsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -790,11 +790,11 @@ export type InstitutionUpdateWithoutContactsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
@@ -809,11 +809,11 @@ export type InstitutionUncheckedUpdateWithoutContactsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -828,11 +828,11 @@ export type InstitutionCreateWithoutShiftsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -847,11 +847,11 @@ export type InstitutionUncheckedCreateWithoutShiftsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -882,11 +882,11 @@ export type InstitutionUpdateWithoutShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -901,11 +901,11 @@ export type InstitutionUncheckedUpdateWithoutShiftsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -920,11 +920,11 @@ export type InstitutionCreateWithoutClubsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
@@ -939,11 +939,11 @@ export type InstitutionUncheckedCreateWithoutClubsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
@@ -974,11 +974,11 @@ export type InstitutionUpdateWithoutClubsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
@@ -993,11 +993,11 @@ export type InstitutionUncheckedUpdateWithoutClubsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1012,11 +1012,11 @@ export type InstitutionCreateWithoutSeasonsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -1031,11 +1031,11 @@ export type InstitutionUncheckedCreateWithoutSeasonsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -1066,11 +1066,11 @@ export type InstitutionUpdateWithoutSeasonsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -1085,11 +1085,11 @@ export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1104,11 +1104,11 @@ export type InstitutionCreateWithoutCreatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -1123,11 +1123,11 @@ export type InstitutionUncheckedCreateWithoutCreatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
@@ -1152,11 +1152,11 @@ export type InstitutionCreateWithoutUpdatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -1171,11 +1171,11 @@ export type InstitutionUncheckedCreateWithoutUpdatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutInstitutionInput
@@ -1219,11 +1219,11 @@ export type InstitutionScalarWhereInput = {
   name?: Prisma.StringFilter<"Institution"> | string
   imageUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   address?: Prisma.StringFilter<"Institution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
-  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Institution"> | number | null
+  googleMapsUrl?: Prisma.StringNullableFilter<"Institution"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Institution"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Institution"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Institution"> | string | null
 }
@@ -1249,11 +1249,11 @@ export type InstitutionCreateWithoutSchoolsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
@@ -1268,11 +1268,11 @@ export type InstitutionUncheckedCreateWithoutSchoolsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -1303,11 +1303,11 @@ export type InstitutionUpdateWithoutSchoolsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -1322,11 +1322,11 @@ export type InstitutionUncheckedUpdateWithoutSchoolsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1341,11 +1341,11 @@ export type InstitutionCreateWithoutGeneralEventsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutInstitutionInput
   contacts?: Prisma.InstitutionContactCreateNestedManyWithoutInstitutionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedInstitutionsInput
@@ -1360,11 +1360,11 @@ export type InstitutionUncheckedCreateWithoutGeneralEventsInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutInstitutionInput
@@ -1395,11 +1395,11 @@ export type InstitutionUpdateWithoutGeneralEventsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedInstitutionsNestedInput
@@ -1414,11 +1414,11 @@ export type InstitutionUncheckedUpdateWithoutGeneralEventsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1433,11 +1433,11 @@ export type InstitutionCreateManyCreatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   updatedById?: string | null
 }
 
@@ -1446,11 +1446,11 @@ export type InstitutionCreateManyUpdatedByInput = {
   name: string
   imageUrl?: string | null
   address: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  googleMapsUrl?: string | null
   latitude?: number | null
   longitude?: number | null
+  googleMapsUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdById?: string | null
 }
 
@@ -1459,11 +1459,11 @@ export type InstitutionUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -1478,11 +1478,11 @@ export type InstitutionUncheckedUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1497,11 +1497,11 @@ export type InstitutionUncheckedUpdateManyWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1510,11 +1510,11 @@ export type InstitutionUpdateWithoutUpdatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutInstitutionNestedInput
   contacts?: Prisma.InstitutionContactUpdateManyWithoutInstitutionNestedInput
@@ -1529,11 +1529,11 @@ export type InstitutionUncheckedUpdateWithoutUpdatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutInstitutionNestedInput
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutInstitutionNestedInput
@@ -1548,11 +1548,11 @@ export type InstitutionUncheckedUpdateManyWithoutUpdatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  googleMapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1637,11 +1637,11 @@ export type InstitutionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  googleMapsUrl?: boolean
   latitude?: boolean
   longitude?: boolean
+  googleMapsUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
@@ -1660,11 +1660,11 @@ export type InstitutionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  googleMapsUrl?: boolean
   latitude?: boolean
   longitude?: boolean
+  googleMapsUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
   createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
@@ -1676,11 +1676,11 @@ export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  googleMapsUrl?: boolean
   latitude?: boolean
   longitude?: boolean
+  googleMapsUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
   createdBy?: boolean | Prisma.Institution$createdByArgs<ExtArgs>
@@ -1692,16 +1692,16 @@ export type InstitutionSelectScalar = {
   name?: boolean
   imageUrl?: boolean
   address?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  googleMapsUrl?: boolean
   latitude?: boolean
   longitude?: boolean
+  googleMapsUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "createdAt" | "updatedAt" | "googleMapsUrl" | "latitude" | "longitude" | "createdById" | "updatedById", ExtArgs["result"]["institution"]>
+export type InstitutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "imageUrl" | "address" | "latitude" | "longitude" | "googleMapsUrl" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["institution"]>
 export type InstitutionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clubs?: boolean | Prisma.Institution$clubsArgs<ExtArgs>
   generalEvents?: boolean | Prisma.Institution$generalEventsArgs<ExtArgs>
@@ -1739,11 +1739,11 @@ export type $InstitutionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     name: string
     imageUrl: string | null
     address: string
-    createdAt: Date
-    updatedAt: Date
-    googleMapsUrl: string | null
     latitude: number | null
     longitude: number | null
+    googleMapsUrl: string | null
+    createdAt: Date
+    updatedAt: Date
     createdById: string | null
     updatedById: string | null
   }, ExtArgs["result"]["institution"]>
@@ -2181,11 +2181,11 @@ export interface InstitutionFieldRefs {
   readonly name: Prisma.FieldRef<"Institution", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Institution", 'String'>
   readonly address: Prisma.FieldRef<"Institution", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Institution", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Institution", 'DateTime'>
-  readonly googleMapsUrl: Prisma.FieldRef<"Institution", 'String'>
   readonly latitude: Prisma.FieldRef<"Institution", 'Float'>
   readonly longitude: Prisma.FieldRef<"Institution", 'Float'>
+  readonly googleMapsUrl: Prisma.FieldRef<"Institution", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Institution", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Institution", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Institution", 'String'>
   readonly updatedById: Prisma.FieldRef<"Institution", 'String'>
 }

@@ -1048,6 +1048,23 @@ export type EnumNewsStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumNewsStatusFilter<$PrismaModel>
 }
 
+export type EnumPromotionPositionFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromotionPosition | Prisma.EnumPromotionPositionFieldRefInput<$PrismaModel>
+  in?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel> | $Enums.PromotionPosition
+}
+
+export type EnumPromotionPositionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromotionPosition | Prisma.EnumPromotionPositionFieldRefInput<$PrismaModel>
+  in?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromotionPositionWithAggregatesFilter<$PrismaModel> | $Enums.PromotionPosition
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -2028,6 +2045,23 @@ export type NestedEnumNewsStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumNewsStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumNewsStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPromotionPositionFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromotionPosition | Prisma.EnumPromotionPositionFieldRefInput<$PrismaModel>
+  in?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel> | $Enums.PromotionPosition
+}
+
+export type NestedEnumPromotionPositionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromotionPosition | Prisma.EnumPromotionPositionFieldRefInput<$PrismaModel>
+  in?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromotionPosition[] | Prisma.ListEnumPromotionPositionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromotionPositionWithAggregatesFilter<$PrismaModel> | $Enums.PromotionPosition
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromotionPositionFilter<$PrismaModel>
 }
 
 

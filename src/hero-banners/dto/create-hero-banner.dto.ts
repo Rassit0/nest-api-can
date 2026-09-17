@@ -1,7 +1,7 @@
 import { IsString, IsOptional, IsBoolean, IsInt } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
-export class CreateBannerDto {
+export class CreateHeroBannerDto {
   @IsString()
   title: string;
 
@@ -13,23 +13,22 @@ export class CreateBannerDto {
   @IsOptional()
   redirectTo?: string;
 
-  @IsString()
-  image16x9: string;
+  @IsOptional()
+  image16x9?: string; // Validado en Service/Controller porque llega como File
 
-  @IsString()
   @IsOptional()
   image1x1?: string;
 
-  @IsString()
   @IsOptional()
   image3x4?: string;
 
-  @IsString()
+@IsBoolean()
   @IsOptional()
-  category?: string;
-
-  @IsBoolean()
-  @IsOptional()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
   isActive?: boolean;
 
   @IsInt()

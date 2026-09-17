@@ -5,12 +5,15 @@ import { StorageController } from './storage.controller';
 import { ScheduleModule } from '@nestjs/schedule';
 import { S3StorageProvider } from './providers/s3-storage.provider';
 import { envs } from '../config/envs';
+import { ImageProcessorService } from './image/image-processor.service';
+
 @Global()
 @Module({
   imports: [ScheduleModule.forRoot()],
   controllers: [StorageController],
   providers: [
     StorageService,
+    ImageProcessorService,
     {
       provide: STORAGE_PROVIDER,
       useClass: envs.storageDriver === 's3' ? S3StorageProvider : LocalStorageProvider,

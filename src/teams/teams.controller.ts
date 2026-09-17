@@ -74,6 +74,69 @@ export class TeamsController {
     return this.teamsService.findAll(paginationDto);
   }
 
+
+
+  @Get('clubs-by-discipline/options/:disciplineId')
+  @RequirePermissions('READ_TEAMS')
+  @ApiOperation({
+    summary: 'Obtener clubes por disciplina',
+    description:
+      'Retorna los clubes asociados a una disciplina deportiva específica.',
+  })
+  @ApiParam({
+    name: 'disciplineId',
+    description: 'ID de la disciplina (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Opciones de clubes obtenidas correctamente.' })
+  async getClubsByDisciplineOptions(
+    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
+  ) {
+    return await this.teamsService.getClubsByDisciplineOptions(disciplineId);
+  }
+
+  @Get('disciplines/options')
+  @RequirePermissions('READ_TEAMS')
+  @ApiOperation({
+    summary: 'Obtener disciplinas disponibles para equipos',
+  })
+  @ApiOkResponse({
+    description: 'Opciones de disciplinas obtenidas correctamente.',
+  })
+  async getDisciplinesOptions() {
+    return await this.teamsService.getDisciplinesOptions();
+  }
+
+  @Get('options')
+  @RequirePermissions('READ_TEAMS')
+  @ApiOperation({
+    summary: 'Obtener todos los equipos (CAN y externos)',
+  })
+  @ApiOkResponse({
+    description: 'Opciones de equipos obtenidas correctamente.',
+  })
+  async getTeamsOptions() {
+    return await this.teamsService.getTeamsOptions();
+  }
+
+  @Get('clubs/context/:clubId')
+  @RequirePermissions('READ_TEAMS')
+  @ApiOperation({
+    summary: 'Obtener contexto básico del club',
+    description:
+      'Retorna información básica (nombre, id) de un club para usar de contexto en la vista de equipos, ' +
+      'sin requerir permisos sobre el módulo de Clubes.',
+  })
+  @ApiParam({
+    name: 'clubId',
+    description: 'ID del club (UUID)',
+    format: 'uuid',
+  })
+  @ApiOkResponse({ description: 'Contexto del club obtenido correctamente.' })
+  async getClubContext(@Param('clubId', ParseUUIDPipe) clubId: string) {
+    return await this.teamsService.getClubContext(clubId);
+  }
+
   @Get(':id')
   @RequirePermissions('READ_TEAMS')
   @ApiOperation({
@@ -124,55 +187,5 @@ export class TeamsController {
   @ApiStandardResponse(TeamResponseDto, 'Equipo eliminado exitosamente.')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.teamsService.remove(id);
-  }
-
-  @Get('clubs-by-discipline/options/:disciplineId')
-  @RequirePermissions('READ_TEAMS')
-  @ApiOperation({
-    summary: 'Obtener clubes por disciplina',
-    description:
-      'Retorna los clubes asociados a una disciplina deportiva específica.',
-  })
-  @ApiParam({
-    name: 'disciplineId',
-    description: 'ID de la disciplina (UUID)',
-    format: 'uuid',
-  })
-  @ApiOkResponse({ description: 'Opciones de clubes obtenidas correctamente.' })
-  async getClubsByDisciplineOptions(
-    @Param('disciplineId', ParseUUIDPipe) disciplineId: string,
-  ) {
-    return await this.teamsService.getClubsByDisciplineOptions(disciplineId);
-  }
-
-  @Get('disciplines/options')
-  @RequirePermissions('READ_TEAMS')
-  @ApiOperation({
-    summary: 'Obtener disciplinas disponibles para equipos',
-    description: 'Retorna selectores de disciplinas deportivas.',
-  })
-  @ApiOkResponse({
-    description: 'Opciones de disciplinas obtenidas correctamente.',
-  })
-  async getDisciplinesOptions() {
-    return await this.teamsService.getDisciplinesOptions();
-  }
-
-  @Get('clubs/context/:clubId')
-  @RequirePermissions('READ_TEAMS')
-  @ApiOperation({
-    summary: 'Obtener contexto básico del club',
-    description:
-      'Retorna información básica (nombre, id) de un club para usar de contexto en la vista de equipos, ' +
-      'sin requerir permisos sobre el módulo de Clubes.',
-  })
-  @ApiParam({
-    name: 'clubId',
-    description: 'ID del club (UUID)',
-    format: 'uuid',
-  })
-  @ApiOkResponse({ description: 'Contexto del club obtenido correctamente.' })
-  async getClubContext(@Param('clubId', ParseUUIDPipe) clubId: string) {
-    return await this.teamsService.getClubContext(clubId);
   }
 }

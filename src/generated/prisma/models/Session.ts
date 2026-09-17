@@ -36,20 +36,20 @@ export type SessionSumAggregateOutputType = {
 
 export type SessionMinAggregateOutputType = {
   id: string | null
-  durationMin: number | null
   eventId: string | null
+  durationMin: number | null
 }
 
 export type SessionMaxAggregateOutputType = {
   id: string | null
-  durationMin: number | null
   eventId: string | null
+  durationMin: number | null
 }
 
 export type SessionCountAggregateOutputType = {
   id: number
-  durationMin: number
   eventId: number
+  durationMin: number
   _all: number
 }
 
@@ -64,20 +64,20 @@ export type SessionSumAggregateInputType = {
 
 export type SessionMinAggregateInputType = {
   id?: true
-  durationMin?: true
   eventId?: true
+  durationMin?: true
 }
 
 export type SessionMaxAggregateInputType = {
   id?: true
-  durationMin?: true
   eventId?: true
+  durationMin?: true
 }
 
 export type SessionCountAggregateInputType = {
   id?: true
-  durationMin?: true
   eventId?: true
+  durationMin?: true
   _all?: true
 }
 
@@ -169,8 +169,8 @@ export type SessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type SessionGroupByOutputType = {
   id: string
-  durationMin: number
   eventId: string
+  durationMin: number
   _count: SessionCountAggregateOutputType | null
   _avg: SessionAvgAggregateOutputType | null
   _sum: SessionSumAggregateOutputType | null
@@ -198,8 +198,8 @@ export type SessionWhereInput = {
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   id?: Prisma.StringFilter<"Session"> | string
-  durationMin?: Prisma.IntFilter<"Session"> | number
   eventId?: Prisma.StringFilter<"Session"> | string
+  durationMin?: Prisma.IntFilter<"Session"> | number
   bookings?: Prisma.SessionBookingListRelationFilter
   sessionCourses?: Prisma.SessionCourseListRelationFilter
   sessionTeams?: Prisma.SessionTeamListRelationFilter
@@ -208,8 +208,8 @@ export type SessionWhereInput = {
 
 export type SessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  durationMin?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
+  durationMin?: Prisma.SortOrder
   bookings?: Prisma.SessionBookingOrderByRelationAggregateInput
   sessionCourses?: Prisma.SessionCourseOrderByRelationAggregateInput
   sessionTeams?: Prisma.SessionTeamOrderByRelationAggregateInput
@@ -231,8 +231,8 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  durationMin?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
+  durationMin?: Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _avg?: Prisma.SessionAvgOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
@@ -245,8 +245,8 @@ export type SessionScalarWhereWithAggregatesInput = {
   OR?: Prisma.SessionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SessionScalarWhereWithAggregatesInput | Prisma.SessionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Session"> | string
-  durationMin?: Prisma.IntWithAggregatesFilter<"Session"> | number
   eventId?: Prisma.StringWithAggregatesFilter<"Session"> | string
+  durationMin?: Prisma.IntWithAggregatesFilter<"Session"> | number
 }
 
 export type SessionCreateInput = {
@@ -260,8 +260,8 @@ export type SessionCreateInput = {
 
 export type SessionUncheckedCreateInput = {
   id?: string
-  durationMin?: number
   eventId: string
+  durationMin?: number
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
@@ -278,8 +278,8 @@ export type SessionUpdateInput = {
 
 export type SessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
@@ -287,8 +287,8 @@ export type SessionUncheckedUpdateInput = {
 
 export type SessionCreateManyInput = {
   id?: string
-  durationMin?: number
   eventId: string
+  durationMin?: number
 }
 
 export type SessionUpdateManyMutationInput = {
@@ -298,8 +298,8 @@ export type SessionUpdateManyMutationInput = {
 
 export type SessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SessionNullableScalarRelationFilter = {
@@ -309,8 +309,8 @@ export type SessionNullableScalarRelationFilter = {
 
 export type SessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  durationMin?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
+  durationMin?: Prisma.SortOrder
 }
 
 export type SessionAvgOrderByAggregateInput = {
@@ -319,14 +319,14 @@ export type SessionAvgOrderByAggregateInput = {
 
 export type SessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  durationMin?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
+  durationMin?: Prisma.SortOrder
 }
 
 export type SessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  durationMin?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
+  durationMin?: Prisma.SortOrder
 }
 
 export type SessionSumOrderByAggregateInput = {
@@ -470,8 +470,8 @@ export type SessionCreateWithoutSessionTeamsInput = {
 
 export type SessionUncheckedCreateWithoutSessionTeamsInput = {
   id?: string
-  durationMin?: number
   eventId: string
+  durationMin?: number
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
 }
@@ -502,8 +502,8 @@ export type SessionUpdateWithoutSessionTeamsInput = {
 
 export type SessionUncheckedUpdateWithoutSessionTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
 }
@@ -518,8 +518,8 @@ export type SessionCreateWithoutSessionCoursesInput = {
 
 export type SessionUncheckedCreateWithoutSessionCoursesInput = {
   id?: string
-  durationMin?: number
   eventId: string
+  durationMin?: number
   bookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutSessionInput
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
@@ -550,8 +550,8 @@ export type SessionUpdateWithoutSessionCoursesInput = {
 
 export type SessionUncheckedUpdateWithoutSessionCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   bookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutSessionNestedInput
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
@@ -566,8 +566,8 @@ export type SessionCreateWithoutBookingsInput = {
 
 export type SessionUncheckedCreateWithoutBookingsInput = {
   id?: string
-  durationMin?: number
   eventId: string
+  durationMin?: number
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutSessionInput
   sessionTeams?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutSessionInput
 }
@@ -598,8 +598,8 @@ export type SessionUpdateWithoutBookingsInput = {
 
 export type SessionUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  durationMin?: Prisma.IntFieldUpdateOperationsInput | number
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutSessionNestedInput
   sessionTeams?: Prisma.SessionTeamUncheckedUpdateManyWithoutSessionNestedInput
 }
@@ -655,8 +655,8 @@ export type SessionCountOutputTypeCountSessionTeamsArgs<ExtArgs extends runtime.
 
 export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  durationMin?: boolean
   eventId?: boolean
+  durationMin?: boolean
   bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>
   sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
   sessionTeams?: boolean | Prisma.Session$sessionTeamsArgs<ExtArgs>
@@ -666,25 +666,25 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 
 export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  durationMin?: boolean
   eventId?: boolean
+  durationMin?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  durationMin?: boolean
   eventId?: boolean
+  durationMin?: boolean
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 export type SessionSelectScalar = {
   id?: boolean
-  durationMin?: boolean
   eventId?: boolean
+  durationMin?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "durationMin" | "eventId", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "durationMin", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.Session$bookingsArgs<ExtArgs>
   sessionCourses?: boolean | Prisma.Session$sessionCoursesArgs<ExtArgs>
@@ -709,8 +709,8 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    durationMin: number
     eventId: string
+    durationMin: number
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1139,8 +1139,8 @@ export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface SessionFieldRefs {
   readonly id: Prisma.FieldRef<"Session", 'String'>
-  readonly durationMin: Prisma.FieldRef<"Session", 'Int'>
   readonly eventId: Prisma.FieldRef<"Session", 'String'>
+  readonly durationMin: Prisma.FieldRef<"Session", 'Int'>
 }
     
 

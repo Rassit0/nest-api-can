@@ -104,14 +104,16 @@ export class CalendarQueriesService {
         
         match: {
           select: {
-            opponentName: true,
+            homeTeam: { select: { id: true, name: true } },
+            awayTeam: { select: { id: true, name: true } },
+            homeScore: true,
+            awayScore: true,
             type: true,
             result: true,
             teamSeasonCategory: {
               select: {
                 id: true,
-                teamSeason: { select: { id: true, team: { select: { name: true } } } },
-                category: { select: { name: true } }
+                category: { select: { id: true, name: true } }
               }
             }
           }
@@ -122,6 +124,7 @@ export class CalendarQueriesService {
             institutionId: true,
             teamSeasonCategoryId: true,
             courseSeasonId: true,
+            courseSeasonShiftId: true,
           }
         }
       },

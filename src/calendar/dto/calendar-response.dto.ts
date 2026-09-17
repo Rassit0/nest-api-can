@@ -21,16 +21,20 @@ export interface SessionCalendarMetadata extends BaseCalendarMetadata {
 }
 
 export interface MatchCalendarMetadata extends BaseCalendarMetadata {
-  opponentName: string;
+  homeTeam: { id: string; name: string } | null;
+  awayTeam: { id: string; name: string } | null;
+  homeScore: number | null;
+  awayScore: number | null;
   matchType: string;
   result: string;
-  team: { id: string; name: string } | null;
+  category: { id: string; name: string } | null;
 }
 
 export interface GeneralEventCalendarMetadata extends BaseCalendarMetadata {
   institutionId: string | null;
-  teamSeasonId: string | null;
+  teamSeasonCategoryId: string | null;
   courseSeasonId: string | null;
+  courseSeasonShiftId: string | null;
 }
 
 export interface CalendarEventResponse<T = BaseCalendarMetadata> {

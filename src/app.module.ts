@@ -79,7 +79,10 @@ import { StorageModule } from './storage/storage.module';
 import { ThirdPartiesModule } from './third-parties/third-parties.module';
 import { PaymentsModule } from './payments/payments.module';
 import { NewsModule } from './news/news.module';
-import { BannersModule } from './banners/banners.module';
+import { NewsCategoriesModule } from './news-categories/news-categories.module';
+import { PromotionsModule } from './promotions/promotions.module';
+import { HeroBannersModule } from './hero-banners/hero-banners.module';
+import { HomeDisciplinesModule } from './home-disciplines/home-disciplines.module';
 
 @Module({
   imports: [
@@ -158,7 +161,10 @@ import { BannersModule } from './banners/banners.module';
     ThirdPartiesModule,
     PaymentsModule,
     NewsModule,
-    BannersModule,
+    NewsCategoriesModule,
+    PromotionsModule,
+    HeroBannersModule,
+    HomeDisciplinesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

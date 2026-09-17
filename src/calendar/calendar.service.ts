@@ -40,12 +40,15 @@ export class CalendarService {
       } 
       else if (event.eventType === EventType.MATCH && event.match) {
         const matchMeta: MatchCalendarMetadata = {
-          opponentName: event.match.opponentName,
+          homeTeam: event.match.homeTeam,
+          awayTeam: event.match.awayTeam,
+          homeScore: event.match.homeScore,
+          awayScore: event.match.awayScore,
           matchType: event.match.type,
           result: event.match.result,
-          team: event.match.teamSeasonCategory ? {
-            id: event.match.teamSeasonCategory.teamSeason.id,
-            name: `${event.match.teamSeasonCategory.teamSeason.team.name} - ${event.match.teamSeasonCategory.category.name}`
+          category: event.match.teamSeasonCategory ? {
+            id: event.match.teamSeasonCategory.id,
+            name: event.match.teamSeasonCategory.category.name
           } : null
         };
         metadata = matchMeta;
@@ -53,8 +56,9 @@ export class CalendarService {
       else if (event.eventType === EventType.GENERAL && event.generalEvent) {
         const genMeta: GeneralEventCalendarMetadata = {
           institutionId: event.generalEvent.institutionId,
-          teamSeasonId: event.generalEvent.teamSeasonCategoryId,
-          courseSeasonId: event.generalEvent.courseSeasonId
+          teamSeasonCategoryId: event.generalEvent.teamSeasonCategoryId,
+          courseSeasonId: event.generalEvent.courseSeasonId,
+          courseSeasonShiftId: event.generalEvent.courseSeasonShiftId,
         };
         metadata = genMeta;
       }

@@ -27,21 +27,22 @@ export type AggregateTransaction = {
 }
 
 export type TransactionAvgAggregateOutputType = {
-  amount: runtime.Decimal | null
   receiptNumber: number | null
-  balanceBefore: runtime.Decimal | null
+  amount: runtime.Decimal | null
   balanceAfter: runtime.Decimal | null
+  balanceBefore: runtime.Decimal | null
 }
 
 export type TransactionSumAggregateOutputType = {
-  amount: runtime.Decimal | null
   receiptNumber: number | null
-  balanceBefore: runtime.Decimal | null
+  amount: runtime.Decimal | null
   balanceAfter: runtime.Decimal | null
+  balanceBefore: runtime.Decimal | null
 }
 
 export type TransactionMinAggregateOutputType = {
   id: string | null
+  receiptNumber: number | null
   payerPersonId: string | null
   amount: runtime.Decimal | null
   transactionDate: Date | null
@@ -55,7 +56,6 @@ export type TransactionMinAggregateOutputType = {
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
-  receiptNumber: number | null
   receiptSeries: string | null
   financialAccountId: string | null
   isReconciled: boolean | null
@@ -64,13 +64,14 @@ export type TransactionMinAggregateOutputType = {
   isInternalTransfer: boolean | null
   thirdPartyId: string | null
   paymentId: string | null
-  reversesId: string | null
-  balanceBefore: runtime.Decimal | null
   balanceAfter: runtime.Decimal | null
+  balanceBefore: runtime.Decimal | null
+  reversesId: string | null
 }
 
 export type TransactionMaxAggregateOutputType = {
   id: string | null
+  receiptNumber: number | null
   payerPersonId: string | null
   amount: runtime.Decimal | null
   transactionDate: Date | null
@@ -84,7 +85,6 @@ export type TransactionMaxAggregateOutputType = {
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
-  receiptNumber: number | null
   receiptSeries: string | null
   financialAccountId: string | null
   isReconciled: boolean | null
@@ -93,13 +93,14 @@ export type TransactionMaxAggregateOutputType = {
   isInternalTransfer: boolean | null
   thirdPartyId: string | null
   paymentId: string | null
-  reversesId: string | null
-  balanceBefore: runtime.Decimal | null
   balanceAfter: runtime.Decimal | null
+  balanceBefore: runtime.Decimal | null
+  reversesId: string | null
 }
 
 export type TransactionCountAggregateOutputType = {
   id: number
+  receiptNumber: number
   payerPersonId: number
   amount: number
   transactionDate: number
@@ -113,7 +114,6 @@ export type TransactionCountAggregateOutputType = {
   updatedAt: number
   createdById: number
   updatedById: number
-  receiptNumber: number
   receiptSeries: number
   financialAccountId: number
   isReconciled: number
@@ -122,29 +122,30 @@ export type TransactionCountAggregateOutputType = {
   isInternalTransfer: number
   thirdPartyId: number
   paymentId: number
-  reversesId: number
-  balanceBefore: number
   balanceAfter: number
+  balanceBefore: number
+  reversesId: number
   _all: number
 }
 
 
 export type TransactionAvgAggregateInputType = {
-  amount?: true
   receiptNumber?: true
-  balanceBefore?: true
+  amount?: true
   balanceAfter?: true
+  balanceBefore?: true
 }
 
 export type TransactionSumAggregateInputType = {
-  amount?: true
   receiptNumber?: true
-  balanceBefore?: true
+  amount?: true
   balanceAfter?: true
+  balanceBefore?: true
 }
 
 export type TransactionMinAggregateInputType = {
   id?: true
+  receiptNumber?: true
   payerPersonId?: true
   amount?: true
   transactionDate?: true
@@ -158,7 +159,6 @@ export type TransactionMinAggregateInputType = {
   updatedAt?: true
   createdById?: true
   updatedById?: true
-  receiptNumber?: true
   receiptSeries?: true
   financialAccountId?: true
   isReconciled?: true
@@ -167,13 +167,14 @@ export type TransactionMinAggregateInputType = {
   isInternalTransfer?: true
   thirdPartyId?: true
   paymentId?: true
-  reversesId?: true
-  balanceBefore?: true
   balanceAfter?: true
+  balanceBefore?: true
+  reversesId?: true
 }
 
 export type TransactionMaxAggregateInputType = {
   id?: true
+  receiptNumber?: true
   payerPersonId?: true
   amount?: true
   transactionDate?: true
@@ -187,7 +188,6 @@ export type TransactionMaxAggregateInputType = {
   updatedAt?: true
   createdById?: true
   updatedById?: true
-  receiptNumber?: true
   receiptSeries?: true
   financialAccountId?: true
   isReconciled?: true
@@ -196,13 +196,14 @@ export type TransactionMaxAggregateInputType = {
   isInternalTransfer?: true
   thirdPartyId?: true
   paymentId?: true
-  reversesId?: true
-  balanceBefore?: true
   balanceAfter?: true
+  balanceBefore?: true
+  reversesId?: true
 }
 
 export type TransactionCountAggregateInputType = {
   id?: true
+  receiptNumber?: true
   payerPersonId?: true
   amount?: true
   transactionDate?: true
@@ -216,7 +217,6 @@ export type TransactionCountAggregateInputType = {
   updatedAt?: true
   createdById?: true
   updatedById?: true
-  receiptNumber?: true
   receiptSeries?: true
   financialAccountId?: true
   isReconciled?: true
@@ -225,9 +225,9 @@ export type TransactionCountAggregateInputType = {
   isInternalTransfer?: true
   thirdPartyId?: true
   paymentId?: true
-  reversesId?: true
-  balanceBefore?: true
   balanceAfter?: true
+  balanceBefore?: true
+  reversesId?: true
   _all?: true
 }
 
@@ -319,6 +319,7 @@ export type TransactionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type TransactionGroupByOutputType = {
   id: string
+  receiptNumber: number
   payerPersonId: string | null
   amount: runtime.Decimal
   transactionDate: Date
@@ -332,7 +333,6 @@ export type TransactionGroupByOutputType = {
   updatedAt: Date
   createdById: string | null
   updatedById: string | null
-  receiptNumber: number
   receiptSeries: string
   financialAccountId: string
   isReconciled: boolean
@@ -341,9 +341,9 @@ export type TransactionGroupByOutputType = {
   isInternalTransfer: boolean
   thirdPartyId: string | null
   paymentId: string | null
-  reversesId: string | null
-  balanceBefore: runtime.Decimal | null
   balanceAfter: runtime.Decimal | null
+  balanceBefore: runtime.Decimal | null
+  reversesId: string | null
   _count: TransactionCountAggregateOutputType | null
   _avg: TransactionAvgAggregateOutputType | null
   _sum: TransactionSumAggregateOutputType | null
@@ -371,6 +371,7 @@ export type TransactionWhereInput = {
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   id?: Prisma.StringFilter<"Transaction"> | string
+  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   payerPersonId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -384,7 +385,6 @@ export type TransactionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Transaction"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   receiptSeries?: Prisma.StringFilter<"Transaction"> | string
   financialAccountId?: Prisma.StringFilter<"Transaction"> | string
   isReconciled?: Prisma.BoolFilter<"Transaction"> | boolean
@@ -393,9 +393,9 @@ export type TransactionWhereInput = {
   isInternalTransfer?: Prisma.BoolFilter<"Transaction"> | boolean
   thirdPartyId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   paymentId?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  reversesId?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   attachments?: Prisma.AttachmentListRelationFilter
   internalTransferDest?: Prisma.XOR<Prisma.InternalTransferNullableScalarRelationFilter, Prisma.InternalTransferWhereInput> | null
   internalTransferSource?: Prisma.XOR<Prisma.InternalTransferNullableScalarRelationFilter, Prisma.InternalTransferWhereInput> | null
@@ -403,14 +403,15 @@ export type TransactionWhereInput = {
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   payerPerson?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
-  thirdParty?: Prisma.XOR<Prisma.ThirdPartyNullableScalarRelationFilter, Prisma.ThirdPartyWhereInput> | null
-  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   reverses?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
   reversedBy?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
+  thirdParty?: Prisma.XOR<Prisma.ThirdPartyNullableScalarRelationFilter, Prisma.ThirdPartyWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type TransactionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   payerPersonId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
@@ -424,7 +425,6 @@ export type TransactionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  receiptNumber?: Prisma.SortOrder
   receiptSeries?: Prisma.SortOrder
   financialAccountId?: Prisma.SortOrder
   isReconciled?: Prisma.SortOrder
@@ -433,9 +433,9 @@ export type TransactionOrderByWithRelationInput = {
   isInternalTransfer?: Prisma.SortOrder
   thirdPartyId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  reversesId?: Prisma.SortOrderInput | Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrderInput | Prisma.SortOrder
   balanceAfter?: Prisma.SortOrderInput | Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversesId?: Prisma.SortOrderInput | Prisma.SortOrder
   attachments?: Prisma.AttachmentOrderByRelationAggregateInput
   internalTransferDest?: Prisma.InternalTransferOrderByWithRelationInput
   internalTransferSource?: Prisma.InternalTransferOrderByWithRelationInput
@@ -443,10 +443,10 @@ export type TransactionOrderByWithRelationInput = {
   financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
   payerPerson?: Prisma.PersonOrderByWithRelationInput
   payment?: Prisma.PaymentOrderByWithRelationInput
-  thirdParty?: Prisma.ThirdPartyOrderByWithRelationInput
-  updatedBy?: Prisma.UserOrderByWithRelationInput
   reverses?: Prisma.TransactionOrderByWithRelationInput
   reversedBy?: Prisma.TransactionOrderByWithRelationInput
+  thirdParty?: Prisma.ThirdPartyOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type TransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -456,6 +456,7 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   OR?: Prisma.TransactionWhereInput[]
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
+  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   payerPersonId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -469,7 +470,6 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Transaction"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   receiptSeries?: Prisma.StringFilter<"Transaction"> | string
   financialAccountId?: Prisma.StringFilter<"Transaction"> | string
   isReconciled?: Prisma.BoolFilter<"Transaction"> | boolean
@@ -478,8 +478,8 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   isInternalTransfer?: Prisma.BoolFilter<"Transaction"> | boolean
   thirdPartyId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   paymentId?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentListRelationFilter
   internalTransferDest?: Prisma.XOR<Prisma.InternalTransferNullableScalarRelationFilter, Prisma.InternalTransferWhereInput> | null
   internalTransferSource?: Prisma.XOR<Prisma.InternalTransferNullableScalarRelationFilter, Prisma.InternalTransferWhereInput> | null
@@ -487,14 +487,15 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   payerPerson?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
-  thirdParty?: Prisma.XOR<Prisma.ThirdPartyNullableScalarRelationFilter, Prisma.ThirdPartyWhereInput> | null
-  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   reverses?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
   reversedBy?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
+  thirdParty?: Prisma.XOR<Prisma.ThirdPartyNullableScalarRelationFilter, Prisma.ThirdPartyWhereInput> | null
+  updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "reversesId" | "receiptSeries_receiptNumber">
 
 export type TransactionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   payerPersonId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
@@ -508,7 +509,6 @@ export type TransactionOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  receiptNumber?: Prisma.SortOrder
   receiptSeries?: Prisma.SortOrder
   financialAccountId?: Prisma.SortOrder
   isReconciled?: Prisma.SortOrder
@@ -517,9 +517,9 @@ export type TransactionOrderByWithAggregationInput = {
   isInternalTransfer?: Prisma.SortOrder
   thirdPartyId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  reversesId?: Prisma.SortOrderInput | Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrderInput | Prisma.SortOrder
   balanceAfter?: Prisma.SortOrderInput | Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversesId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TransactionCountOrderByAggregateInput
   _avg?: Prisma.TransactionAvgOrderByAggregateInput
   _max?: Prisma.TransactionMaxOrderByAggregateInput
@@ -532,6 +532,7 @@ export type TransactionScalarWhereWithAggregatesInput = {
   OR?: Prisma.TransactionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TransactionScalarWhereWithAggregatesInput | Prisma.TransactionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
+  receiptNumber?: Prisma.IntWithAggregatesFilter<"Transaction"> | number
   payerPersonId?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
   amount?: Prisma.DecimalWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
@@ -545,7 +546,6 @@ export type TransactionScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
-  receiptNumber?: Prisma.IntWithAggregatesFilter<"Transaction"> | number
   receiptSeries?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   financialAccountId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   isReconciled?: Prisma.BoolWithAggregatesFilter<"Transaction"> | boolean
@@ -554,13 +554,14 @@ export type TransactionScalarWhereWithAggregatesInput = {
   isInternalTransfer?: Prisma.BoolWithAggregatesFilter<"Transaction"> | boolean
   thirdPartyId?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
   paymentId?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
-  reversesId?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
-  balanceBefore?: Prisma.DecimalNullableWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.DecimalNullableWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.DecimalNullableWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
 }
 
 export type TransactionCreateInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -571,14 +572,13 @@ export type TransactionCreateInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
@@ -586,14 +586,15 @@ export type TransactionCreateInput = {
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -607,7 +608,6 @@ export type TransactionUncheckedCreateInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -616,9 +616,9 @@ export type TransactionUncheckedCreateInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -627,6 +627,7 @@ export type TransactionUncheckedCreateInput = {
 
 export type TransactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -637,14 +638,13 @@ export type TransactionUpdateInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
@@ -652,14 +652,15 @@ export type TransactionUpdateInput = {
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -673,7 +674,6 @@ export type TransactionUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -682,9 +682,9 @@ export type TransactionUncheckedUpdateInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -693,6 +693,7 @@ export type TransactionUncheckedUpdateInput = {
 
 export type TransactionCreateManyInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -706,7 +707,6 @@ export type TransactionCreateManyInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -715,13 +715,14 @@ export type TransactionCreateManyInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -732,18 +733,18 @@ export type TransactionUpdateManyMutationInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type TransactionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -757,7 +758,6 @@ export type TransactionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -766,9 +766,9 @@ export type TransactionUncheckedUpdateManyInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionListRelationFilter = {
@@ -793,6 +793,7 @@ export type TransactionReceiptSeriesReceiptNumberCompoundUniqueInput = {
 
 export type TransactionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   payerPersonId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
@@ -806,7 +807,6 @@ export type TransactionCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  receiptNumber?: Prisma.SortOrder
   receiptSeries?: Prisma.SortOrder
   financialAccountId?: Prisma.SortOrder
   isReconciled?: Prisma.SortOrder
@@ -815,20 +815,21 @@ export type TransactionCountOrderByAggregateInput = {
   isInternalTransfer?: Prisma.SortOrder
   thirdPartyId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
-  reversesId?: Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrder
   balanceAfter?: Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrder
+  reversesId?: Prisma.SortOrder
 }
 
 export type TransactionAvgOrderByAggregateInput = {
-  amount?: Prisma.SortOrder
   receiptNumber?: Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrder
+  amount?: Prisma.SortOrder
   balanceAfter?: Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrder
 }
 
 export type TransactionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   payerPersonId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
@@ -842,7 +843,6 @@ export type TransactionMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  receiptNumber?: Prisma.SortOrder
   receiptSeries?: Prisma.SortOrder
   financialAccountId?: Prisma.SortOrder
   isReconciled?: Prisma.SortOrder
@@ -851,13 +851,14 @@ export type TransactionMaxOrderByAggregateInput = {
   isInternalTransfer?: Prisma.SortOrder
   thirdPartyId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
-  reversesId?: Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrder
   balanceAfter?: Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrder
+  reversesId?: Prisma.SortOrder
 }
 
 export type TransactionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   payerPersonId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
@@ -871,7 +872,6 @@ export type TransactionMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
-  receiptNumber?: Prisma.SortOrder
   receiptSeries?: Prisma.SortOrder
   financialAccountId?: Prisma.SortOrder
   isReconciled?: Prisma.SortOrder
@@ -880,16 +880,16 @@ export type TransactionMinOrderByAggregateInput = {
   isInternalTransfer?: Prisma.SortOrder
   thirdPartyId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
-  reversesId?: Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrder
   balanceAfter?: Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrder
+  reversesId?: Prisma.SortOrder
 }
 
 export type TransactionSumOrderByAggregateInput = {
-  amount?: Prisma.SortOrder
   receiptNumber?: Prisma.SortOrder
-  balanceBefore?: Prisma.SortOrder
+  amount?: Prisma.SortOrder
   balanceAfter?: Prisma.SortOrder
+  balanceBefore?: Prisma.SortOrder
 }
 
 export type TransactionScalarRelationFilter = {
@@ -1255,6 +1255,7 @@ export type TransactionUpdateOneWithoutAttachmentsNestedInput = {
 
 export type TransactionCreateWithoutPayerPersonInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1265,28 +1266,28 @@ export type TransactionCreateWithoutPayerPersonInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutPayerPersonInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1299,7 +1300,6 @@ export type TransactionUncheckedCreateWithoutPayerPersonInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1308,9 +1308,9 @@ export type TransactionUncheckedCreateWithoutPayerPersonInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -1348,6 +1348,7 @@ export type TransactionScalarWhereInput = {
   OR?: Prisma.TransactionScalarWhereInput[]
   NOT?: Prisma.TransactionScalarWhereInput | Prisma.TransactionScalarWhereInput[]
   id?: Prisma.StringFilter<"Transaction"> | string
+  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   payerPersonId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -1361,7 +1362,6 @@ export type TransactionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   createdById?: Prisma.StringNullableFilter<"Transaction"> | string | null
   updatedById?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  receiptNumber?: Prisma.IntFilter<"Transaction"> | number
   receiptSeries?: Prisma.StringFilter<"Transaction"> | string
   financialAccountId?: Prisma.StringFilter<"Transaction"> | string
   isReconciled?: Prisma.BoolFilter<"Transaction"> | boolean
@@ -1370,13 +1370,14 @@ export type TransactionScalarWhereInput = {
   isInternalTransfer?: Prisma.BoolFilter<"Transaction"> | boolean
   thirdPartyId?: Prisma.StringNullableFilter<"Transaction"> | string | null
   paymentId?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  reversesId?: Prisma.StringNullableFilter<"Transaction"> | string | null
-  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.DecimalNullableFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.StringNullableFilter<"Transaction"> | string | null
 }
 
 export type TransactionCreateWithoutPaymentInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1387,28 +1388,28 @@ export type TransactionCreateWithoutPaymentInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutPaymentInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1422,7 +1423,6 @@ export type TransactionUncheckedCreateWithoutPaymentInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1430,9 +1430,9 @@ export type TransactionUncheckedCreateWithoutPaymentInput = {
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -1467,6 +1467,7 @@ export type TransactionUpdateManyWithWhereWithoutPaymentInput = {
 
 export type TransactionCreateWithoutFinancialAccountInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1477,28 +1478,28 @@ export type TransactionCreateWithoutFinancialAccountInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutFinancialAccountInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1512,7 +1513,6 @@ export type TransactionUncheckedCreateWithoutFinancialAccountInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
@@ -1520,9 +1520,9 @@ export type TransactionUncheckedCreateWithoutFinancialAccountInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -1557,6 +1557,7 @@ export type TransactionUpdateManyWithWhereWithoutFinancialAccountInput = {
 
 export type TransactionCreateWithoutReversedByInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1567,14 +1568,13 @@ export type TransactionCreateWithoutReversedByInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
@@ -1582,13 +1582,14 @@ export type TransactionCreateWithoutReversedByInput = {
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
+  reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
-  reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
 }
 
 export type TransactionUncheckedCreateWithoutReversedByInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1602,7 +1603,6 @@ export type TransactionUncheckedCreateWithoutReversedByInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1611,9 +1611,9 @@ export type TransactionUncheckedCreateWithoutReversedByInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -1626,6 +1626,7 @@ export type TransactionCreateOrConnectWithoutReversedByInput = {
 
 export type TransactionCreateWithoutReversesInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1636,14 +1637,13 @@ export type TransactionCreateWithoutReversesInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
@@ -1651,13 +1651,14 @@ export type TransactionCreateWithoutReversesInput = {
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
+  reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
   thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
-  reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
 }
 
 export type TransactionUncheckedCreateWithoutReversesInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1671,7 +1672,6 @@ export type TransactionUncheckedCreateWithoutReversesInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1680,8 +1680,8 @@ export type TransactionUncheckedCreateWithoutReversesInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -1706,6 +1706,7 @@ export type TransactionUpdateToOneWithWhereWithoutReversedByInput = {
 
 export type TransactionUpdateWithoutReversedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1716,14 +1717,13 @@ export type TransactionUpdateWithoutReversedByInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
@@ -1731,13 +1731,14 @@ export type TransactionUpdateWithoutReversedByInput = {
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
+  reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
-  reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutReversedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1751,7 +1752,6 @@ export type TransactionUncheckedUpdateWithoutReversedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1760,9 +1760,9 @@ export type TransactionUncheckedUpdateWithoutReversedByInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -1781,6 +1781,7 @@ export type TransactionUpdateToOneWithWhereWithoutReversesInput = {
 
 export type TransactionUpdateWithoutReversesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1791,14 +1792,13 @@ export type TransactionUpdateWithoutReversesInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
@@ -1806,13 +1806,14 @@ export type TransactionUpdateWithoutReversesInput = {
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
+  reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
   thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
-  reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutReversesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1826,7 +1827,6 @@ export type TransactionUncheckedUpdateWithoutReversesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1835,8 +1835,8 @@ export type TransactionUncheckedUpdateWithoutReversesInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -1845,6 +1845,7 @@ export type TransactionUncheckedUpdateWithoutReversesInput = {
 
 export type TransactionCreateWithoutInternalTransferDestInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1855,28 +1856,28 @@ export type TransactionCreateWithoutInternalTransferDestInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutInternalTransferDestInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1890,7 +1891,6 @@ export type TransactionUncheckedCreateWithoutInternalTransferDestInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1899,9 +1899,9 @@ export type TransactionUncheckedCreateWithoutInternalTransferDestInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
   reversedBy?: Prisma.TransactionUncheckedCreateNestedOneWithoutReversesInput
@@ -1914,6 +1914,7 @@ export type TransactionCreateOrConnectWithoutInternalTransferDestInput = {
 
 export type TransactionCreateWithoutInternalTransferSourceInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -1924,28 +1925,28 @@ export type TransactionCreateWithoutInternalTransferSourceInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutInternalTransferSourceInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -1959,7 +1960,6 @@ export type TransactionUncheckedCreateWithoutInternalTransferSourceInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -1968,9 +1968,9 @@ export type TransactionUncheckedCreateWithoutInternalTransferSourceInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   reversedBy?: Prisma.TransactionUncheckedCreateNestedOneWithoutReversesInput
@@ -1994,6 +1994,7 @@ export type TransactionUpdateToOneWithWhereWithoutInternalTransferDestInput = {
 
 export type TransactionUpdateWithoutInternalTransferDestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2004,28 +2005,28 @@ export type TransactionUpdateWithoutInternalTransferDestInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutInternalTransferDestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2039,7 +2040,6 @@ export type TransactionUncheckedUpdateWithoutInternalTransferDestInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2048,9 +2048,9 @@ export type TransactionUncheckedUpdateWithoutInternalTransferDestInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
   reversedBy?: Prisma.TransactionUncheckedUpdateOneWithoutReversesNestedInput
@@ -2069,6 +2069,7 @@ export type TransactionUpdateToOneWithWhereWithoutInternalTransferSourceInput = 
 
 export type TransactionUpdateWithoutInternalTransferSourceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2079,28 +2080,28 @@ export type TransactionUpdateWithoutInternalTransferSourceInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutInternalTransferSourceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2114,7 +2115,6 @@ export type TransactionUncheckedUpdateWithoutInternalTransferSourceInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2123,9 +2123,9 @@ export type TransactionUncheckedUpdateWithoutInternalTransferSourceInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   reversedBy?: Prisma.TransactionUncheckedUpdateOneWithoutReversesNestedInput
@@ -2133,6 +2133,7 @@ export type TransactionUncheckedUpdateWithoutInternalTransferSourceInput = {
 
 export type TransactionCreateWithoutCreatedByInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -2143,28 +2144,28 @@ export type TransactionCreateWithoutCreatedByInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutCreatedByInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2177,7 +2178,6 @@ export type TransactionUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2186,9 +2186,9 @@ export type TransactionUncheckedCreateWithoutCreatedByInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -2207,6 +2207,7 @@ export type TransactionCreateManyCreatedByInputEnvelope = {
 
 export type TransactionCreateWithoutUpdatedByInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -2217,14 +2218,13 @@ export type TransactionCreateWithoutUpdatedByInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
@@ -2232,13 +2232,14 @@ export type TransactionCreateWithoutUpdatedByInput = {
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutUpdatedByInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2251,7 +2252,6 @@ export type TransactionUncheckedCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2260,9 +2260,9 @@ export type TransactionUncheckedCreateWithoutUpdatedByInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -2313,6 +2313,7 @@ export type TransactionUpdateManyWithWhereWithoutUpdatedByInput = {
 
 export type TransactionCreateWithoutThirdPartyInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -2323,14 +2324,13 @@ export type TransactionCreateWithoutThirdPartyInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
@@ -2338,13 +2338,14 @@ export type TransactionCreateWithoutThirdPartyInput = {
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutThirdPartyInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2358,7 +2359,6 @@ export type TransactionUncheckedCreateWithoutThirdPartyInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2366,9 +2366,9 @@ export type TransactionUncheckedCreateWithoutThirdPartyInput = {
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutTransactionInput
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
@@ -2403,6 +2403,7 @@ export type TransactionUpdateManyWithWhereWithoutThirdPartyInput = {
 
 export type TransactionCreateWithoutAttachmentsInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -2413,28 +2414,28 @@ export type TransactionCreateWithoutAttachmentsInput = {
   status?: $Enums.TransactionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalTransferDest?: Prisma.InternalTransferCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferCreateNestedOneWithoutSourceTransactionInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedTransactionsInput
   financialAccount: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
   payerPerson?: Prisma.PersonCreateNestedOneWithoutTransactionsInput
   payment?: Prisma.PaymentCreateNestedOneWithoutTransactionsInput
-  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
-  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
   reverses?: Prisma.TransactionCreateNestedOneWithoutReversedByInput
   reversedBy?: Prisma.TransactionCreateNestedOneWithoutReversesInput
+  thirdParty?: Prisma.ThirdPartyCreateNestedOneWithoutTransactionsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedTransactionsInput
 }
 
 export type TransactionUncheckedCreateWithoutAttachmentsInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2448,7 +2449,6 @@ export type TransactionUncheckedCreateWithoutAttachmentsInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2457,9 +2457,9 @@ export type TransactionUncheckedCreateWithoutAttachmentsInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
   internalTransferDest?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutDestinationTransactionInput
   internalTransferSource?: Prisma.InternalTransferUncheckedCreateNestedOneWithoutSourceTransactionInput
   reversedBy?: Prisma.TransactionUncheckedCreateNestedOneWithoutReversesInput
@@ -2483,6 +2483,7 @@ export type TransactionUpdateToOneWithWhereWithoutAttachmentsInput = {
 
 export type TransactionUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2493,28 +2494,28 @@ export type TransactionUpdateWithoutAttachmentsInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2528,7 +2529,6 @@ export type TransactionUncheckedUpdateWithoutAttachmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2537,9 +2537,9 @@ export type TransactionUncheckedUpdateWithoutAttachmentsInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
   reversedBy?: Prisma.TransactionUncheckedUpdateOneWithoutReversesNestedInput
@@ -2547,6 +2547,7 @@ export type TransactionUncheckedUpdateWithoutAttachmentsInput = {
 
 export type TransactionCreateManyPayerPersonInput = {
   id?: string
+  receiptNumber: number
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
   description?: string | null
@@ -2559,7 +2560,6 @@ export type TransactionCreateManyPayerPersonInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2568,13 +2568,14 @@ export type TransactionCreateManyPayerPersonInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateWithoutPayerPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2585,28 +2586,28 @@ export type TransactionUpdateWithoutPayerPersonInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutPayerPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2619,7 +2620,6 @@ export type TransactionUncheckedUpdateWithoutPayerPersonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2628,9 +2628,9 @@ export type TransactionUncheckedUpdateWithoutPayerPersonInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -2639,6 +2639,7 @@ export type TransactionUncheckedUpdateWithoutPayerPersonInput = {
 
 export type TransactionUncheckedUpdateManyWithoutPayerPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2651,7 +2652,6 @@ export type TransactionUncheckedUpdateManyWithoutPayerPersonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2660,13 +2660,14 @@ export type TransactionUncheckedUpdateManyWithoutPayerPersonInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionCreateManyPaymentInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2680,7 +2681,6 @@ export type TransactionCreateManyPaymentInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2688,13 +2688,14 @@ export type TransactionCreateManyPaymentInput = {
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateWithoutPaymentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2705,28 +2706,28 @@ export type TransactionUpdateWithoutPaymentInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutPaymentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2740,7 +2741,6 @@ export type TransactionUncheckedUpdateWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2748,9 +2748,9 @@ export type TransactionUncheckedUpdateWithoutPaymentInput = {
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -2759,6 +2759,7 @@ export type TransactionUncheckedUpdateWithoutPaymentInput = {
 
 export type TransactionUncheckedUpdateManyWithoutPaymentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2772,7 +2773,6 @@ export type TransactionUncheckedUpdateManyWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2780,13 +2780,14 @@ export type TransactionUncheckedUpdateManyWithoutPaymentInput = {
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionCreateManyFinancialAccountInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2800,7 +2801,6 @@ export type TransactionCreateManyFinancialAccountInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   isReconciled?: boolean
   reconciledAt?: Date | string | null
@@ -2808,13 +2808,14 @@ export type TransactionCreateManyFinancialAccountInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateWithoutFinancialAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2825,28 +2826,28 @@ export type TransactionUpdateWithoutFinancialAccountInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutFinancialAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2860,7 +2861,6 @@ export type TransactionUncheckedUpdateWithoutFinancialAccountInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2868,9 +2868,9 @@ export type TransactionUncheckedUpdateWithoutFinancialAccountInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -2879,6 +2879,7 @@ export type TransactionUncheckedUpdateWithoutFinancialAccountInput = {
 
 export type TransactionUncheckedUpdateManyWithoutFinancialAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2892,7 +2893,6 @@ export type TransactionUncheckedUpdateManyWithoutFinancialAccountInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2900,13 +2900,14 @@ export type TransactionUncheckedUpdateManyWithoutFinancialAccountInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionCreateManyCreatedByInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2919,7 +2920,6 @@ export type TransactionCreateManyCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2928,13 +2928,14 @@ export type TransactionCreateManyCreatedByInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionCreateManyUpdatedByInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -2947,7 +2948,6 @@ export type TransactionCreateManyUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -2956,13 +2956,14 @@ export type TransactionCreateManyUpdatedByInput = {
   isInternalTransfer?: boolean
   thirdPartyId?: string | null
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2973,28 +2974,28 @@ export type TransactionUpdateWithoutCreatedByInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3007,7 +3008,6 @@ export type TransactionUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3016,9 +3016,9 @@ export type TransactionUncheckedUpdateWithoutCreatedByInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -3027,6 +3027,7 @@ export type TransactionUncheckedUpdateWithoutCreatedByInput = {
 
 export type TransactionUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3039,7 +3040,6 @@ export type TransactionUncheckedUpdateManyWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3048,13 +3048,14 @@ export type TransactionUncheckedUpdateManyWithoutCreatedByInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3065,14 +3066,13 @@ export type TransactionUpdateWithoutUpdatedByInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
@@ -3080,13 +3080,14 @@ export type TransactionUpdateWithoutUpdatedByInput = {
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  thirdParty?: Prisma.ThirdPartyUpdateOneWithoutTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3099,7 +3100,6 @@ export type TransactionUncheckedUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3108,9 +3108,9 @@ export type TransactionUncheckedUpdateWithoutUpdatedByInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -3119,6 +3119,7 @@ export type TransactionUncheckedUpdateWithoutUpdatedByInput = {
 
 export type TransactionUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3131,7 +3132,6 @@ export type TransactionUncheckedUpdateManyWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3140,13 +3140,14 @@ export type TransactionUncheckedUpdateManyWithoutUpdatedByInput = {
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TransactionCreateManyThirdPartyInput = {
   id?: string
+  receiptNumber: number
   payerPersonId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate: Date | string
@@ -3160,7 +3161,6 @@ export type TransactionCreateManyThirdPartyInput = {
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
-  receiptNumber: number
   receiptSeries?: string
   financialAccountId: string
   isReconciled?: boolean
@@ -3168,13 +3168,14 @@ export type TransactionCreateManyThirdPartyInput = {
   referenceGroupId?: string | null
   isInternalTransfer?: boolean
   paymentId?: string | null
-  reversesId?: string | null
-  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: string | null
 }
 
 export type TransactionUpdateWithoutThirdPartyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3185,14 +3186,13 @@ export type TransactionUpdateWithoutThirdPartyInput = {
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reconciledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   attachments?: Prisma.AttachmentUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUpdateOneWithoutSourceTransactionNestedInput
@@ -3200,13 +3200,14 @@ export type TransactionUpdateWithoutThirdPartyInput = {
   financialAccount?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
   payerPerson?: Prisma.PersonUpdateOneWithoutTransactionsNestedInput
   payment?: Prisma.PaymentUpdateOneWithoutTransactionsNestedInput
-  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
   reverses?: Prisma.TransactionUpdateOneWithoutReversedByNestedInput
   reversedBy?: Prisma.TransactionUpdateOneWithoutReversesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedTransactionsNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutThirdPartyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3220,7 +3221,6 @@ export type TransactionUncheckedUpdateWithoutThirdPartyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3228,9 +3228,9 @@ export type TransactionUncheckedUpdateWithoutThirdPartyInput = {
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutTransactionNestedInput
   internalTransferDest?: Prisma.InternalTransferUncheckedUpdateOneWithoutDestinationTransactionNestedInput
   internalTransferSource?: Prisma.InternalTransferUncheckedUpdateOneWithoutSourceTransactionNestedInput
@@ -3239,6 +3239,7 @@ export type TransactionUncheckedUpdateWithoutThirdPartyInput = {
 
 export type TransactionUncheckedUpdateManyWithoutThirdPartyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   payerPersonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3252,7 +3253,6 @@ export type TransactionUncheckedUpdateManyWithoutThirdPartyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  receiptNumber?: Prisma.IntFieldUpdateOperationsInput | number
   receiptSeries?: Prisma.StringFieldUpdateOperationsInput | string
   financialAccountId?: Prisma.StringFieldUpdateOperationsInput | string
   isReconciled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3260,9 +3260,9 @@ export type TransactionUncheckedUpdateManyWithoutThirdPartyInput = {
   referenceGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternalTransfer?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   balanceAfter?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  balanceBefore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reversesId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -3298,6 +3298,7 @@ export type TransactionCountOutputTypeCountAttachmentsArgs<ExtArgs extends runti
 
 export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptNumber?: boolean
   payerPersonId?: boolean
   amount?: boolean
   transactionDate?: boolean
@@ -3311,7 +3312,6 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  receiptNumber?: boolean
   receiptSeries?: boolean
   financialAccountId?: boolean
   isReconciled?: boolean
@@ -3320,9 +3320,9 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   isInternalTransfer?: boolean
   thirdPartyId?: boolean
   paymentId?: boolean
-  reversesId?: boolean
-  balanceBefore?: boolean
   balanceAfter?: boolean
+  balanceBefore?: boolean
+  reversesId?: boolean
   attachments?: boolean | Prisma.Transaction$attachmentsArgs<ExtArgs>
   internalTransferDest?: boolean | Prisma.Transaction$internalTransferDestArgs<ExtArgs>
   internalTransferSource?: boolean | Prisma.Transaction$internalTransferSourceArgs<ExtArgs>
@@ -3330,15 +3330,16 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
-  thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
   reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   reversedBy?: boolean | Prisma.Transaction$reversedByArgs<ExtArgs>
+  thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.TransactionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptNumber?: boolean
   payerPersonId?: boolean
   amount?: boolean
   transactionDate?: boolean
@@ -3352,7 +3353,6 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  receiptNumber?: boolean
   receiptSeries?: boolean
   financialAccountId?: boolean
   isReconciled?: boolean
@@ -3361,20 +3361,21 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   isInternalTransfer?: boolean
   thirdPartyId?: boolean
   paymentId?: boolean
-  reversesId?: boolean
-  balanceBefore?: boolean
   balanceAfter?: boolean
+  balanceBefore?: boolean
+  reversesId?: boolean
   createdBy?: boolean | Prisma.Transaction$createdByArgs<ExtArgs>
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
+  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
-  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptNumber?: boolean
   payerPersonId?: boolean
   amount?: boolean
   transactionDate?: boolean
@@ -3388,7 +3389,6 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  receiptNumber?: boolean
   receiptSeries?: boolean
   financialAccountId?: boolean
   isReconciled?: boolean
@@ -3397,20 +3397,21 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   isInternalTransfer?: boolean
   thirdPartyId?: boolean
   paymentId?: boolean
-  reversesId?: boolean
-  balanceBefore?: boolean
   balanceAfter?: boolean
+  balanceBefore?: boolean
+  reversesId?: boolean
   createdBy?: boolean | Prisma.Transaction$createdByArgs<ExtArgs>
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
+  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
-  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectScalar = {
   id?: boolean
+  receiptNumber?: boolean
   payerPersonId?: boolean
   amount?: boolean
   transactionDate?: boolean
@@ -3424,7 +3425,6 @@ export type TransactionSelectScalar = {
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
-  receiptNumber?: boolean
   receiptSeries?: boolean
   financialAccountId?: boolean
   isReconciled?: boolean
@@ -3433,12 +3433,12 @@ export type TransactionSelectScalar = {
   isInternalTransfer?: boolean
   thirdPartyId?: boolean
   paymentId?: boolean
-  reversesId?: boolean
-  balanceBefore?: boolean
   balanceAfter?: boolean
+  balanceBefore?: boolean
+  reversesId?: boolean
 }
 
-export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "payerPersonId" | "amount" | "transactionDate" | "description" | "type" | "paymentMethod" | "reference" | "notes" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "receiptNumber" | "receiptSeries" | "financialAccountId" | "isReconciled" | "reconciledAt" | "referenceGroupId" | "isInternalTransfer" | "thirdPartyId" | "paymentId" | "reversesId" | "balanceBefore" | "balanceAfter", ExtArgs["result"]["transaction"]>
+export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "receiptNumber" | "payerPersonId" | "amount" | "transactionDate" | "description" | "type" | "paymentMethod" | "reference" | "notes" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "receiptSeries" | "financialAccountId" | "isReconciled" | "reconciledAt" | "referenceGroupId" | "isInternalTransfer" | "thirdPartyId" | "paymentId" | "balanceAfter" | "balanceBefore" | "reversesId", ExtArgs["result"]["transaction"]>
 export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attachments?: boolean | Prisma.Transaction$attachmentsArgs<ExtArgs>
   internalTransferDest?: boolean | Prisma.Transaction$internalTransferDestArgs<ExtArgs>
@@ -3447,10 +3447,10 @@ export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.Internal
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
-  thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
-  updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
   reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   reversedBy?: boolean | Prisma.Transaction$reversedByArgs<ExtArgs>
+  thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
   _count?: boolean | Prisma.TransactionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3458,18 +3458,18 @@ export type TransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
+  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
-  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
 }
 export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.Transaction$createdByArgs<ExtArgs>
   financialAccount?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   payerPerson?: boolean | Prisma.Transaction$payerPersonArgs<ExtArgs>
   payment?: boolean | Prisma.Transaction$paymentArgs<ExtArgs>
+  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
   thirdParty?: boolean | Prisma.Transaction$thirdPartyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Transaction$updatedByArgs<ExtArgs>
-  reverses?: boolean | Prisma.Transaction$reversesArgs<ExtArgs>
 }
 
 export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3482,13 +3482,14 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     financialAccount: Prisma.$FinancialAccountPayload<ExtArgs>
     payerPerson: Prisma.$PersonPayload<ExtArgs> | null
     payment: Prisma.$PaymentPayload<ExtArgs> | null
-    thirdParty: Prisma.$ThirdPartyPayload<ExtArgs> | null
-    updatedBy: Prisma.$UserPayload<ExtArgs> | null
     reverses: Prisma.$TransactionPayload<ExtArgs> | null
     reversedBy: Prisma.$TransactionPayload<ExtArgs> | null
+    thirdParty: Prisma.$ThirdPartyPayload<ExtArgs> | null
+    updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    receiptNumber: number
     payerPersonId: string | null
     amount: runtime.Decimal
     transactionDate: Date
@@ -3502,7 +3503,6 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     updatedAt: Date
     createdById: string | null
     updatedById: string | null
-    receiptNumber: number
     receiptSeries: string
     financialAccountId: string
     isReconciled: boolean
@@ -3511,9 +3511,9 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     isInternalTransfer: boolean
     thirdPartyId: string | null
     paymentId: string | null
-    reversesId: string | null
-    balanceBefore: runtime.Decimal | null
     balanceAfter: runtime.Decimal | null
+    balanceBefore: runtime.Decimal | null
+    reversesId: string | null
   }, ExtArgs["result"]["transaction"]>
   composites: {}
 }
@@ -3915,10 +3915,10 @@ export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runt
   financialAccount<T extends Prisma.FinancialAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FinancialAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   payerPerson<T extends Prisma.Transaction$payerPersonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$payerPersonArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.Transaction$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  thirdParty<T extends Prisma.Transaction$thirdPartyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$thirdPartyArgs<ExtArgs>>): Prisma.Prisma__ThirdPartyClient<runtime.Types.Result.GetResult<Prisma.$ThirdPartyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  updatedBy<T extends Prisma.Transaction$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reverses<T extends Prisma.Transaction$reversesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$reversesArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reversedBy<T extends Prisma.Transaction$reversedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$reversedByArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  thirdParty<T extends Prisma.Transaction$thirdPartyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$thirdPartyArgs<ExtArgs>>): Prisma.Prisma__ThirdPartyClient<runtime.Types.Result.GetResult<Prisma.$ThirdPartyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.Transaction$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3949,6 +3949,7 @@ export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runt
  */
 export interface TransactionFieldRefs {
   readonly id: Prisma.FieldRef<"Transaction", 'String'>
+  readonly receiptNumber: Prisma.FieldRef<"Transaction", 'Int'>
   readonly payerPersonId: Prisma.FieldRef<"Transaction", 'String'>
   readonly amount: Prisma.FieldRef<"Transaction", 'Decimal'>
   readonly transactionDate: Prisma.FieldRef<"Transaction", 'DateTime'>
@@ -3962,7 +3963,6 @@ export interface TransactionFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"Transaction", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Transaction", 'String'>
   readonly updatedById: Prisma.FieldRef<"Transaction", 'String'>
-  readonly receiptNumber: Prisma.FieldRef<"Transaction", 'Int'>
   readonly receiptSeries: Prisma.FieldRef<"Transaction", 'String'>
   readonly financialAccountId: Prisma.FieldRef<"Transaction", 'String'>
   readonly isReconciled: Prisma.FieldRef<"Transaction", 'Boolean'>
@@ -3971,9 +3971,9 @@ export interface TransactionFieldRefs {
   readonly isInternalTransfer: Prisma.FieldRef<"Transaction", 'Boolean'>
   readonly thirdPartyId: Prisma.FieldRef<"Transaction", 'String'>
   readonly paymentId: Prisma.FieldRef<"Transaction", 'String'>
-  readonly reversesId: Prisma.FieldRef<"Transaction", 'String'>
-  readonly balanceBefore: Prisma.FieldRef<"Transaction", 'Decimal'>
   readonly balanceAfter: Prisma.FieldRef<"Transaction", 'Decimal'>
+  readonly balanceBefore: Prisma.FieldRef<"Transaction", 'Decimal'>
+  readonly reversesId: Prisma.FieldRef<"Transaction", 'String'>
 }
     
 
@@ -4489,44 +4489,6 @@ export type Transaction$paymentArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * Transaction.thirdParty
- */
-export type Transaction$thirdPartyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ThirdParty
-   */
-  select?: Prisma.ThirdPartySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ThirdParty
-   */
-  omit?: Prisma.ThirdPartyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ThirdPartyInclude<ExtArgs> | null
-  where?: Prisma.ThirdPartyWhereInput
-}
-
-/**
- * Transaction.updatedBy
- */
-export type Transaction$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * Transaction.reverses
  */
 export type Transaction$reversesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4562,6 +4524,44 @@ export type Transaction$reversedByArgs<ExtArgs extends runtime.Types.Extensions.
    */
   include?: Prisma.TransactionInclude<ExtArgs> | null
   where?: Prisma.TransactionWhereInput
+}
+
+/**
+ * Transaction.thirdParty
+ */
+export type Transaction$thirdPartyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ThirdParty
+   */
+  select?: Prisma.ThirdPartySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ThirdParty
+   */
+  omit?: Prisma.ThirdPartyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ThirdPartyInclude<ExtArgs> | null
+  where?: Prisma.ThirdPartyWhereInput
+}
+
+/**
+ * Transaction.updatedBy
+ */
+export type Transaction$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

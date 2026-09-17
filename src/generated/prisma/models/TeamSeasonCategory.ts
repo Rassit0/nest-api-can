@@ -51,12 +51,12 @@ export type TeamSeasonCategoryMinAggregateOutputType = {
   maxMembers: number | null
   validateAge: boolean | null
   isActive: boolean | null
-  status: $Enums.TeamSeasonCategoryStatus | null
-  endedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  endedAt: Date | null
+  status: $Enums.TeamSeasonCategoryStatus | null
 }
 
 export type TeamSeasonCategoryMaxAggregateOutputType = {
@@ -70,12 +70,12 @@ export type TeamSeasonCategoryMaxAggregateOutputType = {
   maxMembers: number | null
   validateAge: boolean | null
   isActive: boolean | null
-  status: $Enums.TeamSeasonCategoryStatus | null
-  endedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
   updatedById: string | null
+  endedAt: Date | null
+  status: $Enums.TeamSeasonCategoryStatus | null
 }
 
 export type TeamSeasonCategoryCountAggregateOutputType = {
@@ -89,12 +89,12 @@ export type TeamSeasonCategoryCountAggregateOutputType = {
   maxMembers: number
   validateAge: number
   isActive: number
-  status: number
-  endedAt: number
   createdAt: number
   updatedAt: number
   createdById: number
   updatedById: number
+  endedAt: number
+  status: number
   _all: number
 }
 
@@ -124,12 +124,12 @@ export type TeamSeasonCategoryMinAggregateInputType = {
   maxMembers?: true
   validateAge?: true
   isActive?: true
-  status?: true
-  endedAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  endedAt?: true
+  status?: true
 }
 
 export type TeamSeasonCategoryMaxAggregateInputType = {
@@ -143,12 +143,12 @@ export type TeamSeasonCategoryMaxAggregateInputType = {
   maxMembers?: true
   validateAge?: true
   isActive?: true
-  status?: true
-  endedAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  endedAt?: true
+  status?: true
 }
 
 export type TeamSeasonCategoryCountAggregateInputType = {
@@ -162,12 +162,12 @@ export type TeamSeasonCategoryCountAggregateInputType = {
   maxMembers?: true
   validateAge?: true
   isActive?: true
-  status?: true
-  endedAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
   updatedById?: true
+  endedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -268,12 +268,12 @@ export type TeamSeasonCategoryGroupByOutputType = {
   maxMembers: number | null
   validateAge: boolean
   isActive: boolean
-  status: $Enums.TeamSeasonCategoryStatus
-  endedAt: Date | null
   createdAt: Date
   updatedAt: Date
   createdById: string | null
   updatedById: string | null
+  endedAt: Date | null
+  status: $Enums.TeamSeasonCategoryStatus
   _count: TeamSeasonCategoryCountAggregateOutputType | null
   _avg: TeamSeasonCategoryAvgAggregateOutputType | null
   _sum: TeamSeasonCategorySumAggregateOutputType | null
@@ -310,12 +310,12 @@ export type TeamSeasonCategoryWhereInput = {
   maxMembers?: Prisma.IntNullableFilter<"TeamSeasonCategory"> | number | null
   validateAge?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
   isActive?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
+  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventListRelationFilter
   matches?: Prisma.MatchListRelationFilter
   player_membership?: Prisma.PlayerMembershipListRelationFilter
@@ -336,12 +336,12 @@ export type TeamSeasonCategoryOrderByWithRelationInput = {
   maxMembers?: Prisma.SortOrderInput | Prisma.SortOrder
   validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   generalEvents?: Prisma.GeneralEventOrderByRelationAggregateInput
   matches?: Prisma.MatchOrderByRelationAggregateInput
   player_membership?: Prisma.PlayerMembershipOrderByRelationAggregateInput
@@ -367,12 +367,12 @@ export type TeamSeasonCategoryWhereUniqueInput = Prisma.AtLeast<{
   maxMembers?: Prisma.IntNullableFilter<"TeamSeasonCategory"> | number | null
   validateAge?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
   isActive?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
+  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventListRelationFilter
   matches?: Prisma.MatchListRelationFilter
   player_membership?: Prisma.PlayerMembershipListRelationFilter
@@ -393,12 +393,12 @@ export type TeamSeasonCategoryOrderByWithAggregationInput = {
   maxMembers?: Prisma.SortOrderInput | Prisma.SortOrder
   validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.TeamSeasonCategoryCountOrderByAggregateInput
   _avg?: Prisma.TeamSeasonCategoryAvgOrderByAggregateInput
   _max?: Prisma.TeamSeasonCategoryMaxOrderByAggregateInput
@@ -420,12 +420,12 @@ export type TeamSeasonCategoryScalarWhereWithAggregatesInput = {
   maxMembers?: Prisma.IntNullableWithAggregatesFilter<"TeamSeasonCategory"> | number | null
   validateAge?: Prisma.BoolWithAggregatesFilter<"TeamSeasonCategory"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"TeamSeasonCategory"> | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusWithAggregatesFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TeamSeasonCategory"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeasonCategory"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TeamSeasonCategory"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"TeamSeasonCategory"> | string | null
   updatedById?: Prisma.StringNullableWithAggregatesFilter<"TeamSeasonCategory"> | string | null
+  endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TeamSeasonCategory"> | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusWithAggregatesFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryCreateInput = {
@@ -437,12 +437,12 @@ export type TeamSeasonCategoryCreateInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -463,12 +463,12 @@ export type TeamSeasonCategoryUncheckedCreateInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -485,12 +485,12 @@ export type TeamSeasonCategoryUpdateInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -511,12 +511,12 @@ export type TeamSeasonCategoryUncheckedUpdateInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -535,12 +535,12 @@ export type TeamSeasonCategoryCreateManyInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryUpdateManyMutationInput = {
@@ -552,12 +552,12 @@ export type TeamSeasonCategoryUpdateManyMutationInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryUncheckedUpdateManyInput = {
@@ -571,12 +571,12 @@ export type TeamSeasonCategoryUncheckedUpdateManyInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryListRelationFilter = {
@@ -621,12 +621,12 @@ export type TeamSeasonCategoryCountOrderByAggregateInput = {
   maxMembers?: Prisma.SortOrder
   validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  endedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type TeamSeasonCategoryAvgOrderByAggregateInput = {
@@ -647,12 +647,12 @@ export type TeamSeasonCategoryMaxOrderByAggregateInput = {
   maxMembers?: Prisma.SortOrder
   validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  endedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type TeamSeasonCategoryMinOrderByAggregateInput = {
@@ -666,12 +666,12 @@ export type TeamSeasonCategoryMinOrderByAggregateInput = {
   maxMembers?: Prisma.SortOrder
   validateAge?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  endedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type TeamSeasonCategorySumOrderByAggregateInput = {
@@ -850,12 +850,12 @@ export type TeamSeasonCategoryCreateWithoutCategoryInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -874,12 +874,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutCategoryInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -927,12 +927,12 @@ export type TeamSeasonCategoryScalarWhereInput = {
   maxMembers?: Prisma.IntNullableFilter<"TeamSeasonCategory"> | number | null
   validateAge?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
   isActive?: Prisma.BoolFilter<"TeamSeasonCategory"> | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TeamSeasonCategory"> | Date | string
   createdById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
   updatedById?: Prisma.StringNullableFilter<"TeamSeasonCategory"> | string | null
+  endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryCreateWithoutTeamSeasonInput = {
@@ -944,12 +944,12 @@ export type TeamSeasonCategoryCreateWithoutTeamSeasonInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -968,12 +968,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutTeamSeasonInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -1016,12 +1016,12 @@ export type TeamSeasonCategoryCreateWithoutPlayer_membershipInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1041,12 +1041,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutPlayer_membershipInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1078,12 +1078,12 @@ export type TeamSeasonCategoryUpdateWithoutPlayer_membershipInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1103,12 +1103,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutPlayer_membershipInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1124,12 +1124,12 @@ export type TeamSeasonCategoryCreateWithoutTeamSeasonStaffsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -1149,12 +1149,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutTeamSeasonStaffsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -1186,12 +1186,12 @@ export type TeamSeasonCategoryUpdateWithoutTeamSeasonStaffsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1211,12 +1211,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1232,12 +1232,12 @@ export type TeamSeasonCategoryCreateWithoutGeneralEventsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1257,12 +1257,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutGeneralEventsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1294,12 +1294,12 @@ export type TeamSeasonCategoryUpdateWithoutGeneralEventsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1319,12 +1319,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutGeneralEventsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1340,12 +1340,12 @@ export type TeamSeasonCategoryCreateWithoutSessionsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -1365,12 +1365,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutSessionsInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
@@ -1402,12 +1402,12 @@ export type TeamSeasonCategoryUpdateWithoutSessionsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1427,12 +1427,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutSessionsInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1448,12 +1448,12 @@ export type TeamSeasonCategoryCreateWithoutMatchesInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1473,12 +1473,12 @@ export type TeamSeasonCategoryUncheckedCreateWithoutMatchesInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1510,12 +1510,12 @@ export type TeamSeasonCategoryUpdateWithoutMatchesInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1535,12 +1535,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1557,12 +1557,12 @@ export type TeamSeasonCategoryCreateManyCategoryInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryUpdateWithoutCategoryInput = {
@@ -1574,12 +1574,12 @@ export type TeamSeasonCategoryUpdateWithoutCategoryInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1598,12 +1598,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutCategoryInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1621,12 +1621,12 @@ export type TeamSeasonCategoryUncheckedUpdateManyWithoutCategoryInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryCreateManyTeamSeasonInput = {
@@ -1639,12 +1639,12 @@ export type TeamSeasonCategoryCreateManyTeamSeasonInput = {
   maxMembers?: number | null
   validateAge?: boolean
   isActive?: boolean
-  status?: $Enums.TeamSeasonCategoryStatus
-  endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
   updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
 }
 
 export type TeamSeasonCategoryUpdateWithoutTeamSeasonInput = {
@@ -1656,12 +1656,12 @@ export type TeamSeasonCategoryUpdateWithoutTeamSeasonInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1680,12 +1680,12 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutTeamSeasonInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
@@ -1703,12 +1703,12 @@ export type TeamSeasonCategoryUncheckedUpdateManyWithoutTeamSeasonInput = {
   maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
 }
 
 
@@ -1789,12 +1789,12 @@ export type TeamSeasonCategorySelect<ExtArgs extends runtime.Types.Extensions.In
   maxMembers?: boolean
   validateAge?: boolean
   isActive?: boolean
-  status?: boolean
-  endedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  endedAt?: boolean
+  status?: boolean
   generalEvents?: boolean | Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs>
   matches?: boolean | Prisma.TeamSeasonCategory$matchesArgs<ExtArgs>
   player_membership?: boolean | Prisma.TeamSeasonCategory$player_membershipArgs<ExtArgs>
@@ -1816,12 +1816,12 @@ export type TeamSeasonCategorySelectCreateManyAndReturn<ExtArgs extends runtime.
   maxMembers?: boolean
   validateAge?: boolean
   isActive?: boolean
-  status?: boolean
-  endedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  endedAt?: boolean
+  status?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeasonCategory"]>
@@ -1837,12 +1837,12 @@ export type TeamSeasonCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.
   maxMembers?: boolean
   validateAge?: boolean
   isActive?: boolean
-  status?: boolean
-  endedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  endedAt?: boolean
+  status?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   teamSeason?: boolean | Prisma.TeamSeasonDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamSeasonCategory"]>
@@ -1858,15 +1858,15 @@ export type TeamSeasonCategorySelectScalar = {
   maxMembers?: boolean
   validateAge?: boolean
   isActive?: boolean
-  status?: boolean
-  endedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
+  endedAt?: boolean
+  status?: boolean
 }
 
-export type TeamSeasonCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "categoryId" | "gender" | "minBirthYear" | "maxBirthYear" | "minMembers" | "maxMembers" | "validateAge" | "isActive" | "status" | "endedAt" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["teamSeasonCategory"]>
+export type TeamSeasonCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "categoryId" | "gender" | "minBirthYear" | "maxBirthYear" | "minMembers" | "maxMembers" | "validateAge" | "isActive" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "endedAt" | "status", ExtArgs["result"]["teamSeasonCategory"]>
 export type TeamSeasonCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generalEvents?: boolean | Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs>
   matches?: boolean | Prisma.TeamSeasonCategory$matchesArgs<ExtArgs>
@@ -1908,12 +1908,12 @@ export type $TeamSeasonCategoryPayload<ExtArgs extends runtime.Types.Extensions.
     maxMembers: number | null
     validateAge: boolean
     isActive: boolean
-    status: $Enums.TeamSeasonCategoryStatus
-    endedAt: Date | null
     createdAt: Date
     updatedAt: Date
     createdById: string | null
     updatedById: string | null
+    endedAt: Date | null
+    status: $Enums.TeamSeasonCategoryStatus
   }, ExtArgs["result"]["teamSeasonCategory"]>
   composites: {}
 }
@@ -2354,12 +2354,12 @@ export interface TeamSeasonCategoryFieldRefs {
   readonly maxMembers: Prisma.FieldRef<"TeamSeasonCategory", 'Int'>
   readonly validateAge: Prisma.FieldRef<"TeamSeasonCategory", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"TeamSeasonCategory", 'Boolean'>
-  readonly status: Prisma.FieldRef<"TeamSeasonCategory", 'TeamSeasonCategoryStatus'>
-  readonly endedAt: Prisma.FieldRef<"TeamSeasonCategory", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"TeamSeasonCategory", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TeamSeasonCategory", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"TeamSeasonCategory", 'String'>
   readonly updatedById: Prisma.FieldRef<"TeamSeasonCategory", 'String'>
+  readonly endedAt: Prisma.FieldRef<"TeamSeasonCategory", 'DateTime'>
+  readonly status: Prisma.FieldRef<"TeamSeasonCategory", 'TeamSeasonCategoryStatus'>
 }
     
 

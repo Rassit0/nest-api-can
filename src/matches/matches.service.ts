@@ -1,8 +1,8 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma, EventType, EventStatus, TeamSeasonCategoryStatus, StatusTeamSeason, SeasonStatus } from 'src/generated/prisma/client';
+import { Prisma, EventType, EventStatus, TeamSeasonCategoryStatus, StatusTeamSeason, SeasonStatus, MatchResult } from 'src/generated/prisma/client';
 import { MatchesPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { EventsService } from 'src/events/events.service';
@@ -10,10 +10,11 @@ import { BaseEventCreateDto, BaseEventUpdateDto } from 'src/events/dto/base-even
 
 export const matchSelect: Prisma.MatchSelect = {
   id: true,
-  opponentName: true,
+  homeTeamId: true,
+  awayTeamId: true,
   type: true,
-  ourScore: true,
-  theirScore: true,
+  homeScore: true,
+  awayScore: true,
   result: true,
   event: {
     select: {
@@ -33,13 +34,7 @@ export const matchSelect: Prisma.MatchSelect = {
   teamSeasonCategory: {
     select: {
       id: true,
-      gender: true,
-      category: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+      category: { select: { id: true, name: true } },
       teamSeason: {
         select: {
           id: true,
@@ -48,18 +43,34 @@ export const matchSelect: Prisma.MatchSelect = {
               id: true,
               name: true,
               imageUrl: true,
-            },
-          },
-          season: {
-            select: {
-              id: true,
-              name: true,
+              club: {
+                select: {
+                  id: true,
+                  name: true,
+                  isExternal: true,
+                  discipline: { select: { id: true, name: true } },
+                },
+              },
             },
           },
         },
       },
     },
   },
+  homeTeam: {
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+    }
+  },
+  awayTeam: {
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+    }
+  }
 };
 
 @Injectable()
@@ -71,9 +82,50 @@ export class MatchesService {
     private readonly eventsService: EventsService,
   ) {}
 
-  async create(createMatchDto: CreateMatchDto, userId?: string) {
-    const { startDate, endDate, locationId, teamSeasonCategoryId, ...matchData } = createMatchDto;
+  private async validateMatchIntegrity(homeTeamId: string, awayTeamId: string, teamSeasonCategoryId: string): Promise<string> {
+    if (homeTeamId === awayTeamId) {
+      throw new BadRequestException('El equipo local no puede ser igual al visitante');
+    }
 
+    const tsc = await this.prisma.teamSeasonCategory.findUnique({
+      where: { id: teamSeasonCategoryId },
+      include: { teamSeason: true }
+    });
+
+    if (!tsc) {
+      throw new BadRequestException('Categoría no encontrada');
+    }
+
+    const canTeamId = tsc.teamSeason.teamId;
+
+    if (homeTeamId !== canTeamId && awayTeamId !== canTeamId) {
+      throw new BadRequestException('El equipo asociado a la categoría seleccionada debe participar en el partido (como local o visitante)');
+    }
+
+    return canTeamId;
+  }
+
+  private calculateMatchResult(homeTeamId: string, awayTeamId: string, homeScore: number | null | undefined, awayScore: number | null | undefined, canTeamId: string): MatchResult {
+    if (homeScore === null || homeScore === undefined || awayScore === null || awayScore === undefined) {
+      return MatchResult.PENDING;
+    }
+
+    if (homeScore === awayScore) {
+      return MatchResult.DRAW;
+    }
+
+    if (homeTeamId === canTeamId) {
+      return homeScore > awayScore ? MatchResult.WIN : MatchResult.LOSS;
+    } else {
+      return awayScore > homeScore ? MatchResult.WIN : MatchResult.LOSS;
+    }
+  }
+
+  async create(createMatchDto: CreateMatchDto, userId?: string) {
+    const { startDate, endDate, locationId, teamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, ...matchData } = createMatchDto;
+
+    const canTeamId = await this.validateMatchIntegrity(homeTeamId, awayTeamId, teamSeasonCategoryId);
+    const calculatedResult = this.calculateMatchResult(homeTeamId, awayTeamId, homeScore, awayScore, canTeamId);
 
     const baseData: BaseEventCreateDto = {
       eventType: EventType.MATCH,
@@ -86,6 +138,11 @@ export class MatchesService {
       return tx.match.create({
         data: {
           ...matchData,
+          homeTeamId,
+          awayTeamId,
+          homeScore,
+          awayScore,
+          result: calculatedResult,
           eventId,
           teamSeasonCategoryId,
         },
@@ -113,7 +170,16 @@ export class MatchesService {
 
     if (search) {
       where.OR = [
-        { opponentName: { contains: search, mode: 'insensitive' } },
+        {
+          awayTeam: {
+            name: { contains: search, mode: 'insensitive' },
+          },
+        },
+        {
+          homeTeam: {
+            name: { contains: search, mode: 'insensitive' },
+          },
+        },
         {
           teamSeasonCategory: {
             teamSeason: {
@@ -176,7 +242,27 @@ export class MatchesService {
       throw new NotFoundException('El partido solicitado no fue encontrado');
     }
 
-    const { startDate, endDate, locationId, teamSeasonCategoryId, ...matchData } = updateMatchDto;
+    const { startDate, endDate, locationId, teamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, ...matchData } = updateMatchDto;
+
+    const currentMatch = await this.prisma.match.findUnique({
+      where: { id },
+    });
+
+    if (!currentMatch) {
+      throw new NotFoundException('El partido no existe');
+    }
+
+    const effectiveHomeTeamId = homeTeamId ?? currentMatch.homeTeamId;
+    const effectiveAwayTeamId = awayTeamId ?? currentMatch.awayTeamId;
+    const effectiveCategoryId = teamSeasonCategoryId ?? currentMatch.teamSeasonCategoryId;
+    
+    // In update logic, homeScore could be passed as null to clear it
+    // Wait, DTO allows null. We check if property is explicitly in DTO (undefined means not passed).
+    const effectiveHomeScore = homeScore !== undefined ? homeScore : currentMatch.homeScore;
+    const effectiveAwayScore = awayScore !== undefined ? awayScore : currentMatch.awayScore;
+
+    const canTeamId = await this.validateMatchIntegrity(effectiveHomeTeamId, effectiveAwayTeamId, effectiveCategoryId);
+    const calculatedResult = this.calculateMatchResult(effectiveHomeTeamId, effectiveAwayTeamId, effectiveHomeScore, effectiveAwayScore, canTeamId);
 
     const baseData: BaseEventUpdateDto = {
       ...(startDate && { startDate: new Date(startDate) }),
@@ -196,6 +282,11 @@ export class MatchesService {
         where: { id },
         data: {
           ...matchData,
+          ...(homeTeamId && { homeTeamId }),
+          ...(awayTeamId && { awayTeamId }),
+          ...(homeScore !== undefined && { homeScore }),
+          ...(awayScore !== undefined && { awayScore }),
+          result: calculatedResult,
           ...updateCategoryData,
         },
         select: matchSelect,
@@ -238,9 +329,8 @@ export class MatchesService {
 
     const publicSelect = {
       id: true,
-      opponentName: true,
-      ourScore: true,
-      theirScore: true,
+      homeScore: true,
+      awayScore: true,
       result: true,
       event: {
         select: {
@@ -251,6 +341,18 @@ export class MatchesService {
           },
         },
       },
+      homeTeam: {
+        select: {
+          name: true,
+          imageUrl: true,
+        }
+      },
+      awayTeam: {
+        select: {
+          name: true,
+          imageUrl: true,
+        }
+      },
       teamSeasonCategory: {
         select: {
           category: { select: { name: true } },
@@ -258,8 +360,6 @@ export class MatchesService {
             select: {
               team: {
                 select: {
-                  name: true,
-                  imageUrl: true,
                   club: {
                     select: {
                       discipline: { select: { name: true } },
@@ -308,14 +408,15 @@ export class MatchesService {
       locationName: match.event?.location?.name || 'Sede CAN',
       date: match.event?.startDate?.toISOString() || new Date().toISOString(),
       homeTeam: {
-        name: match.teamSeasonCategory?.teamSeason?.team?.name || 'CAN',
-        imageUrl: match.teamSeasonCategory?.teamSeason?.team?.imageUrl || null,
+        name: match.homeTeam?.name || 'Local',
+        imageUrl: match.homeTeam?.imageUrl || null,
       },
       awayTeam: {
-        name: match.opponentName,
+        name: match.awayTeam?.name || 'Visitante',
+        imageUrl: match.awayTeam?.imageUrl || null,
       },
-      ourScore: match.ourScore,
-      theirScore: match.theirScore,
+      homeScore: match.homeScore,
+      awayScore: match.awayScore,
       status: match.event?.status === EventStatus.COMPLETED ? 'PLAYED' : 'PENDING',
       discipline: match.teamSeasonCategory?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
     });

@@ -242,8 +242,49 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
   // GeneralEvent implementation using the generic orchestrator
   // ---------------------------------------------------------
 
+  private async validateGeneralEventContext(data: {
+    institutionId?: string | null;
+    teamSeasonCategoryId?: string | null;
+    courseSeasonId?: string | null;
+    courseSeasonShiftId?: string | null;
+  }) {
+    const { institutionId, teamSeasonCategoryId, courseSeasonId, courseSeasonShiftId } = data;
+
+    let activeContexts = 0;
+    if (institutionId) activeContexts++;
+    if (teamSeasonCategoryId) activeContexts++;
+    if (courseSeasonId) activeContexts++;
+
+    if (activeContexts !== 1) {
+      throw new EventValidationException('El evento general debe pertenecer a un único contexto (Institución, Equipo, o Escuela).', EventErrorCode.INVALID_EVENT_CONTEXT);
+    }
+
+    if (courseSeasonShiftId) {
+      if (!courseSeasonId) {
+        throw new EventValidationException('El turno de escuela requiere especificar la escuela (courseSeasonId).', EventErrorCode.INVALID_EVENT_CONTEXT);
+      }
+      const shift = await this.prisma.courseSeasonShift.findUnique({
+        where: { id: courseSeasonShiftId },
+        select: { courseSeasonId: true },
+      });
+      if (!shift) {
+        throw new EventValidationException('El turno de escuela especificado no existe.', EventErrorCode.INVALID_EVENT_CONTEXT);
+      }
+      if (shift.courseSeasonId !== courseSeasonId) {
+        throw new EventValidationException('El turno de escuela no pertenece a la escuela especificada.', EventErrorCode.INVALID_EVENT_CONTEXT);
+      }
+    }
+  }
+
   async createGeneralEvent(createDto: CreateGeneralEventDto, userId?: string) {
     const { startDate, endDate, locationId, title, description, color, institutionId, teamSeasonCategoryId, courseSeasonId, courseSeasonShiftId, recurrenceRule, timezone } = createDto;
+
+    await this.validateGeneralEventContext({
+      institutionId,
+      teamSeasonCategoryId,
+      courseSeasonId,
+      courseSeasonShiftId,
+    });
 
     const baseData: BaseEventCreateDto = {
       eventType: EventType.GENERAL,
@@ -303,13 +344,25 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       ...(timezone !== undefined && { timezone }),
     };
 
+    const finalInstitutionId = institutionId !== undefined ? institutionId : generalEvent.institutionId;
+    const finalTeamSeasonCategoryId = teamSeasonCategoryId !== undefined ? teamSeasonCategoryId : generalEvent.teamSeasonCategoryId;
+    const finalCourseSeasonId = courseSeasonId !== undefined ? courseSeasonId : generalEvent.courseSeasonId;
+    const finalCourseSeasonShiftId = courseSeasonShiftId !== undefined ? courseSeasonShiftId : generalEvent.courseSeasonShiftId;
+
+    await this.validateGeneralEventContext({
+      institutionId: finalInstitutionId,
+      teamSeasonCategoryId: finalTeamSeasonCategoryId,
+      courseSeasonId: finalCourseSeasonId,
+      courseSeasonShiftId: finalCourseSeasonShiftId,
+    });
+
     if (generalEvent.event.eventSeriesId && scope !== 'single') {
       const mergeTemplate = (oldTemplate: any) => ({
         ...oldTemplate,
-        ...(institutionId !== undefined && { institutionId }),
-        ...(teamSeasonCategoryId !== undefined && { teamSeasonCategoryId }),
-        ...(courseSeasonId !== undefined && { courseSeasonId }),
-        ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
+        institutionId: finalInstitutionId,
+        teamSeasonCategoryId: finalTeamSeasonCategoryId,
+        courseSeasonId: finalCourseSeasonId,
+        courseSeasonShiftId: finalCourseSeasonShiftId,
       });
 
       const occurrenceHandler = async (tx: Prisma.TransactionClient, newEventId: string, mergedTemplate: any) => {
@@ -335,11 +388,10 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       return tx.generalEvent.update({
         where: { id },
         data: {
-          ...(institutionId !== undefined && { institutionId }),
-          ...(teamSeasonCategoryId !== undefined && { teamSeasonCategoryId }),
-          ...(teamSeasonCategoryId === null && { teamSeasonCategoryId: null }),
-          ...(courseSeasonId !== undefined && { courseSeasonId }),
-          ...(courseSeasonShiftId !== undefined && { courseSeasonShiftId }),
+          institutionId: finalInstitutionId,
+          teamSeasonCategoryId: finalTeamSeasonCategoryId,
+          courseSeasonId: finalCourseSeasonId,
+          courseSeasonShiftId: finalCourseSeasonShiftId,
         },
       });
     });

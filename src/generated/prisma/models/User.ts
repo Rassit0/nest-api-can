@@ -27,34 +27,34 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
+  password: string | null
   personId: string | null
   roleId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  password: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
+  password: string | null
   personId: string | null
   roleId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  password: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
+  password: number
   personId: number
   roleId: number
   isActive: number
   createdAt: number
   updatedAt: number
-  password: number
   _all: number
 }
 
@@ -62,34 +62,34 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
+  password?: true
   personId?: true
   roleId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
-  password?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
+  password?: true
   personId?: true
   roleId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
-  password?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
+  password?: true
   personId?: true
   roleId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
-  password?: true
   _all?: true
 }
 
@@ -168,12 +168,12 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   email: string
+  password: string
   personId: string | null
   roleId: string
   isActive: boolean
   createdAt: Date
   updatedAt: Date
-  password: string
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -200,12 +200,12 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
   personId?: Prisma.StringNullableFilter<"User"> | string | null
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  password?: Prisma.StringFilter<"User"> | string
   createdAccountCategories?: Prisma.AccountCategoryListRelationFilter
   updatedAccountCategories?: Prisma.AccountCategoryListRelationFilter
   createdAccountCharges?: Prisma.AccountChargeListRelationFilter
@@ -316,12 +316,12 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   createdAccountCategories?: Prisma.AccountCategoryOrderByRelationAggregateInput
   updatedAccountCategories?: Prisma.AccountCategoryOrderByRelationAggregateInput
   createdAccountCharges?: Prisma.AccountChargeOrderByRelationAggregateInput
@@ -436,11 +436,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
+  password?: Prisma.StringFilter<"User"> | string
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  password?: Prisma.StringFilter<"User"> | string
   createdAccountCategories?: Prisma.AccountCategoryListRelationFilter
   updatedAccountCategories?: Prisma.AccountCategoryListRelationFilter
   createdAccountCharges?: Prisma.AccountChargeListRelationFilter
@@ -551,12 +551,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -568,21 +568,21 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  password?: Prisma.StringWithAggregatesFilter<"User"> | string
   personId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   roleId?: Prisma.StringWithAggregatesFilter<"User"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  password?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -693,12 +693,12 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -807,10 +807,10 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -921,12 +921,12 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1035,32 +1035,32 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -1071,34 +1071,34 @@ export type UserNullableScalarRelationFilter = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  password?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  password?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  password?: Prisma.SortOrder
 }
 
 export type UserListRelationFilter = {
@@ -2836,10 +2836,10 @@ export type UserUpdateOneWithoutAttachmentsNestedInput = {
 export type UserCreateWithoutCreatedPersonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -2949,12 +2949,12 @@ export type UserCreateWithoutCreatedPersonsInput = {
 export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3067,10 +3067,10 @@ export type UserCreateOrConnectWithoutCreatedPersonsInput = {
 export type UserCreateWithoutUpdatedPersonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -3180,12 +3180,12 @@ export type UserCreateWithoutUpdatedPersonsInput = {
 export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3298,10 +3298,10 @@ export type UserCreateOrConnectWithoutUpdatedPersonsInput = {
 export type UserCreateWithoutPersonInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -3411,11 +3411,11 @@ export type UserCreateWithoutPersonInput = {
 export type UserUncheckedCreateWithoutPersonInput = {
   id?: string
   email: string
+  password: string
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3540,10 +3540,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPersonsInput = {
 export type UserUpdateWithoutCreatedPersonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -3653,12 +3653,12 @@ export type UserUpdateWithoutCreatedPersonsInput = {
 export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3777,10 +3777,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPersonsInput = {
 export type UserUpdateWithoutUpdatedPersonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -3890,12 +3890,12 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
 export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4014,10 +4014,10 @@ export type UserUpdateToOneWithWhereWithoutPersonInput = {
 export type UserUpdateWithoutPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -4127,11 +4127,11 @@ export type UserUpdateWithoutPersonInput = {
 export type UserUncheckedUpdateWithoutPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4240,10 +4240,10 @@ export type UserUncheckedUpdateWithoutPersonInput = {
 export type UserCreateWithoutCreatedDisciplinesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -4353,12 +4353,12 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
 export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4471,10 +4471,10 @@ export type UserCreateOrConnectWithoutCreatedDisciplinesInput = {
 export type UserCreateWithoutUpdatedDisciplinesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -4584,12 +4584,12 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
 export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4713,10 +4713,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedDisciplinesInput = {
 export type UserUpdateWithoutCreatedDisciplinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -4826,12 +4826,12 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
 export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4950,10 +4950,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedDisciplinesInput = {
 export type UserUpdateWithoutUpdatedDisciplinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -5063,12 +5063,12 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
 export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5176,10 +5176,10 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
 export type UserCreateWithoutCreatedInstitutionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -5289,12 +5289,12 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
 export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5407,10 +5407,10 @@ export type UserCreateOrConnectWithoutCreatedInstitutionsInput = {
 export type UserCreateWithoutUpdatedInstitutionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -5520,12 +5520,12 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
 export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5649,10 +5649,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedInstitutionsInput = {
 export type UserUpdateWithoutCreatedInstitutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -5762,12 +5762,12 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
 export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5886,10 +5886,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedInstitutionsInput = {
 export type UserUpdateWithoutUpdatedInstitutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -5999,12 +5999,12 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
 export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6112,10 +6112,10 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
 export type UserCreateWithoutCreatedInstitutionContactsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -6225,12 +6225,12 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
 export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6343,10 +6343,10 @@ export type UserCreateOrConnectWithoutCreatedInstitutionContactsInput = {
 export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -6456,12 +6456,12 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
 export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6585,10 +6585,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedInstitutionContactsInput = {
 export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -6698,12 +6698,12 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
 export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6822,10 +6822,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedInstitutionContactsInput = {
 export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -6935,12 +6935,12 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
 export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7048,10 +7048,10 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
 export type UserCreateWithoutCreatedShiftsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -7161,12 +7161,12 @@ export type UserCreateWithoutCreatedShiftsInput = {
 export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7279,10 +7279,10 @@ export type UserCreateOrConnectWithoutCreatedShiftsInput = {
 export type UserCreateWithoutUpdatedShiftsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -7392,12 +7392,12 @@ export type UserCreateWithoutUpdatedShiftsInput = {
 export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7521,10 +7521,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedShiftsInput = {
 export type UserUpdateWithoutCreatedShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -7634,12 +7634,12 @@ export type UserUpdateWithoutCreatedShiftsInput = {
 export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7758,10 +7758,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedShiftsInput = {
 export type UserUpdateWithoutUpdatedShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -7871,12 +7871,12 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
 export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7984,10 +7984,10 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
 export type UserCreateWithoutCreatedClubsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -8097,12 +8097,12 @@ export type UserCreateWithoutCreatedClubsInput = {
 export type UserUncheckedCreateWithoutCreatedClubsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8215,10 +8215,10 @@ export type UserCreateOrConnectWithoutCreatedClubsInput = {
 export type UserCreateWithoutUpdatedClubsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -8328,12 +8328,12 @@ export type UserCreateWithoutUpdatedClubsInput = {
 export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8457,10 +8457,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedClubsInput = {
 export type UserUpdateWithoutCreatedClubsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -8570,12 +8570,12 @@ export type UserUpdateWithoutCreatedClubsInput = {
 export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8694,10 +8694,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedClubsInput = {
 export type UserUpdateWithoutUpdatedClubsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -8807,12 +8807,12 @@ export type UserUpdateWithoutUpdatedClubsInput = {
 export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8920,10 +8920,10 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
 export type UserCreateWithoutCreatedLocationsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -9033,12 +9033,12 @@ export type UserCreateWithoutCreatedLocationsInput = {
 export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9151,10 +9151,10 @@ export type UserCreateOrConnectWithoutCreatedLocationsInput = {
 export type UserCreateWithoutUpdatedLocationsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -9264,12 +9264,12 @@ export type UserCreateWithoutUpdatedLocationsInput = {
 export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9393,10 +9393,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedLocationsInput = {
 export type UserUpdateWithoutCreatedLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -9506,12 +9506,12 @@ export type UserUpdateWithoutCreatedLocationsInput = {
 export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9630,10 +9630,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedLocationsInput = {
 export type UserUpdateWithoutUpdatedLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -9743,12 +9743,12 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
 export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9856,10 +9856,10 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
 export type UserCreateWithoutCreatedCategoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -9969,12 +9969,12 @@ export type UserCreateWithoutCreatedCategoriesInput = {
 export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10087,10 +10087,10 @@ export type UserCreateOrConnectWithoutCreatedCategoriesInput = {
 export type UserCreateWithoutUpdatedCategoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -10200,12 +10200,12 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
 export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10329,10 +10329,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCategoriesInput = {
 export type UserUpdateWithoutCreatedCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -10442,12 +10442,12 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
 export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10566,10 +10566,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCategoriesInput = {
 export type UserUpdateWithoutUpdatedCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -10679,12 +10679,12 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
 export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10792,10 +10792,10 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
 export type UserCreateWithoutCreatedSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -10905,12 +10905,12 @@ export type UserCreateWithoutCreatedSeasonsInput = {
 export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11023,10 +11023,10 @@ export type UserCreateOrConnectWithoutCreatedSeasonsInput = {
 export type UserCreateWithoutUpdatedSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -11136,12 +11136,12 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
 export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11265,10 +11265,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedSeasonsInput = {
 export type UserUpdateWithoutCreatedSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -11378,12 +11378,12 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
 export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11502,10 +11502,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedSeasonsInput = {
 export type UserUpdateWithoutUpdatedSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -11615,12 +11615,12 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
 export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11728,10 +11728,10 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
 export type UserCreateWithoutCreatedSeasonEventsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -11841,12 +11841,12 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
 export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11959,10 +11959,10 @@ export type UserCreateOrConnectWithoutCreatedSeasonEventsInput = {
 export type UserCreateWithoutUpdatedSeasonEventsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -12072,12 +12072,12 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
 export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12201,10 +12201,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedSeasonEventsInput = {
 export type UserUpdateWithoutCreatedSeasonEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -12314,12 +12314,12 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
 export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12438,10 +12438,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedSeasonEventsInput = {
 export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -12551,12 +12551,12 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
 export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12664,10 +12664,10 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
 export type UserCreateWithoutCreatedTeamsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -12777,12 +12777,12 @@ export type UserCreateWithoutCreatedTeamsInput = {
 export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12895,10 +12895,10 @@ export type UserCreateOrConnectWithoutCreatedTeamsInput = {
 export type UserCreateWithoutUpdatedTeamsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -13008,12 +13008,12 @@ export type UserCreateWithoutUpdatedTeamsInput = {
 export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13137,10 +13137,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamsInput = {
 export type UserUpdateWithoutCreatedTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -13250,12 +13250,12 @@ export type UserUpdateWithoutCreatedTeamsInput = {
 export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13374,10 +13374,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTeamsInput = {
 export type UserUpdateWithoutUpdatedTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -13487,12 +13487,12 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
 export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13600,10 +13600,10 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
 export type UserCreateWithoutCreatedTeamSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -13713,12 +13713,12 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
 export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13831,10 +13831,10 @@ export type UserCreateOrConnectWithoutCreatedTeamSeasonsInput = {
 export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -13944,12 +13944,12 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14073,10 +14073,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamSeasonsInput = {
 export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -14186,12 +14186,12 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14310,10 +14310,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTeamSeasonsInput = {
 export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -14423,12 +14423,12 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14536,10 +14536,10 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
 export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -14649,12 +14649,12 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
 export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14767,10 +14767,10 @@ export type UserCreateOrConnectWithoutCreatedTeamSeasonBillingConfigsInput = {
 export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -14880,12 +14880,12 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15009,10 +15009,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamSeasonBillingConfigsInput 
 export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -15122,12 +15122,12 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15246,10 +15246,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTeamSeasonBillingConfigsInput 
 export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -15359,12 +15359,12 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15472,10 +15472,10 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
 export type UserCreateWithoutCreatedPaymentPlansInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -15585,12 +15585,12 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
 export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15703,10 +15703,10 @@ export type UserCreateOrConnectWithoutCreatedPaymentPlansInput = {
 export type UserCreateWithoutUpdatedPaymentPlansInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -15816,12 +15816,12 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
 export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15945,10 +15945,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPaymentPlansInput = {
 export type UserUpdateWithoutCreatedPaymentPlansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -16058,12 +16058,12 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
 export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16182,10 +16182,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPaymentPlansInput = {
 export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -16295,12 +16295,12 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
 export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16408,10 +16408,10 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
 export type UserCreateWithoutCreatedPlayersInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -16521,12 +16521,12 @@ export type UserCreateWithoutCreatedPlayersInput = {
 export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16639,10 +16639,10 @@ export type UserCreateOrConnectWithoutCreatedPlayersInput = {
 export type UserCreateWithoutUpdatedPlayersInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -16752,12 +16752,12 @@ export type UserCreateWithoutUpdatedPlayersInput = {
 export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16881,10 +16881,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPlayersInput = {
 export type UserUpdateWithoutCreatedPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -16994,12 +16994,12 @@ export type UserUpdateWithoutCreatedPlayersInput = {
 export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17118,10 +17118,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPlayersInput = {
 export type UserUpdateWithoutUpdatedPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -17231,12 +17231,12 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
 export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17344,10 +17344,10 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
 export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -17457,12 +17457,12 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17575,10 +17575,10 @@ export type UserCreateOrConnectWithoutCreatedPlayerMembershipsInput = {
 export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -17688,12 +17688,12 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17817,10 +17817,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPlayerMembershipsInput = {
 export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -17930,12 +17930,12 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18054,10 +18054,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPlayerMembershipsInput = {
 export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -18167,12 +18167,12 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18280,10 +18280,10 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
 export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -18393,12 +18393,12 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18511,10 +18511,10 @@ export type UserCreateOrConnectWithoutCreatedPlayerMembershipHistoriesInput = {
 export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -18624,12 +18624,12 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18753,10 +18753,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPlayerMembershipHistoriesInput
 export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -18866,12 +18866,12 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18990,10 +18990,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPlayerMembershipHistoriesInput
 export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -19103,12 +19103,12 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19216,10 +19216,10 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
 export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -19329,12 +19329,12 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19447,10 +19447,10 @@ export type UserCreateOrConnectWithoutCreatedPlayerMembershipPausesInput = {
 export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -19560,12 +19560,12 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19689,10 +19689,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPlayerMembershipPausesInput = 
 export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -19802,12 +19802,12 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19926,10 +19926,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPlayerMembershipPausesInput = 
 export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -20039,12 +20039,12 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20152,10 +20152,10 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
 export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -20265,12 +20265,12 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
 export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20383,10 +20383,10 @@ export type UserCreateOrConnectWithoutCreatedMembershipDiscountsInput = {
 export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -20496,12 +20496,12 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
 export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20625,10 +20625,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedMembershipDiscountsInput = {
 export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -20738,12 +20738,12 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
 export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20862,10 +20862,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedMembershipDiscountsInput = {
 export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -20975,12 +20975,12 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
 export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21088,10 +21088,10 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
 export type UserCreateWithoutCreatedMembershipChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -21201,12 +21201,12 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
 export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21319,10 +21319,10 @@ export type UserCreateOrConnectWithoutCreatedMembershipChargesInput = {
 export type UserCreateWithoutUpdatedMembershipChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -21432,12 +21432,12 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
 export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21561,10 +21561,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedMembershipChargesInput = {
 export type UserUpdateWithoutCreatedMembershipChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -21674,12 +21674,12 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
 export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21798,10 +21798,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedMembershipChargesInput = {
 export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -21911,12 +21911,12 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
 export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22024,10 +22024,10 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
 export type UserCreateWithoutCreatedStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -22137,12 +22137,12 @@ export type UserCreateWithoutCreatedStaffsInput = {
 export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22255,10 +22255,10 @@ export type UserCreateOrConnectWithoutCreatedStaffsInput = {
 export type UserCreateWithoutUpdatedStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -22368,12 +22368,12 @@ export type UserCreateWithoutUpdatedStaffsInput = {
 export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22497,10 +22497,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStaffsInput = {
 export type UserUpdateWithoutCreatedStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -22610,12 +22610,12 @@ export type UserUpdateWithoutCreatedStaffsInput = {
 export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22734,10 +22734,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStaffsInput = {
 export type UserUpdateWithoutUpdatedStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -22847,12 +22847,12 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
 export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22960,10 +22960,10 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
 export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -23073,12 +23073,12 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
 export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23191,10 +23191,10 @@ export type UserCreateOrConnectWithoutCreatedTeamSeasonStaffsInput = {
 export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -23304,12 +23304,12 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23433,10 +23433,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamSeasonStaffsInput = {
 export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -23546,12 +23546,12 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23670,10 +23670,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTeamSeasonStaffsInput = {
 export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -23783,12 +23783,12 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23896,10 +23896,10 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
 export type UserCreateWithoutCreatedChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -24009,12 +24009,12 @@ export type UserCreateWithoutCreatedChargesInput = {
 export type UserUncheckedCreateWithoutCreatedChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24127,10 +24127,10 @@ export type UserCreateOrConnectWithoutCreatedChargesInput = {
 export type UserCreateWithoutUpdatedChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -24240,12 +24240,12 @@ export type UserCreateWithoutUpdatedChargesInput = {
 export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24369,10 +24369,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedChargesInput = {
 export type UserUpdateWithoutCreatedChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -24482,12 +24482,12 @@ export type UserUpdateWithoutCreatedChargesInput = {
 export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24606,10 +24606,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedChargesInput = {
 export type UserUpdateWithoutUpdatedChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -24719,12 +24719,12 @@ export type UserUpdateWithoutUpdatedChargesInput = {
 export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24832,10 +24832,10 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
 export type UserCreateWithoutCreatedPaymentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -24945,12 +24945,12 @@ export type UserCreateWithoutCreatedPaymentsInput = {
 export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25063,10 +25063,10 @@ export type UserCreateOrConnectWithoutCreatedPaymentsInput = {
 export type UserCreateWithoutUpdatedPaymentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -25176,12 +25176,12 @@ export type UserCreateWithoutUpdatedPaymentsInput = {
 export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25305,10 +25305,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPaymentsInput = {
 export type UserUpdateWithoutCreatedPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -25418,12 +25418,12 @@ export type UserUpdateWithoutCreatedPaymentsInput = {
 export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25542,10 +25542,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPaymentsInput = {
 export type UserUpdateWithoutUpdatedPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -25655,12 +25655,12 @@ export type UserUpdateWithoutUpdatedPaymentsInput = {
 export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25768,10 +25768,10 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
 export type UserCreateWithoutCreatedTransactionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -25881,12 +25881,12 @@ export type UserCreateWithoutCreatedTransactionsInput = {
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25999,10 +25999,10 @@ export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
 export type UserCreateWithoutUpdatedTransactionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -26112,12 +26112,12 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
 export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26241,10 +26241,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTransactionsInput = {
 export type UserUpdateWithoutCreatedTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -26354,12 +26354,12 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26478,10 +26478,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTransactionsInput = {
 export type UserUpdateWithoutUpdatedTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -26591,12 +26591,12 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
 export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26704,10 +26704,10 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
 export type UserCreateWithoutCreatedInternalTransfersInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -26817,12 +26817,12 @@ export type UserCreateWithoutCreatedInternalTransfersInput = {
 export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26946,10 +26946,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedInternalTransfersInput = {
 export type UserUpdateWithoutCreatedInternalTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -27059,12 +27059,12 @@ export type UserUpdateWithoutCreatedInternalTransfersInput = {
 export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27172,10 +27172,10 @@ export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
 export type UserCreateWithoutCreatedRolesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -27285,12 +27285,12 @@ export type UserCreateWithoutCreatedRolesInput = {
 export type UserUncheckedCreateWithoutCreatedRolesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27403,10 +27403,10 @@ export type UserCreateOrConnectWithoutCreatedRolesInput = {
 export type UserCreateWithoutUpdatedRolesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -27516,12 +27516,12 @@ export type UserCreateWithoutUpdatedRolesInput = {
 export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27634,10 +27634,10 @@ export type UserCreateOrConnectWithoutUpdatedRolesInput = {
 export type UserCreateWithoutRoleInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -27747,11 +27747,11 @@ export type UserCreateWithoutRoleInput = {
 export type UserUncheckedCreateWithoutRoleInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27881,10 +27881,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedRolesInput = {
 export type UserUpdateWithoutCreatedRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -27994,12 +27994,12 @@ export type UserUpdateWithoutCreatedRolesInput = {
 export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28118,10 +28118,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedRolesInput = {
 export type UserUpdateWithoutUpdatedRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -28231,12 +28231,12 @@ export type UserUpdateWithoutUpdatedRolesInput = {
 export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28363,21 +28363,21 @@ export type UserScalarWhereInput = {
   NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
   personId?: Prisma.StringNullableFilter<"User"> | string | null
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  password?: Prisma.StringFilter<"User"> | string
 }
 
 export type UserCreateWithoutCreatedPermissionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -28487,12 +28487,12 @@ export type UserCreateWithoutCreatedPermissionsInput = {
 export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28605,10 +28605,10 @@ export type UserCreateOrConnectWithoutCreatedPermissionsInput = {
 export type UserCreateWithoutUpdatedPermissionsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -28718,12 +28718,12 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
 export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28847,10 +28847,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedPermissionsInput = {
 export type UserUpdateWithoutCreatedPermissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -28960,12 +28960,12 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
 export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29084,10 +29084,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedPermissionsInput = {
 export type UserUpdateWithoutUpdatedPermissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -29197,12 +29197,12 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
 export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29310,10 +29310,10 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
 export type UserCreateWithoutCreatedSchoolsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -29423,12 +29423,12 @@ export type UserCreateWithoutCreatedSchoolsInput = {
 export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29541,10 +29541,10 @@ export type UserCreateOrConnectWithoutCreatedSchoolsInput = {
 export type UserCreateWithoutUpdatedSchoolsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -29654,12 +29654,12 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
 export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29783,10 +29783,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedSchoolsInput = {
 export type UserUpdateWithoutCreatedSchoolsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -29896,12 +29896,12 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
 export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30020,10 +30020,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedSchoolsInput = {
 export type UserUpdateWithoutUpdatedSchoolsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -30133,12 +30133,12 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
 export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30246,10 +30246,10 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
 export type UserCreateWithoutCreatedCoursesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -30359,12 +30359,12 @@ export type UserCreateWithoutCreatedCoursesInput = {
 export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30477,10 +30477,10 @@ export type UserCreateOrConnectWithoutCreatedCoursesInput = {
 export type UserCreateWithoutUpdatedCoursesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -30590,12 +30590,12 @@ export type UserCreateWithoutUpdatedCoursesInput = {
 export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30719,10 +30719,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCoursesInput = {
 export type UserUpdateWithoutCreatedCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -30832,12 +30832,12 @@ export type UserUpdateWithoutCreatedCoursesInput = {
 export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30956,10 +30956,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCoursesInput = {
 export type UserUpdateWithoutUpdatedCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -31069,12 +31069,12 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
 export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31182,10 +31182,10 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
 export type UserCreateWithoutCreatedCourseSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -31295,12 +31295,12 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
 export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31413,10 +31413,10 @@ export type UserCreateOrConnectWithoutCreatedCourseSeasonsInput = {
 export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -31526,12 +31526,12 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31655,10 +31655,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonsInput = {
 export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -31768,12 +31768,12 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31892,10 +31892,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonsInput = {
 export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -32005,12 +32005,12 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32118,10 +32118,10 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
 export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -32231,12 +32231,12 @@ export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
 export type UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32349,10 +32349,10 @@ export type UserCreateOrConnectWithoutCreatedCourseSeasonShiftsInput = {
 export type UserCreateWithoutUpdatedCourseSeasonShiftsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -32462,12 +32462,12 @@ export type UserCreateWithoutUpdatedCourseSeasonShiftsInput = {
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32591,10 +32591,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonShiftsInput = {
 export type UserUpdateWithoutCreatedCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -32704,12 +32704,12 @@ export type UserUpdateWithoutCreatedCourseSeasonShiftsInput = {
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32828,10 +32828,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonShiftsInput = {
 export type UserUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -32941,12 +32941,12 @@ export type UserUpdateWithoutUpdatedCourseSeasonShiftsInput = {
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33054,10 +33054,10 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
 export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -33167,12 +33167,12 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
 export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33285,10 +33285,10 @@ export type UserCreateOrConnectWithoutCreatedTeamSeasonPausesInput = {
 export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -33398,12 +33398,12 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33527,10 +33527,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamSeasonPausesInput = {
 export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -33640,12 +33640,12 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33764,10 +33764,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedTeamSeasonPausesInput = {
 export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -33877,12 +33877,12 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33990,10 +33990,10 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
 export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -34103,12 +34103,12 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
 export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34221,10 +34221,10 @@ export type UserCreateOrConnectWithoutCreatedCourseSeasonPausesInput = {
 export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -34334,12 +34334,12 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34463,10 +34463,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonPausesInput = {
 export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -34576,12 +34576,12 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34700,10 +34700,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonPausesInput = {
 export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -34813,12 +34813,12 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34926,10 +34926,10 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
 export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -35039,12 +35039,12 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
 export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35157,10 +35157,10 @@ export type UserCreateOrConnectWithoutCreatedCourseSeasonBillingConfigsInput = {
 export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -35270,12 +35270,12 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35399,10 +35399,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonBillingConfigsInpu
 export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -35512,12 +35512,12 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35636,10 +35636,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonBillingConfigsInpu
 export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -35749,12 +35749,12 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35862,10 +35862,10 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
 export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -35975,12 +35975,12 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
 export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36093,10 +36093,10 @@ export type UserCreateOrConnectWithoutCreatedCourseSeasonStaffsInput = {
 export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -36206,12 +36206,12 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36335,10 +36335,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCourseSeasonStaffsInput = {
 export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -36448,12 +36448,12 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36572,10 +36572,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCourseSeasonStaffsInput = {
 export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -36685,12 +36685,12 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36798,10 +36798,10 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
 export type UserCreateWithoutCreatedStudentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -36911,12 +36911,12 @@ export type UserCreateWithoutCreatedStudentsInput = {
 export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37029,10 +37029,10 @@ export type UserCreateOrConnectWithoutCreatedStudentsInput = {
 export type UserCreateWithoutUpdatedStudentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -37142,12 +37142,12 @@ export type UserCreateWithoutUpdatedStudentsInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37271,10 +37271,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentsInput = {
 export type UserUpdateWithoutCreatedStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -37384,12 +37384,12 @@ export type UserUpdateWithoutCreatedStudentsInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37508,10 +37508,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentsInput = {
 export type UserUpdateWithoutUpdatedStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -37621,12 +37621,12 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37734,10 +37734,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
 export type UserCreateWithoutCreatedStudentMembershipsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -37847,12 +37847,12 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
 export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37965,10 +37965,10 @@ export type UserCreateOrConnectWithoutCreatedStudentMembershipsInput = {
 export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -38078,12 +38078,12 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38207,10 +38207,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentMembershipsInput = {
 export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -38320,12 +38320,12 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38444,10 +38444,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentMembershipsInput = {
 export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -38557,12 +38557,12 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38670,10 +38670,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
 export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -38783,12 +38783,12 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
 export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38901,10 +38901,10 @@ export type UserCreateOrConnectWithoutCreatedStudentMembershipHistoriesInput = {
 export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -39014,12 +39014,12 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39143,10 +39143,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentMembershipHistoriesInpu
 export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -39256,12 +39256,12 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39380,10 +39380,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentMembershipHistoriesInpu
 export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -39493,12 +39493,12 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39606,10 +39606,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
 export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -39719,12 +39719,12 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
 export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39837,10 +39837,10 @@ export type UserCreateOrConnectWithoutCreatedStudentMembershipPausesInput = {
 export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -39950,12 +39950,12 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40079,10 +40079,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentMembershipPausesInput =
 export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -40192,12 +40192,12 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40316,10 +40316,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentMembershipPausesInput =
 export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -40429,12 +40429,12 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40542,10 +40542,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
 export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -40655,12 +40655,12 @@ export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
 export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40773,10 +40773,10 @@ export type UserCreateOrConnectWithoutCreatedCycleEnrollmentsInput = {
 export type UserCreateWithoutUpdatedCycleEnrollmentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -40886,12 +40886,12 @@ export type UserCreateWithoutUpdatedCycleEnrollmentsInput = {
 export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41015,10 +41015,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedCycleEnrollmentsInput = {
 export type UserUpdateWithoutCreatedCycleEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -41128,12 +41128,12 @@ export type UserUpdateWithoutCreatedCycleEnrollmentsInput = {
 export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41252,10 +41252,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedCycleEnrollmentsInput = {
 export type UserUpdateWithoutUpdatedCycleEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -41365,12 +41365,12 @@ export type UserUpdateWithoutUpdatedCycleEnrollmentsInput = {
 export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41478,10 +41478,10 @@ export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
 export type UserCreateWithoutCreatedStudentDiscountsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -41591,12 +41591,12 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
 export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41709,10 +41709,10 @@ export type UserCreateOrConnectWithoutCreatedStudentDiscountsInput = {
 export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -41822,12 +41822,12 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41951,10 +41951,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentDiscountsInput = {
 export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -42064,12 +42064,12 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42188,10 +42188,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentDiscountsInput = {
 export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -42301,12 +42301,12 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42414,10 +42414,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
 export type UserCreateWithoutCreatedStudentChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -42527,12 +42527,12 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
 export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42645,10 +42645,10 @@ export type UserCreateOrConnectWithoutCreatedStudentChargesInput = {
 export type UserCreateWithoutUpdatedStudentChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -42758,12 +42758,12 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
 export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42887,10 +42887,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedStudentChargesInput = {
 export type UserUpdateWithoutCreatedStudentChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -43000,12 +43000,12 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
 export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43124,10 +43124,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedStudentChargesInput = {
 export type UserUpdateWithoutUpdatedStudentChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -43237,12 +43237,12 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
 export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43350,10 +43350,10 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
 export type UserCreateWithoutCreatedSessionIncidentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -43463,12 +43463,12 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
 export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43581,10 +43581,10 @@ export type UserCreateOrConnectWithoutCreatedSessionIncidentsInput = {
 export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -43694,12 +43694,12 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
 export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43823,10 +43823,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedSessionIncidentsInput = {
 export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -43936,12 +43936,12 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
 export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44060,10 +44060,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedSessionIncidentsInput = {
 export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -44173,12 +44173,12 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
 export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44286,10 +44286,10 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
 export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -44399,12 +44399,12 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
 export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44517,10 +44517,10 @@ export type UserCreateOrConnectWithoutCreatedProgressEvaluationsInput = {
 export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -44630,12 +44630,12 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
 export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44759,10 +44759,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedProgressEvaluationsInput = {
 export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -44872,12 +44872,12 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
 export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44996,10 +44996,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedProgressEvaluationsInput = {
 export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -45109,12 +45109,12 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
 export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -45222,10 +45222,10 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
 export type UserCreateWithoutCreatedEventsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -45335,12 +45335,12 @@ export type UserCreateWithoutCreatedEventsInput = {
 export type UserUncheckedCreateWithoutCreatedEventsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -45453,10 +45453,10 @@ export type UserCreateOrConnectWithoutCreatedEventsInput = {
 export type UserCreateWithoutUpdatedEventsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -45566,12 +45566,12 @@ export type UserCreateWithoutUpdatedEventsInput = {
 export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -45695,10 +45695,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedEventsInput = {
 export type UserUpdateWithoutCreatedEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -45808,12 +45808,12 @@ export type UserUpdateWithoutCreatedEventsInput = {
 export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -45932,10 +45932,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedEventsInput = {
 export type UserUpdateWithoutUpdatedEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -46045,12 +46045,12 @@ export type UserUpdateWithoutUpdatedEventsInput = {
 export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -46158,10 +46158,10 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
 export type UserCreateWithoutCreatedSessionBookingsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -46271,12 +46271,12 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
 export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -46389,10 +46389,10 @@ export type UserCreateOrConnectWithoutCreatedSessionBookingsInput = {
 export type UserCreateWithoutUpdatedSessionBookingsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -46502,12 +46502,12 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
 export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -46631,10 +46631,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedSessionBookingsInput = {
 export type UserUpdateWithoutCreatedSessionBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -46744,12 +46744,12 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
 export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -46868,10 +46868,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedSessionBookingsInput = {
 export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -46981,12 +46981,12 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
 export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -47094,10 +47094,10 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
 export type UserCreateWithoutCreatedMatchLineupsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -47207,12 +47207,12 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
 export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -47325,10 +47325,10 @@ export type UserCreateOrConnectWithoutCreatedMatchLineupsInput = {
 export type UserCreateWithoutUpdatedMatchLineupsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -47438,12 +47438,12 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
 export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -47567,10 +47567,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedMatchLineupsInput = {
 export type UserUpdateWithoutCreatedMatchLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -47680,12 +47680,12 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
 export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -47804,10 +47804,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedMatchLineupsInput = {
 export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -47917,12 +47917,12 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
 export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -48030,10 +48030,10 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
 export type UserCreateWithoutAuditLogsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -48143,12 +48143,12 @@ export type UserCreateWithoutAuditLogsInput = {
 export type UserUncheckedCreateWithoutAuditLogsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -48272,10 +48272,10 @@ export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
 export type UserUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -48385,12 +48385,12 @@ export type UserUpdateWithoutAuditLogsInput = {
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -48498,10 +48498,10 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
 export type UserCreateWithoutCreatedAccountCategoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
@@ -48611,12 +48611,12 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
 export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -48729,10 +48729,10 @@ export type UserCreateOrConnectWithoutCreatedAccountCategoriesInput = {
 export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
@@ -48842,12 +48842,12 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
 export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -48971,10 +48971,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedAccountCategoriesInput = {
 export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
@@ -49084,12 +49084,12 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
 export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -49208,10 +49208,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedAccountCategoriesInput = {
 export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
@@ -49321,12 +49321,12 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
 export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -49434,10 +49434,10 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
 export type UserCreateWithoutCreatedAccountChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
@@ -49547,12 +49547,12 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
 export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -49665,10 +49665,10 @@ export type UserCreateOrConnectWithoutCreatedAccountChargesInput = {
 export type UserCreateWithoutUpdatedAccountChargesInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -49778,12 +49778,12 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
 export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -49907,10 +49907,10 @@ export type UserUpdateToOneWithWhereWithoutCreatedAccountChargesInput = {
 export type UserUpdateWithoutCreatedAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
@@ -50020,12 +50020,12 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
 export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -50144,10 +50144,10 @@ export type UserUpdateToOneWithWhereWithoutUpdatedAccountChargesInput = {
 export type UserUpdateWithoutUpdatedAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -50257,12 +50257,12 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
 export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -50370,10 +50370,10 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
 export type UserCreateWithoutCashClosuresCreatedInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -50483,12 +50483,12 @@ export type UserCreateWithoutCashClosuresCreatedInput = {
 export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -50601,10 +50601,10 @@ export type UserCreateOrConnectWithoutCashClosuresCreatedInput = {
 export type UserCreateWithoutCashClosuresUpdatedInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -50714,12 +50714,12 @@ export type UserCreateWithoutCashClosuresUpdatedInput = {
 export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -50843,10 +50843,10 @@ export type UserUpdateToOneWithWhereWithoutCashClosuresCreatedInput = {
 export type UserUpdateWithoutCashClosuresCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -50956,12 +50956,12 @@ export type UserUpdateWithoutCashClosuresCreatedInput = {
 export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -51080,10 +51080,10 @@ export type UserUpdateToOneWithWhereWithoutCashClosuresUpdatedInput = {
 export type UserUpdateWithoutCashClosuresUpdatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -51193,12 +51193,12 @@ export type UserUpdateWithoutCashClosuresUpdatedInput = {
 export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -51306,10 +51306,10 @@ export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
 export type UserCreateWithoutAttachmentsInput = {
   id?: string
   email: string
+  password: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
@@ -51419,12 +51419,12 @@ export type UserCreateWithoutAttachmentsInput = {
 export type UserUncheckedCreateWithoutAttachmentsInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   roleId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
@@ -51548,10 +51548,10 @@ export type UserUpdateToOneWithWhereWithoutAttachmentsInput = {
 export type UserUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -51661,12 +51661,12 @@ export type UserUpdateWithoutAttachmentsInput = {
 export type UserUncheckedUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -51774,20 +51774,20 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
 export type UserCreateManyRoleInput = {
   id?: string
   email: string
+  password: string
   personId?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  password: string
 }
 
 export type UserUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
@@ -51897,11 +51897,11 @@ export type UserUpdateWithoutRoleInput = {
 export type UserUncheckedUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -52010,11 +52010,11 @@ export type UserUncheckedUpdateWithoutRoleInput = {
 export type UserUncheckedUpdateManyWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -52969,12 +52969,12 @@ export type UserCountOutputTypeCountUpdatedTransactionsArgs<ExtArgs extends runt
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  password?: boolean
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  password?: boolean
   createdAccountCategories?: boolean | Prisma.User$createdAccountCategoriesArgs<ExtArgs>
   updatedAccountCategories?: boolean | Prisma.User$updatedAccountCategoriesArgs<ExtArgs>
   createdAccountCharges?: boolean | Prisma.User$createdAccountChargesArgs<ExtArgs>
@@ -53086,12 +53086,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  password?: boolean
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  password?: boolean
   person?: boolean | Prisma.User$personArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -53099,12 +53099,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  password?: boolean
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  password?: boolean
   person?: boolean | Prisma.User$personArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -53112,15 +53112,15 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
+  password?: boolean
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  password?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "personId" | "roleId" | "isActive" | "createdAt" | "updatedAt" | "password", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "personId" | "roleId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdAccountCategories?: boolean | Prisma.User$createdAccountCategoriesArgs<ExtArgs>
   updatedAccountCategories?: boolean | Prisma.User$updatedAccountCategoriesArgs<ExtArgs>
@@ -53350,12 +53350,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
+    password: string
     personId: string | null
     roleId: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
-    password: string
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -53886,12 +53886,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly password: Prisma.FieldRef<"User", 'String'>
   readonly personId: Prisma.FieldRef<"User", 'String'>
   readonly roleId: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly password: Prisma.FieldRef<"User", 'String'>
 }
     
 
