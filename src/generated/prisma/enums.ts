@@ -378,3 +378,11 @@ export const NewsStatus = {
 } as const
 
 export type NewsStatus = (typeof NewsStatus)[keyof typeof NewsStatus]
+
+
+export const MatchSide = {
+  HOME: 'HOME',
+  AWAY: 'AWAY'
+} as const
+
+export type MatchSide = (typeof MatchSide)[keyof typeof MatchSide]

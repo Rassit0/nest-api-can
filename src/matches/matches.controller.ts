@@ -16,6 +16,7 @@ import { MatchesService } from './matches.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { MatchesPaginationDto } from './dto/pagination.dto';
+import { MatchTeamContextDto } from './dto/team-context.dto';
 import {
   ApiStandardResponse,
   ApiPaginatedResponse,
@@ -38,6 +39,13 @@ export class MatchesController {
   async create(@Body() createMatchDto: CreateMatchDto, @Req() req: any) {
     const userId = req.user?.id;
     return await this.matchesService.create(createMatchDto, userId);
+  }
+
+  @Get('team-context')
+  @ApiOperation({ summary: 'Obtener contexto del equipo para un partido' })
+  @RequirePermissions('READ_MATCHES')
+  async getTeamContext(@Query() query: MatchTeamContextDto) {
+    return await this.matchesService.getTeamContext(query);
   }
 
   @Get()
@@ -72,5 +80,31 @@ export class MatchesController {
   @RequirePermissions('DELETE_MATCHES')
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     return await this.matchesService.remove(id);
+  }
+
+  // --- LIFECYCLE ENDPOINTS ---
+
+  @Post(':id/complete')
+  @RequirePermissions('UPDATE_MATCHES')
+  async completeMatch(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.matchesService.completeMatch(id);
+  }
+
+  @Post(':id/cancel')
+  @RequirePermissions('UPDATE_MATCHES')
+  async cancelMatch(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.matchesService.cancelMatch(id);
+  }
+
+  @Post(':id/reopen')
+  @RequirePermissions('UPDATE_MATCHES')
+  async reopenMatch(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.matchesService.reopenMatch(id);
+  }
+
+  @Post(':id/restore')
+  @RequirePermissions('UPDATE_MATCHES')
+  async restoreMatch(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.matchesService.restoreMatch(id);
   }
 }

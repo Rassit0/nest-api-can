@@ -108,6 +108,10 @@ export class RolesService {
     } = paginationDto;
     const skip = (page - 1) * per_page;
 
+    const allowedSortFields = ['name', 'createdAt', 'id'];
+    const safeSortField = allowedSortFields.includes(sortField) ? sortField : 'name';
+    const safeOrder = orderBy === 'desc' ? 'desc' : 'asc';
+
     const where: Prisma.RoleWhereInput = {};
 
     if (search) {
@@ -122,7 +126,7 @@ export class RolesService {
         where,
         take: per_page,
         skip,
-        orderBy: { [sortField]: orderBy },
+        orderBy: { [safeSortField]: safeOrder },
         select: roleSelect,
       }),
       this.prisma.role.count({ where }),
@@ -274,10 +278,14 @@ export class RolesService {
       page = 1,
       search,
       orderBy = 'asc',
-      sortField = 'module',
+      sortField = 'name',
       roleId,
     } = paginationDto;
     const skip = (page - 1) * per_page;
+
+    const allowedSortFields = ['name', 'id'];
+    const safeSortField = allowedSortFields.includes(sortField) ? sortField : 'name';
+    const safeOrder = orderBy === 'desc' ? 'desc' : 'asc';
 
     const where: Prisma.PermissionWhereInput = {};
 
@@ -301,7 +309,7 @@ export class RolesService {
         where,
         take: per_page,
         skip,
-        orderBy: { [sortField]: orderBy },
+        orderBy: { [safeSortField]: safeOrder },
         select: {
           id: true,
           name: true,

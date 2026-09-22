@@ -204,6 +204,8 @@ export type StaffWhereInput = {
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   teamSeasonStaffs?: Prisma.TeamSeasonStaffListRelationFilter
+  homeMatchesCoached?: Prisma.MatchListRelationFilter
+  awayMatchesCoached?: Prisma.MatchListRelationFilter
 }
 
 export type StaffOrderByWithRelationInput = {
@@ -220,6 +222,8 @@ export type StaffOrderByWithRelationInput = {
   person?: Prisma.PersonOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffOrderByRelationAggregateInput
+  homeMatchesCoached?: Prisma.MatchOrderByRelationAggregateInput
+  awayMatchesCoached?: Prisma.MatchOrderByRelationAggregateInput
 }
 
 export type StaffWhereUniqueInput = Prisma.AtLeast<{
@@ -239,6 +243,8 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   teamSeasonStaffs?: Prisma.TeamSeasonStaffListRelationFilter
+  homeMatchesCoached?: Prisma.MatchListRelationFilter
+  awayMatchesCoached?: Prisma.MatchListRelationFilter
 }, "id" | "personId">
 
 export type StaffOrderByWithAggregationInput = {
@@ -278,6 +284,8 @@ export type StaffCreateInput = {
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateInput = {
@@ -291,6 +299,8 @@ export type StaffUncheckedCreateInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUpdateInput = {
@@ -304,6 +314,8 @@ export type StaffUpdateInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateInput = {
@@ -317,6 +329,8 @@ export type StaffUncheckedUpdateInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffCreateManyInput = {
@@ -554,6 +568,38 @@ export type StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutProgressEvaluationsInput, Prisma.StaffUpdateWithoutProgressEvaluationsInput>, Prisma.StaffUncheckedUpdateWithoutProgressEvaluationsInput>
 }
 
+export type StaffCreateNestedOneWithoutHomeMatchesCoachedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutHomeMatchesCoachedInput>
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutHomeMatchesCoachedInput
+  connect?: Prisma.StaffWhereUniqueInput
+}
+
+export type StaffCreateNestedOneWithoutAwayMatchesCoachedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutAwayMatchesCoachedInput>
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutAwayMatchesCoachedInput
+  connect?: Prisma.StaffWhereUniqueInput
+}
+
+export type StaffUpdateOneWithoutHomeMatchesCoachedNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutHomeMatchesCoachedInput>
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutHomeMatchesCoachedInput
+  upsert?: Prisma.StaffUpsertWithoutHomeMatchesCoachedInput
+  disconnect?: Prisma.StaffWhereInput | boolean
+  delete?: Prisma.StaffWhereInput | boolean
+  connect?: Prisma.StaffWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutHomeMatchesCoachedInput, Prisma.StaffUpdateWithoutHomeMatchesCoachedInput>, Prisma.StaffUncheckedUpdateWithoutHomeMatchesCoachedInput>
+}
+
+export type StaffUpdateOneWithoutAwayMatchesCoachedNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutAwayMatchesCoachedInput>
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutAwayMatchesCoachedInput
+  upsert?: Prisma.StaffUpsertWithoutAwayMatchesCoachedInput
+  disconnect?: Prisma.StaffWhereInput | boolean
+  delete?: Prisma.StaffWhereInput | boolean
+  connect?: Prisma.StaffWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutAwayMatchesCoachedInput, Prisma.StaffUpdateWithoutAwayMatchesCoachedInput>, Prisma.StaffUncheckedUpdateWithoutAwayMatchesCoachedInput>
+}
+
 export type StaffCreateWithoutPersonInput = {
   id?: string
   isActive?: boolean
@@ -564,6 +610,8 @@ export type StaffCreateWithoutPersonInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStaffsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutPersonInput = {
@@ -576,6 +624,8 @@ export type StaffUncheckedCreateWithoutPersonInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutPersonInput = {
@@ -604,6 +654,8 @@ export type StaffUpdateWithoutPersonInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStaffsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutPersonInput = {
@@ -616,6 +668,8 @@ export type StaffUncheckedUpdateWithoutPersonInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffCreateWithoutTeamSeasonStaffsInput = {
@@ -628,6 +682,8 @@ export type StaffCreateWithoutTeamSeasonStaffsInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStaffsInput
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutTeamSeasonStaffsInput = {
@@ -640,6 +696,8 @@ export type StaffUncheckedCreateWithoutTeamSeasonStaffsInput = {
   updatedById?: string | null
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutTeamSeasonStaffsInput = {
@@ -668,6 +726,8 @@ export type StaffUpdateWithoutTeamSeasonStaffsInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStaffsNestedInput
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutTeamSeasonStaffsInput = {
@@ -680,6 +740,8 @@ export type StaffUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffCreateWithoutCreatedByInput = {
@@ -692,6 +754,8 @@ export type StaffCreateWithoutCreatedByInput = {
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutCreatedByInput = {
@@ -704,6 +768,8 @@ export type StaffUncheckedCreateWithoutCreatedByInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutCreatedByInput = {
@@ -726,6 +792,8 @@ export type StaffCreateWithoutUpdatedByInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStaffsInput
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutUpdatedByInput = {
@@ -738,6 +806,8 @@ export type StaffUncheckedCreateWithoutUpdatedByInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutUpdatedByInput = {
@@ -805,6 +875,8 @@ export type StaffCreateWithoutCourseSeasonStaffsInput = {
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutCourseSeasonStaffsInput = {
@@ -817,6 +889,8 @@ export type StaffUncheckedCreateWithoutCourseSeasonStaffsInput = {
   updatedById?: string | null
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutCourseSeasonStaffsInput = {
@@ -845,6 +919,8 @@ export type StaffUpdateWithoutCourseSeasonStaffsInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutCourseSeasonStaffsInput = {
@@ -857,6 +933,8 @@ export type StaffUncheckedUpdateWithoutCourseSeasonStaffsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffCreateWithoutProgressEvaluationsInput = {
@@ -869,6 +947,8 @@ export type StaffCreateWithoutProgressEvaluationsInput = {
   person: Prisma.PersonCreateNestedOneWithoutStaffInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffUncheckedCreateWithoutProgressEvaluationsInput = {
@@ -881,6 +961,8 @@ export type StaffUncheckedCreateWithoutProgressEvaluationsInput = {
   updatedById?: string | null
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
 }
 
 export type StaffCreateOrConnectWithoutProgressEvaluationsInput = {
@@ -909,6 +991,8 @@ export type StaffUpdateWithoutProgressEvaluationsInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutProgressEvaluationsInput = {
@@ -921,6 +1005,152 @@ export type StaffUncheckedUpdateWithoutProgressEvaluationsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
+}
+
+export type StaffCreateWithoutHomeMatchesCoachedInput = {
+  id?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStaffsInput
+  person: Prisma.PersonCreateNestedOneWithoutStaffInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  awayMatchesCoached?: Prisma.MatchCreateNestedManyWithoutAwayCoachInput
+}
+
+export type StaffUncheckedCreateWithoutHomeMatchesCoachedInput = {
+  id?: string
+  personId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  awayMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayCoachInput
+}
+
+export type StaffCreateOrConnectWithoutHomeMatchesCoachedInput = {
+  where: Prisma.StaffWhereUniqueInput
+  create: Prisma.XOR<Prisma.StaffCreateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutHomeMatchesCoachedInput>
+}
+
+export type StaffCreateWithoutAwayMatchesCoachedInput = {
+  id?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutStaffInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutEvaluatorStaffInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStaffsInput
+  person: Prisma.PersonCreateNestedOneWithoutStaffInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedStaffsInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchCreateNestedManyWithoutHomeCoachInput
+}
+
+export type StaffUncheckedCreateWithoutAwayMatchesCoachedInput = {
+  id?: string
+  personId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutEvaluatorStaffInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutStaffInput
+  homeMatchesCoached?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeCoachInput
+}
+
+export type StaffCreateOrConnectWithoutAwayMatchesCoachedInput = {
+  where: Prisma.StaffWhereUniqueInput
+  create: Prisma.XOR<Prisma.StaffCreateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutAwayMatchesCoachedInput>
+}
+
+export type StaffUpsertWithoutHomeMatchesCoachedInput = {
+  update: Prisma.XOR<Prisma.StaffUpdateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedUpdateWithoutHomeMatchesCoachedInput>
+  create: Prisma.XOR<Prisma.StaffCreateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutHomeMatchesCoachedInput>
+  where?: Prisma.StaffWhereInput
+}
+
+export type StaffUpdateToOneWithWhereWithoutHomeMatchesCoachedInput = {
+  where?: Prisma.StaffWhereInput
+  data: Prisma.XOR<Prisma.StaffUpdateWithoutHomeMatchesCoachedInput, Prisma.StaffUncheckedUpdateWithoutHomeMatchesCoachedInput>
+}
+
+export type StaffUpdateWithoutHomeMatchesCoachedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStaffsNestedInput
+  person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
+}
+
+export type StaffUncheckedUpdateWithoutHomeMatchesCoachedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
+}
+
+export type StaffUpsertWithoutAwayMatchesCoachedInput = {
+  update: Prisma.XOR<Prisma.StaffUpdateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedUpdateWithoutAwayMatchesCoachedInput>
+  create: Prisma.XOR<Prisma.StaffCreateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedCreateWithoutAwayMatchesCoachedInput>
+  where?: Prisma.StaffWhereInput
+}
+
+export type StaffUpdateToOneWithWhereWithoutAwayMatchesCoachedInput = {
+  where?: Prisma.StaffWhereInput
+  data: Prisma.XOR<Prisma.StaffUpdateWithoutAwayMatchesCoachedInput, Prisma.StaffUncheckedUpdateWithoutAwayMatchesCoachedInput>
+}
+
+export type StaffUpdateWithoutAwayMatchesCoachedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutStaffNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutEvaluatorStaffNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedStaffsNestedInput
+  person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+}
+
+export type StaffUncheckedUpdateWithoutAwayMatchesCoachedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
 }
 
 export type StaffCreateManyCreatedByInput = {
@@ -951,6 +1181,8 @@ export type StaffUpdateWithoutCreatedByInput = {
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedStaffsNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutCreatedByInput = {
@@ -963,6 +1195,8 @@ export type StaffUncheckedUpdateWithoutCreatedByInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateManyWithoutCreatedByInput = {
@@ -984,6 +1218,8 @@ export type StaffUpdateWithoutUpdatedByInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStaffsNestedInput
   person?: Prisma.PersonUpdateOneRequiredWithoutStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutUpdatedByInput = {
@@ -996,6 +1232,8 @@ export type StaffUncheckedUpdateWithoutUpdatedByInput = {
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
   progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutStaffNestedInput
+  homeMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutHomeCoachNestedInput
+  awayMatchesCoached?: Prisma.MatchUncheckedUpdateManyWithoutAwayCoachNestedInput
 }
 
 export type StaffUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1016,12 +1254,16 @@ export type StaffCountOutputType = {
   courseSeasonStaffs: number
   progressEvaluations: number
   teamSeasonStaffs: number
+  homeMatchesCoached: number
+  awayMatchesCoached: number
 }
 
 export type StaffCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courseSeasonStaffs?: boolean | StaffCountOutputTypeCountCourseSeasonStaffsArgs
   progressEvaluations?: boolean | StaffCountOutputTypeCountProgressEvaluationsArgs
   teamSeasonStaffs?: boolean | StaffCountOutputTypeCountTeamSeasonStaffsArgs
+  homeMatchesCoached?: boolean | StaffCountOutputTypeCountHomeMatchesCoachedArgs
+  awayMatchesCoached?: boolean | StaffCountOutputTypeCountAwayMatchesCoachedArgs
 }
 
 /**
@@ -1055,6 +1297,20 @@ export type StaffCountOutputTypeCountTeamSeasonStaffsArgs<ExtArgs extends runtim
   where?: Prisma.TeamSeasonStaffWhereInput
 }
 
+/**
+ * StaffCountOutputType without action
+ */
+export type StaffCountOutputTypeCountHomeMatchesCoachedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
+
+/**
+ * StaffCountOutputType without action
+ */
+export type StaffCountOutputTypeCountAwayMatchesCoachedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
+
 
 export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1070,6 +1326,8 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Staff$updatedByArgs<ExtArgs>
   teamSeasonStaffs?: boolean | Prisma.Staff$teamSeasonStaffsArgs<ExtArgs>
+  homeMatchesCoached?: boolean | Prisma.Staff$homeMatchesCoachedArgs<ExtArgs>
+  awayMatchesCoached?: boolean | Prisma.Staff$awayMatchesCoachedArgs<ExtArgs>
   _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
@@ -1117,6 +1375,8 @@ export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Staff$updatedByArgs<ExtArgs>
   teamSeasonStaffs?: boolean | Prisma.Staff$teamSeasonStaffsArgs<ExtArgs>
+  homeMatchesCoached?: boolean | Prisma.Staff$homeMatchesCoachedArgs<ExtArgs>
+  awayMatchesCoached?: boolean | Prisma.Staff$awayMatchesCoachedArgs<ExtArgs>
   _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StaffIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1139,6 +1399,8 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     person: Prisma.$PersonPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     teamSeasonStaffs: Prisma.$TeamSeasonStaffPayload<ExtArgs>[]
+    homeMatchesCoached: Prisma.$MatchPayload<ExtArgs>[]
+    awayMatchesCoached: Prisma.$MatchPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1548,6 +1810,8 @@ export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Ty
   person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Staff$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   teamSeasonStaffs<T extends Prisma.Staff$teamSeasonStaffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$teamSeasonStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  homeMatchesCoached<T extends Prisma.Staff$homeMatchesCoachedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$homeMatchesCoachedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  awayMatchesCoached<T extends Prisma.Staff$awayMatchesCoachedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$awayMatchesCoachedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2087,6 +2351,54 @@ export type Staff$teamSeasonStaffsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.TeamSeasonStaffScalarFieldEnum | Prisma.TeamSeasonStaffScalarFieldEnum[]
+}
+
+/**
+ * Staff.homeMatchesCoached
+ */
+export type Staff$homeMatchesCoachedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
+ * Staff.awayMatchesCoached
+ */
+export type Staff$awayMatchesCoachedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
 }
 
 /**

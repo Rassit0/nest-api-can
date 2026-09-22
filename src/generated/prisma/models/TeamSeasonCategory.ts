@@ -317,7 +317,9 @@ export type TeamSeasonCategoryWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventListRelationFilter
-  matches?: Prisma.MatchListRelationFilter
+  legacyMatches?: Prisma.MatchListRelationFilter
+  homeMatches?: Prisma.MatchListRelationFilter
+  awayMatches?: Prisma.MatchListRelationFilter
   player_membership?: Prisma.PlayerMembershipListRelationFilter
   sessions?: Prisma.SessionTeamListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
@@ -343,7 +345,9 @@ export type TeamSeasonCategoryOrderByWithRelationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   generalEvents?: Prisma.GeneralEventOrderByRelationAggregateInput
-  matches?: Prisma.MatchOrderByRelationAggregateInput
+  legacyMatches?: Prisma.MatchOrderByRelationAggregateInput
+  homeMatches?: Prisma.MatchOrderByRelationAggregateInput
+  awayMatches?: Prisma.MatchOrderByRelationAggregateInput
   player_membership?: Prisma.PlayerMembershipOrderByRelationAggregateInput
   sessions?: Prisma.SessionTeamOrderByRelationAggregateInput
   category?: Prisma.CategoryOrderByWithRelationInput
@@ -374,7 +378,9 @@ export type TeamSeasonCategoryWhereUniqueInput = Prisma.AtLeast<{
   endedAt?: Prisma.DateTimeNullableFilter<"TeamSeasonCategory"> | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFilter<"TeamSeasonCategory"> | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventListRelationFilter
-  matches?: Prisma.MatchListRelationFilter
+  legacyMatches?: Prisma.MatchListRelationFilter
+  homeMatches?: Prisma.MatchListRelationFilter
+  awayMatches?: Prisma.MatchListRelationFilter
   player_membership?: Prisma.PlayerMembershipListRelationFilter
   sessions?: Prisma.SessionTeamListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
@@ -444,7 +450,9 @@ export type TeamSeasonCategoryCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
@@ -470,7 +478,9 @@ export type TeamSeasonCategoryUncheckedCreateInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -492,7 +502,9 @@ export type TeamSeasonCategoryUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
@@ -518,7 +530,9 @@ export type TeamSeasonCategoryUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -823,18 +837,52 @@ export type TeamSeasonCategoryUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonCategoryUpdateToOneWithWhereWithoutSessionsInput, Prisma.TeamSeasonCategoryUpdateWithoutSessionsInput>, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutSessionsInput>
 }
 
-export type TeamSeasonCategoryCreateNestedOneWithoutMatchesInput = {
-  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutMatchesInput>
-  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutMatchesInput
+export type TeamSeasonCategoryCreateNestedOneWithoutLegacyMatchesInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutLegacyMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutLegacyMatchesInput
   connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
 }
 
-export type TeamSeasonCategoryUpdateOneRequiredWithoutMatchesNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutMatchesInput>
-  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutMatchesInput
-  upsert?: Prisma.TeamSeasonCategoryUpsertWithoutMatchesInput
+export type TeamSeasonCategoryCreateNestedOneWithoutHomeMatchesInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutHomeMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutHomeMatchesInput
   connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonCategoryUpdateToOneWithWhereWithoutMatchesInput, Prisma.TeamSeasonCategoryUpdateWithoutMatchesInput>, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput>
+}
+
+export type TeamSeasonCategoryCreateNestedOneWithoutAwayMatchesInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutAwayMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutAwayMatchesInput
+  connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
+}
+
+export type TeamSeasonCategoryUpdateOneWithoutLegacyMatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutLegacyMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutLegacyMatchesInput
+  upsert?: Prisma.TeamSeasonCategoryUpsertWithoutLegacyMatchesInput
+  disconnect?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  delete?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonCategoryUpdateToOneWithWhereWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUpdateWithoutLegacyMatchesInput>, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutLegacyMatchesInput>
+}
+
+export type TeamSeasonCategoryUpdateOneWithoutHomeMatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutHomeMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutHomeMatchesInput
+  upsert?: Prisma.TeamSeasonCategoryUpsertWithoutHomeMatchesInput
+  disconnect?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  delete?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonCategoryUpdateToOneWithWhereWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUpdateWithoutHomeMatchesInput>, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutHomeMatchesInput>
+}
+
+export type TeamSeasonCategoryUpdateOneWithoutAwayMatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutAwayMatchesInput>
+  connectOrCreate?: Prisma.TeamSeasonCategoryCreateOrConnectWithoutAwayMatchesInput
+  upsert?: Prisma.TeamSeasonCategoryUpsertWithoutAwayMatchesInput
+  disconnect?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  delete?: Prisma.TeamSeasonCategoryWhereInput | boolean
+  connect?: Prisma.TeamSeasonCategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamSeasonCategoryUpdateToOneWithWhereWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUpdateWithoutAwayMatchesInput>, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutAwayMatchesInput>
 }
 
 export type EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput = {
@@ -857,7 +905,9 @@ export type TeamSeasonCategoryCreateWithoutCategoryInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutCategoriesInput
@@ -881,7 +931,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutCategoryInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -951,7 +1003,9 @@ export type TeamSeasonCategoryCreateWithoutTeamSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
@@ -975,7 +1029,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutTeamSeasonInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1023,7 +1079,9 @@ export type TeamSeasonCategoryCreateWithoutPlayer_membershipInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
   teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutCategoriesInput
@@ -1048,7 +1106,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutPlayer_membershipInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
 }
@@ -1085,7 +1145,9 @@ export type TeamSeasonCategoryUpdateWithoutPlayer_membershipInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
   teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutCategoriesNestedInput
@@ -1110,7 +1172,9 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutPlayer_membershipInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
 }
@@ -1131,7 +1195,9 @@ export type TeamSeasonCategoryCreateWithoutTeamSeasonStaffsInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
@@ -1156,7 +1222,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutTeamSeasonStaffsInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
 }
@@ -1193,7 +1261,9 @@ export type TeamSeasonCategoryUpdateWithoutTeamSeasonStaffsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
@@ -1218,7 +1288,9 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutTeamSeasonStaffsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
 }
@@ -1238,7 +1310,9 @@ export type TeamSeasonCategoryCreateWithoutGeneralEventsInput = {
   updatedById?: string | null
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
@@ -1263,7 +1337,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutGeneralEventsInput = {
   updatedById?: string | null
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
@@ -1300,7 +1376,9 @@ export type TeamSeasonCategoryUpdateWithoutGeneralEventsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
@@ -1325,7 +1403,9 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutGeneralEventsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1347,7 +1427,9 @@ export type TeamSeasonCategoryCreateWithoutSessionsInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
   teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutCategoriesInput
@@ -1372,7 +1454,9 @@ export type TeamSeasonCategoryUncheckedCreateWithoutSessionsInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
-  matches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
 }
@@ -1409,7 +1493,9 @@ export type TeamSeasonCategoryUpdateWithoutSessionsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
   teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutCategoriesNestedInput
@@ -1434,12 +1520,14 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutSessionsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
 }
 
-export type TeamSeasonCategoryCreateWithoutMatchesInput = {
+export type TeamSeasonCategoryCreateWithoutLegacyMatchesInput = {
   id?: string
   gender: $Enums.ProgramGender
   minBirthYear?: number | null
@@ -1455,6 +1543,8 @@ export type TeamSeasonCategoryCreateWithoutMatchesInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
   category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
@@ -1462,7 +1552,7 @@ export type TeamSeasonCategoryCreateWithoutMatchesInput = {
   teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutTeamSeasonCategoryInput
 }
 
-export type TeamSeasonCategoryUncheckedCreateWithoutMatchesInput = {
+export type TeamSeasonCategoryUncheckedCreateWithoutLegacyMatchesInput = {
   id?: string
   teamSeasonId: string
   categoryId: string
@@ -1480,28 +1570,140 @@ export type TeamSeasonCategoryUncheckedCreateWithoutMatchesInput = {
   endedAt?: Date | string | null
   status?: $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
   player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
   sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
 }
 
-export type TeamSeasonCategoryCreateOrConnectWithoutMatchesInput = {
+export type TeamSeasonCategoryCreateOrConnectWithoutLegacyMatchesInput = {
   where: Prisma.TeamSeasonCategoryWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutMatchesInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutLegacyMatchesInput>
 }
 
-export type TeamSeasonCategoryUpsertWithoutMatchesInput = {
-  update: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput>
-  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutMatchesInput>
+export type TeamSeasonCategoryCreateWithoutHomeMatchesInput = {
+  id?: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  minMembers?: number | null
+  maxMembers?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamSeasonCategoryInput
+  player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
+  sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
+  category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutCategoriesInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutTeamSeasonCategoryInput
+}
+
+export type TeamSeasonCategoryUncheckedCreateWithoutHomeMatchesInput = {
+  id?: string
+  teamSeasonId: string
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  minMembers?: number | null
+  maxMembers?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamSeasonCategoryInput
+  player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
+  sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+}
+
+export type TeamSeasonCategoryCreateOrConnectWithoutHomeMatchesInput = {
+  where: Prisma.TeamSeasonCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutHomeMatchesInput>
+}
+
+export type TeamSeasonCategoryCreateWithoutAwayMatchesInput = {
+  id?: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  minMembers?: number | null
+  maxMembers?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  player_membership?: Prisma.PlayerMembershipCreateNestedManyWithoutTeamSeasonCategoriesInput
+  sessions?: Prisma.SessionTeamCreateNestedManyWithoutTeamSeasonCategoryInput
+  category: Prisma.CategoryCreateNestedOneWithoutTeamSeasonCategoriesInput
+  teamSeason: Prisma.TeamSeasonCreateNestedOneWithoutCategoriesInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutTeamSeasonCategoryInput
+}
+
+export type TeamSeasonCategoryUncheckedCreateWithoutAwayMatchesInput = {
+  id?: string
+  teamSeasonId: string
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  minMembers?: number | null
+  maxMembers?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  endedAt?: Date | string | null
+  status?: $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  legacyMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamSeasonCategoryInput
+  player_membership?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutTeamSeasonCategoriesInput
+  sessions?: Prisma.SessionTeamUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput
+}
+
+export type TeamSeasonCategoryCreateOrConnectWithoutAwayMatchesInput = {
+  where: Prisma.TeamSeasonCategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutAwayMatchesInput>
+}
+
+export type TeamSeasonCategoryUpsertWithoutLegacyMatchesInput = {
+  update: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutLegacyMatchesInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutLegacyMatchesInput>
   where?: Prisma.TeamSeasonCategoryWhereInput
 }
 
-export type TeamSeasonCategoryUpdateToOneWithWhereWithoutMatchesInput = {
+export type TeamSeasonCategoryUpdateToOneWithWhereWithoutLegacyMatchesInput = {
   where?: Prisma.TeamSeasonCategoryWhereInput
-  data: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput>
+  data: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutLegacyMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutLegacyMatchesInput>
 }
 
-export type TeamSeasonCategoryUpdateWithoutMatchesInput = {
+export type TeamSeasonCategoryUpdateWithoutLegacyMatchesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
   minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1517,6 +1719,8 @@ export type TeamSeasonCategoryUpdateWithoutMatchesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
@@ -1524,7 +1728,7 @@ export type TeamSeasonCategoryUpdateWithoutMatchesInput = {
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutTeamSeasonCategoryNestedInput
 }
 
-export type TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput = {
+export type TeamSeasonCategoryUncheckedUpdateWithoutLegacyMatchesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1542,6 +1746,130 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutMatchesInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
+  player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
+  sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+}
+
+export type TeamSeasonCategoryUpsertWithoutHomeMatchesInput = {
+  update: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutHomeMatchesInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutHomeMatchesInput>
+  where?: Prisma.TeamSeasonCategoryWhereInput
+}
+
+export type TeamSeasonCategoryUpdateToOneWithWhereWithoutHomeMatchesInput = {
+  where?: Prisma.TeamSeasonCategoryWhereInput
+  data: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutHomeMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutHomeMatchesInput>
+}
+
+export type TeamSeasonCategoryUpdateWithoutHomeMatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
+  player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
+  sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutCategoriesNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutTeamSeasonCategoryNestedInput
+}
+
+export type TeamSeasonCategoryUncheckedUpdateWithoutHomeMatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
+  player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
+  sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+}
+
+export type TeamSeasonCategoryUpsertWithoutAwayMatchesInput = {
+  update: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutAwayMatchesInput>
+  create: Prisma.XOR<Prisma.TeamSeasonCategoryCreateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedCreateWithoutAwayMatchesInput>
+  where?: Prisma.TeamSeasonCategoryWhereInput
+}
+
+export type TeamSeasonCategoryUpdateToOneWithWhereWithoutAwayMatchesInput = {
+  where?: Prisma.TeamSeasonCategoryWhereInput
+  data: Prisma.XOR<Prisma.TeamSeasonCategoryUpdateWithoutAwayMatchesInput, Prisma.TeamSeasonCategoryUncheckedUpdateWithoutAwayMatchesInput>
+}
+
+export type TeamSeasonCategoryUpdateWithoutAwayMatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
+  sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
+  teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutCategoriesNestedInput
+  teamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutTeamSeasonCategoryNestedInput
+}
+
+export type TeamSeasonCategoryUncheckedUpdateWithoutAwayMatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1581,7 +1909,9 @@ export type TeamSeasonCategoryUpdateWithoutCategoryInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeason?: Prisma.TeamSeasonUpdateOneRequiredWithoutCategoriesNestedInput
@@ -1605,7 +1935,9 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutCategoryInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1663,7 +1995,9 @@ export type TeamSeasonCategoryUpdateWithoutTeamSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUpdateManyWithoutTeamSeasonCategoryNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutTeamSeasonCategoriesNestedInput
@@ -1687,7 +2021,9 @@ export type TeamSeasonCategoryUncheckedUpdateWithoutTeamSeasonInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumTeamSeasonCategoryStatusFieldUpdateOperationsInput | $Enums.TeamSeasonCategoryStatus
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
-  matches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  legacyMatches?: Prisma.MatchUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryNestedInput
   player_membership?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutTeamSeasonCategoriesNestedInput
   sessions?: Prisma.SessionTeamUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
   teamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput
@@ -1718,7 +2054,9 @@ export type TeamSeasonCategoryUncheckedUpdateManyWithoutTeamSeasonInput = {
 
 export type TeamSeasonCategoryCountOutputType = {
   generalEvents: number
-  matches: number
+  legacyMatches: number
+  homeMatches: number
+  awayMatches: number
   player_membership: number
   sessions: number
   teamSeasonStaffs: number
@@ -1726,7 +2064,9 @@ export type TeamSeasonCategoryCountOutputType = {
 
 export type TeamSeasonCategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generalEvents?: boolean | TeamSeasonCategoryCountOutputTypeCountGeneralEventsArgs
-  matches?: boolean | TeamSeasonCategoryCountOutputTypeCountMatchesArgs
+  legacyMatches?: boolean | TeamSeasonCategoryCountOutputTypeCountLegacyMatchesArgs
+  homeMatches?: boolean | TeamSeasonCategoryCountOutputTypeCountHomeMatchesArgs
+  awayMatches?: boolean | TeamSeasonCategoryCountOutputTypeCountAwayMatchesArgs
   player_membership?: boolean | TeamSeasonCategoryCountOutputTypeCountPlayer_membershipArgs
   sessions?: boolean | TeamSeasonCategoryCountOutputTypeCountSessionsArgs
   teamSeasonStaffs?: boolean | TeamSeasonCategoryCountOutputTypeCountTeamSeasonStaffsArgs
@@ -1752,7 +2092,21 @@ export type TeamSeasonCategoryCountOutputTypeCountGeneralEventsArgs<ExtArgs exte
 /**
  * TeamSeasonCategoryCountOutputType without action
  */
-export type TeamSeasonCategoryCountOutputTypeCountMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type TeamSeasonCategoryCountOutputTypeCountLegacyMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
+
+/**
+ * TeamSeasonCategoryCountOutputType without action
+ */
+export type TeamSeasonCategoryCountOutputTypeCountHomeMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchWhereInput
+}
+
+/**
+ * TeamSeasonCategoryCountOutputType without action
+ */
+export type TeamSeasonCategoryCountOutputTypeCountAwayMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MatchWhereInput
 }
 
@@ -1796,7 +2150,9 @@ export type TeamSeasonCategorySelect<ExtArgs extends runtime.Types.Extensions.In
   endedAt?: boolean
   status?: boolean
   generalEvents?: boolean | Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs>
-  matches?: boolean | Prisma.TeamSeasonCategory$matchesArgs<ExtArgs>
+  legacyMatches?: boolean | Prisma.TeamSeasonCategory$legacyMatchesArgs<ExtArgs>
+  homeMatches?: boolean | Prisma.TeamSeasonCategory$homeMatchesArgs<ExtArgs>
+  awayMatches?: boolean | Prisma.TeamSeasonCategory$awayMatchesArgs<ExtArgs>
   player_membership?: boolean | Prisma.TeamSeasonCategory$player_membershipArgs<ExtArgs>
   sessions?: boolean | Prisma.TeamSeasonCategory$sessionsArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -1869,7 +2225,9 @@ export type TeamSeasonCategorySelectScalar = {
 export type TeamSeasonCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamSeasonId" | "categoryId" | "gender" | "minBirthYear" | "maxBirthYear" | "minMembers" | "maxMembers" | "validateAge" | "isActive" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "endedAt" | "status", ExtArgs["result"]["teamSeasonCategory"]>
 export type TeamSeasonCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   generalEvents?: boolean | Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs>
-  matches?: boolean | Prisma.TeamSeasonCategory$matchesArgs<ExtArgs>
+  legacyMatches?: boolean | Prisma.TeamSeasonCategory$legacyMatchesArgs<ExtArgs>
+  homeMatches?: boolean | Prisma.TeamSeasonCategory$homeMatchesArgs<ExtArgs>
+  awayMatches?: boolean | Prisma.TeamSeasonCategory$awayMatchesArgs<ExtArgs>
   player_membership?: boolean | Prisma.TeamSeasonCategory$player_membershipArgs<ExtArgs>
   sessions?: boolean | Prisma.TeamSeasonCategory$sessionsArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -1890,7 +2248,9 @@ export type $TeamSeasonCategoryPayload<ExtArgs extends runtime.Types.Extensions.
   name: "TeamSeasonCategory"
   objects: {
     generalEvents: Prisma.$GeneralEventPayload<ExtArgs>[]
-    matches: Prisma.$MatchPayload<ExtArgs>[]
+    legacyMatches: Prisma.$MatchPayload<ExtArgs>[]
+    homeMatches: Prisma.$MatchPayload<ExtArgs>[]
+    awayMatches: Prisma.$MatchPayload<ExtArgs>[]
     player_membership: Prisma.$PlayerMembershipPayload<ExtArgs>[]
     sessions: Prisma.$SessionTeamPayload<ExtArgs>[]
     category: Prisma.$CategoryPayload<ExtArgs>
@@ -2309,7 +2669,9 @@ readonly fields: TeamSeasonCategoryFieldRefs;
 export interface Prisma__TeamSeasonCategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   generalEvents<T extends Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$generalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GeneralEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  matches<T extends Prisma.TeamSeasonCategory$matchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$matchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  legacyMatches<T extends Prisma.TeamSeasonCategory$legacyMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$legacyMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  homeMatches<T extends Prisma.TeamSeasonCategory$homeMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$homeMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  awayMatches<T extends Prisma.TeamSeasonCategory$awayMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$awayMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   player_membership<T extends Prisma.TeamSeasonCategory$player_membershipArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$player_membershipArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.TeamSeasonCategory$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamSeasonCategory$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2780,9 +3142,57 @@ export type TeamSeasonCategory$generalEventsArgs<ExtArgs extends runtime.Types.E
 }
 
 /**
- * TeamSeasonCategory.matches
+ * TeamSeasonCategory.legacyMatches
  */
-export type TeamSeasonCategory$matchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type TeamSeasonCategory$legacyMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
+ * TeamSeasonCategory.homeMatches
+ */
+export type TeamSeasonCategory$homeMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Match
+   */
+  select?: Prisma.MatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Match
+   */
+  omit?: Prisma.MatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchInclude<ExtArgs> | null
+  where?: Prisma.MatchWhereInput
+  orderBy?: Prisma.MatchOrderByWithRelationInput | Prisma.MatchOrderByWithRelationInput[]
+  cursor?: Prisma.MatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchScalarFieldEnum | Prisma.MatchScalarFieldEnum[]
+}
+
+/**
+ * TeamSeasonCategory.awayMatches
+ */
+export type TeamSeasonCategory$awayMatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Match
    */

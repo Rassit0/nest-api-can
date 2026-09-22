@@ -66,30 +66,30 @@ export class TransactionsController {
 
   @Get()
   @ApiOperation({
-    summary: 'Obtener lista paginada de transacciones',
+    summary: 'Obtener transacciones',
     description:
-      'Retorna una lista paginada y filtrable de todas las transacciones realizadas.',
+      'Retorna una lista paginada de transacciones. Filtros disponibles: search, per_page, page, type, paymentMethods, financialAccountIds, startDate, endDate, origin, categoryId, createdById',
   })
   @ApiPaginatedResponse(
     Object,
     'Lista de transacciones obtenida correctamente.',
   )
-  @RequirePermissions('READ_TRANSACTIONS')
+  @RequirePermissions('READ_TRANSACTIONS', 'READ_CASH_FLOW')
   async findAll(@Query() paginationDto: TransactionsPaginationDto) {
     return await this.transactionsService.findAll(paginationDto);
   }
 
   @Get('payment-methods')
   @ApiOperation({
-    summary: 'Listar métodos de pago soportados',
-    description: 'Retorna una lista con todos los métodos de pago aceptados.',
+    summary: 'Obtener métodos de pago',
+    description:
+      'Retorna los métodos de pago únicos utilizados en las transacciones',
   })
-  @RequirePermissions('READ_TRANSACTIONS')
-  getPaymentMethods() {
+  @ApiStandardResponse(Object, 'Métodos de pago obtenidos exitosamente.')
+  @RequirePermissions('READ_TRANSACTIONS', 'READ_CASH_FLOW')
+  async getPaymentMethods() {
     return this.transactionsService.getPaymentMethods();
   }
-
-
 
   @Get(':id')
   @ApiOperation({

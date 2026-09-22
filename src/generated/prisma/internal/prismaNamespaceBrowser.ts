@@ -108,6 +108,7 @@ export const ModelName = {
   SessionCourse: 'SessionCourse',
   SessionBooking: 'SessionBooking',
   Match: 'Match',
+  MatchCallUp: 'MatchCallUp',
   MatchLineup: 'MatchLineup',
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
@@ -1127,16 +1128,39 @@ export const MatchScalarFieldEnum = {
   awayTeamId: 'awayTeamId',
   homeScore: 'homeScore',
   homeTeamId: 'homeTeamId',
-  teamSeasonCategoryId: 'teamSeasonCategoryId'
+  teamSeasonCategoryId: 'teamSeasonCategoryId',
+  homeTeamSeasonCategoryId: 'homeTeamSeasonCategoryId',
+  awayTeamSeasonCategoryId: 'awayTeamSeasonCategoryId',
+  competitionName: 'competitionName',
+  homeCoachId: 'homeCoachId',
+  homeCoachName: 'homeCoachName',
+  awayCoachId: 'awayCoachId',
+  awayCoachName: 'awayCoachName',
+  homeCallUpConfiguredAt: 'homeCallUpConfiguredAt',
+  awayCallUpConfiguredAt: 'awayCallUpConfiguredAt'
 } as const
 
 export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]
 
 
-export const MatchLineupScalarFieldEnum = {
+export const MatchCallUpScalarFieldEnum = {
   id: 'id',
   matchId: 'matchId',
   playerId: 'playerId',
+  side: 'side',
+  isGuest: 'isGuest',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type MatchCallUpScalarFieldEnum = (typeof MatchCallUpScalarFieldEnum)[keyof typeof MatchCallUpScalarFieldEnum]
+
+
+export const MatchLineupScalarFieldEnum = {
+  id: 'id',
+  callUpId: 'callUpId',
   minutesPlayed: 'minutesPlayed',
   goals: 'goals',
   assists: 'assists',

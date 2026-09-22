@@ -449,6 +449,7 @@ export const ModelName = {
   SessionCourse: 'SessionCourse',
   SessionBooking: 'SessionBooking',
   Match: 'Match',
+  MatchCallUp: 'MatchCallUp',
   MatchLineup: 'MatchLineup',
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
@@ -478,7 +479,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4848,6 +4849,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MatchCallUp: {
+      payload: Prisma.$MatchCallUpPayload<ExtArgs>
+      fields: Prisma.MatchCallUpFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MatchCallUpFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MatchCallUpFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        findFirst: {
+          args: Prisma.MatchCallUpFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MatchCallUpFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        findMany: {
+          args: Prisma.MatchCallUpFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>[]
+        }
+        create: {
+          args: Prisma.MatchCallUpCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        createMany: {
+          args: Prisma.MatchCallUpCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MatchCallUpCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>[]
+        }
+        delete: {
+          args: Prisma.MatchCallUpDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        update: {
+          args: Prisma.MatchCallUpUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        deleteMany: {
+          args: Prisma.MatchCallUpDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MatchCallUpUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MatchCallUpUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>[]
+        }
+        upsert: {
+          args: Prisma.MatchCallUpUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchCallUpPayload>
+        }
+        aggregate: {
+          args: Prisma.MatchCallUpAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMatchCallUp>
+        }
+        groupBy: {
+          args: Prisma.MatchCallUpGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchCallUpGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MatchCallUpCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchCallUpCountAggregateOutputType> | number
+        }
+      }
+    }
     MatchLineup: {
       payload: Prisma.$MatchLineupPayload<ExtArgs>
       fields: Prisma.MatchLineupFieldRefs
@@ -6910,16 +6985,39 @@ export const MatchScalarFieldEnum = {
   awayTeamId: 'awayTeamId',
   homeScore: 'homeScore',
   homeTeamId: 'homeTeamId',
-  teamSeasonCategoryId: 'teamSeasonCategoryId'
+  teamSeasonCategoryId: 'teamSeasonCategoryId',
+  homeTeamSeasonCategoryId: 'homeTeamSeasonCategoryId',
+  awayTeamSeasonCategoryId: 'awayTeamSeasonCategoryId',
+  competitionName: 'competitionName',
+  homeCoachId: 'homeCoachId',
+  homeCoachName: 'homeCoachName',
+  awayCoachId: 'awayCoachId',
+  awayCoachName: 'awayCoachName',
+  homeCallUpConfiguredAt: 'homeCallUpConfiguredAt',
+  awayCallUpConfiguredAt: 'awayCallUpConfiguredAt'
 } as const
 
 export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]
 
 
-export const MatchLineupScalarFieldEnum = {
+export const MatchCallUpScalarFieldEnum = {
   id: 'id',
   matchId: 'matchId',
   playerId: 'playerId',
+  side: 'side',
+  isGuest: 'isGuest',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
+} as const
+
+export type MatchCallUpScalarFieldEnum = (typeof MatchCallUpScalarFieldEnum)[keyof typeof MatchCallUpScalarFieldEnum]
+
+
+export const MatchLineupScalarFieldEnum = {
+  id: 'id',
+  callUpId: 'callUpId',
   minutesPlayed: 'minutesPlayed',
   goals: 'goals',
   assists: 'assists',
@@ -7750,6 +7848,20 @@ export type ListEnumMatchResultFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'MatchSide'
+ */
+export type EnumMatchSideFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchSide'>
+    
+
+
+/**
+ * Reference to a field of type 'MatchSide[]'
+ */
+export type ListEnumMatchSideFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchSide[]'>
+    
+
+
+/**
  * Reference to a field of type 'AccountReferenceType'
  */
 export type EnumAccountReferenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccountReferenceType'>
@@ -7978,6 +8090,7 @@ export type GlobalOmitConfig = {
   sessionCourse?: Prisma.SessionCourseOmit
   sessionBooking?: Prisma.SessionBookingOmit
   match?: Prisma.MatchOmit
+  matchCallUp?: Prisma.MatchCallUpOmit
   matchLineup?: Prisma.MatchLineupOmit
   auditLog?: Prisma.AuditLogOmit
   eventMaterializationLog?: Prisma.EventMaterializationLogOmit

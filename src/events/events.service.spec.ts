@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { AvailabilityEngine } from './engines/availability.engine';
 import { EventSeriesService } from './event-series.service';
 import { EventMaterializationService } from './event-materialization.service';
-import { EventType } from 'src/generated/prisma/client';
+import { EventType, EventStatus } from 'src/generated/prisma/client';
 import {
   EventConflictException,
   EventValidationException,
@@ -26,10 +26,12 @@ describe('EventsService (Orchestrator)', () => {
           create: jest.fn().mockResolvedValue({ id: 'event-1', createdById: 'user-1' }),
           update: jest.fn().mockResolvedValue({ id: 'event-1', updatedById: 'user-1' }),
           delete: jest.fn().mockResolvedValue({ id: 'event-1' }),
+          findUnique: mockPrisma.event.findUnique, // reuse the outer mock
         },
         generalEvent: {
           create: jest.fn().mockResolvedValue({ id: 'ge-1' }),
         },
+        $queryRaw: jest.fn().mockResolvedValue([{ status: EventStatus.SCHEDULED }]),
       });
     }),
     event: {

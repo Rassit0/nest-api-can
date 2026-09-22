@@ -38,7 +38,7 @@ export class AccountCategoriesController {
   }
 
   @Get()
-  @RequirePermissions('READ_ACCOUNT_CATEGORIES')
+  @RequirePermissions('READ_ACCOUNT_CATEGORIES', 'READ_CASH_FLOW')
   findAll(@Query() paginationDto: AccountCategoriesPaginationDto) {
     return this.accountCategoriesService.findAll(paginationDto);
   }

@@ -363,7 +363,7 @@ model Player {
   updatedAt           DateTime             @updatedAt @map("updated_at")
   createdById         String?              @map("created_by_id")
   updatedById         String?              @map("updated_by_id")
-  matchLineups        MatchLineup[]
+  matchCallUps        MatchCallUp[]
   playerMemberships   PlayerMembership[]
   createdBy           User?                @relation("CreatedBy", fields: [createdById], references: [id])
   person              Person               @relation(fields: [personId], references: [id])
@@ -495,6 +495,8 @@ model Staff {
   person              Person               @relation(fields: [personId], references: [id])
   updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
   teamSeasonStaffs    TeamSeasonStaff[]
+  homeMatchesCoached  Match[]              @relation("MatchHomeCoach")
+  awayMatchesCoached  Match[]              @relation("MatchAwayCoach")
 
   @@map("staff")
 }
@@ -780,6 +782,8 @@ model User {
   updatedTransactions               Transaction[]               @relation("UpdatedBy")
   person                            Person?                     @relation(fields: [personId], references: [id], onDelete: Cascade)
   role                              Role                        @relation(fields: [roleId], references: [id])
+  createdMatchCallUps               MatchCallUp[]               @relation("CreatedBy")
+  updatedMatchCallUps               MatchCallUp[]               @relation("UpdatedBy")
 
   @@map("users")
 }
@@ -1352,44 +1356,75 @@ model SessionBooking {
 }
 
 model Match {
-  id                   String             @id @default(uuid())
-  eventId              String             @unique @map("event_id")
-  type                 MatchType          @default(LEAGUE)
-  result               MatchResult        @default(PENDING)
-  awayScore            Int?               @map("away_score")
-  awayTeamId           String             @map("away_team_id")
-  homeScore            Int?               @map("home_score")
-  homeTeamId           String             @map("home_team_id")
-  teamSeasonCategoryId String             @map("team_season_category_id")
-  lineups              MatchLineup[]
-  awayTeam             Team               @relation("MatchAwayTeam", fields: [awayTeamId], references: [id])
-  event                Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  homeTeam             Team               @relation("MatchHomeTeam", fields: [homeTeamId], references: [id])
-  teamSeasonCategory   TeamSeasonCategory @relation(fields: [teamSeasonCategoryId], references: [id])
+  id                       String              @id @default(uuid())
+  eventId                  String              @unique @map("event_id")
+  type                     MatchType           @default(LEAGUE)
+  result                   MatchResult         @default(PENDING)
+  awayScore                Int?                @map("away_score")
+  awayTeamId               String              @map("away_team_id")
+  homeScore                Int?                @map("home_score")
+  homeTeamId               String              @map("home_team_id")
+  teamSeasonCategoryId     String?             @map("team_season_category_id")
+  homeTeamSeasonCategoryId String?             @map("home_team_season_category_id")
+  awayTeamSeasonCategoryId String?             @map("away_team_season_category_id")
+  competitionName          String?             @map("competition_name")
+  homeCoachId              String?             @map("home_coach_id")
+  homeCoachName            String?             @map("home_coach_name")
+  awayCoachId              String?             @map("away_coach_id")
+  awayCoachName            String?             @map("away_coach_name")
+  homeCallUpConfiguredAt   DateTime?           @map("home_call_up_configured_at")
+  awayCallUpConfiguredAt   DateTime?           @map("away_call_up_configured_at")
+  callUps                  MatchCallUp[]
+  awayTeam                 Team                @relation("MatchAwayTeam", fields: [awayTeamId], references: [id])
+  event                    Event               @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  homeTeam                 Team                @relation("MatchHomeTeam", fields: [homeTeamId], references: [id])
+  teamSeasonCategory       TeamSeasonCategory? @relation("MatchLegacyCategory", fields: [teamSeasonCategoryId], references: [id])
+  homeTeamSeasonCategory   TeamSeasonCategory? @relation("MatchHomeCategory", fields: [homeTeamSeasonCategoryId], references: [id])
+  awayTeamSeasonCategory   TeamSeasonCategory? @relation("MatchAwayCategory", fields: [awayTeamSeasonCategoryId], references: [id])
+  homeCoach                Staff?              @relation("MatchHomeCoach", fields: [homeCoachId], references: [id])
+  awayCoach                Staff?              @relation("MatchAwayCoach", fields: [awayCoachId], references: [id])
 
   @@map("matches")
 }
 
-model MatchLineup {
-  id            String   @id @default(uuid())
-  matchId       String   @map("match_id")
-  playerId      String   @map("player_id")
-  minutesPlayed Int      @default(0) @map("minutes_played")
-  goals         Int      @default(0)
-  assists       Int      @default(0)
-  yellowCards   Int      @default(0) @map("yellow_cards")
-  redCards      Int      @default(0) @map("red_cards")
-  isStarter     Boolean  @default(false) @map("is_starter")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
-  createdById   String?  @map("created_by_id")
-  updatedById   String?  @map("updated_by_id")
-  createdBy     User?    @relation("CreatedBy", fields: [createdById], references: [id])
-  match         Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
-  player        Player   @relation(fields: [playerId], references: [id])
-  updatedBy     User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+model MatchCallUp {
+  id          String       @id @default(uuid())
+  matchId     String       @map("match_id")
+  playerId    String       @map("player_id")
+  side        MatchSide
+  isGuest     Boolean      @default(false) @map("is_guest")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  createdById String?      @map("created_by_id")
+  updatedById String?      @map("updated_by_id")
+  createdBy   User?        @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?        @relation("UpdatedBy", fields: [updatedById], references: [id])
+  match       Match        @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player      Player       @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  lineup      MatchLineup?
 
   @@unique([matchId, playerId])
+  @@index([matchId, side])
+  @@map("match_call_ups")
+}
+
+model MatchLineup {
+  id            String      @id @default(uuid())
+  callUpId      String      @unique @map("call_up_id")
+  minutesPlayed Int         @default(0) @map("minutes_played")
+  goals         Int         @default(0)
+  assists       Int         @default(0)
+  yellowCards   Int         @default(0) @map("yellow_cards")
+  redCards      Int         @default(0) @map("red_cards")
+  isStarter     Boolean     @default(false) @map("is_starter")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  createdById   String?     @map("created_by_id")
+  updatedById   String?     @map("updated_by_id")
+  createdBy     User?       @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy     User?       @relation("UpdatedBy", fields: [updatedById], references: [id])
+  callUp        MatchCallUp @relation(fields: [callUpId], references: [id], onDelete: Cascade)
+
   @@map("match_lineups")
 }
 
@@ -1545,7 +1580,9 @@ model TeamSeasonCategory {
   endedAt           DateTime?                @map("ended_at")
   status            TeamSeasonCategoryStatus @default(ACTIVE)
   generalEvents     GeneralEvent[]
-  matches           Match[]
+  legacyMatches     Match[]                  @relation("MatchLegacyCategory")
+  homeMatches       Match[]                  @relation("MatchHomeCategory")
+  awayMatches       Match[]                  @relation("MatchAwayCategory")
   player_membership PlayerMembership[]
   sessions          SessionTeam[]
   category          Category                 @relation(fields: [categoryId], references: [id])
@@ -1902,4 +1939,9 @@ enum NewsStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+}
+
+enum MatchSide {
+  HOME
+  AWAY
 }

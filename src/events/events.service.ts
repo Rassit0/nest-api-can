@@ -1,5 +1,6 @@
 import { Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreateGeneralEventDto } from './dto/create-general-event.dto';
+import { MatchLifecyclePolicy } from 'src/matches/utils/match-lifecycle.policy';
 import { UpdateGeneralEventDto } from './dto/update-general-event.dto';
 import { PrismaService } from 'src/prisma.service';
 import { AvailabilityEngine } from './engines/availability.engine';
@@ -117,79 +118,106 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
     userId: string | undefined,
     childDelegation: (tx: Prisma.TransactionClient) => Promise<T>,
   ): Promise<{ event: Prisma.EventGetPayload<any>; specific: T }> {
-    const existingEvent = await this.prisma.event.findUnique({
-      where: { id: eventId },
-    });
+    return this.prisma.$transaction(async (tx) => {
+      // Tomamos el row lock del Event PRIMERO
+      let lockedStatus;
+      try {
+        lockedStatus = await MatchLifecyclePolicy.lockEventForMatchLifecycle(tx, eventId);
+      } catch (e) {
+        throw new EventNotFoundException('El evento padre no fue encontrado');
+      }
 
-    if (!existingEvent) {
-      throw new EventNotFoundException('El evento padre no fue encontrado');
-    }
-
-    const start = baseData.startDate ? new Date(baseData.startDate) : existingEvent.startDate;
-    const end = baseData.endDate ? new Date(baseData.endDate) : existingEvent.endDate;
-    
-    // Explicit null handles disconnection
-    const targetLocationId = baseData.locationId !== undefined ? baseData.locationId : existingEvent.locationId;
-
-    if (start >= end) {
-      throw new EventValidationException('La fecha de inicio debe ser anterior a la fecha de fin');
-    }
-
-    if (
-      (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
-      (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime()) ||
-      targetLocationId !== existingEvent.locationId
-    ) {
-      if (targetLocationId) {
-        const isAvailable = await this.availabilityEngine.checkAvailability({
-          locationId: targetLocationId,
-          startDate: start,
-          endDate: end,
-          excludeEventId: eventId,
-        });
-
-        if (isAvailable !== true) {
-          let errorCode = EventErrorCode.EVENT_CONFLICT;
-          if (isAvailable.reason === 'LOCATION_OCCUPIED') errorCode = EventErrorCode.LOCATION_UNAVAILABLE;
-          if (isAvailable.reason === 'PARENT_LOCATION_OCCUPIED') errorCode = EventErrorCode.PARENT_LOCATION_OCCUPIED;
-          if (isAvailable.reason === 'CHILD_LOCATION_OCCUPIED') errorCode = EventErrorCode.CHILD_LOCATION_OCCUPIED;
-
-          throw new EventConflictException(
-            `El horario no está disponible: la locación ya está ocupada`,
-            errorCode,
-            {
-              locationId: targetLocationId,
-              startDate: start,
-              endDate: end,
-              conflictingEventId: isAvailable.conflictingEventId,
-              conflictingEventTitle: isAvailable.conflictingEventTitle,
+      const existingEvent = await tx.event.findUnique({
+        where: { id: eventId },
+        include: {
+          match: {
+            include: {
+              _count: { select: { callUps: true } }
             }
-          );
+          }
+        }
+      });
+
+      if (!existingEvent) {
+        throw new EventNotFoundException('El evento padre no fue encontrado');
+      }
+
+      if (existingEvent.match) {
+        MatchLifecyclePolicy.assertScheduled(lockedStatus, 'modificar');
+        
+        const start = baseData.startDate ? new Date(baseData.startDate) : existingEvent.startDate;
+        const isChangingStartDate = start.getTime() !== existingEvent.startDate.getTime();
+        
+        MatchLifecyclePolicy.assertStructuralFieldsEditable(
+          existingEvent.match._count.callUps > 0,
+          isChangingStartDate
+        );
+      }
+
+      const start = baseData.startDate ? new Date(baseData.startDate) : existingEvent.startDate;
+      const end = baseData.endDate ? new Date(baseData.endDate) : existingEvent.endDate;
+      
+      // Explicit null handles disconnection
+      const targetLocationId = baseData.locationId !== undefined ? baseData.locationId : existingEvent.locationId;
+
+      if (start >= end) {
+        throw new EventValidationException('La fecha de inicio debe ser anterior a la fecha de fin');
+      }
+
+      if (
+        (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
+        (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime()) ||
+        targetLocationId !== existingEvent.locationId
+      ) {
+        if (targetLocationId) {
+          const isAvailable = await this.availabilityEngine.checkAvailability({
+            locationId: targetLocationId,
+            startDate: start,
+            endDate: end,
+            excludeEventId: eventId,
+          });
+
+          if (isAvailable !== true) {
+            let errorCode = EventErrorCode.EVENT_CONFLICT;
+            if (isAvailable.reason === 'LOCATION_OCCUPIED') errorCode = EventErrorCode.LOCATION_UNAVAILABLE;
+            if (isAvailable.reason === 'PARENT_LOCATION_OCCUPIED') errorCode = EventErrorCode.PARENT_LOCATION_OCCUPIED;
+            if (isAvailable.reason === 'CHILD_LOCATION_OCCUPIED') errorCode = EventErrorCode.CHILD_LOCATION_OCCUPIED;
+
+            throw new EventConflictException(
+              `El horario no está disponible: la locación ya está ocupada`,
+              errorCode,
+              {
+                locationId: targetLocationId,
+                startDate: start,
+                endDate: end,
+                conflictingEventId: isAvailable.conflictingEventId,
+                conflictingEventTitle: isAvailable.conflictingEventTitle,
+              }
+            );
+          }
         }
       }
-    }
 
-    const isMoved = 
-      (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
-      (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime());
-                    
-    const isModified = !isMoved && (
-      (baseData.title !== undefined && baseData.title !== existingEvent.title) ||
-      (baseData.description !== undefined && baseData.description !== existingEvent.description) ||
-      (baseData.color !== undefined && baseData.color !== existingEvent.color) ||
-      (targetLocationId !== existingEvent.locationId)
-    );
+      const isMoved = 
+        (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
+        (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime());
+                      
+      const isModified = !isMoved && (
+        (baseData.title !== undefined && baseData.title !== existingEvent.title) ||
+        (baseData.description !== undefined && baseData.description !== existingEvent.description) ||
+        (baseData.color !== undefined && baseData.color !== existingEvent.color) ||
+        (targetLocationId !== existingEvent.locationId)
+      );
 
-    let exceptionType = existingEvent.exceptionType;
-    if (existingEvent.eventSeriesId) {
-      if (isMoved) {
-        exceptionType = EventExceptionType.MOVED;
-      } else if (isModified && exceptionType !== EventExceptionType.MOVED) {
-        exceptionType = EventExceptionType.MODIFIED;
+      let exceptionType = existingEvent.exceptionType;
+      if (existingEvent.eventSeriesId) {
+        if (isMoved) {
+          exceptionType = EventExceptionType.MOVED;
+        } else if (isModified && exceptionType !== EventExceptionType.MOVED) {
+          exceptionType = EventExceptionType.MODIFIED;
+        }
       }
-    }
 
-    return this.prisma.$transaction(async (tx) => {
       const updatedEvent = await tx.event.update({
         where: { id: eventId },
         data: {
@@ -214,28 +242,43 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
    * Generic orchestrator for deleting an Event.
    */
   async executeEventDeletion(eventId: string) {
-    const existingEvent = await this.prisma.event.findUnique({
-      where: { id: eventId },
-    });
+    return this.prisma.$transaction(async (tx) => {
+      // Tomamos el row lock del Event PRIMERO
+      let lockedStatus;
+      try {
+        lockedStatus = await MatchLifecyclePolicy.lockEventForMatchLifecycle(tx, eventId);
+      } catch (e) {
+        throw new EventNotFoundException('El evento no fue encontrado');
+      }
 
-    if (!existingEvent) {
-      throw new EventNotFoundException('El evento no fue encontrado');
-    }
-
-    if (existingEvent.eventSeriesId) {
-      const cancelledEvent = await this.prisma.event.update({
+      const existingEvent = await tx.event.findUnique({
         where: { id: eventId },
-        data: { exceptionType: EventExceptionType.CANCELLED },
+        include: { match: true }
       });
-      return { deleted: true, event: cancelledEvent };
-    }
 
-    // Prisma's onDelete: Cascade will handle deleting GeneralEvent/Session/Match
-    const deletedEvent = await this.prisma.event.delete({
-      where: { id: eventId },
+      if (!existingEvent) {
+        throw new EventNotFoundException('El evento no fue encontrado');
+      }
+
+      if (existingEvent.match) {
+        MatchLifecyclePolicy.assertScheduled(lockedStatus, 'eliminar');
+      }
+
+      if (existingEvent.eventSeriesId) {
+        const cancelledEvent = await tx.event.update({
+          where: { id: eventId },
+          data: { exceptionType: EventExceptionType.CANCELLED },
+        });
+        return { deleted: true, event: cancelledEvent };
+      }
+
+      // Prisma's onDelete: Cascade will handle deleting GeneralEvent/Session/Match
+      const deletedEvent = await tx.event.delete({
+        where: { id: eventId },
+      });
+
+      return { deleted: true, event: deletedEvent };
     });
-
-    return { deleted: true, event: deletedEvent };
   }
 
   // ---------------------------------------------------------

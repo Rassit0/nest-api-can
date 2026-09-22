@@ -8,27 +8,46 @@ import {
   IsUUID,
   Min,
   IsISO8601,
+  IsString,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { MatchType } from 'src/generated/prisma/client';
 
 export class CreateMatchDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la categoría de la temporada del equipo (TeamSeasonCategory)',
+    description: 'ID de la categoría de la temporada del equipo local (TeamSeasonCategory)',
   })
+  @IsOptional()
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'teamSeasonCategoryId',
+      constraint1: 'homeTeamSeasonCategoryId',
     }),
   })
   @Exists('teamSeasonCategory', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'teamSeasonCategoryId',
+      constraint1: 'homeTeamSeasonCategoryId',
     }),
   })
-  teamSeasonCategoryId: string;
+  homeTeamSeasonCategoryId?: string | null;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID de la categoría de la temporada del equipo visitante (TeamSeasonCategory)',
+  })
+  @IsOptional()
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'awayTeamSeasonCategoryId',
+    }),
+  })
+  @Exists('teamSeasonCategory', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'awayTeamSeasonCategoryId',
+    }),
+  })
+  awayTeamSeasonCategoryId?: string | null;
 
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
@@ -156,4 +175,46 @@ export class CreateMatchDto {
   })
   @Type(() => Number)
   awayScore?: number | null;
+
+  @ApiPropertyOptional({
+    example: 'Liga Municipal 2026',
+    description: 'Nombre opcional de la competición o torneo',
+  })
+  @IsOptional()
+  @IsString()
+  competitionName?: string | null;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440003',
+    description: 'ID del staff que actúa como entrenador local',
+  })
+  @IsOptional()
+  @IsUUID('4')
+  @Exists('staff', 'id')
+  homeCoachId?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Juan Pérez',
+    description: 'Nombre del entrenador local (solo para rivales externos sin Staff en DB)',
+  })
+  @IsOptional()
+  @IsString()
+  homeCoachName?: string | null;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440004',
+    description: 'ID del staff que actúa como entrenador visitante',
+  })
+  @IsOptional()
+  @IsUUID('4')
+  @Exists('staff', 'id')
+  awayCoachId?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Carlos López',
+    description: 'Nombre del entrenador visitante (solo para rivales externos sin Staff en DB)',
+  })
+  @IsOptional()
+  @IsString()
+  awayCoachName?: string | null;
 }

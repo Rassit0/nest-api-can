@@ -26,6 +26,7 @@ export class CalendarService {
 
       if (event.eventType === EventType.SESSION && event.session) {
         const sessionMeta: SessionCalendarMetadata = {
+          sessionId: event.session.id,
           durationMin: event.session.durationMin,
           teams: event.session.sessionTeams.map(st => ({
             id: st.teamSeasonCategory.teamSeason.id,
@@ -40,21 +41,34 @@ export class CalendarService {
       } 
       else if (event.eventType === EventType.MATCH && event.match) {
         const matchMeta: MatchCalendarMetadata = {
+          matchId: event.match.id,
           homeTeam: event.match.homeTeam,
           awayTeam: event.match.awayTeam,
           homeScore: event.match.homeScore,
           awayScore: event.match.awayScore,
           matchType: event.match.type,
           result: event.match.result,
-          category: event.match.teamSeasonCategory ? {
+          homeCategory: event.match.homeTeamSeasonCategory ? {
+            id: event.match.homeTeamSeasonCategory.id,
+            name: event.match.homeTeamSeasonCategory.category.name
+          } : event.match.teamSeasonCategory ? {
             id: event.match.teamSeasonCategory.id,
             name: event.match.teamSeasonCategory.category.name
-          } : null
+          } : null,
+          awayCategory: event.match.awayTeamSeasonCategory ? {
+            id: event.match.awayTeamSeasonCategory.id,
+            name: event.match.awayTeamSeasonCategory.category.name
+          } : event.match.teamSeasonCategory ? {
+            id: event.match.teamSeasonCategory.id,
+            name: event.match.teamSeasonCategory.category.name
+          } : null,
+          hasCallUps: event.match._count?.callUps > 0
         };
         metadata = matchMeta;
       }
       else if (event.eventType === EventType.GENERAL && event.generalEvent) {
         const genMeta: GeneralEventCalendarMetadata = {
+          generalEventId: event.generalEvent.id,
           institutionId: event.generalEvent.institutionId,
           teamSeasonCategoryId: event.generalEvent.teamSeasonCategoryId,
           courseSeasonId: event.generalEvent.courseSeasonId,

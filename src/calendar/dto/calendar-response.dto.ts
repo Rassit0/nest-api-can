@@ -15,22 +15,27 @@ export interface BaseCalendarMetadata {
 }
 
 export interface SessionCalendarMetadata extends BaseCalendarMetadata {
+  sessionId: string;
   durationMin: number;
   teams: Array<{ id: string; name: string }>;
   courses: Array<{ id: string; name: string }>;
 }
 
 export interface MatchCalendarMetadata extends BaseCalendarMetadata {
+  matchId: string;
   homeTeam: { id: string; name: string } | null;
   awayTeam: { id: string; name: string } | null;
   homeScore: number | null;
   awayScore: number | null;
   matchType: string;
   result: string;
-  category: { id: string; name: string } | null;
+  homeCategory: { id: string; name: string } | null;
+  awayCategory: { id: string; name: string } | null;
+  hasCallUps: boolean;
 }
 
 export interface GeneralEventCalendarMetadata extends BaseCalendarMetadata {
+  generalEventId: string;
   institutionId: string | null;
   teamSeasonCategoryId: string | null;
   courseSeasonId: string | null;

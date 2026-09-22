@@ -58,6 +58,15 @@ export class InstitutionsController {
     return await this.institutionsService.findDefault();
   }
 
+  @Get('context')
+  @ApiOperation({
+    summary: 'Obtener contexto básico de la institución',
+    description: 'Devuelve datos esenciales requeridos por la UI administrativa sin requerir permisos RBAC específicos.',
+  })
+  async getContext() {
+    return await this.institutionsService.getContext();
+  }
+
   @Get(':id')
   @RequirePermissions('READ_INSTITUTIONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {

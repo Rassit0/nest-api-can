@@ -6,6 +6,12 @@ import { PrismaService } from 'src/prisma.service';
 import { InstitutionsPaginationDto } from './dto/pagination.dto';
 import { NotFoundError } from 'rxjs';
 
+export const institutionContextSelect: Prisma.InstitutionSelect = {
+  id: true,
+  name: true,
+  imageUrl: true,
+};
+
 export const institutionsSelect: Prisma.InstitutionSelect = {
   id: true,
   name: true,
@@ -168,6 +174,21 @@ export class InstitutionsService {
         ...institution,
         locations,
       },
+    };
+  }
+
+  async getContext() {
+    const institution = await this.prisma.institution.findFirst({
+      select: institutionContextSelect,
+    });
+
+    if (!institution) {
+      throw new NotFoundException('No hay ninguna institución registrada');
+    }
+
+    return {
+      message: 'Contexto institucional obtenido exitosamente',
+      data: institution,
     };
   }
 

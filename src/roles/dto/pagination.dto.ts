@@ -24,12 +24,12 @@ export class PermissionsPaginationDto extends PaginationDto {
 
   @ApiPropertyOptional({
     description: 'Campo por el cual ordenar los resultados',
-    default: 'module',
-    enum: ['name', 'module', 'id'],
+    default: 'name',
+    enum: ['name', 'id'],
   })
   @IsOptional()
-  @IsIn(['name', 'module', 'id'], {
-    message: 'Columnas permitidas: name, module, id',
+  @IsIn(['name', 'id'], {
+    message: 'Columnas permitidas: name, id',
   })
-  sortField?: string = 'module';
+  sortField?: string = 'name';
 }

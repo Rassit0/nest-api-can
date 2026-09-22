@@ -97,6 +97,18 @@ export class UsersController {
     return await this.usersService.update(id, updateUserDto, req.user);
   }
 
+  @Patch(':id/reset-password')
+  @ApiOperation({
+    summary: 'Restablecer contraseña',
+    description: 'Genera una nueva contraseña temporal para el usuario y la retorna',
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiStandardResponse(UserResponseDto, 'Contraseña restablecida exitosamente.')
+  @RequirePermissions('UPDATE_USERS')
+  async resetPassword(@Param('id', ParseUUIDPipe) id: string, @Req() req: any) {
+    return await this.usersService.resetPassword(id, req.user);
+  }
+
   @Patch(':id/deactivate')
   @ApiOperation({
     summary: 'Desactivar un usuario',

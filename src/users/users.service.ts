@@ -233,6 +233,36 @@ export class UsersService {
     };
   }
 
+  async resetPassword(id: string, actor: any) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: { role: true },
+    });
+    if (!user) throw new NotFoundException('errors.USER_NOT_FOUND');
+
+    // SuperAdmin protection
+    if (user.role.isSuperAdmin && !actor?.role?.isSuperAdmin) {
+      throw new ForbiddenException('No tienes permisos para restablecer la contraseña de un Super Administrador');
+    }
+
+    const tempPassword = crypto.randomBytes(8).toString('hex');
+    const passwordHash = this.hashPassword(tempPassword);
+
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: { password: passwordHash },
+      select: userSelect,
+    });
+
+    return {
+      message: 'Contraseña restablecida exitosamente',
+      data: {
+        ...updatedUser,
+        tempPassword, // Return cleartext password only once
+      },
+    };
+  }
+
   async deactivate(id: string, actor: any) {
     if (id === actor.id) {
       throw new ForbiddenException('No puedes desactivarte a ti mismo');

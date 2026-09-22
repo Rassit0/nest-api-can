@@ -125,6 +125,21 @@ export class FinancialAccountsService {
     });
   }
 
+  async findOptions() {
+    return this.prisma.financialAccount.findMany({
+      where: { isActive: true },
+      select: {
+        id: true,
+        name: true,
+        currency: true,
+        type: true,
+        isDefault: true,
+        allowedPaymentMethods: true,
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
   async create(createDto: CreateFinancialAccountDto) {
     const { initialBalance, isDefault, ...data } = createDto;
 

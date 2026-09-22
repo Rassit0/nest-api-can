@@ -47,7 +47,13 @@ export class CalendarQueriesService {
         },
         {
           match: {
-            ...(teamSeasonCategoryId && { teamSeasonCategoryId })
+            ...(teamSeasonCategoryId && {
+              OR: [
+                { teamSeasonCategoryId },
+                { homeTeamSeasonCategoryId: teamSeasonCategoryId },
+                { awayTeamSeasonCategoryId: teamSeasonCategoryId }
+              ]
+            })
           }
         }
       ];
@@ -73,6 +79,7 @@ export class CalendarQueriesService {
         
         session: {
           select: {
+            id: true,
             durationMin: true,
             sessionTeams: {
               select: {
@@ -104,6 +111,7 @@ export class CalendarQueriesService {
         
         match: {
           select: {
+            id: true,
             homeTeam: { select: { id: true, name: true } },
             awayTeam: { select: { id: true, name: true } },
             homeScore: true,
@@ -113,14 +121,33 @@ export class CalendarQueriesService {
             teamSeasonCategory: {
               select: {
                 id: true,
-                category: { select: { id: true, name: true } }
-              }
+                category: { select: { name: true } },
+                teamSeason: { select: { team: { select: { name: true } } } },
+              },
+            },
+            homeTeamSeasonCategory: {
+              select: {
+                id: true,
+                category: { select: { name: true } },
+                teamSeason: { select: { team: { select: { name: true } } } },
+              },
+            },
+            awayTeamSeasonCategory: {
+              select: {
+                id: true,
+                category: { select: { name: true } },
+                teamSeason: { select: { team: { select: { name: true } } } },
+              },
+            },
+            _count: {
+              select: { callUps: true }
             }
           }
         },
         
         generalEvent: {
           select: {
+            id: true,
             institutionId: true,
             teamSeasonCategoryId: true,
             courseSeasonId: true,

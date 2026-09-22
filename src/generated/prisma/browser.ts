@@ -313,6 +313,11 @@ export type SessionBooking = Prisma.SessionBookingModel
  */
 export type Match = Prisma.MatchModel
 /**
+ * Model MatchCallUp
+ * 
+ */
+export type MatchCallUp = Prisma.MatchCallUpModel
+/**
  * Model MatchLineup
  * 
  */

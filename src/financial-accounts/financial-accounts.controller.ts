@@ -27,6 +27,18 @@ export class FinancialAccountsController {
     };
   }
 
+  @Get('options')
+  @ApiOperation({ summary: 'Obtener opciones de cuentas financieras', description: 'Retorna una lista reducida de cuentas activas.' })
+  @ApiStandardResponse(Object, 'Opciones obtenidas exitosamente.')
+  @RequirePermissions('READ_FINANCIAL_ACCOUNTS', 'READ_CASH_FLOW')
+  async findOptions() {
+    const data = await this.financialAccountsService.findOptions();
+    return {
+      message: 'Opciones obtenidas exitosamente',
+      data,
+    };
+  }
+
   @Post()
   @ApiOperation({ summary: 'Crear una cuenta financiera', description: 'Crea una nueva caja o cuenta bancaria.' })
   @ApiStandardCreatedResponse(Object, 'Cuenta financiera creada exitosamente.')

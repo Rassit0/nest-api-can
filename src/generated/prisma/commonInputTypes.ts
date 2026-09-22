@@ -912,6 +912,23 @@ export type EnumMatchResultWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumMatchResultFilter<$PrismaModel>
 }
 
+export type EnumMatchSideFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchSide | Prisma.EnumMatchSideFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchSideFilter<$PrismaModel> | $Enums.MatchSide
+}
+
+export type EnumMatchSideWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchSide | Prisma.EnumMatchSideFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchSideWithAggregatesFilter<$PrismaModel> | $Enums.MatchSide
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchSideFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchSideFilter<$PrismaModel>
+}
+
 export type JsonNullableFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -1936,6 +1953,23 @@ export type NestedEnumMatchResultWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMatchResultFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMatchResultFilter<$PrismaModel>
+}
+
+export type NestedEnumMatchSideFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchSide | Prisma.EnumMatchSideFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchSideFilter<$PrismaModel> | $Enums.MatchSide
+}
+
+export type NestedEnumMatchSideWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchSide | Prisma.EnumMatchSideFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchSide[] | Prisma.ListEnumMatchSideFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchSideWithAggregatesFilter<$PrismaModel> | $Enums.MatchSide
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchSideFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchSideFilter<$PrismaModel>
 }
 
 export type NestedJsonNullableFilter<$PrismaModel = never> =

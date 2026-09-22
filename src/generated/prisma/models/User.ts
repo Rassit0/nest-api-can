@@ -311,6 +311,8 @@ export type UserWhereInput = {
   updatedTransactions?: Prisma.TransactionListRelationFilter
   person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  createdMatchCallUps?: Prisma.MatchCallUpListRelationFilter
+  updatedMatchCallUps?: Prisma.MatchCallUpListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -427,6 +429,8 @@ export type UserOrderByWithRelationInput = {
   updatedTransactions?: Prisma.TransactionOrderByRelationAggregateInput
   person?: Prisma.PersonOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
+  createdMatchCallUps?: Prisma.MatchCallUpOrderByRelationAggregateInput
+  updatedMatchCallUps?: Prisma.MatchCallUpOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -546,6 +550,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedTransactions?: Prisma.TransactionListRelationFilter
   person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  createdMatchCallUps?: Prisma.MatchCallUpListRelationFilter
+  updatedMatchCallUps?: Prisma.MatchCallUpListRelationFilter
 }, "id" | "email" | "personId">
 
 export type UserOrderByWithAggregationInput = {
@@ -688,6 +694,8 @@ export type UserCreateInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -802,6 +810,8 @@ export type UserUncheckedCreateInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUpdateInput = {
@@ -916,6 +926,8 @@ export type UserUpdateInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -1030,6 +1042,8 @@ export type UserUncheckedUpdateInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -2673,6 +2687,38 @@ export type UserUpdateOneWithoutUpdatedSessionBookingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedSessionBookingsInput, Prisma.UserUpdateWithoutUpdatedSessionBookingsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedSessionBookingsInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedMatchCallUpsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutCreatedMatchCallUpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedMatchCallUpsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedMatchCallUpsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutUpdatedMatchCallUpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedMatchCallUpsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedMatchCallUpsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutCreatedMatchCallUpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedMatchCallUpsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedMatchCallUpsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedMatchCallUpsInput, Prisma.UserUpdateWithoutCreatedMatchCallUpsInput>, Prisma.UserUncheckedUpdateWithoutCreatedMatchCallUpsInput>
+}
+
+export type UserUpdateOneWithoutUpdatedMatchCallUpsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutUpdatedMatchCallUpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedMatchCallUpsInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedMatchCallUpsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedMatchCallUpsInput, Prisma.UserUpdateWithoutUpdatedMatchCallUpsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedMatchCallUpsInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedMatchLineupsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedMatchLineupsInput, Prisma.UserUncheckedCreateWithoutCreatedMatchLineupsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedMatchLineupsInput
@@ -2944,6 +2990,8 @@ export type UserCreateWithoutCreatedPersonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPersonsInput = {
@@ -3057,6 +3105,8 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPersonsInput = {
@@ -3175,6 +3225,8 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
@@ -3288,6 +3340,8 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPersonsInput = {
@@ -3406,6 +3460,8 @@ export type UserCreateWithoutPersonInput = {
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutPersonInput = {
@@ -3519,6 +3575,8 @@ export type UserUncheckedCreateWithoutPersonInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutPersonInput = {
@@ -3648,6 +3706,8 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
@@ -3761,6 +3821,8 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPersonsInput = {
@@ -3885,6 +3947,8 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
@@ -3998,6 +4062,8 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutPersonInput = {
@@ -4122,6 +4188,8 @@ export type UserUpdateWithoutPersonInput = {
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPersonInput = {
@@ -4235,6 +4303,8 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedDisciplinesInput = {
@@ -4348,6 +4418,8 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
@@ -4461,6 +4533,8 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedDisciplinesInput = {
@@ -4579,6 +4653,8 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
@@ -4692,6 +4768,8 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedDisciplinesInput = {
@@ -4821,6 +4899,8 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
@@ -4934,6 +5014,8 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedDisciplinesInput = {
@@ -5058,6 +5140,8 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
@@ -5171,6 +5255,8 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionsInput = {
@@ -5284,6 +5370,8 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
@@ -5397,6 +5485,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionsInput = {
@@ -5515,6 +5605,8 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
@@ -5628,6 +5720,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionsInput = {
@@ -5757,6 +5851,8 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
@@ -5870,6 +5966,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionsInput = {
@@ -5994,6 +6092,8 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
@@ -6107,6 +6207,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInstitutionContactsInput = {
@@ -6220,6 +6322,8 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
@@ -6333,6 +6437,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInstitutionContactsInput = {
@@ -6451,6 +6557,8 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
@@ -6564,6 +6672,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedInstitutionContactsInput = {
@@ -6693,6 +6803,8 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
@@ -6806,6 +6918,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedInstitutionContactsInput = {
@@ -6930,6 +7044,8 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
@@ -7043,6 +7159,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedShiftsInput = {
@@ -7156,6 +7274,8 @@ export type UserCreateWithoutCreatedShiftsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedShiftsInput = {
@@ -7269,6 +7389,8 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedShiftsInput = {
@@ -7387,6 +7509,8 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
@@ -7500,6 +7624,8 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedShiftsInput = {
@@ -7629,6 +7755,8 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
@@ -7742,6 +7870,8 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedShiftsInput = {
@@ -7866,6 +7996,8 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
@@ -7979,6 +8111,8 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedClubsInput = {
@@ -8092,6 +8226,8 @@ export type UserCreateWithoutCreatedClubsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedClubsInput = {
@@ -8205,6 +8341,8 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedClubsInput = {
@@ -8323,6 +8461,8 @@ export type UserCreateWithoutUpdatedClubsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedClubsInput = {
@@ -8436,6 +8576,8 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedClubsInput = {
@@ -8565,6 +8707,8 @@ export type UserUpdateWithoutCreatedClubsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedClubsInput = {
@@ -8678,6 +8822,8 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedClubsInput = {
@@ -8802,6 +8948,8 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
@@ -8915,6 +9063,8 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedLocationsInput = {
@@ -9028,6 +9178,8 @@ export type UserCreateWithoutCreatedLocationsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedLocationsInput = {
@@ -9141,6 +9293,8 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedLocationsInput = {
@@ -9259,6 +9413,8 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
@@ -9372,6 +9528,8 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedLocationsInput = {
@@ -9501,6 +9659,8 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
@@ -9614,6 +9774,8 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedLocationsInput = {
@@ -9738,6 +9900,8 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
@@ -9851,6 +10015,8 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCategoriesInput = {
@@ -9964,6 +10130,8 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
@@ -10077,6 +10245,8 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCategoriesInput = {
@@ -10195,6 +10365,8 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
@@ -10308,6 +10480,8 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCategoriesInput = {
@@ -10437,6 +10611,8 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
@@ -10550,6 +10726,8 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCategoriesInput = {
@@ -10674,6 +10852,8 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
@@ -10787,6 +10967,8 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonsInput = {
@@ -10900,6 +11082,8 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
@@ -11013,6 +11197,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonsInput = {
@@ -11131,6 +11317,8 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
@@ -11244,6 +11432,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonsInput = {
@@ -11373,6 +11563,8 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
@@ -11486,6 +11678,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonsInput = {
@@ -11610,6 +11804,8 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
@@ -11723,6 +11919,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSeasonEventsInput = {
@@ -11836,6 +12034,8 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
@@ -11949,6 +12149,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSeasonEventsInput = {
@@ -12067,6 +12269,8 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
@@ -12180,6 +12384,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSeasonEventsInput = {
@@ -12309,6 +12515,8 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
@@ -12422,6 +12630,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSeasonEventsInput = {
@@ -12546,6 +12756,8 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
@@ -12659,6 +12871,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamsInput = {
@@ -12772,6 +12986,8 @@ export type UserCreateWithoutCreatedTeamsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamsInput = {
@@ -12885,6 +13101,8 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamsInput = {
@@ -13003,6 +13221,8 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
@@ -13116,6 +13336,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamsInput = {
@@ -13245,6 +13467,8 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
@@ -13358,6 +13582,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamsInput = {
@@ -13482,6 +13708,8 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
@@ -13595,6 +13823,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonsInput = {
@@ -13708,6 +13938,8 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
@@ -13821,6 +14053,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonsInput = {
@@ -13939,6 +14173,8 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
@@ -14052,6 +14288,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonsInput = {
@@ -14181,6 +14419,8 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
@@ -14294,6 +14534,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonsInput = {
@@ -14418,6 +14660,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
@@ -14531,6 +14775,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14644,6 +14890,8 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14757,6 +15005,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -14875,6 +15125,8 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -14988,6 +15240,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -15117,6 +15371,8 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
@@ -15230,6 +15486,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -15354,6 +15612,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
@@ -15467,6 +15727,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPaymentPlansInput = {
@@ -15580,6 +15842,8 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
@@ -15693,6 +15957,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPaymentPlansInput = {
@@ -15811,6 +16077,8 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
@@ -15924,6 +16192,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPaymentPlansInput = {
@@ -16053,6 +16323,8 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
@@ -16166,6 +16438,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPaymentPlansInput = {
@@ -16290,6 +16564,8 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
@@ -16403,6 +16679,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayersInput = {
@@ -16516,6 +16794,8 @@ export type UserCreateWithoutCreatedPlayersInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayersInput = {
@@ -16629,6 +16909,8 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayersInput = {
@@ -16747,6 +17029,8 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
@@ -16860,6 +17144,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayersInput = {
@@ -16989,6 +17275,8 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
@@ -17102,6 +17390,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayersInput = {
@@ -17226,6 +17516,8 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
@@ -17339,6 +17631,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipsInput = {
@@ -17452,6 +17746,8 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
@@ -17565,6 +17861,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipsInput = {
@@ -17683,6 +17981,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
@@ -17796,6 +18096,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipsInput = {
@@ -17925,6 +18227,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
@@ -18038,6 +18342,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipsInput = {
@@ -18162,6 +18468,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
@@ -18275,6 +18583,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18388,6 +18698,8 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18501,6 +18813,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18619,6 +18933,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18732,6 +19048,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -18861,6 +19179,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
@@ -18974,6 +19294,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -19098,6 +19420,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
@@ -19211,6 +19535,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19324,6 +19650,8 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19437,6 +19765,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlayerMembershipPausesInput = {
@@ -19555,6 +19885,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19668,6 +20000,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPlayerMembershipPausesInput = {
@@ -19797,6 +20131,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
@@ -19910,6 +20246,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPlayerMembershipPausesInput = {
@@ -20034,6 +20372,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
@@ -20147,6 +20487,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipDiscountsInput = {
@@ -20260,6 +20602,8 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
@@ -20373,6 +20717,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipDiscountsInput = {
@@ -20491,6 +20837,8 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
@@ -20604,6 +20952,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipDiscountsInput = {
@@ -20733,6 +21083,8 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
@@ -20846,6 +21198,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipDiscountsInput = {
@@ -20970,6 +21324,8 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
@@ -21083,6 +21439,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMembershipChargesInput = {
@@ -21196,6 +21554,8 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
@@ -21309,6 +21669,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMembershipChargesInput = {
@@ -21427,6 +21789,8 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
@@ -21540,6 +21904,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMembershipChargesInput = {
@@ -21669,6 +22035,8 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
@@ -21782,6 +22150,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMembershipChargesInput = {
@@ -21906,6 +22276,8 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
@@ -22019,6 +22391,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStaffsInput = {
@@ -22132,6 +22506,8 @@ export type UserCreateWithoutCreatedStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStaffsInput = {
@@ -22245,6 +22621,8 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStaffsInput = {
@@ -22363,6 +22741,8 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
@@ -22476,6 +22856,8 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStaffsInput = {
@@ -22605,6 +22987,8 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
@@ -22718,6 +23102,8 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStaffsInput = {
@@ -22842,6 +23228,8 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
@@ -22955,6 +23343,8 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -23068,6 +23458,8 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
@@ -23181,6 +23573,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonStaffsInput = {
@@ -23299,6 +23693,8 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23412,6 +23808,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23541,6 +23939,8 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
@@ -23654,6 +24054,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23778,6 +24180,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
@@ -23891,6 +24295,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedChargesInput = {
@@ -24004,6 +24410,8 @@ export type UserCreateWithoutCreatedChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedChargesInput = {
@@ -24117,6 +24525,8 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedChargesInput = {
@@ -24235,6 +24645,8 @@ export type UserCreateWithoutUpdatedChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedChargesInput = {
@@ -24348,6 +24760,8 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedChargesInput = {
@@ -24477,6 +24891,8 @@ export type UserUpdateWithoutCreatedChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedChargesInput = {
@@ -24590,6 +25006,8 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedChargesInput = {
@@ -24714,6 +25132,8 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
@@ -24827,6 +25247,8 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPaymentsInput = {
@@ -24940,6 +25362,8 @@ export type UserCreateWithoutCreatedPaymentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
@@ -25053,6 +25477,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPaymentsInput = {
@@ -25171,6 +25597,8 @@ export type UserCreateWithoutUpdatedPaymentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
@@ -25284,6 +25712,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPaymentsInput = {
@@ -25413,6 +25843,8 @@ export type UserUpdateWithoutCreatedPaymentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
@@ -25526,6 +25958,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPaymentsInput = {
@@ -25650,6 +26084,8 @@ export type UserUpdateWithoutUpdatedPaymentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
@@ -25763,6 +26199,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTransactionsInput = {
@@ -25876,6 +26314,8 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
@@ -25989,6 +26429,8 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTransactionsInput = {
@@ -26107,6 +26549,8 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
@@ -26220,6 +26664,8 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTransactionsInput = {
@@ -26349,6 +26795,8 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
@@ -26462,6 +26910,8 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTransactionsInput = {
@@ -26586,6 +27036,8 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
@@ -26699,6 +27151,8 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedInternalTransfersInput = {
@@ -26812,6 +27266,8 @@ export type UserCreateWithoutCreatedInternalTransfersInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
@@ -26925,6 +27381,8 @@ export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedInternalTransfersInput = {
@@ -27054,6 +27512,8 @@ export type UserUpdateWithoutCreatedInternalTransfersInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
@@ -27167,6 +27627,8 @@ export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedRolesInput = {
@@ -27280,6 +27742,8 @@ export type UserCreateWithoutCreatedRolesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedRolesInput = {
@@ -27393,6 +27857,8 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedRolesInput = {
@@ -27511,6 +27977,8 @@ export type UserCreateWithoutUpdatedRolesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedRolesInput = {
@@ -27624,6 +28092,8 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedRolesInput = {
@@ -27742,6 +28212,8 @@ export type UserCreateWithoutRoleInput = {
   createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -27855,6 +28327,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -27989,6 +28463,8 @@ export type UserUpdateWithoutCreatedRolesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedRolesInput = {
@@ -28102,6 +28578,8 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedRolesInput = {
@@ -28226,6 +28704,8 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
@@ -28339,6 +28819,8 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutRoleInput = {
@@ -28482,6 +28964,8 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
@@ -28595,6 +29079,8 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPermissionsInput = {
@@ -28713,6 +29199,8 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
@@ -28826,6 +29314,8 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedPermissionsInput = {
@@ -28955,6 +29445,8 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
@@ -29068,6 +29560,8 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedPermissionsInput = {
@@ -29192,6 +29686,8 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
@@ -29305,6 +29801,8 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSchoolsInput = {
@@ -29418,6 +29916,8 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
@@ -29531,6 +30031,8 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSchoolsInput = {
@@ -29649,6 +30151,8 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
@@ -29762,6 +30266,8 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSchoolsInput = {
@@ -29891,6 +30397,8 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
@@ -30004,6 +30512,8 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSchoolsInput = {
@@ -30128,6 +30638,8 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
@@ -30241,6 +30753,8 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCoursesInput = {
@@ -30354,6 +30868,8 @@ export type UserCreateWithoutCreatedCoursesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCoursesInput = {
@@ -30467,6 +30983,8 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCoursesInput = {
@@ -30585,6 +31103,8 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
@@ -30698,6 +31218,8 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCoursesInput = {
@@ -30827,6 +31349,8 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
@@ -30940,6 +31464,8 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCoursesInput = {
@@ -31064,6 +31590,8 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
@@ -31177,6 +31705,8 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonsInput = {
@@ -31290,6 +31820,8 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
@@ -31403,6 +31935,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonsInput = {
@@ -31521,6 +32055,8 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
@@ -31634,6 +32170,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonsInput = {
@@ -31763,6 +32301,8 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
@@ -31876,6 +32416,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonsInput = {
@@ -32000,6 +32542,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
@@ -32113,6 +32657,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
@@ -32226,6 +32772,8 @@ export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput = {
@@ -32339,6 +32887,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonShiftsInput = {
@@ -32457,6 +33007,8 @@ export type UserCreateWithoutUpdatedCourseSeasonShiftsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput = {
@@ -32570,6 +33122,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonShiftsInput = {
@@ -32699,6 +33253,8 @@ export type UserUpdateWithoutCreatedCourseSeasonShiftsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput = {
@@ -32812,6 +33368,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonShiftsInput = {
@@ -32936,6 +33494,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
@@ -33049,6 +33609,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -33162,6 +33724,8 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
@@ -33275,6 +33839,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamSeasonPausesInput = {
@@ -33393,6 +33959,8 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
@@ -33506,6 +34074,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTeamSeasonPausesInput = {
@@ -33635,6 +34205,8 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
@@ -33748,6 +34320,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTeamSeasonPausesInput = {
@@ -33872,6 +34446,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
@@ -33985,6 +34561,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -34098,6 +34676,8 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
@@ -34211,6 +34791,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonPausesInput = {
@@ -34329,6 +34911,8 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
@@ -34442,6 +35026,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonPausesInput = {
@@ -34571,6 +35157,8 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
@@ -34684,6 +35272,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonPausesInput = {
@@ -34808,6 +35398,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
@@ -34921,6 +35513,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -35034,6 +35628,8 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -35147,6 +35743,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -35265,6 +35863,8 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -35378,6 +35978,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -35507,6 +36109,8 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
@@ -35620,6 +36224,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -35744,6 +36350,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
@@ -35857,6 +36465,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -35970,6 +36580,8 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
@@ -36083,6 +36695,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseSeasonStaffsInput = {
@@ -36201,6 +36815,8 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -36314,6 +36930,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCourseSeasonStaffsInput = {
@@ -36443,6 +37061,8 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
@@ -36556,6 +37176,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCourseSeasonStaffsInput = {
@@ -36680,6 +37302,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
@@ -36793,6 +37417,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentsInput = {
@@ -36906,6 +37532,8 @@ export type UserCreateWithoutCreatedStudentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentsInput = {
@@ -37019,6 +37647,8 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentsInput = {
@@ -37137,6 +37767,8 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
@@ -37250,6 +37882,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentsInput = {
@@ -37379,6 +38013,8 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
@@ -37492,6 +38128,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentsInput = {
@@ -37616,6 +38254,8 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
@@ -37729,6 +38369,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipsInput = {
@@ -37842,6 +38484,8 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
@@ -37955,6 +38599,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipsInput = {
@@ -38073,6 +38719,8 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
@@ -38186,6 +38834,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipsInput = {
@@ -38315,6 +38965,8 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
@@ -38428,6 +39080,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipsInput = {
@@ -38552,6 +39206,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
@@ -38665,6 +39321,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -38778,6 +39436,8 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -38891,6 +39551,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipHistoriesInput = {
@@ -39009,6 +39671,8 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -39122,6 +39786,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -39251,6 +39917,8 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
@@ -39364,6 +40032,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -39488,6 +40158,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
@@ -39601,6 +40273,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -39714,6 +40388,8 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
@@ -39827,6 +40503,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentMembershipPausesInput = {
@@ -39945,6 +40623,8 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
@@ -40058,6 +40738,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentMembershipPausesInput = {
@@ -40187,6 +40869,8 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
@@ -40300,6 +40984,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentMembershipPausesInput = {
@@ -40424,6 +41110,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
@@ -40537,6 +41225,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
@@ -40650,6 +41340,8 @@ export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
@@ -40763,6 +41455,8 @@ export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCycleEnrollmentsInput = {
@@ -40881,6 +41575,8 @@ export type UserCreateWithoutUpdatedCycleEnrollmentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
@@ -40994,6 +41690,8 @@ export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCycleEnrollmentsInput = {
@@ -41123,6 +41821,8 @@ export type UserUpdateWithoutCreatedCycleEnrollmentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
@@ -41236,6 +41936,8 @@ export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCycleEnrollmentsInput = {
@@ -41360,6 +42062,8 @@ export type UserUpdateWithoutUpdatedCycleEnrollmentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
@@ -41473,6 +42177,8 @@ export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentDiscountsInput = {
@@ -41586,6 +42292,8 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
@@ -41699,6 +42407,8 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentDiscountsInput = {
@@ -41817,6 +42527,8 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
@@ -41930,6 +42642,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentDiscountsInput = {
@@ -42059,6 +42773,8 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
@@ -42172,6 +42888,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentDiscountsInput = {
@@ -42296,6 +43014,8 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
@@ -42409,6 +43129,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedStudentChargesInput = {
@@ -42522,6 +43244,8 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
@@ -42635,6 +43359,8 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedStudentChargesInput = {
@@ -42753,6 +43479,8 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
@@ -42866,6 +43594,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedStudentChargesInput = {
@@ -42995,6 +43725,8 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
@@ -43108,6 +43840,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedStudentChargesInput = {
@@ -43232,6 +43966,8 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
@@ -43345,6 +44081,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionIncidentsInput = {
@@ -43458,6 +44196,8 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
@@ -43571,6 +44311,8 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionIncidentsInput = {
@@ -43689,6 +44431,8 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
@@ -43802,6 +44546,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionIncidentsInput = {
@@ -43931,6 +44677,8 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
@@ -44044,6 +44792,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionIncidentsInput = {
@@ -44168,6 +44918,8 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
@@ -44281,6 +45033,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedProgressEvaluationsInput = {
@@ -44394,6 +45148,8 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
@@ -44507,6 +45263,8 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProgressEvaluationsInput = {
@@ -44625,6 +45383,8 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
@@ -44738,6 +45498,8 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProgressEvaluationsInput = {
@@ -44867,6 +45629,8 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
@@ -44980,6 +45744,8 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProgressEvaluationsInput = {
@@ -45104,6 +45870,8 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
@@ -45217,6 +45985,8 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedEventsInput = {
@@ -45330,6 +46100,8 @@ export type UserCreateWithoutCreatedEventsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -45443,6 +46215,8 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -45561,6 +46335,8 @@ export type UserCreateWithoutUpdatedEventsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEventsInput = {
@@ -45674,6 +46450,8 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEventsInput = {
@@ -45803,6 +46581,8 @@ export type UserUpdateWithoutCreatedEventsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -45916,6 +46696,8 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedEventsInput = {
@@ -46040,6 +46822,8 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
@@ -46153,6 +46937,8 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedSessionBookingsInput = {
@@ -46266,6 +47052,8 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
@@ -46379,6 +47167,8 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSessionBookingsInput = {
@@ -46497,6 +47287,8 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
@@ -46610,6 +47402,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSessionBookingsInput = {
@@ -46739,6 +47533,8 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
@@ -46852,6 +47648,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSessionBookingsInput = {
@@ -46976,6 +47774,8 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
@@ -47089,6 +47889,960 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateWithoutCreatedMatchCallUpsInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedMatchCallUpsInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedMatchCallUpsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutCreatedMatchCallUpsInput>
+}
+
+export type UserCreateWithoutUpdatedMatchCallUpsInput = {
+  id?: string
+  email: string
+  password: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cashClosuresCreated?: Prisma.CashClosureCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineCreateNestedManyWithoutUpdatedByInput
+  createdEvents?: Prisma.EventCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferCreateNestedManyWithoutCreatedByInput
+  createdLocations?: Prisma.LocationCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutUpdatedByInput
+  createdPayments?: Prisma.PaymentCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  createdPersons?: Prisma.PersonCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutUpdatedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
+  person?: Prisma.PersonCreateNestedOneWithoutUserInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedMatchCallUpsInput = {
+  id?: string
+  email: string
+  password: string
+  personId?: string | null
+  roleId: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutCreatedByInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCharges?: Prisma.ChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedClubs?: Prisma.ClubUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdEvents?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLocations?: Prisma.LocationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPersons?: Prisma.PersonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSchools?: Prisma.SchoolUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSeasons?: Prisma.SeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedShifts?: Prisma.ShiftUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStaffs?: Prisma.StaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedStudents?: Prisma.StudentUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedMatchCallUpsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutUpdatedMatchCallUpsInput>
+}
+
+export type UserUpsertWithoutCreatedMatchCallUpsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedUpdateWithoutCreatedMatchCallUpsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutCreatedMatchCallUpsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedMatchCallUpsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedMatchCallUpsInput, Prisma.UserUncheckedUpdateWithoutCreatedMatchCallUpsInput>
+}
+
+export type UserUpdateWithoutCreatedMatchCallUpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedMatchCallUpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUpsertWithoutUpdatedMatchCallUpsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedUpdateWithoutUpdatedMatchCallUpsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedCreateWithoutUpdatedMatchCallUpsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedMatchCallUpsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedMatchCallUpsInput, Prisma.UserUncheckedUpdateWithoutUpdatedMatchCallUpsInput>
+}
+
+export type UserUpdateWithoutUpdatedMatchCallUpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUpdateManyWithoutUpdatedByNestedInput
+  createdEvents?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUpdateManyWithoutCreatedByNestedInput
+  createdLocations?: Prisma.LocationUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUpdateManyWithoutUpdatedByNestedInput
+  createdPayments?: Prisma.PaymentUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  createdPersons?: Prisma.PersonUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
+  person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedMatchCallUpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedAccountCharges?: Prisma.AccountChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cashClosuresCreated?: Prisma.CashClosureUncheckedUpdateManyWithoutCreatedByNestedInput
+  cashClosuresUpdated?: Prisma.CashClosureUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCharges?: Prisma.ChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCharges?: Prisma.ChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdClubs?: Prisma.ClubUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedClubs?: Prisma.ClubUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonBillingConfigs?: Prisma.CourseSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonPauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonShifts?: Prisma.CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourseSeasons?: Prisma.CourseSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedDisciplines?: Prisma.DisciplineUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdEvents?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedEvents?: Prisma.EventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutionContacts?: Prisma.InstitutionContactUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedInstitutions?: Prisma.InstitutionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdInternalTransfers?: Prisma.InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdLocations?: Prisma.LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLocations?: Prisma.LocationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchLineups?: Prisma.MatchLineupUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipCharges?: Prisma.MembershipChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMembershipDiscounts?: Prisma.MembershipDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPaymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPayments?: Prisma.PaymentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPayments?: Prisma.PaymentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPersons?: Prisma.PersonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPersons?: Prisma.PersonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMemberships?: Prisma.PlayerMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipHistories?: Prisma.PlayerMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayerMembershipPauses?: Prisma.PlayerMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProgressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSchools?: Prisma.SchoolUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSchools?: Prisma.SchoolUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasonEvents?: Prisma.SeasonEventUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSeasons?: Prisma.SeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionBookings?: Prisma.SessionBookingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSessionIncidents?: Prisma.SessionIncidentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdShifts?: Prisma.ShiftUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedShifts?: Prisma.ShiftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStaffs?: Prisma.StaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStaffs?: Prisma.StaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentCharges?: Prisma.StudentChargeUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentDiscounts?: Prisma.StudentDiscountUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipHistories?: Prisma.StudentMembershipHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMembershipPauses?: Prisma.StudentMembershipPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdStudents?: Prisma.StudentUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedStudents?: Prisma.StudentUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonBillingConfigs?: Prisma.TeamSeasonBillingConfigUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonPauses?: Prisma.TeamSeasonPauseUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasonStaffs?: Prisma.TeamSeasonStaffUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeamSeasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTeams?: Prisma.TeamUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedMatchLineupsInput = {
@@ -47202,6 +48956,8 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
@@ -47315,6 +49071,8 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMatchLineupsInput = {
@@ -47433,6 +49191,8 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
@@ -47546,6 +49306,8 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedMatchLineupsInput = {
@@ -47675,6 +49437,8 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
@@ -47788,6 +49552,8 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedMatchLineupsInput = {
@@ -47912,6 +49678,8 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
@@ -48025,6 +49793,8 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -48138,6 +49908,8 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -48251,6 +50023,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -48380,6 +50154,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -48493,6 +50269,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountCategoriesInput = {
@@ -48606,6 +50384,8 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
@@ -48719,6 +50499,8 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountCategoriesInput = {
@@ -48837,6 +50619,8 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
@@ -48950,6 +50734,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountCategoriesInput = {
@@ -49079,6 +50865,8 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
@@ -49192,6 +50980,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountCategoriesInput = {
@@ -49316,6 +51106,8 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
@@ -49429,6 +51221,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAccountChargesInput = {
@@ -49542,6 +51336,8 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
@@ -49655,6 +51451,8 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAccountChargesInput = {
@@ -49773,6 +51571,8 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
@@ -49886,6 +51686,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedAccountChargesInput = {
@@ -50015,6 +51817,8 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
@@ -50128,6 +51932,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedAccountChargesInput = {
@@ -50252,6 +52058,8 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
@@ -50365,6 +52173,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutCashClosuresCreatedInput = {
@@ -50478,6 +52288,8 @@ export type UserCreateWithoutCashClosuresCreatedInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
@@ -50591,6 +52403,8 @@ export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresCreatedInput = {
@@ -50709,6 +52523,8 @@ export type UserCreateWithoutCashClosuresUpdatedInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
@@ -50822,6 +52638,8 @@ export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutCashClosuresUpdatedInput = {
@@ -50951,6 +52769,8 @@ export type UserUpdateWithoutCashClosuresCreatedInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
@@ -51064,6 +52884,8 @@ export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUpsertWithoutCashClosuresUpdatedInput = {
@@ -51188,6 +53010,8 @@ export type UserUpdateWithoutCashClosuresUpdatedInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
@@ -51301,6 +53125,8 @@ export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutAttachmentsInput = {
@@ -51414,6 +53240,8 @@ export type UserCreateWithoutAttachmentsInput = {
   updatedTransactions?: Prisma.TransactionCreateNestedManyWithoutUpdatedByInput
   person?: Prisma.PersonCreateNestedOneWithoutUserInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  createdMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutAttachmentsInput = {
@@ -51527,6 +53355,8 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutUpdatedByInput
   createdTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutAttachmentsInput = {
@@ -51656,6 +53486,8 @@ export type UserUpdateWithoutAttachmentsInput = {
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttachmentsInput = {
@@ -51769,6 +53601,8 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -51892,6 +53726,8 @@ export type UserUpdateWithoutRoleInput = {
   createdTransactions?: Prisma.TransactionUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUpdateManyWithoutUpdatedByNestedInput
   person?: Prisma.PersonUpdateOneWithoutUserNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -52005,6 +53841,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedTeams?: Prisma.TeamUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedMatchCallUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -52126,6 +53964,8 @@ export type UserCountOutputType = {
   updatedTeams: number
   createdTransactions: number
   updatedTransactions: number
+  createdMatchCallUps: number
+  updatedMatchCallUps: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -52232,6 +54072,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedTeams?: boolean | UserCountOutputTypeCountUpdatedTeamsArgs
   createdTransactions?: boolean | UserCountOutputTypeCountCreatedTransactionsArgs
   updatedTransactions?: boolean | UserCountOutputTypeCountUpdatedTransactionsArgs
+  createdMatchCallUps?: boolean | UserCountOutputTypeCountCreatedMatchCallUpsArgs
+  updatedMatchCallUps?: boolean | UserCountOutputTypeCountUpdatedMatchCallUpsArgs
 }
 
 /**
@@ -52965,6 +54807,20 @@ export type UserCountOutputTypeCountUpdatedTransactionsArgs<ExtArgs extends runt
   where?: Prisma.TransactionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedMatchCallUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchCallUpWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedMatchCallUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchCallUpWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -53080,6 +54936,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedTransactions?: boolean | Prisma.User$updatedTransactionsArgs<ExtArgs>
   person?: boolean | Prisma.User$personArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  createdMatchCallUps?: boolean | Prisma.User$createdMatchCallUpsArgs<ExtArgs>
+  updatedMatchCallUps?: boolean | Prisma.User$updatedMatchCallUpsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -53227,6 +55085,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedTransactions?: boolean | Prisma.User$updatedTransactionsArgs<ExtArgs>
   person?: boolean | Prisma.User$personArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  createdMatchCallUps?: boolean | Prisma.User$createdMatchCallUpsArgs<ExtArgs>
+  updatedMatchCallUps?: boolean | Prisma.User$updatedMatchCallUpsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -53346,6 +55206,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedTransactions: Prisma.$TransactionPayload<ExtArgs>[]
     person: Prisma.$PersonPayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs>
+    createdMatchCallUps: Prisma.$MatchCallUpPayload<ExtArgs>[]
+    updatedMatchCallUps: Prisma.$MatchCallUpPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -53855,6 +55717,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedTransactions<T extends Prisma.User$updatedTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   person<T extends Prisma.User$personArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$personArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdMatchCallUps<T extends Prisma.User$createdMatchCallUpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdMatchCallUpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchCallUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedMatchCallUps<T extends Prisma.User$updatedMatchCallUpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedMatchCallUpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchCallUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -56776,6 +58640,54 @@ export type User$personArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.PersonInclude<ExtArgs> | null
   where?: Prisma.PersonWhereInput
+}
+
+/**
+ * User.createdMatchCallUps
+ */
+export type User$createdMatchCallUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchCallUp
+   */
+  select?: Prisma.MatchCallUpSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchCallUp
+   */
+  omit?: Prisma.MatchCallUpOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchCallUpInclude<ExtArgs> | null
+  where?: Prisma.MatchCallUpWhereInput
+  orderBy?: Prisma.MatchCallUpOrderByWithRelationInput | Prisma.MatchCallUpOrderByWithRelationInput[]
+  cursor?: Prisma.MatchCallUpWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchCallUpScalarFieldEnum | Prisma.MatchCallUpScalarFieldEnum[]
+}
+
+/**
+ * User.updatedMatchCallUps
+ */
+export type User$updatedMatchCallUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchCallUp
+   */
+  select?: Prisma.MatchCallUpSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchCallUp
+   */
+  omit?: Prisma.MatchCallUpOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchCallUpInclude<ExtArgs> | null
+  where?: Prisma.MatchCallUpWhereInput
+  orderBy?: Prisma.MatchCallUpOrderByWithRelationInput | Prisma.MatchCallUpOrderByWithRelationInput[]
+  cursor?: Prisma.MatchCallUpWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchCallUpScalarFieldEnum | Prisma.MatchCallUpScalarFieldEnum[]
 }
 
 /**
