@@ -558,7 +558,21 @@ export class MatchesService {
               },
             },
           },
-        }
+        },
+        {
+          homeTeam: {
+            club: {
+              isExternal: false,
+            },
+          },
+        },
+        {
+          awayTeam: {
+            club: {
+              isExternal: false,
+            },
+          },
+        },
       ]
     };
 
@@ -638,7 +652,7 @@ export class MatchesService {
       },
       homeScore: match.homeScore,
       awayScore: match.awayScore,
-      status: match.event?.status === EventStatus.COMPLETED ? 'PLAYED' : 'PENDING',
+      status: (match.event?.status === EventStatus.COMPLETED || (match.homeScore !== null && match.awayScore !== null)) ? 'PLAYED' : 'PENDING',
       discipline: activeCategoryForDiscipline?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
     };
     };
