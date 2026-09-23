@@ -130,4 +130,16 @@ export class UsersController {
   async reactivate(@Param('id', ParseUUIDPipe) id: string, @Req() req: any) {
     return await this.usersService.reactivate(id, req.user);
   }
+
+  @Patch(':id/unlock')
+  @ApiOperation({
+    summary: 'Desbloquear cuenta de usuario',
+    description: 'Restablece los intentos fallidos a 0 y elimina el bloqueo temporal de la cuenta.'
+  })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiStandardResponse(UserResponseDto, 'Cuenta desbloqueada exitosamente.')
+  @RequirePermissions('UNLOCK_USERS')
+  async unlock(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.usersService.unlock(id);
+  }
 }

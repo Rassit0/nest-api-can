@@ -5,6 +5,7 @@ import { UpdateMatchDto } from './dto/update-match.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma, EventType, EventStatus, TeamSeasonCategoryStatus, StatusTeamSeason, SeasonStatus, MatchResult } from 'src/generated/prisma/client';
 import { MatchesPaginationDto } from './dto/pagination.dto';
+import { FindPublicFixtureDto } from './dto/find-public-fixture.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { EventsService } from 'src/events/events.service';
 import { BaseEventCreateDto, BaseEventUpdateDto } from 'src/events/dto/base-event.dto';
@@ -522,7 +523,7 @@ export class MatchesService {
     });
   }
 
-  async findPublicFixture() {
+  async findPublicFixture(query?: FindPublicFixtureDto) {
     const commonWhere = {
       OR: [
         {
@@ -619,6 +620,66 @@ export class MatchesService {
       },
     };
 
+    const formatMatch = (match: any) => {
+      const activeCategoryForDiscipline = match.homeTeamSeasonCategory || match.awayTeamSeasonCategory || match.teamSeasonCategory;
+      return {
+      id: match.id,
+      homeCategoryName: match.homeTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
+      awayCategoryName: match.awayTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
+      locationName: match.event?.location?.name ?? null,
+      date: match.event?.startDate?.toISOString() || new Date().toISOString(),
+      homeTeam: {
+        name: match.homeTeam?.name || 'Local',
+        imageUrl: match.homeTeam?.imageUrl || null,
+      },
+      awayTeam: {
+        name: match.awayTeam?.name || 'Visitante',
+        imageUrl: match.awayTeam?.imageUrl || null,
+      },
+      homeScore: match.homeScore,
+      awayScore: match.awayScore,
+      status: match.event?.status === EventStatus.COMPLETED ? 'PLAYED' : 'PENDING',
+      discipline: activeCategoryForDiscipline?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
+    };
+    };
+    if ((query?.from && !query?.to) || (!query?.from && query?.to)) {
+      throw new BadRequestException('Ambos parámetros "from" y "to" deben ser proveídos juntos.');
+    }
+
+    if (query?.from && query?.to) {
+      const fromDate = new Date(query.from);
+      const toDate = new Date(query.to);
+
+      if (fromDate >= toDate) {
+        throw new BadRequestException('La fecha de inicio debe ser anterior a la fecha de fin');
+      }
+
+      const diffInDays = (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+      if (diffInDays > 93) {
+        throw new BadRequestException('El rango máximo de consulta es de 93 días');
+      }
+
+      const rangeMatches = await this.prisma.match.findMany({
+        where: {
+          ...commonWhere,
+          event: {
+            startDate: {
+              gte: fromDate,
+              lt: toDate,
+            },
+            status: { not: EventStatus.CANCELLED },
+          },
+        },
+        orderBy: { event: { startDate: 'asc' } },
+        select: publicSelect,
+      });
+
+      return {
+        message: 'Fixture público obtenido exitosamente',
+        data: rangeMatches.map(formatMatch),
+      };
+    }
+
     const [recentMatches, upcomingMatches] = await Promise.all([
       // Resultados recientes
       this.prisma.match.findMany({
@@ -647,29 +708,6 @@ export class MatchesService {
         select: publicSelect,
       }),
     ]);
-
-    const formatMatch = (match: any) => {
-      const activeCategoryForDiscipline = match.homeTeamSeasonCategory || match.awayTeamSeasonCategory || match.teamSeasonCategory;
-      return {
-      id: match.id,
-      homeCategoryName: match.homeTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
-      awayCategoryName: match.awayTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
-      locationName: match.event?.location?.name ?? null,
-      date: match.event?.startDate?.toISOString() || new Date().toISOString(),
-      homeTeam: {
-        name: match.homeTeam?.name || 'Local',
-        imageUrl: match.homeTeam?.imageUrl || null,
-      },
-      awayTeam: {
-        name: match.awayTeam?.name || 'Visitante',
-        imageUrl: match.awayTeam?.imageUrl || null,
-      },
-      homeScore: match.homeScore,
-      awayScore: match.awayScore,
-      status: match.event?.status === EventStatus.COMPLETED ? 'PLAYED' : 'PENDING',
-      discipline: activeCategoryForDiscipline?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
-    };
-    };
 
     const data = [
       ...recentMatches.map(formatMatch),

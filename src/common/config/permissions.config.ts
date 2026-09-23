@@ -68,7 +68,7 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   CATEGORIES: crud('CATEGORIES'),
   ROLES: crud('ROLES'),
   PERMISSIONS: crud('PERMISSIONS'),
-  USERS: crud('USERS'),
+  USERS: [...crud('USERS'), 'UNLOCK_USERS'],
   PERSONS: crud('PERSONS'),
   CLUBS: crud('CLUBS'),
   TEAMS: crud('TEAMS'),

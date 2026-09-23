@@ -10,6 +10,8 @@ import { HomeDisciplinesService } from '../home-disciplines/home-disciplines.ser
 import { NewsCategoriesService } from '../news-categories/news-categories.service';
 import { PromotionsService } from '../promotions/promotions.service';
 
+import { FindPublicFixtureDto } from '../matches/dto/find-public-fixture.dto';
+
 @ApiTags('Public')
 @Controller('public')
 export class PublicController {
@@ -62,8 +64,8 @@ export class PublicController {
     description: 'Retorna los próximos partidos y resultados recientes para el portal web.',
   })
   @ApiOkResponse({ description: 'Fixture público obtenido correctamente.' })
-  async findPublicFixture() {
-    return await this.matchesService.findPublicFixture();
+  async findPublicFixture(@Query() query: FindPublicFixtureDto) {
+    return await this.matchesService.findPublicFixture(query);
   }
 
   @Get('news-categories')

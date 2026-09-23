@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
+import { Transform } from 'class-transformer';
 
 export class LoginUserDto {
   @ApiProperty({
@@ -20,6 +21,13 @@ export class LoginUserDto {
       }),
     },
   )
+  @MaxLength(255, {
+    message: i18nValidationMessage('validation.MAX_LENGTH', {
+      constraint1: 'email',
+      constraint2: 255,
+    }),
+  })
+  @Transform(({ value }) => (typeof value === 'string' ? value.toLowerCase().trim() : value))
   email: string;
 
   @ApiProperty({
@@ -35,6 +43,12 @@ export class LoginUserDto {
   @IsString({
     message: i18nValidationMessage('validation.IS_STRING', {
       constraint1: 'password',
+    }),
+  })
+  @MaxLength(100, {
+    message: i18nValidationMessage('validation.MAX_LENGTH', {
+      constraint1: 'password',
+      constraint2: 100,
     }),
   })
   password: string;

@@ -1540,6 +1540,12 @@ export class UserResponseDto {
   isActive: boolean;
 
   @ApiProperty({
+    example: false,
+    description: 'Calculado en el servidor si la cuenta está actualmente bloqueada por intentos fallidos'
+  })
+  isLocked: boolean;
+
+  @ApiProperty({
     example: '2024-01-01T00:00:00Z',
   })
   createdAt: Date;

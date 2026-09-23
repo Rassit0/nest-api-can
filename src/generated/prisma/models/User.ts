@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  failedLoginAttempts: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  failedLoginAttempts: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -31,6 +41,8 @@ export type UserMinAggregateOutputType = {
   personId: string | null
   roleId: string | null
   isActive: boolean | null
+  failedLoginAttempts: number | null
+  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +54,8 @@ export type UserMaxAggregateOutputType = {
   personId: string | null
   roleId: string | null
   isActive: boolean | null
+  failedLoginAttempts: number | null
+  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,11 +67,21 @@ export type UserCountAggregateOutputType = {
   personId: number
   roleId: number
   isActive: number
+  failedLoginAttempts: number
+  lockedUntil: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  failedLoginAttempts?: true
+}
+
+export type UserSumAggregateInputType = {
+  failedLoginAttempts?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -66,6 +90,8 @@ export type UserMinAggregateInputType = {
   personId?: true
   roleId?: true
   isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +103,8 @@ export type UserMaxAggregateInputType = {
   personId?: true
   roleId?: true
   isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +116,8 @@ export type UserCountAggregateInputType = {
   personId?: true
   roleId?: true
   isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -131,6 +161,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -161,6 +203,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -172,9 +216,13 @@ export type UserGroupByOutputType = {
   personId: string | null
   roleId: string
   isActive: boolean
+  failedLoginAttempts: number
+  lockedUntil: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -204,6 +252,8 @@ export type UserWhereInput = {
   personId?: Prisma.StringNullableFilter<"User"> | string | null
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   createdAccountCategories?: Prisma.AccountCategoryListRelationFilter
@@ -322,6 +372,8 @@ export type UserOrderByWithRelationInput = {
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdAccountCategories?: Prisma.AccountCategoryOrderByRelationAggregateInput
@@ -443,6 +495,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   createdAccountCategories?: Prisma.AccountCategoryListRelationFilter
@@ -561,11 +615,15 @@ export type UserOrderByWithAggregationInput = {
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -578,6 +636,8 @@ export type UserScalarWhereWithAggregatesInput = {
   personId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   roleId?: Prisma.StringWithAggregatesFilter<"User"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntWithAggregatesFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -587,6 +647,8 @@ export type UserCreateInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -705,6 +767,8 @@ export type UserUncheckedCreateInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -819,6 +883,8 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -937,6 +1003,8 @@ export type UserUncheckedUpdateInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1053,6 +1121,8 @@ export type UserCreateManyInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1062,6 +1132,8 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1073,6 +1145,8 @@ export type UserUncheckedUpdateManyInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1089,8 +1163,14 @@ export type UserCountOrderByAggregateInput = {
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -1100,6 +1180,8 @@ export type UserMaxOrderByAggregateInput = {
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -1111,8 +1193,14 @@ export type UserMinOrderByAggregateInput = {
   personId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserListRelationFilter = {
@@ -2884,6 +2972,8 @@ export type UserCreateWithoutCreatedPersonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -3001,6 +3091,8 @@ export type UserUncheckedCreateWithoutCreatedPersonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3119,6 +3211,8 @@ export type UserCreateWithoutUpdatedPersonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -3236,6 +3330,8 @@ export type UserUncheckedCreateWithoutUpdatedPersonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3354,6 +3450,8 @@ export type UserCreateWithoutPersonInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -3470,6 +3568,8 @@ export type UserUncheckedCreateWithoutPersonInput = {
   password: string
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -3600,6 +3700,8 @@ export type UserUpdateWithoutCreatedPersonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -3717,6 +3819,8 @@ export type UserUncheckedUpdateWithoutCreatedPersonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3841,6 +3945,8 @@ export type UserUpdateWithoutUpdatedPersonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -3958,6 +4064,8 @@ export type UserUncheckedUpdateWithoutUpdatedPersonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4082,6 +4190,8 @@ export type UserUpdateWithoutPersonInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -4198,6 +4308,8 @@ export type UserUncheckedUpdateWithoutPersonInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -4312,6 +4424,8 @@ export type UserCreateWithoutCreatedDisciplinesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -4429,6 +4543,8 @@ export type UserUncheckedCreateWithoutCreatedDisciplinesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4547,6 +4663,8 @@ export type UserCreateWithoutUpdatedDisciplinesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -4664,6 +4782,8 @@ export type UserUncheckedCreateWithoutUpdatedDisciplinesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -4793,6 +4913,8 @@ export type UserUpdateWithoutCreatedDisciplinesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -4910,6 +5032,8 @@ export type UserUncheckedUpdateWithoutCreatedDisciplinesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5034,6 +5158,8 @@ export type UserUpdateWithoutUpdatedDisciplinesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -5151,6 +5277,8 @@ export type UserUncheckedUpdateWithoutUpdatedDisciplinesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5264,6 +5392,8 @@ export type UserCreateWithoutCreatedInstitutionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -5381,6 +5511,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5499,6 +5631,8 @@ export type UserCreateWithoutUpdatedInstitutionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -5616,6 +5750,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -5745,6 +5881,8 @@ export type UserUpdateWithoutCreatedInstitutionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -5862,6 +6000,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -5986,6 +6126,8 @@ export type UserUpdateWithoutUpdatedInstitutionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -6103,6 +6245,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6216,6 +6360,8 @@ export type UserCreateWithoutCreatedInstitutionContactsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -6333,6 +6479,8 @@ export type UserUncheckedCreateWithoutCreatedInstitutionContactsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6451,6 +6599,8 @@ export type UserCreateWithoutUpdatedInstitutionContactsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -6568,6 +6718,8 @@ export type UserUncheckedCreateWithoutUpdatedInstitutionContactsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -6697,6 +6849,8 @@ export type UserUpdateWithoutCreatedInstitutionContactsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -6814,6 +6968,8 @@ export type UserUncheckedUpdateWithoutCreatedInstitutionContactsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -6938,6 +7094,8 @@ export type UserUpdateWithoutUpdatedInstitutionContactsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -7055,6 +7213,8 @@ export type UserUncheckedUpdateWithoutUpdatedInstitutionContactsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7168,6 +7328,8 @@ export type UserCreateWithoutCreatedShiftsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -7285,6 +7447,8 @@ export type UserUncheckedCreateWithoutCreatedShiftsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7403,6 +7567,8 @@ export type UserCreateWithoutUpdatedShiftsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -7520,6 +7686,8 @@ export type UserUncheckedCreateWithoutUpdatedShiftsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -7649,6 +7817,8 @@ export type UserUpdateWithoutCreatedShiftsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -7766,6 +7936,8 @@ export type UserUncheckedUpdateWithoutCreatedShiftsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -7890,6 +8062,8 @@ export type UserUpdateWithoutUpdatedShiftsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -8007,6 +8181,8 @@ export type UserUncheckedUpdateWithoutUpdatedShiftsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8120,6 +8296,8 @@ export type UserCreateWithoutCreatedClubsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -8237,6 +8415,8 @@ export type UserUncheckedCreateWithoutCreatedClubsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8355,6 +8535,8 @@ export type UserCreateWithoutUpdatedClubsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -8472,6 +8654,8 @@ export type UserUncheckedCreateWithoutUpdatedClubsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -8601,6 +8785,8 @@ export type UserUpdateWithoutCreatedClubsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -8718,6 +8904,8 @@ export type UserUncheckedUpdateWithoutCreatedClubsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -8842,6 +9030,8 @@ export type UserUpdateWithoutUpdatedClubsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -8959,6 +9149,8 @@ export type UserUncheckedUpdateWithoutUpdatedClubsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9072,6 +9264,8 @@ export type UserCreateWithoutCreatedLocationsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -9189,6 +9383,8 @@ export type UserUncheckedCreateWithoutCreatedLocationsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9307,6 +9503,8 @@ export type UserCreateWithoutUpdatedLocationsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -9424,6 +9622,8 @@ export type UserUncheckedCreateWithoutUpdatedLocationsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -9553,6 +9753,8 @@ export type UserUpdateWithoutCreatedLocationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -9670,6 +9872,8 @@ export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -9794,6 +9998,8 @@ export type UserUpdateWithoutUpdatedLocationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -9911,6 +10117,8 @@ export type UserUncheckedUpdateWithoutUpdatedLocationsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10024,6 +10232,8 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -10141,6 +10351,8 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10259,6 +10471,8 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -10376,6 +10590,8 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -10505,6 +10721,8 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -10622,6 +10840,8 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10746,6 +10966,8 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -10863,6 +11085,8 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -10976,6 +11200,8 @@ export type UserCreateWithoutCreatedSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -11093,6 +11319,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11211,6 +11439,8 @@ export type UserCreateWithoutUpdatedSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -11328,6 +11558,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -11457,6 +11689,8 @@ export type UserUpdateWithoutCreatedSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -11574,6 +11808,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11698,6 +11934,8 @@ export type UserUpdateWithoutUpdatedSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -11815,6 +12053,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -11928,6 +12168,8 @@ export type UserCreateWithoutCreatedSeasonEventsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -12045,6 +12287,8 @@ export type UserUncheckedCreateWithoutCreatedSeasonEventsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12163,6 +12407,8 @@ export type UserCreateWithoutUpdatedSeasonEventsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -12280,6 +12526,8 @@ export type UserUncheckedCreateWithoutUpdatedSeasonEventsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -12409,6 +12657,8 @@ export type UserUpdateWithoutCreatedSeasonEventsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -12526,6 +12776,8 @@ export type UserUncheckedUpdateWithoutCreatedSeasonEventsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12650,6 +12902,8 @@ export type UserUpdateWithoutUpdatedSeasonEventsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -12767,6 +13021,8 @@ export type UserUncheckedUpdateWithoutUpdatedSeasonEventsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -12880,6 +13136,8 @@ export type UserCreateWithoutCreatedTeamsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -12997,6 +13255,8 @@ export type UserUncheckedCreateWithoutCreatedTeamsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13115,6 +13375,8 @@ export type UserCreateWithoutUpdatedTeamsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -13232,6 +13494,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -13361,6 +13625,8 @@ export type UserUpdateWithoutCreatedTeamsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -13478,6 +13744,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13602,6 +13870,8 @@ export type UserUpdateWithoutUpdatedTeamsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -13719,6 +13989,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -13832,6 +14104,8 @@ export type UserCreateWithoutCreatedTeamSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -13949,6 +14223,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14067,6 +14343,8 @@ export type UserCreateWithoutUpdatedTeamSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -14184,6 +14462,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -14313,6 +14593,8 @@ export type UserUpdateWithoutCreatedTeamSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -14430,6 +14712,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14554,6 +14838,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -14671,6 +14957,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -14784,6 +15072,8 @@ export type UserCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -14901,6 +15191,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonBillingConfigsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15019,6 +15311,8 @@ export type UserCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -15136,6 +15430,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15265,6 +15561,8 @@ export type UserUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -15382,6 +15680,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonBillingConfigsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15506,6 +15806,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -15623,6 +15925,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonBillingConfigsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -15736,6 +16040,8 @@ export type UserCreateWithoutCreatedPaymentPlansInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -15853,6 +16159,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentPlansInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -15971,6 +16279,8 @@ export type UserCreateWithoutUpdatedPaymentPlansInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -16088,6 +16398,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentPlansInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16217,6 +16529,8 @@ export type UserUpdateWithoutCreatedPaymentPlansInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -16334,6 +16648,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentPlansInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16458,6 +16774,8 @@ export type UserUpdateWithoutUpdatedPaymentPlansInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -16575,6 +16893,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentPlansInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -16688,6 +17008,8 @@ export type UserCreateWithoutCreatedPlayersInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -16805,6 +17127,8 @@ export type UserUncheckedCreateWithoutCreatedPlayersInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -16923,6 +17247,8 @@ export type UserCreateWithoutUpdatedPlayersInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -17040,6 +17366,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayersInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17169,6 +17497,8 @@ export type UserUpdateWithoutCreatedPlayersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -17286,6 +17616,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayersInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17410,6 +17742,8 @@ export type UserUpdateWithoutUpdatedPlayersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -17527,6 +17861,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayersInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -17640,6 +17976,8 @@ export type UserCreateWithoutCreatedPlayerMembershipsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -17757,6 +18095,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -17875,6 +18215,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -17992,6 +18334,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18121,6 +18465,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -18238,6 +18584,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18362,6 +18710,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -18479,6 +18829,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -18592,6 +18944,8 @@ export type UserCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -18709,6 +19063,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipHistoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -18827,6 +19183,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -18944,6 +19302,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipHistoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19073,6 +19433,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -19190,6 +19552,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipHistoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19314,6 +19678,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -19431,6 +19797,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipHistoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -19544,6 +19912,8 @@ export type UserCreateWithoutCreatedPlayerMembershipPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -19661,6 +20031,8 @@ export type UserUncheckedCreateWithoutCreatedPlayerMembershipPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -19779,6 +20151,8 @@ export type UserCreateWithoutUpdatedPlayerMembershipPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -19896,6 +20270,8 @@ export type UserUncheckedCreateWithoutUpdatedPlayerMembershipPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20025,6 +20401,8 @@ export type UserUpdateWithoutCreatedPlayerMembershipPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -20142,6 +20520,8 @@ export type UserUncheckedUpdateWithoutCreatedPlayerMembershipPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20266,6 +20646,8 @@ export type UserUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -20383,6 +20765,8 @@ export type UserUncheckedUpdateWithoutUpdatedPlayerMembershipPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -20496,6 +20880,8 @@ export type UserCreateWithoutCreatedMembershipDiscountsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -20613,6 +20999,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipDiscountsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20731,6 +21119,8 @@ export type UserCreateWithoutUpdatedMembershipDiscountsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -20848,6 +21238,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipDiscountsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -20977,6 +21369,8 @@ export type UserUpdateWithoutCreatedMembershipDiscountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -21094,6 +21488,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipDiscountsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21218,6 +21614,8 @@ export type UserUpdateWithoutUpdatedMembershipDiscountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -21335,6 +21733,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipDiscountsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -21448,6 +21848,8 @@ export type UserCreateWithoutCreatedMembershipChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -21565,6 +21967,8 @@ export type UserUncheckedCreateWithoutCreatedMembershipChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21683,6 +22087,8 @@ export type UserCreateWithoutUpdatedMembershipChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -21800,6 +22206,8 @@ export type UserUncheckedCreateWithoutUpdatedMembershipChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -21929,6 +22337,8 @@ export type UserUpdateWithoutCreatedMembershipChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -22046,6 +22456,8 @@ export type UserUncheckedUpdateWithoutCreatedMembershipChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22170,6 +22582,8 @@ export type UserUpdateWithoutUpdatedMembershipChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -22287,6 +22701,8 @@ export type UserUncheckedUpdateWithoutUpdatedMembershipChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -22400,6 +22816,8 @@ export type UserCreateWithoutCreatedStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -22517,6 +22935,8 @@ export type UserUncheckedCreateWithoutCreatedStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22635,6 +23055,8 @@ export type UserCreateWithoutUpdatedStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -22752,6 +23174,8 @@ export type UserUncheckedCreateWithoutUpdatedStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -22881,6 +23305,8 @@ export type UserUpdateWithoutCreatedStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -22998,6 +23424,8 @@ export type UserUncheckedUpdateWithoutCreatedStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23122,6 +23550,8 @@ export type UserUpdateWithoutUpdatedStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -23239,6 +23669,8 @@ export type UserUncheckedUpdateWithoutUpdatedStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -23352,6 +23784,8 @@ export type UserCreateWithoutCreatedTeamSeasonStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -23469,6 +23903,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23587,6 +24023,8 @@ export type UserCreateWithoutUpdatedTeamSeasonStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -23704,6 +24142,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -23833,6 +24273,8 @@ export type UserUpdateWithoutCreatedTeamSeasonStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -23950,6 +24392,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24074,6 +24518,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -24191,6 +24637,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24304,6 +24752,8 @@ export type UserCreateWithoutCreatedChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -24421,6 +24871,8 @@ export type UserUncheckedCreateWithoutCreatedChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24539,6 +24991,8 @@ export type UserCreateWithoutUpdatedChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -24656,6 +25110,8 @@ export type UserUncheckedCreateWithoutUpdatedChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24785,6 +25241,8 @@ export type UserUpdateWithoutCreatedChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -24902,6 +25360,8 @@ export type UserUncheckedUpdateWithoutCreatedChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25026,6 +25486,8 @@ export type UserUpdateWithoutUpdatedChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -25143,6 +25605,8 @@ export type UserUncheckedUpdateWithoutUpdatedChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25256,6 +25720,8 @@ export type UserCreateWithoutCreatedPaymentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -25373,6 +25839,8 @@ export type UserUncheckedCreateWithoutCreatedPaymentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25491,6 +25959,8 @@ export type UserCreateWithoutUpdatedPaymentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -25608,6 +26078,8 @@ export type UserUncheckedCreateWithoutUpdatedPaymentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -25737,6 +26209,8 @@ export type UserUpdateWithoutCreatedPaymentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -25854,6 +26328,8 @@ export type UserUncheckedUpdateWithoutCreatedPaymentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -25978,6 +26454,8 @@ export type UserUpdateWithoutUpdatedPaymentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -26095,6 +26573,8 @@ export type UserUncheckedUpdateWithoutUpdatedPaymentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26208,6 +26688,8 @@ export type UserCreateWithoutCreatedTransactionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -26325,6 +26807,8 @@ export type UserUncheckedCreateWithoutCreatedTransactionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26443,6 +26927,8 @@ export type UserCreateWithoutUpdatedTransactionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -26560,6 +27046,8 @@ export type UserUncheckedCreateWithoutUpdatedTransactionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -26689,6 +27177,8 @@ export type UserUpdateWithoutCreatedTransactionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -26806,6 +27296,8 @@ export type UserUncheckedUpdateWithoutCreatedTransactionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -26930,6 +27422,8 @@ export type UserUpdateWithoutUpdatedTransactionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -27047,6 +27541,8 @@ export type UserUncheckedUpdateWithoutUpdatedTransactionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27160,6 +27656,8 @@ export type UserCreateWithoutCreatedInternalTransfersInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -27277,6 +27775,8 @@ export type UserUncheckedCreateWithoutCreatedInternalTransfersInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27406,6 +27906,8 @@ export type UserUpdateWithoutCreatedInternalTransfersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -27523,6 +28025,8 @@ export type UserUncheckedUpdateWithoutCreatedInternalTransfersInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -27636,6 +28140,8 @@ export type UserCreateWithoutCreatedRolesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -27753,6 +28259,8 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -27871,6 +28379,8 @@ export type UserCreateWithoutUpdatedRolesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -27988,6 +28498,8 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28106,6 +28618,8 @@ export type UserCreateWithoutRoleInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -28222,6 +28736,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   password: string
   personId?: string | null
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -28357,6 +28873,8 @@ export type UserUpdateWithoutCreatedRolesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -28474,6 +28992,8 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28598,6 +29118,8 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -28715,6 +29237,8 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -28849,6 +29373,8 @@ export type UserScalarWhereInput = {
   personId?: Prisma.StringNullableFilter<"User"> | string | null
   roleId?: Prisma.StringFilter<"User"> | string
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -28858,6 +29384,8 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -28975,6 +29503,8 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29093,6 +29623,8 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -29210,6 +29742,8 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -29339,6 +29873,8 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -29456,6 +29992,8 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29580,6 +30118,8 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -29697,6 +30237,8 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -29810,6 +30352,8 @@ export type UserCreateWithoutCreatedSchoolsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -29927,6 +30471,8 @@ export type UserUncheckedCreateWithoutCreatedSchoolsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30045,6 +30591,8 @@ export type UserCreateWithoutUpdatedSchoolsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -30162,6 +30710,8 @@ export type UserUncheckedCreateWithoutUpdatedSchoolsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30291,6 +30841,8 @@ export type UserUpdateWithoutCreatedSchoolsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -30408,6 +30960,8 @@ export type UserUncheckedUpdateWithoutCreatedSchoolsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30532,6 +31086,8 @@ export type UserUpdateWithoutUpdatedSchoolsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -30649,6 +31205,8 @@ export type UserUncheckedUpdateWithoutUpdatedSchoolsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30762,6 +31320,8 @@ export type UserCreateWithoutCreatedCoursesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -30879,6 +31439,8 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30997,6 +31559,8 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -31114,6 +31678,8 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31243,6 +31809,8 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -31360,6 +31928,8 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31484,6 +32054,8 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -31601,6 +32173,8 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31714,6 +32288,8 @@ export type UserCreateWithoutCreatedCourseSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -31831,6 +32407,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31949,6 +32527,8 @@ export type UserCreateWithoutUpdatedCourseSeasonsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -32066,6 +32646,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32195,6 +32777,8 @@ export type UserUpdateWithoutCreatedCourseSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -32312,6 +32896,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32436,6 +33022,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -32553,6 +33141,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32666,6 +33256,8 @@ export type UserCreateWithoutCreatedCourseSeasonShiftsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -32783,6 +33375,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonShiftsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32901,6 +33495,8 @@ export type UserCreateWithoutUpdatedCourseSeasonShiftsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -33018,6 +33614,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonShiftsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33147,6 +33745,8 @@ export type UserUpdateWithoutCreatedCourseSeasonShiftsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -33264,6 +33864,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonShiftsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33388,6 +33990,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -33505,6 +34109,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonShiftsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -33618,6 +34224,8 @@ export type UserCreateWithoutCreatedTeamSeasonPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -33735,6 +34343,8 @@ export type UserUncheckedCreateWithoutCreatedTeamSeasonPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -33853,6 +34463,8 @@ export type UserCreateWithoutUpdatedTeamSeasonPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -33970,6 +34582,8 @@ export type UserUncheckedCreateWithoutUpdatedTeamSeasonPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34099,6 +34713,8 @@ export type UserUpdateWithoutCreatedTeamSeasonPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -34216,6 +34832,8 @@ export type UserUncheckedUpdateWithoutCreatedTeamSeasonPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34340,6 +34958,8 @@ export type UserUpdateWithoutUpdatedTeamSeasonPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -34457,6 +35077,8 @@ export type UserUncheckedUpdateWithoutUpdatedTeamSeasonPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -34570,6 +35192,8 @@ export type UserCreateWithoutCreatedCourseSeasonPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -34687,6 +35311,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -34805,6 +35431,8 @@ export type UserCreateWithoutUpdatedCourseSeasonPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -34922,6 +35550,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35051,6 +35681,8 @@ export type UserUpdateWithoutCreatedCourseSeasonPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -35168,6 +35800,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35292,6 +35926,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -35409,6 +36045,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -35522,6 +36160,8 @@ export type UserCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -35639,6 +36279,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonBillingConfigsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -35757,6 +36399,8 @@ export type UserCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -35874,6 +36518,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36003,6 +36649,8 @@ export type UserUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -36120,6 +36768,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonBillingConfigsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36244,6 +36894,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -36361,6 +37013,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonBillingConfigsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -36474,6 +37128,8 @@ export type UserCreateWithoutCreatedCourseSeasonStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -36591,6 +37247,8 @@ export type UserUncheckedCreateWithoutCreatedCourseSeasonStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36709,6 +37367,8 @@ export type UserCreateWithoutUpdatedCourseSeasonStaffsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -36826,6 +37486,8 @@ export type UserUncheckedCreateWithoutUpdatedCourseSeasonStaffsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -36955,6 +37617,8 @@ export type UserUpdateWithoutCreatedCourseSeasonStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -37072,6 +37736,8 @@ export type UserUncheckedUpdateWithoutCreatedCourseSeasonStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37196,6 +37862,8 @@ export type UserUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -37313,6 +37981,8 @@ export type UserUncheckedUpdateWithoutUpdatedCourseSeasonStaffsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -37426,6 +38096,8 @@ export type UserCreateWithoutCreatedStudentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -37543,6 +38215,8 @@ export type UserUncheckedCreateWithoutCreatedStudentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37661,6 +38335,8 @@ export type UserCreateWithoutUpdatedStudentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -37778,6 +38454,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -37907,6 +38585,8 @@ export type UserUpdateWithoutCreatedStudentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -38024,6 +38704,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38148,6 +38830,8 @@ export type UserUpdateWithoutUpdatedStudentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -38265,6 +38949,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -38378,6 +39064,8 @@ export type UserCreateWithoutCreatedStudentMembershipsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -38495,6 +39183,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38613,6 +39303,8 @@ export type UserCreateWithoutUpdatedStudentMembershipsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -38730,6 +39422,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -38859,6 +39553,8 @@ export type UserUpdateWithoutCreatedStudentMembershipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -38976,6 +39672,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39100,6 +39798,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -39217,6 +39917,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -39330,6 +40032,8 @@ export type UserCreateWithoutCreatedStudentMembershipHistoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -39447,6 +40151,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipHistoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39565,6 +40271,8 @@ export type UserCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -39682,6 +40390,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipHistoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -39811,6 +40521,8 @@ export type UserUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -39928,6 +40640,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipHistoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40052,6 +40766,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -40169,6 +40885,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipHistoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -40282,6 +41000,8 @@ export type UserCreateWithoutCreatedStudentMembershipPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -40399,6 +41119,8 @@ export type UserUncheckedCreateWithoutCreatedStudentMembershipPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40517,6 +41239,8 @@ export type UserCreateWithoutUpdatedStudentMembershipPausesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -40634,6 +41358,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentMembershipPausesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -40763,6 +41489,8 @@ export type UserUpdateWithoutCreatedStudentMembershipPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -40880,6 +41608,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentMembershipPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41004,6 +41734,8 @@ export type UserUpdateWithoutUpdatedStudentMembershipPausesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -41121,6 +41853,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentMembershipPausesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41234,6 +41968,8 @@ export type UserCreateWithoutCreatedCycleEnrollmentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -41351,6 +42087,8 @@ export type UserUncheckedCreateWithoutCreatedCycleEnrollmentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41469,6 +42207,8 @@ export type UserCreateWithoutUpdatedCycleEnrollmentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -41586,6 +42326,8 @@ export type UserUncheckedCreateWithoutUpdatedCycleEnrollmentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -41715,6 +42457,8 @@ export type UserUpdateWithoutCreatedCycleEnrollmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -41832,6 +42576,8 @@ export type UserUncheckedUpdateWithoutCreatedCycleEnrollmentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -41956,6 +42702,8 @@ export type UserUpdateWithoutUpdatedCycleEnrollmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -42073,6 +42821,8 @@ export type UserUncheckedUpdateWithoutUpdatedCycleEnrollmentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42186,6 +42936,8 @@ export type UserCreateWithoutCreatedStudentDiscountsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -42303,6 +43055,8 @@ export type UserUncheckedCreateWithoutCreatedStudentDiscountsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42421,6 +43175,8 @@ export type UserCreateWithoutUpdatedStudentDiscountsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -42538,6 +43294,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentDiscountsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -42667,6 +43425,8 @@ export type UserUpdateWithoutCreatedStudentDiscountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -42784,6 +43544,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentDiscountsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -42908,6 +43670,8 @@ export type UserUpdateWithoutUpdatedStudentDiscountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -43025,6 +43789,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentDiscountsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43138,6 +43904,8 @@ export type UserCreateWithoutCreatedStudentChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -43255,6 +44023,8 @@ export type UserUncheckedCreateWithoutCreatedStudentChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43373,6 +44143,8 @@ export type UserCreateWithoutUpdatedStudentChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -43490,6 +44262,8 @@ export type UserUncheckedCreateWithoutUpdatedStudentChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -43619,6 +44393,8 @@ export type UserUpdateWithoutCreatedStudentChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -43736,6 +44512,8 @@ export type UserUncheckedUpdateWithoutCreatedStudentChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -43860,6 +44638,8 @@ export type UserUpdateWithoutUpdatedStudentChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -43977,6 +44757,8 @@ export type UserUncheckedUpdateWithoutUpdatedStudentChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44090,6 +44872,8 @@ export type UserCreateWithoutCreatedSessionIncidentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -44207,6 +44991,8 @@ export type UserUncheckedCreateWithoutCreatedSessionIncidentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44325,6 +45111,8 @@ export type UserCreateWithoutUpdatedSessionIncidentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -44442,6 +45230,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionIncidentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -44571,6 +45361,8 @@ export type UserUpdateWithoutCreatedSessionIncidentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -44688,6 +45480,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionIncidentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -44812,6 +45606,8 @@ export type UserUpdateWithoutUpdatedSessionIncidentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -44929,6 +45725,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionIncidentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -45042,6 +45840,8 @@ export type UserCreateWithoutCreatedProgressEvaluationsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -45159,6 +45959,8 @@ export type UserUncheckedCreateWithoutCreatedProgressEvaluationsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -45277,6 +46079,8 @@ export type UserCreateWithoutUpdatedProgressEvaluationsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -45394,6 +46198,8 @@ export type UserUncheckedCreateWithoutUpdatedProgressEvaluationsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -45523,6 +46329,8 @@ export type UserUpdateWithoutCreatedProgressEvaluationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -45640,6 +46448,8 @@ export type UserUncheckedUpdateWithoutCreatedProgressEvaluationsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -45764,6 +46574,8 @@ export type UserUpdateWithoutUpdatedProgressEvaluationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -45881,6 +46693,8 @@ export type UserUncheckedUpdateWithoutUpdatedProgressEvaluationsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -45994,6 +46808,8 @@ export type UserCreateWithoutCreatedEventsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -46111,6 +46927,8 @@ export type UserUncheckedCreateWithoutCreatedEventsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -46229,6 +47047,8 @@ export type UserCreateWithoutUpdatedEventsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -46346,6 +47166,8 @@ export type UserUncheckedCreateWithoutUpdatedEventsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -46475,6 +47297,8 @@ export type UserUpdateWithoutCreatedEventsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -46592,6 +47416,8 @@ export type UserUncheckedUpdateWithoutCreatedEventsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -46716,6 +47542,8 @@ export type UserUpdateWithoutUpdatedEventsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -46833,6 +47661,8 @@ export type UserUncheckedUpdateWithoutUpdatedEventsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -46946,6 +47776,8 @@ export type UserCreateWithoutCreatedSessionBookingsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -47063,6 +47895,8 @@ export type UserUncheckedCreateWithoutCreatedSessionBookingsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -47181,6 +48015,8 @@ export type UserCreateWithoutUpdatedSessionBookingsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -47298,6 +48134,8 @@ export type UserUncheckedCreateWithoutUpdatedSessionBookingsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -47427,6 +48265,8 @@ export type UserUpdateWithoutCreatedSessionBookingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -47544,6 +48384,8 @@ export type UserUncheckedUpdateWithoutCreatedSessionBookingsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -47668,6 +48510,8 @@ export type UserUpdateWithoutUpdatedSessionBookingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -47785,6 +48629,8 @@ export type UserUncheckedUpdateWithoutUpdatedSessionBookingsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -47898,6 +48744,8 @@ export type UserCreateWithoutCreatedMatchCallUpsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -48015,6 +48863,8 @@ export type UserUncheckedCreateWithoutCreatedMatchCallUpsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -48133,6 +48983,8 @@ export type UserCreateWithoutUpdatedMatchCallUpsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -48250,6 +49102,8 @@ export type UserUncheckedCreateWithoutUpdatedMatchCallUpsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -48379,6 +49233,8 @@ export type UserUpdateWithoutCreatedMatchCallUpsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -48496,6 +49352,8 @@ export type UserUncheckedUpdateWithoutCreatedMatchCallUpsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -48620,6 +49478,8 @@ export type UserUpdateWithoutUpdatedMatchCallUpsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -48737,6 +49597,8 @@ export type UserUncheckedUpdateWithoutUpdatedMatchCallUpsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -48850,6 +49712,8 @@ export type UserCreateWithoutCreatedMatchLineupsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -48967,6 +49831,8 @@ export type UserUncheckedCreateWithoutCreatedMatchLineupsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -49085,6 +49951,8 @@ export type UserCreateWithoutUpdatedMatchLineupsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -49202,6 +50070,8 @@ export type UserUncheckedCreateWithoutUpdatedMatchLineupsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -49331,6 +50201,8 @@ export type UserUpdateWithoutCreatedMatchLineupsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -49448,6 +50320,8 @@ export type UserUncheckedUpdateWithoutCreatedMatchLineupsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -49572,6 +50446,8 @@ export type UserUpdateWithoutUpdatedMatchLineupsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -49689,6 +50565,8 @@ export type UserUncheckedUpdateWithoutUpdatedMatchLineupsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -49802,6 +50680,8 @@ export type UserCreateWithoutAuditLogsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -49919,6 +50799,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -50048,6 +50930,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -50165,6 +51049,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -50278,6 +51164,8 @@ export type UserCreateWithoutCreatedAccountCategoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutUpdatedByInput
@@ -50395,6 +51283,8 @@ export type UserUncheckedCreateWithoutCreatedAccountCategoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -50513,6 +51403,8 @@ export type UserCreateWithoutUpdatedAccountCategoriesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -50630,6 +51522,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountCategoriesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -50759,6 +51653,8 @@ export type UserUpdateWithoutCreatedAccountCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutUpdatedByNestedInput
@@ -50876,6 +51772,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountCategoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -51000,6 +51898,8 @@ export type UserUpdateWithoutUpdatedAccountCategoriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -51117,6 +52017,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountCategoriesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -51230,6 +52132,8 @@ export type UserCreateWithoutCreatedAccountChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -51347,6 +52251,8 @@ export type UserUncheckedCreateWithoutCreatedAccountChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -51465,6 +52371,8 @@ export type UserCreateWithoutUpdatedAccountChargesInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -51582,6 +52490,8 @@ export type UserUncheckedCreateWithoutUpdatedAccountChargesInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -51711,6 +52621,8 @@ export type UserUpdateWithoutCreatedAccountChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -51828,6 +52740,8 @@ export type UserUncheckedUpdateWithoutCreatedAccountChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -51952,6 +52866,8 @@ export type UserUpdateWithoutUpdatedAccountChargesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -52069,6 +52985,8 @@ export type UserUncheckedUpdateWithoutUpdatedAccountChargesInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -52182,6 +53100,8 @@ export type UserCreateWithoutCashClosuresCreatedInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -52299,6 +53219,8 @@ export type UserUncheckedCreateWithoutCashClosuresCreatedInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -52417,6 +53339,8 @@ export type UserCreateWithoutCashClosuresUpdatedInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -52534,6 +53458,8 @@ export type UserUncheckedCreateWithoutCashClosuresUpdatedInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -52663,6 +53589,8 @@ export type UserUpdateWithoutCashClosuresCreatedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -52780,6 +53708,8 @@ export type UserUncheckedUpdateWithoutCashClosuresCreatedInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -52904,6 +53834,8 @@ export type UserUpdateWithoutCashClosuresUpdatedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -53021,6 +53953,8 @@ export type UserUncheckedUpdateWithoutCashClosuresUpdatedInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -53134,6 +54068,8 @@ export type UserCreateWithoutAttachmentsInput = {
   email: string
   password: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryCreateNestedManyWithoutCreatedByInput
@@ -53251,6 +54187,8 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   personId?: string | null
   roleId: string
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedCreateNestedManyWithoutCreatedByInput
@@ -53380,6 +54318,8 @@ export type UserUpdateWithoutAttachmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -53497,6 +54437,8 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -53611,6 +54553,8 @@ export type UserCreateManyRoleInput = {
   password: string
   personId?: string | null
   isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -53620,6 +54564,8 @@ export type UserUpdateWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUpdateManyWithoutCreatedByNestedInput
@@ -53736,6 +54682,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAccountCategories?: Prisma.AccountCategoryUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -53851,6 +54799,8 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -54829,6 +55779,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdAccountCategories?: boolean | Prisma.User$createdAccountCategoriesArgs<ExtArgs>
@@ -54948,6 +55900,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   person?: boolean | Prisma.User$personArgs<ExtArgs>
@@ -54961,6 +55915,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   person?: boolean | Prisma.User$personArgs<ExtArgs>
@@ -54974,11 +55930,13 @@ export type UserSelectScalar = {
   personId?: boolean
   roleId?: boolean
   isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "personId" | "roleId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "personId" | "roleId" | "isActive" | "failedLoginAttempts" | "lockedUntil" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdAccountCategories?: boolean | Prisma.User$createdAccountCategoriesArgs<ExtArgs>
   updatedAccountCategories?: boolean | Prisma.User$updatedAccountCategoriesArgs<ExtArgs>
@@ -55216,6 +56174,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     personId: string | null
     roleId: string
     isActive: boolean
+    failedLoginAttempts: number
+    lockedUntil: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -55754,6 +56714,8 @@ export interface UserFieldRefs {
   readonly personId: Prisma.FieldRef<"User", 'String'>
   readonly roleId: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly failedLoginAttempts: Prisma.FieldRef<"User", 'Int'>
+  readonly lockedUntil: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

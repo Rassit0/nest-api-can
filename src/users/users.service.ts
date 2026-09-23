@@ -20,6 +20,7 @@ export const userSelect: Prisma.UserSelect = {
   isActive: true,
   personId: true,
   roleId: true,
+  lockedUntil: true,
   createdAt: true,
   updatedAt: true,
   role: {
@@ -50,6 +51,13 @@ export class UsersService {
 
   private hashPassword(password: string): string {
     return bcrypt.hashSync(password, 10);
+  }
+
+  private mapUserResponse(user: any) {
+    if (!user) return user;
+    const isLocked = user.lockedUntil != null && new Date(user.lockedUntil) > new Date();
+    const { lockedUntil, ...rest } = user;
+    return { ...rest, isLocked };
   }
 
   async create(createUserDto: CreateUserDto, actor: any) {
@@ -87,7 +95,7 @@ export class UsersService {
     return {
       message: 'Usuario creado exitosamente',
       data: {
-        ...newUser,
+        ...this.mapUserResponse(newUser),
         tempPassword, // Return cleartext password only once
       },
     };
@@ -130,7 +138,9 @@ export class UsersService {
       this.prisma.user.count({ where }),
     ]);
 
-    return createPaginationResult(users, totalItems, page, per_page, 'Usuarios obtenidos exitosamente');
+    const mappedUsers = users.map(user => this.mapUserResponse(user));
+
+    return createPaginationResult(mappedUsers, totalItems, page, per_page, 'Usuarios obtenidos exitosamente');
   }
 
   async findOne(id: string) {
@@ -143,7 +153,7 @@ export class UsersService {
     }
     return {
       message: 'Usuario obtenido exitosamente',
-      data: user,
+      data: this.mapUserResponse(user),
     };
   }
 
@@ -229,7 +239,7 @@ export class UsersService {
 
     return {
       message: 'Usuario actualizado exitosamente',
-      data: updatedUser,
+      data: this.mapUserResponse(updatedUser),
     };
   }
 
@@ -257,7 +267,7 @@ export class UsersService {
     return {
       message: 'Contraseña restablecida exitosamente',
       data: {
-        ...updatedUser,
+        ...this.mapUserResponse(updatedUser),
         tempPassword, // Return cleartext password only once
       },
     };
@@ -311,7 +321,7 @@ export class UsersService {
 
     return {
       message: 'Usuario desactivado exitosamente',
-      data: deactivatedUser,
+      data: this.mapUserResponse(deactivatedUser),
     };
   }
 
@@ -329,7 +339,28 @@ export class UsersService {
 
     return {
       message: 'Usuario reactivado exitosamente',
-      data: reactivatedUser,
+      data: this.mapUserResponse(reactivatedUser),
+    };
+  }
+
+  async unlock(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!user) throw new NotFoundException('errors.USER_NOT_FOUND');
+
+    const unlockedUser = await this.prisma.user.update({
+      where: { id },
+      data: {
+        failedLoginAttempts: 0,
+        lockedUntil: null,
+      },
+      select: userSelect,
+    });
+
+    return {
+      message: 'Cuenta desbloqueada exitosamente',
+      data: this.mapUserResponse(unlockedUser),
     };
   }
 

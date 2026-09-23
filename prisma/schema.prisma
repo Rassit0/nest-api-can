@@ -675,6 +675,8 @@ model User {
   personId                          String?                     @unique @map("person_id")
   roleId                            String                      @map("role_id")
   isActive                          Boolean                     @default(true) @map("is_active")
+  failedLoginAttempts               Int                         @default(0) @map("failed_login_attempts")
+  lockedUntil                       DateTime?                   @map("locked_until")
   createdAt                         DateTime                    @default(now()) @map("created_at")
   updatedAt                         DateTime                    @updatedAt @map("updated_at")
   createdAccountCategories          AccountCategory[]           @relation("CreatedBy")
