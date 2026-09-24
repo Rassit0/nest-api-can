@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import {
   Prisma,
@@ -25,7 +30,7 @@ export class MembershipLateFeeService {
    * Este mÃ©todo puede ser llamado por un Cron Job todas las noches.
    */
   async applyDailyLateFees() {
-    this.logger.log('Iniciando proceso diario de cÃ¡lculo de recargos...');
+    this.logger.log('Iniciando proceso diario de cálculo de recargos...');
 
     const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
 
@@ -58,7 +63,7 @@ export class MembershipLateFeeService {
   }
 
   /**
-   * LÃ³gica interna para evaluar y aplicar la mora a un cargo individual (CRON)
+   * Lógica interna para evaluar y aplicar la mora a un cargo individual (CRON)
    */
   private async processChargeLateFee(
     tx: Prisma.TransactionClient,
@@ -68,7 +73,8 @@ export class MembershipLateFeeService {
     const preview = this.calculateLateFee(baseCharge, evaluationDate);
     if (preview.totalLateFeeAmount <= 0) return;
 
-    const existingLateFeeCharge = await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
+    const existingLateFeeCharge =
+      await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
 
     if (existingLateFeeCharge) {
       if (
@@ -77,7 +83,7 @@ export class MembershipLateFeeService {
         existingLateFeeCharge.status === StatusCharge.PAID
       ) {
         const previousAmount = Number(existingLateFeeCharge.amount);
-        
+
         // `difference` representa únicamente la mora aún no materializada.
         // Al calcularla sobre el Charge bloqueado, una ejecución concurrente
         // observa el monto actualizado y no vuelve a generar la misma mora.
@@ -89,7 +95,8 @@ export class MembershipLateFeeService {
             existingLateFeeCharge.id,
             {
               amount: preview.totalLateFeeAmount,
-              pendingAmount: Number(existingLateFeeCharge.pendingAmount) + difference,
+              pendingAmount:
+                Number(existingLateFeeCharge.pendingAmount) + difference,
               status:
                 existingLateFeeCharge.status === StatusCharge.PAID
                   ? StatusCharge.PARTIAL
@@ -121,39 +128,53 @@ export class MembershipLateFeeService {
   }
 
   /**
-   * Genera una previsualizaciÃ³n matemÃ¡tica de la mora actual sin persistirla.
+   * Genera una previsualización matemática de la mora actual sin persistirla.
    */
   async previewLateFee(chargeId: string) {
     const baseCharge = await this.lateFeeRepo.findChargeForLateFee(chargeId);
     if (!baseCharge) {
-      throw new NotFoundException('Cargo no encontrado o no pertenece a un CourseSeason.');
+      throw new NotFoundException(
+        'Cargo no encontrado o no pertenece a un CourseSeason.',
+      );
     }
-    
+
     if (baseCharge.status === StatusCharge.CANCELLED) {
-    
-      throw new BadRequestException('No se puede generar mora sobre un cargo anulado.');
-    
+      throw new BadRequestException(
+        'No se puede generar mora sobre un cargo anulado.',
+      );
     }
-    
+
     // Validar que el cargo base no sea ya una mora
-    if (baseCharge.membershipCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
-      throw new BadRequestException('El cargo seleccionado ya es un recargo por mora.');
+    if (
+      baseCharge.membershipCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE
+    ) {
+      throw new BadRequestException(
+        'El cargo seleccionado ya es un recargo por mora.',
+      );
     }
 
     const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
     const preview = this.calculateLateFee(baseCharge, evaluationDate);
-    
+
     if (preview.totalLateFeeAmount <= 0) {
-      throw new BadRequestException('No hay recargo aplicable en este momento (periodo de gracia activo o cargo no vencido).');
+      throw new BadRequestException(
+        'No hay recargo aplicable en este momento (periodo de gracia activo o cargo no vencido).',
+      );
     }
 
-    const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(this.prisma, chargeId);
+    const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(
+      this.prisma,
+      chargeId,
+    );
 
     return {
       chargeId: baseCharge.id,
       dueDate: baseCharge.dueDate,
       daysPassed: preview.elapsedDays,
-      graceDays: Number(baseCharge.membershipCharges[0]?.playerMembership?.teamSeason?.billingConfig?.graceDays || 0),
+      graceDays: Number(
+        baseCharge.membershipCharges[0]?.playerMembership?.teamSeason
+          ?.billingConfig?.graceDays || 0,
+      ),
       punishableDays: preview.penaltyDays,
       lateFeePerDay: preview.lateFeePerDay,
       totalLateFeeAmount: preview.totalLateFeeAmount,
@@ -167,40 +188,59 @@ export class MembershipLateFeeService {
    */
   async applyLateFee(chargeId: string, customAmount?: number) {
     return await this.prisma.$transaction(async (tx) => {
-      const baseCharge = await this.lateFeeRepo.findChargeForLateFee(chargeId, tx);
+      const baseCharge = await this.lateFeeRepo.findChargeForLateFee(
+        chargeId,
+        tx,
+      );
       if (!baseCharge) {
-        throw new NotFoundException('Cargo no encontrado o no pertenece a un CourseSeason.');
+        throw new NotFoundException(
+          'Cargo no encontrado o no pertenece a un CourseSeason.',
+        );
       }
 
       if (baseCharge.status === StatusCharge.CANCELLED) {
-        throw new BadRequestException('No se puede generar mora sobre un cargo anulado.');
+        throw new BadRequestException(
+          'No se puede generar mora sobre un cargo anulado.',
+        );
       }
 
-      if (baseCharge.membershipCharges?.[0]?.type === TypeMembershipCharge.LATE_FEE) {
-        throw new BadRequestException('El cargo seleccionado ya es un recargo por mora.');
+      if (
+        baseCharge.membershipCharges?.[0]?.type ===
+        TypeMembershipCharge.LATE_FEE
+      ) {
+        throw new BadRequestException(
+          'El cargo seleccionado ya es un recargo por mora.',
+        );
       }
 
       const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
       const preview = this.calculateLateFee(baseCharge, evaluationDate);
 
-      const finalAmount = customAmount !== undefined ? customAmount : preview.totalLateFeeAmount;
+      const finalAmount =
+        customAmount !== undefined ? customAmount : preview.totalLateFeeAmount;
 
       if (finalAmount <= 0) {
         throw new BadRequestException('El monto de mora es 0 o menor.');
       }
 
-      const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(tx, chargeId);
+      const existingLateFee = await this.lateFeeRepo.findPendingLateFeeCharge(
+        tx,
+        chargeId,
+      );
       if (existingLateFee) {
-        throw new BadRequestException('Ya existe un recargo por mora pendiente de pago para este cargo. Cancele o pague el recargo actual antes de generar uno nuevo.');
+        throw new BadRequestException(
+          'Ya existe un recargo por mora pendiente de pago para este cargo. Cancele o pague el recargo actual antes de generar uno nuevo.',
+        );
       }
 
       const membershipChargeRelation = baseCharge.membershipCharges[0];
-      
+
       const baseDesc = baseCharge.description?.trim() || 'Cargo original';
-      
-      const description = customAmount !== undefined 
-        ? `Mora sobre: ${baseDesc} (Monto personalizado)` 
-        : `Mora sobre: ${baseDesc}`;
+
+      const description =
+        customAmount !== undefined
+          ? `Mora sobre: ${baseDesc} (Monto personalizado)`
+          : `Mora sobre: ${baseDesc}`;
 
       const newCharge = await this.lateFeeRepo.createLateFeeCharge(tx, {
         parentChargeId: baseCharge.id,
@@ -227,7 +267,7 @@ export class MembershipLateFeeService {
   }
 
   /**
-   * FunciÃ³n pura para calcular matemÃ¡ticamente la mora.
+   * Función pura para calcular matemáticamente la mora.
    */
   public calculateLateFee(
     baseCharge: ChargeWithLateFeeRelations,
@@ -235,7 +275,13 @@ export class MembershipLateFeeService {
   ) {
     const membershipChargeRelation = baseCharge.membershipCharges[0];
     if (!membershipChargeRelation) {
-      return { baseChargeId: baseCharge.id, elapsedDays: 0, penaltyDays: 0, lateFeePerDay: 0, totalLateFeeAmount: 0 };
+      return {
+        baseChargeId: baseCharge.id,
+        elapsedDays: 0,
+        penaltyDays: 0,
+        lateFeePerDay: 0,
+        totalLateFeeAmount: 0,
+      };
     }
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
@@ -244,12 +290,19 @@ export class MembershipLateFeeService {
       !teamSeason.billingConfig?.lateFeeEnabled ||
       teamSeason.billingConfig?.isEngineActive === false
     ) {
-      return { baseChargeId: baseCharge.id, elapsedDays: 0, penaltyDays: 0, lateFeePerDay: 0, totalLateFeeAmount: 0 };
+      return {
+        baseChargeId: baseCharge.id,
+        elapsedDays: 0,
+        penaltyDays: 0,
+        lateFeePerDay: 0,
+        totalLateFeeAmount: 0,
+      };
     }
 
     const dueDate = DateUtils.getEndOfLocalDayInUTC(baseCharge.dueDate);
     const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
-    const individualPauses = membershipChargeRelation.playerMembership?.pauses || [];
+    const individualPauses =
+      membershipChargeRelation.playerMembership?.pauses || [];
     const allPauses = [...teamSeasonPauses, ...individualPauses];
     let pausedDays = 0;
 
@@ -260,7 +313,8 @@ export class MembershipLateFeeService {
           const pEnd = DateUtils.getEndOfLocalDayInUTC(p.endDate);
           return {
             start: pStart < dueDate ? dueDate.getTime() : pStart.getTime(),
-            end: pEnd > evaluationDate ? evaluationDate.getTime() : pEnd.getTime(),
+            end:
+              pEnd > evaluationDate ? evaluationDate.getTime() : pEnd.getTime(),
           };
         })
         .filter((i) => i.start <= i.end);
@@ -279,12 +333,16 @@ export class MembershipLateFeeService {
         }
 
         for (const m of merged) {
-          pausedDays += Math.round((m.end - m.start) / (1000 * 60 * 60 * 24)) + 1;
+          pausedDays +=
+            Math.round((m.end - m.start) / (1000 * 60 * 60 * 24)) + 1;
         }
       }
     }
 
-    const elapsedDays = Math.max(0, this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays);
+    const elapsedDays = Math.max(
+      0,
+      this.calculateElapsedDays(dueDate, evaluationDate) - pausedDays,
+    );
     const graceDays = Number(teamSeason.billingConfig?.graceDays || 0);
 
     if (elapsedDays <= graceDays) {
@@ -315,7 +373,3 @@ export class MembershipLateFeeService {
     return Math.round(diffTime / (1000 * 60 * 60 * 24));
   }
 }
-
-
-
-

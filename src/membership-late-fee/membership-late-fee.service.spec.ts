@@ -83,7 +83,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       expect(lateFeeRepo.createLateFeeCharge).not.toHaveBeenCalled();
     });
 
-    it('Caso 2: Ignorar si aÃºn estÃ¡ dentro de los dÃ­as de gracia', async () => {
+    it('Caso 2: Ignorar si aÃºn está dentro de los dÃ­as de gracia', async () => {
       const mockCharge = {
         id: 'charge-1',
         dueDate: new Date('2026-08-05T00:00:00.000Z'), // 5 dÃ­as vencido
@@ -198,7 +198,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
     });
   });
 
-  describe('Actualizaciones DinÃ¡micas (RecÃ¡lculo Diario de Recargos)', () => {
+  describe('Actualizaciones Dinámicas (Recálculo Diario de Recargos)', () => {
     const baseDate = new Date('2026-08-10T00:00:00.000Z');
 
     beforeAll(() => {
@@ -359,89 +359,214 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
     describe('previewLateFee', () => {
       it('Lanza NotFound si el cargo no existe', async () => {
         lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue(null);
-        await expect(service.previewLateFee('123')).rejects.toThrow('Cargo no encontrado');
+        await expect(service.previewLateFee('123')).rejects.toThrow(
+          'Cargo no encontrado',
+        );
       });
 
       it('Lanza BadRequest si el cargo esta CANCELLED', async () => {
         lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue({
-          id: '123', status: StatusCharge.CANCELLED,
-          membershipCharges: [{ playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.CANCELLED,
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 2,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         } as any);
         await expect(service.previewLateFee('123')).rejects.toThrow('anulado');
       });
 
       it('Lanza BadRequest si el cargo ya es de tipo LATE_FEE', async () => {
         lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue({
-          id: '123', status: StatusCharge.PENDING,
-          membershipCharges: [{ type: TypeMembershipCharge.LATE_FEE, playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.PENDING,
+          membershipCharges: [
+            {
+              type: TypeMembershipCharge.LATE_FEE,
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 2,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         } as any);
-        await expect(service.previewLateFee('123')).rejects.toThrow('recargo por mora');
+        await expect(service.previewLateFee('123')).rejects.toThrow(
+          'recargo por mora',
+        );
       });
     });
 
     describe('applyLateFee', () => {
       it('Falla si customAmount es <= 0', async () => {
         const mockCharge = {
-          id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'), 
-          membershipCharges: [{ playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.PENDING,
+          dueDate: new Date('2026-08-01T00:00:00.000Z'),
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 0,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         };
-        lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue(mockCharge as any);
-        lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
-        
-        await expect(service.applyLateFee('123', 0)).rejects.toThrow('El monto de mora es 0 o menor.');
+        lateFeeRepo.findChargeForLateFee = jest
+          .fn()
+          .mockResolvedValue(mockCharge as any);
+        lateFeeRepo.findPendingLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue(null);
+
+        await expect(service.applyLateFee('123', 0)).rejects.toThrow(
+          'El monto de mora es 0 o menor.',
+        );
       });
 
       it('Sin customAmount utiliza el calculo automatico', async () => {
         const mockCharge = {
-          id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'),
-          membershipCharges: [{ playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.PENDING,
+          dueDate: new Date('2026-08-01T00:00:00.000Z'),
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 0,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         };
-        lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue(mockCharge as any);
-        lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
-        lateFeeRepo.createLateFeeCharge = jest.fn().mockResolvedValue({ id: 'new-late-fee' } as any);
-        
+        lateFeeRepo.findChargeForLateFee = jest
+          .fn()
+          .mockResolvedValue(mockCharge as any);
+        lateFeeRepo.findPendingLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue(null);
+        lateFeeRepo.createLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue({ id: 'new-late-fee' } as any);
+
         await service.applyLateFee('123', undefined);
-        
+
         expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
           expect.anything(),
-          expect.objectContaining({ parentChargeId: '123', amount: 90, pendingAmount: 90 })
+          expect.objectContaining({
+            parentChargeId: '123',
+            amount: 90,
+            pendingAmount: 90,
+          }),
         );
       });
 
       it('PENDING + customAmount: prioriza el monto manual', async () => {
         const mockCharge = {
-          id: '123', status: StatusCharge.PENDING, dueDate: new Date('2026-08-01T00:00:00.000Z'),
-          membershipCharges: [{ playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.PENDING,
+          dueDate: new Date('2026-08-01T00:00:00.000Z'),
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 0,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         };
-        lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue(mockCharge as any);
-        lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
-        lateFeeRepo.createLateFeeCharge = jest.fn().mockResolvedValue({ id: 'new-late-fee' } as any);
-        
-        await service.applyLateFee('123', 100); 
-        
+        lateFeeRepo.findChargeForLateFee = jest
+          .fn()
+          .mockResolvedValue(mockCharge as any);
+        lateFeeRepo.findPendingLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue(null);
+        lateFeeRepo.createLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue({ id: 'new-late-fee' } as any);
+
+        await service.applyLateFee('123', 100);
+
         expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
           expect.anything(),
-          expect.objectContaining({ parentChargeId: '123', amount: 100, pendingAmount: 100 })
+          expect.objectContaining({
+            parentChargeId: '123',
+            amount: 100,
+            pendingAmount: 100,
+          }),
         );
       });
 
       it('PAID + customAmount: crea LATE_FEE PENDING correctamente y mantiene intacto el padre', async () => {
         const mockCharge = {
-          id: '123', status: StatusCharge.PAID, amount: 300, adjustmentAmount: -50, pendingAmount: 0, dueDate: new Date('2026-08-01T00:00:00.000Z'),
-          membershipCharges: [{ playerMembership: { teamSeason: { billingConfig: { lateFeeEnabled: true, graceDays: 0, lateFeePerDay: 10 } } } }],
+          id: '123',
+          status: StatusCharge.PAID,
+          amount: 300,
+          adjustmentAmount: -50,
+          pendingAmount: 0,
+          dueDate: new Date('2026-08-01T00:00:00.000Z'),
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 0,
+                    lateFeePerDay: 10,
+                  },
+                },
+              },
+            },
+          ],
         };
-        lateFeeRepo.findChargeForLateFee = jest.fn().mockResolvedValue(mockCharge as any);
-        lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
-        lateFeeRepo.createLateFeeCharge = jest.fn().mockResolvedValue({ id: 'new-late-fee' } as any);
-        
-        await service.applyLateFee('123', 75); 
-        
+        lateFeeRepo.findChargeForLateFee = jest
+          .fn()
+          .mockResolvedValue(mockCharge as any);
+        lateFeeRepo.findPendingLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue(null);
+        lateFeeRepo.createLateFeeCharge = jest
+          .fn()
+          .mockResolvedValue({ id: 'new-late-fee' } as any);
+
+        await service.applyLateFee('123', 75);
+
         expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
           expect.anything(),
           expect.objectContaining({
-            parentChargeId: '123', amount: 75, pendingAmount: 75,
-            status: StatusCharge.PENDING, chargeCategory: 'LATE_FEE'
-          })
+            parentChargeId: '123',
+            amount: 75,
+            pendingAmount: 75,
+            status: StatusCharge.PENDING,
+            chargeCategory: 'LATE_FEE',
+          }),
         );
 
         expect(mockCharge.status).toBe(StatusCharge.PAID);
@@ -461,22 +586,32 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         description: 'Cuota Mes - Julio 2026',
         status: StatusCharge.PENDING,
         dueDate: new Date('2026-08-01T00:00:00.000Z'),
-        membershipCharges: [{ 
-          type: TypeMembershipCharge.REGISTRATION, 
-          playerMembershipId: 'mem-1',
-          playerMembership: { 
-            pauses: [], 
-            teamSeason: { 
-              billingConfig: { lateFeeEnabled: true, graceDays: 2, lateFeePerDay: 5 }, 
-              teamSeasonPauses: [] 
-            } 
-          } 
-        }],
+        membershipCharges: [
+          {
+            type: TypeMembershipCharge.REGISTRATION,
+            playerMembershipId: 'mem-1',
+            playerMembership: {
+              pauses: [],
+              teamSeason: {
+                billingConfig: {
+                  lateFeeEnabled: true,
+                  graceDays: 2,
+                  lateFeePerDay: 5,
+                },
+                teamSeasonPauses: [],
+              },
+            },
+          },
+        ],
       };
       lateFeeRepo.findExistingLateFeeCharge = jest.fn().mockResolvedValue(null);
       lateFeeRepo.findPendingLateFeeCharge = jest.fn().mockResolvedValue(null);
-      lateFeeRepo.createLateFeeCharge = jest.fn().mockResolvedValue({ id: 'new-late-fee' } as any);
-      lateFeeRepo.findOverdueCharges = jest.fn().mockResolvedValue([mockBaseCharge]);
+      lateFeeRepo.createLateFeeCharge = jest
+        .fn()
+        .mockResolvedValue({ id: 'new-late-fee' } as any);
+      lateFeeRepo.findOverdueCharges = jest
+        .fn()
+        .mockResolvedValue([mockBaseCharge]);
       lateFeeRepo.findChargeForLateFee = jest.fn();
       lateFeeRepo.updateLateFeeCharge = jest.fn();
     });
@@ -488,7 +623,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.anything(),
         expect.objectContaining({
           description: 'Mora sobre: Cuota Mes - Julio 2026',
-        })
+        }),
       );
     });
 
@@ -498,8 +633,9 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
-          description: 'Mora sobre: Cuota Mes - Julio 2026 (Monto personalizado)',
-        })
+          description:
+            'Mora sobre: Cuota Mes - Julio 2026 (Monto personalizado)',
+        }),
       );
     });
 
@@ -511,7 +647,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.anything(),
         expect.objectContaining({
           description: 'Mora sobre: Cargo original',
-        })
+        }),
       );
     });
 
@@ -523,7 +659,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.anything(),
         expect.objectContaining({
           description: 'Mora sobre: Cargo original',
-        })
+        }),
       );
     });
 
@@ -535,7 +671,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.anything(),
         expect.objectContaining({
           description: 'Mora sobre: Cargo original',
-        })
+        }),
       );
     });
 
@@ -547,7 +683,7 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         expect.anything(),
         expect.objectContaining({
           description: 'Mora sobre: Cuota Mes - Julio 2026 (8 días de retraso)',
-        })
+        }),
       );
       jest.useRealTimers();
     });
@@ -560,15 +696,17 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
         amount: 30,
         pendingAmount: 30,
       };
-      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(existingLateFee as any);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(
+        existingLateFee as any,
+      );
       await service.applyDailyLateFees();
-      
+
       expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
         expect.anything(),
         'late-1',
         expect.objectContaining({
           description: 'Mora sobre: Cuota Mes - Julio 2026 (8 x 5/día)',
-        })
+        }),
       );
       jest.useRealTimers();
     });
