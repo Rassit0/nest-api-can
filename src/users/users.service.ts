@@ -13,6 +13,8 @@ import { UsersPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
+import { PersonsService } from '../persons/persons.service';
+import { MemoryStoredFile } from 'nestjs-form-data';
 
 export const userSelect: Prisma.UserSelect = {
   id: true,
@@ -47,7 +49,10 @@ export const userSelect: Prisma.UserSelect = {
 export class UsersService {
   private readonly logger = new Logger('UsersService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly personsService: PersonsService,
+  ) {}
 
   private hashPassword(password: string): string {
     return bcrypt.hashSync(password, 10);
@@ -141,6 +146,88 @@ export class UsersService {
     const mappedUsers = users.map(user => this.mapUserResponse(user));
 
     return createPaginationResult(mappedUsers, totalItems, page, per_page, 'Usuarios obtenidos exitosamente');
+  }
+
+  async findMyProfile(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        person: {
+          select: {
+            id: true,
+            name: true,
+            lastName: true,
+            imageUrl: true,
+          }
+        }
+      }
+    });
+
+    if (!user) {
+      throw new NotFoundException('errors.USER_NOT_FOUND');
+    }
+
+    return {
+      message: 'Perfil obtenido exitosamente',
+      data: user.person,
+    };
+  }
+
+  async findMyDetailedProfile(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        email: true,
+        role: {
+          select: { name: true },
+        },
+        person: {
+          select: {
+            id: true,
+            name: true,
+            lastName: true,
+            secondLastName: true,
+            documentType: true,
+            documentNumber: true,
+            phone: true,
+            address: true,
+            imageUrl: true,
+          }
+        }
+      }
+    });
+
+    if (!user) {
+      throw new NotFoundException('errors.USER_NOT_FOUND');
+    }
+
+    return {
+      message: 'Perfil detallado obtenido exitosamente',
+      data: {
+        user: {
+          email: user.email,
+          role: user.role?.name,
+        },
+        person: user.person,
+      },
+    };
+  }
+
+  async updateSelfAvatar(userId: string, file: MemoryStoredFile) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { personId: true },
+    });
+    
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+    
+    if (!user.personId) {
+      throw new BadRequestException('El usuario no tiene una persona vinculada para actualizar el avatar');
+    }
+
+    return await this.personsService.updateAvatar(user.personId, file);
   }
 
   async findOne(id: string) {

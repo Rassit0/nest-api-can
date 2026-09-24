@@ -42,6 +42,7 @@ import { PersonResponseDto } from '../common/dto/responses/entities.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { UpdateAvatarDto } from './dto/update-avatar.dto';
 
 import { SecretarySummaryResponseDto } from './dto/secretary-summary.dto';
 
@@ -92,6 +93,7 @@ export class PersonsController {
     'CREATE_STUDENTS',
     'CREATE_STAFF',
     'CREATE_USERS',
+    'UPDATE_USERS',
     'READ_TRANSACTIONS',
     'CREATE_ACCOUNT_CHARGES',
   )
@@ -135,6 +137,26 @@ export class PersonsController {
   @RequirePermissions('READ_PERSONS')
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return await this.personsService.findOne(id);
+  }
+
+  @Patch(':id/avatar')
+  @ApiOperation({
+    summary: 'Actualizar avatar de persona (Administrativo)',
+    description: 'Modifica únicamente la foto de perfil de una persona.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la persona a actualizar (UUID)',
+    format: 'uuid',
+  })
+  @ApiConsumes('multipart/form-data')
+  @FormDataRequest()
+  @RequirePermissions('UPDATE_PERSONS')
+  async updateAvatar(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateAvatarDto: UpdateAvatarDto,
+  ) {
+    return await this.personsService.updateAvatar(id, updateAvatarDto.file);
   }
 
   @Patch(':id')

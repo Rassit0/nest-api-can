@@ -463,7 +463,9 @@ export const ModelName = {
   HeroBanner: 'HeroBanner',
   HomeDiscipline: 'HomeDiscipline',
   NewsCategory: 'NewsCategory',
-  Promotion: 'Promotion'
+  Promotion: 'Promotion',
+  InstitutionHistorySettings: 'InstitutionHistorySettings',
+  InstitutionHistoryItem: 'InstitutionHistoryItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -479,7 +481,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5959,6 +5961,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    InstitutionHistorySettings: {
+      payload: Prisma.$InstitutionHistorySettingsPayload<ExtArgs>
+      fields: Prisma.InstitutionHistorySettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InstitutionHistorySettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InstitutionHistorySettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.InstitutionHistorySettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InstitutionHistorySettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        findMany: {
+          args: Prisma.InstitutionHistorySettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>[]
+        }
+        create: {
+          args: Prisma.InstitutionHistorySettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        createMany: {
+          args: Prisma.InstitutionHistorySettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InstitutionHistorySettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.InstitutionHistorySettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        update: {
+          args: Prisma.InstitutionHistorySettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.InstitutionHistorySettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InstitutionHistorySettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InstitutionHistorySettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.InstitutionHistorySettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistorySettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.InstitutionHistorySettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInstitutionHistorySettings>
+        }
+        groupBy: {
+          args: Prisma.InstitutionHistorySettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionHistorySettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InstitutionHistorySettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionHistorySettingsCountAggregateOutputType> | number
+        }
+      }
+    }
+    InstitutionHistoryItem: {
+      payload: Prisma.$InstitutionHistoryItemPayload<ExtArgs>
+      fields: Prisma.InstitutionHistoryItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InstitutionHistoryItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InstitutionHistoryItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        findFirst: {
+          args: Prisma.InstitutionHistoryItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InstitutionHistoryItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        findMany: {
+          args: Prisma.InstitutionHistoryItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>[]
+        }
+        create: {
+          args: Prisma.InstitutionHistoryItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        createMany: {
+          args: Prisma.InstitutionHistoryItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InstitutionHistoryItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>[]
+        }
+        delete: {
+          args: Prisma.InstitutionHistoryItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        update: {
+          args: Prisma.InstitutionHistoryItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.InstitutionHistoryItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InstitutionHistoryItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InstitutionHistoryItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.InstitutionHistoryItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstitutionHistoryItemPayload>
+        }
+        aggregate: {
+          args: Prisma.InstitutionHistoryItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInstitutionHistoryItem>
+        }
+        groupBy: {
+          args: Prisma.InstitutionHistoryItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionHistoryItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InstitutionHistoryItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstitutionHistoryItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -7256,6 +7406,32 @@ export const PromotionScalarFieldEnum = {
 export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
 
 
+export const InstitutionHistorySettingsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  imageAlt: 'imageAlt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionHistorySettingsScalarFieldEnum = (typeof InstitutionHistorySettingsScalarFieldEnum)[keyof typeof InstitutionHistorySettingsScalarFieldEnum]
+
+
+export const InstitutionHistoryItemScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  title: 'title',
+  description: 'description',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionHistoryItemScalarFieldEnum = (typeof InstitutionHistoryItemScalarFieldEnum)[keyof typeof InstitutionHistoryItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -8107,6 +8283,8 @@ export type GlobalOmitConfig = {
   homeDiscipline?: Prisma.HomeDisciplineOmit
   newsCategory?: Prisma.NewsCategoryOmit
   promotion?: Prisma.PromotionOmit
+  institutionHistorySettings?: Prisma.InstitutionHistorySettingsOmit
+  institutionHistoryItem?: Prisma.InstitutionHistoryItemOmit
 }
 
 /* Types for Logging */

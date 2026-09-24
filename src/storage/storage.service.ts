@@ -87,8 +87,8 @@ export class StorageService {
    */
   extractInternalNameFromUrl(url: string): string | null {
     if (!url) return null;
-    // Busca: (banners|hero-banners|home-disciplines|promotions|news|attachments|clubs|teams)/<UUIDv4>.<ext> al final de la URL
-    const regex = /(banners|hero-banners|home-disciplines|promotions|news|attachments|clubs|teams)\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\.[a-zA-Z0-9]+$/;
+    // Busca: (banners|hero-banners|home-disciplines|promotions|news|attachments|clubs|teams|avatars)/<UUIDv4>.<ext> al final de la URL
+    const regex = /(banners|hero-banners|home-disciplines|promotions|news|attachments|clubs|teams|avatars)\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\.[a-zA-Z0-9]+$/;
     const match = url.match(regex);
     return match ? match[0] : null;
   }

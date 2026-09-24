@@ -387,3 +387,13 @@ export type NewsCategory = Prisma.NewsCategoryModel
  * 
  */
 export type Promotion = Prisma.PromotionModel
+/**
+ * Model InstitutionHistorySettings
+ * 
+ */
+export type InstitutionHistorySettings = Prisma.InstitutionHistorySettingsModel
+/**
+ * Model InstitutionHistoryItem
+ * 
+ */
+export type InstitutionHistoryItem = Prisma.InstitutionHistoryItemModel

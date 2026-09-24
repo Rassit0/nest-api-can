@@ -122,7 +122,9 @@ export const ModelName = {
   HeroBanner: 'HeroBanner',
   HomeDiscipline: 'HomeDiscipline',
   NewsCategory: 'NewsCategory',
-  Promotion: 'Promotion'
+  Promotion: 'Promotion',
+  InstitutionHistorySettings: 'InstitutionHistorySettings',
+  InstitutionHistoryItem: 'InstitutionHistoryItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1397,6 +1399,32 @@ export const PromotionScalarFieldEnum = {
 } as const
 
 export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
+
+
+export const InstitutionHistorySettingsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  imageAlt: 'imageAlt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionHistorySettingsScalarFieldEnum = (typeof InstitutionHistorySettingsScalarFieldEnum)[keyof typeof InstitutionHistorySettingsScalarFieldEnum]
+
+
+export const InstitutionHistoryItemScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  title: 'title',
+  description: 'description',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstitutionHistoryItemScalarFieldEnum = (typeof InstitutionHistoryItemScalarFieldEnum)[keyof typeof InstitutionHistoryItemScalarFieldEnum]
 
 
 export const SortOrder = {

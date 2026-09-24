@@ -83,6 +83,7 @@ import { NewsCategoriesModule } from './news-categories/news-categories.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { HeroBannersModule } from './hero-banners/hero-banners.module';
 import { HomeDisciplinesModule } from './home-disciplines/home-disciplines.module';
+import { InstitutionHistoryModule } from './institution-history/institution-history.module';
 
 @Module({
   imports: [
@@ -165,6 +166,7 @@ import { HomeDisciplinesModule } from './home-disciplines/home-disciplines.modul
     PromotionsModule,
     HeroBannersModule,
     HomeDisciplinesModule,
+    InstitutionHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

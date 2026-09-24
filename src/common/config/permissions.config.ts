@@ -48,6 +48,7 @@ export const SystemModules = [
   'NEWS',
   'BANNERS',
   'PROMOTIONS',
+  'INSTITUTION_HISTORY',
 ] as const;
 
 export type SystemModuleName = (typeof SystemModules)[number];
@@ -124,6 +125,7 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
   NEWS: crud('NEWS'),
   BANNERS: crud('BANNERS'),
   PROMOTIONS: crud('PROMOTIONS'),
+  INSTITUTION_HISTORY: crud('INSTITUTION_HISTORY'),
 };
 
 // Array plano con todos los permisos del sistema

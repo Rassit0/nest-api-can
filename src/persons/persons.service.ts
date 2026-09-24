@@ -13,6 +13,8 @@ import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { PersonPaginationDto } from './dto/pagination.dto';
 import { PersonsOptionsPaginationDto, ExcludeRole } from './dto/persons-options-pagination.dto';
+import { StorageService } from '../storage/storage.service';
+import { MemoryStoredFile } from 'nestjs-form-data';
 
 export const PersonSelect: Prisma.PersonSelect = {
   id: true,
@@ -35,7 +37,10 @@ export const PersonSelect: Prisma.PersonSelect = {
 export class PersonsService {
   private readonly logger = new Logger('PersonsService');
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly storageService: StorageService,
+  ) {}
 
   async create(createPersonDto: CreatePersonDto) {
     const { imageUrl, ...personData } = createPersonDto;
@@ -48,6 +53,66 @@ export class PersonsService {
     return {
       message: 'Persona agregada exitosamente',
       data: newPerson,
+    };
+  }
+
+  async updateAvatar(personId: string, file: MemoryStoredFile) {
+    const person = await this.prisma.person.findUnique({
+      where: { id: personId },
+    });
+
+    if (!person) {
+      throw new NotFoundException('Persona no encontrada');
+    }
+
+    const fileRecord = file as unknown as Record<string, unknown>;
+    const multerFile = {
+      buffer: file.buffer,
+      mimetype: (fileRecord.busBoyMimeType || fileRecord.mimeType || fileRecord.mimetype) as string,
+      originalname: file.originalName,
+      size: file.size,
+    } as Express.Multer.File;
+
+    // 1. Upload new image
+    const uploadResult = await this.storageService.uploadFile(multerFile, 'avatars', { aspectRatio: '1:1', position: 'center' });
+
+    // 2. Update DB
+    const oldImageUrl = person.imageUrl;
+    let dbSuccess = false;
+    let newImageUrl = uploadResult.url;
+
+    try {
+      await this.prisma.person.update({
+        where: { id: personId },
+        data: { imageUrl: newImageUrl },
+      });
+      dbSuccess = true;
+    } catch (error) {
+      this.logger.error(`Error actualizando avatar en DB para la persona ${personId}:`, error);
+      // DB FAILURE -> attempt to clean up the newly uploaded file
+      try {
+        await this.storageService.deleteFile(uploadResult.internalName);
+      } catch (cleanupError) {
+        this.logger.warn(`No se pudo eliminar la imagen nueva (compensación) ${uploadResult.internalName}:`, cleanupError);
+      }
+      throw new InternalServerErrorException('Error al actualizar el avatar en la base de datos');
+    }
+
+    // 3. Compensation logic: DB SUCCESS -> attempt to clean up old image
+    if (dbSuccess && oldImageUrl) {
+      const oldInternalName = this.storageService.extractInternalNameFromUrl(oldImageUrl);
+      if (oldInternalName) {
+        try {
+          await this.storageService.deleteFile(oldInternalName);
+        } catch (cleanupError) {
+          this.logger.warn(`No se pudo eliminar la imagen anterior ${oldInternalName}:`, cleanupError);
+        }
+      }
+    }
+
+    return {
+      message: 'Avatar actualizado exitosamente',
+      data: { imageUrl: newImageUrl },
     };
   }
 

@@ -11,6 +11,7 @@ export const authSelect = {
   email: true,
   password: true,
   isActive: true,
+  personId: true,
   role: {
     select: {
       id: true,

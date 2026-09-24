@@ -120,6 +120,29 @@ export class PersonResponseDto {
   user?: any;
 }
 
+export class CurrentPersonDto {
+  @ApiProperty({
+    example: 'string',
+  })
+  id: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  name: string;
+
+  @ApiProperty({
+    example: 'string',
+  })
+  lastName: string;
+
+  @ApiProperty({
+    required: false,
+    example: 'string',
+  })
+  imageUrl?: string | null;
+}
+
 export class PersonContactResponseDto {
   @ApiProperty({
     example: 'string',
