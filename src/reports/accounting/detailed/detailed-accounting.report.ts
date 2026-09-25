@@ -488,10 +488,36 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     ];
 
     content.push({
-      text: `SALDO ANTERIOR: Bs ${openingBalance.toFixed(2)}`,
-      style: 'sectionTitle',
-      color: '#1F4E79',
-      margin: [0, 0, 0, 10],
+      table: {
+        widths: ['*', 'auto'],
+        body: [
+          [
+            {
+              text: 'SALDO ANTERIOR',
+              bold: true,
+              fontSize: 10,
+              color: '#1F4E79',
+              margin: [10, 8, 0, 8],
+              border: [false, false, false, false],
+            },
+            {
+              text: `Bs ${openingBalance.toFixed(2)}`,
+              bold: true,
+              fontSize: 10,
+              color: '#1F4E79',
+              alignment: 'right',
+              margin: [0, 8, 10, 8],
+              border: [false, false, false, false],
+            }
+          ]
+        ]
+      },
+      layout: {
+        fillColor: '#F5F8FA',
+        hLineWidth: function () { return 0; },
+        vLineWidth: function () { return 0; },
+      },
+      margin: [0, 0, 0, 15],
     });
 
     if (incomeData.groups.length > 0) {
@@ -546,79 +572,43 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         widths: ['*', 'auto'],
         body: [
           [
-            {
-              text: 'SALDO ANTERIOR',
-              bold: true,
-              color: '#1F4E79',
-              border: [false, false, false, false],
-            },
-            {
-              text: `Bs ${openingBalance.toFixed(2)}`,
-              alignment: 'right',
-              color: '#1F4E79',
-              bold: true,
-              border: [false, false, false, false],
-            },
+            { text: 'Saldo anterior', margin: [10, 4, 0, 4], border: [false, false, false, false] },
+            { text: `Bs ${openingBalance.toFixed(2)}`, alignment: 'right', margin: [0, 4, 10, 4], border: [false, false, false, false] },
           ],
           [
-            {
-              text: 'TOTAL INGRESOS',
-              bold: true,
-              color: '#27AE60',
-              border: [false, false, false, false],
-            },
-            {
-              text: `Bs ${grandTotalIncome.toFixed(2)}`,
-              alignment: 'right',
-              color: '#27AE60',
-              border: [false, false, false, false],
-            },
+            { text: 'Total ingresos', margin: [10, 4, 0, 4], border: [false, false, false, false] },
+            { text: `Bs ${grandTotalIncome.toFixed(2)}`, alignment: 'right', color: '#27AE60', margin: [0, 4, 10, 4], border: [false, false, false, false] },
           ],
           [
-            {
-              text: 'TOTAL EGRESOS',
-              bold: true,
-              color: '#C0392B',
-              border: [false, false, false, true],
-            },
-            {
-              text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs ${grandTotalExpense.toFixed(2)}`,
-              alignment: 'right',
-              color: '#C0392B',
-              border: [false, false, false, true],
-            },
+            { text: 'Total egresos', margin: [10, 4, 0, 4], border: [false, false, false, false] },
+            { text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs ${grandTotalExpense.toFixed(2)}`, alignment: 'right', color: '#C0392B', margin: [0, 4, 10, 4], border: [false, false, false, false] },
           ],
           [
-            {
-              text: 'SALDO NETO DEL PERIODO',
-              bold: true,
-              border: [false, false, false, false],
-            },
-            {
-              text: periodBalance >= 0 ? `Bs ${periodBalance.toFixed(2)}` : `- Bs ${Math.abs(periodBalance).toFixed(2)}`,
-              alignment: 'right',
-              bold: true,
-              border: [false, false, false, false],
-            },
+            { text: 'Saldo neto del período', bold: true, margin: [10, 6, 0, 6], border: [false, false, false, false] },
+            { text: periodBalance >= 0 ? `Bs ${periodBalance.toFixed(2)}` : `- Bs ${Math.abs(periodBalance).toFixed(2)}`, bold: true, alignment: 'right', margin: [0, 6, 10, 6], border: [false, false, false, false] },
           ],
           [
-            {
-              text: 'NUEVO SALDO',
-              bold: true,
-              color: '#1F4E79',
-              border: [false, false, false, false],
-            },
-            {
-              text: `Bs ${closingBalance.toFixed(2)}`,
-              alignment: 'right',
-              color: '#1F4E79',
-              bold: true,
-              fillColor: '#f2f2f2',
-              border: [true, true, true, true],
-            },
+            { text: 'NUEVO SALDO', bold: true, fontSize: 11, color: '#1F4E79', margin: [10, 8, 0, 8], border: [false, false, false, false] },
+            { text: `Bs ${closingBalance.toFixed(2)}`, bold: true, fontSize: 11, color: '#1F4E79', alignment: 'right', margin: [0, 8, 10, 8], border: [false, false, false, false] },
           ],
         ],
       },
+      layout: {
+        fillColor: function (rowIndex) {
+          return (rowIndex === 4) ? '#F5F8FA' : null;
+        },
+        hLineWidth: function (i, node) {
+          if (i === 0 || i === node.table.body.length) return 1.5;
+          if (i === 3) return 0.5; // under egresos
+          if (i === 4) return 1.5; // under saldo neto / above nuevo saldo
+          return 0;
+        },
+        vLineWidth: function () { return 0; },
+        hLineColor: function (i, node) {
+          return (i === 0 || i === 4 || i === node.table.body.length) ? '#1F4E79' : '#E0E0E0';
+        }
+      },
+      margin: [0, 0, 0, 20]
     });
 
     const docDefinition: TDocumentDefinitions = {
@@ -630,38 +620,54 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           text: `Página ${currentPage} de ${pageCount}`,
           alignment: 'center',
           fontSize: 8,
+          color: '#555555',
           margin: [0, 10, 0, 0],
         };
       },
       defaultStyle: {
-        fontSize: 10,
+        fontSize: 8,
+        lineHeight: 1.1,
       },
       content,
       styles: {
-        sectionTitle: { bold: true, fontSize: 12, color: 'black' },
+        sectionTitle: {
+          bold: true,
+          fontSize: 10,
+          color: '#1F4E79',
+          margin: [0, 6, 0, 3],
+        },
         tableHeader: {
           bold: true,
-          fontSize: 8,
-          color: 'black',
+          fontSize: 7,
+          color: '#1F4E79',
+          fillColor: '#E8ECF1',
           alignment: 'center',
           margin: [0, 2, 0, 2],
         },
-        tableCell: { fontSize: 8, margin: [0, 2, 0, 2] },
+        tableCell: {
+          fontSize: 7,
+          margin: [0, 2, 0, 2],
+        },
         tableCellRight: {
-          fontSize: 8,
+          fontSize: 7,
           alignment: 'right',
           margin: [0, 2, 4, 2],
         },
         tableCellCenter: {
-          fontSize: 8,
+          fontSize: 7,
           alignment: 'center',
           margin: [0, 2, 0, 2],
         },
         boldRight: {
           bold: true,
           alignment: 'right',
-          fontSize: 9,
+          fontSize: 8,
           margin: [0, 2, 4, 2],
+        },
+        groupCell: {
+          fontSize: 7,
+          bold: true,
+          margin: [0, 2, 0, 2],
         },
       },
     };
@@ -681,48 +687,86 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       year: 'numeric',
       timeZone: 'America/La_Paz',
     });
-    const dateStr = `${dateFormatter.format(start)} - ${dateFormatter.format(end)}`;
+    const dateStr = `${dateFormatter.format(start)} — ${dateFormatter.format(end)}`;
 
     return {
-      columns: [
-        {
-          image: logo,
-          width: 50,
-          margin: [0, 0, 10, 0],
-        },
-        {
-          stack: [
+      table: {
+        widths: ['auto', '*', 'auto'],
+        body: [
+          [
             {
-              text: 'CLUB ATLETICO NACIONAL',
-              bold: true,
-              fontSize: 12,
-              alignment: 'center',
+              image: logo,
+              width: 45,
+              margin: [0, 2, 8, 2],
+              border: [false, false, false, false],
             },
             {
-              text: 'Fundado el 17 de Octubre de 1935 | CAN Oruro - Telf. 2-52-33388 | Oruro - BOLIVIA',
-              fontSize: 8,
-              alignment: 'center',
+              stack: [
+                {
+                  text: 'CLUB ATLÉTICO NACIONAL',
+                  bold: true,
+                  fontSize: 11,
+                  color: '#1F4E79',
+                },
+                {
+                  text: 'Fundado el 17 de Octubre de 1935',
+                  fontSize: 8,
+                  color: '#555555',
+                  margin: [0, 1, 0, 0],
+                },
+                {
+                  text: 'CAN Oruro · Telf. 2-52-33388 · Oruro - BOLIVIA',
+                  fontSize: 8,
+                  color: '#555555',
+                  margin: [0, 0, 0, 0],
+                },
+              ],
               margin: [0, 2, 0, 2],
+              border: [false, false, false, false],
             },
             {
-              text: `INFORME DETALLADO CONTABLE - Periodo ${dateStr}`,
-              bold: true,
-              fontSize: 9,
-              alignment: 'center',
-              margin: [0, 5, 0, 0],
+              stack: [
+                {
+                  text: 'FINANCIERO',
+                  fontSize: 8,
+                  bold: true,
+                  color: '#1F4E79',
+                  alignment: 'right',
+                  characterSpacing: 1,
+                  margin: [0, 0, 0, 2],
+                },
+                {
+                  text: 'INFORME DETALLADO CONTABLE',
+                  bold: true,
+                  fontSize: 9,
+                  alignment: 'right',
+                },
+                {
+                  text: dateStr,
+                  fontSize: 8,
+                  color: '#555555',
+                  alignment: 'right',
+                  margin: [0, 1, 0, 0],
+                }
+              ],
+              margin: [0, 2, 0, 2],
+              border: [false, false, false, false],
             },
           ],
-          width: '*',
-          margin: [0, 0, 10, 0],
+        ],
+      },
+      layout: {
+        hLineWidth: function (i, node) {
+          return (i === 0 || i === node.table.body.length) ? 1.5 : 0;
         },
-        {
-          width: 50,
-          text: '* Detalle Financiero',
-          fontSize: 7,
-          alignment: 'right',
-          italics: true,
+        vLineWidth: function (i, node) {
+          return 0;
         },
-      ],
+        hLineColor: function (i, node) {
+          return '#1F4E79';
+        },
+      },
+      margin: [0, 0, 0, 6],
     };
   }
 
@@ -798,9 +842,10 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         const cRow: any[] = [
           { text: String(rowIndex++), style: 'tableCellCenter' },
           {
-            text: `* ${cGroup.categoryName.toUpperCase()}`,
+            text: `•  ${cGroup.categoryName}`,
             style: 'tableCell',
-            margin: [10, 2, 0, 2],
+            margin: [15, 2, 0, 2],
+            color: '#333333',
           },
           { text: cGroup.receiptSeries, style: 'tableCellCenter' },
           {
@@ -824,14 +869,14 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     }
 
     const totalRow: any[] = [
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
-      { text: '', border: [false, false, false, false] },
+      { text: '' },
+      { text: '' },
+      { text: '' },
+      { text: '' },
       {
         text: 'TOTAL:',
         style: 'boldRight',
-        border: [false, false, false, false],
+        color: '#1F4E79',
       },
     ];
 
@@ -847,15 +892,14 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       totalRow.push({
         text: formatAmount(totalsByAcc[acc]),
         style: 'boldRight',
-        border: [true, true, true, true],
+        color: '#1F4E79',
       });
     });
 
     totalRow.push({
       text: isExpense && grandTotal !== 0 ? `- Bs ${grandTotal.toFixed(2)}` : `Bs ${grandTotal.toFixed(2)}`,
       style: 'boldRight',
-      border: [true, true, true, true],
-      fillColor: '#f2f2f2',
+      color: '#1F4E79',
     });
 
     body.push(totalRow);
@@ -870,6 +914,35 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         widths,
         body,
       },
+      layout: {
+        hLineWidth: function (i, node) {
+          if (i === 0 || i === 1) return 1.5;
+          if (i === node.table.body.length - 1) return 1.5;
+          if (i === node.table.body.length) return 1.5;
+          
+          // Add a slightly stronger line above group rows (but not the first one since i=1 is the header bottom)
+          if (i > 1 && node.table.body[i] && node.table.body[i][1] && (node.table.body[i][1] as any).bold) return 1;
+          
+          return 0.5;
+        },
+        vLineWidth: function (i, node) {
+          return 0; // Clean horizontal-only borders
+        },
+        hLineColor: function (i, node) {
+          if (i === 0 || i === 1 || i === node.table.body.length - 1 || i === node.table.body.length) return '#1F4E79';
+          if (i > 1 && node.table.body[i] && node.table.body[i][1] && (node.table.body[i][1] as any).bold) return '#B0C4DE';
+          return '#E0E0E0';
+        },
+        fillColor: function (rowIndex, node, columnIndex) {
+          if (rowIndex === 0) return '#E8ECF1'; // header is filled via style too, but safe here
+          if (rowIndex === node.table.body.length - 1) return '#F5F8FA';
+          if (node.table.body[rowIndex] && node.table.body[rowIndex][1] && (node.table.body[rowIndex][1] as any).bold) {
+            return '#F9FBFC'; // groups
+          }
+          // Zebra for normal rows
+          return rowIndex % 2 === 0 ? '#FAFAFA' : null;
+        },
+      }
     };
   }
 
@@ -906,19 +979,29 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     }
 
     body.push([
+      { text: '' },
+      { text: '' },
+      { text: '' },
+      {
+        text: 'TOTAL:',
+        style: 'boldRight',
+        color: '#1F4E79',
+      },
+    ]);
+
+    body.push([
       {
         text: 'TOTAL MOVIMIENTOS INTERNOS:',
         style: 'boldRight',
         colSpan: 3,
-        border: [false, false, false, false],
+        color: '#1F4E79',
       },
       {},
       {},
       {
         text: `Bs ${total.toFixed(2)}`,
         style: 'boldRight',
-        border: [true, true, true, true],
-        fillColor: '#f2f2f2',
+        color: '#1F4E79',
       },
     ]);
 
@@ -928,6 +1011,27 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         widths: ['auto', '*', '*', 'auto'],
         body,
       },
+      layout: {
+        hLineWidth: function (i, node) {
+          if (i === 0 || i === 1) return 1.5;
+          if (i === node.table.body.length - 2) return 1.5;
+          if (i === node.table.body.length - 1) return 0;
+          if (i === node.table.body.length) return 1.5;
+          return 0.5;
+        },
+        vLineWidth: function (i, node) {
+          return 0; // Clean horizontal-only borders
+        },
+        hLineColor: function (i, node) {
+          if (i === 0 || i === 1 || i === node.table.body.length - 2 || i === node.table.body.length) return '#1F4E79';
+          return '#E0E0E0';
+        },
+        fillColor: function (rowIndex, node, columnIndex) {
+          if (rowIndex === 0) return '#E8ECF1';
+          if (rowIndex >= node.table.body.length - 2) return '#F5F8FA';
+          return rowIndex % 2 === 0 ? '#FAFAFA' : null;
+        },
+      }
     };
   }
 }
