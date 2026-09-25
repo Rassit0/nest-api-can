@@ -81,14 +81,14 @@ export class CreatePersonDto {
     type: 'string',
     format: 'binary',
     required: false,
-    description: 'Imagen de la persona (JPEG o PNG, máximo 5MB)',
+    description: 'Imagen de la persona (JPEG o PNG, máximo 20MB)',
   })
   @IsOptional()
   @Transform(({ value }) => (value === '' ? undefined : value))
   @IsFile()
-  @MaxFileSize(5e6, {
+  @MaxFileSize(20e6, {
     message: i18nValidationMessage('validation.MAX_FILE_SIZE', {
-      constraint1: '5MB',
+      constraint1: '20MB',
     }),
   })
   @HasMimeType(['image/jpeg', 'image/png'], {

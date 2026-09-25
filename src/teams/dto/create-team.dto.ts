@@ -67,7 +67,7 @@ export class CreateTeamDto {
     type: 'string',
     format: 'binary',
     required: false,
-    description: 'Imagen del equipo (JPEG o PNG, máximo 5MB)',
+    description: 'Imagen del equipo (JPEG o PNG, máximo 20MB)',
   })
   @IsOptional()
   imageUrl?: any;

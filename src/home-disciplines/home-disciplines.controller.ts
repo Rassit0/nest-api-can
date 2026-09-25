@@ -28,7 +28,7 @@ export class HomeDisciplinesController {
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'image4x3', maxCount: 1 },
   ], {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   create(
@@ -59,7 +59,7 @@ export class HomeDisciplinesController {
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'image4x3', maxCount: 1 },
   ], {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   update(

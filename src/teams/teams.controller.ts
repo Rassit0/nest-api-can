@@ -62,7 +62,7 @@ export class TeamsController {
   })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image', {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   @ApiStandardCreatedResponse(TeamResponseDto, 'Equipo creado exitosamente.')
@@ -177,7 +177,7 @@ export class TeamsController {
   })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image', {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   @ApiBody({ type: UpdateTeamDto })

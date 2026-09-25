@@ -26,7 +26,7 @@ export class NewsController {
   @RequirePermissions('CREATE_NEWS')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('cover', {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   create(
@@ -52,7 +52,7 @@ export class NewsController {
   @RequirePermissions('UPDATE_NEWS')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('cover', {
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     fileFilter: imageFileFilter,
   }))
   update(

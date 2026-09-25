@@ -14,9 +14,9 @@ export class UpdateAvatarDto {
       constraint1: 'image',
     }),
   })
-  @MaxFileSize(5 * 1024 * 1024, { // 5MB
+  @MaxFileSize(20 * 1024 * 1024, { // 20MB
     message: i18nValidationMessage('validation.MAX_FILE_SIZE', {
-      constraint1: '5MB',
+      constraint1: '20MB',
     }),
   })
   @HasMimeType(['image/jpeg', 'image/png', 'image/webp'], {

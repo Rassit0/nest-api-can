@@ -32,7 +32,7 @@ export class StorageController {
   @UseInterceptors(
     FilesInterceptor('files', 5, {
       limits: {
-        fileSize: 5 * 1024 * 1024, // 5MB
+        fileSize: 20 * 1024 * 1024, // 20MB
       },
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(jpg|jpeg|png|webp|pdf)$/)) {

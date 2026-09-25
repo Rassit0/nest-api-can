@@ -25,7 +25,7 @@ export class CreateInstitutionDto {
   // 2. Si el valor es null, saltamos la validación de Enum para que no falle
   @ValidateIf((object, value) => value !== null)
   @IsFile()
-  @MaxFileSize(5e6)
+  @MaxFileSize(20e6)
   @HasMimeType(['image/jpeg', 'image/png'])
   imageUrl?: string;
 
