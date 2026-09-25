@@ -100,7 +100,7 @@ export class LateFeeRepository {
               status: {
                 in: [
                   PlayerMembershipStatus.ACTIVE,
-
+                  PlayerMembershipStatus.PENDING_ACTIVE,
                   PlayerMembershipStatus.SUSPENDED,
                 ],
               },
