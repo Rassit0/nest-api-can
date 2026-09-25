@@ -15,6 +15,8 @@ import { MembershipChargeFactory } from '../membership-charge.factory';
 import { TypeMembershipCharge } from 'src/generated/prisma/client';
 import { CycleBatch } from '../interfaces/membership-charge.types';
 import { DateUtils } from 'src/utils/date.utils';
+import { MembershipLateFeeService } from '../../membership-late-fee/membership-late-fee.service';
+import { StatusCharge } from 'src/generated/prisma/client';
 import { MembershipChargeRepository } from '../repositories/membership-charge.repository';
 import { MembershipRepository } from '../repositories/membership.repository';
 
@@ -25,6 +27,7 @@ export class MembershipGenerationService {
   constructor(
     private readonly membershipRepo: MembershipRepository,
     private readonly chargeRepo: MembershipChargeRepository,
+    private readonly lateFeeService: MembershipLateFeeService,
   ) {}
 
   public async ensureMembershipCharges(
@@ -57,7 +60,7 @@ export class MembershipGenerationService {
     );
     if (exists) return null;
 
-    const { baseAmount, netAmount, appliedDiscounts } =
+    const { baseAmount, netAmount, adjustmentAmount, appliedDiscounts } =
       calculateRegistrationFee(membership);
     if (baseAmount <= 0) return null;
 
@@ -71,12 +74,44 @@ export class MembershipGenerationService {
       data: MembershipChargeFactory.buildRegistrationChargePayload(
         membership.id,
         baseAmount,
-        baseAmount - netAmount,
+        adjustmentAmount,
         description,
         membership.startedAt,
         extractDiscountReason(appliedDiscounts),
       ),
     });
+
+    // Generate late fee if applicable
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+    const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+      charge.id,
+      charge.dueDate,
+      membership.teamSeason as any,
+      membership as any,
+      evaluationDate,
+    );
+
+    if (lateFeePreview.totalLateFeeAmount > 0) {
+      await tx.charge.create({
+        data: {
+          parentChargeId: charge.id,
+          chargeCategory: 'LATE_FEE',
+          description: `Mora sobre: ${charge.description} (${lateFeePreview.penaltyDays} días de retraso)`,
+          amount: lateFeePreview.totalLateFeeAmount,
+          pendingAmount: lateFeePreview.totalLateFeeAmount,
+          dueDate: evaluationDate,
+          status: StatusCharge.PENDING,
+          membershipCharges: {
+            create: {
+              type: TypeMembershipCharge.LATE_FEE,
+              playerMembershipId: membership.id,
+              createdByCron: false,
+            },
+          },
+        },
+      });
+    }
+
     return charge.id;
   }
 
@@ -237,7 +272,7 @@ export class MembershipGenerationService {
           data: MembershipChargeFactory.buildSeasonChargePayload(
             membership.id,
             singlePayment.baseAmount,
-            singlePayment.baseAmount - singlePayment.netAmount,
+            singlePayment.adjustmentAmount,
             description,
             membership.startedAt,
             startBillingYear,
@@ -245,6 +280,38 @@ export class MembershipGenerationService {
             extractDiscountReason(singlePayment.appliedDiscounts),
           ),
         });
+
+        // Generate late fee if applicable
+        const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+        const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+          charge.id,
+          charge.dueDate,
+          membership.teamSeason as any,
+          membership as any,
+          evaluationDate,
+        );
+
+        if (lateFeePreview.totalLateFeeAmount > 0) {
+          await tx.charge.create({
+            data: {
+              parentChargeId: charge.id,
+              chargeCategory: 'LATE_FEE',
+              description: `Mora sobre: ${charge.description} (${lateFeePreview.penaltyDays} días de retraso)`,
+              amount: lateFeePreview.totalLateFeeAmount,
+              pendingAmount: lateFeePreview.totalLateFeeAmount,
+              dueDate: evaluationDate,
+              status: StatusCharge.PENDING,
+              membershipCharges: {
+                create: {
+                  type: TypeMembershipCharge.LATE_FEE,
+                  playerMembershipId: membership.id,
+                  createdByCron: false,
+                },
+              },
+            },
+          });
+        }
+
         return charge.id;
       }
     }
@@ -499,7 +566,7 @@ export class MembershipGenerationService {
           data: MembershipChargeFactory.buildRecurringChargePayload(
             membership.id,
             cycle.baseAmount,
-            cycle.baseAmount - cycle.netAmount,
+            cycle.adjustmentAmount,
             cycle.description,
             groupDueDate || cycle.dueDate,
             cycle.billingYear,
@@ -508,6 +575,38 @@ export class MembershipGenerationService {
             extractDiscountReason(cycle.appliedDiscounts),
           ),
         });
+
+        // Generate late fee if applicable
+        const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+        const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+          charge.id,
+          charge.dueDate,
+          membership.teamSeason as any,
+          membership as any,
+          evaluationDate,
+        );
+
+        if (lateFeePreview.totalLateFeeAmount > 0) {
+          await tx.charge.create({
+            data: {
+              parentChargeId: charge.id,
+              chargeCategory: 'LATE_FEE',
+              description: `Mora sobre: ${charge.description} (${lateFeePreview.penaltyDays} días de retraso)`,
+              amount: lateFeePreview.totalLateFeeAmount,
+              pendingAmount: lateFeePreview.totalLateFeeAmount,
+              dueDate: evaluationDate,
+              status: StatusCharge.PENDING,
+              membershipCharges: {
+                create: {
+                  type: TypeMembershipCharge.LATE_FEE,
+                  playerMembershipId: membership.id,
+                  createdByCron: false,
+                },
+              },
+            },
+          });
+        }
+
         chargeIds.push(charge.id);
         if (existingChargesSet) {
           existingChargesSet.add(

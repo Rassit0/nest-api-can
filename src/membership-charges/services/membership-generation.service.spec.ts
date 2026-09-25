@@ -6,6 +6,7 @@ import { PrismaService } from 'src/prisma.service';
 import { PlayerMembershipWithRelations } from '../membership-financial.calculator';
 import { Prisma, TypeMembershipCharge } from 'src/generated/prisma/client';
 import { ExistingChargeMinimal } from '../interfaces/membership-charge.types';
+import { MembershipLateFeeService } from '../../membership-late-fee/membership-late-fee.service';
 
 describe('MembershipGenerationService', () => {
   let service: MembershipGenerationService;
@@ -90,6 +91,14 @@ describe('MembershipGenerationService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MembershipGenerationService,
+        {
+          provide: MembershipLateFeeService,
+          useValue: {
+            calculateLateFeePure: jest.fn().mockReturnValue({
+              totalLateFeeAmount: 0,
+            }),
+          },
+        },
         {
           provide: MembershipRepository,
           useValue: {

@@ -14,9 +14,14 @@ import {
   PreviewResult,
 } from '../interfaces/membership-charge.types';
 import { PreviewChargeFactory } from '../factories/preview-charge.factory';
+import { MembershipLateFeeService } from '../../membership-late-fee/membership-late-fee.service';
 
 @Injectable()
 export class MembershipPreviewService {
+  constructor(
+    private readonly lateFeeService: MembershipLateFeeService,
+  ) {}
+
   public extractPreviewChargesFromCycles(
     membership: PlayerMembershipWithRelations,
     existingCharges: ExistingChargeMinimal[] | null,
@@ -59,6 +64,38 @@ export class MembershipPreviewService {
         ),
       );
     }
+
+    const lateFeeCharges: PreviewCharge[] = [];
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+
+    for (const charge of charges) {
+      if (charge.type === TypeMembershipCharge.RECURRING_FEE || charge.type === TypeMembershipCharge.SEASON_FEE) {
+        // Evaluate late fee
+        const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+          'preview',
+          charge.dueDate,
+          membership.teamSeason as any,
+          membership as any,
+          evaluationDate,
+        );
+
+        if (lateFeePreview.totalLateFeeAmount > 0) {
+          lateFeeCharges.push(
+            PreviewChargeFactory.buildLateFeeCharge(
+              lateFeePreview.totalLateFeeAmount,
+              `Mora sobre: ${charge.description} (${lateFeePreview.penaltyDays} días de retraso)`,
+              evaluationDate,
+              charge.billingYear,
+              charge.billingMonth,
+              charge.type,
+              charge.billingCycle,
+            )
+          );
+        }
+      }
+    }
+
+    charges = charges.concat(lateFeeCharges);
 
     return { charges, breakdown: this.buildChargesBreakdown(charges) };
   }
@@ -269,7 +306,7 @@ export class MembershipPreviewService {
   }
 
   public buildChargesBreakdown(
-    charges: { amount: number; baseAmount?: number; adjustmentAmount?: number }[],
+    charges: { type?: string; amount: number; baseAmount?: number; adjustmentAmount?: number }[],
   ) {
     const totalBaseAmount = charges.reduce(
       (sum, c) => sum + (c.baseAmount || 0),
@@ -279,11 +316,16 @@ export class MembershipPreviewService {
       (sum, c) => sum + (c.adjustmentAmount || 0),
       0,
     );
+    const totalLateFeeAmount = charges.reduce(
+      (sum, c) => sum + (c.type === TypeMembershipCharge.LATE_FEE ? c.amount : 0),
+      0,
+    );
     const totalNetAmount = charges.reduce((sum, c) => sum + c.amount, 0);
 
     return {
       totalBaseAmount,
       totalDiscount: totalDiscountAmount,
+      totalLateFee: totalLateFeeAmount,
       totalNetAmount,
       currency: 'BOB',
     };

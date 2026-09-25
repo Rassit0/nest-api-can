@@ -68,4 +68,28 @@ export class PreviewChargeFactory {
       billingMonth: dueDate.getUTCMonth() + 1,
     };
   }
+
+  static buildLateFeeCharge(
+    amount: number,
+    description: string,
+    dueDate: Date,
+    billingYear: number,
+    billingMonth: number,
+    parentChargeType: TypeMembershipCharge,
+    billingCycle?: number | null,
+  ): PreviewCharge {
+    return {
+      type: TypeMembershipCharge.LATE_FEE,
+      description,
+      amount,
+      baseAmount: 0,
+      adjustmentAmount: 0,
+      discountPercent: 0,
+      dueDate,
+      billingYear,
+      billingMonth,
+      billingCycle,
+      parentChargeType,
+    };
+  }
 }

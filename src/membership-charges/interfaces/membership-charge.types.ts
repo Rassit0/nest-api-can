@@ -12,11 +12,13 @@ export interface PreviewCharge {
   billingYear: number;
   billingMonth: number;
   billingCycle?: number | null;
+  parentChargeType?: TypeMembershipCharge;
 }
 
 export interface ChargeBreakdown {
   totalBaseAmount: number;
   totalDiscount: number;
+  totalLateFee?: number;
   totalNetAmount: number;
   currency: string;
 }

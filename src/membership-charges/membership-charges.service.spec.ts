@@ -17,6 +17,7 @@ import { DateUtils } from 'src/utils/date.utils';
 import { MembershipChargeRecalculationService } from './services/membership-recalculation.service';
 import { MembershipManualChargeService } from './services/membership-manual-charge.service';
 import { MembershipAdvanceChargeService } from './services/membership-advance-charge.service';
+import { MembershipLateFeeService } from '../membership-late-fee/membership-late-fee.service';
 
 describe('MembershipChargesService (Financial Engine - Extremo)', () => {
   let service: MembershipChargesService;
@@ -62,6 +63,18 @@ describe('MembershipChargesService (Financial Engine - Extremo)', () => {
       providers: [
         MembershipChargesService,
         MembershipPreviewService, // Inyección real para mantener tests de cálculo matemático de ciclos
+        {
+          provide: MembershipLateFeeService,
+          useValue: {
+            calculateLateFeePure: jest.fn().mockReturnValue({
+              baseChargeId: 'preview',
+              elapsedDays: 0,
+              penaltyDays: 0,
+              lateFeePerDay: 0,
+              totalLateFeeAmount: 0,
+            }),
+          },
+        },
         {
           provide: MembershipGenerationService,
           useValue: mockGenerationService,
