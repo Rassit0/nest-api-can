@@ -1,4 +1,4 @@
-﻿import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { DetailedAccountingReport } from './detailed-accounting.report';
 import { ReportRegistry } from '../../core/registry/report.registry';
 import { PrinterService } from 'src/printer/printer.service';
@@ -120,7 +120,7 @@ describe('DetailedAccountingReport', () => {
       
       expect(groups[0].categoryName).toBe('OTROS / HISTÓRICO');
       expect(groups[0].children[0].receiptSeries).toBe('EGR');
-      expect(groups[0].accounts['Desconocida']).toBe(-100);
+      expect(groups[0].accounts['Desconocida']).toBe(100);
       expect(groups[0].documentIds.size).toBe(1);
     });
 

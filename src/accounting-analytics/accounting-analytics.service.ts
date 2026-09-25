@@ -19,7 +19,6 @@ export class AccountingAnalyticsService {
     if (params?.start && params?.end) {
       periodStart = new Date(params.start);
       periodEnd = new Date(params.end);
-      periodEnd.setUTCHours(23, 59, 59, 999);
     } else {
       periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
       periodEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);

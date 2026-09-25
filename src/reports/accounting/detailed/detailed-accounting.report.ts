@@ -199,7 +199,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     });
   }
 
-  private groupAccountingData(transactions: any[], categoryNameBySeries: Map<string, string>) {
+  private groupAccountingData(transactions: any[], categoryNameBySeries: Map<string, string> = new Map()) {
     // ParentCategory -> ChildCategory -> Series -> AggregatedGroup
     const parentMap = new Map<string, AggregatedGroup>();
     const activeAccountNames = new Set<string>();
@@ -437,13 +437,26 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       ? new Date(params.end)
       : new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
 
-    if (
-      params.end &&
-      typeof params.end === 'string' &&
-      !params.end.includes('T')
-    ) {
-      end.setUTCHours(23, 59, 59, 999);
-    }
+    // Calcular saldo histórico (Saldo Anterior) antes de `start`
+    const historicalSums = await this.prisma.transaction.groupBy({
+      by: ['type'],
+      _sum: { amount: true },
+      where: {
+        isInternalTransfer: false,
+        OR: [
+          { status: 'COMPLETED' },
+          { status: 'CANCELLED', reversedBy: { isNot: null } },
+        ],
+        transactionDate: { lt: start },
+      },
+    });
+    
+    let openingBalance = 0;
+    historicalSums.forEach(sum => {
+      const amount = Number(sum._sum.amount) || 0;
+      if (sum.type === 'INCOME') openingBalance += amount;
+      if (sum.type === 'EXPENSE') openingBalance -= amount;
+    });
 
     const incomeTxs = await this.getIncomeTransactions(start, end);
     const expenseTxs = await this.getExpenseTransactions(start, end);
@@ -470,9 +483,16 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
     }
 
     const content: Content[] = [
-      this.buildHeader(start, end, grandTotalIncome, grandTotalExpense),
+      this.buildHeader(start, end),
       { text: '\n' },
     ];
+
+    content.push({
+      text: `SALDO ANTERIOR: Bs ${openingBalance.toFixed(2)}`,
+      style: 'sectionTitle',
+      color: '#1F4E79',
+      margin: [0, 0, 0, 10],
+    });
 
     if (incomeData.groups.length > 0) {
       content.push({
@@ -514,7 +534,8 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       content.push(this.buildTransfersTable(transfers));
     }
 
-    const balance = grandTotalIncome - grandTotalExpense;
+    const periodBalance = grandTotalIncome - grandTotalExpense;
+    const closingBalance = openingBalance + periodBalance;
     content.push({
       text: '\nRESUMEN DEL PERIODO',
       style: 'sectionTitle',
@@ -526,13 +547,30 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         body: [
           [
             {
+              text: 'SALDO ANTERIOR',
+              bold: true,
+              color: '#1F4E79',
+              border: [false, false, false, false],
+            },
+            {
+              text: `Bs ${openingBalance.toFixed(2)}`,
+              alignment: 'right',
+              color: '#1F4E79',
+              bold: true,
+              border: [false, false, false, false],
+            },
+          ],
+          [
+            {
               text: 'TOTAL INGRESOS',
               bold: true,
+              color: '#27AE60',
               border: [false, false, false, false],
             },
             {
               text: `Bs ${grandTotalIncome.toFixed(2)}`,
               alignment: 'right',
+              color: '#27AE60',
               border: [false, false, false, false],
             },
           ],
@@ -540,11 +578,13 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
             {
               text: 'TOTAL EGRESOS',
               bold: true,
+              color: '#C0392B',
               border: [false, false, false, true],
             },
             {
               text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs ${grandTotalExpense.toFixed(2)}`,
               alignment: 'right',
+              color: '#C0392B',
               border: [false, false, false, true],
             },
           ],
@@ -555,8 +595,23 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
               border: [false, false, false, false],
             },
             {
-              text: `Bs ${balance.toFixed(2)}`,
+              text: periodBalance >= 0 ? `Bs ${periodBalance.toFixed(2)}` : `- Bs ${Math.abs(periodBalance).toFixed(2)}`,
               alignment: 'right',
+              bold: true,
+              border: [false, false, false, false],
+            },
+          ],
+          [
+            {
+              text: 'NUEVO SALDO',
+              bold: true,
+              color: '#1F4E79',
+              border: [false, false, false, false],
+            },
+            {
+              text: `Bs ${closingBalance.toFixed(2)}`,
+              alignment: 'right',
+              color: '#1F4E79',
               bold: true,
               fillColor: '#f2f2f2',
               border: [true, true, true, true],
@@ -617,13 +672,8 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
   private buildHeader(
     start: Date,
     end: Date,
-    grandTotalIncome: number,
-    grandTotalExpense: number,
   ): Content {
     const logo = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
-    const incomeFmt = grandTotalIncome.toFixed(2);
-    const expenseFmt = grandTotalExpense > 0 ? `- ${grandTotalExpense.toFixed(2)}` : grandTotalExpense.toFixed(2);
-    const balanceFmt = (grandTotalIncome - grandTotalExpense).toFixed(2);
 
     const dateFormatter = new Intl.DateTimeFormat('es-BO', {
       day: '2-digit',
@@ -655,7 +705,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
               margin: [0, 2, 0, 2],
             },
             {
-              text: `INFORME DETALLADO (Ingresos Bs ${incomeFmt} | Egresos Bs ${expenseFmt} | Saldo Bs ${balanceFmt}) = Periodo ${dateStr}`,
+              text: `INFORME DETALLADO CONTABLE - Periodo ${dateStr}`,
               bold: true,
               fontSize: 9,
               alignment: 'center',

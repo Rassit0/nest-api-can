@@ -53,8 +53,12 @@ export class AccountingDashboardService {
 
     if (diffDays <= 31) {
       const daysMap: Record<number, { ingresos: number; egresos: number; name: string }> = {};
-      const numDays = Math.ceil((periodEnd.getTime() - periodStart.getTime() + 1) / ONE_DAY);
-      for (let i = 0; i < numDays; i++) daysMap[i] = { ingresos: 0, egresos: 0, name: `${new Date(periodStart.getTime() + i * ONE_DAY).getDate()}` };
+      
+      let numDays = 0;
+      for (let time = periodStart.getTime(); time <= periodEnd.getTime(); time += ONE_DAY) {
+        daysMap[numDays] = { ingresos: 0, egresos: 0, name: `${new Date(time).getUTCDate()}` };
+        numDays++;
+      }
 
       transactions.forEach((t) => {
         const chunkIndex = Math.floor((t.transactionDate.getTime() - periodStart.getTime()) / ONE_DAY);
@@ -65,10 +69,12 @@ export class AccountingDashboardService {
       cashFlow = Object.values(daysMap);
     } else {
       const monthsMap: Record<string, { ingresos: number; egresos: number; name: string }> = {};
-      for (let m = new Date(periodStart); m <= periodEnd; m.setMonth(m.getMonth() + 1)) monthsMap[`${m.getFullYear()}-${m.getMonth()}`] = { ingresos: 0, egresos: 0, name: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'][m.getMonth()] };
+      for (let m = new Date(periodStart); m <= periodEnd; m.setUTCMonth(m.getUTCMonth() + 1)) {
+        monthsMap[`${m.getUTCFullYear()}-${m.getUTCMonth()}`] = { ingresos: 0, egresos: 0, name: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'][m.getUTCMonth()] };
+      }
       
       transactions.forEach((t) => {
-        const key = `${t.transactionDate.getFullYear()}-${t.transactionDate.getMonth()}`;
+        const key = `${t.transactionDate.getUTCFullYear()}-${t.transactionDate.getUTCMonth()}`;
         const amount = Number(t.amount);
         if (t.type === TransactionType.INCOME) { periodIncome += amount; if (monthsMap[key]) monthsMap[key].ingresos += amount; }
         else if (t.type === TransactionType.EXPENSE) { periodExpenses += amount; if (monthsMap[key]) monthsMap[key].egresos += amount; }
