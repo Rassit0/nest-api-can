@@ -1,0 +1,4 @@
+PrismaClientUnknownRequestError: Error in connector: Error querying the database: FATAL: the database system is starting up
+    at Qr.transaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\core\engines\library\LibraryEngine.ts:223:13)
+    at async Proxy._transactionWithCallback (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:715:20)
+    at async AuthService.login (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\auth\auth.service.ts:63:20)

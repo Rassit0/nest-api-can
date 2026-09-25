@@ -68,8 +68,11 @@ export class S3StorageProvider implements IStorageProvider {
 
   getFileUrl(internalName: string): string {
     if (envs.s3.publicUrl) {
-      const baseUrl = envs.s3.publicUrl.replace(/\/$/, '');
-      return `${baseUrl}/${internalName}`;
+      let baseUrl = envs.s3.publicUrl.replace(/\/+$/, '');
+      baseUrl = baseUrl.replace('{bucket}', this.bucket);
+      
+      const normalizedInternalName = internalName.replace(/^\/+/, '');
+      return `${baseUrl}/${normalizedInternalName}`;
     }
 
     if (envs.s3.endpoint) {
