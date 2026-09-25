@@ -285,13 +285,35 @@ export class MembershipLateFeeService {
     }
 
     const teamSeason = membershipChargeRelation.playerMembership?.teamSeason;
+    const playerMembership = membershipChargeRelation.playerMembership;
+    
+    return this.calculateLateFeePure(
+      baseCharge.id,
+      baseCharge.dueDate,
+      teamSeason as any,
+      playerMembership as any,
+      evaluationDate
+    );
+  }
+
+  /**
+   * Pure function to calculate late fee for historical preview and real execution.
+   */
+  public calculateLateFeePure(
+    baseChargeId: string,
+    chargeDueDate: Date,
+    teamSeason: any,
+    playerMembership: any,
+    evaluationDate: Date = DateUtils.getEndOfLocalDayInUTC(new Date()),
+  ) {
+
     if (
       !teamSeason ||
       !teamSeason.billingConfig?.lateFeeEnabled ||
       teamSeason.billingConfig?.isEngineActive === false
     ) {
       return {
-        baseChargeId: baseCharge.id,
+        baseChargeId,
         elapsedDays: 0,
         penaltyDays: 0,
         lateFeePerDay: 0,
@@ -299,10 +321,9 @@ export class MembershipLateFeeService {
       };
     }
 
-    const dueDate = DateUtils.getEndOfLocalDayInUTC(baseCharge.dueDate);
+    const dueDate = DateUtils.getEndOfLocalDayInUTC(chargeDueDate);
     const teamSeasonPauses = teamSeason.teamSeasonPauses || [];
-    const individualPauses =
-      membershipChargeRelation.playerMembership?.pauses || [];
+    const individualPauses = playerMembership?.pauses || [];
     const allPauses = [...teamSeasonPauses, ...individualPauses];
     let pausedDays = 0;
 
@@ -347,7 +368,7 @@ export class MembershipLateFeeService {
 
     if (elapsedDays <= graceDays) {
       return {
-        baseChargeId: baseCharge.id,
+        baseChargeId,
         elapsedDays,
         penaltyDays: 0,
         lateFeePerDay: Number(teamSeason.billingConfig?.lateFeePerDay || 0),
@@ -360,7 +381,7 @@ export class MembershipLateFeeService {
     const totalLateFeeAmount = penaltyDays * lateFeePerDay;
 
     return {
-      baseChargeId: baseCharge.id,
+      baseChargeId,
       elapsedDays,
       penaltyDays,
       lateFeePerDay,

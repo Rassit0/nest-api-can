@@ -12,10 +12,14 @@ import { MembershipChargeFactory } from '../membership-charge.factory';
 import { RegularizeMembershipChargeDto } from '../dto/regularize-membership-charge.dto';
 import { calculateRegistrationFee } from '../membership-financial.calculator';
 import { formatDiscountsDescription } from '../membership-billing.utils';
+import { MembershipLateFeeService } from 'src/membership-late-fee/membership-late-fee.service';
+import { DateUtils } from 'src/utils/date.utils';
 
 
 export interface RegularizableCycle extends SimulatedCycle {
   cycleId: string;
+  lateFeeAmount?: number;
+  totalAmount?: number;
 }
 
 @Injectable()
@@ -23,6 +27,7 @@ export class MembershipRegularizationService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly chargeRepo: MembershipChargeRepository,
+    private readonly lateFeeService: MembershipLateFeeService,
   ) {}
 
   public async getRegularizableCycles(
@@ -83,15 +88,29 @@ export class MembershipRegularizationService {
         netAmount: regCalc.netAmount,
         appliedDiscounts: regCalc.appliedDiscounts,
         description: description,
+        lateFeeAmount: 0,
+        totalAmount: regCalc.netAmount,
       });
     }
 
     for (const cycle of allCycles) {
       const cycleKey = this.buildCycleKey(cycle, frequency);
       if (!existingChargesSet.has(cycleKey) && cycle.dueDate <= currentDate) {
+        const evalDate = DateUtils.getEndOfLocalDayInUTC(currentDate);
+        const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+          'preview',
+          cycle.dueDate,
+          membership.teamSeason,
+          membership,
+          evalDate
+        );
+        const lateFeeAmount = lateFeePreview.totalLateFeeAmount;
+
         regularizableCycles.push({
           ...cycle,
           cycleId: cycleKey,
+          lateFeeAmount,
+          totalAmount: cycle.netAmount + lateFeeAmount,
         });
       }
     }
@@ -215,9 +234,47 @@ export class MembershipRegularizationService {
     chargePayload.membershipCharges.create['createdByCron'] = false;
 
     try {
-      const result = await this.prisma.charge.create({
-        data: chargePayload,
-        include: { membershipCharges: true },
+      const result = await this.prisma.$transaction(async (tx) => {
+        const baseCharge = await tx.charge.create({
+          data: chargePayload,
+          include: { membershipCharges: true },
+        });
+
+        if (dto.cycleId !== 'REGISTRATION') {
+          const evalDate = DateUtils.getEndOfLocalDayInUTC(currentDate);
+          const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+            baseCharge.id,
+            baseCharge.dueDate,
+            membership.teamSeason,
+            membership,
+            evalDate
+          );
+
+          if (lateFeePreview.totalLateFeeAmount > 0) {
+            const membershipChargeRelation = baseCharge.membershipCharges[0];
+            const baseDesc = baseCharge.description?.trim() || 'Cargo original';
+
+            await tx.charge.create({
+              data: {
+                parentChargeId: baseCharge.id,
+                chargeCategory: 'LATE_FEE',
+                description: `Mora sobre: ${baseDesc} (${lateFeePreview.penaltyDays} días de retraso)`,
+                amount: lateFeePreview.totalLateFeeAmount,
+                pendingAmount: lateFeePreview.totalLateFeeAmount,
+                dueDate: currentDate,
+                status: 'PENDING',
+                membershipCharges: {
+                  create: {
+                    type: 'LATE_FEE',
+                    playerMembershipId: membershipChargeRelation.playerMembershipId,
+                    createdByCron: false,
+                  },
+                },
+              },
+            });
+          }
+        }
+        return baseCharge;
       });
       return result;
     } catch (error) {

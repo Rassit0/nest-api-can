@@ -12,8 +12,10 @@ import { MembershipChargeRecalculationService } from './services/membership-reca
 import { MembershipManualChargeService } from './services/membership-manual-charge.service';
 import { MembershipAdvanceChargeService } from './services/membership-advance-charge.service';
 import { MembershipRecalibrationDateCalculator } from './domain/membership-recalibration-date.calculator';
+import { MembershipLateFeeModule } from '../membership-late-fee/membership-late-fee.module';
 
 @Module({
+  imports: [MembershipLateFeeModule],
   controllers: [MembershipChargesController],
   providers: [
     MembershipChargesService,

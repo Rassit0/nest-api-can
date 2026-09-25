@@ -110,9 +110,6 @@ export function calculateCycleDates(
     );
 
     dueDate = new Date(theoreticalDueDate);
-    if (cycleCounter === 1) {
-      dueDate = new Date(startDate);
-    }
 
     const billingYear = theoreticalDueDate.getUTCFullYear();
     const billingMonthNum = theoreticalDueDate.getUTCMonth() + 1;
