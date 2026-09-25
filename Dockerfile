@@ -1,77 +1,41 @@
-# syntax=docker/dockerfile:1
-
-# =========================================================
-# 1. Dependencias completas (build)
-# =========================================================
-FROM node:24-alpine AS deps
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci
-
-
-# =========================================================
-# 2. Dependencias de producción
-# BuildKit puede ejecutar esta fase EN PARALELO con deps
-# =========================================================
-FROM node:24-alpine AS prod-deps
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
-
-
-# =========================================================
-# 3. Build
-# =========================================================
+# 1. Fase de construcción
 FROM node:24-alpine AS builder
-
 WORKDIR /app
+COPY package*.json ./
+RUN npm ci
 
-COPY --from=deps /app/node_modules ./node_modules
-
+# Copiamos todo el código fuente
 COPY . .
 
+# Generamos el cliente en tu ruta personalizada e indicamos a Nest que compile
 RUN npx prisma generate
 
+# Nota: Si tu script "npm run build" tiene metidos los comandos de migración/seed,
+# usamos directo "npx nest build" aquí para que no intente duplicar tareas en el builder.
 RUN npx nest build
 
-
-# =========================================================
-# 4. Runtime
-# =========================================================
+# 2. Fase de producción
 FROM node:24-alpine AS runner
-
 WORKDIR /app
-
 ENV NODE_ENV=production
-
 COPY package*.json ./
 
-# Dependencias de producción ya preparadas en paralelo
-COPY --from=prod-deps /app/node_modules ./node_modules
-
-# Aplicación compilada
+# Copiamos lo compilado primero para obligar a BuildKit a esperar a que termine el builder y no correr 'npm ci' en paralelo (evita OOM)
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
-# Prisma Client generado en ruta personalizada
+# Instalamos solo las dependencias de producción
+RUN npm ci --omit=dev
+
+# Copiamos tu cliente de Prisma personalizado generado en src/
 COPY --from=builder /app/src/generated ./src/generated
 
-# Configuración necesaria para Prisma
-COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
-
-# Mantener esto SOLO si `prisma` está en devDependencies y
-# start:migrate:prod ejecuta `prisma migrate deploy`
+# Copiamos las herramientas de ejecución de Prisma que sí existen en node_modules
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma 
+COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 3000
 
+# Cuando el contenedor se encienda en Coolify, migra, inserta el seed y arranca
 CMD ["sh", "-c", "npm run start:migrate:prod"]
