@@ -422,3 +422,8 @@ export type InstitutionHistorySettings = Prisma.InstitutionHistorySettingsModel
  * 
  */
 export type InstitutionHistoryItem = Prisma.InstitutionHistoryItemModel
+/**
+ * Model NewsAsset
+ * 
+ */
+export type NewsAsset = Prisma.NewsAssetModel

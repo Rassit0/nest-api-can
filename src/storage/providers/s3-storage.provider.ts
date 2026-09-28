@@ -66,6 +66,22 @@ export class S3StorageProvider implements IStorageProvider {
     }
   }
 
+  async deleteFileStrict(internalName: string): Promise<void> {
+    const command = new DeleteObjectCommand({
+      Bucket: this.bucket,
+      Key: internalName,
+    });
+
+    try {
+      await this.s3Client.send(command);
+    } catch (error: any) {
+      // S3 delete doesn't throw if the object doesn't exist, it succeeds.
+      // But if there's a network/credential error, it will throw here.
+      this.logger.error(`Error estricto eliminando archivo de S3: ${internalName}`, error);
+      throw error;
+    }
+  }
+
   getFileUrl(internalName: string): string {
     if (envs.s3.publicUrl) {
       let baseUrl = envs.s3.publicUrl.replace(/\/+$/, '');

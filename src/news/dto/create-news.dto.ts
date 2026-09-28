@@ -4,6 +4,8 @@ import {
   IsEnum,
   IsArray,
   IsDateString,
+  IsUUID,
+  IsNumber,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { NewsStatus } from 'src/generated/prisma/enums';
@@ -16,8 +18,8 @@ export class CreateNewsDto {
   excerpt: string;
 
   @IsString()
-  content: string;
-
+  @IsOptional()
+  content?: string;
 
   @IsString()
   @IsOptional()
@@ -39,4 +41,32 @@ export class CreateNewsDto {
   @IsDateString()
   @IsOptional()
   publishedAt?: string;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return value; // let validator handle failure
+      }
+    }
+    return value;
+  })
+  structuredContent?: any;
+
+  @IsString()
+  @IsOptional()
+  uploadSessionId?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      const parsed = parseInt(value, 10);
+      return isNaN(parsed) ? value : parsed;
+    }
+    return value;
+  })
+  contentSchemaVersion?: number;
 }

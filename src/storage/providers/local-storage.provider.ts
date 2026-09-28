@@ -46,6 +46,19 @@ export class LocalStorageProvider implements IStorageProvider {
     }
   }
 
+  async deleteFileStrict(internalName: string): Promise<void> {
+    const filePath = path.join(this.uploadDir, internalName);
+    if (!fs.existsSync(filePath)) {
+      return; // Already absent -> SUCCESS
+    }
+    try {
+      await fs.promises.unlink(filePath);
+    } catch (error) {
+      this.logger.error(`Strict delete failed for: ${internalName}`, error);
+      throw error;
+    }
+  }
+
   getFileUrl(internalName: string): string {
     return `${this.baseUrl}/uploads/${internalName}`;
   }

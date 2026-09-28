@@ -97,6 +97,10 @@ export class StorageService {
     return this.storageProvider.deleteFile(internalName);
   }
 
+  async deleteFileStrict(internalName: string) {
+    return this.storageProvider.deleteFileStrict(internalName);
+  }
+
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async cleanupPendingAttachments() {
     this.logger.log('Iniciando limpieza de archivos temporales (PENDING) expirados...');

@@ -465,7 +465,8 @@ export const ModelName = {
   NewsCategory: 'NewsCategory',
   Promotion: 'Promotion',
   InstitutionHistorySettings: 'InstitutionHistorySettings',
-  InstitutionHistoryItem: 'InstitutionHistoryItem'
+  InstitutionHistoryItem: 'InstitutionHistoryItem',
+  NewsAsset: 'NewsAsset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -481,7 +482,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "thirdParty" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem" | "newsAsset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6109,6 +6110,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NewsAsset: {
+      payload: Prisma.$NewsAssetPayload<ExtArgs>
+      fields: Prisma.NewsAssetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NewsAssetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NewsAssetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        findFirst: {
+          args: Prisma.NewsAssetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NewsAssetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        findMany: {
+          args: Prisma.NewsAssetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>[]
+        }
+        create: {
+          args: Prisma.NewsAssetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        createMany: {
+          args: Prisma.NewsAssetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NewsAssetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>[]
+        }
+        delete: {
+          args: Prisma.NewsAssetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        update: {
+          args: Prisma.NewsAssetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        deleteMany: {
+          args: Prisma.NewsAssetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NewsAssetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NewsAssetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>[]
+        }
+        upsert: {
+          args: Prisma.NewsAssetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NewsAssetPayload>
+        }
+        aggregate: {
+          args: Prisma.NewsAssetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNewsAsset>
+        }
+        groupBy: {
+          args: Prisma.NewsAssetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsAssetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NewsAssetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NewsAssetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -7339,7 +7414,9 @@ export const NewsScalarFieldEnum = {
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  structuredContent: 'structuredContent',
+  contentSchemaVersion: 'contentSchemaVersion'
 } as const
 
 export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
@@ -7430,6 +7507,20 @@ export const InstitutionHistoryItemScalarFieldEnum = {
 } as const
 
 export type InstitutionHistoryItemScalarFieldEnum = (typeof InstitutionHistoryItemScalarFieldEnum)[keyof typeof InstitutionHistoryItemScalarFieldEnum]
+
+
+export const NewsAssetScalarFieldEnum = {
+  id: 'id',
+  storageKey: 'storageKey',
+  url: 'url',
+  newsId: 'newsId',
+  uploadSessionId: 'uploadSessionId',
+  uploadedById: 'uploadedById',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type NewsAssetScalarFieldEnum = (typeof NewsAssetScalarFieldEnum)[keyof typeof NewsAssetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -8122,6 +8213,20 @@ export type EnumPromotionPositionFieldRefInput<$PrismaModel> = FieldRefInputType
 export type ListEnumPromotionPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromotionPosition[]'>
     
 
+
+/**
+ * Reference to a field of type 'NewsAssetStatus'
+ */
+export type EnumNewsAssetStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsAssetStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'NewsAssetStatus[]'
+ */
+export type ListEnumNewsAssetStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsAssetStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -8285,6 +8390,7 @@ export type GlobalOmitConfig = {
   promotion?: Prisma.PromotionOmit
   institutionHistorySettings?: Prisma.InstitutionHistorySettingsOmit
   institutionHistoryItem?: Prisma.InstitutionHistoryItemOmit
+  newsAsset?: Prisma.NewsAssetOmit
 }
 
 /* Types for Logging */

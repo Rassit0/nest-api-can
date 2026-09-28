@@ -787,6 +787,7 @@ model User {
   role                              Role                        @relation(fields: [roleId], references: [id])
   createdMatchCallUps               MatchCallUp[]               @relation("CreatedBy")
   updatedMatchCallUps               MatchCallUp[]               @relation("UpdatedBy")
+  newsAssets                        NewsAsset[]                 @relation("UserNewsAssets")
 
   @@map("users")
 }
@@ -1614,6 +1615,10 @@ model News {
   categoryId     String?       @map("category_id")
   category       NewsCategory? @relation(fields: [categoryId], references: [id])
 
+  structuredContent    Json?       @map("structured_content")
+  contentSchemaVersion Int?        @map("content_schema_version")
+  newsAssets           NewsAsset[]
+
   @@index([status])
   @@index([publishedAt])
   @@map("news")
@@ -1973,4 +1978,34 @@ model InstitutionHistoryItem {
   @@index([isActive])
   @@index([sortOrder])
   @@map("institution_history_items")
+}
+
+enum NewsAssetStatus {
+  PENDING
+  ATTACHED
+  DELETE_PENDING
+}
+
+model NewsAsset {
+  id String @id @default(uuid())
+
+  storageKey String @unique @map("storage_key")
+  url        String
+
+  newsId          String? @map("news_id")
+  uploadSessionId String  @map("upload_session_id")
+  uploadedById    String  @map("uploaded_by_id")
+
+  status NewsAssetStatus @default(PENDING)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  news News? @relation(fields: [newsId], references: [id], onDelete: SetNull)
+
+  uploadedBy User @relation("UserNewsAssets", fields: [uploadedById], references: [id], onDelete: Restrict)
+
+  @@index([uploadSessionId, uploadedById, status])
+  @@index([newsId, status])
+  @@index([status, createdAt])
+  @@map("news_assets")
 }

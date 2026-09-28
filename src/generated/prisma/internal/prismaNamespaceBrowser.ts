@@ -124,7 +124,8 @@ export const ModelName = {
   NewsCategory: 'NewsCategory',
   Promotion: 'Promotion',
   InstitutionHistorySettings: 'InstitutionHistorySettings',
-  InstitutionHistoryItem: 'InstitutionHistoryItem'
+  InstitutionHistoryItem: 'InstitutionHistoryItem',
+  NewsAsset: 'NewsAsset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1334,7 +1335,9 @@ export const NewsScalarFieldEnum = {
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  structuredContent: 'structuredContent',
+  contentSchemaVersion: 'contentSchemaVersion'
 } as const
 
 export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
@@ -1425,6 +1428,20 @@ export const InstitutionHistoryItemScalarFieldEnum = {
 } as const
 
 export type InstitutionHistoryItemScalarFieldEnum = (typeof InstitutionHistoryItemScalarFieldEnum)[keyof typeof InstitutionHistoryItemScalarFieldEnum]
+
+
+export const NewsAssetScalarFieldEnum = {
+  id: 'id',
+  storageKey: 'storageKey',
+  url: 'url',
+  newsId: 'newsId',
+  uploadSessionId: 'uploadSessionId',
+  uploadedById: 'uploadedById',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type NewsAssetScalarFieldEnum = (typeof NewsAssetScalarFieldEnum)[keyof typeof NewsAssetScalarFieldEnum]
 
 
 export const SortOrder = {

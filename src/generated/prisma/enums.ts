@@ -386,3 +386,12 @@ export const MatchSide = {
 } as const
 
 export type MatchSide = (typeof MatchSide)[keyof typeof MatchSide]
+
+
+export const NewsAssetStatus = {
+  PENDING: 'PENDING',
+  ATTACHED: 'ATTACHED',
+  DELETE_PENDING: 'DELETE_PENDING'
+} as const
+
+export type NewsAssetStatus = (typeof NewsAssetStatus)[keyof typeof NewsAssetStatus]
