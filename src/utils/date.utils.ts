@@ -44,6 +44,63 @@ export class DateUtils {
     return endOfDayUTC;
   }
 
+  /**
+   * Constructs the end of a local calendar day (23:59:59.999) in the application's timezone
+   * and returns the exact UTC instant that represents it.
+   *
+   * @param year - The calendar year
+   * @param month - The calendar month (0-11)
+   * @param day - The calendar day of the month
+   */
+  static getEndOfLocalDayFromParts(year: number, month: number, day: number): Date {
+    const tz = envs.appTimezone;
+    
+    // First approximation of UTC time using 12:00 UTC as reference for the target day.
+    // Noon UTC is generally safe for finding the timezone offset as it avoids midnight boundaries.
+    const probe1 = new Date(Date.UTC(year, month, day, 12, 0, 0, 0));
+    
+    const getOffsetMs = (d: Date) => {
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: tz,
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false,
+      });
+      const parts = formatter.formatToParts(d);
+      
+      const localYear = parseInt(parts.find(p => p.type === 'year')!.value);
+      const localMonth = parseInt(parts.find(p => p.type === 'month')!.value) - 1;
+      const localDay = parseInt(parts.find(p => p.type === 'day')!.value);
+      let localHour = parseInt(parts.find(p => p.type === 'hour')!.value);
+      if (localHour === 24) localHour = 0;
+      const localMinute = parseInt(parts.find(p => p.type === 'minute')!.value);
+      const localSecond = parseInt(parts.find(p => p.type === 'second')!.value);
+      
+      const localAsUTC = new Date(Date.UTC(localYear, localMonth, localDay, localHour, localMinute, localSecond, d.getUTCMilliseconds()));
+      return localAsUTC.getTime() - d.getTime();
+    };
+    
+    const offset1 = getOffsetMs(probe1);
+    
+    // We want the local time to be exactly 23:59:59.999 on the specified calendar day
+    const targetLocalAsUTC = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
+    
+    // Subtract our first offset guess to get a close estimate of the actual UTC time
+    const estimatedUTC = new Date(targetLocalAsUTC.getTime() - offset1);
+    
+    // Probe the offset again at our estimated UTC time.
+    // Since estimatedUTC represents the exact target local time, its offset is the definitive one
+    // (this is critical for accurately handling DST transitions that might happen during the day).
+    const offset2 = getOffsetMs(estimatedUTC);
+    
+    // Return final UTC time using the definitive offset
+    return new Date(targetLocalAsUTC.getTime() - offset2);
+  }
+
   static getStartOfUTCDay(date: Date | string | null = new Date()): Date {
     if (!date) return new Date();
     const start = new Date(date);

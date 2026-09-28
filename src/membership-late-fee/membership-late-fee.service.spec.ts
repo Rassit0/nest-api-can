@@ -711,4 +711,61 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       jest.useRealTimers();
     });
   });
+
+  describe('Timezone Late Fee Regression Test (+1 day bug)', () => {
+    it('should correctly calculate 48 days of penalty when dueDate is exactly 02/08/2026 03:59:59.999Z', async () => {
+      // Evaluation date exactly on Sept 28, 2026 13:13:20 (local), 17:13:20 UTC
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-09-28T17:13:20.408Z'));
+
+      const mockedCharges = [
+        {
+          id: 'charge-1',
+          amount: 100,
+          pendingAmount: 100,
+          status: 'PENDING',
+          // Exactly the expected output of DateUtils.getEndOfLocalDayFromParts(2026, 7, 1)
+          dueDate: new Date('2026-08-02T03:59:59.999Z'),
+          membershipCharges: [
+            {
+              playerMembership: {
+                id: 'membership-1',
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    graceDays: 10, // 10 grace days
+                    lateFeePercent: null,
+                    lateFeePerDay: 1, // 1 Bs per day
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ];
+      lateFeeRepo.findOverdueCharges.mockResolvedValue(mockedCharges as any);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(null);
+
+      // Run
+      await service.applyDailyLateFees();
+
+      // Expectations
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          // The math:
+          // Local eval day in UTC: 2026-09-29T03:59:59.999Z
+          // Diff: 2026-09-29T03:59:59.999Z - 2026-08-02T03:59:59.999Z = 58 days exact
+          // Grace days: 10
+          // Penalty days: 48
+          // lateFeePerDay: 1
+          // Total: 48 Bs
+          amount: 48,
+          pendingAmount: 48,
+        }),
+      );
+
+      jest.useRealTimers();
+    });
+  });
 });

@@ -90,9 +90,12 @@ export function calculateCycleDates(
       Date.UTC(targetYear, targetMonth + 1, 0),
     ).getUTCDate();
     const safeTargetBillingDay = Math.min(billingDay, maxDaysInTargetMonth);
-    theoreticalDueDate = new Date(
-      Date.UTC(targetYear, targetMonth, safeTargetBillingDay),
+    theoreticalDueDate = DateUtils.getEndOfLocalDayFromParts(
+      targetYear,
+      targetMonth,
+      safeTargetBillingDay,
     );
+    dueDate = theoreticalDueDate; // Now it directly points to the correct UTC instant
 
     let nextTargetMonth = targetMonth + 1;
     let nextTargetYear = targetYear;
@@ -105,19 +108,19 @@ export function calculateCycleDates(
       Date.UTC(nextTargetYear, nextTargetMonth + 1, 0),
     ).getUTCDate();
     const safeNextBillingDay = Math.min(billingDay, maxDaysInNextMonth);
-    nextDueDate = new Date(
-      Date.UTC(nextTargetYear, nextTargetMonth, safeNextBillingDay),
+    nextDueDate = DateUtils.getEndOfLocalDayFromParts(
+      nextTargetYear,
+      nextTargetMonth,
+      safeNextBillingDay,
     );
 
-    dueDate = new Date(theoreticalDueDate);
-
-    const billingYear = theoreticalDueDate.getUTCFullYear();
-    const billingMonthNum = theoreticalDueDate.getUTCMonth() + 1;
+    const billingYear = targetYear;
+    const billingMonthNum = targetMonth + 1;
 
     return {
-      dueDate: DateUtils.getEndOfLocalDayInUTC(dueDate),
-      theoreticalDueDate: DateUtils.getEndOfLocalDayInUTC(theoreticalDueDate),
-      nextDueDate: DateUtils.getEndOfLocalDayInUTC(nextDueDate),
+      dueDate, // Already UTC-corrected local end of day
+      theoreticalDueDate,
+      nextDueDate,
       billingYear,
       billingMonth: billingMonthNum,
       billingCycle: cycleCounter,

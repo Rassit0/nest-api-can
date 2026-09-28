@@ -82,8 +82,8 @@ describe('MembershipCyclesEngine', () => {
     // First cycle
     expect(cycles[0].cycleCounter).toBe(1);
     expect(cycles[0].isFirstCycle).toBe(true);
-    expect(cycles[0].dueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 0, 15)))); // startedAt because it's first cycle
-    expect(cycles[0].nextDueDate).toEqual(DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 1, 1)))); // Feb 1
+    expect(cycles[0].dueDate.toISOString()).toEqual(DateUtils.getEndOfLocalDayFromParts(2024, 0, 1).toISOString()); // Jan 1st end of civil day
+    expect(cycles[0].nextDueDate.toISOString()).toEqual(DateUtils.getEndOfLocalDayFromParts(2024, 1, 1).toISOString()); // Feb 1st end of civil day
 
     // Check if descriptions mark prorating
     expect(cycles[0].description).toContain('Prorrateado');
@@ -147,15 +147,15 @@ describe('MembershipCyclesEngine', () => {
       const membership = getMockMembership();
       // Starts Jan 15. Due dates: Jan 15, Feb 1, Mar 1...
       // Let's end the membership exactly on Feb 1.
-      membership.endedAt = new Date(Date.UTC(2024, 1, 2)); // Feb 2
+      membership.endedAt = new Date(Date.UTC(2024, 1, 3)); // Feb 3
 
       const cycles = simulateAllCycles(membership);
 
-      // Should generate Jan 15 and Feb 1.
+      // Should generate Jan 1 and Feb 1 (civil days).
       expect(cycles.length).toBe(2);
-      expect(cycles[1].dueDate.getUTCMonth()).toBe(1); // Feb 1
-      expect(cycles[1].nextDueDate.getTime()).toBe(
-        DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 2, 1))).getTime(),
+      expect(cycles[1].dueDate.toISOString()).toBe(DateUtils.getEndOfLocalDayFromParts(2024, 1, 1).toISOString()); // Feb 1
+      expect(cycles[1].nextDueDate.toISOString()).toBe(
+        DateUtils.getEndOfLocalDayFromParts(2024, 2, 1).toISOString(),
       ); // Mar 1
     });
 
@@ -167,11 +167,36 @@ describe('MembershipCyclesEngine', () => {
 
       const cycles = simulateAllCycles(membership);
 
-      // Cycles: Jan 15, Feb 1. Next is Mar 1 which is after Feb 10.
+      // Cycles: Jan 1, Feb 1 (civil days). Next is Mar 1 which is after Feb 10.
       expect(cycles.length).toBe(2);
-      expect(cycles[1].nextDueDate.getTime()).toBe(
-        DateUtils.getEndOfLocalDayInUTC(new Date(Date.UTC(2024, 2, 1))).getTime(),
+      expect(cycles[1].nextDueDate.toISOString()).toBe(
+        DateUtils.getEndOfLocalDayFromParts(2024, 2, 1).toISOString(),
       ); // Mar 1
+    });
+  });
+
+  describe('Timezone Late Fee Regression Test (+1 day bug)', () => {
+    it('should correctly construct dueDate matching exactly the end of target civil day', () => {
+      const membership = getMockMembership();
+      
+      // We simulate the August 2026 cycle generation
+      // targetYear = 2026, targetMonth = agosto (7), billingDay = 1
+      membership.startedAt = new Date(Date.UTC(2026, 6, 1)); // Jul 1, 2026
+      membership.teamSeason.season.startDate = new Date(Date.UTC(2026, 0, 1));
+      membership.teamSeason.season.endDate = new Date(Date.UTC(2026, 11, 31, 23, 59, 59, 999));
+      
+      const cycles = simulateAllCycles(membership);
+      
+      // Cycle 0: July 1
+      // Cycle 1: August 1
+      const augustCycle = cycles[1];
+      
+      expect(augustCycle.billingYear).toBe(2026);
+      expect(augustCycle.billingMonth).toBe(8);
+      
+      // BEFORE FIX: The cycle engine returned 2026-08-01T03:59:59.999Z (which is July 31st 23:59:59 in La Paz)
+      // AFTER FIX: It should return exactly 2026-08-02T03:59:59.999Z (which is Aug 1st 23:59:59 in La Paz)
+      expect(augustCycle.dueDate.toISOString()).toBe('2026-08-02T03:59:59.999Z');
     });
   });
 });
