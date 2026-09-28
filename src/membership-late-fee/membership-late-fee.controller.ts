@@ -43,4 +43,18 @@ export class MembershipLateFeeController {
   ) {
     return await this.membershipLateFeeService.applyLateFee(chargeId, dto.customAmount);
   }
+
+  @Post('apply-mass')
+  @ApiOperation({
+    summary: 'Generar recargos por mora masivamente',
+    description: 'Inicia el proceso (típicamente programado por Cron) para calcular y generar los recargos por mora para todos los cargos vencidos.',
+  })
+  @ApiResponse({ status: 201, description: 'Proceso ejecutado.' })
+  @RequirePermissions('CREATE_MEMBERSHIP_CHARGES')
+  async applyMassLateFees() {
+    await this.membershipLateFeeService.applyDailyLateFees();
+    return {
+      message: 'Proceso de generación de moras ejecutado correctamente.',
+    };
+  }
 }
