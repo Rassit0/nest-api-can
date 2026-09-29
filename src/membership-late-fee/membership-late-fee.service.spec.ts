@@ -768,4 +768,353 @@ describe('MembershipLateFeeService (Motor Nocturno de Moras - Extremo)', () => {
       jest.useRealTimers();
     });
   });
+
+  describe('Recálculo Bidireccional de Mora (Charge.dueDate source-of-truth)', () => {
+    const baseDate = new Date('2026-09-28T12:00:00.000Z');
+
+    beforeAll(() => {
+      jest.useFakeTimers().setSystemTime(baseDate);
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+    });
+
+    const getMockCharge = (dueDateStr: string) => ({
+      id: 'charge-bidi',
+      dueDate: new Date(dueDateStr),
+      description: 'Test Charge',
+      membershipCharges: [
+        {
+          playerMembership: {
+            teamSeason: {
+              billingConfig: {
+                lateFeeEnabled: true,
+                graceDays: 0,
+                lateFeePerDay: 1,
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    it('TEST A — CREATE NORMAL', async () => {
+      const charge = getMockCharge('2026-09-18T00:00:00.000Z'); // 11 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(null);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          amount: 11,
+          pendingAmount: 11,
+          status: StatusCharge.PENDING,
+        }),
+      );
+    });
+
+    it('TEST B — EXISTING PENDING UNPAID — INCREASE', async () => {
+      const charge = getMockCharge('2026-09-13T00:00:00.000Z'); // 16 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 10,
+        pendingAmount: 10,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({
+          amount: 16,
+          pendingAmount: 16,
+        }),
+      );
+    });
+
+    it('TEST C — EXISTING PENDING UNPAID — DECREASE', async () => {
+      const charge = getMockCharge('2026-09-16T00:00:00.000Z'); // 13 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 18,
+        pendingAmount: 18,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({
+          amount: 13,
+          pendingAmount: 13,
+        }),
+      );
+    });
+
+    it('TEST D — SAME AMOUNT (Idempotency)', async () => {
+      const charge = getMockCharge('2026-09-10T00:00:00.000Z'); // 19 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 19,
+        pendingAmount: 19,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).not.toHaveBeenCalled();
+      expect(lateFeeRepo.createLateFeeCharge).not.toHaveBeenCalled();
+    });
+
+    it('TEST CON dueDate REAL — HACIA ATRÁS (Increase)', async () => {
+      // dueDate A: Sept 20 -> 9 days late = 9 fee
+      const charge = getMockCharge('2026-09-20T00:00:00.000Z');
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 9,
+        pendingAmount: 9,
+      } as any);
+
+      // Mover dueDate hacia atrás a Sept 10 -> 19 days late
+      charge.dueDate = new Date('2026-09-10T00:00:00.000Z');
+      
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({
+          amount: 19,
+          pendingAmount: 19,
+        }),
+      );
+    });
+
+    it('TEST CON dueDate REAL — HACIA ADELANTE (Decrease)', async () => {
+      // dueDate A: Sept 10 -> 19 days late = 19 fee
+      const charge = getMockCharge('2026-09-10T00:00:00.000Z');
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 19,
+        pendingAmount: 19,
+      } as any);
+
+      // Mover dueDate hacia adelante a Sept 20 -> 9 days late
+      charge.dueDate = new Date('2026-09-20T00:00:00.000Z');
+      
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({
+          amount: 9,
+          pendingAmount: 9,
+        }),
+      );
+    });
+
+    it('TEST DE SOURCE OF TRUTH (Charge.dueDate is what matters)', async () => {
+      const charge = getMockCharge('2026-09-10T00:00:00.000Z'); // 19 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue(null);
+
+      await service.applyDailyLateFees();
+      expect(lateFeeRepo.createLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ amount: 19 })
+      );
+
+      jest.clearAllMocks();
+
+      // Modify ONLY dueDate
+      charge.dueDate = new Date('2026-09-20T00:00:00.000Z'); // 9 days late
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 19,
+        pendingAmount: 19,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).toHaveBeenCalledWith(
+        expect.anything(),
+        'late-1',
+        expect.objectContaining({ amount: 9, pendingAmount: 9 })
+      );
+    });
+
+    describe('VERIFICACIÓN MATEMÁTICA DEFINITIVA (graceDays=10)', () => {
+      it('CONTROL CASE: 28/09/2026 -> 17 días de mora', () => {
+        // dueDate: 01/09/2026 23:59:59.999 La Paz
+        const dueDate = new Date('2026-09-02T03:59:59.999Z');
+        // evalDate: 28/09/2026 23:59:59.999 La Paz
+        const evalDate = new Date('2026-09-29T03:59:59.999Z');
+
+        const mockCharge = {
+          id: 'charge-math',
+          dueDate,
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    isEngineActive: true,
+                    graceDays: 10,
+                    lateFeePerDay: 1,
+                  },
+                },
+              },
+            },
+          ],
+        };
+
+        const result = service.calculateLateFeePure(
+          mockCharge.id,
+          mockCharge.dueDate,
+          mockCharge.membershipCharges[0].playerMembership.teamSeason,
+          mockCharge.membershipCharges[0].playerMembership,
+          evalDate,
+        );
+
+        expect(result.elapsedDays).toBe(27);
+        expect(result.penaltyDays).toBe(17);
+        expect(result.totalLateFeeAmount).toBe(17);
+      });
+
+      it('TEST DE BORDE — ÚLTIMO DÍA DE GRACIA (11/09/2026)', () => {
+        const dueDate = new Date('2026-09-02T03:59:59.999Z');
+        const evalDate = new Date('2026-09-12T03:59:59.999Z'); // 11/09/2026 23:59:59.999 La Paz
+
+        const mockCharge = {
+          id: 'charge-border-1',
+          dueDate,
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    isEngineActive: true,
+                    graceDays: 10,
+                    lateFeePerDay: 1,
+                  },
+                },
+              },
+            },
+          ],
+        };
+
+        const result = service.calculateLateFeePure(
+          mockCharge.id,
+          mockCharge.dueDate,
+          mockCharge.membershipCharges[0].playerMembership.teamSeason,
+          mockCharge.membershipCharges[0].playerMembership,
+          evalDate,
+        );
+
+        expect(result.elapsedDays).toBe(10);
+        expect(result.penaltyDays).toBe(0);
+        expect(result.totalLateFeeAmount).toBe(0);
+      });
+
+      it('TEST DE BORDE — PRIMER DÍA DE MORA (12/09/2026)', () => {
+        const dueDate = new Date('2026-09-02T03:59:59.999Z');
+        const evalDate = new Date('2026-09-13T03:59:59.999Z'); // 12/09/2026 23:59:59.999 La Paz
+
+        const mockCharge = {
+          id: 'charge-border-2',
+          dueDate,
+          membershipCharges: [
+            {
+              playerMembership: {
+                teamSeason: {
+                  billingConfig: {
+                    lateFeeEnabled: true,
+                    isEngineActive: true,
+                    graceDays: 10,
+                    lateFeePerDay: 1,
+                  },
+                },
+              },
+            },
+          ],
+        };
+
+        const result = service.calculateLateFeePure(
+          mockCharge.id,
+          mockCharge.dueDate,
+          mockCharge.membershipCharges[0].playerMembership.teamSeason,
+          mockCharge.membershipCharges[0].playerMembership,
+          evalDate,
+        );
+
+        expect(result.elapsedDays).toBe(11);
+        expect(result.penaltyDays).toBe(1);
+        expect(result.totalLateFeeAmount).toBe(1);
+      });
+    });
+
+    it('PARTIAL — REGRESSION TEST (No disminuir destructivamente)', async () => {
+      const charge = getMockCharge('2026-09-16T00:00:00.000Z'); // 12 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PARTIAL,
+        amount: 18,
+        pendingAmount: 8, // paid 10
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).not.toHaveBeenCalled();
+    });
+
+    it('PAID — REGRESSION TEST (No disminuir automáticamente)', async () => {
+      const charge = getMockCharge('2026-09-16T00:00:00.000Z'); // 12 days late
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PAID,
+        amount: 18,
+        pendingAmount: 0,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).not.toHaveBeenCalled();
+    });
+
+    it('ZERO CASE TEST (Comportamiento actual para cálculo = 0)', async () => {
+      const charge = getMockCharge('2026-09-29T00:00:00.000Z'); // Not late yet (evaluation is 28th)
+      lateFeeRepo.findOverdueCharges.mockResolvedValue([charge as any]);
+      lateFeeRepo.findExistingLateFeeCharge.mockResolvedValue({
+        id: 'late-1',
+        status: StatusCharge.PENDING,
+        amount: 10,
+        pendingAmount: 10,
+      } as any);
+
+      await service.applyDailyLateFees();
+
+      expect(lateFeeRepo.updateLateFeeCharge).not.toHaveBeenCalled();
+      expect(lateFeeRepo.findExistingLateFeeCharge).not.toHaveBeenCalled();
+    });
+  });
 });

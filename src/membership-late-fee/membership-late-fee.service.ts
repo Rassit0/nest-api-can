@@ -77,16 +77,32 @@ export class MembershipLateFeeService {
       await this.lateFeeRepo.findExistingLateFeeCharge(tx, baseCharge.id);
 
     if (existingLateFeeCharge) {
-      if (
+      const previousAmount = Number(existingLateFeeCharge.amount);
+      const pendingAmount = Number(existingLateFeeCharge.pendingAmount);
+
+      const isCompletelyUnpaid =
+        existingLateFeeCharge.status === StatusCharge.PENDING &&
+        previousAmount === pendingAmount;
+
+      if (isCompletelyUnpaid) {
+        if (preview.totalLateFeeAmount !== previousAmount) {
+          await this.lateFeeRepo.updateLateFeeCharge(
+            tx,
+            existingLateFeeCharge.id,
+            {
+              amount: preview.totalLateFeeAmount,
+              pendingAmount: preview.totalLateFeeAmount,
+              status: StatusCharge.PENDING,
+              description: `Mora sobre: ${baseCharge.description?.trim() || 'Cargo original'} (${preview.penaltyDays} x ${preview.lateFeePerDay}/día)`,
+            },
+          );
+        }
+      } else if (
         existingLateFeeCharge.status === StatusCharge.PENDING ||
         existingLateFeeCharge.status === StatusCharge.PARTIAL ||
         existingLateFeeCharge.status === StatusCharge.PAID
       ) {
-        const previousAmount = Number(existingLateFeeCharge.amount);
-
         // `difference` representa únicamente la mora aún no materializada.
-        // Al calcularla sobre el Charge bloqueado, una ejecución concurrente
-        // observa el monto actualizado y no vuelve a generar la misma mora.
         const difference = preview.totalLateFeeAmount - previousAmount;
 
         if (difference > 0) {
@@ -95,8 +111,7 @@ export class MembershipLateFeeService {
             existingLateFeeCharge.id,
             {
               amount: preview.totalLateFeeAmount,
-              pendingAmount:
-                Number(existingLateFeeCharge.pendingAmount) + difference,
+              pendingAmount: pendingAmount + difference,
               status:
                 existingLateFeeCharge.status === StatusCharge.PAID
                   ? StatusCharge.PARTIAL
