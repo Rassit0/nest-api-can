@@ -109,9 +109,11 @@ export class NewsAssetService {
     }
 
     for (const asset of assets) {
-      // Validate ownership
+      // Validate ownership (except if it's already attached to this very news article, which allows collaborative editing)
       if (asset.uploadedById !== userId) {
-        throw new ForbiddenException(`No tienes permiso para usar el recurso ${asset.id}`);
+        if (!(asset.status === 'ATTACHED' && newsId && asset.newsId === newsId)) {
+          throw new ForbiddenException(`No tienes permiso para usar el recurso ${asset.id}`);
+        }
       }
 
       if (asset.status === 'PENDING') {
