@@ -1,6 +1,0 @@
-AggregateError [ECONNREFUSED]: 
-    at D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\pg-pool\index.js:45:11
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async PrismaPgAdapter.startTransaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\adapter-pg\dist\index.js:720:18)
-    at async <anonymous> (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\driver-adapter-utils\src\binder.ts:133:17)
-    at async startTransaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\driver-adapter-utils\src\binder.ts:101:19)

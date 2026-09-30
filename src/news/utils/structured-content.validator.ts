@@ -86,7 +86,7 @@ export function validateAndDeriveStructuredContent(data: any): ValidatedStructur
     switch (type) {
       case 'Heading':
         if (typeof restProps.text !== 'string') throw new BadRequestException(`Heading ${id} missing text`);
-        if (restProps.level && !['h2', 'h3'].includes(restProps.level)) throw new BadRequestException(`Heading ${id} invalid level`);
+        if (restProps.level && !['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(restProps.level)) throw new BadRequestException(`Heading ${id} invalid level`);
         
         sanitizedProps.text = restProps.text;
         sanitizedProps.level = restProps.level || 'h2';
@@ -110,6 +110,7 @@ export function validateAndDeriveStructuredContent(data: any): ValidatedStructur
         sanitizedProps.caption = typeof restProps.caption === 'string' ? restProps.caption : undefined;
         if (restProps.size) sanitizedProps.size = restProps.size;
         if (restProps.alignment) sanitizedProps.alignment = restProps.alignment;
+        if (restProps.verticalAlignment) sanitizedProps.verticalAlignment = restProps.verticalAlignment;
         if (restProps.radius) sanitizedProps.radius = restProps.radius;
         assetIds.add(sanitizedProps.assetId);
         
@@ -134,6 +135,7 @@ export function validateAndDeriveStructuredContent(data: any): ValidatedStructur
         sanitizedProps.caption = typeof restProps.caption === 'string' ? restProps.caption : undefined;
         if (restProps.imageSize) sanitizedProps.imageSize = restProps.imageSize;
         if (restProps.imageAlignment) sanitizedProps.imageAlignment = restProps.imageAlignment;
+        if (restProps.imageVerticalAlignment) sanitizedProps.imageVerticalAlignment = restProps.imageVerticalAlignment;
         if (restProps.imageRadius) sanitizedProps.imageRadius = restProps.imageRadius;
         assetIds.add(sanitizedProps.assetId);
         
@@ -155,16 +157,23 @@ export function validateAndDeriveStructuredContent(data: any): ValidatedStructur
         if (!Array.isArray(restProps.images)) throw new BadRequestException(`Gallery ${id} images must be an array`);
         if (restProps.images.length > 20) throw new BadRequestException(`Gallery ${id} images exceed maximum limit (20)`);
         
+        if (restProps.columns) sanitizedProps.columns = restProps.columns;
+        
         sanitizedProps.images = restProps.images.map((img: any, idx: number) => {
           if (!img || typeof img !== 'object' || typeof img.assetId !== 'string') {
             throw new BadRequestException(`Gallery ${id} image at index ${idx} missing valid assetId`);
           }
           assetIds.add(img.assetId);
-          return {
+          const sanitizedImg: any = {
             assetId: img.assetId,
             alt: typeof img.alt === 'string' ? img.alt : '',
             caption: typeof img.caption === 'string' ? img.caption : undefined,
           };
+          if (img.size) sanitizedImg.size = img.size;
+          if (img.alignment) sanitizedImg.alignment = img.alignment;
+          if (img.verticalAlignment) sanitizedImg.verticalAlignment = img.verticalAlignment;
+          if (img.radius) sanitizedImg.radius = img.radius;
+          return sanitizedImg;
         });
 
         sanitizedProps.images.forEach((img: any) => {
