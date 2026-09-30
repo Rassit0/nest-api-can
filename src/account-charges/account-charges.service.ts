@@ -65,6 +65,15 @@ export class AccountChargesService {
       }
     }
 
+    if (accountData.companyId) {
+      const company = await this.prisma.company.findUnique({
+        where: { id: accountData.companyId },
+      });
+      if (!company) {
+        throw new BadRequestException('La empresa especificada no existe');
+      }
+    }
+
     const newAccountCharge = await this.prisma.$transaction(async (tx) => {
       // 1. Delegar al ChargeService para la lógica financiera
       const chargeResult = await this.chargesService.create(
@@ -93,6 +102,9 @@ export class AccountChargesService {
           person: {
             select: { id: true, name: true, lastName: true, email: true },
           },
+          company: {
+            select: { id: true, name: true, taxId: true },
+          },
         },
       });
 
@@ -115,6 +127,7 @@ export class AccountChargesService {
             chargeId: chargeResult.data.id,
             attachmentIds: immediatePayment.attachmentIds,
             payerPersonId: immediatePayment.payerPersonId,
+            payerCompanyId: immediatePayment.payerCompanyId,
           },
           tx,
         );

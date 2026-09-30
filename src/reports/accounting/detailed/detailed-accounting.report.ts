@@ -147,7 +147,8 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       },
       include: {
         financialAccount: { select: { name: true } },
-        thirdParty: { select: { name: true } },
+        payerPerson: { select: { name: true, lastName: true } },
+        payerCompany: { select: { name: true } },
         payment: {
           include: {
             charge: {
@@ -155,6 +156,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                 accountCharge: {
                   include: {
                     person: { select: { name: true, lastName: true } },
+                    company: { select: { name: true } },
                   },
                 },
               },
@@ -170,6 +172,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                     accountCharge: {
                       include: {
                         person: { select: { name: true, lastName: true } },
+                        company: { select: { name: true } },
                       },
                     },
                   },

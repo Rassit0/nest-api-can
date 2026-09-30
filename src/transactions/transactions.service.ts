@@ -83,6 +83,13 @@ export const transactionSelect = {
                   documentNumber: true,
                 },
               },
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                  taxId: true,
+                },
+              },
             },
           },
           membershipCharges: {
@@ -141,11 +148,11 @@ export const transactionSelect = {
       sizeBytes: true,
     },
   },
-  thirdParty: {
+  payerCompany: {
     select: {
       id: true,
       name: true,
-      documentNumber: true,
+      taxId: true,
     },
   },
 } satisfies Prisma.TransactionSelect;
@@ -287,6 +294,12 @@ export class TransactionsService {
       splitTransactions,
       ...rest
     } = createTransactionDto;
+
+    if (rest.payerPersonId && rest.payerCompanyId) {
+      throw new BadRequestException(
+        'Cannot provide both payerPersonId and payerCompanyId simultaneously.',
+      );
+    }
 
     const isPayment = !!chargeId;
     const mainChargeId = chargeId;
@@ -693,60 +706,276 @@ export class TransactionsService {
         payment: { charge: { sessionBooking: { isNot: null } } },
       }),
       ...(search && {
-        AND: search.trim().split(/\s+/).filter(Boolean).map(word => {
-          const isNumeric = !isNaN(Number(word));
-          // Verificar si tiene formato de recibo (ej: ESC-MAT-7 o GEN-0007)
-          const receiptMatch = word.match(/^(.*?)-(\d+)$/);
+        AND: search
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean)
+          .map((word) => {
+            const isNumeric = !isNaN(Number(word));
+            // Verificar si tiene formato de recibo (ej: ESC-MAT-7 o GEN-0007)
+            const receiptMatch = word.match(/^(.*?)-(\d+)$/);
 
-          const orConditions: Prisma.TransactionWhereInput[] = [
-            { description: { contains: word, mode: 'insensitive' } },
-            { reference: { contains: word, mode: 'insensitive' } },
-            { receiptSeries: { contains: word, mode: 'insensitive' } },
-            { payment: { receiptSeries: { contains: word, mode: 'insensitive' } } },
-            { payerPerson: { name: { contains: word, mode: 'insensitive' } } },
-            { payerPerson: { lastName: { contains: word, mode: 'insensitive' } } },
-            { payerPerson: { secondLastName: { contains: word, mode: 'insensitive' } } },
-            { payerPerson: { documentNumber: { contains: word, mode: 'insensitive' } } },
-            // ThirdParty (Beneficiario directo)
-            { thirdParty: { name: { contains: word, mode: 'insensitive' } } },
-            { thirdParty: { documentNumber: { contains: word, mode: 'insensitive' } } },
-            // Beneficiario derivado de AccountCharge
-            { payment: { charge: { accountCharge: { person: { name: { contains: word, mode: 'insensitive' } } } } } },
-            { payment: { charge: { accountCharge: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } },
-            { payment: { charge: { accountCharge: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } },
-            { payment: { charge: { accountCharge: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } },
-            // Beneficiario derivado de Student
-            { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { name: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { studentCharges: { some: { studentMembership: { student: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } } } } },
-            // Beneficiario derivado de Player
-            { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { name: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { lastName: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { secondLastName: { contains: word, mode: 'insensitive' } } } } } } } } },
-            { payment: { charge: { membershipCharges: { some: { playerMembership: { player: { person: { documentNumber: { contains: word, mode: 'insensitive' } } } } } } } } },
-          ];
+            const orConditions: Prisma.TransactionWhereInput[] = [
+              { description: { contains: word, mode: 'insensitive' } },
+              { reference: { contains: word, mode: 'insensitive' } },
+              { receiptSeries: { contains: word, mode: 'insensitive' } },
+              {
+                payment: {
+                  receiptSeries: { contains: word, mode: 'insensitive' },
+                },
+              },
+              {
+                payerPerson: { name: { contains: word, mode: 'insensitive' } },
+              },
+              {
+                payerPerson: {
+                  lastName: { contains: word, mode: 'insensitive' },
+                },
+              },
+              {
+                payerPerson: {
+                  secondLastName: { contains: word, mode: 'insensitive' },
+                },
+              },
+              {
+                payerPerson: {
+                  documentNumber: { contains: word, mode: 'insensitive' },
+                },
+              },
+              // Company (Beneficiario directo)
+              {
+                payerCompany: { name: { contains: word, mode: 'insensitive' } },
+              },
+              {
+                payerCompany: {
+                  taxId: { contains: word, mode: 'insensitive' },
+                },
+              },
+              // Beneficiario derivado de AccountCharge
+              {
+                payment: {
+                  charge: {
+                    accountCharge: {
+                      person: { name: { contains: word, mode: 'insensitive' } },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    accountCharge: {
+                      person: {
+                        lastName: { contains: word, mode: 'insensitive' },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    accountCharge: {
+                      person: {
+                        secondLastName: { contains: word, mode: 'insensitive' },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    accountCharge: {
+                      person: {
+                        documentNumber: { contains: word, mode: 'insensitive' },
+                      },
+                    },
+                  },
+                },
+              },
+              // Beneficiario derivado de Student
+              {
+                payment: {
+                  charge: {
+                    studentCharges: {
+                      some: {
+                        studentMembership: {
+                          student: {
+                            person: {
+                              name: { contains: word, mode: 'insensitive' },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    studentCharges: {
+                      some: {
+                        studentMembership: {
+                          student: {
+                            person: {
+                              lastName: { contains: word, mode: 'insensitive' },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    studentCharges: {
+                      some: {
+                        studentMembership: {
+                          student: {
+                            person: {
+                              secondLastName: {
+                                contains: word,
+                                mode: 'insensitive',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    studentCharges: {
+                      some: {
+                        studentMembership: {
+                          student: {
+                            person: {
+                              documentNumber: {
+                                contains: word,
+                                mode: 'insensitive',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              // Beneficiario derivado de Player
+              {
+                payment: {
+                  charge: {
+                    membershipCharges: {
+                      some: {
+                        playerMembership: {
+                          player: {
+                            person: {
+                              name: { contains: word, mode: 'insensitive' },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    membershipCharges: {
+                      some: {
+                        playerMembership: {
+                          player: {
+                            person: {
+                              lastName: { contains: word, mode: 'insensitive' },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    membershipCharges: {
+                      some: {
+                        playerMembership: {
+                          player: {
+                            person: {
+                              secondLastName: {
+                                contains: word,
+                                mode: 'insensitive',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                payment: {
+                  charge: {
+                    membershipCharges: {
+                      some: {
+                        playerMembership: {
+                          player: {
+                            person: {
+                              documentNumber: {
+                                contains: word,
+                                mode: 'insensitive',
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            ];
 
-          if (isNumeric) {
-            orConditions.push({ receiptNumber: { equals: parseInt(word, 10) } });
-            orConditions.push({ payment: { receiptNumber: { equals: parseInt(word, 10) } } });
-          }
+            if (isNumeric) {
+              orConditions.push({
+                receiptNumber: { equals: parseInt(word, 10) },
+              });
+              orConditions.push({
+                payment: { receiptNumber: { equals: parseInt(word, 10) } },
+              });
+            }
 
-          if (receiptMatch) {
-            orConditions.push({
-              receiptSeries: { contains: receiptMatch[1], mode: 'insensitive' },
-              receiptNumber: { equals: parseInt(receiptMatch[2], 10) },
-            });
-            orConditions.push({
-              payment: {
-                receiptSeries: { contains: receiptMatch[1], mode: 'insensitive' },
+            if (receiptMatch) {
+              orConditions.push({
+                receiptSeries: {
+                  contains: receiptMatch[1],
+                  mode: 'insensitive',
+                },
                 receiptNumber: { equals: parseInt(receiptMatch[2], 10) },
-              }
-            });
-          }
+              });
+              orConditions.push({
+                payment: {
+                  receiptSeries: {
+                    contains: receiptMatch[1],
+                    mode: 'insensitive',
+                  },
+                  receiptNumber: { equals: parseInt(receiptMatch[2], 10) },
+                },
+              });
+            }
 
-          return { OR: orConditions };
-        })
+            return { OR: orConditions };
+          }),
       }),
     };
 
@@ -1008,8 +1237,6 @@ export class TransactionsService {
       return deletedTransaction;
     });
   }
-
-
 
   getPaymentMethods() {
     return {

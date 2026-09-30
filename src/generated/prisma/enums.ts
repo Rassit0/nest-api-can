@@ -352,14 +352,14 @@ export const AccountReferenceType = {
 export type AccountReferenceType = (typeof AccountReferenceType)[keyof typeof AccountReferenceType]
 
 
-export const ThirdPartyType = {
+export const CompanyType = {
   PROVIDER: 'PROVIDER',
   CLIENT: 'CLIENT',
   INSTITUTION: 'INSTITUTION',
   OTHER: 'OTHER'
 } as const
 
-export type ThirdPartyType = (typeof ThirdPartyType)[keyof typeof ThirdPartyType]
+export type CompanyType = (typeof CompanyType)[keyof typeof CompanyType]
 
 
 export const AttachmentStatus = {

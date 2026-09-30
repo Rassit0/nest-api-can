@@ -37,6 +37,10 @@ export class ImmediatePaymentDto {
   payerPersonId?: string;
 
   @IsOptional()
+  @IsUUID('4')
+  payerCompanyId?: string;
+
+  @IsOptional()
   @Type(() => Date)
   transactionDate?: Date;
 }
@@ -82,6 +86,10 @@ export class CreateAccountChargeDto {
   @IsUUID()
   @IsOptional()
   personId?: string;
+
+  @IsUUID()
+  @IsOptional()
+  companyId?: string;
 
   @IsString()
   @IsOptional()

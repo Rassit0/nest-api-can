@@ -1,4 +1,6 @@
-PrismaClientUnknownRequestError: Error in connector: Error querying the database: FATAL: the database system is starting up
-    at Qr.transaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\core\engines\library\LibraryEngine.ts:223:13)
-    at async Proxy._transactionWithCallback (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:715:20)
-    at async AuthService.login (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\src\auth\auth.service.ts:63:20)
+AggregateError [ECONNREFUSED]: 
+    at D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PrismaPgAdapter.startTransaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\adapter-pg\dist\index.js:720:18)
+    at async <anonymous> (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\driver-adapter-utils\src\binder.ts:133:17)
+    at async startTransaction (D:\Documentos\Trabajos\Sistema Gestion CAN\Sistema\nest-gestion360\node_modules\@prisma\driver-adapter-utils\src\binder.ts:101:19)

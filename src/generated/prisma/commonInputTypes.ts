@@ -997,21 +997,21 @@ export type EnumAccountReferenceTypeNullableWithAggregatesFilter<$PrismaModel = 
   _max?: Prisma.NestedEnumAccountReferenceTypeNullableFilter<$PrismaModel>
 }
 
-export type EnumThirdPartyTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.ThirdPartyType | Prisma.EnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel> | $Enums.ThirdPartyType
+export type EnumCompanyTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CompanyType | Prisma.EnumCompanyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel> | $Enums.CompanyType
 }
 
-export type EnumThirdPartyTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ThirdPartyType | Prisma.EnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumThirdPartyTypeWithAggregatesFilter<$PrismaModel> | $Enums.ThirdPartyType
+export type EnumCompanyTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CompanyType | Prisma.EnumCompanyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCompanyTypeWithAggregatesFilter<$PrismaModel> | $Enums.CompanyType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel>
 }
 
 export type EnumAttachmentStatusFilter<$PrismaModel = never> = {
@@ -2030,21 +2030,21 @@ export type NestedEnumAccountReferenceTypeNullableWithAggregatesFilter<$PrismaMo
   _max?: Prisma.NestedEnumAccountReferenceTypeNullableFilter<$PrismaModel>
 }
 
-export type NestedEnumThirdPartyTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.ThirdPartyType | Prisma.EnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel> | $Enums.ThirdPartyType
+export type NestedEnumCompanyTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CompanyType | Prisma.EnumCompanyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel> | $Enums.CompanyType
 }
 
-export type NestedEnumThirdPartyTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ThirdPartyType | Prisma.EnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ThirdPartyType[] | Prisma.ListEnumThirdPartyTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumThirdPartyTypeWithAggregatesFilter<$PrismaModel> | $Enums.ThirdPartyType
+export type NestedEnumCompanyTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CompanyType | Prisma.EnumCompanyTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CompanyType[] | Prisma.ListEnumCompanyTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCompanyTypeWithAggregatesFilter<$PrismaModel> | $Enums.CompanyType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumThirdPartyTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCompanyTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumAttachmentStatusFilter<$PrismaModel = never> = {

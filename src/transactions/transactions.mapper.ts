@@ -22,10 +22,10 @@ export interface MappedTransaction {
   balanceBefore: number | null;
   balanceAfter: number | null;
   financialAccountName: string | null;
-  thirdParty: {
+  payerCompany: {
     id: string;
     name: string;
-    documentNumber: string | null;
+    taxId: string | null;
   } | null;
   payerPerson: {
     id: string;
@@ -77,27 +77,12 @@ export class TransactionsMapper {
       }
     }
 
-      let mappedThirdParty = transaction.thirdParty || null;
-      if (!mappedThirdParty && transaction.payment?.charge?.accountCharge?.person) {
-        const p = transaction.payment.charge.accountCharge.person;
-        mappedThirdParty = {
-          id: p.id,
-          name: `${p.lastName || ''} ${(p as any).secondLastName || ''} ${p.name}`.replace(/\s+/g, ' ').trim(),
-          documentNumber: p.documentNumber || null,
-        };
-      } else if (!mappedThirdParty && transaction.payment?.charge?.membershipCharges?.[0]?.playerMembership?.player?.person) {
-        const p = transaction.payment.charge.membershipCharges[0].playerMembership.player.person;
-        mappedThirdParty = {
-          id: p.id,
-          name: `${p.lastName || ''} ${(p as any).secondLastName || ''} ${p.name}`.replace(/\s+/g, ' ').trim(),
-          documentNumber: p.documentNumber || null,
-        };
-      } else if (!mappedThirdParty && transaction.payment?.charge?.studentCharges?.[0]?.studentMembership?.student?.person) {
-        const p = transaction.payment.charge.studentCharges[0].studentMembership.student.person;
-        mappedThirdParty = {
-          id: p.id,
-          name: `${p.lastName || ''} ${(p as any).secondLastName || ''} ${p.name}`.replace(/\s+/g, ' ').trim(),
-          documentNumber: p.documentNumber || null,
+      let mappedCompany = transaction.payerCompany || null;
+      if (!mappedCompany && transaction.payment?.charge?.accountCharge?.company) {
+        mappedCompany = {
+          id: transaction.payment.charge.accountCharge.company.id,
+          name: transaction.payment.charge.accountCharge.company.name,
+          taxId: transaction.payment.charge.accountCharge.company.taxId,
         };
       }
 
@@ -119,7 +104,7 @@ export class TransactionsMapper {
         balanceBefore: transaction.balanceBefore != null ? Number(transaction.balanceBefore) : null,
         balanceAfter: transaction.balanceAfter != null ? Number(transaction.balanceAfter) : null,
         financialAccountName: (transaction as any).financialAccount?.name || null,
-        thirdParty: mappedThirdParty,
+        payerCompany: mappedCompany,
         payerPerson: (transaction as any).payerPerson || null,
         attachments: transaction.attachments || [],
         createdAt: transaction.createdAt,

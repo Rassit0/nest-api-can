@@ -53,7 +53,12 @@ export class PaymentReportService {
                 },
               },
             },
-            accountCharge: true,
+            accountCharge: {
+              include: {
+                person: true,
+                company: true,
+              },
+            },
           },
         },
       },
@@ -116,8 +121,17 @@ export class PaymentReportService {
       beneficiaryName =
         `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
       beneficiaryId = person.id;
-    } else if (charge?.accountCharge?.personId) {
-      beneficiaryId = charge.accountCharge.personId;
+    } else if (charge?.accountCharge) {
+      if (charge.accountCharge.person) {
+        const person = charge.accountCharge.person;
+        beneficiaryName =
+          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+        beneficiaryId = person.id;
+      } else if (charge.accountCharge.company) {
+        const company = charge.accountCharge.company;
+        beneficiaryName = company.name;
+        beneficiaryId = company.id;
+      }
     }
 
     const lang = I18nContext.current()?.lang || 'es';
@@ -213,7 +227,9 @@ export class PaymentReportService {
     const uniqueIds = Array.from(new Set(paymentIds));
 
     if (uniqueIds.length === 0) {
-      throw new BadRequestException('Debe proveer al menos un ID de pago/transacción.');
+      throw new BadRequestException(
+        'Debe proveer al menos un ID de pago/transacción.',
+      );
     }
 
     // 2. Obtener datos de cada recibo de forma secuencial
@@ -265,7 +281,12 @@ export class PaymentReportService {
                     },
                   },
                 },
-                accountCharge: true,
+                accountCharge: {
+                  include: {
+                    person: true,
+                    company: true,
+                  },
+                },
               },
             },
           },
@@ -315,6 +336,14 @@ export class PaymentReportService {
           charge.studentCharges[0].studentMembership.student.person;
         beneficiaryName =
           `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+      } else if (charge.accountCharge) {
+        if (charge.accountCharge.person) {
+          const person = charge.accountCharge.person;
+          beneficiaryName =
+            `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+        } else if (charge.accountCharge.company) {
+          beneficiaryName = charge.accountCharge.company.name;
+        }
       }
     }
 
@@ -395,7 +424,7 @@ export class PaymentReportService {
     }
 
     const data = await this.buildTransactionReceiptData(transactionId);
-    
+
     // -- ANTIGUO CODIGO INDIVIDUAL (Conservado por solicitud) --
     // const docDefinition = transactionByIdReport({ data: data as any, isSingle });
     // -----------------------------------------------------------

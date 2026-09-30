@@ -115,7 +115,7 @@ export const ModelName = {
   AccountCategory: 'AccountCategory',
   AccountCharge: 'AccountCharge',
   CashClosure: 'CashClosure',
-  ThirdParty: 'ThirdParty',
+  Company: 'Company',
   Attachment: 'Attachment',
   TeamSeasonCategory: 'TeamSeasonCategory',
   News: 'News',
@@ -621,7 +621,7 @@ export const TransactionScalarFieldEnum = {
   reconciledAt: 'reconciledAt',
   referenceGroupId: 'referenceGroupId',
   isInternalTransfer: 'isInternalTransfer',
-  thirdPartyId: 'thirdPartyId',
+  payerCompanyId: 'payerCompanyId',
   paymentId: 'paymentId',
   balanceAfter: 'balanceAfter',
   balanceBefore: 'balanceBefore',
@@ -1240,6 +1240,7 @@ export const AccountChargeScalarFieldEnum = {
   referenceId: 'referenceId',
   referenceNumber: 'referenceNumber',
   personId: 'personId',
+  companyId: 'companyId',
   externalEntity: 'externalEntity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -1265,19 +1266,25 @@ export const CashClosureScalarFieldEnum = {
 export type CashClosureScalarFieldEnum = (typeof CashClosureScalarFieldEnum)[keyof typeof CashClosureScalarFieldEnum]
 
 
-export const ThirdPartyScalarFieldEnum = {
+export const CompanyScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  legalName: 'legalName',
+  taxId: 'taxId',
+  phone: 'phone',
+  email: 'email',
+  address: 'address',
+  notes: 'notes',
+  isActive: 'isActive',
   type: 'type',
   documentType: 'documentType',
-  documentNumber: 'documentNumber',
-  contactEmail: 'contactEmail',
-  contactPhone: 'contactPhone',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  updatedById: 'updatedById'
 } as const
 
-export type ThirdPartyScalarFieldEnum = (typeof ThirdPartyScalarFieldEnum)[keyof typeof ThirdPartyScalarFieldEnum]
+export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
 
 
 export const AttachmentScalarFieldEnum = {

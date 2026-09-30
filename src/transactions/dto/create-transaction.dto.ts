@@ -60,20 +60,20 @@ export class CreateTransactionDto {
   @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440001',
     description:
-      'ID de la entidad/proveedor (ThirdParty) asociado a la transacción',
+      'ID de la empresa/entidad (Company) asociada a la transacción',
   })
   @IsOptional()
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
-      constraint1: 'thirdPartyId',
+      constraint1: 'payerCompanyId',
     }),
   })
-  @Exists('thirdParty', 'id', {
+  @Exists('company', 'id', {
     message: i18nValidationMessage('validation.NOT_EXISTS', {
-      constraint1: 'thirdPartyId',
+      constraint1: 'payerCompanyId',
     }),
   })
-  thirdPartyId?: string;
+  payerCompanyId?: string;
 
   @ApiPropertyOptional({
     example: 150.0,

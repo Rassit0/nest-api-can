@@ -618,7 +618,7 @@ model Transaction {
   reconciledAt           DateTime?         @map("reconciled_at")
   referenceGroupId       String?           @map("reference_group_id")
   isInternalTransfer     Boolean           @default(false) @map("is_internal_transfer")
-  thirdPartyId           String?           @map("third_party_id")
+  payerCompanyId         String?           @map("payer_company_id")
   paymentId              String?           @map("payment_id")
   balanceAfter           Decimal?          @map("balance_after") @db.Decimal(10, 2)
   balanceBefore          Decimal?          @map("balance_before") @db.Decimal(10, 2)
@@ -632,7 +632,7 @@ model Transaction {
   payment                Payment?          @relation(fields: [paymentId], references: [id], onDelete: Restrict)
   reverses               Transaction?      @relation("TransactionReversal", fields: [reversesId], references: [id])
   reversedBy             Transaction?      @relation("TransactionReversal")
-  thirdParty             ThirdParty?       @relation(fields: [thirdPartyId], references: [id])
+  payerCompany           Company?          @relation(fields: [payerCompanyId], references: [id], onDelete: Restrict)
   updatedBy              User?             @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@unique([receiptSeries, receiptNumber])
@@ -684,6 +684,8 @@ model User {
   updatedAccountCategories          AccountCategory[]           @relation("UpdatedBy")
   createdAccountCharges             AccountCharge[]             @relation("CreatedBy")
   updatedAccountCharges             AccountCharge[]             @relation("UpdatedBy")
+  createdCompanies                  Company[]                   @relation("CreatedBy")
+  updatedCompanies                  Company[]                   @relation("UpdatedBy")
   attachments                       Attachment[]
   auditLogs                         AuditLog[]
   cashClosuresCreated               CashClosure[]               @relation("CreatedByCashClosure")
@@ -1496,6 +1498,7 @@ model AccountCharge {
   referenceId     String?               @map("reference_id")
   referenceNumber String?               @map("reference_number")
   personId        String?               @map("person_id")
+  companyId       String?               @map("company_id")
   externalEntity  String?               @map("external_entity")
   createdAt       DateTime              @default(now()) @map("created_at")
   updatedAt       DateTime              @updatedAt @map("updated_at")
@@ -1505,6 +1508,7 @@ model AccountCharge {
   charge          Charge                @relation(fields: [chargeId], references: [id], onDelete: Cascade)
   createdBy       User?                 @relation("CreatedBy", fields: [createdById], references: [id])
   person          Person?               @relation("PersonAccountCharges", fields: [personId], references: [id])
+  company         Company?              @relation(fields: [companyId], references: [id], onDelete: Restrict)
   updatedBy       User?                 @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   @@index([personId])
@@ -1530,19 +1534,31 @@ model CashClosure {
   @@map("cash_closures")
 }
 
-model ThirdParty {
-  id             String         @id @default(uuid())
+model Company {
+  id             String      @id @default(uuid())
   name           String
-  type           ThirdPartyType @default(PROVIDER)
-  documentType   String?        @map("document_type")
-  documentNumber String?        @map("document_number")
-  contactEmail   String?        @map("contact_email")
-  contactPhone   String?        @map("contact_phone")
-  createdAt      DateTime       @default(now()) @map("created_at")
-  updatedAt      DateTime       @updatedAt @map("updated_at")
-  transactions   Transaction[]
+  legalName      String?     @map("legal_name")
+  taxId          String?     @map("tax_id")
+  phone          String?
+  email          String?
+  address        String?
+  notes          String?
+  isActive       Boolean     @default(true) @map("is_active")
+  type           CompanyType @default(PROVIDER)
+  documentType   String?     @map("document_type") // Legacy
 
-  @@map("third_parties")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+  createdById    String?     @map("created_by_id")
+  updatedById    String?     @map("updated_by_id")
+
+  createdBy      User?       @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy      User?       @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  transactions   Transaction[]
+  accountCharges AccountCharge[]
+
+  @@map("companies")
 }
 
 model Attachment {
@@ -1930,7 +1946,7 @@ enum AccountReferenceType {
   OTHER
 }
 
-enum ThirdPartyType {
+enum CompanyType {
   PROVIDER
   CLIENT
   INSTITUTION

@@ -33,6 +33,7 @@ export type AccountChargeMinAggregateOutputType = {
   referenceId: string | null
   referenceNumber: string | null
   personId: string | null
+  companyId: string | null
   externalEntity: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +50,7 @@ export type AccountChargeMaxAggregateOutputType = {
   referenceId: string | null
   referenceNumber: string | null
   personId: string | null
+  companyId: string | null
   externalEntity: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -65,6 +67,7 @@ export type AccountChargeCountAggregateOutputType = {
   referenceId: number
   referenceNumber: number
   personId: number
+  companyId: number
   externalEntity: number
   createdAt: number
   updatedAt: number
@@ -83,6 +86,7 @@ export type AccountChargeMinAggregateInputType = {
   referenceId?: true
   referenceNumber?: true
   personId?: true
+  companyId?: true
   externalEntity?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +103,7 @@ export type AccountChargeMaxAggregateInputType = {
   referenceId?: true
   referenceNumber?: true
   personId?: true
+  companyId?: true
   externalEntity?: true
   createdAt?: true
   updatedAt?: true
@@ -115,6 +120,7 @@ export type AccountChargeCountAggregateInputType = {
   referenceId?: true
   referenceNumber?: true
   personId?: true
+  companyId?: true
   externalEntity?: true
   createdAt?: true
   updatedAt?: true
@@ -204,6 +210,7 @@ export type AccountChargeGroupByOutputType = {
   referenceId: string | null
   referenceNumber: string | null
   personId: string | null
+  companyId: string | null
   externalEntity: string | null
   createdAt: Date
   updatedAt: Date
@@ -241,6 +248,7 @@ export type AccountChargeWhereInput = {
   referenceId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   referenceNumber?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   personId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
+  companyId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   externalEntity?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
@@ -250,6 +258,7 @@ export type AccountChargeWhereInput = {
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
+  company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -262,6 +271,7 @@ export type AccountChargeOrderByWithRelationInput = {
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalEntity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -271,6 +281,7 @@ export type AccountChargeOrderByWithRelationInput = {
   charge?: Prisma.ChargeOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   person?: Prisma.PersonOrderByWithRelationInput
+  company?: Prisma.CompanyOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -286,6 +297,7 @@ export type AccountChargeWhereUniqueInput = Prisma.AtLeast<{
   referenceId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   referenceNumber?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   personId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
+  companyId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   externalEntity?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
@@ -295,6 +307,7 @@ export type AccountChargeWhereUniqueInput = Prisma.AtLeast<{
   charge?: Prisma.XOR<Prisma.ChargeScalarRelationFilter, Prisma.ChargeWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
+  company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "chargeId">
 
@@ -307,6 +320,7 @@ export type AccountChargeOrderByWithAggregationInput = {
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   personId?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalEntity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -329,6 +343,7 @@ export type AccountChargeScalarWhereWithAggregatesInput = {
   referenceId?: Prisma.StringNullableWithAggregatesFilter<"AccountCharge"> | string | null
   referenceNumber?: Prisma.StringNullableWithAggregatesFilter<"AccountCharge"> | string | null
   personId?: Prisma.StringNullableWithAggregatesFilter<"AccountCharge"> | string | null
+  companyId?: Prisma.StringNullableWithAggregatesFilter<"AccountCharge"> | string | null
   externalEntity?: Prisma.StringNullableWithAggregatesFilter<"AccountCharge"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AccountCharge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AccountCharge"> | Date | string
@@ -349,6 +364,7 @@ export type AccountChargeCreateInput = {
   charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
   person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
 }
 
@@ -361,6 +377,7 @@ export type AccountChargeUncheckedCreateInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -381,6 +398,7 @@ export type AccountChargeUpdateInput = {
   charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
   person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
 }
 
@@ -393,6 +411,7 @@ export type AccountChargeUncheckedUpdateInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -409,6 +428,7 @@ export type AccountChargeCreateManyInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -436,6 +456,7 @@ export type AccountChargeUncheckedUpdateManyInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,6 +488,7 @@ export type AccountChargeCountOrderByAggregateInput = {
   referenceId?: Prisma.SortOrder
   referenceNumber?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   externalEntity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -483,6 +505,7 @@ export type AccountChargeMaxOrderByAggregateInput = {
   referenceId?: Prisma.SortOrder
   referenceNumber?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   externalEntity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -499,6 +522,7 @@ export type AccountChargeMinOrderByAggregateInput = {
   referenceId?: Prisma.SortOrder
   referenceNumber?: Prisma.SortOrder
   personId?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
   externalEntity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -710,6 +734,48 @@ export type NullableEnumAccountReferenceTypeFieldUpdateOperationsInput = {
   set?: $Enums.AccountReferenceType | null
 }
 
+export type AccountChargeCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput> | Prisma.AccountChargeCreateWithoutCompanyInput[] | Prisma.AccountChargeUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.AccountChargeCreateOrConnectWithoutCompanyInput | Prisma.AccountChargeCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.AccountChargeCreateManyCompanyInputEnvelope
+  connect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+}
+
+export type AccountChargeUncheckedCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput> | Prisma.AccountChargeCreateWithoutCompanyInput[] | Prisma.AccountChargeUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.AccountChargeCreateOrConnectWithoutCompanyInput | Prisma.AccountChargeCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.AccountChargeCreateManyCompanyInputEnvelope
+  connect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+}
+
+export type AccountChargeUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput> | Prisma.AccountChargeCreateWithoutCompanyInput[] | Prisma.AccountChargeUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.AccountChargeCreateOrConnectWithoutCompanyInput | Prisma.AccountChargeCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.AccountChargeUpsertWithWhereUniqueWithoutCompanyInput | Prisma.AccountChargeUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.AccountChargeCreateManyCompanyInputEnvelope
+  set?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  disconnect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  delete?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  connect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  update?: Prisma.AccountChargeUpdateWithWhereUniqueWithoutCompanyInput | Prisma.AccountChargeUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.AccountChargeUpdateManyWithWhereWithoutCompanyInput | Prisma.AccountChargeUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.AccountChargeScalarWhereInput | Prisma.AccountChargeScalarWhereInput[]
+}
+
+export type AccountChargeUncheckedUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput> | Prisma.AccountChargeCreateWithoutCompanyInput[] | Prisma.AccountChargeUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.AccountChargeCreateOrConnectWithoutCompanyInput | Prisma.AccountChargeCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.AccountChargeUpsertWithWhereUniqueWithoutCompanyInput | Prisma.AccountChargeUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.AccountChargeCreateManyCompanyInputEnvelope
+  set?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  disconnect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  delete?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  connect?: Prisma.AccountChargeWhereUniqueInput | Prisma.AccountChargeWhereUniqueInput[]
+  update?: Prisma.AccountChargeUpdateWithWhereUniqueWithoutCompanyInput | Prisma.AccountChargeUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.AccountChargeUpdateManyWithWhereWithoutCompanyInput | Prisma.AccountChargeUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.AccountChargeScalarWhereInput | Prisma.AccountChargeScalarWhereInput[]
+}
+
 export type AccountChargeCreateWithoutPersonInput = {
   id?: string
   title: string
@@ -722,6 +788,7 @@ export type AccountChargeCreateWithoutPersonInput = {
   category?: Prisma.AccountCategoryCreateNestedOneWithoutAccountChargesInput
   charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
 }
 
@@ -733,6 +800,7 @@ export type AccountChargeUncheckedCreateWithoutPersonInput = {
   referenceType?: $Enums.AccountReferenceType | null
   referenceId?: string | null
   referenceNumber?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -778,6 +846,7 @@ export type AccountChargeScalarWhereInput = {
   referenceId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   referenceNumber?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   personId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
+  companyId?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   externalEntity?: Prisma.StringNullableFilter<"AccountCharge"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AccountCharge"> | Date | string
@@ -797,6 +866,7 @@ export type AccountChargeCreateWithoutChargeInput = {
   category?: Prisma.AccountCategoryCreateNestedOneWithoutAccountChargesInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
   person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
 }
 
@@ -808,6 +878,7 @@ export type AccountChargeUncheckedCreateWithoutChargeInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -843,6 +914,7 @@ export type AccountChargeUpdateWithoutChargeInput = {
   category?: Prisma.AccountCategoryUpdateOneWithoutAccountChargesNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
   person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
 }
 
@@ -854,6 +926,7 @@ export type AccountChargeUncheckedUpdateWithoutChargeInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -873,6 +946,7 @@ export type AccountChargeCreateWithoutCreatedByInput = {
   category?: Prisma.AccountCategoryCreateNestedOneWithoutAccountChargesInput
   charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
   person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
 }
 
@@ -885,6 +959,7 @@ export type AccountChargeUncheckedCreateWithoutCreatedByInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -914,6 +989,7 @@ export type AccountChargeCreateWithoutUpdatedByInput = {
   charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
   person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
 }
 
 export type AccountChargeUncheckedCreateWithoutUpdatedByInput = {
@@ -925,6 +1001,7 @@ export type AccountChargeUncheckedCreateWithoutUpdatedByInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -985,6 +1062,7 @@ export type AccountChargeCreateWithoutCategoryInput = {
   charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
   person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutAccountChargesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
 }
 
@@ -996,6 +1074,7 @@ export type AccountChargeUncheckedCreateWithoutCategoryInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1029,6 +1108,64 @@ export type AccountChargeUpdateManyWithWhereWithoutCategoryInput = {
   data: Prisma.XOR<Prisma.AccountChargeUpdateManyMutationInput, Prisma.AccountChargeUncheckedUpdateManyWithoutCategoryInput>
 }
 
+export type AccountChargeCreateWithoutCompanyInput = {
+  id?: string
+  title: string
+  referenceType?: $Enums.AccountReferenceType | null
+  referenceId?: string | null
+  referenceNumber?: string | null
+  externalEntity?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category?: Prisma.AccountCategoryCreateNestedOneWithoutAccountChargesInput
+  charge: Prisma.ChargeCreateNestedOneWithoutAccountChargeInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAccountChargesInput
+  person?: Prisma.PersonCreateNestedOneWithoutAccountChargesInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedAccountChargesInput
+}
+
+export type AccountChargeUncheckedCreateWithoutCompanyInput = {
+  id?: string
+  chargeId: string
+  title: string
+  categoryId?: string | null
+  referenceType?: $Enums.AccountReferenceType | null
+  referenceId?: string | null
+  referenceNumber?: string | null
+  personId?: string | null
+  externalEntity?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type AccountChargeCreateOrConnectWithoutCompanyInput = {
+  where: Prisma.AccountChargeWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput>
+}
+
+export type AccountChargeCreateManyCompanyInputEnvelope = {
+  data: Prisma.AccountChargeCreateManyCompanyInput | Prisma.AccountChargeCreateManyCompanyInput[]
+  skipDuplicates?: boolean
+}
+
+export type AccountChargeUpsertWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.AccountChargeWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountChargeUpdateWithoutCompanyInput, Prisma.AccountChargeUncheckedUpdateWithoutCompanyInput>
+  create: Prisma.XOR<Prisma.AccountChargeCreateWithoutCompanyInput, Prisma.AccountChargeUncheckedCreateWithoutCompanyInput>
+}
+
+export type AccountChargeUpdateWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.AccountChargeWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountChargeUpdateWithoutCompanyInput, Prisma.AccountChargeUncheckedUpdateWithoutCompanyInput>
+}
+
+export type AccountChargeUpdateManyWithWhereWithoutCompanyInput = {
+  where: Prisma.AccountChargeScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountChargeUpdateManyMutationInput, Prisma.AccountChargeUncheckedUpdateManyWithoutCompanyInput>
+}
+
 export type AccountChargeCreateManyPersonInput = {
   id?: string
   chargeId: string
@@ -1037,6 +1174,7 @@ export type AccountChargeCreateManyPersonInput = {
   referenceType?: $Enums.AccountReferenceType | null
   referenceId?: string | null
   referenceNumber?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1056,6 +1194,7 @@ export type AccountChargeUpdateWithoutPersonInput = {
   category?: Prisma.AccountCategoryUpdateOneWithoutAccountChargesNestedInput
   charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
 }
 
@@ -1067,6 +1206,7 @@ export type AccountChargeUncheckedUpdateWithoutPersonInput = {
   referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1082,6 +1222,7 @@ export type AccountChargeUncheckedUpdateManyWithoutPersonInput = {
   referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1098,6 +1239,7 @@ export type AccountChargeCreateManyCreatedByInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1113,6 +1255,7 @@ export type AccountChargeCreateManyUpdatedByInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1131,6 +1274,7 @@ export type AccountChargeUpdateWithoutCreatedByInput = {
   category?: Prisma.AccountCategoryUpdateOneWithoutAccountChargesNestedInput
   charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
   person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
 }
 
@@ -1143,6 +1287,7 @@ export type AccountChargeUncheckedUpdateWithoutCreatedByInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1158,6 +1303,7 @@ export type AccountChargeUncheckedUpdateManyWithoutCreatedByInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1177,6 +1323,7 @@ export type AccountChargeUpdateWithoutUpdatedByInput = {
   charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
   person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
 }
 
 export type AccountChargeUncheckedUpdateWithoutUpdatedByInput = {
@@ -1188,6 +1335,7 @@ export type AccountChargeUncheckedUpdateWithoutUpdatedByInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1203,6 +1351,7 @@ export type AccountChargeUncheckedUpdateManyWithoutUpdatedByInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1217,6 +1366,7 @@ export type AccountChargeCreateManyCategoryInput = {
   referenceId?: string | null
   referenceNumber?: string | null
   personId?: string | null
+  companyId?: string | null
   externalEntity?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1236,6 +1386,7 @@ export type AccountChargeUpdateWithoutCategoryInput = {
   charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
   person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutAccountChargesNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
 }
 
@@ -1247,6 +1398,7 @@ export type AccountChargeUncheckedUpdateWithoutCategoryInput = {
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1258,6 +1410,71 @@ export type AccountChargeUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   chargeId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
+  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AccountChargeCreateManyCompanyInput = {
+  id?: string
+  chargeId: string
+  title: string
+  categoryId?: string | null
+  referenceType?: $Enums.AccountReferenceType | null
+  referenceId?: string | null
+  referenceNumber?: string | null
+  personId?: string | null
+  externalEntity?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type AccountChargeUpdateWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
+  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.AccountCategoryUpdateOneWithoutAccountChargesNestedInput
+  charge?: Prisma.ChargeUpdateOneRequiredWithoutAccountChargeNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAccountChargesNestedInput
+  person?: Prisma.PersonUpdateOneWithoutAccountChargesNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedAccountChargesNestedInput
+}
+
+export type AccountChargeUncheckedUpdateWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
+  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  personId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalEntity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AccountChargeUncheckedUpdateManyWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceType?: Prisma.NullableEnumAccountReferenceTypeFieldUpdateOperationsInput | $Enums.AccountReferenceType | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1280,6 +1497,7 @@ export type AccountChargeSelect<ExtArgs extends runtime.Types.Extensions.Interna
   referenceId?: boolean
   referenceNumber?: boolean
   personId?: boolean
+  companyId?: boolean
   externalEntity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1289,6 +1507,7 @@ export type AccountChargeSelect<ExtArgs extends runtime.Types.Extensions.Interna
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["accountCharge"]>
 
@@ -1301,6 +1520,7 @@ export type AccountChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   referenceId?: boolean
   referenceNumber?: boolean
   personId?: boolean
+  companyId?: boolean
   externalEntity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1310,6 +1530,7 @@ export type AccountChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["accountCharge"]>
 
@@ -1322,6 +1543,7 @@ export type AccountChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   referenceId?: boolean
   referenceNumber?: boolean
   personId?: boolean
+  companyId?: boolean
   externalEntity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1331,6 +1553,7 @@ export type AccountChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }, ExtArgs["result"]["accountCharge"]>
 
@@ -1343,6 +1566,7 @@ export type AccountChargeSelectScalar = {
   referenceId?: boolean
   referenceNumber?: boolean
   personId?: boolean
+  companyId?: boolean
   externalEntity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1350,12 +1574,13 @@ export type AccountChargeSelectScalar = {
   updatedById?: boolean
 }
 
-export type AccountChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chargeId" | "title" | "categoryId" | "referenceType" | "referenceId" | "referenceNumber" | "personId" | "externalEntity" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["accountCharge"]>
+export type AccountChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chargeId" | "title" | "categoryId" | "referenceType" | "referenceId" | "referenceNumber" | "personId" | "companyId" | "externalEntity" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["accountCharge"]>
 export type AccountChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.AccountCharge$categoryArgs<ExtArgs>
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }
 export type AccountChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1363,6 +1588,7 @@ export type AccountChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Type
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }
 export type AccountChargeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1370,6 +1596,7 @@ export type AccountChargeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.AccountCharge$createdByArgs<ExtArgs>
   person?: boolean | Prisma.AccountCharge$personArgs<ExtArgs>
+  company?: boolean | Prisma.AccountCharge$companyArgs<ExtArgs>
   updatedBy?: boolean | Prisma.AccountCharge$updatedByArgs<ExtArgs>
 }
 
@@ -1380,6 +1607,7 @@ export type $AccountChargePayload<ExtArgs extends runtime.Types.Extensions.Inter
     charge: Prisma.$ChargePayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     person: Prisma.$PersonPayload<ExtArgs> | null
+    company: Prisma.$CompanyPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1391,6 +1619,7 @@ export type $AccountChargePayload<ExtArgs extends runtime.Types.Extensions.Inter
     referenceId: string | null
     referenceNumber: string | null
     personId: string | null
+    companyId: string | null
     externalEntity: string | null
     createdAt: Date
     updatedAt: Date
@@ -1794,6 +2023,7 @@ export interface Prisma__AccountChargeClient<T, Null = never, ExtArgs extends ru
   charge<T extends Prisma.ChargeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeDefaultArgs<ExtArgs>>): Prisma.Prisma__ChargeClient<runtime.Types.Result.GetResult<Prisma.$ChargePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.AccountCharge$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCharge$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   person<T extends Prisma.AccountCharge$personArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCharge$personArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  company<T extends Prisma.AccountCharge$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCharge$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.AccountCharge$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountCharge$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1832,6 +2062,7 @@ export interface AccountChargeFieldRefs {
   readonly referenceId: Prisma.FieldRef<"AccountCharge", 'String'>
   readonly referenceNumber: Prisma.FieldRef<"AccountCharge", 'String'>
   readonly personId: Prisma.FieldRef<"AccountCharge", 'String'>
+  readonly companyId: Prisma.FieldRef<"AccountCharge", 'String'>
   readonly externalEntity: Prisma.FieldRef<"AccountCharge", 'String'>
   readonly createdAt: Prisma.FieldRef<"AccountCharge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AccountCharge", 'DateTime'>
@@ -2287,6 +2518,25 @@ export type AccountCharge$personArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.PersonInclude<ExtArgs> | null
   where?: Prisma.PersonWhereInput
+}
+
+/**
+ * AccountCharge.company
+ */
+export type AccountCharge$companyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Company
+   */
+  select?: Prisma.CompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Company
+   */
+  omit?: Prisma.CompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyInclude<ExtArgs> | null
+  where?: Prisma.CompanyWhereInput
 }
 
 /**

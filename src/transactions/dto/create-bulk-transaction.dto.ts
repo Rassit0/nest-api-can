@@ -28,7 +28,8 @@ export class BulkChargeItemDto {
 
   @ApiPropertyOptional({
     type: [SplitTransactionDto],
-    description: 'Distribución de pagos específica para este cargo. Si se provee, ignora la distribución global.',
+    description:
+      'Distribución de pagos específica para este cargo. Si se provee, ignora la distribución global.',
   })
   @IsOptional()
   @IsArray()
@@ -52,7 +53,8 @@ export class CreateBulkTransactionDto {
 
   @ApiProperty({
     type: [BulkChargeItemDto],
-    description: 'Lista de cargos a pagar. Se aplicará el saldo pendiente total a cada uno.',
+    description:
+      'Lista de cargos a pagar. Se aplicará el saldo pendiente total a cada uno.',
   })
   @IsArray()
   @ValidateNested({ each: true })
@@ -60,7 +62,8 @@ export class CreateBulkTransactionDto {
   charges: BulkChargeItemDto[];
 
   @ApiPropertyOptional({
-    description: 'Importe total que el operador declara estar cobrando. Opcional si se envían splits detallados.',
+    description:
+      'Importe total que el operador declara estar cobrando. Opcional si se envían splits detallados.',
   })
   @IsOptional()
   @IsNumber()
@@ -80,7 +83,8 @@ export class CreateBulkTransactionDto {
   paymentMethod?: PaymentMethod;
 
   @ApiPropertyOptional({
-    description: 'ID de la cuenta financiera a la que ingresará el dinero por defecto',
+    description:
+      'ID de la cuenta financiera a la que ingresará el dinero por defecto',
   })
   @IsOptional()
   @IsUUID('4', {

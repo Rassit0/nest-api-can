@@ -76,7 +76,6 @@ import { AccountChargesModule } from './account-charges/account-charges.module';
 import { FinancialAccountsModule } from './financial-accounts/financial-accounts.module';
 import { InternalTransfersModule } from './internal-transfers/internal-transfers.module';
 import { StorageModule } from './storage/storage.module';
-import { ThirdPartiesModule } from './third-parties/third-parties.module';
 import { PaymentsModule } from './payments/payments.module';
 import { NewsModule } from './news/news.module';
 import { NewsCategoriesModule } from './news-categories/news-categories.module';
@@ -84,6 +83,7 @@ import { PromotionsModule } from './promotions/promotions.module';
 import { HeroBannersModule } from './hero-banners/hero-banners.module';
 import { HomeDisciplinesModule } from './home-disciplines/home-disciplines.module';
 import { InstitutionHistoryModule } from './institution-history/institution-history.module';
+import { CompaniesModule } from './companies/companies.module';
 
 @Module({
   imports: [
@@ -159,7 +159,6 @@ import { InstitutionHistoryModule } from './institution-history/institution-hist
     AccountingDashboardModule,
     AccountingAnalyticsModule,
     StorageModule,
-    ThirdPartiesModule,
     PaymentsModule,
     NewsModule,
     NewsCategoriesModule,
@@ -167,6 +166,7 @@ import { InstitutionHistoryModule } from './institution-history/institution-hist
     HeroBannersModule,
     HomeDisciplinesModule,
     InstitutionHistoryModule,
+    CompaniesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],
