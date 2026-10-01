@@ -109,6 +109,7 @@ export const ModelName = {
   SessionBooking: 'SessionBooking',
   Match: 'Match',
   MatchCallUp: 'MatchCallUp',
+  MatchPartial: 'MatchPartial',
   MatchLineup: 'MatchLineup',
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
@@ -1161,6 +1162,18 @@ export const MatchCallUpScalarFieldEnum = {
 } as const
 
 export type MatchCallUpScalarFieldEnum = (typeof MatchCallUpScalarFieldEnum)[keyof typeof MatchCallUpScalarFieldEnum]
+
+
+export const MatchPartialScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  sequence: 'sequence',
+  label: 'label',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore'
+} as const
+
+export type MatchPartialScalarFieldEnum = (typeof MatchPartialScalarFieldEnum)[keyof typeof MatchPartialScalarFieldEnum]
 
 
 export const MatchLineupScalarFieldEnum = {

@@ -318,6 +318,11 @@ export type Match = Prisma.MatchModel
  */
 export type MatchCallUp = Prisma.MatchCallUpModel
 /**
+ * Model MatchPartial
+ * 
+ */
+export type MatchPartial = Prisma.MatchPartialModel
+/**
  * Model MatchLineup
  * 
  */

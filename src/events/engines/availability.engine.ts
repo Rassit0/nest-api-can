@@ -69,7 +69,8 @@ export class AvailabilityEngine implements IAvailabilityEngine {
       FROM LocationTree lt
       INNER JOIN events e ON e.location_id = lt.id 
       WHERE 
-        e.start_date < ${endDate} AND e.end_date > ${startDate}
+        e.start_date < ${endDate}
+        AND e.end_date > ${startDate}
         AND (${excludeEventId}::text IS NULL OR e.id != ${excludeEventId})
     `;
 

@@ -1,6 +1,6 @@
 export interface TimeRange {
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
 }
 
 export interface CollisionError {

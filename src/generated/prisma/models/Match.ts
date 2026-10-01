@@ -325,6 +325,7 @@ export type MatchWhereInput = {
   homeCallUpConfiguredAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
   awayCallUpConfiguredAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
   callUps?: Prisma.MatchCallUpListRelationFilter
+  partials?: Prisma.MatchPartialListRelationFilter
   awayTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   homeTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -355,6 +356,7 @@ export type MatchOrderByWithRelationInput = {
   homeCallUpConfiguredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   awayCallUpConfiguredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   callUps?: Prisma.MatchCallUpOrderByRelationAggregateInput
+  partials?: Prisma.MatchPartialOrderByRelationAggregateInput
   awayTeam?: Prisma.TeamOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
   homeTeam?: Prisma.TeamOrderByWithRelationInput
@@ -388,6 +390,7 @@ export type MatchWhereUniqueInput = Prisma.AtLeast<{
   homeCallUpConfiguredAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
   awayCallUpConfiguredAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
   callUps?: Prisma.MatchCallUpListRelationFilter
+  partials?: Prisma.MatchPartialListRelationFilter
   awayTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   homeTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -460,6 +463,7 @@ export type MatchCreateInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -490,6 +494,7 @@ export type MatchUncheckedCreateInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchUpdateInput = {
@@ -504,6 +509,7 @@ export type MatchUpdateInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -534,6 +540,7 @@ export type MatchUncheckedUpdateInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchCreateManyInput = {
@@ -906,6 +913,20 @@ export type MatchUpdateOneRequiredWithoutCallUpsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MatchUpdateToOneWithWhereWithoutCallUpsInput, Prisma.MatchUpdateWithoutCallUpsInput>, Prisma.MatchUncheckedUpdateWithoutCallUpsInput>
 }
 
+export type MatchCreateNestedOneWithoutPartialsInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutPartialsInput, Prisma.MatchUncheckedCreateWithoutPartialsInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutPartialsInput
+  connect?: Prisma.MatchWhereUniqueInput
+}
+
+export type MatchUpdateOneRequiredWithoutPartialsNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutPartialsInput, Prisma.MatchUncheckedCreateWithoutPartialsInput>
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutPartialsInput
+  upsert?: Prisma.MatchUpsertWithoutPartialsInput
+  connect?: Prisma.MatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MatchUpdateToOneWithWhereWithoutPartialsInput, Prisma.MatchUpdateWithoutPartialsInput>, Prisma.MatchUncheckedUpdateWithoutPartialsInput>
+}
+
 export type MatchCreateNestedManyWithoutTeamSeasonCategoryInput = {
   create?: Prisma.XOR<Prisma.MatchCreateWithoutTeamSeasonCategoryInput, Prisma.MatchUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.MatchCreateWithoutTeamSeasonCategoryInput[] | Prisma.MatchUncheckedCreateWithoutTeamSeasonCategoryInput[]
   connectOrCreate?: Prisma.MatchCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.MatchCreateOrConnectWithoutTeamSeasonCategoryInput[]
@@ -1044,6 +1065,7 @@ export type MatchCreateWithoutAwayTeamInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutLegacyMatchesInput
@@ -1072,6 +1094,7 @@ export type MatchUncheckedCreateWithoutAwayTeamInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutAwayTeamInput = {
@@ -1096,6 +1119,7 @@ export type MatchCreateWithoutHomeTeamInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutLegacyMatchesInput
@@ -1124,6 +1148,7 @@ export type MatchUncheckedCreateWithoutHomeTeamInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutHomeTeamInput = {
@@ -1204,6 +1229,7 @@ export type MatchCreateWithoutHomeCoachInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1232,6 +1258,7 @@ export type MatchUncheckedCreateWithoutHomeCoachInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutHomeCoachInput = {
@@ -1256,6 +1283,7 @@ export type MatchCreateWithoutAwayCoachInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1284,6 +1312,7 @@ export type MatchUncheckedCreateWithoutAwayCoachInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutAwayCoachInput = {
@@ -1340,6 +1369,7 @@ export type MatchCreateWithoutEventInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutLegacyMatchesInput
@@ -1368,6 +1398,7 @@ export type MatchUncheckedCreateWithoutEventInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutEventInput = {
@@ -1398,6 +1429,7 @@ export type MatchUpdateWithoutEventInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutLegacyMatchesNestedInput
@@ -1426,6 +1458,7 @@ export type MatchUncheckedUpdateWithoutEventInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchCreateWithoutCallUpsInput = {
@@ -1439,6 +1472,7 @@ export type MatchCreateWithoutCallUpsInput = {
   awayCoachName?: string | null
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1468,6 +1502,7 @@ export type MatchUncheckedCreateWithoutCallUpsInput = {
   awayCoachName?: string | null
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutCallUpsInput = {
@@ -1497,6 +1532,7 @@ export type MatchUpdateWithoutCallUpsInput = {
   awayCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -1526,6 +1562,111 @@ export type MatchUncheckedUpdateWithoutCallUpsInput = {
   awayCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
+}
+
+export type MatchCreateWithoutPartialsInput = {
+  id?: string
+  type?: $Enums.MatchType
+  result?: $Enums.MatchResult
+  awayScore?: number | null
+  homeScore?: number | null
+  competitionName?: string | null
+  homeCoachName?: string | null
+  awayCoachName?: string | null
+  homeCallUpConfiguredAt?: Date | string | null
+  awayCallUpConfiguredAt?: Date | string | null
+  callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
+  event: Prisma.EventCreateNestedOneWithoutMatchInput
+  homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutLegacyMatchesInput
+  homeTeamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutHomeMatchesInput
+  awayTeamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutAwayMatchesInput
+  homeCoach?: Prisma.StaffCreateNestedOneWithoutHomeMatchesCoachedInput
+  awayCoach?: Prisma.StaffCreateNestedOneWithoutAwayMatchesCoachedInput
+}
+
+export type MatchUncheckedCreateWithoutPartialsInput = {
+  id?: string
+  eventId: string
+  type?: $Enums.MatchType
+  result?: $Enums.MatchResult
+  awayScore?: number | null
+  awayTeamId: string
+  homeScore?: number | null
+  homeTeamId: string
+  teamSeasonCategoryId?: string | null
+  homeTeamSeasonCategoryId?: string | null
+  awayTeamSeasonCategoryId?: string | null
+  competitionName?: string | null
+  homeCoachId?: string | null
+  homeCoachName?: string | null
+  awayCoachId?: string | null
+  awayCoachName?: string | null
+  homeCallUpConfiguredAt?: Date | string | null
+  awayCallUpConfiguredAt?: Date | string | null
+  callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+}
+
+export type MatchCreateOrConnectWithoutPartialsInput = {
+  where: Prisma.MatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.MatchCreateWithoutPartialsInput, Prisma.MatchUncheckedCreateWithoutPartialsInput>
+}
+
+export type MatchUpsertWithoutPartialsInput = {
+  update: Prisma.XOR<Prisma.MatchUpdateWithoutPartialsInput, Prisma.MatchUncheckedUpdateWithoutPartialsInput>
+  create: Prisma.XOR<Prisma.MatchCreateWithoutPartialsInput, Prisma.MatchUncheckedCreateWithoutPartialsInput>
+  where?: Prisma.MatchWhereInput
+}
+
+export type MatchUpdateToOneWithWhereWithoutPartialsInput = {
+  where?: Prisma.MatchWhereInput
+  data: Prisma.XOR<Prisma.MatchUpdateWithoutPartialsInput, Prisma.MatchUncheckedUpdateWithoutPartialsInput>
+}
+
+export type MatchUpdateWithoutPartialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  competitionName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
+  homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutLegacyMatchesNestedInput
+  homeTeamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutHomeMatchesNestedInput
+  awayTeamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutAwayMatchesNestedInput
+  homeCoach?: Prisma.StaffUpdateOneWithoutHomeMatchesCoachedNestedInput
+  awayCoach?: Prisma.StaffUpdateOneWithoutAwayMatchesCoachedNestedInput
+}
+
+export type MatchUncheckedUpdateWithoutPartialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+  result?: Prisma.EnumMatchResultFieldUpdateOperationsInput | $Enums.MatchResult
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeTeamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayTeamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competitionName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeCoachId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayCoachId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayCoachName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchCreateWithoutTeamSeasonCategoryInput = {
@@ -1540,6 +1681,7 @@ export type MatchCreateWithoutTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1568,6 +1710,7 @@ export type MatchUncheckedCreateWithoutTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutTeamSeasonCategoryInput = {
@@ -1592,6 +1735,7 @@ export type MatchCreateWithoutHomeTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1620,6 +1764,7 @@ export type MatchUncheckedCreateWithoutHomeTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutHomeTeamSeasonCategoryInput = {
@@ -1644,6 +1789,7 @@ export type MatchCreateWithoutAwayTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialCreateNestedManyWithoutMatchInput
   awayTeam: Prisma.TeamCreateNestedOneWithoutAwayMatchesInput
   event: Prisma.EventCreateNestedOneWithoutMatchInput
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1672,6 +1818,7 @@ export type MatchUncheckedCreateWithoutAwayTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Date | string | null
   awayCallUpConfiguredAt?: Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedCreateNestedManyWithoutMatchInput
+  partials?: Prisma.MatchPartialUncheckedCreateNestedManyWithoutMatchInput
 }
 
 export type MatchCreateOrConnectWithoutAwayTeamSeasonCategoryInput = {
@@ -1784,6 +1931,7 @@ export type MatchUpdateWithoutAwayTeamInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutLegacyMatchesNestedInput
@@ -1812,6 +1960,7 @@ export type MatchUncheckedUpdateWithoutAwayTeamInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutAwayTeamInput = {
@@ -1846,6 +1995,7 @@ export type MatchUpdateWithoutHomeTeamInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutLegacyMatchesNestedInput
@@ -1874,6 +2024,7 @@ export type MatchUncheckedUpdateWithoutHomeTeamInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutHomeTeamInput = {
@@ -1948,6 +2099,7 @@ export type MatchUpdateWithoutHomeCoachInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -1976,6 +2128,7 @@ export type MatchUncheckedUpdateWithoutHomeCoachInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutHomeCoachInput = {
@@ -2010,6 +2163,7 @@ export type MatchUpdateWithoutAwayCoachInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -2038,6 +2192,7 @@ export type MatchUncheckedUpdateWithoutAwayCoachInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutAwayCoachInput = {
@@ -2132,6 +2287,7 @@ export type MatchUpdateWithoutTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -2160,6 +2316,7 @@ export type MatchUncheckedUpdateWithoutTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutTeamSeasonCategoryInput = {
@@ -2194,6 +2351,7 @@ export type MatchUpdateWithoutHomeTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -2222,6 +2380,7 @@ export type MatchUncheckedUpdateWithoutHomeTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutHomeTeamSeasonCategoryInput = {
@@ -2256,6 +2415,7 @@ export type MatchUpdateWithoutAwayTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUpdateManyWithoutMatchNestedInput
   awayTeam?: Prisma.TeamUpdateOneRequiredWithoutAwayMatchesNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutMatchNestedInput
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -2284,6 +2444,7 @@ export type MatchUncheckedUpdateWithoutAwayTeamSeasonCategoryInput = {
   homeCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   awayCallUpConfiguredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   callUps?: Prisma.MatchCallUpUncheckedUpdateManyWithoutMatchNestedInput
+  partials?: Prisma.MatchPartialUncheckedUpdateManyWithoutMatchNestedInput
 }
 
 export type MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryInput = {
@@ -2313,10 +2474,12 @@ export type MatchUncheckedUpdateManyWithoutAwayTeamSeasonCategoryInput = {
 
 export type MatchCountOutputType = {
   callUps: number
+  partials: number
 }
 
 export type MatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   callUps?: boolean | MatchCountOutputTypeCountCallUpsArgs
+  partials?: boolean | MatchCountOutputTypeCountPartialsArgs
 }
 
 /**
@@ -2334,6 +2497,13 @@ export type MatchCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  */
 export type MatchCountOutputTypeCountCallUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MatchCallUpWhereInput
+}
+
+/**
+ * MatchCountOutputType without action
+ */
+export type MatchCountOutputTypeCountPartialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchPartialWhereInput
 }
 
 
@@ -2357,6 +2527,7 @@ export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   homeCallUpConfiguredAt?: boolean
   awayCallUpConfiguredAt?: boolean
   callUps?: boolean | Prisma.Match$callUpsArgs<ExtArgs>
+  partials?: boolean | Prisma.Match$partialsArgs<ExtArgs>
   awayTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   homeTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -2450,6 +2621,7 @@ export type MatchSelectScalar = {
 export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "type" | "result" | "awayScore" | "awayTeamId" | "homeScore" | "homeTeamId" | "teamSeasonCategoryId" | "homeTeamSeasonCategoryId" | "awayTeamSeasonCategoryId" | "competitionName" | "homeCoachId" | "homeCoachName" | "awayCoachId" | "awayCoachName" | "homeCallUpConfiguredAt" | "awayCallUpConfiguredAt", ExtArgs["result"]["match"]>
 export type MatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   callUps?: boolean | Prisma.Match$callUpsArgs<ExtArgs>
+  partials?: boolean | Prisma.Match$partialsArgs<ExtArgs>
   awayTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   homeTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -2485,6 +2657,7 @@ export type $MatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Match"
   objects: {
     callUps: Prisma.$MatchCallUpPayload<ExtArgs>[]
+    partials: Prisma.$MatchPartialPayload<ExtArgs>[]
     awayTeam: Prisma.$TeamPayload<ExtArgs>
     event: Prisma.$EventPayload<ExtArgs>
     homeTeam: Prisma.$TeamPayload<ExtArgs>
@@ -2908,6 +3081,7 @@ readonly fields: MatchFieldRefs;
 export interface Prisma__MatchClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   callUps<T extends Prisma.Match$callUpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$callUpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchCallUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  partials<T extends Prisma.Match$partialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$partialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPartialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   awayTeam<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   homeTeam<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -3380,6 +3554,30 @@ export type Match$callUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MatchCallUpScalarFieldEnum | Prisma.MatchCallUpScalarFieldEnum[]
+}
+
+/**
+ * Match.partials
+ */
+export type Match$partialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchPartial
+   */
+  select?: Prisma.MatchPartialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchPartial
+   */
+  omit?: Prisma.MatchPartialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchPartialInclude<ExtArgs> | null
+  where?: Prisma.MatchPartialWhereInput
+  orderBy?: Prisma.MatchPartialOrderByWithRelationInput | Prisma.MatchPartialOrderByWithRelationInput[]
+  cursor?: Prisma.MatchPartialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchPartialScalarFieldEnum | Prisma.MatchPartialScalarFieldEnum[]
 }
 
 /**

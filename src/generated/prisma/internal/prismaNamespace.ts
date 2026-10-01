@@ -450,6 +450,7 @@ export const ModelName = {
   SessionBooking: 'SessionBooking',
   Match: 'Match',
   MatchCallUp: 'MatchCallUp',
+  MatchPartial: 'MatchPartial',
   MatchLineup: 'MatchLineup',
   AuditLog: 'AuditLog',
   EventMaterializationLog: 'EventMaterializationLog',
@@ -482,7 +483,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "company" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem" | "newsAsset"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchPartial" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "company" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem" | "newsAsset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4926,6 +4927,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MatchPartial: {
+      payload: Prisma.$MatchPartialPayload<ExtArgs>
+      fields: Prisma.MatchPartialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MatchPartialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MatchPartialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        findFirst: {
+          args: Prisma.MatchPartialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MatchPartialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        findMany: {
+          args: Prisma.MatchPartialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>[]
+        }
+        create: {
+          args: Prisma.MatchPartialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        createMany: {
+          args: Prisma.MatchPartialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MatchPartialCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>[]
+        }
+        delete: {
+          args: Prisma.MatchPartialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        update: {
+          args: Prisma.MatchPartialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        deleteMany: {
+          args: Prisma.MatchPartialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MatchPartialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MatchPartialUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>[]
+        }
+        upsert: {
+          args: Prisma.MatchPartialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchPartialPayload>
+        }
+        aggregate: {
+          args: Prisma.MatchPartialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMatchPartial>
+        }
+        groupBy: {
+          args: Prisma.MatchPartialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchPartialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MatchPartialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchPartialCountAggregateOutputType> | number
+        }
+      }
+    }
     MatchLineup: {
       payload: Prisma.$MatchLineupPayload<ExtArgs>
       fields: Prisma.MatchLineupFieldRefs
@@ -7242,6 +7317,18 @@ export const MatchCallUpScalarFieldEnum = {
 export type MatchCallUpScalarFieldEnum = (typeof MatchCallUpScalarFieldEnum)[keyof typeof MatchCallUpScalarFieldEnum]
 
 
+export const MatchPartialScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  sequence: 'sequence',
+  label: 'label',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore'
+} as const
+
+export type MatchPartialScalarFieldEnum = (typeof MatchPartialScalarFieldEnum)[keyof typeof MatchPartialScalarFieldEnum]
+
+
 export const MatchLineupScalarFieldEnum = {
   id: 'id',
   callUpId: 'callUpId',
@@ -8381,6 +8468,7 @@ export type GlobalOmitConfig = {
   sessionBooking?: Prisma.SessionBookingOmit
   match?: Prisma.MatchOmit
   matchCallUp?: Prisma.MatchCallUpOmit
+  matchPartial?: Prisma.MatchPartialOmit
   matchLineup?: Prisma.MatchLineupOmit
   auditLog?: Prisma.AuditLogOmit
   eventMaterializationLog?: Prisma.EventMaterializationLogOmit

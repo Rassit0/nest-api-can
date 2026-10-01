@@ -2,7 +2,7 @@ import { EventType } from 'src/generated/prisma/client';
 
 export interface BaseEventCreateDto {
   startDate: Date;
-  endDate: Date;
+  endDate?: Date | null;
   eventType: EventType;
   title?: string;
   description?: string;
@@ -14,7 +14,7 @@ export interface BaseEventCreateDto {
 
 export interface BaseEventUpdateDto {
   startDate?: Date;
-  endDate?: Date;
+  endDate?: Date | null;
   title?: string;
   description?: string;
   color?: string;

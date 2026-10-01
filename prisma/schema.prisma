@@ -1261,7 +1261,7 @@ model Event {
   title             String?
   description       String?
   startDate         DateTime           @map("start_date")
-  endDate           DateTime           @map("end_date")
+  endDate           DateTime?          @map("end_date")
   locationId        String?            @map("location_id")
   eventType         EventType          @map("event_type")
   status            EventStatus        @default(SCHEDULED)
@@ -1381,6 +1381,7 @@ model Match {
   homeCallUpConfiguredAt   DateTime?           @map("home_call_up_configured_at")
   awayCallUpConfiguredAt   DateTime?           @map("away_call_up_configured_at")
   callUps                  MatchCallUp[]
+  partials                 MatchPartial[]
   awayTeam                 Team                @relation("MatchAwayTeam", fields: [awayTeamId], references: [id])
   event                    Event               @relation(fields: [eventId], references: [id], onDelete: Cascade)
   homeTeam                 Team                @relation("MatchHomeTeam", fields: [homeTeamId], references: [id])
@@ -1412,6 +1413,23 @@ model MatchCallUp {
   @@unique([matchId, playerId])
   @@index([matchId, side])
   @@map("match_call_ups")
+}
+
+model MatchPartial {
+  id        String  @id @default(uuid())
+  matchId   String  @map("match_id")
+
+  sequence  Int
+  label     String?
+
+  homeScore Int?    @map("home_score")
+  awayScore Int?    @map("away_score")
+
+  match     Match   @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, sequence])
+  @@index([matchId])
+  @@map("match_partials")
 }
 
 model MatchLineup {

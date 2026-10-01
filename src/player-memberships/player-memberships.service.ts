@@ -929,7 +929,7 @@ export class PlayerMembershipsService {
 
     if (hasTransactionsOrPaid) {
       throw new BadRequestException(
-        'No se puede eliminar la membresía porque cuenta con pagos registrados, transacciones o cargos anidados. En su lugar, utilice la opción de Finalizar o Retirar.',
+        'No se puede eliminar la membresía porque tiene historial financiero (cargos modificados, intentos de pago o cargos anidados). Para mantener la integridad contable, utilice la opción de Finalizar o Retirar en su lugar.',
       );
     }
 

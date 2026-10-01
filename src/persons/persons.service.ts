@@ -423,6 +423,25 @@ export class PersonsService {
         orderBy: { dueDate: 'asc' },
       }),
     ]);
+    // Organizar cargos: agrupar moras (hijos) debajo de sus respectivos padres
+    const rootCharges = charges.filter((c) => !c.parentChargeId);
+    const childCharges = charges.filter((c) => c.parentChargeId);
+
+    const orphanChildren = childCharges.filter(
+      (c) => !rootCharges.some((r) => r.id === c.parentChargeId),
+    );
+
+    const effectiveRoots = [...rootCharges, ...orphanChildren].sort(
+      (a, b) => a.dueDate.getTime() - b.dueDate.getTime(),
+    );
+
+    const sortedCharges: typeof charges = [];
+    for (const root of effectiveRoots) {
+      sortedCharges.push(root);
+      const children = childCharges.filter((c) => c.parentChargeId === root.id);
+      children.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+      sortedCharges.push(...children);
+    }
 
     return {
       message: 'Resumen de secretaría obtenido exitosamente',
@@ -476,7 +495,7 @@ export class PersonsService {
             cycleEnrollments: sm.cycleEnrollments,
           };
         }),
-        pendingCharges: charges.map((charge) => {
+        pendingCharges: sortedCharges.map((charge) => {
           let type = 'ACCOUNT';
           let originName = 'Cobro Manual';
 

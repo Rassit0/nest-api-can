@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsBoolean, IsNumber, Min, Max, IsUrl } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 
@@ -52,4 +52,35 @@ export class CreateLocationDto {
     }),
   })
   isRentable?: boolean;
+
+  @Transform(({ value }) => (value === '' ? null : value))
+  @IsOptional()
+  @IsNumber({}, {
+    message: i18nValidationMessage('validation.IS_NUMBER', {
+      constraint1: 'latitude',
+    }),
+  })
+  @Min(-90, { message: 'La latitud debe ser mayor o igual a -90' })
+  @Max(90, { message: 'La latitud debe ser menor o igual a 90' })
+  latitude?: number | null;
+
+  @Transform(({ value }) => (value === '' ? null : value))
+  @IsOptional()
+  @IsNumber({}, {
+    message: i18nValidationMessage('validation.IS_NUMBER', {
+      constraint1: 'longitude',
+    }),
+  })
+  @Min(-180, { message: 'La longitud debe ser mayor o igual a -180' })
+  @Max(180, { message: 'La longitud debe ser menor o igual a 180' })
+  longitude?: number | null;
+
+  @Transform(({ value }) => (value === '' ? null : value))
+  @IsOptional()
+  @IsUrl({}, {
+    message: i18nValidationMessage('validation.IS_URL', {
+      constraint1: 'googleMapsUrl',
+    }),
+  })
+  googleMapsUrl?: string | null;
 }

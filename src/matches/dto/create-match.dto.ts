@@ -9,10 +9,13 @@ import {
   Min,
   IsISO8601,
   IsString,
+  ValidateNested,
+  IsArray,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { Exists } from 'src/common/validators/decorators/exists.decorator';
 import { MatchType } from 'src/generated/prisma/client';
+import { MatchPartialDto } from './match-partial.dto';
 
 export class CreateMatchDto {
   @ApiPropertyOptional({
@@ -115,13 +118,14 @@ export class CreateMatchDto {
   })
   startDate: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '2026-06-30T17:00:00.000Z',
-    description: 'Fecha y hora de fin del partido',
+    description: 'Fecha y hora estimada de fin del partido',
+    nullable: true,
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsISO8601({ strict: true })
-  endDate: string;
+  endDate?: string | null;
 
   @ApiProperty({
     enum: MatchType,
@@ -217,4 +221,18 @@ export class CreateMatchDto {
   @IsOptional()
   @IsString()
   awayCoachName?: string | null;
+
+  @ApiPropertyOptional({
+    type: () => [MatchPartialDto],
+    description: 'Parciales del partido (Sets, Cuartos, etc.)',
+  })
+  @IsOptional()
+  @IsArray({
+    message: i18nValidationMessage('validation.IS_ARRAY', {
+      constraint1: 'partials',
+    }),
+  })
+  @ValidateNested({ each: true })
+  @Type(() => MatchPartialDto)
+  partials?: MatchPartialDto[];
 }

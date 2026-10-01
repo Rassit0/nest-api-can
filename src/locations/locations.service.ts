@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -13,6 +13,13 @@ export class LocationsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createLocationDto: CreateLocationDto) {
+    if (
+      (createLocationDto.latitude !== undefined && createLocationDto.latitude !== null && (createLocationDto.longitude === undefined || createLocationDto.longitude === null)) ||
+      (createLocationDto.longitude !== undefined && createLocationDto.longitude !== null && (createLocationDto.latitude === undefined || createLocationDto.latitude === null))
+    ) {
+      throw new BadRequestException('Latitud y longitud deben proporcionarse juntas.');
+    }
+
     const newLocation = await this.prisma.location.create({
       data: createLocationDto,
     });
@@ -69,6 +76,21 @@ export class LocationsService {
   }
 
   async update(id: string, updateLocationDto: UpdateLocationDto) {
+    const existing = await this.prisma.location.findUnique({ where: { id } });
+    if (!existing) {
+      throw new BadRequestException('Lugar no encontrado');
+    }
+
+    const effectiveLat = updateLocationDto.latitude !== undefined ? updateLocationDto.latitude : existing.latitude;
+    const effectiveLng = updateLocationDto.longitude !== undefined ? updateLocationDto.longitude : existing.longitude;
+
+    if (
+      (effectiveLat !== null && effectiveLng === null) ||
+      (effectiveLat === null && effectiveLng !== null)
+    ) {
+      throw new BadRequestException('Latitud y longitud deben proporcionarse juntas.');
+    }
+
     const updateLocation = await this.prisma.location.update({
       where: { id },
       data: updateLocationDto,

@@ -55,13 +55,17 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
     childDelegation: (tx: Prisma.TransactionClient, eventId: string) => Promise<T>,
   ): Promise<{ event: Prisma.EventGetPayload<any>; specific: T }> {
     const start = new Date(baseData.startDate);
-    const end = new Date(baseData.endDate);
+    const end = baseData.endDate ? new Date(baseData.endDate) : null;
 
-    if (start >= end) {
+    if (end !== null && start >= end) {
       throw new EventValidationException('La fecha de inicio debe ser anterior a la fecha de fin');
     }
 
     if (baseData.locationId) {
+      if (end === null) {
+        throw new EventValidationException('Para reservar una locación se requiere la fecha y hora de fin estimada');
+      }
+
       const isAvailable = await this.availabilityEngine.checkAvailability({
         locationId: baseData.locationId,
         startDate: start,
@@ -154,22 +158,26 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
         );
       }
 
-      const start = baseData.startDate ? new Date(baseData.startDate) : existingEvent.startDate;
-      const end = baseData.endDate ? new Date(baseData.endDate) : existingEvent.endDate;
+      const start = baseData.startDate !== undefined ? new Date(baseData.startDate) : existingEvent.startDate;
+      const end = baseData.endDate !== undefined ? (baseData.endDate ? new Date(baseData.endDate) : null) : existingEvent.endDate;
       
       // Explicit null handles disconnection
       const targetLocationId = baseData.locationId !== undefined ? baseData.locationId : existingEvent.locationId;
 
-      if (start >= end) {
+      if (end !== null && start >= end) {
         throw new EventValidationException('La fecha de inicio debe ser anterior a la fecha de fin');
       }
 
       if (
-        (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
-        (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime()) ||
+        (baseData.startDate !== undefined && start.getTime() !== existingEvent.startDate.getTime()) ||
+        (baseData.endDate !== undefined && end?.getTime() !== existingEvent.endDate?.getTime()) ||
         targetLocationId !== existingEvent.locationId
       ) {
         if (targetLocationId) {
+          if (end === null) {
+            throw new EventValidationException('Para mantener o reservar una locación se requiere la fecha y hora de fin estimada');
+          }
+
           const isAvailable = await this.availabilityEngine.checkAvailability({
             locationId: targetLocationId,
             startDate: start,
@@ -199,8 +207,8 @@ export class EventsService implements OnModuleInit, IEventOccurrenceHandler {
       }
 
       const isMoved = 
-        (baseData.startDate && start.getTime() !== existingEvent.startDate.getTime()) ||
-        (baseData.endDate && end.getTime() !== existingEvent.endDate.getTime());
+        (baseData.startDate !== undefined && start.getTime() !== existingEvent.startDate.getTime()) ||
+        (baseData.endDate !== undefined && end?.getTime() !== existingEvent.endDate?.getTime());
                       
       const isModified = !isMoved && (
         (baseData.title !== undefined && baseData.title !== existingEvent.title) ||

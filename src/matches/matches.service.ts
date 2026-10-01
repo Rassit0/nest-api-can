@@ -17,6 +17,11 @@ export const matchSelect: Prisma.MatchSelect = {
   type: true,
   homeScore: true,
   awayScore: true,
+  partials: {
+    orderBy: {
+      sequence: Prisma.SortOrder.asc,
+    },
+  },
   result: true,
   competitionName: true,
   homeCoachId: true,
@@ -216,7 +221,14 @@ export class MatchesService {
   }
 
   async create(createMatchDto: CreateMatchDto, userId?: string) {
-    const { startDate, endDate, locationId, homeTeamSeasonCategoryId, awayTeamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, ...matchData } = createMatchDto;
+    const { startDate, endDate, locationId, homeTeamSeasonCategoryId, awayTeamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, partials, ...matchData } = createMatchDto;
+
+    if (partials) {
+      const sequences = partials.map(p => p.sequence);
+      if (new Set(sequences).size !== sequences.length) {
+        throw new BadRequestException('Las secuencias de los parciales no pueden estar duplicadas.');
+      }
+    }
 
     const canTeamId = await this.validateMatchIntegrity(this.prisma, homeTeamId, awayTeamId, homeTeamSeasonCategoryId, awayTeamSeasonCategoryId);
     const calculatedResult = this.calculateMatchResult(homeTeamId, awayTeamId, homeScore, awayScore, canTeamId);
@@ -231,7 +243,7 @@ export class MatchesService {
     const baseData: BaseEventCreateDto = {
       eventType: EventType.MATCH,
       startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      endDate: endDate ? new Date(endDate) : null,
       locationId,
     };
 
@@ -243,6 +255,16 @@ export class MatchesService {
           awayTeamId,
           homeScore,
           awayScore,
+          ...(partials && partials.length > 0 && {
+            partials: {
+              create: partials.map(p => ({
+                sequence: p.sequence,
+                label: p.label,
+                homeScore: p.homeScore,
+                awayScore: p.awayScore,
+              })),
+            },
+          }),
           result: calculatedResult,
           eventId,
           homeTeamSeasonCategoryId: homeTeamSeasonCategoryId || null,
@@ -344,11 +366,18 @@ export class MatchesService {
       throw new NotFoundException('El partido solicitado no fue encontrado');
     }
 
-    const { startDate, endDate, locationId, homeTeamSeasonCategoryId, awayTeamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, ...matchData } = updateMatchDto;
+    const { startDate, endDate, locationId, homeTeamSeasonCategoryId, awayTeamSeasonCategoryId, homeTeamId, awayTeamId, homeScore, awayScore, partials, ...matchData } = updateMatchDto;
+
+    if (partials) {
+      const sequences = partials.map(p => p.sequence);
+      if (new Set(sequences).size !== sequences.length) {
+        throw new BadRequestException('Las secuencias de los parciales no pueden estar duplicadas.');
+      }
+    }
 
     const baseData: BaseEventUpdateDto = {
       ...(startDate && { startDate: new Date(startDate) }),
-      ...(endDate && { endDate: new Date(endDate) }),
+      ...(endDate !== undefined && { endDate: endDate ? new Date(endDate) : null }),
       ...(locationId !== undefined && { locationId }),
     };
 
@@ -401,6 +430,32 @@ export class MatchesService {
           awayTeamId,
           ...(homeScore !== undefined && { homeScore }),
           ...(awayScore !== undefined && { awayScore }),
+          ...(partials !== undefined && {
+            partials: {
+              ...(partials.filter(p => p.id).length > 0 
+                ? { deleteMany: { id: { notIn: partials.filter(p => p.id).map(p => p.id as string) } } }
+                : { deleteMany: {} }),
+              ...(partials.filter(p => !p.id).length > 0 && {
+                create: partials.filter(p => !p.id).map(p => ({
+                  sequence: p.sequence,
+                  label: p.label,
+                  homeScore: p.homeScore,
+                  awayScore: p.awayScore,
+                })),
+              }),
+              ...(partials.filter(p => p.id).length > 0 && {
+                update: partials.filter(p => p.id).map(p => ({
+                  where: { id: p.id },
+                  data: {
+                    sequence: p.sequence,
+                    label: p.label,
+                    homeScore: p.homeScore,
+                    awayScore: p.awayScore,
+                  },
+                })),
+              }),
+            },
+          }),
           result: calculatedResult,
           ...(homeTeamSeasonCategoryId !== undefined && { homeTeamSeasonCategoryId }),
           ...(awayTeamSeasonCategoryId !== undefined && { awayTeamSeasonCategoryId }),
@@ -580,13 +635,18 @@ export class MatchesService {
       id: true,
       homeScore: true,
       awayScore: true,
+      partials: {
+        orderBy: {
+          sequence: Prisma.SortOrder.asc,
+        },
+      },
       result: true,
       event: {
         select: {
           startDate: true,
           status: true,
           location: {
-            select: { name: true },
+            select: { name: true, latitude: true, longitude: true, googleMapsUrl: true },
           },
         },
       },
@@ -594,12 +654,14 @@ export class MatchesService {
         select: {
           name: true,
           imageUrl: true,
+          club: { select: { discipline: { select: { name: true } } } },
         }
       },
       awayTeam: {
         select: {
           name: true,
           imageUrl: true,
+          club: { select: { discipline: { select: { name: true } } } },
         }
       },
       teamSeasonCategory: {
@@ -641,6 +703,12 @@ export class MatchesService {
       homeCategoryName: match.homeTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
       awayCategoryName: match.awayTeamSeasonCategory?.category?.name || match.teamSeasonCategory?.category?.name || null,
       locationName: match.event?.location?.name ?? null,
+      location: match.event?.location ? {
+        name: match.event.location.name,
+        latitude: match.event.location.latitude,
+        longitude: match.event.location.longitude,
+        mapsUrl: match.event.location.googleMapsUrl,
+      } : null,
       date: match.event?.startDate?.toISOString() || new Date().toISOString(),
       homeTeam: {
         name: match.homeTeam?.name || 'Local',
@@ -653,7 +721,7 @@ export class MatchesService {
       homeScore: match.homeScore,
       awayScore: match.awayScore,
       status: (match.event?.status === EventStatus.COMPLETED || (match.homeScore !== null && match.awayScore !== null)) ? 'PLAYED' : 'PENDING',
-      discipline: activeCategoryForDiscipline?.teamSeason?.team?.club?.discipline?.name || 'Deporte',
+      discipline: match.homeTeam?.club?.discipline?.name || match.awayTeam?.club?.discipline?.name || 'Deporte',
     };
     };
     if ((query?.from && !query?.to) || (!query?.from && query?.to)) {
@@ -684,7 +752,7 @@ export class MatchesService {
             status: { not: EventStatus.CANCELLED },
           },
         },
-        orderBy: { event: { startDate: 'asc' } },
+        orderBy: [{ event: { startDate: 'asc' } }, { id: 'asc' }],
         select: publicSelect,
       });
 
@@ -704,7 +772,7 @@ export class MatchesService {
             status: { not: EventStatus.CANCELLED },
           },
         },
-        orderBy: { event: { startDate: 'desc' } },
+        orderBy: [{ event: { startDate: 'desc' } }, { id: 'desc' }],
         take: 6,
         select: publicSelect,
       }),
@@ -717,7 +785,7 @@ export class MatchesService {
             status: { not: EventStatus.CANCELLED },
           },
         },
-        orderBy: { event: { startDate: 'asc' } },
+        orderBy: [{ event: { startDate: 'asc' } }, { id: 'asc' }],
         take: 6,
         select: publicSelect,
       }),
