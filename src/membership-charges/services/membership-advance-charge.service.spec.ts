@@ -39,7 +39,7 @@ describe('MembershipAdvanceChargeService', () => {
           provide: MembershipGenerationService,
           useValue: {
             findNextUngeneratedCycles: jest.fn(),
-            generateAdvanceCharges: jest.fn(),
+            generateAdvanceCharges: jest.fn().mockResolvedValue(['charge1', 'charge2']),
           },
         },
         {
@@ -145,7 +145,7 @@ describe('MembershipAdvanceChargeService', () => {
       expect(result).toEqual({ success: true });
       expect(
         previewService.extractAdvanceChargesFromCycles,
-      ).toHaveBeenCalledWith(cycles);
+      ).toHaveBeenCalledWith(mockMembership, cycles);
     });
   });
 
@@ -160,7 +160,7 @@ describe('MembershipAdvanceChargeService', () => {
         cycles,
       );
       (generationService.generateAdvanceCharges as jest.Mock).mockResolvedValue(
-        cycles.length,
+        ['charge1', 'charge2'],
       );
 
       const result = await service.generateAdvanceCharges('mem-1', 2);

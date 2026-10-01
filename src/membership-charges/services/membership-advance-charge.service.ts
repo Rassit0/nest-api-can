@@ -63,7 +63,10 @@ export class MembershipAdvanceChargeService {
       );
     }
 
-    return this.previewService.extractAdvanceChargesFromCycles(nextCycles);
+    return this.previewService.extractAdvanceChargesFromCycles(
+      membership,
+      nextCycles,
+    );
   }
 
   /**

@@ -279,7 +279,7 @@ export function calculateRecurringFeeForDate(
   );
   const baseAmountRounded = Number(base.toFixed(2));
 
-  const adjustmentAmount = Number(
+  const adjustmentAmount = -Number(
     ((baseAmountRounded * discount) / 100).toFixed(2),
   );
   const netAmount = Number(

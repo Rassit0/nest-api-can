@@ -101,9 +101,10 @@ export class MembershipPreviewService {
   }
 
   public extractAdvanceChargesFromCycles(
+    membership: PlayerMembershipWithRelations,
     cycles: SimulatedCycle[],
   ): PreviewResult {
-    const charges = cycles.map((cycle) =>
+    let charges: PreviewCharge[] = cycles.map((cycle) =>
       PreviewChargeFactory.buildRecurringCharge(
         cycle.netAmount,
         cycle.baseAmount,
@@ -116,6 +117,35 @@ export class MembershipPreviewService {
         cycle.billingCycle,
       ),
     );
+
+    const lateFeeCharges: PreviewCharge[] = [];
+    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+
+    for (const charge of charges) {
+      const lateFeePreview = this.lateFeeService.calculateLateFeePure(
+        'preview',
+        charge.dueDate,
+        membership.teamSeason as any,
+        membership as any,
+        evaluationDate,
+      );
+
+      if (lateFeePreview.totalLateFeeAmount > 0) {
+        lateFeeCharges.push(
+          PreviewChargeFactory.buildLateFeeCharge(
+            lateFeePreview.totalLateFeeAmount,
+            `Mora sobre: ${charge.description} (${lateFeePreview.penaltyDays} días de retraso)`,
+            evaluationDate,
+            charge.billingYear,
+            charge.billingMonth,
+            charge.type,
+            charge.billingCycle,
+          )
+        );
+      }
+    }
+
+    charges = charges.concat(lateFeeCharges);
 
     return { charges, breakdown: this.buildChargesBreakdown(charges) };
   }
