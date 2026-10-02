@@ -122,7 +122,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         ],
       },
       include: {
-        financialAccount: { select: { name: true } },
+        financialAccount: { select: { id: true, name: true } },
         payment: paymentInclude,
         reverses: {
           include: { payment: paymentInclude },
@@ -146,7 +146,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         ],
       },
       include: {
-        financialAccount: { select: { name: true } },
+        financialAccount: { select: { id: true, name: true } },
         payerPerson: { select: { name: true, lastName: true } },
         payerCompany: { select: { name: true } },
         payment: {
@@ -440,9 +440,43 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       ? new Date(params.end)
       : new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999);
 
+    const allAccounts = await this.prisma.financialAccount.findMany({ select: { id: true, name: true } });
+    const accMap = new Map<string, string>();
+    allAccounts.forEach(a => accMap.set(a.id, a.name));
+
+    type AccountBalanceSummary = {
+      accountId: string;
+      accountName: string;
+      openingBalance: number;
+      periodIncome: number;
+      periodExpense: number;
+      transferIn: number;
+      transferOut: number;
+      transferNet: number;
+      closingBalance: number;
+    };
+    
+    const summaries = new Map<string, AccountBalanceSummary>();
+    const getSummary = (id: string, fallbackName?: string): AccountBalanceSummary => {
+      if (!summaries.has(id)) {
+        summaries.set(id, {
+          accountId: id,
+          accountName: accMap.get(id) || fallbackName || 'Desconocida',
+          openingBalance: 0,
+          periodIncome: 0,
+          periodExpense: 0,
+          transferIn: 0,
+          transferOut: 0,
+          transferNet: 0,
+          closingBalance: 0,
+        });
+      }
+      return summaries.get(id)!;
+    };
+
     // Calcular saldo histórico (Saldo Anterior) antes de `start`
     const historicalSums = await this.prisma.transaction.groupBy({
-      by: ['type'],
+      by: ['type', 'financialAccountId'],
       _sum: { amount: true },
       where: {
         isInternalTransfer: false,
@@ -453,17 +487,97 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         transactionDate: { lt: start },
       },
     });
+
+    const historicalTransfers = await this.prisma.internalTransfer.findMany({
+      where: {
+        date: { lt: start },
+        status: 'COMPLETED',
+      },
+      include: {
+        sourceTransaction: { select: { financialAccountId: true } },
+        destinationTransaction: { select: { financialAccountId: true } },
+      }
+    });
     
-    let openingBalance = 0;
+    let globalOpeningBalance = 0;
+    
     historicalSums.forEach(sum => {
       const amount = Number(sum._sum.amount) || 0;
-      if (sum.type === 'INCOME') openingBalance += amount;
-      if (sum.type === 'EXPENSE') openingBalance -= amount;
+      const accId = sum.financialAccountId;
+      const sumRef = getSummary(accId);
+
+      if (sum.type === 'INCOME') {
+        sumRef.openingBalance += amount;
+        globalOpeningBalance += amount;
+      }
+      if (sum.type === 'EXPENSE') {
+        sumRef.openingBalance -= amount;
+        globalOpeningBalance -= amount;
+      }
+    });
+
+    historicalTransfers.forEach(t => {
+      const amount = Number(t.amount || 0);
+      if (t.sourceTransaction) {
+        getSummary(t.sourceTransaction.financialAccountId).openingBalance -= amount;
+      }
+      if (t.destinationTransaction) {
+        getSummary(t.destinationTransaction.financialAccountId).openingBalance += amount;
+      }
     });
 
     const incomeTxs = await this.getIncomeTransactions(start, end);
     const expenseTxs = await this.getExpenseTransactions(start, end);
     const transfers = await this.getAccountingTransfers(start, end);
+
+    incomeTxs.forEach(t => {
+      const amount = Number(t.amount || 0);
+      const effectiveAmt = Math.abs(amount);
+      const name = t.financialAccount?.name;
+      getSummary(t.financialAccountId, name).periodIncome += effectiveAmt;
+    });
+
+    expenseTxs.forEach(t => {
+      const amount = Number(t.amount || 0);
+      const effectiveAmt = Math.abs(amount);
+      const name = t.financialAccount?.name;
+      getSummary(t.financialAccountId, name).periodExpense += effectiveAmt;
+    });
+
+    transfers.forEach(t => {
+      const amount = Number(t.amount || 0);
+      if (t.sourceTransaction) {
+        const name = t.sourceTransaction.financialAccount?.name;
+        getSummary(t.sourceTransaction.financialAccountId, name).transferOut += amount;
+      }
+      if (t.destinationTransaction) {
+        const name = t.destinationTransaction.financialAccount?.name;
+        getSummary(t.destinationTransaction.financialAccountId, name).transferIn += amount;
+      }
+    });
+
+    const activeSummaries: AccountBalanceSummary[] = [];
+    let sumAccountOpening = 0;
+    let sumAccountClosing = 0;
+
+    for (const summary of summaries.values()) {
+      summary.transferNet = summary.transferIn - summary.transferOut;
+      summary.closingBalance = summary.openingBalance + summary.periodIncome - summary.periodExpense + summary.transferNet;
+
+      if (Math.abs(summary.openingBalance) > 0.001 || 
+          Math.abs(summary.periodIncome) > 0.001 || 
+          Math.abs(summary.periodExpense) > 0.001 || 
+          Math.abs(summary.transferIn) > 0.001 || 
+          Math.abs(summary.transferOut) > 0.001 || 
+          Math.abs(summary.closingBalance) > 0.001) {
+        activeSummaries.push(summary);
+      }
+
+      sumAccountOpening += summary.openingBalance;
+      sumAccountClosing += summary.closingBalance;
+    }
+    
+    activeSummaries.sort((a, b) => a.accountName.localeCompare(b.accountName));
 
     const categories = await this.prisma.accountCategory.findMany();
     const categoryNameBySeries = new Map<string, string>();
@@ -485,49 +599,100 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       grandTotalExpense += g.total;
     }
 
+    const periodBalance = grandTotalIncome - grandTotalExpense;
+    const globalClosingBalance = globalOpeningBalance + periodBalance;
+
+    // INVARIANTE VALIDATION
+    if (Math.abs(sumAccountOpening - globalOpeningBalance) > 0.01) {
+      console.error(`INVARIANT FAILED: sumAccountOpening (${sumAccountOpening}) != globalOpeningBalance (${globalOpeningBalance})`);
+    }
+    if (Math.abs(sumAccountClosing - globalClosingBalance) > 0.01) {
+      console.error(`INVARIANT FAILED: sumAccountClosing (${sumAccountClosing}) != globalClosingBalance (${globalClosingBalance})`);
+    }
+
     const content: Content[] = [
       this.buildHeader(start, end),
-      { text: '\n' },
     ];
 
+    // RESUMEN GENERAL COMPACTO
     content.push({
       table: {
-        widths: ['*', 'auto'],
+        widths: ['*', '*', '*', '*', '*'],
         body: [
           [
-            {
-              text: 'SALDO ANTERIOR',
-              bold: true,
-              fontSize: 10,
-              color: '#1F4E79',
-              margin: [10, 8, 0, 8],
-              border: [false, false, false, false],
-            },
-            {
-              text: `Bs ${openingBalance.toFixed(2)}`,
-              bold: true,
-              fontSize: 10,
-              color: '#1F4E79',
-              alignment: 'right',
-              margin: [0, 8, 10, 8],
-              border: [false, false, false, false],
-            }
+            { text: 'ANTERIOR', style: 'tableHeader', alignment: 'center' },
+            { text: 'INGRESOS', style: 'tableHeader', alignment: 'center' },
+            { text: 'EGRESOS', style: 'tableHeader', alignment: 'center' },
+            { text: 'NETO PERÍODO', style: 'tableHeader', alignment: 'center' },
+            { text: 'NUEVO SALDO', style: 'tableHeader', alignment: 'center' },
+          ],
+          [
+            { text: `Bs ${globalOpeningBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, margin: [0, 4, 0, 4] },
+            { text: `Bs ${grandTotalIncome.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#27AE60', margin: [0, 4, 0, 4] },
+            { text: `Bs ${grandTotalExpense.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#C0392B', margin: [0, 4, 0, 4] },
+            { text: `Bs ${periodBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: periodBalance >= 0 ? '#1F4E79' : '#C0392B', margin: [0, 4, 0, 4] },
+            { text: `Bs ${globalClosingBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#1F4E79', fontSize: 9, margin: [0, 4, 0, 4] },
           ]
         ]
       },
       layout: {
-        fillColor: '#F5F8FA',
-        hLineWidth: function () { return 0; },
+        fillColor: function (rowIndex) {
+          return (rowIndex === 0) ? '#E8ECF1' : '#F5F8FA';
+        },
+        hLineWidth: function (i, node) { return (i === 0 || i === 1 || i === node.table.body.length) ? 1.5 : 0.5; },
         vLineWidth: function () { return 0; },
+        hLineColor: function (i, node) { return (i === 0 || i === node.table.body.length) ? '#1F4E79' : '#E0E0E0'; }
       },
-      margin: [0, 0, 0, 15],
+      margin: [0, 0, 0, 10],
     });
+
+    // RESUMEN POR CUENTA COMPACTO
+    if (activeSummaries.length > 0) {
+      const accBody: any[] = [
+        [
+          { text: 'CUENTA', style: 'tableHeader', alignment: 'left' },
+          { text: 'ANTERIOR', style: 'tableHeader', alignment: 'right' },
+          { text: 'INGRESOS', style: 'tableHeader', alignment: 'right' },
+          { text: 'EGRESOS', style: 'tableHeader', alignment: 'right' },
+          { text: 'TRANSF. NETA', style: 'tableHeader', alignment: 'right' },
+          { text: 'FINAL', style: 'tableHeader', alignment: 'right' },
+        ]
+      ];
+
+      for (const sum of activeSummaries) {
+        accBody.push([
+          { text: sum.accountName, style: 'tableCell', bold: true },
+          { text: sum.openingBalance.toFixed(2), style: 'tableCellRight' },
+          { text: sum.periodIncome.toFixed(2), style: 'tableCellRight', color: sum.periodIncome > 0 ? '#27AE60' : undefined },
+          { text: sum.periodExpense.toFixed(2), style: 'tableCellRight', color: sum.periodExpense > 0 ? '#C0392B' : undefined },
+          { text: sum.transferNet.toFixed(2), style: 'tableCellRight', color: sum.transferNet !== 0 ? '#F39C12' : undefined },
+          { text: sum.closingBalance.toFixed(2), style: 'tableCellRight', bold: true, color: '#1F4E79' },
+        ]);
+      }
+
+      content.push({
+        table: {
+          headerRows: 1,
+          widths: ['*', 'auto', 'auto', 'auto', 'auto', 'auto'],
+          body: accBody,
+        },
+        layout: {
+          hLineWidth: function (i, node) { return (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5; },
+          vLineWidth: function () { return 0; },
+          hLineColor: function (i, node) { return (i === 0 || i === 1 || i === node.table.body.length) ? '#1F4E79' : '#E0E0E0'; },
+          fillColor: function (rowIndex) { return (rowIndex === 0) ? '#E8ECF1' : (rowIndex % 2 === 0 ? '#FAFAFA' : null); },
+          paddingTop: function() { return 2; },
+          paddingBottom: function() { return 2; }
+        },
+        margin: [0, 0, 0, 15],
+      });
+    }
 
     if (incomeData.groups.length > 0) {
       content.push({
         text: 'INGRESOS',
         style: 'sectionTitle',
-        margin: [0, 0, 0, 5],
+        margin: [0, 0, 0, 3],
       });
       content.push(
         this.buildTable(
@@ -540,9 +705,9 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
 
     if (expenseData.groups.length > 0) {
       content.push({
-        text: '\nEGRESOS',
+        text: 'EGRESOS',
         style: 'sectionTitle',
-        margin: [0, 10, 0, 5],
+        margin: [0, 5, 0, 3],
       });
       content.push(
         this.buildTable(
@@ -556,63 +721,12 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
 
     if (transfers.length > 0) {
       content.push({
-        text: '\nMOVIMIENTOS INTERNOS Y RECLASIFICACIONES',
+        text: 'MOVIMIENTOS INTERNOS Y RECLASIFICACIONES',
         style: 'sectionTitle',
-        margin: [0, 10, 0, 5],
+        margin: [0, 5, 0, 3],
       });
       content.push(this.buildTransfersTable(transfers));
     }
-
-    const periodBalance = grandTotalIncome - grandTotalExpense;
-    const closingBalance = openingBalance + periodBalance;
-    content.push({
-      text: '\nRESUMEN DEL PERIODO',
-      style: 'sectionTitle',
-      margin: [0, 15, 0, 5],
-    });
-    content.push({
-      table: {
-        widths: ['*', 'auto'],
-        body: [
-          [
-            { text: 'Saldo anterior', margin: [10, 4, 0, 4], border: [false, false, false, false] },
-            { text: `Bs ${openingBalance.toFixed(2)}`, alignment: 'right', margin: [0, 4, 10, 4], border: [false, false, false, false] },
-          ],
-          [
-            { text: 'Total ingresos', margin: [10, 4, 0, 4], border: [false, false, false, false] },
-            { text: `Bs ${grandTotalIncome.toFixed(2)}`, alignment: 'right', color: '#27AE60', margin: [0, 4, 10, 4], border: [false, false, false, false] },
-          ],
-          [
-            { text: 'Total egresos', margin: [10, 4, 0, 4], border: [false, false, false, false] },
-            { text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs ${grandTotalExpense.toFixed(2)}`, alignment: 'right', color: '#C0392B', margin: [0, 4, 10, 4], border: [false, false, false, false] },
-          ],
-          [
-            { text: 'Saldo neto del período', bold: true, margin: [10, 6, 0, 6], border: [false, false, false, false] },
-            { text: periodBalance >= 0 ? `Bs ${periodBalance.toFixed(2)}` : `- Bs ${Math.abs(periodBalance).toFixed(2)}`, bold: true, alignment: 'right', margin: [0, 6, 10, 6], border: [false, false, false, false] },
-          ],
-          [
-            { text: 'NUEVO SALDO', bold: true, fontSize: 11, color: '#1F4E79', margin: [10, 8, 0, 8], border: [false, false, false, false] },
-            { text: `Bs ${closingBalance.toFixed(2)}`, bold: true, fontSize: 11, color: '#1F4E79', alignment: 'right', margin: [0, 8, 10, 8], border: [false, false, false, false] },
-          ],
-        ],
-      },
-      layout: {
-        fillColor: function (rowIndex) {
-          return (rowIndex === 4) ? '#F5F8FA' : null;
-        },
-        hLineWidth: function (i, node) {
-          if (i === 0 || i === node.table.body.length) return 1.5;
-          if (i === 3) return 0.5; // under egresos
-          if (i === 4) return 1.5; // under saldo neto / above nuevo saldo
-          return 0;
-        },
-        vLineWidth: function () { return 0; },
-        hLineColor: function (i, node) {
-          return (i === 0 || i === 4 || i === node.table.body.length) ? '#1F4E79' : '#E0E0E0';
-        }
-      },
-      margin: [0, 0, 0, 20]
-    });
 
     const docDefinition: TDocumentDefinitions = {
       pageSize: 'A4',
@@ -635,9 +749,9 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       styles: {
         sectionTitle: {
           bold: true,
-          fontSize: 10,
+          fontSize: 9, // Reduced
           color: '#1F4E79',
-          margin: [0, 6, 0, 3],
+          margin: [0, 4, 0, 2], // Reduced margin
         },
         tableHeader: {
           bold: true,
@@ -699,8 +813,8 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           [
             {
               image: logo,
-              width: 45,
-              margin: [0, 2, 8, 2],
+              width: 35, // Reduced width
+              margin: [0, 0, 6, 0], // Reduced margin
               border: [false, false, false, false],
             },
             {
@@ -708,51 +822,37 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
                 {
                   text: 'CLUB ATLÉTICO NACIONAL',
                   bold: true,
-                  fontSize: 11,
+                  fontSize: 10, // Reduced
                   color: '#1F4E79',
                 },
                 {
-                  text: 'Fundado el 17 de Octubre de 1935',
-                  fontSize: 8,
-                  color: '#555555',
-                  margin: [0, 1, 0, 0],
-                },
-                {
                   text: 'CAN Oruro · Telf. 2-52-33388 · Oruro - BOLIVIA',
-                  fontSize: 8,
+                  fontSize: 7, // Reduced
                   color: '#555555',
-                  margin: [0, 0, 0, 0],
+                  margin: [0, 1, 0, 0], // Reduced
                 },
               ],
-              margin: [0, 2, 0, 2],
+              margin: [0, 0, 0, 0], // Reduced
               border: [false, false, false, false],
             },
             {
               stack: [
                 {
-                  text: 'FINANCIERO',
-                  fontSize: 8,
-                  bold: true,
-                  color: '#1F4E79',
-                  alignment: 'right',
-                  characterSpacing: 1,
-                  margin: [0, 0, 0, 2],
-                },
-                {
                   text: 'INFORME DETALLADO CONTABLE',
                   bold: true,
                   fontSize: 9,
+                  color: '#1F4E79',
                   alignment: 'right',
+                  margin: [0, 0, 0, 1], // Reduced
                 },
                 {
                   text: dateStr,
                   fontSize: 8,
                   color: '#555555',
                   alignment: 'right',
-                  margin: [0, 1, 0, 0],
                 }
               ],
-              margin: [0, 2, 0, 2],
+              margin: [0, 0, 0, 0],
               border: [false, false, false, false],
             },
           ],
@@ -760,7 +860,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
       },
       layout: {
         hLineWidth: function (i, node) {
-          return (i === 0 || i === node.table.body.length) ? 1.5 : 0;
+          return (i === node.table.body.length) ? 1 : 0; // Only bottom border
         },
         vLineWidth: function (i, node) {
           return 0;
@@ -768,10 +868,13 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
         hLineColor: function (i, node) {
           return '#1F4E79';
         },
+        paddingTop: function() { return 2; }, // Reduced
+        paddingBottom: function() { return 2; } // Reduced
       },
-      margin: [0, 0, 0, 6],
+      margin: [0, 0, 0, 8], // Reduced bottom margin to 8
     };
   }
+
 
   private buildTable(
     groups: AggregatedGroup[],
