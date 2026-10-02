@@ -26,6 +26,7 @@ import { FinancialAccountsService } from 'src/financial-accounts/financial-accou
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 import { syncPlayerMembershipStatus } from 'src/common/helpers/sync-player-membership.helper';
 import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
+import { cleanupExpiredEnrollmentIfNeeded } from 'src/common/helpers/cycle-enrollment-cleanup.helper';
 
 export const transactionSelect = {
   id: true,
@@ -262,6 +263,9 @@ export class TransactionsService {
         // Reutilizamos la lógica completa de creación individual
         // pasando explícitamente el mismo cliente transaccional de Prisma
         const result = await this.create(createTxDto, prisma);
+        if ((result as any)?.expiredAndCleaned) {
+          return { expiredAndCleaned: true };
+        }
         results.push(result);
       }
 
@@ -276,9 +280,19 @@ export class TransactionsService {
       };
     };
 
-    return tx
+    const createdBulkTransaction = tx
       ? await execute(tx)
       : await this.prisma.$transaction(execute, { timeout: 20000 });
+
+    if ((createdBulkTransaction as any)?.expiredAndCleaned) {
+      throw new BadRequestException({
+        message:
+          'Una de las inscripciones ha expirado y fue liberada. Puedes volver a inscribir al estudiante.',
+        code: 'CYCLE_ENROLLMENT_EXPIRED_CLEANED',
+      });
+    }
+
+    return createdBulkTransaction;
   }
 
   async create(
@@ -406,6 +420,15 @@ export class TransactionsService {
         // Payments, reversos y Late Fees realizan Read-Modify-Write sobre
         // este mismo saldo. El lock evita Lost Updates bajo concurrencia.
         const lockedCharge = await lockChargeForUpdate(prisma, mainChargeId);
+
+        const isExpiredAndCleaned = await cleanupExpiredEnrollmentIfNeeded(
+          prisma,
+          undefined,
+          mainChargeId,
+        );
+        if (isExpiredAndCleaned) {
+          return { expiredAndCleaned: true };
+        }
 
         charge = await prisma.charge.findUnique({
           where: { id: mainChargeId },
@@ -638,6 +661,18 @@ export class TransactionsService {
           timeout: 10000,
           isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
         });
+
+    if ((createdTransaction as any)?.expiredAndCleaned) {
+      if (tx) {
+        return createdTransaction;
+      } else {
+        throw new BadRequestException({
+          message:
+            'La inscripción ha expirado y fue liberada. Puedes volver a inscribir al estudiante.',
+          code: 'CYCLE_ENROLLMENT_EXPIRED_CLEANED',
+        });
+      }
+    }
 
     return {
       message: 'Transacción registrada con éxito',

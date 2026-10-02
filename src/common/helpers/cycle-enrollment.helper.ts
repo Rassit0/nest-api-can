@@ -1,4 +1,4 @@
-export const PAYMENT_DEADLINE_HOURS = 24;
+export const PAYMENT_DEADLINE_HOURS = 72;
 
 /**
  * Retorna la fecha exacta de expiración para un CycleEnrollment pendiente.
@@ -10,7 +10,7 @@ export function getCycleEnrollmentExpirationDate(createdAt: Date): Date {
 }
 
 /**
- * Determina si un CycleEnrollment ya superó su ventana de pago (24h).
+ * Determina si un CycleEnrollment ya superó su ventana de pago (72h).
  * @param createdAt La fecha de creación del CycleEnrollment
  * @returns boolean true si ya expiró, false si sigue vigente
  */

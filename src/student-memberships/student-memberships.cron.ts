@@ -5,6 +5,7 @@ import { StudentMembershipStatus, CycleEnrollmentStatus, StudentMembershipSuspen
 import { PrismaService } from 'src/prisma.service';
 import { ChargesService } from 'src/charges/charges.service';
 import { PAYMENT_DEADLINE_HOURS } from 'src/common/helpers/cycle-enrollment.helper';
+import { cleanupExpiredEnrollmentIfNeeded } from 'src/common/helpers/cycle-enrollment-cleanup.helper';
 import { StatusCharge } from 'src/generated/prisma/client';
 import { StudentMembershipsService } from './student-memberships.service';
 
@@ -117,8 +118,8 @@ export class StudentMembershipsCron {
     }
   }
 
-  // Ejecutar cada hora para verificar expiraciones (o cada 15 min según necesidad)
-  @Cron('0 3 * * *', {
+  // Ejecutar cada hora para verificar expiraciones
+  @Cron('0 * * * *', {
     timeZone: envs.appTimezone,
   })
   async processExpiredPendingCycles() {
@@ -140,8 +141,8 @@ export class StudentMembershipsCron {
 
     for (const enrollment of expiredEnrollments) {
       try {
-        await this.studentMembershipsService.cancelExpiredPendingCycle(enrollment.id);
-        this.logger.log(`Reserva ${enrollment.id} expirada tras 24h verificada y cancelada automáticamente (si aplicaba).`);
+        await cleanupExpiredEnrollmentIfNeeded(this.prisma, enrollment.id);
+        this.logger.log(`Reserva ${enrollment.id} expirada tras 72h verificada y cancelada automáticamente (si aplicaba).`);
       } catch (error) {
         if (error.code === 'P2034') {
           // Serialization failure, another process handled it
