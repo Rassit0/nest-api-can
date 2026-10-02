@@ -138,6 +138,26 @@ export class CourseSeasonsService {
 
   constructor(private readonly prisma: PrismaService) {}
 
+  async getShiftCyclesOptions(shiftId: string) {
+    const enrollments = await this.prisma.cycleEnrollment.findMany({
+      where: { courseSeasonShiftId: shiftId },
+      select: { cycleStartDate: true, cycleEndDate: true },
+      distinct: ['cycleStartDate', 'cycleEndDate'],
+      orderBy: { cycleStartDate: 'desc' },
+    });
+
+    return enrollments.map((e) => {
+      const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      const monthStr = monthNames[e.cycleStartDate.getUTCMonth()];
+      const yearStr = e.cycleStartDate.getUTCFullYear();
+      return {
+        cycleStartDate: e.cycleStartDate.toISOString(),
+        cycleEndDate: e.cycleEndDate.toISOString(),
+        name: `${monthStr} ${yearStr}`
+      };
+    });
+  }
+
   async create(createCourseCategoryDto: CreateCourseSeasonDto) {
     const { imageUrl, ...rest } = createCourseCategoryDto;
 
@@ -483,6 +503,7 @@ export class CourseSeasonsService {
       sortField = 'createdAt',
       gender,
       courseId,
+      schoolId,
     } = paginationDto;
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
@@ -504,6 +525,13 @@ export class CourseSeasonsService {
 
     if (courseId) {
       where.courseId = courseId;
+    }
+
+    if (schoolId) {
+      where.course = {
+        ...(where.course as object),
+        schoolId,
+      };
     }
 
     if (gender) {

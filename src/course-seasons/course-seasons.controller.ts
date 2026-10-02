@@ -103,6 +103,15 @@ export class CourseSeasonsController {
     return await this.courseSeasonsService.getShiftsByCourseSeasonOptions(id);
   }
 
+  @Get('shifts/:shiftId/cycles')
+  @ApiOperation({ summary: 'Obtener ciclos disponibles por turno' })
+  @RequirePermissions('READ_COURSE_SEASONS', 'READ_REPORTS')
+  async getShiftCyclesOptions(
+    @Param('shiftId', ParseUUIDPipe) shiftId: string,
+  ) {
+    return await this.courseSeasonsService.getShiftCyclesOptions(shiftId);
+  }
+
 
   @Get('seasons-by-discipline/options/:disciplineId')
   @ApiOperation({ summary: 'Obtener temporadas por disciplina' })

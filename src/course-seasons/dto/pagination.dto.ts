@@ -30,4 +30,12 @@ export class CourseSeasonsPaginationDto extends PaginationDto {
   @IsOptional()
   @IsUUID()
   courseId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filtrar por ID de escuela',
+    format: 'uuid',
+  })
+  @IsOptional()
+  @IsUUID()
+  schoolId?: string;
 }

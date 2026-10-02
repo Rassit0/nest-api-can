@@ -9,6 +9,7 @@ import { MonthlyCashflowExcelService } from './monthly-cashflow-excel.service';
 import { MonthlyAccountingService } from './monthly-accounting.service';
 import { MonthlyAccountingExcelService } from './monthly-accounting-excel.service';
 import { PrinterModule } from '../printer/printer.module';
+import { CourseCycleEnrollmentReport } from './course/course-cycle-enrollment.report';
 
 @Module({
   imports: [ReportCoreModule, AccountingReportModule, PrinterModule],
@@ -19,7 +20,8 @@ import { PrinterModule } from '../printer/printer.module';
     MonthlyCashflowService,
     MonthlyCashflowExcelService,
     MonthlyAccountingService,
-    MonthlyAccountingExcelService
+    MonthlyAccountingExcelService,
+    CourseCycleEnrollmentReport,
   ],
 })
 export class ReportsModule {}
