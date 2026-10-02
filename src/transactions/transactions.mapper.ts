@@ -41,6 +41,8 @@ export interface MappedTransaction {
     sizeBytes: number;
   }[];
   createdAt: Date;
+  payerName: string | null;
+  beneficiaryName: string | null;
 }
 
 export class TransactionsMapper {
@@ -49,6 +51,7 @@ export class TransactionsMapper {
     let concept = transaction.description || 'Movimiento sin concepto';
     let category = null;
     let origin = 'UNKNOWN';
+    let beneficiaryName: string | null = null;
 
     // Resolver contexto a partir del cargo principal pagado (si lo hay)
     if (transaction.payment && transaction.payment.charge) {
@@ -74,6 +77,21 @@ export class TransactionsMapper {
       } else {
         origin = 'GENERIC_CHARGE';
         concept = mainCharge.description || concept;
+      }
+
+      if (mainCharge.membershipCharges && mainCharge.membershipCharges.length > 0) {
+        const person = mainCharge.membershipCharges[0].playerMembership.player.person;
+        beneficiaryName = `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
+      } else if (mainCharge.studentCharges && mainCharge.studentCharges.length > 0) {
+        const person = mainCharge.studentCharges[0].studentMembership.student.person;
+        beneficiaryName = `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
+      } else if (mainCharge.accountCharge) {
+        if (mainCharge.accountCharge.person) {
+          const person = mainCharge.accountCharge.person;
+          beneficiaryName = `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
+        } else if (mainCharge.accountCharge.company) {
+          beneficiaryName = mainCharge.accountCharge.company.name;
+        }
       }
     }
 
@@ -108,6 +126,8 @@ export class TransactionsMapper {
         payerPerson: (transaction as any).payerPerson || null,
         attachments: transaction.attachments || [],
         createdAt: transaction.createdAt,
+        payerName: (transaction as any).payerPerson ? `${(transaction as any).payerPerson.lastName || ''} ${(transaction as any).payerPerson.secondLastName || ''} ${(transaction as any).payerPerson.name}`.replace(/\s+/g, ' ').trim() : mappedCompany ? mappedCompany.name : null,
+        beneficiaryName: beneficiaryName || null,
       };
   }
 }

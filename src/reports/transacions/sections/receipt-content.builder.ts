@@ -73,8 +73,9 @@ export const buildReceiptContent = (
                         { text: data.type === 'EXPENSE' ? 'Pagado a:' : 'Recibí de:', fontSize: 7, bold: true },
                         {
                           text: data.payerName,
-                          fontSize: 8,
-                          margin: [0, 0, 0, 5],
+                          fontSize: 14,
+                          bold: true,
+                          margin: [0, 0, 0, 8],
                         },
                         ...(data.beneficiaryName
                           ? ([
@@ -85,8 +86,9 @@ export const buildReceiptContent = (
                               },
                               {
                                 text: data.beneficiaryName,
-                                fontSize: 8,
-                                margin: [0, 0, 0, 5],
+                                fontSize: 14,
+                                bold: true,
+                                margin: [0, 0, 0, 8],
                               },
                             ] as Content[])
                           : []),
@@ -111,35 +113,17 @@ export const buildReceiptContent = (
                     {
                       stack: [
                         {
-                          text: 'MONTO:',
+                          text: 'TOTAL:',
                           bold: true,
-                          fontSize: 9,
+                          fontSize: 12,
                           alignment: 'right',
-                          margin: [0, 0, 0, 3],
+                          margin: [0, 0, 0, 2],
                         },
                         {
-                          stack: [
-                            {
-                              canvas: [
-                                {
-                                  type: 'rect',
-                                  x: 20,
-                                  y: 0,
-                                  w: 80,
-                                  h: 18,
-                                  r: 4,
-                                  lineWidth: 0.5,
-                                },
-                              ],
-                            },
-                            {
-                              text: `${data.amountNumeric} Bs.`,
-                              alignment: 'right',
-                              fontSize: 10,
-                              bold: true,
-                              margin: [0, -13.5, 10, 0],
-                            },
-                          ],
+                          text: `Bs. ${data.amountNumeric}`,
+                          alignment: 'right',
+                          fontSize: 18,
+                          bold: true,
                           margin: [0, 0, 0, 15],
                         },
                         {

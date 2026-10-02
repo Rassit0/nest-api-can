@@ -51,7 +51,14 @@ export const consolidatedReceiptReport = (options: {
         {
           width: '*',
           stack: [
-            { text: title, bold: true, fontSize: 7, alignment: 'right', margin: [0, 0, 0, 3] },
+            { 
+              text: title, 
+              bold: true, 
+              fontSize: 10, 
+              color: firstData.type === 'EXPENSE' ? '#B91C1C' : '#000000',
+              alignment: 'right', 
+              margin: [0, 0, 0, 3] 
+            },
             {
               columns: [
                 { width: '*', text: '' },

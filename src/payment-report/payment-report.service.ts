@@ -35,6 +35,7 @@ export class PaymentReportService {
           include: {
             financialAccount: true,
             payerPerson: true,
+            payerCompany: true,
           },
         },
         charge: {
@@ -93,16 +94,20 @@ export class PaymentReportService {
 
     const firstTx = payment.transactions[0];
     const payerName = firstTx?.payerPerson
-      ? `${firstTx.payerPerson.name} ${firstTx.payerPerson.lastName}`
-      : 'No especificado';
+      ? `${firstTx.payerPerson.lastName || ''} ${firstTx.payerPerson.secondLastName || ''} ${firstTx.payerPerson.name}`.replace(/\s+/g, ' ').trim()
+      : firstTx?.payerCompany
+        ? firstTx.payerCompany.legalName || firstTx.payerCompany.name
+        : 'No especificado';
     const payerDocument = firstTx?.payerPerson
       ? firstTx.payerPerson.documentNumber
-      : 'S/N';
-    const payerId = firstTx?.payerPerson?.id;
+      : firstTx?.payerCompany
+        ? firstTx.payerCompany.taxId || 'S/N'
+        : 'S/N';
+    const payerId = firstTx?.payerPerson?.id || firstTx?.payerCompany?.id;
 
     const receiverPerson = payment.createdBy?.person;
     const receiverName = receiverPerson
-      ? `${receiverPerson.name} ${receiverPerson.lastName}`
+      ? `${receiverPerson.lastName || ''} ${receiverPerson.secondLastName || ''} ${receiverPerson.name}`.replace(/\s+/g, ' ').trim()
       : 'Usuario del Sistema';
     const receiverDocument = receiverPerson
       ? receiverPerson.documentNumber
@@ -114,18 +119,18 @@ export class PaymentReportService {
     if (charge?.membershipCharges && charge.membershipCharges.length > 0) {
       const person = charge.membershipCharges[0].playerMembership.player.person;
       beneficiaryName =
-        `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+        `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
       beneficiaryId = person.id;
     } else if (charge?.studentCharges && charge.studentCharges.length > 0) {
       const person = charge.studentCharges[0].studentMembership.student.person;
       beneficiaryName =
-        `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+        `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
       beneficiaryId = person.id;
     } else if (charge?.accountCharge) {
       if (charge.accountCharge.person) {
         const person = charge.accountCharge.person;
         beneficiaryName =
-          `${person.name} ${person.lastName} ${person.secondLastName || ''}`.trim();
+          `${person.lastName || ''} ${person.secondLastName || ''} ${person.name}`.replace(/\s+/g, ' ').trim();
         beneficiaryId = person.id;
       } else if (charge.accountCharge.company) {
         const company = charge.accountCharge.company;

@@ -45,9 +45,10 @@ export const headerSection = (options: HeaderOptions): Content => {
       {
         text: title,
         bold: true,
-        fontSize: 10, // reducido
+        fontSize: 14,
+        color: type === 'EXPENSE' ? '#B91C1C' : '#000000', // Rojo institucional (tailwind red-700) para egreso
         alignment: 'right',
-        margin: [0, 0, 30, 3],
+        margin: [0, 0, 30, 5],
       },
       {
         columns: [
