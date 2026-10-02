@@ -9,6 +9,7 @@ import { HeroBannersService } from '../hero-banners/hero-banners.service';
 import { HomeDisciplinesService } from '../home-disciplines/home-disciplines.service';
 import { NewsCategoriesService } from '../news-categories/news-categories.service';
 import { PromotionsService } from '../promotions/promotions.service';
+import { SponsorsService } from '../sponsors/sponsors.service';
 
 import { FindPublicFixtureDto } from '../matches/dto/find-public-fixture.dto';
 
@@ -25,6 +26,7 @@ export class PublicController {
     private readonly homeDisciplinesService: HomeDisciplinesService,
     private readonly newsCategoriesService: NewsCategoriesService,
     private readonly promotionsService: PromotionsService,
+    private readonly sponsorsService: SponsorsService,
   ) {}
 
   @Get('institutions/default')
@@ -133,6 +135,17 @@ export class PublicController {
   @ApiOkResponse({ description: 'Promociones obtenidas correctamente.' })
   async findPublicPromotions() {
     return await this.promotionsService.findPublic();
+  }
+
+  @Get('sponsors')
+  @ApiOperation({
+    summary: 'Listar sponsors públicos',
+    description: 'Retorna listado de sponsors/auspiciadores activos ordenados para el portal web.',
+  })
+  @ApiOkResponse({ description: 'Sponsors públicos obtenidos correctamente.' })
+  async findPublicSponsors() {
+    const all = await this.sponsorsService.findAll();
+    return all.filter(s => s.isActive).sort((a, b) => a.sortOrder - b.sortOrder);
   }
 }
 

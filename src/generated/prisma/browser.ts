@@ -383,6 +383,11 @@ export type HeroBanner = Prisma.HeroBannerModel
  */
 export type HomeDiscipline = Prisma.HomeDisciplineModel
 /**
+ * Model Sponsor
+ * 
+ */
+export type Sponsor = Prisma.SponsorModel
+/**
  * Model NewsCategory
  * 
  */

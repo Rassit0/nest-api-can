@@ -10,6 +10,7 @@ import { HomeDisciplinesModule } from '../home-disciplines/home-disciplines.modu
 
 import { NewsCategoriesModule } from '../news-categories/news-categories.module';
 import { PromotionsModule } from '../promotions/promotions.module';
+import { SponsorsModule } from '../sponsors/sponsors.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { PromotionsModule } from '../promotions/promotions.module';
     HeroBannersModule,
     HomeDisciplinesModule,
     NewsCategoriesModule,
-    PromotionsModule
+    PromotionsModule,
+    SponsorsModule
   ],
   controllers: [PublicController],
 })

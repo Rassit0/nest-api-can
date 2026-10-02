@@ -122,6 +122,7 @@ export const ModelName = {
   News: 'News',
   HeroBanner: 'HeroBanner',
   HomeDiscipline: 'HomeDiscipline',
+  Sponsor: 'Sponsor',
   NewsCategory: 'NewsCategory',
   Promotion: 'Promotion',
   InstitutionHistorySettings: 'InstitutionHistorySettings',
@@ -1392,6 +1393,20 @@ export const HomeDisciplineScalarFieldEnum = {
 } as const
 
 export type HomeDisciplineScalarFieldEnum = (typeof HomeDisciplineScalarFieldEnum)[keyof typeof HomeDisciplineScalarFieldEnum]
+
+
+export const SponsorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  websiteUrl: 'websiteUrl',
+  imageUrl: 'imageUrl',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
 
 
 export const NewsCategoryScalarFieldEnum = {

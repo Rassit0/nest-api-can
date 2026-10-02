@@ -463,6 +463,7 @@ export const ModelName = {
   News: 'News',
   HeroBanner: 'HeroBanner',
   HomeDiscipline: 'HomeDiscipline',
+  Sponsor: 'Sponsor',
   NewsCategory: 'NewsCategory',
   Promotion: 'Promotion',
   InstitutionHistorySettings: 'InstitutionHistorySettings',
@@ -483,7 +484,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchPartial" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "company" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem" | "newsAsset"
+    modelProps: "person" | "personContact" | "discipline" | "institution" | "institutionContact" | "shift" | "club" | "location" | "category" | "season" | "seasonEvent" | "team" | "teamSeason" | "teamSeasonBillingConfig" | "paymentPlan" | "player" | "playerMembership" | "playerMembershipHistory" | "playerMembershipPause" | "membershipDiscount" | "membershipCharge" | "staff" | "teamSeasonStaff" | "charge" | "payment" | "financialAccount" | "transaction" | "internalTransfer" | "receiptSequence" | "user" | "role" | "module" | "permission" | "rolePermission" | "school" | "course" | "courseSeason" | "courseSeasonShift" | "teamSeasonPause" | "courseSeasonPause" | "courseSeasonBillingConfig" | "courseSeasonStaff" | "student" | "studentMembership" | "studentMembershipHistory" | "studentMembershipPause" | "cycleEnrollment" | "studentDiscount" | "studentCharge" | "sessionIncident" | "progressEvaluation" | "eventSeries" | "event" | "generalEvent" | "session" | "sessionTeam" | "sessionCourse" | "sessionBooking" | "match" | "matchCallUp" | "matchPartial" | "matchLineup" | "auditLog" | "eventMaterializationLog" | "accountCategory" | "accountCharge" | "cashClosure" | "company" | "attachment" | "teamSeasonCategory" | "news" | "heroBanner" | "homeDiscipline" | "sponsor" | "newsCategory" | "promotion" | "institutionHistorySettings" | "institutionHistoryItem" | "newsAsset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5889,6 +5890,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Sponsor: {
+      payload: Prisma.$SponsorPayload<ExtArgs>
+      fields: Prisma.SponsorFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SponsorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SponsorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        findFirst: {
+          args: Prisma.SponsorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SponsorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        findMany: {
+          args: Prisma.SponsorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        create: {
+          args: Prisma.SponsorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        createMany: {
+          args: Prisma.SponsorCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SponsorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        delete: {
+          args: Prisma.SponsorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        update: {
+          args: Prisma.SponsorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        deleteMany: {
+          args: Prisma.SponsorDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SponsorUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SponsorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        upsert: {
+          args: Prisma.SponsorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        aggregate: {
+          args: Prisma.SponsorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSponsor>
+        }
+        groupBy: {
+          args: Prisma.SponsorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SponsorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorCountAggregateOutputType> | number
+        }
+      }
+    }
     NewsCategory: {
       payload: Prisma.$NewsCategoryPayload<ExtArgs>
       fields: Prisma.NewsCategoryFieldRefs
@@ -7547,6 +7622,20 @@ export const HomeDisciplineScalarFieldEnum = {
 export type HomeDisciplineScalarFieldEnum = (typeof HomeDisciplineScalarFieldEnum)[keyof typeof HomeDisciplineScalarFieldEnum]
 
 
+export const SponsorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  websiteUrl: 'websiteUrl',
+  imageUrl: 'imageUrl',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
+
+
 export const NewsCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -8481,6 +8570,7 @@ export type GlobalOmitConfig = {
   news?: Prisma.NewsOmit
   heroBanner?: Prisma.HeroBannerOmit
   homeDiscipline?: Prisma.HomeDisciplineOmit
+  sponsor?: Prisma.SponsorOmit
   newsCategory?: Prisma.NewsCategoryOmit
   promotion?: Prisma.PromotionOmit
   institutionHistorySettings?: Prisma.InstitutionHistorySettingsOmit
