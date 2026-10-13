@@ -5,6 +5,33 @@ import * as fs from 'fs';
 import { MonthlyAccountingService } from './monthly-accounting.service';
 import { MonthlyAccountingQueryDto } from './dto/monthly-accounting.dto';
 import { TransactionStatus } from '../generated/prisma/client';
+import { DateUtils } from '../utils/date.utils';
+
+type MatrixKind = 'INCOME' | 'EXPENSE';
+
+interface DailyMatrix {
+  categories: string[];
+  /** Cuentas con movimiento por categoría (orden de data.accounts) */
+  activeAccounts: Record<string, { id: string; name: string; accountNumber?: string | null }[]>;
+  /** days[dayIndex][category][accountId] = monto */
+  days: Record<string, Record<string, number>>[];
+  dayTotals: number[];
+  /** totals[category][accountId] */
+  totals: Record<string, Record<string, number>>;
+  grandTotal: number;
+}
+
+/** Un bloque (SALIDAS u ENTRADAS) de la matriz diaria de transferencias */
+interface TransferSide {
+  /** Cuentas que participaron en este rol (orden de data.accounts) */
+  accounts: { id: string; name: string; accountNumber?: string | null }[];
+  /** days[dayIndex][accountId] = monto */
+  days: Record<string, number>[];
+  dayTotals: number[];
+  /** totals[accountId] */
+  totals: Record<string, number>;
+  grandTotal: number;
+}
 
 @Injectable()
 export class MonthlyAccountingExcelService {
@@ -19,163 +46,39 @@ export class MonthlyAccountingExcelService {
     const monthStr = `${query.year}-${query.month.toString().padStart(2, '0')}`;
     const numFmt = '#,##0.00';
 
-    // Helper to categorize transaction
+    // Helpers de formateo basados en envs.appTimezone (DateUtils)
+    const formatLocalDateTime = (d: Date): string => DateUtils.formatLocalDateTime(d);
+    const formatAccountHeader = (acc: { name: string; accountNumber?: string | null }): string => {
+      const num = acc.accountNumber?.trim();
+      return num ? `${acc.name}\nNº ${num}` : acc.name;
+    };
+
+    // Lógica de categorización original (Payment → Charge)
     const categorizeTx = (tx: any) => {
       let categoryGroup = 'SIN CATEGORÍA';
-      let discipline = '';
       const charge = tx.payment?.charge;
-
       if (charge) {
         if (charge.studentCharges && charge.studentCharges.length > 0) {
-          discipline = charge.studentCharges[0].studentMembership?.courseSeason?.course?.school?.discipline?.name || '';
+          const discipline = charge.studentCharges[0].studentMembership?.courseSeason?.course?.school?.discipline?.name || '';
           categoryGroup = `Escuelas${discipline ? ' - ' + discipline : ''}`;
         } else if (charge.membershipCharges && charge.membershipCharges.length > 0) {
-          discipline = charge.membershipCharges[0].playerMembership?.teamSeason?.team?.club?.discipline?.name || '';
+          const discipline = charge.membershipCharges[0].playerMembership?.teamSeason?.team?.club?.discipline?.name || '';
           categoryGroup = `Equipos${discipline ? ' - ' + discipline : ''}`;
         } else if (charge.accountCharge?.category) {
           categoryGroup = charge.accountCharge.category.name;
         }
       }
-
-      return { categoryGroup, discipline };
+      return categoryGroup;
     };
 
-    // Prepare Daily Data Map
-    const daysInMonth = new Date(Date.UTC(query.year, query.month, 0)).getUTCDate();
-    const dailyData = Array.from({ length: daysInMonth }, (_, i) => {
-      return {
-        day: i + 1,
-        incomes: {} as Record<string, Record<string, number>>,
-        expenses: {} as Record<string, Record<string, number>>,
-        internalIn: 0,
-        internalOut: 0,
-        totalIncome: 0,
-        totalExpense: 0,
-      };
-    });
+    const isOperative = (tx: any) =>
+      tx.status === TransactionStatus.COMPLETED ||
+      (tx.status === TransactionStatus.CANCELLED && tx.reversedBy !== null && tx.reversedBy !== undefined);
 
-    // Prepare Accounts Balance tracking
-    const accountBalances = new Map<string, number>();
-    data.accounts.forEach(acc => accountBalances.set(acc.id, acc.openingBalance));
-
-    // Distribution Map for Sheet 2
-    // Key: categoryGroup, Value: Map<accountId, amount>
-    const distributionMatrix = new Map<string, Map<string, number>>();
-    const getDistCell = (cat: string, accId: string) => {
-      if (!distributionMatrix.has(cat)) distributionMatrix.set(cat, new Map());
-      const map = distributionMatrix.get(cat);
-      return map.get(accId) || 0;
-    };
-    const addDistCell = (cat: string, accId: string, amount: number) => {
-      if (!distributionMatrix.has(cat)) distributionMatrix.set(cat, new Map());
-      const map = distributionMatrix.get(cat);
-      map.set(accId, (map.get(accId) || 0) + amount);
-    };
-
-    const uniqueIncomes = new Set<string>();
-    const uniqueExpenses = new Set<string>();
-
-    for (const tx of data.transactions) {
-      const txAny = tx as any;
-      const day = tx.transactionDate.getUTCDate();
-      const metrics = dailyData[day - 1];
-      const { categoryGroup } = categorizeTx(tx);
-      const amount = Number(tx.amount) || 0;
-      const accId = tx.financialAccountId;
-
-      const isOperative =
-        tx.status === TransactionStatus.COMPLETED ||
-        (tx.status === TransactionStatus.CANCELLED && txAny.reversedBy !== null && txAny.reversedBy !== undefined);
-
-      if (!isOperative) {
-        continue;
-      }
-
-      if (tx.isInternalTransfer) {
-        const isSource = !!txAny.internalTransferSource;
-        const isDest = !!txAny.internalTransferDest;
-
-        if (isSource) {
-          metrics.internalOut += amount;
-          accountBalances.set(accId, (accountBalances.get(accId) || 0) - amount);
-        } else if (isDest) {
-          metrics.internalIn += amount;
-          accountBalances.set(accId, (accountBalances.get(accId) || 0) + amount);
-        }
-      } else {
-        if (tx.type === 'INCOME') {
-          uniqueIncomes.add(categoryGroup);
-          if (!metrics.incomes[categoryGroup]) metrics.incomes[categoryGroup] = {};
-          metrics.incomes[categoryGroup][accId] = (metrics.incomes[categoryGroup][accId] || 0) + amount;
-          metrics.totalIncome += amount;
-          accountBalances.set(accId, (accountBalances.get(accId) || 0) + amount);
-          addDistCell(categoryGroup, accId, amount);
-        } else if (tx.type === 'EXPENSE') {
-          uniqueExpenses.add(categoryGroup);
-          if (!metrics.expenses[categoryGroup]) metrics.expenses[categoryGroup] = {};
-          metrics.expenses[categoryGroup][accId] = (metrics.expenses[categoryGroup][accId] || 0) + amount;
-          metrics.totalExpense += amount;
-          accountBalances.set(accId, (accountBalances.get(accId) || 0) - amount);
-          addDistCell(categoryGroup, accId, -amount);
-        }
-      }
-    }
-
-    // --- CÁLCULO DE TOTALES PREVIOS AL RENDERIZADO ---
-    let sumTotalIncome = 0;
-    let sumTotalExpense = 0;
-    let sumInternalIn = 0;
-    let sumInternalOut = 0;
-    let sumNet = 0;
-    const incomeTotals: Record<string, Record<string, number>> = {};
-    const expenseTotals: Record<string, Record<string, number>> = {};
-
-    const incomeCols = Array.from(uniqueIncomes).sort();
-    const expenseCols = Array.from(uniqueExpenses).sort();
-
-    for (const inc of incomeCols) incomeTotals[inc] = {};
-    for (const exp of expenseCols) expenseTotals[exp] = {};
-
-    for (const d of dailyData) {
-      sumTotalIncome += d.totalIncome;
-      sumTotalExpense += d.totalExpense;
-      sumInternalIn += d.internalIn;
-      sumInternalOut += d.internalOut;
-      sumNet += (d.totalIncome - d.totalExpense);
-      
-      for (const inc of incomeCols) {
-        if (!d.incomes[inc]) d.incomes[inc] = {};
-        for (const acc of data.accounts) {
-          const val = d.incomes[inc][acc.id] || 0;
-          incomeTotals[inc][acc.id] = (incomeTotals[inc][acc.id] || 0) + val;
-        }
-      }
-      for (const exp of expenseCols) {
-        if (!d.expenses[exp]) d.expenses[exp] = {};
-        for (const acc of data.accounts) {
-          const val = d.expenses[exp][acc.id] || 0;
-          expenseTotals[exp][acc.id] = (expenseTotals[exp][acc.id] || 0) + val;
-        }
-      }
-    }
-
-
-
-    const activeIncomeAccounts: Record<string, any[]> = {};
-    for (const inc of incomeCols) {
-      activeIncomeAccounts[inc] = data.accounts.filter(acc => Math.abs(incomeTotals[inc][acc.id] || 0) > 0);
-    }
-    const activeExpenseAccounts: Record<string, any[]> = {};
-    for (const exp of expenseCols) {
-      activeExpenseAccounts[exp] = data.accounts.filter(acc => Math.abs(expenseTotals[exp][acc.id] || 0) > 0);
-    }
-
-    let sysOpening = 0;
-    let sysClosing = 0;
-    for (const acc of data.accounts) {
-      sysOpening += acc.openingBalance;
-      sysClosing += accountBalances.get(acc.id) || 0;
-    }
+    // Días del calendario (cálculo puramente civil, sin depender de timezone del host)
+    const isLeap = (y: number) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+    const monthLengths = [31, isLeap(query.year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const daysInMonth = monthLengths[query.month - 1];
 
     // --- ESTILOS COMUNES ---
     const borderSutil: Partial<ExcelJS.Borders> = {
@@ -183,491 +86,930 @@ export class MonthlyAccountingExcelService {
     };
     const borderTotal: Partial<ExcelJS.Borders> = {
       top: { style: 'medium', color: { argb: 'FF1F4E79' } },
-      bottom: { style: 'thin', color: { argb: 'FF1F4E79' } }
+      bottom: { style: 'thin', color: { argb: 'FF1F4E79' } },
     };
     const fillTitle: ExcelJS.Fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E79' } };
     const fontTitle: Partial<ExcelJS.Font> = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
-    
-    // --- HOJA 1: RESUMEN MENSUAL ---
-    const ws1 = wb.addWorksheet(`Resumen ${monthStr}`, {
-      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 }
-    });
-    
-    // --- CABECERA INSTITUCIONAL (Estilo Recibos) ---
-    let logoPath = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
-    if (!fs.existsSync(logoPath)) {
-      logoPath = path.join(process.cwd(), 'src', 'assets', 'logo-can.png');
-    }
-    if (fs.existsSync(logoPath)) {
-      const logoId = wb.addImage({
-        filename: logoPath,
-        extension: 'png',
-      });
-      ws1.addImage(logoId, {
-        tl: { col: 0, row: 0 },
-        ext: { width: 85, height: 85 }
-      });
-    }
+    const fillTotal: ExcelJS.Fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE6EEF8' } };
+    const zebraFill = (i: number): ExcelJS.Fill =>
+      i % 2 === 0 ? { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } } : { type: 'pattern', pattern: 'none' };
 
-    let totalCols = 1;
-    for (const inc of incomeCols) totalCols += activeIncomeAccounts[inc].length + 1;
-    totalCols += 1; // TOTAL INGRESOS
-    for (const exp of expenseCols) totalCols += activeExpenseAccounts[exp].length + 1;
-    totalCols += 1; // TOTAL EGRESOS
-    totalCols += 3; // INT IN, INT OUT, NETO
-
-    ws1.mergeCells(1, 1, 1, totalCols);
-    const titleCell = ws1.getCell(1, 1);
-    titleCell.value = 'CLUB ATLÉTICO NACIONAL';
-    titleCell.font = { name: 'Calibri', size: 16, bold: true, color: { argb: 'FF1F4E79' } };
-    titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
-    
-    ws1.mergeCells(2, 1, 2, totalCols);
-    const subInstCell = ws1.getCell(2, 1);
-    subInstCell.value = 'FUNDADO EL 17 DE OCTUBRE DE 1935';
-    subInstCell.font = { name: 'Calibri', size: 10, color: { argb: 'FF595959' } };
-    subInstCell.alignment = { vertical: 'middle', horizontal: 'center' };
-
-    ws1.mergeCells(3, 1, 3, totalCols);
-    const repTitleCell = ws1.getCell(3, 1);
-    repTitleCell.value = 'INFORME CONTABLE MENSUAL';
-    repTitleCell.font = { name: 'Calibri', size: 14, bold: true, color: { argb: 'FF1F4E79' } };
-    repTitleCell.alignment = { vertical: 'middle', horizontal: 'center' };
-
-    ws1.mergeCells(4, 1, 4, totalCols);
-    const subtitleCell = ws1.getCell(4, 1);
-    subtitleCell.value = `Periodo: ${monthStr}  |  Generado: ${new Date().toLocaleString('es-BO')}`;
-    subtitleCell.font = { name: 'Calibri', size: 11, color: { argb: 'FF595959' } };
-    subtitleCell.alignment = { vertical: 'middle', horizontal: 'center' };
-    
-    ws1.addRow([]);
-
-    // --- RESUMEN EJECUTIVO (Dashboard Style) ---
-    ws1.addRow(['SALDO INICIAL', 'TOTAL INGRESOS', 'TOTAL EGRESOS', 'SALDO FINAL']);
-    const execHeaderRow = ws1.lastRow;
-    if (execHeaderRow) {
-      execHeaderRow.font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF595959' } };
-      execHeaderRow.alignment = { horizontal: 'center', vertical: 'middle' };
-      execHeaderRow.height = 20;
-    }
-
-    ws1.addRow([sysOpening, sumTotalIncome, sumTotalExpense === 0 ? 0 : -sumTotalExpense, sysClosing]);
-    const execValueRow = ws1.lastRow;
-    if (execValueRow) {
-      execValueRow.height = 30;
-      execValueRow.font = { name: 'Calibri', bold: true, size: 14 };
-      execValueRow.alignment = { horizontal: 'center', vertical: 'middle' };
-      execValueRow.eachCell(cell => { cell.numFmt = numFmt; });
-      
-      execValueRow.getCell(1).font = { name: 'Calibri', bold: true, size: 14, color: { argb: 'FF1F4E79' } };
-      execValueRow.getCell(2).font = { name: 'Calibri', bold: true, size: 14, color: { argb: 'FF27AE60' } };
-      execValueRow.getCell(3).font = { name: 'Calibri', bold: true, size: 14, color: { argb: 'FFC0392B' } };
-      execValueRow.getCell(4).font = { name: 'Calibri', bold: true, size: 14, color: { argb: 'FF1F4E79' } };
-      
-      for(let i = 1; i <= 4; i++) {
-        execHeaderRow!.getCell(i).border = { top: { style: 'medium', color: {argb:'FFBDD7EE'} }, left: { style: 'thin', color: {argb:'FFBDD7EE'} }, right: { style: 'thin', color: {argb:'FFBDD7EE'} } };
-        execHeaderRow!.getCell(i).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F6FA' } };
-        
-        execValueRow.getCell(i).border = { bottom: { style: 'medium', color: {argb:'FFBDD7EE'} }, left: { style: 'thin', color: {argb:'FFBDD7EE'} }, right: { style: 'thin', color: {argb:'FFBDD7EE'} } };
-        execValueRow.getCell(i).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F6FA' } };
-      }
-    }
-
-    ws1.addRow([]);
-    ws1.addRow([]);
-
-    // Matriz Diaria Jerárquica
-    const row8 = ['Día'];
-    const row9 = [''];
-    
-    // Generar estructura Income
-    for (const inc of incomeCols) {
-      row8.push(inc);
-      for (const acc of activeIncomeAccounts[inc]) row9.push(acc.name);
-      row9.push('TOTAL');
-      
-      for (let i = 0; i < activeIncomeAccounts[inc].length; i++) {
-        row8.push(''); // blank spaces for mergeCells
-      }
-    }
-    row8.push('TOTAL INGRESOS');
-    row9.push('');
-    
-    // Generar estructura Expense
-    for (const exp of expenseCols) {
-      row8.push(exp);
-      for (const acc of activeExpenseAccounts[exp]) row9.push(acc.name);
-      row9.push('TOTAL');
-      
-      for (let i = 0; i < activeExpenseAccounts[exp].length; i++) {
-        row8.push(''); // blank spaces for mergeCells
-      }
-    }
-    row8.push('TOTAL EGRESOS');
-    row9.push('');
-    
-    row8.push('ENTRADAS INTERNAS', 'SALIDAS INTERNAS', 'NETO OPERATIVO');
-    row9.push('', '', '');
-    
-    ws1.addRow(row8);
-    const r8 = ws1.lastRow!;
-    r8.height = 25;
-    ws1.addRow(row9);
-    const r9 = ws1.lastRow!;
-    r9.height = 25;
-    
-    // Aplicar mergeCells y estilos a las cabeceras jerárquicas
-    const applyHeaderStyle = (cell: ExcelJS.Cell, bgColor: string, textColor: string, isMainHeader: boolean = false) => {
-       cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
-       cell.font = { name: 'Calibri', color: { argb: textColor }, bold: true, size: isMainHeader ? 11 : 10 };
-       cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-       cell.border = { 
-         top: { style: isMainHeader ? 'medium' : 'thin', color: { argb: 'FFFFFFFF' } },
-         right: { style: 'thin', color: { argb: 'FFFFFFFF' } }, 
-         bottom: { style: 'thin', color: { argb: 'FFFFFFFF' } }, 
-         left: { style: 'thin', color: { argb: 'FFFFFFFF' } } 
-       };
+    // --- AGREGACIÓN: CONCILIACIÓN POR CUENTA ---
+    type AccountBalanceSummary = {
+      id: string;
+      name: string;
+      accountNumber?: string | null;
+      isActive: boolean;
+      openingBalance: number;
+      periodIncome: number;
+      periodExpense: number;
+      transferIn: number;
+      transferOut: number;
+      closingBalance: number;
     };
-    
-    let currentIdx = 2; // Empieza en la columna 2 (B)
-    
-    // Día
-    ws1.mergeCells(10, 1, 11, 1);
-    applyHeaderStyle(ws1.getCell(10, 1), 'FFE9ECEF', 'FF495057', true);
-
-    // Incomes (Verde suave)
-    for (let j = 0; j < incomeCols.length; j++) {
-      const inc = incomeCols[j];
-      const span = activeIncomeAccounts[inc].length + 1;
-      ws1.mergeCells(10, currentIdx, 10, currentIdx + span - 1);
-      applyHeaderStyle(ws1.getCell(10, currentIdx), 'FFE8F5E9', 'FF2E7D32', true);
-      
-      for (let i = 0; i < span; i++) {
-        applyHeaderStyle(ws1.getCell(11, currentIdx + i), 'FFF1F8E9', 'FF33691E');
-      }
-      currentIdx += span;
-    }
-    
-    // Total Ingresos
-    ws1.mergeCells(10, currentIdx, 11, currentIdx);
-    applyHeaderStyle(ws1.getCell(10, currentIdx), 'FFC8E6C9', 'FF1B5E20', true);
-    currentIdx++;
-
-    // Expenses (Rojo suave)
-    for (let j = 0; j < expenseCols.length; j++) {
-      const exp = expenseCols[j];
-      const span = activeExpenseAccounts[exp].length + 1;
-      ws1.mergeCells(10, currentIdx, 10, currentIdx + span - 1);
-      applyHeaderStyle(ws1.getCell(10, currentIdx), 'FFFFEBEE', 'FFC62828', true);
-      
-      for (let i = 0; i < span; i++) {
-        applyHeaderStyle(ws1.getCell(11, currentIdx + i), 'FFFFF3E0', 'FFBF360C');
-      }
-      currentIdx += span;
-    }
-    
-    // Total Egresos
-    ws1.mergeCells(10, currentIdx, 11, currentIdx);
-    applyHeaderStyle(ws1.getCell(10, currentIdx), 'FFFFCDD2', 'FFB71C1C', true);
-    currentIdx++;
-    
-    // Internal & Net (Azul grisáceo)
-    for (let i = 0; i < 2; i++) {
-      ws1.mergeCells(10, currentIdx + i, 11, currentIdx + i);
-      applyHeaderStyle(ws1.getCell(10, currentIdx + i), 'FFE3F2FD', 'FF1565C0', true);
-    }
-    
-    // NETO OPERATIVO
-    ws1.mergeCells(10, currentIdx + 2, 11, currentIdx + 2);
-    applyHeaderStyle(ws1.getCell(10, currentIdx + 2), 'FFE1F5FE', 'FF0277BD', true);
-
-    let rowIndex = 0;
-    for (const d of dailyData) {
-      const formattedDate = `${String(d.day).padStart(2, '0')}-${String(query.month).padStart(2, '0')}-${query.year}`;
-      const row: any[] = [formattedDate];
-      
-      for (const inc of incomeCols) {
-        let catTotal = 0;
-        for (const acc of activeIncomeAccounts[inc]) {
-          const val = d.incomes[inc][acc.id] || 0;
-          row.push(val);
-          catTotal += val;
-        }
-        row.push(catTotal);
-      }
-      row.push(d.totalIncome);
-      
-      for (const exp of expenseCols) {
-        let catTotal = 0;
-        for (const acc of activeExpenseAccounts[exp]) {
-          const val = d.expenses[exp][acc.id] || 0;
-          row.push(val === 0 ? 0 : -val);
-          catTotal += val;
-        }
-        row.push(catTotal === 0 ? 0 : -catTotal);
-      }
-      row.push(d.totalExpense === 0 ? 0 : -d.totalExpense);
-      
-      row.push(d.internalIn);
-      row.push(d.internalOut === 0 ? 0 : -d.internalOut);
-      row.push(d.totalIncome - d.totalExpense);
-
-      const excelRow = ws1.addRow(row);
-      rowIndex++;
-      const isZebra = rowIndex % 2 === 0;
-      const rowFill: ExcelJS.Fill = isZebra ? { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } } : { type: 'pattern', pattern: 'none' };
-      
-      excelRow.eachCell((cell, colNumber) => {
-        if (colNumber > 1) cell.numFmt = numFmt;
-        cell.border = borderSutil;
-        cell.fill = rowFill;
+    const accountMap = new Map<string, AccountBalanceSummary>();
+    data.accounts.forEach((acc) => {
+      accountMap.set(acc.id, {
+        id: acc.id,
+        name: acc.name,
+        accountNumber: acc.accountNumber,
+        isActive: acc.isActive,
+        openingBalance: acc.openingBalance,
+        periodIncome: 0,
+        periodExpense: 0,
+        transferIn: 0,
+        transferOut: 0,
+        closingBalance: 0,
       });
-      
-      let cIdx = 1;
-      for (const inc of incomeCols) {
-        cIdx += activeIncomeAccounts[inc].length + 1;
-        excelRow.getCell(cIdx).font = { color: { argb: 'FF2E7D32' }, bold: true };
-      }
-      cIdx++;
-      excelRow.getCell(cIdx).font = { color: { argb: 'FF1B5E20' }, bold: true };
-      
-      for (const exp of expenseCols) {
-        cIdx += activeExpenseAccounts[exp].length + 1;
-        excelRow.getCell(cIdx).font = { color: { argb: 'FFC62828' }, bold: true };
-      }
-      cIdx++;
-      excelRow.getCell(cIdx).font = { color: { argb: 'FFB71C1C' }, bold: true };
-    }
-
-    // Fila de Totales
-    const totalsRow: any[] = ['TOTALES'];
-    for (const inc of incomeCols) {
-      let superTotal = 0;
-      for (const acc of activeIncomeAccounts[inc]) {
-        const val = incomeTotals[inc][acc.id] || 0;
-        totalsRow.push(val);
-        superTotal += val;
-      }
-      totalsRow.push(superTotal);
-    }
-    totalsRow.push(sumTotalIncome);
-    
-    for (const exp of expenseCols) {
-      let superTotal = 0;
-      for (const acc of activeExpenseAccounts[exp]) {
-        const val = expenseTotals[exp][acc.id] || 0;
-        totalsRow.push(val === 0 ? 0 : -val);
-        superTotal += val;
-      }
-      totalsRow.push(superTotal === 0 ? 0 : -superTotal);
-    }
-    totalsRow.push(sumTotalExpense === 0 ? 0 : -sumTotalExpense);
-    
-    totalsRow.push(sumInternalIn, sumInternalOut === 0 ? 0 : -sumInternalOut, sumNet);
-
-    const tRow = ws1.addRow(totalsRow);
-    tRow.height = 25;
-    tRow.eachCell((cell, colNumber) => {
-      cell.font = { bold: true, name: 'Calibri', size: 11 };
-      cell.border = borderTotal;
-      cell.alignment = { vertical: 'middle', horizontal: 'right' };
-      if (colNumber === 1) cell.alignment.horizontal = 'center';
-      if (colNumber > 1) cell.numFmt = numFmt;
-      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE6EEF8' } };
     });
 
-    // Ajuste de anchos Hoja 1
-    ws1.getColumn(1).width = 10;
-    for(let i=2; i<=row8.length; i++) ws1.getColumn(i).width = 14;
-    
-    ws1.views = [{ state: 'frozen', xSplit: 1, ySplit: 11 }];
-    ws1.autoFilter = { from: { row: 11, column: 1 }, to: { row: 11, column: row8.length } };
-
-    // --- HOJA 2: DISTRIBUCIÓN CONTABLE ---
-    const ws2 = wb.addWorksheet(`Distribución ${monthStr}`, {
-      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 }
+    // --- AGREGACIÓN: MATRICES DIARIAS (una sola pasada, sin queries adicionales) ---
+    const buildEmptyMatrix = (): DailyMatrix => ({
+      categories: [],
+      activeAccounts: {},
+      days: Array.from({ length: daysInMonth }, () => ({})),
+      dayTotals: Array.from({ length: daysInMonth }, () => 0),
+      totals: {},
+      grandTotal: 0,
     });
-    
-    const distHeaders = ['Categoría', ...data.accounts.map(a => a.name), 'TOTAL'];
+    const incomeMatrix = buildEmptyMatrix();
+    const expenseMatrix = buildEmptyMatrix();
 
-    ws2.mergeCells(1, 1, 1, distHeaders.length);
-    const dTitle = ws2.getCell(1, 1);
-    dTitle.value = 'DISTRIBUCIÓN CONTABLE';
-    dTitle.font = { name: 'Calibri', size: 14, bold: true, color: { argb: 'FF1F4E79' } };
-    dTitle.alignment = { vertical: 'middle', horizontal: 'center' };
-    
-    ws2.mergeCells(2, 1, 2, distHeaders.length);
-    const dSubtitle = ws2.getCell(2, 1);
-    dSubtitle.value = `Periodo: ${monthStr}`;
-    dSubtitle.font = { name: 'Calibri', size: 11, color: { argb: 'FF595959' } };
-    dSubtitle.alignment = { vertical: 'middle', horizontal: 'center' };
-    ws2.addRow([]);
+    let globalIncome = 0;
+    let globalExpense = 0;
 
-    ws2.addRow(distHeaders);
-    const dHeaderRow = ws2.lastRow;
-    if (dHeaderRow) {
-      dHeaderRow.height = 25;
-      dHeaderRow.eachCell(cell => {
-        cell.fill = fillTitle;
-        cell.font = fontTitle;
+    for (const tx of data.transactions as any[]) {
+      if (tx.isInternalTransfer) continue; // Defensa: transferencias nunca entran en las matrices
+      if (!isOperative(tx)) continue;
+      if (tx.type !== 'INCOME' && tx.type !== 'EXPENSE') continue;
+
+      const amount = Number(tx.amount) || 0;
+      const accId: string = tx.financialAccountId;
+      const { year, month, day } = DateUtils.getLocalDateParts(tx.transactionDate);
+      if (year !== query.year || month !== query.month || day < 1 || day > daysInMonth) continue;
+
+      const matrix = tx.type === 'INCOME' ? incomeMatrix : expenseMatrix;
+      const category = categorizeTx(tx);
+      const dayCell = matrix.days[day - 1];
+      if (!dayCell[category]) dayCell[category] = {};
+      dayCell[category][accId] = (dayCell[category][accId] || 0) + amount;
+      matrix.dayTotals[day - 1] += amount;
+      if (!matrix.totals[category]) matrix.totals[category] = {};
+      matrix.totals[category][accId] = (matrix.totals[category][accId] || 0) + amount;
+      matrix.grandTotal += amount;
+
+      const acc = accountMap.get(accId);
+      if (tx.type === 'INCOME') {
+        globalIncome += amount;
+        if (acc) acc.periodIncome += amount;
+      } else {
+        globalExpense += amount;
+        if (acc) acc.periodExpense += amount;
+      }
+    }
+
+    for (const matrix of [incomeMatrix, expenseMatrix]) {
+      matrix.categories = Object.keys(matrix.totals).sort();
+      for (const cat of matrix.categories) {
+        matrix.activeAccounts[cat] = data.accounts
+          .filter((a) => Math.abs(matrix.totals[cat][a.id] || 0) > 0)
+          .map((a) => ({ id: a.id, name: a.name, accountNumber: a.accountNumber }));
+      }
+    }
+
+    // --- AGREGACIÓN: MATRIZ DIARIA DE TRANSFERENCIAS ---
+    // Solo InternalTransfer COMPLETED. Origen/destino SIEMPRE por relación estructural 1:1
+    // (sourceTransaction / destinationTransaction), nunca por type, signo u orden.
+    const buildTransferSide = (): TransferSide => ({
+      accounts: [],
+      days: Array.from({ length: daysInMonth }, () => ({})),
+      dayTotals: Array.from({ length: daysInMonth }, () => 0),
+      totals: {},
+      grandTotal: 0,
+    });
+    const transferOutSide = buildTransferSide(); // SALIDAS (cuenta origen)
+    const transferInSide = buildTransferSide(); // ENTRADAS (cuenta destino)
+    const addTransferLeg = (side: TransferSide, accId: string, dayIdx: number, amt: number) => {
+      side.days[dayIdx][accId] = (side.days[dayIdx][accId] || 0) + amt;
+      side.dayTotals[dayIdx] += amt;
+      side.totals[accId] = (side.totals[accId] || 0) + amt;
+      side.grandTotal += amt;
+    };
+
+    let globalTransferIn = 0;
+    let globalTransferOut = 0;
+    for (const it of data.internalTransfers as any[]) {
+      const amt = Number(it.amount) || 0;
+      globalTransferOut += amt;
+      globalTransferIn += amt;
+      const srcAccId: string | undefined = it.sourceTransaction?.financialAccountId;
+      const dstAccId: string | undefined = it.destinationTransaction?.financialAccountId;
+      const srcAcc = srcAccId ? accountMap.get(srcAccId) : undefined;
+      if (srcAcc) srcAcc.transferOut += amt;
+      const destAcc = dstAccId ? accountMap.get(dstAccId) : undefined;
+      if (destAcc) destAcc.transferIn += amt;
+
+      // Día civil según envs.appTimezone
+      const { year, month, day } = DateUtils.getLocalDateParts(it.date);
+      if (year !== query.year || month !== query.month || day < 1 || day > daysInMonth) continue;
+      if (srcAccId) addTransferLeg(transferOutSide, srcAccId, day - 1, amt);
+      if (dstAccId) addTransferLeg(transferInSide, dstAccId, day - 1, amt);
+    }
+    // Columnas: solo cuentas que participaron (orden determinista = data.accounts, name ASC)
+    for (const side of [transferOutSide, transferInSide]) {
+      side.accounts = data.accounts
+        .filter((a) => side.totals[a.id] !== undefined)
+        .map((a) => ({ id: a.id, name: a.name, accountNumber: a.accountNumber }));
+    }
+
+    let globalOpening = 0;
+    let globalClosing = 0;
+    for (const acc of accountMap.values()) {
+      acc.closingBalance = acc.openingBalance + acc.periodIncome - acc.periodExpense + acc.transferIn - acc.transferOut;
+      globalOpening += acc.openingBalance;
+      globalClosing += acc.closingBalance;
+    }
+
+    const reconAccounts = Array.from(accountMap.values()).filter(
+      (acc) =>
+        acc.isActive ||
+        Math.abs(acc.openingBalance) > 0.001 ||
+        Math.abs(acc.periodIncome) > 0.001 ||
+        Math.abs(acc.periodExpense) > 0.001 ||
+        Math.abs(acc.transferIn) > 0.001 ||
+        Math.abs(acc.transferOut) > 0.001,
+    );
+
+    // --- RENDER: MATRIZ DIARIA (Día × Categoría × Cuenta) ---
+    const applyHeaderStyle = (cell: ExcelJS.Cell, bgColor: string, textColor: string, isMainHeader = false) => {
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
+      cell.font = { name: 'Calibri', color: { argb: textColor }, bold: true, size: isMainHeader ? 11 : 10 };
+      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+      cell.border = {
+        top: { style: isMainHeader ? 'medium' : 'thin', color: { argb: 'FFFFFFFF' } },
+        right: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+        bottom: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+        left: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+      };
+    };
+
+    const matrixColumnCount = (m: DailyMatrix) =>
+      1 + m.categories.reduce((s, c) => s + m.activeAccounts[c].length + 1, 0) + 1;
+
+    const renderDailyMatrix = (ws: ExcelJS.Worksheet, m: DailyMatrix, kind: MatrixKind) => {
+      const palette =
+        kind === 'INCOME'
+          ? { catBg: 'FFE8F5E9', catFg: 'FF2E7D32', subBg: 'FFF1F8E9', subFg: 'FF33691E', totBg: 'FFC8E6C9', totFg: 'FF1B5E20' }
+          : { catBg: 'FFFFEBEE', catFg: 'FFC62828', subBg: 'FFFFF3E0', subFg: 'FFBF360C', totBg: 'FFFFCDD2', totFg: 'FFB71C1C' };
+      const totalLabel = kind === 'INCOME' ? 'TOTAL INGRESOS' : 'TOTAL EGRESOS';
+
+      const row1: any[] = ['Día'];
+      const row2: any[] = [''];
+      for (const cat of m.categories) {
+        row1.push(cat);
+        for (let i = 0; i < m.activeAccounts[cat].length; i++) row1.push('');
+        for (const acc of m.activeAccounts[cat]) row2.push(formatAccountHeader(acc));
+        row2.push('TOTAL');
+      }
+      row1.push(totalLabel);
+      row2.push('');
+
+      const h1 = ws.addRow(row1);
+      h1.height = 25;
+      const h2 = ws.addRow(row2);
+      h2.height = 30;
+      const h1Idx = h1.number;
+      const h2Idx = h2.number;
+
+      ws.mergeCells(h1Idx, 1, h2Idx, 1);
+      applyHeaderStyle(ws.getCell(h1Idx, 1), 'FFE9ECEF', 'FF495057', true);
+      let col = 2;
+      for (const cat of m.categories) {
+        const span = m.activeAccounts[cat].length + 1;
+        if (span > 1) ws.mergeCells(h1Idx, col, h1Idx, col + span - 1);
+        applyHeaderStyle(ws.getCell(h1Idx, col), palette.catBg, palette.catFg, true);
+        for (let i = 0; i < span; i++) applyHeaderStyle(ws.getCell(h2Idx, col + i), palette.subBg, palette.subFg);
+        col += span;
+      }
+      ws.mergeCells(h1Idx, col, h2Idx, col);
+      applyHeaderStyle(ws.getCell(h1Idx, col), palette.totBg, palette.totFg, true);
+
+      const styleCategoryTotals = (excelRow: ExcelJS.Row) => {
+        let c = 1;
+        for (const cat of m.categories) {
+          c += m.activeAccounts[cat].length + 1;
+          excelRow.getCell(c).font = { color: { argb: palette.catFg }, bold: true };
+        }
+        excelRow.getCell(c + 1).font = { color: { argb: palette.totFg }, bold: true };
+      };
+
+      for (let d = 0; d < daysInMonth; d++) {
+        const dayCell = m.days[d];
+        const label = `${String(d + 1).padStart(2, '0')}-${String(query.month).padStart(2, '0')}-${query.year}`;
+        const row: any[] = [label];
+        for (const cat of m.categories) {
+          let catTotal = 0;
+          for (const acc of m.activeAccounts[cat]) {
+            const val = dayCell[cat]?.[acc.id] || 0;
+            row.push(val);
+            catTotal += val;
+          }
+          row.push(catTotal);
+        }
+        row.push(m.dayTotals[d]);
+
+        const excelRow = ws.addRow(row);
+        const fill = zebraFill(d + 1);
+        excelRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+          if (colNumber > 1) cell.numFmt = numFmt;
+          cell.border = borderSutil;
+          cell.fill = fill;
+        });
+        styleCategoryTotals(excelRow);
+      }
+
+      const totalsRow: any[] = ['TOTAL MES'];
+      for (const cat of m.categories) {
+        let catTotal = 0;
+        for (const acc of m.activeAccounts[cat]) {
+          const val = m.totals[cat][acc.id] || 0;
+          totalsRow.push(val);
+          catTotal += val;
+        }
+        totalsRow.push(catTotal);
+      }
+      totalsRow.push(m.grandTotal);
+      const tRow = ws.addRow(totalsRow);
+      tRow.height = 25;
+      tRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+        cell.font = { bold: true, name: 'Calibri', size: 11 };
+        cell.border = borderTotal;
+        cell.alignment = { vertical: 'middle', horizontal: colNumber === 1 ? 'center' : 'right' };
+        if (colNumber > 1) cell.numFmt = numFmt;
+        cell.fill = fillTotal;
+      });
+
+      return { headerRow1: h1Idx, headerRow2: h2Idx, columnCount: row1.length };
+    };
+
+    const addInstitutionalHeader = (ws: ExcelJS.Worksheet, title: string, widthCols: number, withLogo: boolean) => {
+      if (withLogo) {
+        let logoPath = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
+        if (!fs.existsSync(logoPath)) logoPath = path.join(process.cwd(), 'src', 'assets', 'logo-can.png');
+        if (fs.existsSync(logoPath)) {
+          const logoId = wb.addImage({ filename: logoPath, extension: 'png' });
+          ws.addImage(logoId, { tl: { col: 0, row: 0 }, ext: { width: 75, height: 75 } });
+        }
+      }
+      const lines: [string, Partial<ExcelJS.Font>][] = [
+        ['CLUB ATLÉTICO NACIONAL', { name: 'Calibri', size: 16, bold: true, color: { argb: 'FF1F4E79' } }],
+        ['FUNDADO EL 17 DE OCTUBRE DE 1935', { name: 'Calibri', size: 10, color: { argb: 'FF595959' } }],
+        [title, { name: 'Calibri', size: 14, bold: true, color: { argb: 'FF1F4E79' } }],
+        [
+          `Periodo: ${monthStr}  |  Generado: ${formatLocalDateTime(new Date())}`,
+          { name: 'Calibri', size: 11, color: { argb: 'FF595959' } },
+        ],
+      ];
+      lines.forEach(([text, font], i) => {
+        const r = i + 1;
+        ws.mergeCells(r, 1, r, Math.max(widthCols, 8));
+        const cell = ws.getCell(r, 1);
+        cell.value = text;
+        cell.font = font;
         cell.alignment = { vertical: 'middle', horizontal: 'center' };
       });
-    }
+      ws.addRow([]);
+    };
 
-    const categories = Array.from(distributionMatrix.keys()).sort();
-    let dRowIndex = 0;
-    for (const cat of categories) {
-      const row: any[] = [cat];
-      let catTotal = 0;
-      for (const acc of data.accounts) {
-        const val = getDistCell(cat, acc.id);
-        row.push(val);
-        catTotal += val;
-      }
-      row.push(catTotal);
-      const eRow = ws2.addRow(row);
-      dRowIndex++;
-      const isZebra = dRowIndex % 2 === 0;
-      eRow.eachCell((cell, colNumber) => {
-        if (colNumber > 1) cell.numFmt = numFmt;
-        cell.border = borderSutil;
-        cell.fill = isZebra ? { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } } : { type: 'pattern', pattern: 'none' };
-      });
-      eRow.getCell(distHeaders.length).font = { bold: true };
-    }
-
-    // Totales Hoja 2
-    const dTotalRowData: any[] = ['TOTAL'];
-    let dSuperTotal = 0;
-    for (const acc of data.accounts) {
-      let accSum = 0;
-      for (const cat of categories) {
-        accSum += getDistCell(cat, acc.id);
-      }
-      dTotalRowData.push(accSum);
-      dSuperTotal += accSum;
-    }
-    dTotalRowData.push(dSuperTotal);
-
-    const dTRow = ws2.addRow(dTotalRowData);
-    dTRow.height = 25;
-    dTRow.eachCell((cell, colNumber) => {
-      cell.font = { bold: true, name: 'Calibri' };
-      cell.border = borderTotal;
-      cell.alignment = { vertical: 'middle', horizontal: 'right' };
-      if(colNumber===1) cell.alignment.horizontal = 'left';
-      if(colNumber > 1) cell.numFmt = numFmt;
-      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE6EEF8' } };
+    // ==========================================
+    // HOJA 1: RESUMEN (conciliación + matriz diaria de INGRESOS)
+    // ==========================================
+    const ws1 = wb.addWorksheet(`Resumen ${monthStr}`, {
+      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
     });
+    addInstitutionalHeader(ws1, 'INFORME CONTABLE MENSUAL', matrixColumnCount(incomeMatrix), true);
 
-    ws2.getColumn(1).width = 30;
-    for(let i=2; i<=distHeaders.length; i++) ws2.getColumn(i).width = 18;
+    // Resumen ejecutivo
+    const execHeaderRow = ws1.addRow(['SALDO INICIAL', 'INGRESOS EXTERNOS', 'EGRESOS EXTERNOS', 'SALDO FINAL']);
+    execHeaderRow.font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF595959' } };
+    execHeaderRow.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+    execHeaderRow.height = 28;
+    const execValueRow = ws1.addRow([globalOpening, globalIncome, globalExpense === 0 ? 0 : -globalExpense, globalClosing]);
+    execValueRow.height = 30;
+    execValueRow.alignment = { horizontal: 'center', vertical: 'middle' };
+    const execColors = ['FF1F4E79', 'FF27AE60', 'FFC0392B', 'FF1F4E79'];
+    for (let i = 1; i <= 4; i++) {
+      const hc = execHeaderRow.getCell(i);
+      hc.border = {
+        top: { style: 'medium', color: { argb: 'FFBDD7EE' } },
+        left: { style: 'thin', color: { argb: 'FFBDD7EE' } },
+        right: { style: 'thin', color: { argb: 'FFBDD7EE' } },
+      };
+      hc.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F6FA' } };
+      const vc = execValueRow.getCell(i);
+      vc.numFmt = numFmt;
+      vc.font = { name: 'Calibri', bold: true, size: 13, color: { argb: execColors[i - 1] } };
+      vc.border = {
+        bottom: { style: 'medium', color: { argb: 'FFBDD7EE' } },
+        left: { style: 'thin', color: { argb: 'FFBDD7EE' } },
+        right: { style: 'thin', color: { argb: 'FFBDD7EE' } },
+      };
+      vc.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F6FA' } };
+    }
+    ws1.addRow([]);
 
-    ws2.views = [{ state: 'frozen', xSplit: 1, ySplit: 4 }];
-    ws2.autoFilter = { from: { row: 4, column: 1 }, to: { row: 4, column: distHeaders.length } };
-
-
-    // --- HOJA 3: DETALLE DE MOVIMIENTOS ---
-    const ws3 = wb.addWorksheet(`Detalle ${monthStr}`);
-    
-    ws3.mergeCells(1, 1, 1, 16);
-    const detTitle = ws3.getCell(1, 1);
-    detTitle.value = 'DETALLE DE TRANSACCIONES';
-    detTitle.font = { name: 'Calibri', size: 14, bold: true, color: { argb: 'FF1F4E79' } };
-    detTitle.alignment = { vertical: 'middle', horizontal: 'center' };
-    
-    ws3.mergeCells(2, 1, 2, 16);
-    const detSubtitle = ws3.getCell(2, 1);
-    detSubtitle.value = `Periodo: ${monthStr}`;
-    detSubtitle.font = { name: 'Calibri', size: 11, color: { argb: 'FF595959' } };
-    detSubtitle.alignment = { vertical: 'middle', horizontal: 'center' };
-    ws3.addRow([]);
-
-    ws3.columns = [
-      { header: 'ID Transacción', key: 'id', width: 36 },
-      { header: 'Fecha (Local)', key: 'date', width: 16 },
-      { header: 'Recibo', key: 'receipt', width: 15 },
-      { header: 'Tipo', key: 'type', width: 15 },
-      { header: 'Estado', key: 'status', width: 15 },
-      { header: 'Cuenta Financiera', key: 'account', width: 20 },
-      { header: 'Método Pago', key: 'paymentMethod', width: 15 },
-      { header: 'Categoría/Origen', key: 'category', width: 30 },
-      { header: 'Disciplina', key: 'discipline', width: 15 },
-      { header: 'Monto', key: 'amount', width: 15 },
-      { header: 'Balance Antes', key: 'balanceBefore', width: 15 },
-      { header: 'Balance Después', key: 'balanceAfter', width: 15 },
-      { header: 'Payment ID', key: 'paymentId', width: 36 },
-      { header: 'Charge ID', key: 'chargeId', width: 36 },
-      { header: 'Interno', key: 'isInternal', width: 10 },
-      { header: 'Reversión (reversesId)', key: 'reversesId', width: 36 },
-    ];
-
-    const w3Header = ws3.getRow(4);
-    w3Header.height = 25;
-    w3Header.eachCell(cell => {
+    // Conciliación compacta por cuenta
+    const reconTitle = ws1.addRow(['CONCILIACIÓN POR CUENTA FINANCIERA']);
+    reconTitle.font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF1F4E79' } };
+    const reconHeaderRow = ws1.addRow([
+      'Cuenta',
+      'Nº Cuenta',
+      'Saldo Inicial',
+      'Ingresos (+)',
+      'Egresos (-)',
+      'Transf. Entrantes (+)',
+      'Transf. Salientes (-)',
+      'Saldo Final',
+    ]);
+    reconHeaderRow.height = 28;
+    reconHeaderRow.eachCell((cell) => {
       cell.fill = fillTitle;
       cell.font = fontTitle;
-      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+    });
+    reconAccounts.forEach((acc, i) => {
+      const row = ws1.addRow([
+        acc.name,
+        acc.accountNumber?.trim() || '-',
+        acc.openingBalance,
+        acc.periodIncome,
+        acc.periodExpense === 0 ? 0 : -acc.periodExpense,
+        acc.transferIn,
+        acc.transferOut === 0 ? 0 : -acc.transferOut,
+        acc.closingBalance,
+      ]);
+      row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+        if (colNumber > 2) cell.numFmt = numFmt;
+        cell.border = borderSutil;
+        cell.fill = zebraFill(i + 1);
+      });
+      row.getCell(2).alignment = { horizontal: 'center', vertical: 'middle' };
+      row.getCell(8).font = { bold: true };
+    });
+    const reconTotalRow = ws1.addRow([
+      'TOTAL GENERAL',
+      '',
+      globalOpening,
+      globalIncome,
+      globalExpense === 0 ? 0 : -globalExpense,
+      globalTransferIn,
+      globalTransferOut === 0 ? 0 : -globalTransferOut,
+      globalClosing,
+    ]);
+    reconTotalRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      cell.font = { bold: true, name: 'Calibri', size: 11 };
+      cell.border = borderTotal;
+      cell.alignment = { vertical: 'middle', horizontal: colNumber <= 2 ? 'center' : 'right' };
+      if (colNumber > 2) cell.numFmt = numFmt;
+      cell.fill = fillTotal;
+    });
+    ws1.addRow([]);
+
+    // Matriz diaria de ingresos
+    const incTitle = ws1.addRow(['INGRESOS DIARIOS POR CATEGORÍA Y CUENTA']);
+    incTitle.font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF2E7D32' } };
+    const incLayout = renderDailyMatrix(ws1, incomeMatrix, 'INCOME');
+
+    ws1.getColumn(1).width = 24;
+    ws1.getColumn(2).width = 16;
+    for (let i = 3; i <= Math.max(incLayout.columnCount, 8); i++) ws1.getColumn(i).width = 15;
+
+    // ==========================================
+    // RESUMEN MENSUAL DE MOVIMIENTOS (debajo de la matriz de ingresos)
+    // ==========================================
+    ws1.addRow([]);
+    ws1.addRow([]);
+
+    const summaryMainTitle = ws1.addRow(['RESUMEN MENSUAL DE MOVIMIENTOS']);
+    ws1.mergeCells(summaryMainTitle.number, 1, summaryMainTitle.number, 4);
+    summaryMainTitle.height = 26;
+    summaryMainTitle.getCell(1).fill = fillTitle;
+    summaryMainTitle.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 12 };
+    summaryMainTitle.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
+
+    ws1.addRow([]);
+
+    // --- SECCIÓN A: SALDO INICIAL GLOBAL ---
+    const prevMonthLastDateStr = DateUtils.formatLocalDate(new Date(data.startDate.getTime() - 1000));
+    const openRow = ws1.addRow([`SALDO INICIAL GLOBAL AL ${prevMonthLastDateStr}`, '', '', globalOpening]);
+    ws1.mergeCells(openRow.number, 1, openRow.number, 3);
+    openRow.height = 22;
+    openRow.getCell(1).font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FF1F4E79' } };
+    openRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    openRow.getCell(4).font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FF1F4E79' } };
+    openRow.getCell(4).numFmt = numFmt;
+    openRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    openRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = fillTotal;
+        c.border = borderTotal;
+      }
     });
 
-    let detRowIndex = 0;
-    for (const tx of data.transactions) {
-      const txAny = tx as any;
-      const isInternal = tx.isInternalTransfer;
-      const { categoryGroup, discipline } = categorizeTx(txAny);
-      const amount = Number(tx.amount) || 0;
+    ws1.addRow([]);
 
-      const row = ws3.addRow({
-        id: tx.id,
-        date: tx.transactionDate,
-        receipt: `${tx.receiptSeries}-${tx.receiptNumber}`,
-        type: tx.type,
-        status: tx.status,
-        account: txAny.financialAccount?.name || '',
-        paymentMethod: tx.paymentMethod,
-        category: categoryGroup,
-        discipline: discipline,
-        amount: tx.type === 'EXPENSE' ? -amount : amount,
-        balanceBefore: Number(tx.balanceBefore) || null,
-        balanceAfter: Number(tx.balanceAfter) || null,
-        paymentId: tx.paymentId,
-        chargeId: txAny.payment?.chargeId,
-        isInternal: isInternal ? 'SÍ' : 'NO',
-        reversesId: tx.reversesId,
-      });
+    // --- SECCIÓN B: INGRESOS EXTERNOS ---
+    const incSecHeader = ws1.addRow(['(1) INGRESOS EXTERNOS']);
+    ws1.mergeCells(incSecHeader.number, 1, incSecHeader.number, 4);
+    incSecHeader.height = 24;
+    incSecHeader.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2E7D32' } };
+    incSecHeader.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
+    incSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
 
-      detRowIndex++;
-      const isZebra = detRowIndex % 2 === 0;
+    const incColHeader = ws1.addRow(['Categoría / Disciplina', 'Cuenta Financiera', 'Nº Cuenta', 'Monto']);
+    incColHeader.height = 20;
+    incColHeader.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F5E9' } };
+        c.font = { name: 'Calibri', color: { argb: 'FF1B5E20' }, bold: true, size: 10 };
+        c.border = borderSutil;
+        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
+      }
+    });
 
-      row.eachCell((cell, colNum) => {
-        cell.border = borderSutil;
-        cell.fill = isZebra ? { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } } : { type: 'pattern', pattern: 'none' };
-        cell.alignment = { vertical: 'middle' };
-      });
+    let incDetailZebra = 0;
+    for (const cat of incomeMatrix.categories) {
+      const catRow = ws1.addRow([cat, '', '', '']);
+      ws1.mergeCells(catRow.number, 1, catRow.number, 4);
+      catRow.height = 20;
+      catRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FF1B5E20' } };
+      catRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F8E9' } };
+      catRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+      catRow.getCell(1).border = borderSutil;
 
-      row.getCell('date').numFmt = 'dd/mm/yyyy hh:mm';
-      row.getCell('amount').numFmt = numFmt;
-      row.getCell('balanceBefore').numFmt = numFmt;
-      row.getCell('balanceAfter').numFmt = numFmt;
+      const accs = incomeMatrix.activeAccounts[cat] || [];
+      let catSubtotal = 0;
+      for (const acc of accs) {
+        const amt = incomeMatrix.totals[cat]?.[acc.id] || 0;
+        catSubtotal += amt;
+        const dRow = ws1.addRow(['', acc.name, acc.accountNumber?.trim() || '-', amt]);
+        dRow.height = 19;
+        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+        dRow.getCell(4).numFmt = numFmt;
+        dRow.eachCell({ includeEmpty: true }, (c, col) => {
+          if (col <= 4) {
+            c.border = borderSutil;
+            c.fill = zebraFill(++incDetailZebra);
+            c.font = { name: 'Calibri', size: 10 };
+          }
+        });
+      }
 
-      // Status Formatting
-      const statusCell = row.getCell('status');
-      if (tx.status === TransactionStatus.CANCELLED) {
-        row.font = { color: { argb: 'FF999999' }, italic: true };
-        statusCell.font = { color: { argb: 'FFC0392B' }, italic: true, bold: true };
-      } else if (tx.status === TransactionStatus.PENDING) {
-        statusCell.font = { color: { argb: 'FFB8860B' }, bold: true };
-      } else if (tx.status === TransactionStatus.COMPLETED) {
-        if(tx.reversesId) {
-          statusCell.font = { color: { argb: 'FF8E44AD' }, bold: true }; // Reversal indicator
-        } else {
-          statusCell.font = { color: { argb: 'FF27AE60' }, bold: true };
+      const subRow = ws1.addRow([`TOTAL ${cat}`, '', '', catSubtotal]);
+      ws1.mergeCells(subRow.number, 1, subRow.number, 3);
+      subRow.height = 20;
+      subRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+      subRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF1B5E20' } };
+      subRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+      subRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF1B5E20' } };
+      subRow.getCell(4).numFmt = numFmt;
+      subRow.eachCell({ includeEmpty: true }, (c, col) => {
+        if (col <= 4) {
+          c.border = { top: { style: 'thin', color: { argb: 'FFA5D6A7' } }, bottom: { style: 'thin', color: { argb: 'FFA5D6A7' } } };
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FBE7' } };
         }
+      });
+    }
+
+    const incTotalRow = ws1.addRow(['TOTAL INGRESOS EXTERNOS', '', '', incomeMatrix.grandTotal]);
+    ws1.mergeCells(incTotalRow.number, 1, incTotalRow.number, 3);
+    incTotalRow.height = 22;
+    incTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+    incTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF2E7D32' } };
+    incTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    incTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF2E7D32' } };
+    incTotalRow.getCell(4).numFmt = numFmt;
+    incTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F5E9' } };
+        c.border = borderTotal;
+      }
+    });
+
+    ws1.addRow([]);
+
+    // --- SECCIÓN C: EGRESOS EXTERNOS ---
+    const expSecHeader = ws1.addRow(['(2) EGRESOS EXTERNOS']);
+    ws1.mergeCells(expSecHeader.number, 1, expSecHeader.number, 4);
+    expSecHeader.height = 24;
+    expSecHeader.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC62828' } };
+    expSecHeader.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
+    expSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+
+    const expColHeader = ws1.addRow(['Categoría / Concepto', 'Cuenta Financiera', 'Nº Cuenta', 'Monto']);
+    expColHeader.height = 20;
+    expColHeader.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
+        c.font = { name: 'Calibri', color: { argb: 'FFB71C1C' }, bold: true, size: 10 };
+        c.border = borderSutil;
+        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
+      }
+    });
+
+    let expDetailZebra = 0;
+    for (const cat of expenseMatrix.categories) {
+      const catRow = ws1.addRow([cat, '', '', '']);
+      ws1.mergeCells(catRow.number, 1, catRow.number, 4);
+      catRow.height = 20;
+      catRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FFB71C1C' } };
+      catRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
+      catRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+      catRow.getCell(1).border = borderSutil;
+
+      const accs = expenseMatrix.activeAccounts[cat] || [];
+      let catSubtotal = 0;
+      for (const acc of accs) {
+        const amt = expenseMatrix.totals[cat]?.[acc.id] || 0;
+        catSubtotal += amt;
+        const dRow = ws1.addRow(['', acc.name, acc.accountNumber?.trim() || '-', amt]);
+        dRow.height = 19;
+        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+        dRow.getCell(4).numFmt = numFmt;
+        dRow.eachCell({ includeEmpty: true }, (c, col) => {
+          if (col <= 4) {
+            c.border = borderSutil;
+            c.fill = zebraFill(++expDetailZebra);
+            c.font = { name: 'Calibri', size: 10 };
+          }
+        });
+      }
+
+      const subRow = ws1.addRow([`TOTAL ${cat}`, '', '', catSubtotal]);
+      ws1.mergeCells(subRow.number, 1, subRow.number, 3);
+      subRow.height = 20;
+      subRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+      subRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFB71C1C' } };
+      subRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+      subRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFB71C1C' } };
+      subRow.getCell(4).numFmt = numFmt;
+      subRow.eachCell({ includeEmpty: true }, (c, col) => {
+        if (col <= 4) {
+          c.border = { top: { style: 'thin', color: { argb: 'FFEF9A9A' } }, bottom: { style: 'thin', color: { argb: 'FFEF9A9A' } } };
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+        }
+      });
+    }
+
+    const expTotalRow = ws1.addRow(['TOTAL EGRESOS EXTERNOS', '', '', expenseMatrix.grandTotal]);
+    ws1.mergeCells(expTotalRow.number, 1, expTotalRow.number, 3);
+    expTotalRow.height = 22;
+    expTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+    expTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFC62828' } };
+    expTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    expTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFC62828' } };
+    expTotalRow.getCell(4).numFmt = numFmt;
+    expTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
+        c.border = borderTotal;
+      }
+    });
+
+    ws1.addRow([]);
+
+    // --- RESULTADO DEL PERÍODO ---
+    const periodResult = incomeMatrix.grandTotal - expenseMatrix.grandTotal;
+    const resSecHeader = ws1.addRow(['RESULTADO DEL PERÍODO (INGRESOS EXTERNOS - EGRESOS EXTERNOS)']);
+    ws1.mergeCells(resSecHeader.number, 1, resSecHeader.number, 4);
+    resSecHeader.height = 24;
+    resSecHeader.getCell(1).fill = fillTitle;
+    resSecHeader.getCell(1).font = fontTitle;
+    resSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+
+    const resIncRow = ws1.addRow(['(+) Total Ingresos Externos (1)', '', '', incomeMatrix.grandTotal]);
+    ws1.mergeCells(resIncRow.number, 1, resIncRow.number, 3);
+    resIncRow.height = 20;
+    resIncRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    resIncRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    resIncRow.getCell(4).numFmt = numFmt;
+    resIncRow.eachCell({ includeEmpty: true }, (c, col) => { if (col <= 4) c.border = borderSutil; });
+
+    const resExpRow = ws1.addRow(['(-) Total Egresos Externos (2)', '', '', expenseMatrix.grandTotal === 0 ? 0 : -expenseMatrix.grandTotal]);
+    ws1.mergeCells(resExpRow.number, 1, resExpRow.number, 3);
+    resExpRow.height = 20;
+    resExpRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    resExpRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    resExpRow.getCell(4).numFmt = numFmt;
+    resExpRow.eachCell({ includeEmpty: true }, (c, col) => { if (col <= 4) c.border = borderSutil; });
+
+    const resTotalRow = ws1.addRow(['(=) RESULTADO DEL PERÍODO', '', '', periodResult]);
+    ws1.mergeCells(resTotalRow.number, 1, resTotalRow.number, 3);
+    resTotalRow.height = 22;
+    resTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    resTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF1F4E79' } };
+    resTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    resTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF1F4E79' } };
+    resTotalRow.getCell(4).numFmt = numFmt;
+    resTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = fillTotal;
+        c.border = borderTotal;
+      }
+    });
+
+    ws1.addRow([]);
+
+    // --- SECCIÓN D: MOVIMIENTOS INTERNOS (TRANSFERENCIAS) ---
+    const trfSecHeader = ws1.addRow(['(3) TRANSFERENCIAS INTERNAS ENTRE CUENTAS']);
+    ws1.mergeCells(trfSecHeader.number, 1, trfSecHeader.number, 4);
+    trfSecHeader.height = 24;
+    trfSecHeader.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE65100' } };
+    trfSecHeader.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
+    trfSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+
+    // Subsección: Entradas a cuentas (destino)
+    const inBannerRow = ws1.addRow(['ENTRADAS A CUENTAS (DESTINO)', '', '', '']);
+    ws1.mergeCells(inBannerRow.number, 1, inBannerRow.number, 4);
+    inBannerRow.height = 20;
+    inBannerRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FFBF360C' } };
+    inBannerRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+    inBannerRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    inBannerRow.getCell(1).border = borderSutil;
+
+    const inColHeader = ws1.addRow(['Movimiento', 'Cuenta Destino', 'Nº Cuenta', 'Monto']);
+    inColHeader.height = 20;
+    inColHeader.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF8E1' } };
+        c.font = { name: 'Calibri', color: { argb: 'FFBF360C' }, bold: true, size: 10 };
+        c.border = borderSutil;
+        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
+      }
+    });
+
+    let trfInZebra = 0;
+    if (transferInSide.accounts.length === 0) {
+      const emptyRow = ws1.addRow(['Entrada Interna', 'Sin movimientos en el período', '-', 0]);
+      emptyRow.height = 19;
+      emptyRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+      emptyRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+      emptyRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+      emptyRow.getCell(4).numFmt = numFmt;
+      emptyRow.eachCell({ includeEmpty: true }, (c, col) => { if (col <= 4) c.border = borderSutil; });
+    } else {
+      for (const acc of transferInSide.accounts) {
+        const amt = transferInSide.totals[acc.id] || 0;
+        const dRow = ws1.addRow(['Entrada Interna', acc.name, acc.accountNumber?.trim() || '-', amt]);
+        dRow.height = 19;
+        dRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+        dRow.getCell(4).numFmt = numFmt;
+        dRow.eachCell({ includeEmpty: true }, (c, col) => {
+          if (col <= 4) {
+            c.border = borderSutil;
+            c.fill = zebraFill(++trfInZebra);
+            c.font = { name: 'Calibri', size: 10 };
+          }
+        });
       }
     }
 
-    ws3.views = [{ state: 'frozen', ySplit: 4 }];
-    ws3.autoFilter = { from: { row: 4, column: 1 }, to: { row: 4, column: 16 } };
+    const trfInTotalRow = ws1.addRow(['TOTAL ENTRADAS INTERNAS', '', '', transferInSide.grandTotal]);
+    ws1.mergeCells(trfInTotalRow.number, 1, trfInTotalRow.number, 3);
+    trfInTotalRow.height = 20;
+    trfInTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+    trfInTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFBF360C' } };
+    trfInTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    trfInTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFBF360C' } };
+    trfInTotalRow.getCell(4).numFmt = numFmt;
+    trfInTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+        c.border = borderSutil;
+      }
+    });
+
+    ws1.addRow([]);
+
+    // Subsección: Salidas de cuentas (origen)
+    const outBannerRow = ws1.addRow(['SALIDAS DE CUENTAS (ORIGEN)', '', '', '']);
+    ws1.mergeCells(outBannerRow.number, 1, outBannerRow.number, 4);
+    outBannerRow.height = 20;
+    outBannerRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FFBF360C' } };
+    outBannerRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+    outBannerRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    outBannerRow.getCell(1).border = borderSutil;
+
+    const outColHeader = ws1.addRow(['Movimiento', 'Cuenta Origen', 'Nº Cuenta', 'Monto']);
+    outColHeader.height = 20;
+    outColHeader.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF8E1' } };
+        c.font = { name: 'Calibri', color: { argb: 'FFBF360C' }, bold: true, size: 10 };
+        c.border = borderSutil;
+        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
+      }
+    });
+
+    let trfOutZebra = 0;
+    if (transferOutSide.accounts.length === 0) {
+      const emptyRow = ws1.addRow(['Salida Interna', 'Sin movimientos en el período', '-', 0]);
+      emptyRow.height = 19;
+      emptyRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+      emptyRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+      emptyRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+      emptyRow.getCell(4).numFmt = numFmt;
+      emptyRow.eachCell({ includeEmpty: true }, (c, col) => { if (col <= 4) c.border = borderSutil; });
+    } else {
+      for (const acc of transferOutSide.accounts) {
+        const amt = transferOutSide.totals[acc.id] || 0;
+        const dRow = ws1.addRow(['Salida Interna', acc.name, acc.accountNumber?.trim() || '-', amt]);
+        dRow.height = 19;
+        dRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
+        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
+        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+        dRow.getCell(4).numFmt = numFmt;
+        dRow.eachCell({ includeEmpty: true }, (c, col) => {
+          if (col <= 4) {
+            c.border = borderSutil;
+            c.fill = zebraFill(++trfOutZebra);
+            c.font = { name: 'Calibri', size: 10 };
+          }
+        });
+      }
+    }
+
+    const trfOutTotalRow = ws1.addRow(['TOTAL SALIDAS INTERNAS', '', '', transferOutSide.grandTotal]);
+    ws1.mergeCells(trfOutTotalRow.number, 1, trfOutTotalRow.number, 3);
+    trfOutTotalRow.height = 20;
+    trfOutTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+    trfOutTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFBF360C' } };
+    trfOutTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    trfOutTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFBF360C' } };
+    trfOutTotalRow.getCell(4).numFmt = numFmt;
+    trfOutTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+        c.border = borderSutil;
+      }
+    });
+
+    const netTransfers = transferInSide.grandTotal - transferOutSide.grandTotal;
+    const netTrfRow = ws1.addRow(['NETO TRANSFERENCIAS (ENTRADAS - SALIDAS)', '', '', netTransfers]);
+    ws1.mergeCells(netTrfRow.number, 1, netTrfRow.number, 3);
+    netTrfRow.height = 22;
+    netTrfRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
+    netTrfRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFE65100' } };
+    netTrfRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    netTrfRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFE65100' } };
+    netTrfRow.getCell(4).numFmt = numFmt;
+    netTrfRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
+        c.border = borderTotal;
+      }
+    });
+
+    ws1.addRow([]);
+
+    // --- SECCIÓN E: SALDO FINAL GLOBAL ---
+    const periodLastDateStr = DateUtils.formatLocalDate(new Date(data.endDate.getTime() - 1000));
+    const closeRow = ws1.addRow([`SALDO FINAL GLOBAL AL ${periodLastDateStr}`, '', '', globalClosing]);
+    ws1.mergeCells(closeRow.number, 1, closeRow.number, 3);
+    closeRow.height = 24;
+    closeRow.getCell(1).font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF1F4E79' } };
+    closeRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
+    closeRow.getCell(4).font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF1F4E79' } };
+    closeRow.getCell(4).numFmt = numFmt;
+    closeRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
+    closeRow.eachCell({ includeEmpty: true }, (c, col) => {
+      if (col <= 4) {
+        c.fill = fillTotal;
+        c.border = borderTotal;
+      }
+    });
+
+
+    // ==========================================
+    // HOJA 2: EGRESOS (matriz diaria de EGRESOS)
+    // ==========================================
+    const ws2 = wb.addWorksheet(`Egresos ${monthStr}`, {
+      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
+    });
+    addInstitutionalHeader(ws2, 'EGRESOS DIARIOS POR CATEGORÍA Y CUENTA', matrixColumnCount(expenseMatrix), false);
+    const expLayout = renderDailyMatrix(ws2, expenseMatrix, 'EXPENSE');
+    ws2.getColumn(1).width = 14;
+    for (let i = 2; i <= expLayout.columnCount; i++) ws2.getColumn(i).width = 15;
+    ws2.views = [{ state: 'frozen', xSplit: 1, ySplit: expLayout.headerRow2 }];
+
+    // ==========================================
+    // HOJA 3: TRANSFERENCIAS INTERNAS (matriz diaria SALIDAS | ENTRADAS)
+    // ==========================================
+    const ws3 = wb.addWorksheet(`Transferencias ${monthStr}`, {
+      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
+    });
+    const outSpan = transferOutSide.accounts.length + 1;
+    const inSpan = transferInSide.accounts.length + 1;
+    const trfColumnCount = 1 + outSpan + inSpan;
+    addInstitutionalHeader(ws3, 'TRANSFERENCIAS INTERNAS ENTRE CUENTAS', trfColumnCount, false);
+
+    const trfBlocks = [
+      {
+        side: transferOutSide,
+        label: 'SALIDAS (cuenta origen)',
+        totalLabel: 'TOTAL SALIDAS',
+        palette: { bg: 'FFFFF3E0', fg: 'FFE65100', subBg: 'FFFFF8E1', subFg: 'FFBF360C', totFg: 'FFE65100' },
+      },
+      {
+        side: transferInSide,
+        label: 'ENTRADAS (cuenta destino)',
+        totalLabel: 'TOTAL ENTRADAS',
+        palette: { bg: 'FFE0F2F1', fg: 'FF00695C', subBg: 'FFE8F5F3', subFg: 'FF00695C', totFg: 'FF00695C' },
+      },
+    ];
+
+    const trfRow1: any[] = ['Día'];
+    const trfRow2: any[] = [''];
+    for (const b of trfBlocks) {
+      trfRow1.push(b.label);
+      for (let i = 0; i < b.side.accounts.length; i++) trfRow1.push('');
+      for (const acc of b.side.accounts) trfRow2.push(formatAccountHeader(acc));
+      trfRow2.push(b.totalLabel);
+    }
+    const th1 = ws3.addRow(trfRow1);
+    th1.height = 25;
+    const th2 = ws3.addRow(trfRow2);
+    th2.height = 30;
+    ws3.mergeCells(th1.number, 1, th2.number, 1);
+    applyHeaderStyle(ws3.getCell(th1.number, 1), 'FFE9ECEF', 'FF495057', true);
+    let trfCol = 2;
+    for (const b of trfBlocks) {
+      const span = b.side.accounts.length + 1;
+      if (span > 1) ws3.mergeCells(th1.number, trfCol, th1.number, trfCol + span - 1);
+      applyHeaderStyle(ws3.getCell(th1.number, trfCol), b.palette.bg, b.palette.fg, true);
+      for (let i = 0; i < span; i++) applyHeaderStyle(ws3.getCell(th2.number, trfCol + i), b.palette.subBg, b.palette.subFg);
+      trfCol += span;
+    }
+    const outTotalCol = 1 + outSpan;
+    const inStartCol = outTotalCol + 1;
+    const inTotalCol = trfColumnCount;
+    const blockSeparator: Partial<ExcelJS.Border> = { style: 'medium', color: { argb: 'FF1F4E79' } };
+
+    const styleTransferRow = (excelRow: ExcelJS.Row) => {
+      excelRow.getCell(outTotalCol).font = { color: { argb: trfBlocks[0].palette.totFg }, bold: true };
+      excelRow.getCell(inTotalCol).font = { color: { argb: trfBlocks[1].palette.totFg }, bold: true };
+      const sepCell = excelRow.getCell(inStartCol);
+      sepCell.border = { ...(sepCell.border || {}), left: blockSeparator };
+    };
+    const sideValues = (side: TransferSide, values: Record<string, number>) =>
+      side.accounts.map((acc) => values[acc.id] || 0);
+
+    for (let d = 0; d < daysInMonth; d++) {
+      const label = `${String(d + 1).padStart(2, '0')}-${String(query.month).padStart(2, '0')}-${query.year}`;
+      const excelRow = ws3.addRow([
+        label,
+        ...sideValues(transferOutSide, transferOutSide.days[d]),
+        transferOutSide.dayTotals[d],
+        ...sideValues(transferInSide, transferInSide.days[d]),
+        transferInSide.dayTotals[d],
+      ]);
+      const fill = zebraFill(d + 1);
+      excelRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+        if (colNumber > 1) cell.numFmt = numFmt;
+        cell.border = borderSutil;
+        cell.fill = fill;
+      });
+      styleTransferRow(excelRow);
+    }
+
+    const trfTotalRow = ws3.addRow([
+      'TOTAL MES',
+      ...sideValues(transferOutSide, transferOutSide.totals),
+      transferOutSide.grandTotal,
+      ...sideValues(transferInSide, transferInSide.totals),
+      transferInSide.grandTotal,
+    ]);
+    trfTotalRow.height = 25;
+    trfTotalRow.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      cell.font = { bold: true, name: 'Calibri', size: 11 };
+      cell.border = borderTotal;
+      cell.alignment = { vertical: 'middle', horizontal: colNumber === 1 ? 'center' : 'right' };
+      if (colNumber > 1) cell.numFmt = numFmt;
+      cell.fill = fillTotal;
+    });
+    styleTransferRow(trfTotalRow);
+
+    ws3.getColumn(1).width = 14;
+    for (let i = 2; i <= trfColumnCount; i++) ws3.getColumn(i).width = 16;
+    ws3.views = [{ state: 'frozen', xSplit: 1, ySplit: th2.number }];
 
     return wb;
   }

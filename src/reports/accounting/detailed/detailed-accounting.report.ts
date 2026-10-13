@@ -629,8 +629,8 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           [
             { text: `Bs ${globalOpeningBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, margin: [0, 4, 0, 4] },
             { text: `Bs ${grandTotalIncome.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#27AE60', margin: [0, 4, 0, 4] },
-            { text: `Bs ${grandTotalExpense.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#C0392B', margin: [0, 4, 0, 4] },
-            { text: `Bs ${periodBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: periodBalance >= 0 ? '#1F4E79' : '#C0392B', margin: [0, 4, 0, 4] },
+            { text: grandTotalExpense > 0 ? `- Bs ${grandTotalExpense.toFixed(2)}` : `Bs 0.00`, style: 'tableCellCenter', bold: true, color: '#C0392B', margin: [0, 4, 0, 4] },
+            { text: periodBalance < 0 ? `- Bs ${Math.abs(periodBalance).toFixed(2)}` : `Bs ${periodBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: periodBalance >= 0 ? '#1F4E79' : '#C0392B', margin: [0, 4, 0, 4] },
             { text: `Bs ${globalClosingBalance.toFixed(2)}`, style: 'tableCellCenter', bold: true, color: '#1F4E79', fontSize: 9, margin: [0, 4, 0, 4] },
           ]
         ]
@@ -664,7 +664,7 @@ export class DetailedAccountingReport implements ReportHandler, OnModuleInit {
           { text: sum.accountName, style: 'tableCell', bold: true },
           { text: sum.openingBalance.toFixed(2), style: 'tableCellRight' },
           { text: sum.periodIncome.toFixed(2), style: 'tableCellRight', color: sum.periodIncome > 0 ? '#27AE60' : undefined },
-          { text: sum.periodExpense.toFixed(2), style: 'tableCellRight', color: sum.periodExpense > 0 ? '#C0392B' : undefined },
+          { text: sum.periodExpense > 0 ? `-${sum.periodExpense.toFixed(2)}` : sum.periodExpense.toFixed(2), style: 'tableCellRight', color: sum.periodExpense > 0 ? '#C0392B' : undefined },
           { text: sum.transferNet.toFixed(2), style: 'tableCellRight', color: sum.transferNet !== 0 ? '#F39C12' : undefined },
           { text: sum.closingBalance.toFixed(2), style: 'tableCellRight', bold: true, color: '#1F4E79' },
         ]);

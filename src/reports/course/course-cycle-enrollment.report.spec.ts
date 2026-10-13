@@ -91,7 +91,7 @@ describe('CourseCycleEnrollmentReport', () => {
           charge: {
             amount: 200,
             pendingAmount: 50,
-            adjustmentAmount: 10,
+            adjustmentAmount: -10,
             payments: [
               { paymentDate: new Date('2026-10-05T10:00:00.000Z') }
             ]
@@ -108,7 +108,7 @@ describe('CourseCycleEnrollmentReport', () => {
       //    (membershipStartedAt.getFullYear() === cycleStartDate.getFullYear() && membershipStartedAt.getMonth() === cycleStartDate.getMonth()))
       // 2026-09-15 is BEFORE cycle (2026-10), so it shouldn't include registration.
       
-      expect(result[0].amountPaid).toBe('Bs 140.00'); // Only cycle paid: 200 - 50 - 10
+      expect(result[0].amountPaid).toBe('Bs 140.00'); // Only cycle paid: (200 - 10 discount) - 50 pending = 140
       expect(result[0].paymentDate).toBe('05/10/2026');
     });
 
@@ -157,6 +157,90 @@ describe('CourseCycleEnrollmentReport', () => {
       
       expect(result[0].amountPaid).toBe('Bs 350.00'); // Cycle (200) + Reg (150)
       expect(result[0].paymentDate).toBe('02/10/2026'); // Same date for both
+    });
+
+    it('should correctly calculate paid amount with discount (e.g. 150 cycle + 30 registration with -20 adjustment = 160)', () => {
+      const cycleStartDate = new Date('2026-10-01T00:00:00.000Z');
+      const cycleEndDate = new Date('2026-10-31T23:59:59.000Z');
+
+      const mockEnrollments = [
+        {
+          studentMembership: {
+            startedAt: new Date('2026-10-02T10:00:00.000Z'),
+            student: {
+              person: {
+                id: '1',
+                name: 'Carlos',
+                lastName: 'Perez',
+                birthDate: null,
+              }
+            },
+            studentCharges: [
+              {
+                charge: {
+                  amount: 30,
+                  pendingAmount: 0,
+                  adjustmentAmount: -20, // Discount of 20 -> expected = 10, pending = 0 -> paid = 10
+                  payments: [
+                    { amount: 10, status: 'COMPLETED', paymentDate: new Date('2026-10-02T10:00:00.000Z') }
+                  ]
+                }
+              }
+            ],
+          },
+          charge: {
+            amount: 150,
+            pendingAmount: 0,
+            adjustmentAmount: 0,
+            payments: [
+              { amount: 150, status: 'COMPLETED', paymentDate: new Date('2026-10-02T10:05:00.000Z') }
+            ]
+          },
+        }
+      ];
+
+      const result = report.extractDataset(mockEnrollments, cycleStartDate, cycleEndDate);
+      expect(result.length).toBe(1);
+      expect(result[0].amountPaid).toBe('Bs 160.00');
+    });
+
+    it('should correctly calculate paid amount using fallback when payment amounts are not in mock', () => {
+      const cycleStartDate = new Date('2026-10-01T00:00:00.000Z');
+      const cycleEndDate = new Date('2026-10-31T23:59:59.000Z');
+
+      const mockEnrollments = [
+        {
+          studentMembership: {
+            startedAt: new Date('2026-10-02T10:00:00.000Z'),
+            student: {
+              person: {
+                id: '1',
+                name: 'Carlos',
+                lastName: 'Perez',
+                birthDate: null,
+              }
+            },
+            studentCharges: [
+              {
+                charge: {
+                  amount: 30,
+                  pendingAmount: 0,
+                  adjustmentAmount: -20,
+                }
+              }
+            ],
+          },
+          charge: {
+            amount: 150,
+            pendingAmount: 0,
+            adjustmentAmount: 0,
+          },
+        }
+      ];
+
+      const result = report.extractDataset(mockEnrollments, cycleStartDate, cycleEndDate);
+      expect(result.length).toBe(1);
+      expect(result[0].amountPaid).toBe('Bs 160.00');
     });
   });
 });

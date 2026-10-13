@@ -41,6 +41,7 @@ export const transactionSelect = {
   reference: true,
   notes: true,
   status: true,
+  isInternalTransfer: true,
   balanceBefore: true,
   balanceAfter: true,
   reversesId: true,
@@ -49,6 +50,8 @@ export const transactionSelect = {
   financialAccount: {
     select: { name: true },
   },
+  internalTransferSource: { select: { receiptSeries: true, receiptNumber: true } },
+  internalTransferDest: { select: { receiptSeries: true, receiptNumber: true } },
   payerPerson: {
     select: {
       id: true,
@@ -64,6 +67,17 @@ export const transactionSelect = {
       amount: true,
       receiptSeries: true,
       receiptNumber: true,
+      transactions: {
+        select: {
+          id: true,
+          amount: true,
+          paymentMethod: true,
+          balanceBefore: true,
+          balanceAfter: true,
+          financialAccountId: true,
+          financialAccount: { select: { name: true } }
+        }
+      },
       charge: {
         select: {
           id: true,
@@ -315,6 +329,15 @@ export class TransactionsService {
       );
     }
 
+    if (rest.transactionDate) {
+      const txDate = new Date(rest.transactionDate);
+      const now = new Date();
+      // Tolerancia técnica de 5 minutos por clock drift
+      if (txDate.getTime() > now.getTime() + 5 * 60 * 1000) {
+        throw new BadRequestException('La fecha de la transacción no puede ser en el futuro.');
+      }
+    }
+
     const isPayment = !!chargeId;
     const mainChargeId = chargeId;
 
@@ -527,6 +550,11 @@ export class TransactionsService {
 
       const createdTransactions = [];
 
+      // Ordenar determinísticamente por cuenta para evitar deadlocks
+      processedTransactions.sort((a, b) => 
+        (a.financialAccountId || '').localeCompare(b.financialAccountId || '')
+      );
+
       for (const t of processedTransactions) {
         let txSeries = 'GEN';
         if (!createdPayment && rest.type === 'EXPENSE') {
@@ -639,6 +667,14 @@ export class TransactionsService {
             status: 'LINKED',
           },
         });
+      }
+
+      // Recomputar snapshots en caso de que haya sido backdated
+      const affectedAccountIds = [
+        ...new Set(createdTransactions.map((t) => t.financialAccountId).filter(Boolean)),
+      ];
+      for (const accountId of affectedAccountIds) {
+        await this.financialAccountsService.recalculateAccountSnapshots(accountId, prisma);
       }
 
       const transactionResponse = await prisma.transaction.findUnique({
@@ -1070,6 +1106,136 @@ export class TransactionsService {
     return createPaginationResult(mappedItems, totalItems, page, per_page);
   }
 
+  async getCashFlowOperations(paginationDto: TransactionsPaginationDto) {
+    const { page = 1, per_page = 10, sortField = 'transaction_date', orderBy = 'desc' } = paginationDto;
+    const skip = (page - 1) * per_page;
+
+    const { buildCashFlowQuery } = await import('./cash-flow.query');
+    const { baseCTE, whereClause } = buildCashFlowQuery(paginationDto);
+
+    const validSortFields = ['transaction_date', 'created_at', 'amount'];
+    const safeSortField = validSortFields.includes(sortField) ? sortField : 'transaction_date';
+    const safeOrderBy = orderBy.toLowerCase() === 'asc' ? Prisma.sql`ASC` : Prisma.sql`DESC`;
+    
+    // Prisma does not support dynamic column names in order by using Prisma.sql easily without raw injection risk,
+    // so we build it manually but safely.
+    const orderSql = safeSortField === 'amount' 
+      ? Prisma.sql`ORDER BY op.amount ${safeOrderBy}, op.created_at DESC`
+      : safeSortField === 'created_at' 
+      ? Prisma.sql`ORDER BY op.created_at ${safeOrderBy}`
+      : Prisma.sql`ORDER BY op.transaction_date ${safeOrderBy}, op.created_at DESC`;
+
+    const dataQuery = Prisma.sql`
+      ${baseCTE}
+      SELECT * FROM Operations op
+      ${whereClause}
+      ${orderSql}
+      LIMIT ${per_page} OFFSET ${skip}
+    `;
+
+    const countQuery = Prisma.sql`
+      ${baseCTE}
+      SELECT CAST(COUNT(*) AS INTEGER) as total
+      FROM Operations op
+      ${whereClause}
+    `;
+
+    const [rawItems, countResult] = await Promise.all([
+      this.prisma.$queryRaw<any[]>(dataQuery),
+      this.prisma.$queryRaw<[{ total: number }]>(countQuery)
+    ]);
+
+    const totalItems = countResult[0]?.total || 0;
+
+    // Fetch the full Prisma models for the identified representative transactions
+    const rawIds = rawItems.map(item => item.raw_id);
+    const prismaTransactions = rawIds.length > 0 
+      ? await this.prisma.transaction.findMany({
+          where: { id: { in: rawIds } },
+          select: transactionSelect,
+        })
+      : [];
+
+    // Map Prisma models by ID for O(1) lookup
+    const prismaTransactionsById = new Map<string, any>();
+    for (const pt of prismaTransactions) {
+      prismaTransactionsById.set(pt.id, pt);
+    }
+
+    const { TransactionsMapper } = await import('./transactions.mapper');
+
+    const mappedItems = rawItems.map(item => {
+      const pt = prismaTransactionsById.get(item.raw_id);
+      
+      let baseConcept = item.reference || 'Transacción';
+      let category = null;
+      let origin = 'GENERIC_CHARGE';
+      let beneficiaryName = null;
+      let payerName = null;
+      
+      let groupedDetails = undefined;
+
+      if (pt) {
+        // We trick the mapper to give us the resolved concept and metadata
+        if (item.kind === 'INTERNAL_TRANSFER') {
+          (pt as any).isInternalTransfer = true;
+          (pt as any).internalTransferSource = pt.internalTransferSource || {};
+        }
+        
+        const domainPt = TransactionsMapper.toDomain(pt as any);
+        baseConcept = domainPt.concept;
+        category = domainPt.category;
+        origin = domainPt.origin;
+        beneficiaryName = domainPt.beneficiaryName;
+        payerName = domainPt.payerName;
+
+        if (item.kind === 'PAYMENT' && pt.payment?.transactions?.length > 1) {
+          groupedDetails = pt.payment.transactions.map((t: any) => ({
+            method: t.paymentMethod,
+            account: t.financialAccount?.name || 'Desconocida',
+            accountId: t.financialAccountId,
+            amount: Number(t.amount),
+            balanceBefore: t.balanceBefore ? Number(t.balanceBefore) : null,
+            balanceAfter: t.balanceAfter ? Number(t.balanceAfter) : null,
+          }));
+        }
+      }
+
+      return {
+        id: item.kind === 'INTERNAL_TRANSFER' ? (item.it_source_id || item.it_dest_id || item.raw_id) : item.kind === 'PAYMENT' ? (item.payment_id || item.raw_id) : item.raw_id,
+        kind: item.kind,
+        transactionDate: item.transaction_date,
+        createdAt: item.created_at,
+        receiptSeries: item.receipt_series,
+        receiptNumber: item.receipt_number,
+        concept: item.kind === 'INTERNAL_TRANSFER' ? 'Transferencia interna' : baseConcept,
+        amount: item.kind === 'PAYMENT' && pt?.payment?.amount ? Number(pt.payment.amount) : Number(item.amount),
+        type: item.kind === 'INTERNAL_TRANSFER' ? 'TRANSFER' : item.op_type,
+        accountId: item.account_id,
+        accountName: item.account_name,
+        paymentMethod: item.payment_method,
+        reference: item.reference,
+        sourceAccountId: item.source_account_id,
+        sourceAccountName: item.source_account_name,
+        destAccountId: item.dest_account_id,
+        destAccountName: item.dest_account_name,
+        balanceBefore: item.balanceBefore ? Number(item.balanceBefore) : null,
+        balanceAfter: item.balanceAfter ? Number(item.balanceAfter) : null,
+        sourceBalanceBefore: item.source_balance_before ? Number(item.source_balance_before) : null,
+        sourceBalanceAfter: item.source_balance_after ? Number(item.source_balance_after) : null,
+        destBalanceBefore: item.dest_balance_before ? Number(item.dest_balance_before) : null,
+        destBalanceAfter: item.dest_balance_after ? Number(item.dest_balance_after) : null,
+        category,
+        origin,
+        beneficiaryName,
+        payerName,
+        groupedDetails
+      };
+    });
+
+    return createPaginationResult(mappedItems, totalItems, page, per_page);
+  }
+
   async findOne(id: string) {
     const transaction = await this.prisma.transaction.findUnique({
       where: { id },
@@ -1123,6 +1289,10 @@ export class TransactionsService {
 
     if (!transaction) {
       throw new NotFoundException(`Transacción con ID ${id} no encontrada`);
+    }
+
+    if (transaction.isInternalTransfer) {
+      throw new BadRequestException('INTERNAL_TRANSFER_TRANSACTION_CANNOT_BE_CANCELLED_INDIVIDUALLY');
     }
 
     // Si la transacción pertenece a un recibo (Payment), anulamos el recibo completo
@@ -1268,6 +1438,13 @@ export class TransactionsService {
         data: { status: 'CANCELLED' },
         select: transactionSelect,
       });
+
+      if (transaction.financialAccountId) {
+        await this.financialAccountsService.recalculateAccountSnapshots(
+          transaction.financialAccountId,
+          prisma,
+        );
+      }
 
       return deletedTransaction;
     });

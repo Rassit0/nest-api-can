@@ -38,22 +38,6 @@ export class FinancialAccountsService {
     }
 
     const numericAmount = typeof amount === 'number' ? amount : amount.toNumber();
-    
-    // Obtener todas las cuentas activas para calcular el saldo global (Dashboard)
-    const allActiveAccounts = await tx.financialAccount.findMany({
-      where: { isActive: true },
-      select: { cachedBalance: true }
-    });
-    
-    let globalBalanceBefore = 0;
-    for (const acc of allActiveAccounts) {
-      globalBalanceBefore += Number(acc.cachedBalance || 0);
-    }
-    
-    const globalBalanceAfter =
-      type === TransactionType.INCOME
-        ? globalBalanceBefore + numericAmount
-        : globalBalanceBefore - numericAmount;
 
     // Calcular el saldo individual para actualizar internamente
     const individualBalanceBefore = Number(account.cachedBalance);
@@ -71,9 +55,52 @@ export class FinancialAccountsService {
 
     return {
       account: updatedAccount,
-      balanceBefore: globalBalanceBefore,
-      balanceAfter: globalBalanceAfter,
+      balanceBefore: individualBalanceBefore,
+      balanceAfter: individualBalanceAfter,
     };
+  }
+
+  /**
+   * Recalcula la cadena histórica de snapshots de balances (balanceBefore, balanceAfter)
+   * para una cuenta en orden Ledger (transactionDate ASC, createdAt ASC, id ASC).
+   * Debe llamarse dentro de la misma transacción DB cuando se inserta una
+   * transacción backdated, o se cancela una operación.
+   */
+  async recalculateAccountSnapshots(
+    financialAccountId: string,
+    tx: Prisma.TransactionClient,
+  ): Promise<void> {
+    await tx.$executeRaw`
+      WITH ordered AS (
+        SELECT 
+          id,
+          amount,
+          type,
+          status,
+          ROW_NUMBER() OVER (ORDER BY transaction_date ASC, created_at ASC, id ASC) as rn
+        FROM transactions
+        WHERE financial_account_id = ${financialAccountId}
+      ),
+      running AS (
+        SELECT 
+          id,
+          COALESCE(
+            SUM(CASE WHEN status = 'COMPLETED' THEN (CASE WHEN type = 'INCOME' THEN amount ELSE -amount END) ELSE 0 END) 
+            OVER (ORDER BY rn ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING), 
+            0
+          ) as calc_before,
+          SUM(CASE WHEN status = 'COMPLETED' THEN (CASE WHEN type = 'INCOME' THEN amount ELSE -amount END) ELSE 0 END) 
+          OVER (ORDER BY rn ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as calc_after
+        FROM ordered
+      )
+      UPDATE transactions t
+      SET 
+        balance_before = r.calc_before,
+        balance_after = r.calc_after
+      FROM running r
+      WHERE t.id = r.id
+        AND (t.balance_before IS DISTINCT FROM r.calc_before OR t.balance_after IS DISTINCT FROM r.calc_after);
+    `;
   }
 
   /**

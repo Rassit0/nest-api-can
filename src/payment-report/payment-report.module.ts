@@ -4,8 +4,10 @@ import { PaymentReportController } from './payment-report.controller';
 import { PrinterModule } from 'src/printer/printer.module';
 import { PrismaService } from 'src/prisma.service';
 
+import { InternalTransfersModule } from 'src/internal-transfers/internal-transfers.module';
+
 @Module({
-  imports: [PrinterModule],
+  imports: [PrinterModule, InternalTransfersModule],
   controllers: [PaymentReportController],
   providers: [PaymentReportService, PrismaService],
 })

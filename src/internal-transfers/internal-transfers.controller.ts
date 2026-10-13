@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Query, ParseUUIDPipe, Res } from '@nestjs/common';
 import { InternalTransfersService } from './internal-transfers.service';
 import { CreateInternalTransferDto } from './dto/create-internal-transfer.dto';
 import { InternalTransfersPaginationDto } from './dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiParam, ApiProduces } from '@nestjs/swagger';
 import { ApiStandardResponse, ApiStandardCreatedResponse, ApiPaginatedResponse } from '../common/decorators/api-responses.decorator';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
@@ -30,6 +30,27 @@ export class InternalTransfersController {
   @RequirePermissions('READ_INTERNAL_TRANSFERS')
   findAll(@Query() paginationDto: InternalTransfersPaginationDto) {
     return this.internalTransfersService.findAll(paginationDto);
+  }
+
+  @Get(':id/receipt')
+  @ApiOperation({ summary: 'Generar comprobante de transferencia interna', description: 'Genera un PDF con el recibo de la transferencia.' })
+  @ApiParam({ name: 'id', description: 'UUID de la transferencia' })
+  @ApiProduces('application/pdf')
+  @RequirePermissions('READ_INTERNAL_TRANSFERS')
+  async getReceipt(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Res() res: any,
+  ) {
+    const pdfDoc = await this.internalTransfersService.getReceiptPdf(id);
+    if (!pdfDoc) {
+      // Si retorna null es legacy y no tiene recibo
+      res.status(404).send('No receipt available for this historical transfer.');
+      return;
+    }
+    res.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Comprobante-Transferencia';
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   }
 
   @Patch(':id/cancel')

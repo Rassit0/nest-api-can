@@ -15,6 +15,7 @@ import { convertAmountToWords } from 'src/helpers/numbers-to-words.helper';
 import { PrismaService } from 'src/prisma.service';
 import { I18nService, I18nContext } from 'nestjs-i18n';
 import { Prisma } from 'src/generated/prisma/client';
+import { InternalTransfersService } from 'src/internal-transfers/internal-transfers.service';
 
 @Injectable()
 export class PaymentReportService {
@@ -24,6 +25,7 @@ export class PaymentReportService {
     private readonly printerService: PrinterService,
     private readonly prisma: PrismaService,
     private readonly i18n: I18nService,
+    private readonly internalTransfersService: InternalTransfersService,
   ) {}
 
   async buildPaymentReceiptData(paymentId: string) {
@@ -421,8 +423,29 @@ export class PaymentReportService {
   ) {
     const transaction = await this.prisma.transaction.findUnique({
       where: { id: transactionId },
-      select: { paymentId: true },
+      select: { paymentId: true, isInternalTransfer: true },
     });
+
+    if (transaction?.isInternalTransfer) {
+      const transfer = await this.prisma.internalTransfer.findFirst({
+        where: {
+          OR: [
+            { sourceTransactionId: transactionId },
+            { destinationTransactionId: transactionId },
+          ],
+        },
+      });
+
+      if (!transfer) {
+        throw new BadRequestException('INTERNAL_TRANSFER_PARENT_NOT_FOUND');
+      }
+
+      if (!transfer.receiptSeries || !transfer.receiptNumber) {
+        throw new BadRequestException('No receipt available for this historical transfer.');
+      }
+
+      return this.internalTransfersService.getReceiptPdf(transfer.id);
+    }
 
     if (transaction?.paymentId) {
       return this.getPaymentByIdReport(transaction.paymentId, isSingle);

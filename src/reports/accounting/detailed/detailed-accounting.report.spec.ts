@@ -254,4 +254,63 @@ describe('DetailedAccountingReport', () => {
       expect(futbol.documentIds.size).toBe(1);
     });
   });
+
+  describe('Formato de egresos en color rojo', () => {
+    it('Egresos en color rojo (#C0392B) muestran el signo negativo (-)', async () => {
+      const mockPrisma = (report as any).prisma;
+      const mockPrinter = (report as any).printer;
+
+      mockPrisma.financialAccount = {
+        findMany: jest.fn().mockResolvedValue([{ id: 'acc1', name: 'Caja' }]),
+      };
+      mockPrisma.transaction.groupBy = jest.fn().mockResolvedValue([]);
+      mockPrisma.transaction.findMany = jest
+        .fn()
+        .mockResolvedValueOnce([]) // incomeTxs
+        .mockResolvedValueOnce([   // expenseTxs
+          {
+            id: 't-exp',
+            amount: 500,
+            type: 'EXPENSE',
+            status: 'COMPLETED',
+            financialAccountId: 'acc1',
+            financialAccount: { id: 'acc1', name: 'Caja' },
+            payment: null,
+            reverses: null,
+          },
+        ]);
+      mockPrisma.internalTransfer = {
+        findMany: jest.fn().mockResolvedValue([]),
+      };
+      mockPrisma.accountCategory.findMany = jest.fn().mockResolvedValue([]);
+
+      let docDefCaptured: any;
+      mockPrinter.createPdf.mockImplementation((docDef: any) => {
+        docDefCaptured = docDef;
+        return Buffer.from('mock-pdf');
+      });
+
+      await report.generate({ start: '2026-10-01', end: '2026-10-31' }, 'pdf');
+
+      expect(docDefCaptured).toBeDefined();
+
+      // 1. Resumen General Compacto: la celda de egresos en rojo (#C0392B) lleva signo '-'
+      const compactTable = docDefCaptured.content.find(
+        (c: any) => c.table && c.table.body && c.table.body[0]?.[2]?.text === 'EGRESOS',
+      );
+      expect(compactTable).toBeDefined();
+      const expenseCell = compactTable.table.body[1][2];
+      expect(expenseCell.color).toBe('#C0392B');
+      expect(expenseCell.text).toBe('- Bs 500.00');
+
+      // 2. Resumen por Cuenta: la celda de egresos en rojo (#C0392B) lleva signo '-'
+      const accountTable = docDefCaptured.content.find(
+        (c: any) => c.table && c.table.body && c.table.body[0]?.[3]?.text === 'EGRESOS',
+      );
+      expect(accountTable).toBeDefined();
+      const accExpenseCell = accountTable.table.body[1][3];
+      expect(accExpenseCell.color).toBe('#C0392B');
+      expect(accExpenseCell.text).toBe('-500.00');
+    });
+  });
 });

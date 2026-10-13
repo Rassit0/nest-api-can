@@ -4,10 +4,15 @@ import { headerSection } from './header.section';
 import { footerSection } from './footer.section';
 import { TransactionReceiptData } from '../interfaces/transaction-receipt-data.interface';
 
+import { buildInternalTransferReceiptContent } from './internal-transfer-receipt.builder';
+
 export const buildReceiptContent = (
   startY: number,
   data: TransactionReceiptData,
 ): Content[] => {
+  if (data.type === 'INTERNAL_TRANSFER') {
+    return buildInternalTransferReceiptContent(startY, data);
+  }
   return [
     // 1. HEADER
     {
@@ -70,13 +75,26 @@ export const buildReceiptContent = (
                           fontSize: 9,
                           margin: [0, 0, 0, 6],
                         },
-                        { text: data.type === 'EXPENSE' ? 'Pagado a:' : 'Recibí de:', fontSize: 7, bold: true },
-                        {
-                          text: data.payerName,
-                          fontSize: 14,
-                          bold: true,
-                          margin: [0, 0, 0, 8],
-                        },
+                        ...(data.type === 'EXPENSE'
+                          ? [
+                              { text: 'Pagado a:', fontSize: 7, bold: true },
+                              {
+                                text: data.payerName,
+                                fontSize: 14,
+                                bold: true,
+                                margin: [0, 0, 0, 8],
+                              },
+                            ] as Content[]
+                          : [
+                              { text: 'Recibí de:', fontSize: 7, bold: true },
+                              {
+                                text: data.payerName,
+                                fontSize: 14,
+                                bold: true,
+                                margin: [0, 0, 0, 8],
+                              },
+                            ] as Content[]
+                        ),
                         ...(data.beneficiaryName
                           ? ([
                               {
@@ -138,12 +156,16 @@ export const buildReceiptContent = (
                           bold: true,
                           alignment: 'right',
                         },
-                        {
-                          qr: data.validationUrl,
-                          fit: 60,
-                          alignment: 'right',
-                          margin: [0, 8, 5, 0],
-                        },
+                        ...(data.validationUrl
+                          ? [
+                              {
+                                qr: data.validationUrl,
+                                fit: 60,
+                                alignment: 'right' as const,
+                                margin: [0, 8, 5, 0] as [number, number, number, number],
+                              },
+                            ]
+                          : []),
                       ],
                       margin: [10, 8, 10, 8],
                       border: [false, false, false, false],

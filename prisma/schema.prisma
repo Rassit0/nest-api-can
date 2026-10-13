@@ -598,7 +598,7 @@ model FinancialAccount {
 
 model Transaction {
   id                     String            @id @default(uuid())
-  receiptNumber          Int               @map("receipt_number")
+  receiptNumber          Int?              @map("receipt_number")
   payerPersonId          String?           @map("payer_person_id")
   amount                 Decimal           @db.Decimal(10, 2)
   transactionDate        DateTime          @map("transaction_date")
@@ -612,7 +612,7 @@ model Transaction {
   updatedAt              DateTime          @updatedAt @map("updated_at")
   createdById            String?           @map("created_by_id")
   updatedById            String?           @map("updated_by_id")
-  receiptSeries          String            @default("GEN") @map("receipt_series")
+  receiptSeries          String?           @map("receipt_series")
   financialAccountId     String            @map("financial_account_id")
   isReconciled           Boolean           @default(false) @map("is_reconciled")
   reconciledAt           DateTime?         @map("reconciled_at")
@@ -641,6 +641,8 @@ model Transaction {
 
 model InternalTransfer {
   id                       String         @id @default(uuid())
+  receiptSeries            String?        @map("receipt_series")
+  receiptNumber            Int?           @map("receipt_number")
   amount                   Decimal        @db.Decimal(10, 2)
   description              String?
   reference                String?
@@ -655,6 +657,7 @@ model InternalTransfer {
   destinationTransaction   Transaction    @relation("TransferDestination", fields: [destinationTransactionId], references: [id])
   sourceTransaction        Transaction    @relation("TransferSource", fields: [sourceTransactionId], references: [id])
 
+  @@unique([receiptSeries, receiptNumber])
   @@map("internal_transfers")
 }
 

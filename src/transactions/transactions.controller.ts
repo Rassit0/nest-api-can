@@ -79,6 +79,21 @@ export class TransactionsController {
     return await this.transactionsService.findAll(paginationDto);
   }
 
+  @Get('cash-flow/operations')
+  @ApiOperation({
+    summary: 'Obtener operaciones de flujo de caja',
+    description:
+      'Retorna una lista paginada de operaciones financieras, agrupando pagos múltiples y transferencias internas.',
+  })
+  @ApiPaginatedResponse(
+    Object,
+    'Lista de operaciones obtenida correctamente.',
+  )
+  @RequirePermissions('READ_CASH_FLOW')
+  async getCashFlowOperations(@Query() paginationDto: TransactionsPaginationDto) {
+    return await this.transactionsService.getCashFlowOperations(paginationDto);
+  }
+
   @Get('payment-methods')
   @ApiOperation({
     summary: 'Obtener métodos de pago',

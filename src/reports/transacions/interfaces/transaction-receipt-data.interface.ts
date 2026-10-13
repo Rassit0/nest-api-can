@@ -11,8 +11,8 @@ export interface TransactionReceiptData {
   paymentMethod: string;
   receiverName: string;
   receiverDocument: string;
-  validationUrl: string;
-  type: 'INCOME' | 'EXPENSE';
+  validationUrl?: string | null;
+  type: 'INCOME' | 'EXPENSE' | 'INTERNAL_TRANSFER';
   isPartialPayment?: boolean;
   beneficiaryId?: string;
   payerId?: string;

@@ -66,14 +66,38 @@ export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit 
       let hasCyclePayment = false;
       let hasRegistrationPayment = false;
 
+      const getPaidAmount = (charge: any): number => {
+        if (!charge) return 0;
+
+        if (charge.payments && charge.payments.length > 0) {
+          const completedPayments = charge.payments.filter(
+            (p: any) => !p.status || p.status === 'COMPLETED',
+          );
+          const paymentsTotal = completedPayments.reduce(
+            (sum: number, p: any) => sum + (Number(p.amount) || 0),
+            0,
+          );
+          if (paymentsTotal > 0) {
+            return paymentsTotal;
+          }
+        }
+
+        const baseAmount = Number(charge.amount || 0);
+        const adjustmentAmount = Number(charge.adjustmentAmount || 0);
+        const expectedTotal = Math.max(0, baseAmount + adjustmentAmount);
+        const pendingAmount = Number(charge.pendingAmount || 0);
+
+        return Math.max(0, expectedTotal - pendingAmount);
+      };
+
       // Cycle payments
       if (enrollment.charge) {
         const c = enrollment.charge;
-        const paid = Number(c.amount) - Number(c.pendingAmount) - Number(c.adjustmentAmount);
+        const paid = getPaidAmount(c);
         if (paid > 0) {
            amountPaid += paid;
            hasCyclePayment = true;
-           if (c.payments && c.payments.length > 0) {
+           if (c.payments && c.payments.length > 0 && c.payments[0].paymentDate) {
              cyclePaymentDate = new Date(c.payments[0].paymentDate).toLocaleDateString('es-BO', { timeZone: 'America/La_Paz', day: '2-digit', month: '2-digit', year: 'numeric' });
            }
         }
@@ -86,11 +110,11 @@ export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit 
          (membershipStartedAt.getUTCFullYear() === cycleStartDate.getUTCFullYear() && membershipStartedAt.getUTCMonth() === cycleStartDate.getUTCMonth()))) {
          
          const regCharge = enrollment.studentMembership.studentCharges[0].charge;
-         const paid = Number(regCharge.amount) - Number(regCharge.pendingAmount) - Number(regCharge.adjustmentAmount);
+         const paid = getPaidAmount(regCharge);
          if (paid > 0) {
            amountPaid += paid;
            hasRegistrationPayment = true;
-           if (regCharge.payments && regCharge.payments.length > 0) {
+           if (regCharge.payments && regCharge.payments.length > 0 && regCharge.payments[0].paymentDate) {
              registrationPaymentDate = new Date(regCharge.payments[0].paymentDate).toLocaleDateString('es-BO', { timeZone: 'America/La_Paz', day: '2-digit', month: '2-digit', year: 'numeric' });
            }
          }

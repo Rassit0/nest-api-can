@@ -15,8 +15,8 @@ export interface MappedTransaction {
   paymentMethod: string;
   transactionDate: Date;
   status: string;
-  receiptSeries: string;
-  receiptNumber: number;
+  receiptSeries: string | null;
+  receiptNumber: number | null;
   reference: string | null;
   reversesId: string | null;
   balanceBefore: number | null;
@@ -104,6 +104,25 @@ export class TransactionsMapper {
         };
       }
 
+      let finalReceiptSeries = null;
+      let finalReceiptNumber = null;
+
+      if ((transaction as any).isInternalTransfer) {
+        const internalTransfer = (transaction as any).internalTransferSource || (transaction as any).internalTransferDest;
+        if (internalTransfer) {
+          finalReceiptSeries = internalTransfer.receiptSeries || null;
+          finalReceiptNumber = internalTransfer.receiptNumber || null;
+        }
+        
+        // Formatear concepto
+        concept = transaction.type === 'EXPENSE' 
+          ? 'Transferencia interna · Salida'
+          : 'Transferencia interna · Entrada';
+      } else {
+        finalReceiptSeries = transaction.payment?.receiptSeries || transaction.receiptSeries || null;
+        finalReceiptNumber = transaction.payment?.receiptNumber || transaction.receiptNumber || null;
+      }
+
       return {
         id: transaction.id,
         paymentId: transaction.paymentId || null,
@@ -115,8 +134,8 @@ export class TransactionsMapper {
         paymentMethod: transaction.paymentMethod,
         transactionDate: transaction.transactionDate,
         status: transaction.status,
-        receiptSeries: transaction.payment?.receiptSeries || transaction.receiptSeries,
-        receiptNumber: transaction.payment?.receiptNumber || transaction.receiptNumber,
+        receiptSeries: finalReceiptSeries,
+        receiptNumber: finalReceiptNumber,
         reference: transaction.reference,
         reversesId: transaction.reversesId || null,
         balanceBefore: transaction.balanceBefore != null ? Number(transaction.balanceBefore) : null,

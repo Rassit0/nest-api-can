@@ -199,7 +199,12 @@ export class PaymentsService {
       await syncCycleEnrollmentStatus(prisma, charge.id, newStatus);
 
       // 3. Revertir saldos en cuentas financieras (por Transaction) y anular Transactions
-      for (const t of currentPayment.transactions) {
+      // Ordenar determinísticamente por cuenta para evitar deadlocks
+      const sortedTransactions = [...currentPayment.transactions].sort((a, b) => 
+        (a.financialAccountId || '').localeCompare(b.financialAccountId || '')
+      );
+
+      for (const t of sortedTransactions) {
         if (t.financialAccountId && t.status === 'COMPLETED') {
           // Si fue ingreso, al mandar negativo se decrementa el balance en applyMovement
           await this.financialAccountsService.applyMovement(
@@ -214,6 +219,14 @@ export class PaymentsService {
           where: { id: t.id },
           data: { status: 'CANCELLED' },
         });
+      }
+
+      // Recomputar snapshots
+      const affectedAccountIds = [
+        ...new Set(sortedTransactions.map((t) => t.financialAccountId).filter(Boolean)),
+      ];
+      for (const accountId of affectedAccountIds) {
+        await this.financialAccountsService.recalculateAccountSnapshots(accountId, prisma);
       }
 
       // 4. Anular Payment

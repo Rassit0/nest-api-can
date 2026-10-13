@@ -5,13 +5,16 @@ interface HeaderOptions {
   receiptSeries: string;
   receiptNumber: string;
   date: Date;
-  type?: 'INCOME' | 'EXPENSE';
+  type?: 'INCOME' | 'EXPENSE' | 'INTERNAL_TRANSFER';
   isPartialPayment?: boolean;
 }
 
 export const headerSection = (options: HeaderOptions): Content => {
   const { receiptSeries, receiptNumber, date, type, isPartialPayment } = options;
   let title = type === 'EXPENSE' ? 'COMPROBANTE DE EGRESO' : 'APORTE VOLUNTARIO';
+  if (type === 'INTERNAL_TRANSFER') {
+    title = 'COMPROBANTE DE TRANSFERENCIA INTERNA';
+  }
 
   if (isPartialPayment) {
     title = type === 'EXPENSE' ? 'COMPROBANTE DE EGRESO (PARCIAL)' : 'APORTE VOLUNTARIO (PARCIAL)';

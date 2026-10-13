@@ -13,12 +13,18 @@ import {
 } from '../generated/prisma/client';
 import { FinancialAccountsService } from '../financial-accounts/financial-accounts.service';
 import { createPaginationResult } from '../common/helpers/pagination.helper';
+import { PrinterService } from '../printer/printer.service';
+import { transactionByIdReport } from '../reports/transacions/transaction-by-id.report';
+import { convertAmountToWords } from '../helpers/numbers-to-words.helper';
+import { ReceiptResolverService } from '../payments/receipt-resolver.service';
 
 @Injectable()
 export class InternalTransfersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly financialAccountsService: FinancialAccountsService,
+    private readonly receiptResolverService: ReceiptResolverService,
+    private readonly printerService: PrinterService,
   ) {}
 
   async create(createDto: CreateInternalTransferDto, user: any) {
@@ -35,6 +41,14 @@ export class InternalTransfersService {
       throw new BadRequestException(
         'La cuenta de origen y destino no pueden ser la misma.',
       );
+    }
+
+    if (date) {
+      const txDate = new Date(date);
+      const now = new Date();
+      if (txDate.getTime() > now.getTime() + 5 * 60 * 1000) {
+        throw new BadRequestException('La fecha de la transferencia no puede ser en el futuro.');
+      }
     }
 
     // Usar una transacción de Prisma para garantizar atomicidad
@@ -65,6 +79,10 @@ export class InternalTransfersService {
       }
 
       const transactionDate = date ? new Date(date) : new Date();
+      
+      // Obtener el número de recibo de transferencia
+      const receiptSeries = 'TRF';
+      const receiptNumber = await this.receiptResolverService.nextReceiptNumber(receiptSeries, tx);
 
       // 2. Aplicar movimientos a los saldos primero (obteniendo lock determinista según orden)
       const isSourceFirst =
@@ -111,8 +129,8 @@ export class InternalTransfersService {
           transactionDate,
           paymentMethod: 'TRANSFER',
           isInternalTransfer: true,
-          receiptSeries: 'TR',
-          receiptNumber: Math.floor(Math.random() * 1000000), // Podríamos usar una secuencia real
+          receiptSeries: null,
+          receiptNumber: null,
           balanceBefore: sourceMov.balanceBefore,
           balanceAfter: sourceMov.balanceAfter,
         },
@@ -130,8 +148,8 @@ export class InternalTransfersService {
           transactionDate,
           paymentMethod: 'TRANSFER',
           isInternalTransfer: true,
-          receiptSeries: 'TR',
-          receiptNumber: Math.floor(Math.random() * 1000000),
+          receiptSeries: null,
+          receiptNumber: null,
           balanceBefore: destMov.balanceBefore,
           balanceAfter: destMov.balanceAfter,
         },
@@ -147,11 +165,16 @@ export class InternalTransfersService {
           sourceTransactionId: sourceTransaction.id,
           destinationTransactionId: destTransaction.id,
           status: TransferStatus.COMPLETED, // Podría ser PENDING en el futuro
+          receiptSeries,
+          receiptNumber,
         },
       });
 
+      await this.financialAccountsService.recalculateAccountSnapshots(sourceAccountId, tx);
+      await this.financialAccountsService.recalculateAccountSnapshots(destinationAccountId, tx);
+      
       return transfer;
-    });
+    }, { maxWait: 5000, timeout: 20000 });
   }
 
   async findAll(paginationDto: InternalTransfersPaginationDto) {
@@ -291,5 +314,56 @@ export class InternalTransfersService {
         data: { status: TransferStatus.CANCELLED },
       });
     });
+  }
+
+  async getReceiptPdf(id: string) {
+    const transfer = await this.prisma.internalTransfer.findUnique({
+      where: { id },
+      include: {
+        sourceTransaction: { include: { financialAccount: true } },
+        destinationTransaction: { include: { financialAccount: true } },
+      },
+    });
+
+    if (!transfer) {
+      throw new NotFoundException('Transferencia no encontrada');
+    }
+
+    if (!transfer.receiptSeries || !transfer.receiptNumber) {
+      return null;
+    }
+
+    const amountNumeric = Number(transfer.amount).toFixed(2);
+    const amountLiteral = convertAmountToWords(Number(transfer.amount)).toUpperCase();
+
+    let concept = transfer.description || 'TRANSFERENCIA INTERNA';
+    if (transfer.status === 'CANCELLED') {
+      concept = `[ANULADA] ${concept}`;
+    }
+
+    const data = {
+      receiptSeries: transfer.receiptSeries,
+      receiptNumber: transfer.receiptNumber.toString().padStart(6, '0'),
+      date: transfer.date,
+      payerName: transfer.sourceTransaction.financialAccount.name,
+      payerDocument: '',
+      beneficiaryName: undefined,
+      amountLiteral,
+      amountNumeric,
+      concept,
+      paymentMethod: 'TRANSFERENCIA',
+      receiverName: transfer.destinationTransaction.financialAccount.name,
+      receiverDocument: '',
+      validationUrl: null,
+      type: 'INTERNAL_TRANSFER' as const,
+      isPartialPayment: false,
+    };
+
+    const docDefinition = transactionByIdReport({
+      data,
+      isSingle: false, // para que imprima 2 copias como recibo
+    });
+
+    return this.printerService.createPdf(docDefinition);
   }
 }

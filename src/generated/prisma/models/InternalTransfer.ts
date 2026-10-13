@@ -27,15 +27,19 @@ export type AggregateInternalTransfer = {
 }
 
 export type InternalTransferAvgAggregateOutputType = {
+  receiptNumber: number | null
   amount: runtime.Decimal | null
 }
 
 export type InternalTransferSumAggregateOutputType = {
+  receiptNumber: number | null
   amount: runtime.Decimal | null
 }
 
 export type InternalTransferMinAggregateOutputType = {
   id: string | null
+  receiptSeries: string | null
+  receiptNumber: number | null
   amount: runtime.Decimal | null
   description: string | null
   reference: string | null
@@ -50,6 +54,8 @@ export type InternalTransferMinAggregateOutputType = {
 
 export type InternalTransferMaxAggregateOutputType = {
   id: string | null
+  receiptSeries: string | null
+  receiptNumber: number | null
   amount: runtime.Decimal | null
   description: string | null
   reference: string | null
@@ -64,6 +70,8 @@ export type InternalTransferMaxAggregateOutputType = {
 
 export type InternalTransferCountAggregateOutputType = {
   id: number
+  receiptSeries: number
+  receiptNumber: number
   amount: number
   description: number
   reference: number
@@ -79,15 +87,19 @@ export type InternalTransferCountAggregateOutputType = {
 
 
 export type InternalTransferAvgAggregateInputType = {
+  receiptNumber?: true
   amount?: true
 }
 
 export type InternalTransferSumAggregateInputType = {
+  receiptNumber?: true
   amount?: true
 }
 
 export type InternalTransferMinAggregateInputType = {
   id?: true
+  receiptSeries?: true
+  receiptNumber?: true
   amount?: true
   description?: true
   reference?: true
@@ -102,6 +114,8 @@ export type InternalTransferMinAggregateInputType = {
 
 export type InternalTransferMaxAggregateInputType = {
   id?: true
+  receiptSeries?: true
+  receiptNumber?: true
   amount?: true
   description?: true
   reference?: true
@@ -116,6 +130,8 @@ export type InternalTransferMaxAggregateInputType = {
 
 export type InternalTransferCountAggregateInputType = {
   id?: true
+  receiptSeries?: true
+  receiptNumber?: true
   amount?: true
   description?: true
   reference?: true
@@ -217,6 +233,8 @@ export type InternalTransferGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type InternalTransferGroupByOutputType = {
   id: string
+  receiptSeries: string | null
+  receiptNumber: number | null
   amount: runtime.Decimal
   description: string | null
   reference: string | null
@@ -254,6 +272,8 @@ export type InternalTransferWhereInput = {
   OR?: Prisma.InternalTransferWhereInput[]
   NOT?: Prisma.InternalTransferWhereInput | Prisma.InternalTransferWhereInput[]
   id?: Prisma.StringFilter<"InternalTransfer"> | string
+  receiptSeries?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
+  receiptNumber?: Prisma.IntNullableFilter<"InternalTransfer"> | number | null
   amount?: Prisma.DecimalFilter<"InternalTransfer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
   reference?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
@@ -271,6 +291,8 @@ export type InternalTransferWhereInput = {
 
 export type InternalTransferOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -290,9 +312,12 @@ export type InternalTransferWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   sourceTransactionId?: string
   destinationTransactionId?: string
+  receiptSeries_receiptNumber?: Prisma.InternalTransferReceiptSeriesReceiptNumberCompoundUniqueInput
   AND?: Prisma.InternalTransferWhereInput | Prisma.InternalTransferWhereInput[]
   OR?: Prisma.InternalTransferWhereInput[]
   NOT?: Prisma.InternalTransferWhereInput | Prisma.InternalTransferWhereInput[]
+  receiptSeries?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
+  receiptNumber?: Prisma.IntNullableFilter<"InternalTransfer"> | number | null
   amount?: Prisma.DecimalFilter<"InternalTransfer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
   reference?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
@@ -304,10 +329,12 @@ export type InternalTransferWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   destinationTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
   sourceTransaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
-}, "id" | "sourceTransactionId" | "destinationTransactionId">
+}, "id" | "sourceTransactionId" | "destinationTransactionId" | "receiptSeries_receiptNumber">
 
 export type InternalTransferOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrderInput | Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -330,6 +357,8 @@ export type InternalTransferScalarWhereWithAggregatesInput = {
   OR?: Prisma.InternalTransferScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InternalTransferScalarWhereWithAggregatesInput | Prisma.InternalTransferScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InternalTransfer"> | string
+  receiptSeries?: Prisma.StringNullableWithAggregatesFilter<"InternalTransfer"> | string | null
+  receiptNumber?: Prisma.IntNullableWithAggregatesFilter<"InternalTransfer"> | number | null
   amount?: Prisma.DecimalWithAggregatesFilter<"InternalTransfer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableWithAggregatesFilter<"InternalTransfer"> | string | null
   reference?: Prisma.StringNullableWithAggregatesFilter<"InternalTransfer"> | string | null
@@ -344,6 +373,8 @@ export type InternalTransferScalarWhereWithAggregatesInput = {
 
 export type InternalTransferCreateInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -358,6 +389,8 @@ export type InternalTransferCreateInput = {
 
 export type InternalTransferUncheckedCreateInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -372,6 +405,8 @@ export type InternalTransferUncheckedCreateInput = {
 
 export type InternalTransferUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -386,6 +421,8 @@ export type InternalTransferUpdateInput = {
 
 export type InternalTransferUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -400,6 +437,8 @@ export type InternalTransferUncheckedUpdateInput = {
 
 export type InternalTransferCreateManyInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -414,6 +453,8 @@ export type InternalTransferCreateManyInput = {
 
 export type InternalTransferUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -425,6 +466,8 @@ export type InternalTransferUpdateManyMutationInput = {
 
 export type InternalTransferUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -442,8 +485,15 @@ export type InternalTransferNullableScalarRelationFilter = {
   isNot?: Prisma.InternalTransferWhereInput | null
 }
 
+export type InternalTransferReceiptSeriesReceiptNumberCompoundUniqueInput = {
+  receiptSeries: string
+  receiptNumber: number
+}
+
 export type InternalTransferCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   description?: Prisma.SortOrder
   reference?: Prisma.SortOrder
@@ -457,11 +507,14 @@ export type InternalTransferCountOrderByAggregateInput = {
 }
 
 export type InternalTransferAvgOrderByAggregateInput = {
+  receiptNumber?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
 export type InternalTransferMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   description?: Prisma.SortOrder
   reference?: Prisma.SortOrder
@@ -476,6 +529,8 @@ export type InternalTransferMaxOrderByAggregateInput = {
 
 export type InternalTransferMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  receiptSeries?: Prisma.SortOrder
+  receiptNumber?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   description?: Prisma.SortOrder
   reference?: Prisma.SortOrder
@@ -489,6 +544,7 @@ export type InternalTransferMinOrderByAggregateInput = {
 }
 
 export type InternalTransferSumOrderByAggregateInput = {
+  receiptNumber?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -614,6 +670,8 @@ export type InternalTransferUncheckedUpdateManyWithoutCreatedByNestedInput = {
 
 export type InternalTransferCreateWithoutDestinationTransactionInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -627,6 +685,8 @@ export type InternalTransferCreateWithoutDestinationTransactionInput = {
 
 export type InternalTransferUncheckedCreateWithoutDestinationTransactionInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -645,6 +705,8 @@ export type InternalTransferCreateOrConnectWithoutDestinationTransactionInput = 
 
 export type InternalTransferCreateWithoutSourceTransactionInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -658,6 +720,8 @@ export type InternalTransferCreateWithoutSourceTransactionInput = {
 
 export type InternalTransferUncheckedCreateWithoutSourceTransactionInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -687,6 +751,8 @@ export type InternalTransferUpdateToOneWithWhereWithoutDestinationTransactionInp
 
 export type InternalTransferUpdateWithoutDestinationTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -700,6 +766,8 @@ export type InternalTransferUpdateWithoutDestinationTransactionInput = {
 
 export type InternalTransferUncheckedUpdateWithoutDestinationTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -724,6 +792,8 @@ export type InternalTransferUpdateToOneWithWhereWithoutSourceTransactionInput = 
 
 export type InternalTransferUpdateWithoutSourceTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -737,6 +807,8 @@ export type InternalTransferUpdateWithoutSourceTransactionInput = {
 
 export type InternalTransferUncheckedUpdateWithoutSourceTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -750,6 +822,8 @@ export type InternalTransferUncheckedUpdateWithoutSourceTransactionInput = {
 
 export type InternalTransferCreateWithoutCreatedByInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -763,6 +837,8 @@ export type InternalTransferCreateWithoutCreatedByInput = {
 
 export type InternalTransferUncheckedCreateWithoutCreatedByInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -805,6 +881,8 @@ export type InternalTransferScalarWhereInput = {
   OR?: Prisma.InternalTransferScalarWhereInput[]
   NOT?: Prisma.InternalTransferScalarWhereInput | Prisma.InternalTransferScalarWhereInput[]
   id?: Prisma.StringFilter<"InternalTransfer"> | string
+  receiptSeries?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
+  receiptNumber?: Prisma.IntNullableFilter<"InternalTransfer"> | number | null
   amount?: Prisma.DecimalFilter<"InternalTransfer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
   reference?: Prisma.StringNullableFilter<"InternalTransfer"> | string | null
@@ -819,6 +897,8 @@ export type InternalTransferScalarWhereInput = {
 
 export type InternalTransferCreateManyCreatedByInput = {
   id?: string
+  receiptSeries?: string | null
+  receiptNumber?: number | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   reference?: string | null
@@ -832,6 +912,8 @@ export type InternalTransferCreateManyCreatedByInput = {
 
 export type InternalTransferUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -845,6 +927,8 @@ export type InternalTransferUpdateWithoutCreatedByInput = {
 
 export type InternalTransferUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -858,6 +942,8 @@ export type InternalTransferUncheckedUpdateWithoutCreatedByInput = {
 
 export type InternalTransferUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptSeries?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receiptNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -873,6 +959,8 @@ export type InternalTransferUncheckedUpdateManyWithoutCreatedByInput = {
 
 export type InternalTransferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptSeries?: boolean
+  receiptNumber?: boolean
   amount?: boolean
   description?: boolean
   reference?: boolean
@@ -890,6 +978,8 @@ export type InternalTransferSelect<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type InternalTransferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptSeries?: boolean
+  receiptNumber?: boolean
   amount?: boolean
   description?: boolean
   reference?: boolean
@@ -907,6 +997,8 @@ export type InternalTransferSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 
 export type InternalTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  receiptSeries?: boolean
+  receiptNumber?: boolean
   amount?: boolean
   description?: boolean
   reference?: boolean
@@ -924,6 +1016,8 @@ export type InternalTransferSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 
 export type InternalTransferSelectScalar = {
   id?: boolean
+  receiptSeries?: boolean
+  receiptNumber?: boolean
   amount?: boolean
   description?: boolean
   reference?: boolean
@@ -936,7 +1030,7 @@ export type InternalTransferSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InternalTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "description" | "reference" | "status" | "date" | "sourceTransactionId" | "destinationTransactionId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["internalTransfer"]>
+export type InternalTransferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "receiptSeries" | "receiptNumber" | "amount" | "description" | "reference" | "status" | "date" | "sourceTransactionId" | "destinationTransactionId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["internalTransfer"]>
 export type InternalTransferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.InternalTransfer$createdByArgs<ExtArgs>
   destinationTransaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
@@ -962,6 +1056,8 @@ export type $InternalTransferPayload<ExtArgs extends runtime.Types.Extensions.In
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    receiptSeries: string | null
+    receiptNumber: number | null
     amount: runtime.Decimal
     description: string | null
     reference: string | null
@@ -1399,6 +1495,8 @@ export interface Prisma__InternalTransferClient<T, Null = never, ExtArgs extends
  */
 export interface InternalTransferFieldRefs {
   readonly id: Prisma.FieldRef<"InternalTransfer", 'String'>
+  readonly receiptSeries: Prisma.FieldRef<"InternalTransfer", 'String'>
+  readonly receiptNumber: Prisma.FieldRef<"InternalTransfer", 'Int'>
   readonly amount: Prisma.FieldRef<"InternalTransfer", 'Decimal'>
   readonly description: Prisma.FieldRef<"InternalTransfer", 'String'>
   readonly reference: Prisma.FieldRef<"InternalTransfer", 'String'>

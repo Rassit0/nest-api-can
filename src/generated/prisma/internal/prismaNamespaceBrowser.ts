@@ -635,6 +635,8 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 
 export const InternalTransferScalarFieldEnum = {
   id: 'id',
+  receiptSeries: 'receiptSeries',
+  receiptNumber: 'receiptNumber',
   amount: 'amount',
   description: 'description',
   reference: 'reference',
