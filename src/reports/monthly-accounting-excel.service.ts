@@ -382,12 +382,12 @@ export class MonthlyAccountingExcelService {
     };
 
     // ==========================================
-    // HOJA 1: RESUMEN (conciliación + matriz diaria de INGRESOS)
+    // HOJA 1: RESUMEN (saldos ejecutivos, conciliación por cuenta y resumen mensual)
     // ==========================================
     const ws1 = wb.addWorksheet(`Resumen ${monthStr}`, {
       pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
     });
-    addInstitutionalHeader(ws1, 'INFORME CONTABLE MENSUAL', matrixColumnCount(incomeMatrix), true);
+    addInstitutionalHeader(ws1, 'INFORME CONTABLE MENSUAL', 8, true);
 
     // Resumen ejecutivo
     const execHeaderRow = ws1.addRow(['SALDO INICIAL', 'INGRESOS EXTERNOS', 'EGRESOS EXTERNOS', 'SALDO FINAL']);
@@ -473,16 +473,15 @@ export class MonthlyAccountingExcelService {
       if (colNumber > 2) cell.numFmt = numFmt;
       cell.fill = fillTotal;
     });
-    ws1.addRow([]);
 
-    // Matriz diaria de ingresos
-    const incTitle = ws1.addRow(['INGRESOS DIARIOS POR CATEGORÍA Y CUENTA']);
-    incTitle.font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF2E7D32' } };
-    const incLayout = renderDailyMatrix(ws1, incomeMatrix, 'INCOME');
-
-    ws1.getColumn(1).width = 24;
-    ws1.getColumn(2).width = 16;
-    for (let i = 3; i <= Math.max(incLayout.columnCount, 8); i++) ws1.getColumn(i).width = 15;
+    ws1.getColumn(1).width = 28;
+    ws1.getColumn(2).width = 18;
+    ws1.getColumn(3).width = 18;
+    ws1.getColumn(4).width = 18;
+    ws1.getColumn(5).width = 18;
+    ws1.getColumn(6).width = 20;
+    ws1.getColumn(7).width = 20;
+    ws1.getColumn(8).width = 18;
 
     // ==========================================
     // RESUMEN MENSUAL DE MOVIMIENTOS (debajo de la matriz de ingresos)
@@ -899,7 +898,19 @@ export class MonthlyAccountingExcelService {
 
 
     // ==========================================
-    // HOJA 2: EGRESOS (matriz diaria de EGRESOS)
+    // HOJA 2: INGRESOS (matriz diaria de INGRESOS)
+    // ==========================================
+    const wsIngresos = wb.addWorksheet(`Ingresos ${monthStr}`, {
+      pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
+    });
+    addInstitutionalHeader(wsIngresos, 'INGRESOS DIARIOS POR CATEGORÍA Y CUENTA', matrixColumnCount(incomeMatrix), false);
+    const incLayout = renderDailyMatrix(wsIngresos, incomeMatrix, 'INCOME');
+    wsIngresos.getColumn(1).width = 14;
+    for (let i = 2; i <= incLayout.columnCount; i++) wsIngresos.getColumn(i).width = 15;
+    wsIngresos.views = [{ state: 'frozen', xSplit: 1, ySplit: incLayout.headerRow2 }];
+
+    // ==========================================
+    // HOJA 3: EGRESOS (matriz diaria de EGRESOS)
     // ==========================================
     const ws2 = wb.addWorksheet(`Egresos ${monthStr}`, {
       pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
@@ -911,7 +922,7 @@ export class MonthlyAccountingExcelService {
     ws2.views = [{ state: 'frozen', xSplit: 1, ySplit: expLayout.headerRow2 }];
 
     // ==========================================
-    // HOJA 3: TRANSFERENCIAS INTERNAS (matriz diaria SALIDAS | ENTRADAS)
+    // HOJA 4: TRANSFERENCIAS INTERNAS (matriz diaria SALIDAS | ENTRADAS)
     // ==========================================
     const ws3 = wb.addWorksheet(`Transferencias ${monthStr}`, {
       pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 },

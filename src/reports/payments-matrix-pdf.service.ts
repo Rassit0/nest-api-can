@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import * as fs from 'fs';
+import * as path from 'path';
+import type { Content } from 'pdfmake/interfaces';
 import { PaymentsMatrixService } from './payments-matrix.service';
 import { PrinterService } from 'src/printer/printer.service';
 import { PdfReportBuilder } from './core/builders/pdf-report.builder';
 import { PaymentsMatrixResponseDto } from './dto/payments-matrix.dto';
+import { envs } from 'src/config/envs';
 
 @Injectable()
 export class PaymentsMatrixPdfService {
@@ -15,12 +19,13 @@ export class PaymentsMatrixPdfService {
     institutionId: string,
     shiftId: string,
     userName: string = 'Sistema',
+    issuedAt?: string,
   ): Promise<PDFKit.PDFDocument> {
     const dto = await this.paymentsMatrixService.getCourseSeasonShiftMatrix(
       institutionId,
       shiftId,
     );
-    return this.buildPdf(dto, userName);
+    return this.buildPdf(dto, userName, issuedAt);
   }
 
   async generateTeamSeasonPdf(
@@ -28,18 +33,20 @@ export class PaymentsMatrixPdfService {
     teamSeasonId: string,
     userName: string = 'Sistema',
     teamSeasonCategoryId?: string,
+    issuedAt?: string,
   ): Promise<PDFKit.PDFDocument> {
     const dto = await this.paymentsMatrixService.getTeamSeasonMatrix(
       institutionId,
       teamSeasonId,
       teamSeasonCategoryId,
     );
-    return this.buildPdf(dto, userName);
+    return this.buildPdf(dto, userName, issuedAt);
   }
 
   private buildPdf(
     dto: PaymentsMatrixResponseDto,
     userName: string,
+    issuedAt?: string,
   ): PDFKit.PDFDocument {
     const builder = new PdfReportBuilder('Matriz de Control de Pagos', {
       pageOrientation: 'landscape',
@@ -47,15 +54,7 @@ export class PaymentsMatrixPdfService {
       pageMargins: [15, 20, 15, 20],
     });
 
-    const groupName = dto.group.name;
-    const groupCategory = dto.group.category ? ` - ${dto.group.category}` : '';
-
-    builder.addCover({
-      title: 'Control de Pagos',
-      subtitle: `${groupName}${groupCategory}`,
-      generatedBy: userName,
-      date: new Date().toLocaleDateString('es-BO'),
-    });
+    builder.addContent(this.buildHeader(dto, userName, issuedAt));
 
     const MAX_COLUMNS = 7;
     const periodChunks = [];
@@ -82,6 +81,7 @@ export class PaymentsMatrixPdfService {
     periodChunks.forEach((chunk, index) => {
       if (index > 0) {
         builder.addPageBreak();
+        builder.addContent(this.buildCompactHeader(dto));
       }
 
       const isFirstChunk = index === 0;
@@ -101,7 +101,7 @@ export class PaymentsMatrixPdfService {
 
       dto.students.forEach((student) => {
         const row: any[] = [];
-        row.push({ text: student.name, fontSize: 7, bold: true, margin: [0, 3, 0, 3] });
+        row.push({ text: student.name, fontSize: 6.5, bold: true, margin: [0, 1, 0, 1] });
 
         if (isFirstChunk) {
           if (!student.registration || student.registration.totalPaid === 0) {
@@ -114,13 +114,13 @@ export class PaymentsMatrixPdfService {
             rStackItems.push({
               text: rData.totalPaid.toString(),
               bold: true,
-              fontSize: 8,
-              margin: [0, 0, 0, 4]
+              fontSize: 7.5,
+              margin: [0, 0, 0, 1]
             });
 
             rSortedPayments.forEach(p => {
               const chargeLabel = getChargeLabelAbbr(p.chargeType as string);
-              rStackItems.push({ text: `${p.amount} ${chargeLabel}`, fontSize: 7, margin: [0, 2, 0, 0] });
+              rStackItems.push({ text: `${p.amount} ${chargeLabel}`, fontSize: 6, margin: [0, 0.5, 0, 0] });
               
               let receiptLine = p.receiptNumber || '';
               if (p.date) {
@@ -133,13 +133,13 @@ export class PaymentsMatrixPdfService {
               }
               
               if (receiptLine) {
-                rStackItems.push({ text: receiptLine, fontSize: 6, color: 'gray', margin: [0, 0, 0, 2] });
+                rStackItems.push({ text: receiptLine, fontSize: 5.5, color: 'gray', margin: [0, 0, 0, 0] });
               }
             });
 
             row.push({
               stack: rStackItems,
-              margin: [0, 2, 0, 2],
+              margin: [0, 0.5, 0, 0.5],
               alignment: 'center'
             });
           }
@@ -157,13 +157,13 @@ export class PaymentsMatrixPdfService {
             stackItems.push({
               text: periodData.totalPaid.toString(),
               bold: true,
-              fontSize: 8,
-              margin: [0, 0, 0, 4]
+              fontSize: 7.5,
+              margin: [0, 0, 0, 1]
             });
 
             sortedPayments.forEach(p => {
               const chargeLabel = getChargeLabelAbbr(p.chargeType as string);
-              stackItems.push({ text: `${p.amount} ${chargeLabel}`, fontSize: 7, margin: [0, 2, 0, 0] });
+              stackItems.push({ text: `${p.amount} ${chargeLabel}`, fontSize: 6, margin: [0, 0.5, 0, 0] });
               
               let receiptLine = p.receiptNumber || '';
               
@@ -177,13 +177,13 @@ export class PaymentsMatrixPdfService {
               }
               
               if (receiptLine) {
-                stackItems.push({ text: receiptLine, fontSize: 6, color: 'gray', margin: [0, 0, 0, 2] });
+                stackItems.push({ text: receiptLine, fontSize: 5.5, color: 'gray', margin: [0, 0, 0, 0] });
               }
             });
 
             row.push({
               stack: stackItems,
-              margin: [0, 2, 0, 2],
+              margin: [0, 0.5, 0, 0.5],
               alignment: 'center'
             });
           }
@@ -197,9 +197,9 @@ export class PaymentsMatrixPdfService {
           row.push({
             text: grandTotal.toString(),
             bold: true,
-            fontSize: 7,
+            fontSize: 7.5,
             alignment: 'center',
-            margin: [0, 2, 0, 2],
+            margin: [0, 1, 0, 1],
             color: 'green'
           });
         }
@@ -221,18 +221,198 @@ export class PaymentsMatrixPdfService {
           vLineWidth: () => 0.5,
           hLineColor: () => '#cccccc',
           vLineColor: () => '#cccccc',
-          paddingLeft: () => 4,
-          paddingRight: () => 4
+          paddingLeft: () => 3,
+          paddingRight: () => 3,
+          paddingTop: () => 1.5,
+          paddingBottom: () => 1.5,
         }
       });
     });
 
     const docDefinition = builder.build();
-    
-    // Add page break logic via header repetitions?
-    // pdfMake automatically repeats table headers on new pages if headerRows: 1 is used in addDataTable.
-    // addDataTable already specifies `headerRows: 1` in pdf-report.builder.ts.
+    docDefinition.styles = {
+      ...docDefinition.styles,
+      subheader: {
+        fontSize: 9,
+        bold: true,
+        margin: [0, 3, 0, 2],
+        color: '#1F4E79',
+      },
+      tableExample: {
+        margin: [0, 1, 0, 6],
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 6.5,
+        color: '#1F4E79',
+        fillColor: '#F5F8FA',
+      },
+    };
 
     return this.printer.createPdf(docDefinition);
   }
+
+  private buildHeader(
+    dto: PaymentsMatrixResponseDto,
+    userName: string,
+    issuedAt?: string,
+  ): Content {
+    const distLogo = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
+    const srcLogo = path.join(process.cwd(), 'src', 'assets', 'logo-can.png');
+    const logoPath = fs.existsSync(distLogo)
+      ? distLogo
+      : fs.existsSync(srcLogo)
+        ? srcLogo
+        : null;
+
+    const rawDate = issuedAt ? new Date(issuedAt) : new Date();
+    const formattedDate = new Intl.DateTimeFormat('es-BO', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: envs.appTimezone,
+    }).format(rawDate);
+
+    const logoCell: any = logoPath
+      ? {
+          image: logoPath,
+          width: 26,
+          margin: [0, 0, 5, 0],
+          border: [false, false, false, false],
+        }
+      : {
+          text: '',
+          width: 0,
+          border: [false, false, false, false],
+        };
+
+    const groupTypeLabel =
+      dto.group.type === 'COURSE_SEASON_SHIFT' ? 'TURNO / CURSO' : 'EQUIPO';
+    const groupName = dto.group.name;
+    const groupCategory =
+      dto.group.category ||
+      (dto.group.type === 'COURSE_SEASON_SHIFT'
+        ? 'General'
+        : 'Todas las categorías');
+
+    return {
+      table: {
+        widths: logoPath ? ['auto', '*', 'auto'] : ['*', 'auto'],
+        body: [
+          [
+            ...(logoPath ? [logoCell] : []),
+            {
+              stack: [
+                {
+                  text: 'CLUB ATLÉTICO NACIONAL',
+                  bold: true,
+                  fontSize: 9.5,
+                  color: '#1F4E79',
+                },
+                {
+                  text: 'CONTROL DE PAGOS',
+                  bold: true,
+                  fontSize: 8.5,
+                  color: '#333333',
+                  margin: [0, 0.5, 0, 0.5],
+                },
+                {
+                  text: 'CAN Oruro · Oruro - BOLIVIA',
+                  fontSize: 6.5,
+                  color: '#555555',
+                },
+              ],
+              margin: [0, 0, 0, 0],
+              border: [false, false, false, false],
+              alignment: 'left',
+            },
+            {
+              stack: [
+                {
+                  text: `${groupTypeLabel}: ${groupName}`,
+                  fontSize: 7.5,
+                  bold: true,
+                  alignment: 'right',
+                  color: '#1F4E79',
+                },
+                {
+                  text: `CATEGORÍA: ${groupCategory}`,
+                  fontSize: 7.5,
+                  bold: true,
+                  alignment: 'right',
+                },
+                {
+                  text: `GENERADO POR: ${userName}`,
+                  fontSize: 6,
+                  color: '#555555',
+                  alignment: 'right',
+                },
+                {
+                  text: `FECHA DE EMISIÓN: ${formattedDate}`,
+                  fontSize: 6,
+                  color: '#555555',
+                  alignment: 'right',
+                },
+              ],
+              margin: [0, 0, 0, 0],
+              border: [false, false, false, false],
+            },
+          ],
+        ],
+      },
+      layout: {
+        hLineWidth: function (i, node) {
+          return i === node.table.body.length ? 1 : 0;
+        },
+        vLineWidth: function () {
+          return 0;
+        },
+        hLineColor: function () {
+          return '#1F4E79';
+        },
+        paddingTop: () => 0,
+        paddingBottom: () => 1.5,
+      },
+      margin: [0, 0, 0, 3],
+    };
+  }
+
+  private buildCompactHeader(dto: PaymentsMatrixResponseDto): Content {
+    const groupName = dto.group.name;
+    const groupCategory = dto.group.category ? ` - ${dto.group.category}` : '';
+
+    return {
+      table: {
+        widths: ['*'],
+        body: [
+          [
+            {
+              text: `CLUB ATLÉTICO NACIONAL · CONTROL DE PAGOS · ${groupName}${groupCategory}`,
+              fontSize: 7,
+              bold: true,
+              color: '#1F4E79',
+              border: [false, false, false, false],
+            },
+          ],
+        ],
+      },
+      layout: {
+        hLineWidth: function (i, node) {
+          return i === node.table.body.length ? 1 : 0;
+        },
+        vLineWidth: function () {
+          return 0;
+        },
+        hLineColor: function () {
+          return '#1F4E79';
+        },
+        paddingTop: () => 0,
+        paddingBottom: () => 1.5,
+      },
+      margin: [0, 0, 0, 3],
+    };
+  }
 }
+

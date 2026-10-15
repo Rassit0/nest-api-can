@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import * as path from 'path';
 import type { TDocumentDefinitions, Content } from 'pdfmake/interfaces';
 import { CourseCycleEnrollmentQueryDto } from '../dto/course-cycle-enrollment.dto';
+import { envs } from 'src/config/envs';
 
 @Injectable()
 export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit {
@@ -237,8 +238,9 @@ export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit 
 
     const dataset = this.extractDataset(enrollments, cycleStartDate, cycleEndDate);
 
+    const issuedAt = query?.issuedAt || query?.emissionDate;
     const content: Content[] = [
-      this.buildHeader(shift, cycleStartDate, cycleEndDate),
+      this.buildHeader(shift, cycleStartDate, cycleEndDate, issuedAt),
       { text: '\n' },
     ];
 
@@ -355,8 +357,19 @@ export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit 
     shift: any,
     cycleStartDate: Date,
     cycleEndDate: Date,
+    issuedAt?: string,
   ): Content {
     const logo = path.join(process.cwd(), 'dist', 'assets', 'logo-can.png');
+
+    const rawEmissionDate = issuedAt ? new Date(issuedAt) : new Date();
+    const formattedEmissionDate = new Intl.DateTimeFormat('es-BO', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: envs.appTimezone,
+    }).format(rawEmissionDate);
 
     const schoolName = shift.courseSeason.course.school.name;
     const disciplineName = shift.courseSeason.course.school.discipline.name;
@@ -414,6 +427,7 @@ export class CourseCycleEnrollmentReport implements ReportHandler, OnModuleInit 
                 { text: `DISCIPLINA: ${disciplineName}`, fontSize: 8, alignment: 'right' },
                 { text: `TURNO: ${shiftFullStr}`, fontSize: 8, alignment: 'right' },
                 { text: `CICLO: ${cycleName}`, fontSize: 9, bold: true, color: '#1F4E79', alignment: 'right' },
+                { text: `FECHA DE EMISIÓN: ${formattedEmissionDate}`, fontSize: 7, color: '#555555', alignment: 'right' },
               ],
               margin: [0, 2, 0, 2],
               border: [false, false, false, false],

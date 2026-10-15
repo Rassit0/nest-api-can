@@ -100,6 +100,11 @@ export class PdfReportBuilder {
     return this;
   }
 
+  addContent(content: Content) {
+    this.content.push(content);
+    return this;
+  }
+
   addExecutiveSummary(
     kpis: {
       label: string;

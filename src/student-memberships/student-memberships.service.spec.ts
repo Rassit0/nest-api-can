@@ -153,24 +153,29 @@ describe('StudentMembershipsService', () => {
       effectiveDate,
     };
 
-    it('should successfully transfer a shift', async () => {
+    it('should successfully transfer active and future cycles while strictly preserving historical cycles', async () => {
       // Setup
-      const cycle1 = { id: 'c1', cycleStartDate: new Date('2026-08-01'), cycleEndDate: new Date('2026-08-31') }; // overlaps with effectiveDate
-      const cycle2 = { id: 'c2', cycleStartDate: new Date('2026-09-01'), cycleEndDate: new Date('2026-09-30') }; // future
+      const cycle0Historical = { id: 'c0', cycleStartDate: new Date('2026-07-01'), cycleEndDate: new Date('2026-07-31') }; // past (ended before effectiveDate)
+      const cycle1Active = { id: 'c1', cycleStartDate: new Date('2026-08-01'), cycleEndDate: new Date('2026-08-31') }; // active (overlaps with effectiveDate)
+      const cycle2Future = { id: 'c2', cycleStartDate: new Date('2026-09-01'), cycleEndDate: new Date('2026-09-30') }; // future
 
       prismaMock.studentMembership.findUnique.mockResolvedValue({
         id: membershipId,
         status: StudentMembershipStatus.ACTIVE,
         courseSeasonId: 'origin-season-id',
+        courseSeasonShiftId: 'origin-shift-id',
         courseSeason: { courseId: 'course-1', shift: { name: 'Origin' } },
-        cycleEnrollments: [cycle1, cycle2],
+        cycleEnrollments: [cycle0Historical, cycle1Active, cycle2Future],
       });
 
-      prismaMock.courseSeason.findUnique.mockResolvedValue({
-        id: targetCourseSeasonId,
-        status: StatusCourseSeason.ACTIVE,
-        courseId: 'course-1',
-        shift: { name: 'Destino' }
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({
+        id: transferDto.targetCourseSeasonShiftId,
+        shift: { name: 'Destino' },
+        courseSeason: {
+          id: targetCourseSeasonId,
+          status: StatusCourseSeason.ACTIVE,
+          courseId: 'course-1',
+        },
       });
 
       (capacityHelper.validateCourseSeasonCapacity as jest.Mock).mockResolvedValue(undefined);
@@ -178,29 +183,121 @@ describe('StudentMembershipsService', () => {
       // Act
       await service.transferShift(membershipId, transferDto);
 
-      // Assert
-      // should update only cycle2
+      // Assert 1: Capacity validated for active (c1) and future (c2), but NOT historical (c0)
+      expect(capacityHelper.validateCourseSeasonCapacity).toHaveBeenCalledTimes(2);
+      expect(capacityHelper.validateCourseSeasonCapacity).toHaveBeenCalledWith(
+        expect.anything(),
+        'target-shift-id',
+        cycle1Active.cycleStartDate,
+        cycle1Active.cycleEndDate,
+        'c1',
+      );
+      expect(capacityHelper.validateCourseSeasonCapacity).toHaveBeenCalledWith(
+        expect.anything(),
+        'target-shift-id',
+        cycle2Future.cycleStartDate,
+        cycle2Future.cycleEndDate,
+        'c2',
+      );
+
+      // Assert 2: cycleEnrollment.updateMany updates BOTH active and future, NOT historical
       expect(prismaMock.cycleEnrollment.updateMany).toHaveBeenCalledWith({
-        where: { id: { in: ['c2'] } },
+        where: { id: { in: ['c1', 'c2'] } },
         data: { courseSeasonId: targetCourseSeasonId, courseSeasonShiftId: transferDto.targetCourseSeasonShiftId },
       });
 
-      // should update membership
+      // Assert 3: StudentMembership is updated to target shift immediately
       expect(prismaMock.studentMembership.update).toHaveBeenCalledWith(
         expect.objectContaining({
           where: { id: membershipId },
           data: expect.objectContaining({
             courseSeasonId: targetCourseSeasonId,
             courseSeasonShiftId: 'target-shift-id',
-          })
-        })
+          }),
+        }),
       );
+    });
+
+    it('should fail and rollback completely if capacity is exceeded in active cycle', async () => {
+      const cycle1Active = { id: 'c1', cycleStartDate: new Date('2026-08-01'), cycleEndDate: new Date('2026-08-31') };
+
+      prismaMock.studentMembership.findUnique.mockResolvedValue({
+        id: membershipId,
+        status: StudentMembershipStatus.ACTIVE,
+        courseSeasonId: 'origin-season-id',
+        courseSeasonShiftId: 'origin-shift-id',
+        courseSeason: { courseId: 'course-1', shift: { name: 'Origin' } },
+        cycleEnrollments: [cycle1Active],
+      });
+
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({
+        id: transferDto.targetCourseSeasonShiftId,
+        shift: { name: 'Destino' },
+        courseSeason: {
+          id: targetCourseSeasonId,
+          status: StatusCourseSeason.ACTIVE,
+          courseId: 'course-1',
+        },
+      });
+
+      (capacityHelper.validateCourseSeasonCapacity as jest.Mock).mockRejectedValueOnce(
+        new BadRequestException('El cupo de este ciclo ya no está disponible'),
+      );
+
+      await expect(service.transferShift(membershipId, transferDto))
+        .rejects.toThrow(BadRequestException);
+
+      // Verify no updates occurred
+      expect(prismaMock.cycleEnrollment.updateMany).not.toHaveBeenCalled();
+      expect(prismaMock.studentMembership.update).not.toHaveBeenCalled();
+    });
+
+    it('should maintain financial integrity (no charge/payment mutations during shift transfer)', async () => {
+      const cycle1Active = { id: 'c1', cycleStartDate: new Date('2026-08-01'), cycleEndDate: new Date('2026-08-31') };
+
+      prismaMock.studentMembership.findUnique.mockResolvedValue({
+        id: membershipId,
+        status: StudentMembershipStatus.ACTIVE,
+        courseSeasonId: 'origin-season-id',
+        courseSeasonShiftId: 'origin-shift-id',
+        courseSeason: { courseId: 'course-1', shift: { name: 'Origin' } },
+        cycleEnrollments: [cycle1Active],
+      });
+
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({
+        id: transferDto.targetCourseSeasonShiftId,
+        shift: { name: 'Destino' },
+        courseSeason: {
+          id: targetCourseSeasonId,
+          status: StatusCourseSeason.ACTIVE,
+          courseId: 'course-1',
+        },
+      });
+
+      (capacityHelper.validateCourseSeasonCapacity as jest.Mock).mockResolvedValue(undefined);
+
+      await service.transferShift(membershipId, transferDto);
+
+      // Verify financial tables are not touched
+      expect(prismaMock.studentCharge.findMany).toHaveBeenCalledTimes(0);
     });
 
     it('should fail if membership is not active', async () => {
       prismaMock.studentMembership.findUnique.mockResolvedValue({
         id: membershipId,
         status: StudentMembershipStatus.FINISHED,
+      });
+
+      await expect(service.transferShift(membershipId, transferDto))
+        .rejects.toThrow(BadRequestException);
+    });
+
+    it('should fail if student is already in the target shift', async () => {
+      prismaMock.studentMembership.findUnique.mockResolvedValue({
+        id: membershipId,
+        status: StudentMembershipStatus.ACTIVE,
+        courseSeasonShiftId: transferDto.targetCourseSeasonShiftId,
+        courseSeasonId: targetCourseSeasonId,
       });
 
       await expect(service.transferShift(membershipId, transferDto))
@@ -224,12 +321,6 @@ describe('StudentMembershipsService', () => {
         courseSeasonId: 'origin-season-id',
         courseSeason: { courseId: 'course-1' },
         cycleEnrollments: [],
-      });
-
-      prismaMock.courseSeason.findUnique.mockResolvedValue({
-        id: targetCourseSeasonId,
-        status: StatusCourseSeason.ACTIVE,
-        courseId: 'course-2',
       });
 
       await expect(service.transferShift(membershipId, transferDto))

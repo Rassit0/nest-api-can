@@ -1040,26 +1040,15 @@ export class StudentMembershipsService {
         const isSameOffer =
           membership.courseSeasonId === transferDto.targetCourseSeasonId;
 
-        // 3. Determinar el primer ciclo transferible
+        // 3. Determinar los ciclos transferibles (ciclo activo en curso + ciclos futuros)
+        // Regla crítica: cycleEndDate <= effectiveDate es histórico y JAMÁS debe modificarse.
         const effectiveDate = new Date(transferDto.effectiveDate);
 
-        const overlappingCycle = membership.cycleEnrollments.find(
-          (c) =>
-            c.cycleStartDate <= effectiveDate && c.cycleEndDate > effectiveDate,
-        );
-
-        let transferStartDate: Date;
-        if (overlappingCycle) {
-          // La transferencia aplica desde el inicio del próximo ciclo
-          transferStartDate = overlappingCycle.cycleEndDate;
-        } else {
-          // No hay ciclo en curso en esta fecha, aplica desde la fecha efectiva
-          transferStartDate = effectiveDate;
-        }
-
         const cyclesToTransfer = membership.cycleEnrollments.filter(
-          (c) => c.cycleStartDate >= transferStartDate,
+          (c) => c.cycleEndDate > effectiveDate,
         );
+
+        const transferStartDate = effectiveDate;
 
         if (cyclesToTransfer.length === 0) {
           // Si no hay ciclos futuros, de todas formas cambiamos el turno base

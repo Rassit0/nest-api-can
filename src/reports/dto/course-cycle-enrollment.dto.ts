@@ -19,4 +19,12 @@ export class CourseCycleEnrollmentQueryDto {
 
   @IsISO8601()
   cycleEndDate: string;
+
+  @IsOptional()
+  @IsISO8601()
+  issuedAt?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  emissionDate?: string;
 }

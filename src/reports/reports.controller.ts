@@ -8,6 +8,10 @@ import { MonthlyCashflowExcelService } from './monthly-cashflow-excel.service';
 import { MonthlyCashflowQueryDto } from './dto/monthly-cashflow.dto';
 import { MonthlyAccountingExcelService } from './monthly-accounting-excel.service';
 import { MonthlyAccountingQueryDto } from './dto/monthly-accounting.dto';
+import {
+  TeamSeasonPaymentsMatrixPdfQueryDto,
+  CourseSeasonShiftPaymentsMatrixPdfQueryDto,
+} from './dto/payments-matrix.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
@@ -79,12 +83,19 @@ export class ReportsController {
   @RequirePermissions('READ_COURSE_SEASONS')
   async getCourseSeasonShiftPaymentsMatrixPdf(
     @Param('shiftId') shiftId: string,
+    @Query() query: CourseSeasonShiftPaymentsMatrixPdfQueryDto,
     @Req() req: Request & { user: any },
     @Res() res: Response,
   ) {
     const institutionId = req.user.institutionId;
     const userName = req.user.name || 'Sistema';
-    const result = await this.paymentsMatrixPdfService.generateCourseSeasonShiftPdf(institutionId, shiftId, userName);
+    const issuedAt = query?.issuedAt || query?.emissionDate;
+    const result = await this.paymentsMatrixPdfService.generateCourseSeasonShiftPdf(
+      institutionId,
+      shiftId,
+      userName,
+      issuedAt,
+    );
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
@@ -99,13 +110,20 @@ export class ReportsController {
   @RequirePermissions('READ_TEAM_SEASONS')
   async getTeamSeasonPaymentsMatrixPdf(
     @Param('teamSeasonId') teamSeasonId: string,
-    @Query('teamSeasonCategoryId') teamSeasonCategoryId: string,
+    @Query() query: TeamSeasonPaymentsMatrixPdfQueryDto,
     @Req() req: Request & { user: any },
     @Res() res: Response,
   ) {
     const institutionId = req.user.institutionId;
     const userName = req.user.name || 'Sistema';
-    const result = await this.paymentsMatrixPdfService.generateTeamSeasonPdf(institutionId, teamSeasonId, userName, teamSeasonCategoryId);
+    const issuedAt = query?.issuedAt || query?.emissionDate;
+    const result = await this.paymentsMatrixPdfService.generateTeamSeasonPdf(
+      institutionId,
+      teamSeasonId,
+      userName,
+      query?.teamSeasonCategoryId,
+      issuedAt,
+    );
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(

@@ -156,20 +156,21 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
     setup({ opening, txs, transfers });
   };
 
-  it('workbook tiene exactamente 3 hojas: Resumen, Egresos, Transferencias', async () => {
+  it('workbook tiene exactamente 4 hojas: Resumen, Ingresos, Egresos, Transferencias', async () => {
     scenario();
     const wb = await excelService.generateExcel({ year: 2026, month: 10 });
     expect(wb.worksheets.map((w) => w.name)).toEqual([
       'Resumen 2026-10',
+      'Ingresos 2026-10',
       'Egresos 2026-10',
       'Transferencias 2026-10',
     ]);
   });
 
-  it('1-6. RESUMEN: una fila por día, agregación diaria, categorías × cuentas, totales diario y mensual', async () => {
+  it('1-6. INGRESOS: una fila por día, agregación diaria, categorías × cuentas, totales diario y mensual', async () => {
     scenario();
     const wb = await excelService.generateExcel({ year: 2026, month: 10 });
-    const ws = wb.getWorksheet('Resumen 2026-10')!;
+    const ws = wb.getWorksheet('Ingresos 2026-10')!;
 
     // 1. Una fila por día (31), no por recibo
     const days = dayRows(ws);
@@ -205,17 +206,19 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
     expect(total.getCell(7).value).toBe(380);
   });
 
-  it('RESUMEN no contiene egresos ni transferencias', async () => {
+  it('RESUMEN no contiene matriz diaria de ingresos, egresos ni transferencias', async () => {
     scenario();
     const wb = await excelService.generateExcel({ year: 2026, month: 10 });
     const ws = wb.getWorksheet('Resumen 2026-10')!;
-    const h1 = matrixHeader(ws);
-    const labels = (h1.values as any[]).filter(Boolean);
-    expect(labels).not.toContain('TOTAL EGRESOS');
-    expect(labels).not.toContain('SEGURO');
-    expect(labels).not.toContain('ENTRADAS INTERNAS');
-    expect(labels).not.toContain('NETO OPERATIVO');
-    expect(lastCol(h1)).toBe(7);
+    // Resumen NO contiene matriz diaria (columna 1 = 'Día')
+    expect(findRow(ws, 'Día')).toBeUndefined();
+    expect(findRow(ws, 'TOTAL MES')).toBeUndefined();
+    expect(dayRows(ws)).toHaveLength(0);
+
+    // Resumen conserva sus bloques ejecutivos y consolidados
+    expect(findRow(ws, 'CONCILIACIÓN POR CUENTA FINANCIERA')).toBeDefined();
+    expect(findRow(ws, 'TOTAL GENERAL')).toBeDefined();
+    expect(findRow(ws, 'RESUMEN MENSUAL DE MOVIMIENTOS')).toBeDefined();
   });
 
   it('7-8. EGRESOS: una fila por día, categorías × cuentas, totales diario y mensual', async () => {
@@ -239,10 +242,10 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
     expect(total.getCell(6).value).toBe(75);
   });
 
-  it('InternalTransfer no aparece en la matriz diaria de Resumen ni de Egresos', async () => {
+  it('InternalTransfer no aparece en la matriz diaria de Ingresos ni de Egresos', async () => {
     scenario();
     const wb = await excelService.generateExcel({ year: 2026, month: 10 });
-    for (const name of ['Resumen 2026-10', 'Egresos 2026-10']) {
+    for (const name of ['Ingresos 2026-10', 'Egresos 2026-10']) {
       const ws = wb.getWorksheet(name)!;
       let inMatrix = false;
       ws.eachRow((r) => {
@@ -387,7 +390,7 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
         ],
       });
       const wb = await excelService.generateExcel({ year: 2026, month: 10 });
-      const ws = wb.getWorksheet('Resumen 2026-10')!;
+      const ws = wb.getWorksheet('Ingresos 2026-10')!;
       const h1 = matrixHeader(ws);
       const totalCol = lastCol(h1);
       expect(findRow(ws, '03-10-2026')!.getCell(totalCol).value).toBe(77);
@@ -475,6 +478,7 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
     scenario();
     const wb = await excelService.generateExcel({ year: 2026, month: 10 });
     const ws1 = wb.getWorksheet('Resumen 2026-10')!;
+    const wsIng = wb.getWorksheet('Ingresos 2026-10')!;
     const ws2 = wb.getWorksheet('Egresos 2026-10')!;
 
     // 1 & 2. Summary Income = matrix Income, Summary Expense = matrix Expense
@@ -483,7 +487,7 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
 
     const rSumInc = findRow(ws1, 'TOTAL INGRESOS EXTERNOS')!;
     const rSumExp = findRow(ws1, 'TOTAL EGRESOS EXTERNOS')!;
-    const rMatrixInc = findRow(ws1, 'TOTAL MES')!;
+    const rMatrixInc = findRow(wsIng, 'TOTAL MES')!;
     const rMatrixExp = findRow(ws2, 'TOTAL MES')!;
 
     const matrixIncVal = Number(rMatrixInc.getCell(rMatrixInc.cellCount).value);

@@ -1,3 +1,5 @@
+import { IsUUID, IsOptional, IsISO8601 } from 'class-validator';
+
 export interface PaymentMatrixPeriodDto {
   key: string;
   label: string;
@@ -38,4 +40,28 @@ export interface PaymentsMatrixResponseDto {
   group: PaymentMatrixGroupDto;
   periods: PaymentMatrixPeriodDto[];
   students: PaymentMatrixStudentDto[];
+}
+
+export class TeamSeasonPaymentsMatrixPdfQueryDto {
+  @IsOptional()
+  @IsUUID()
+  teamSeasonCategoryId?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  issuedAt?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  emissionDate?: string;
+}
+
+export class CourseSeasonShiftPaymentsMatrixPdfQueryDto {
+  @IsOptional()
+  @IsISO8601()
+  issuedAt?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  emissionDate?: string;
 }
