@@ -319,6 +319,7 @@ export type CourseSeasonShiftWhereInput = {
   generalEvents?: Prisma.GeneralEventListRelationFilter
   sessionCourses?: Prisma.SessionCourseListRelationFilter
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
+  progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter
 }
 
 export type CourseSeasonShiftOrderByWithRelationInput = {
@@ -348,6 +349,7 @@ export type CourseSeasonShiftOrderByWithRelationInput = {
   generalEvents?: Prisma.GeneralEventOrderByRelationAggregateInput
   sessionCourses?: Prisma.SessionCourseOrderByRelationAggregateInput
   studentMemberships?: Prisma.StudentMembershipOrderByRelationAggregateInput
+  progressEvaluations?: Prisma.ProgressEvaluationOrderByRelationAggregateInput
 }
 
 export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
@@ -382,6 +384,7 @@ export type CourseSeasonShiftWhereUniqueInput = Prisma.AtLeast<{
   generalEvents?: Prisma.GeneralEventListRelationFilter
   sessionCourses?: Prisma.SessionCourseListRelationFilter
   studentMemberships?: Prisma.StudentMembershipListRelationFilter
+  progressEvaluations?: Prisma.ProgressEvaluationListRelationFilter
 }, "id" | "courseSeasonId_shiftId" | "id_courseSeasonId">
 
 export type CourseSeasonShiftOrderByWithAggregationInput = {
@@ -450,6 +453,7 @@ export type CourseSeasonShiftCreateInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateInput = {
@@ -474,6 +478,7 @@ export type CourseSeasonShiftUncheckedCreateInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUpdateInput = {
@@ -498,6 +503,7 @@ export type CourseSeasonShiftUpdateInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateInput = {
@@ -522,6 +528,7 @@ export type CourseSeasonShiftUncheckedUpdateInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateManyInput = {
@@ -943,6 +950,22 @@ export type CourseSeasonShiftUpdateOneRequiredWithoutCycleEnrollmentsNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseSeasonShiftUpdateToOneWithWhereWithoutCycleEnrollmentsInput, Prisma.CourseSeasonShiftUpdateWithoutCycleEnrollmentsInput>, Prisma.CourseSeasonShiftUncheckedUpdateWithoutCycleEnrollmentsInput>
 }
 
+export type CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutProgressEvaluationsInput>
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutProgressEvaluationsInput
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput
+}
+
+export type CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutProgressEvaluationsInput>
+  connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutProgressEvaluationsInput
+  upsert?: Prisma.CourseSeasonShiftUpsertWithoutProgressEvaluationsInput
+  disconnect?: Prisma.CourseSeasonShiftWhereInput | boolean
+  delete?: Prisma.CourseSeasonShiftWhereInput | boolean
+  connect?: Prisma.CourseSeasonShiftWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseSeasonShiftUpdateToOneWithWhereWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUpdateWithoutProgressEvaluationsInput>, Prisma.CourseSeasonShiftUncheckedUpdateWithoutProgressEvaluationsInput>
+}
+
 export type CourseSeasonShiftCreateNestedOneWithoutGeneralEventsInput = {
   create?: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutGeneralEventsInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutGeneralEventsInput>
   connectOrCreate?: Prisma.CourseSeasonShiftCreateOrConnectWithoutGeneralEventsInput
@@ -994,6 +1017,7 @@ export type CourseSeasonShiftCreateWithoutShiftInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutShiftInput = {
@@ -1017,6 +1041,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutShiftInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutShiftInput = {
@@ -1087,6 +1112,7 @@ export type CourseSeasonShiftCreateWithoutCategoryInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutCategoryInput = {
@@ -1110,6 +1136,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutCategoryInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutCategoryInput = {
@@ -1159,6 +1186,7 @@ export type CourseSeasonShiftCreateWithoutCreatedByInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutCreatedByInput = {
@@ -1182,6 +1210,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutCreatedByInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutCreatedByInput = {
@@ -1215,6 +1244,7 @@ export type CourseSeasonShiftCreateWithoutUpdatedByInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutUpdatedByInput = {
@@ -1238,6 +1268,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutUpdatedByInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutUpdatedByInput = {
@@ -1303,6 +1334,7 @@ export type CourseSeasonShiftCreateWithoutCourseSeasonInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonInput = {
@@ -1326,6 +1358,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutCourseSeasonInput = {
@@ -1375,6 +1408,7 @@ export type CourseSeasonShiftCreateWithoutPausesInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutPausesInput = {
@@ -1398,6 +1432,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutPausesInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutPausesInput = {
@@ -1437,6 +1472,7 @@ export type CourseSeasonShiftUpdateWithoutPausesInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutPausesInput = {
@@ -1460,6 +1496,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutPausesInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateWithoutCourseSeasonStaffsInput = {
@@ -1483,6 +1520,7 @@ export type CourseSeasonShiftCreateWithoutCourseSeasonStaffsInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonStaffsInput = {
@@ -1506,6 +1544,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutCourseSeasonStaffsInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutCourseSeasonStaffsInput = {
@@ -1545,6 +1584,7 @@ export type CourseSeasonShiftUpdateWithoutCourseSeasonStaffsInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonStaffsInput = {
@@ -1568,6 +1608,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonStaffsInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateWithoutStudentMembershipsInput = {
@@ -1591,6 +1632,7 @@ export type CourseSeasonShiftCreateWithoutStudentMembershipsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutStudentMembershipsInput = {
@@ -1614,6 +1656,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutStudentMembershipsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutStudentMembershipsInput = {
@@ -1653,6 +1696,7 @@ export type CourseSeasonShiftUpdateWithoutStudentMembershipsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutStudentMembershipsInput = {
@@ -1676,6 +1720,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutStudentMembershipsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateWithoutCycleEnrollmentsInput = {
@@ -1699,6 +1744,7 @@ export type CourseSeasonShiftCreateWithoutCycleEnrollmentsInput = {
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutCycleEnrollmentsInput = {
@@ -1722,6 +1768,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutCycleEnrollmentsInput = {
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutCycleEnrollmentsInput = {
@@ -1761,6 +1808,7 @@ export type CourseSeasonShiftUpdateWithoutCycleEnrollmentsInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutCycleEnrollmentsInput = {
@@ -1781,6 +1829,119 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCycleEnrollmentsInput = {
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+}
+
+export type CourseSeasonShiftCreateWithoutProgressEvaluationsInput = {
+  id?: string
+  maxMembers: number
+  minMembers: number
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pauses?: Prisma.CourseSeasonPauseCreateNestedManyWithoutCourseSeasonShiftInput
+  category: Prisma.CategoryCreateNestedOneWithoutCourseSeasonShiftsInput
+  courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutShiftsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedCourseSeasonShiftsInput
+  shift: Prisma.ShiftCreateNestedOneWithoutCourseSeasonShiftsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedCourseSeasonShiftsInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffCreateNestedManyWithoutCourseSeasonShiftInput
+  cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
+  generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
+  sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
+  studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+}
+
+export type CourseSeasonShiftUncheckedCreateWithoutProgressEvaluationsInput = {
+  id?: string
+  courseSeasonId: string
+  shiftId: string
+  maxMembers: number
+  minMembers: number
+  categoryId: string
+  gender: $Enums.ProgramGender
+  minBirthYear?: number | null
+  maxBirthYear?: number | null
+  validateAge?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+  pauses?: Prisma.CourseSeasonPauseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+}
+
+export type CourseSeasonShiftCreateOrConnectWithoutProgressEvaluationsInput = {
+  where: Prisma.CourseSeasonShiftWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutProgressEvaluationsInput>
+}
+
+export type CourseSeasonShiftUpsertWithoutProgressEvaluationsInput = {
+  update: Prisma.XOR<Prisma.CourseSeasonShiftUpdateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedUpdateWithoutProgressEvaluationsInput>
+  create: Prisma.XOR<Prisma.CourseSeasonShiftCreateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedCreateWithoutProgressEvaluationsInput>
+  where?: Prisma.CourseSeasonShiftWhereInput
+}
+
+export type CourseSeasonShiftUpdateToOneWithWhereWithoutProgressEvaluationsInput = {
+  where?: Prisma.CourseSeasonShiftWhereInput
+  data: Prisma.XOR<Prisma.CourseSeasonShiftUpdateWithoutProgressEvaluationsInput, Prisma.CourseSeasonShiftUncheckedUpdateWithoutProgressEvaluationsInput>
+}
+
+export type CourseSeasonShiftUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pauses?: Prisma.CourseSeasonPauseUpdateManyWithoutCourseSeasonShiftNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutShiftsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedCourseSeasonShiftsNestedInput
+  shift?: Prisma.ShiftUpdateOneRequiredWithoutCourseSeasonShiftsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedCourseSeasonShiftsNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUpdateManyWithoutCourseSeasonShiftNestedInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
+  generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
+  sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
+  studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+}
+
+export type CourseSeasonShiftUncheckedUpdateWithoutProgressEvaluationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseSeasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  shiftId?: Prisma.StringFieldUpdateOperationsInput | string
+  maxMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  minMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumProgramGenderFieldUpdateOperationsInput | $Enums.ProgramGender
+  minBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxBirthYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  validateAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pauses?: Prisma.CourseSeasonPauseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  courseSeasonStaffs?: Prisma.CourseSeasonStaffUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  cycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
@@ -1807,6 +1968,7 @@ export type CourseSeasonShiftCreateWithoutGeneralEventsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutGeneralEventsInput = {
@@ -1830,6 +1992,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutGeneralEventsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   sessionCourses?: Prisma.SessionCourseUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutGeneralEventsInput = {
@@ -1869,6 +2032,7 @@ export type CourseSeasonShiftUpdateWithoutGeneralEventsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutGeneralEventsInput = {
@@ -1892,6 +2056,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutGeneralEventsInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateWithoutSessionCoursesInput = {
@@ -1915,6 +2080,7 @@ export type CourseSeasonShiftCreateWithoutSessionCoursesInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentCreateNestedManyWithoutCourseSeasonShiftInput
   generalEvents?: Prisma.GeneralEventCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftUncheckedCreateWithoutSessionCoursesInput = {
@@ -1938,6 +2104,7 @@ export type CourseSeasonShiftUncheckedCreateWithoutSessionCoursesInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   generalEvents?: Prisma.GeneralEventUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
   studentMemberships?: Prisma.StudentMembershipUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput
 }
 
 export type CourseSeasonShiftCreateOrConnectWithoutSessionCoursesInput = {
@@ -1977,6 +2144,7 @@ export type CourseSeasonShiftUpdateWithoutSessionCoursesInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUpdateManyWithoutCourseSeasonShiftNestedInput
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutSessionCoursesInput = {
@@ -2000,6 +2168,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutSessionCoursesInput = {
   cycleEnrollments?: Prisma.CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftCreateManyShiftInput = {
@@ -2040,6 +2209,7 @@ export type CourseSeasonShiftUpdateWithoutShiftInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutShiftInput = {
@@ -2063,6 +2233,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutShiftInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateManyWithoutShiftInput = {
@@ -2120,6 +2291,7 @@ export type CourseSeasonShiftUpdateWithoutCategoryInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutCategoryInput = {
@@ -2143,6 +2315,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCategoryInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateManyWithoutCategoryInput = {
@@ -2217,6 +2390,7 @@ export type CourseSeasonShiftUpdateWithoutCreatedByInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutCreatedByInput = {
@@ -2240,6 +2414,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCreatedByInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateManyWithoutCreatedByInput = {
@@ -2280,6 +2455,7 @@ export type CourseSeasonShiftUpdateWithoutUpdatedByInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutUpdatedByInput = {
@@ -2303,6 +2479,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutUpdatedByInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -2360,6 +2537,7 @@ export type CourseSeasonShiftUpdateWithoutCourseSeasonInput = {
   generalEvents?: Prisma.GeneralEventUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonInput = {
@@ -2383,6 +2561,7 @@ export type CourseSeasonShiftUncheckedUpdateWithoutCourseSeasonInput = {
   generalEvents?: Prisma.GeneralEventUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   sessionCourses?: Prisma.SessionCourseUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
   studentMemberships?: Prisma.StudentMembershipUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
+  progressEvaluations?: Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput
 }
 
 export type CourseSeasonShiftUncheckedUpdateManyWithoutCourseSeasonInput = {
@@ -2414,6 +2593,7 @@ export type CourseSeasonShiftCountOutputType = {
   generalEvents: number
   sessionCourses: number
   studentMemberships: number
+  progressEvaluations: number
 }
 
 export type CourseSeasonShiftCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2423,6 +2603,7 @@ export type CourseSeasonShiftCountOutputTypeSelect<ExtArgs extends runtime.Types
   generalEvents?: boolean | CourseSeasonShiftCountOutputTypeCountGeneralEventsArgs
   sessionCourses?: boolean | CourseSeasonShiftCountOutputTypeCountSessionCoursesArgs
   studentMemberships?: boolean | CourseSeasonShiftCountOutputTypeCountStudentMembershipsArgs
+  progressEvaluations?: boolean | CourseSeasonShiftCountOutputTypeCountProgressEvaluationsArgs
 }
 
 /**
@@ -2477,6 +2658,13 @@ export type CourseSeasonShiftCountOutputTypeCountStudentMembershipsArgs<ExtArgs 
   where?: Prisma.StudentMembershipWhereInput
 }
 
+/**
+ * CourseSeasonShiftCountOutputType without action
+ */
+export type CourseSeasonShiftCountOutputTypeCountProgressEvaluationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProgressEvaluationWhereInput
+}
+
 
 export type CourseSeasonShiftSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2505,6 +2693,7 @@ export type CourseSeasonShiftSelect<ExtArgs extends runtime.Types.Extensions.Int
   generalEvents?: boolean | Prisma.CourseSeasonShift$generalEventsArgs<ExtArgs>
   sessionCourses?: boolean | Prisma.CourseSeasonShift$sessionCoursesArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>
+  progressEvaluations?: boolean | Prisma.CourseSeasonShift$progressEvaluationsArgs<ExtArgs>
   _count?: boolean | Prisma.CourseSeasonShiftCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["courseSeasonShift"]>
 
@@ -2585,6 +2774,7 @@ export type CourseSeasonShiftInclude<ExtArgs extends runtime.Types.Extensions.In
   generalEvents?: boolean | Prisma.CourseSeasonShift$generalEventsArgs<ExtArgs>
   sessionCourses?: boolean | Prisma.CourseSeasonShift$sessionCoursesArgs<ExtArgs>
   studentMemberships?: boolean | Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>
+  progressEvaluations?: boolean | Prisma.CourseSeasonShift$progressEvaluationsArgs<ExtArgs>
   _count?: boolean | Prisma.CourseSeasonShiftCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CourseSeasonShiftIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2616,6 +2806,7 @@ export type $CourseSeasonShiftPayload<ExtArgs extends runtime.Types.Extensions.I
     generalEvents: Prisma.$GeneralEventPayload<ExtArgs>[]
     sessionCourses: Prisma.$SessionCoursePayload<ExtArgs>[]
     studentMemberships: Prisma.$StudentMembershipPayload<ExtArgs>[]
+    progressEvaluations: Prisma.$ProgressEvaluationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3038,6 +3229,7 @@ export interface Prisma__CourseSeasonShiftClient<T, Null = never, ExtArgs extend
   generalEvents<T extends Prisma.CourseSeasonShift$generalEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$generalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GeneralEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessionCourses<T extends Prisma.CourseSeasonShift$sessionCoursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$sessionCoursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionCoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentMemberships<T extends Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$studentMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  progressEvaluations<T extends Prisma.CourseSeasonShift$progressEvaluationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseSeasonShift$progressEvaluationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProgressEvaluationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3657,6 +3849,30 @@ export type CourseSeasonShift$studentMembershipsArgs<ExtArgs extends runtime.Typ
   take?: number
   skip?: number
   distinct?: Prisma.StudentMembershipScalarFieldEnum | Prisma.StudentMembershipScalarFieldEnum[]
+}
+
+/**
+ * CourseSeasonShift.progressEvaluations
+ */
+export type CourseSeasonShift$progressEvaluationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProgressEvaluation
+   */
+  select?: Prisma.ProgressEvaluationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProgressEvaluation
+   */
+  omit?: Prisma.ProgressEvaluationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProgressEvaluationInclude<ExtArgs> | null
+  where?: Prisma.ProgressEvaluationWhereInput
+  orderBy?: Prisma.ProgressEvaluationOrderByWithRelationInput | Prisma.ProgressEvaluationOrderByWithRelationInput[]
+  cursor?: Prisma.ProgressEvaluationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProgressEvaluationScalarFieldEnum | Prisma.ProgressEvaluationScalarFieldEnum[]
 }
 
 /**

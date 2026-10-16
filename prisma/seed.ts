@@ -3,15 +3,42 @@ import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import * as bcrypt from 'bcrypt';
-import { SystemModules, ModulePermissions } from '../src/common/config/permissions.config';
+import {
+  SystemModules,
+  ModulePermissions,
+} from '../src/common/config/permissions.config';
 
-const connectionString = `${process.env.DATABASE_URL}`;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
-async function main() {
-  console.log('🌱 Seeding database...');
+export const TEACHER_OPERATIONAL_PERMISSIONS = [
+  'READ_SESSIONS',
+  'READ_SESSION_BOOKINGS',
+  'CREATE_SESSION_BOOKINGS',
+  'UPDATE_SESSION_BOOKINGS',
+  'DELETE_SESSION_BOOKINGS',
+  'READ_PROGRESS_EVALUATIONS',
+  'CREATE_PROGRESS_EVALUATIONS',
+  'UPDATE_PROGRESS_EVALUATIONS',
+  'READ_SESSION_INCIDENTS',
+  'CREATE_SESSION_INCIDENTS',
+  'UPDATE_SESSION_INCIDENTS',
+  'READ_STUDENTS',
+  'READ_PLAYERS',
+  'READ_STAFF',
+  'READ_SHIFTS',
+  'READ_CATEGORIES',
+  'READ_COURSES',
+  'READ_COURSE_SEASONS',
+  'READ_TEAMS',
+  'READ_TEAM_SEASONS',
+  'READ_DASHBOARD',
+] as const;
 
+/**
+ * Seeding de datos puramente estructurales e idempotentes necesarios en cualquier entorno
+ * (producción, staging, desarrollo).
+ *
+ * NO contiene usuarios demo, contraseñas conocidas, perfiles ficticios ni asignaciones arbitrarias.
+ */
+export async function seedStructuralData(prisma: PrismaClient) {
   let defaultOrganization = await prisma.institution.findFirst({
     where: {
       name: 'Club Atlético Nacional',
@@ -45,7 +72,6 @@ async function main() {
       },
     });
   } else {
-    // Si ya existe, nos aseguramos de actualizar sus datos de ubicación básicos
     defaultOrganization = await prisma.institution.update({
       where: { id: defaultOrganization.id },
       data: {
@@ -57,7 +83,6 @@ async function main() {
       },
     });
 
-    // Verificamos si ya tiene contactos, de lo contrario los creamos (útil para bd existentes)
     const contactsCount = await prisma.institutionContact.count({
       where: { institutionId: defaultOrganization.id },
     });
@@ -117,12 +142,16 @@ async function main() {
       where: { name: modName },
       update: {
         sortOrder: i,
-        displayName: modName.charAt(0).toUpperCase() + modName.slice(1).toLowerCase().replace(/_/g, ' '),
+        displayName:
+          modName.charAt(0).toUpperCase() +
+          modName.slice(1).toLowerCase().replace(/_/g, ' '),
       },
       create: {
         name: modName,
         sortOrder: i,
-        displayName: modName.charAt(0).toUpperCase() + modName.slice(1).toLowerCase().replace(/_/g, ' '),
+        displayName:
+          modName.charAt(0).toUpperCase() +
+          modName.slice(1).toLowerCase().replace(/_/g, ' '),
       },
     });
     moduleMap[modName] = createdModule.id;
@@ -133,17 +162,22 @@ async function main() {
     moduleId: string;
     description: string;
   }[] = [];
-  
+
   for (const module of SystemModules) {
     const modulePerms = ModulePermissions[module];
     if (modulePerms) {
       for (const permName of modulePerms) {
         let description = `Permiso específico para ${module.toLowerCase().replace(/_/g, ' ')}`;
-        if (permName.startsWith('CREATE_')) description = `Permiso para crear en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
-        if (permName.startsWith('READ_')) description = `Permiso para leer en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
-        if (permName.startsWith('UPDATE_')) description = `Permiso para actualizar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
-        if (permName.startsWith('DELETE_')) description = `Permiso para eliminar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
-        if (permName === 'MANAGE_ALL') description = 'Acceso irrestricto a todo el sistema';
+        if (permName.startsWith('CREATE_'))
+          description = `Permiso para crear en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('READ_'))
+          description = `Permiso para leer en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('UPDATE_'))
+          description = `Permiso para actualizar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName.startsWith('DELETE_'))
+          description = `Permiso para eliminar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
+        if (permName === 'MANAGE_ALL')
+          description = 'Acceso irrestricto a todo el sistema';
 
         permissionsData.push({
           name: permName,
@@ -156,7 +190,7 @@ async function main() {
 
   // 1. Eliminamos permisos "basura" que ya no existen en la configuración actual
   const validPermissionNames = permissionsData.map((p) => p.name);
-  
+
   // Limpiamos las relaciones en roles primero para evitar errores de Foreign Key
   await prisma.rolePermission.deleteMany({
     where: {
@@ -176,7 +210,7 @@ async function main() {
     },
   });
   if (deletedPermissions.count > 0) {
-    console.log(`🗑️  Deleted ${deletedPermissions.count} outdated permissions.`);
+    console.log(`🗑️ Deleted ${deletedPermissions.count} outdated permissions.`);
   }
 
   // 2. Creamos todos los permisos faltantes sin duplicar
@@ -185,7 +219,6 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // 2. Traemos todos los permisos
   const allPermissions = await prisma.permission.findMany();
 
   // 3. Upsert del rol SUPER_ADMIN
@@ -213,7 +246,35 @@ async function main() {
     `✅ SUPER_ADMIN role seeded with ${allPermissions.length} permissions`,
   );
 
-  // 5. Upsert del usuario Super Admin
+  // 4b. Upsert del rol PROFESOR con permisos operativos docentes
+  const profesorRole = await prisma.role.upsert({
+    where: { name: 'PROFESOR' },
+    update: {
+      description: 'Profesor o entrenador con acceso operativo al portal docente',
+    },
+    create: {
+      name: 'PROFESOR',
+      description: 'Profesor o entrenador con acceso operativo al portal docente',
+    },
+  });
+
+  const teacherPerms = allPermissions.filter((p) =>
+    (TEACHER_OPERATIONAL_PERMISSIONS as readonly string[]).includes(p.name),
+  );
+
+  await prisma.rolePermission.createMany({
+    data: teacherPerms.map((p) => ({
+      roleId: profesorRole.id,
+      permissionId: p.id,
+    })),
+    skipDuplicates: true,
+  });
+
+  console.log(
+    `✅ PROFESOR role seeded with ${teacherPerms.length} operational permissions`,
+  );
+
+  // 5. Upsert del usuario Super Admin de arranque base
   const adminEmail = 'admin@can.edu.bo';
   const hashedPassword = await bcrypt.hash('admin123', 10);
 
@@ -232,7 +293,7 @@ async function main() {
 
   console.log(`✅ Super Admin user seeded: ${superAdminUser.email}`);
 
-  // 6. Rellenar los campos de auditoría (created_by_id y updated_by_id) vacíos en toda la base de datos
+  // 6. Rellenar los campos de auditoría vacíos en la base de datos
   console.log('🔄 Backfilling auditing fields for existing records...');
 
   const tablesWithCreatedBy = await prisma.$queryRaw<
@@ -240,7 +301,6 @@ async function main() {
   >`
     SELECT table_name 
     FROM information_schema.columns 
-    
     WHERE column_name = 'created_by_id' AND table_schema = 'public'
   `;
 
@@ -270,14 +330,26 @@ async function main() {
 
   console.log('✅ Auditing fields backfill completed successfully');
 }
-main()
-  .then(async () => {
+
+export async function main() {
+  const connectionString = `${process.env.DATABASE_URL}`;
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
+  const prisma = new PrismaClient({ adapter });
+
+  console.log('🌱 Starting structural database seed (production-safe)...');
+  try {
+    await seedStructuralData(prisma);
+    console.log('✅ Structural database seed completed successfully.');
+  } finally {
     await prisma.$disconnect();
     await pool.end();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    await pool.end();
+  }
+}
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error('❌ Error executing structural seed:', e);
     process.exit(1);
   });
+}

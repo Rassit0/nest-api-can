@@ -33,6 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         isActive: true,
         email: true,
         roleId: true,
+        personId: true,
       },
     });
 
@@ -48,6 +49,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       email: user.email,
       isActive: user.isActive,
       roleId: user.roleId, // Utilizar roleId de la BD y no del payload
+      personId: user.personId,
     };
   }
 }

@@ -954,7 +954,8 @@ model CourseSeasonShift {
   cycleEnrollments   CycleEnrollment[]
   generalEvents      GeneralEvent[]
   sessionCourses     SessionCourse[]
-  studentMemberships StudentMembership[]
+  studentMemberships  StudentMembership[]
+  progressEvaluations ProgressEvaluation[]
 
   @@unique([courseSeasonId, shiftId])
   @@unique([id, courseSeasonId])
@@ -1214,28 +1215,34 @@ model SessionIncident {
 }
 
 model ProgressEvaluation {
-  id               String   @id @default(uuid())
-  playerId         String?  @map("player_id")
-  studentId        String?  @map("student_id")
-  evaluatorStaffId String   @map("evaluator_staff_id")
-  seasonId         String   @map("season_id")
-  evaluationDate   DateTime @map("evaluation_date")
-  technicalScore   Int?     @map("technical_score")
-  tacticalScore    Int?     @map("tactical_score")
-  physicalScore    Int?     @map("physical_score")
-  behaviorScore    Int?     @map("behavior_score")
-  notes            String?
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
-  createdById      String?  @map("created_by_id")
-  updatedById      String?  @map("updated_by_id")
-  createdBy        User?    @relation("CreatedBy", fields: [createdById], references: [id])
-  evaluatorStaff   Staff    @relation(fields: [evaluatorStaffId], references: [id])
-  player           Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  season           Season   @relation(fields: [seasonId], references: [id])
-  student          Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  updatedBy        User?    @relation("UpdatedBy", fields: [updatedById], references: [id])
+  id                   String              @id @default(uuid())
+  playerId             String?             @map("player_id")
+  studentId            String?             @map("student_id")
+  courseSeasonShiftId  String?             @map("course_season_shift_id")
+  teamSeasonCategoryId String?             @map("team_season_category_id")
+  evaluatorStaffId     String              @map("evaluator_staff_id")
+  seasonId             String              @map("season_id")
+  evaluationDate       DateTime            @map("evaluation_date")
+  technicalScore       Int?                @map("technical_score")
+  tacticalScore        Int?                @map("tactical_score")
+  physicalScore        Int?                @map("physical_score")
+  behaviorScore        Int?                @map("behavior_score")
+  notes                String?
+  createdAt            DateTime            @default(now()) @map("created_at")
+  updatedAt            DateTime            @updatedAt @map("updated_at")
+  createdById          String?             @map("created_by_id")
+  updatedById          String?             @map("updated_by_id")
+  createdBy            User?               @relation("CreatedBy", fields: [createdById], references: [id])
+  evaluatorStaff       Staff               @relation(fields: [evaluatorStaffId], references: [id])
+  player               Player?             @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  season               Season              @relation(fields: [seasonId], references: [id])
+  student              Student?            @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  updatedBy            User?               @relation("UpdatedBy", fields: [updatedById], references: [id])
+  courseSeasonShift    CourseSeasonShift?  @relation(fields: [courseSeasonShiftId], references: [id])
+  teamSeasonCategory   TeamSeasonCategory? @relation(fields: [teamSeasonCategoryId], references: [id])
 
+  @@index([courseSeasonShiftId, studentId, evaluationDate(sort: Desc)])
+  @@index([teamSeasonCategoryId, playerId, evaluationDate(sort: Desc)])
   @@map("progress_evaluations")
 }
 
@@ -1629,7 +1636,8 @@ model TeamSeasonCategory {
   sessions          SessionTeam[]
   category          Category                 @relation(fields: [categoryId], references: [id])
   teamSeason        TeamSeason               @relation(fields: [teamSeasonId], references: [id], onDelete: Cascade)
-  teamSeasonStaffs  TeamSeasonStaff[]
+  teamSeasonStaffs    TeamSeasonStaff[]
+  progressEvaluations ProgressEvaluation[]
 
   @@unique([id, teamSeasonId])
   @@unique([teamSeasonId, categoryId, gender])

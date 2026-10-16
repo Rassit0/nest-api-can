@@ -44,6 +44,8 @@ export type ProgressEvaluationMinAggregateOutputType = {
   id: string | null
   playerId: string | null
   studentId: string | null
+  courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
   evaluatorStaffId: string | null
   seasonId: string | null
   evaluationDate: Date | null
@@ -62,6 +64,8 @@ export type ProgressEvaluationMaxAggregateOutputType = {
   id: string | null
   playerId: string | null
   studentId: string | null
+  courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
   evaluatorStaffId: string | null
   seasonId: string | null
   evaluationDate: Date | null
@@ -80,6 +84,8 @@ export type ProgressEvaluationCountAggregateOutputType = {
   id: number
   playerId: number
   studentId: number
+  courseSeasonShiftId: number
+  teamSeasonCategoryId: number
   evaluatorStaffId: number
   seasonId: number
   evaluationDate: number
@@ -114,6 +120,8 @@ export type ProgressEvaluationMinAggregateInputType = {
   id?: true
   playerId?: true
   studentId?: true
+  courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
   evaluatorStaffId?: true
   seasonId?: true
   evaluationDate?: true
@@ -132,6 +140,8 @@ export type ProgressEvaluationMaxAggregateInputType = {
   id?: true
   playerId?: true
   studentId?: true
+  courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
   evaluatorStaffId?: true
   seasonId?: true
   evaluationDate?: true
@@ -150,6 +160,8 @@ export type ProgressEvaluationCountAggregateInputType = {
   id?: true
   playerId?: true
   studentId?: true
+  courseSeasonShiftId?: true
+  teamSeasonCategoryId?: true
   evaluatorStaffId?: true
   seasonId?: true
   evaluationDate?: true
@@ -255,6 +267,8 @@ export type ProgressEvaluationGroupByOutputType = {
   id: string
   playerId: string | null
   studentId: string | null
+  courseSeasonShiftId: string | null
+  teamSeasonCategoryId: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date
@@ -296,6 +310,8 @@ export type ProgressEvaluationWhereInput = {
   id?: Prisma.StringFilter<"ProgressEvaluation"> | string
   playerId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   studentId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   evaluatorStaffId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   seasonId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   evaluationDate?: Prisma.DateTimeFilter<"ProgressEvaluation"> | Date | string
@@ -314,12 +330,16 @@ export type ProgressEvaluationWhereInput = {
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryNullableScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput> | null
 }
 
 export type ProgressEvaluationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrderInput | Prisma.SortOrder
   studentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   evaluatorStaffId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   evaluationDate?: Prisma.SortOrder
@@ -338,6 +358,8 @@ export type ProgressEvaluationOrderByWithRelationInput = {
   season?: Prisma.SeasonOrderByWithRelationInput
   student?: Prisma.StudentOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftOrderByWithRelationInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryOrderByWithRelationInput
 }
 
 export type ProgressEvaluationWhereUniqueInput = Prisma.AtLeast<{
@@ -347,6 +369,8 @@ export type ProgressEvaluationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProgressEvaluationWhereInput | Prisma.ProgressEvaluationWhereInput[]
   playerId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   studentId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   evaluatorStaffId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   seasonId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   evaluationDate?: Prisma.DateTimeFilter<"ProgressEvaluation"> | Date | string
@@ -365,12 +389,16 @@ export type ProgressEvaluationWhereUniqueInput = Prisma.AtLeast<{
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  courseSeasonShift?: Prisma.XOR<Prisma.CourseSeasonShiftNullableScalarRelationFilter, Prisma.CourseSeasonShiftWhereInput> | null
+  teamSeasonCategory?: Prisma.XOR<Prisma.TeamSeasonCategoryNullableScalarRelationFilter, Prisma.TeamSeasonCategoryWhereInput> | null
 }, "id">
 
 export type ProgressEvaluationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrderInput | Prisma.SortOrder
   studentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   evaluatorStaffId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   evaluationDate?: Prisma.SortOrder
@@ -397,6 +425,8 @@ export type ProgressEvaluationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ProgressEvaluation"> | string
   playerId?: Prisma.StringNullableWithAggregatesFilter<"ProgressEvaluation"> | string | null
   studentId?: Prisma.StringNullableWithAggregatesFilter<"ProgressEvaluation"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableWithAggregatesFilter<"ProgressEvaluation"> | string | null
+  teamSeasonCategoryId?: Prisma.StringNullableWithAggregatesFilter<"ProgressEvaluation"> | string | null
   evaluatorStaffId?: Prisma.StringWithAggregatesFilter<"ProgressEvaluation"> | string
   seasonId?: Prisma.StringWithAggregatesFilter<"ProgressEvaluation"> | string
   evaluationDate?: Prisma.DateTimeWithAggregatesFilter<"ProgressEvaluation"> | Date | string
@@ -427,12 +457,16 @@ export type ProgressEvaluationCreateInput = {
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -463,12 +497,16 @@ export type ProgressEvaluationUpdateInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -487,6 +525,8 @@ export type ProgressEvaluationCreateManyInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -517,6 +557,8 @@ export type ProgressEvaluationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -545,6 +587,8 @@ export type ProgressEvaluationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
   evaluatorStaffId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   evaluationDate?: Prisma.SortOrder
@@ -570,6 +614,8 @@ export type ProgressEvaluationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
   evaluatorStaffId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   evaluationDate?: Prisma.SortOrder
@@ -588,6 +634,8 @@ export type ProgressEvaluationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  courseSeasonShiftId?: Prisma.SortOrder
+  teamSeasonCategoryId?: Prisma.SortOrder
   evaluatorStaffId?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   evaluationDate?: Prisma.SortOrder
@@ -819,6 +867,48 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
 }
 
+export type ProgressEvaluationCreateNestedManyWithoutCourseSeasonShiftInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInputEnvelope
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+}
+
+export type ProgressEvaluationUncheckedCreateNestedManyWithoutCourseSeasonShiftInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInputEnvelope
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+}
+
+export type ProgressEvaluationUpdateManyWithoutCourseSeasonShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput[]
+  upsert?: Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInputEnvelope
+  set?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  disconnect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  delete?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  update?: Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  updateMany?: Prisma.ProgressEvaluationUpdateManyWithWhereWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpdateManyWithWhereWithoutCourseSeasonShiftInput[]
+  deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
+}
+
+export type ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftNestedInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput> | Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput[]
+  upsert?: Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInputEnvelope
+  set?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  disconnect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  delete?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  update?: Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutCourseSeasonShiftInput[]
+  updateMany?: Prisma.ProgressEvaluationUpdateManyWithWhereWithoutCourseSeasonShiftInput | Prisma.ProgressEvaluationUpdateManyWithWhereWithoutCourseSeasonShiftInput[]
+  deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
+}
+
 export type ProgressEvaluationCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutStudentInput, Prisma.ProgressEvaluationUncheckedCreateWithoutStudentInput> | Prisma.ProgressEvaluationCreateWithoutStudentInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutStudentInput | Prisma.ProgressEvaluationCreateOrConnectWithoutStudentInput[]
@@ -861,6 +951,48 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutStudentNestedInput = {
   deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
 }
 
+export type ProgressEvaluationCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+}
+
+export type ProgressEvaluationUncheckedCreateNestedManyWithoutTeamSeasonCategoryInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInputEnvelope
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+}
+
+export type ProgressEvaluationUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  disconnect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  delete?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  update?: Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.ProgressEvaluationUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
+}
+
+export type ProgressEvaluationUncheckedUpdateManyWithoutTeamSeasonCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput> | Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput[] | Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput[]
+  connectOrCreate?: Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput[]
+  upsert?: Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  createMany?: Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInputEnvelope
+  set?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  disconnect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  delete?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  connect?: Prisma.ProgressEvaluationWhereUniqueInput | Prisma.ProgressEvaluationWhereUniqueInput[]
+  update?: Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput[]
+  updateMany?: Prisma.ProgressEvaluationUpdateManyWithWhereWithoutTeamSeasonCategoryInput | Prisma.ProgressEvaluationUpdateManyWithWhereWithoutTeamSeasonCategoryInput[]
+  deleteMany?: Prisma.ProgressEvaluationScalarWhereInput | Prisma.ProgressEvaluationScalarWhereInput[]
+}
+
 export type ProgressEvaluationCreateWithoutSeasonInput = {
   id?: string
   evaluationDate: Date | string
@@ -876,12 +1008,16 @@ export type ProgressEvaluationCreateWithoutSeasonInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutSeasonInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   evaluationDate: Date | string
   technicalScore?: number | null
@@ -928,6 +1064,8 @@ export type ProgressEvaluationScalarWhereInput = {
   id?: Prisma.StringFilter<"ProgressEvaluation"> | string
   playerId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   studentId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  courseSeasonShiftId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
+  teamSeasonCategoryId?: Prisma.StringNullableFilter<"ProgressEvaluation"> | string | null
   evaluatorStaffId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   seasonId?: Prisma.StringFilter<"ProgressEvaluation"> | string
   evaluationDate?: Prisma.DateTimeFilter<"ProgressEvaluation"> | Date | string
@@ -957,11 +1095,15 @@ export type ProgressEvaluationCreateWithoutPlayerInput = {
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutPlayerInput = {
   id?: string
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1017,12 +1159,16 @@ export type ProgressEvaluationCreateWithoutEvaluatorStaffInput = {
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutEvaluatorStaffInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   seasonId: string
   evaluationDate: Date | string
   technicalScore?: number | null
@@ -1077,12 +1223,16 @@ export type ProgressEvaluationCreateWithoutCreatedByInput = {
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutCreatedByInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1121,12 +1271,16 @@ export type ProgressEvaluationCreateWithoutUpdatedByInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutUpdatedByInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1182,6 +1336,70 @@ export type ProgressEvaluationUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.ProgressEvaluationUpdateManyMutationInput, Prisma.ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
+export type ProgressEvaluationCreateWithoutCourseSeasonShiftInput = {
+  id?: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
+}
+
+export type ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput = {
+  id?: string
+  playerId?: string | null
+  studentId?: string | null
+  teamSeasonCategoryId?: string | null
+  evaluatorStaffId: string
+  seasonId: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type ProgressEvaluationCreateOrConnectWithoutCourseSeasonShiftInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput>
+}
+
+export type ProgressEvaluationCreateManyCourseSeasonShiftInputEnvelope = {
+  data: Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInput | Prisma.ProgressEvaluationCreateManyCourseSeasonShiftInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProgressEvaluationUpsertWithWhereUniqueWithoutCourseSeasonShiftInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProgressEvaluationUpdateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedUpdateWithoutCourseSeasonShiftInput>
+  create: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedCreateWithoutCourseSeasonShiftInput>
+}
+
+export type ProgressEvaluationUpdateWithWhereUniqueWithoutCourseSeasonShiftInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProgressEvaluationUpdateWithoutCourseSeasonShiftInput, Prisma.ProgressEvaluationUncheckedUpdateWithoutCourseSeasonShiftInput>
+}
+
+export type ProgressEvaluationUpdateManyWithWhereWithoutCourseSeasonShiftInput = {
+  where: Prisma.ProgressEvaluationScalarWhereInput
+  data: Prisma.XOR<Prisma.ProgressEvaluationUpdateManyMutationInput, Prisma.ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftInput>
+}
+
 export type ProgressEvaluationCreateWithoutStudentInput = {
   id?: string
   evaluationDate: Date | string
@@ -1197,11 +1415,15 @@ export type ProgressEvaluationCreateWithoutStudentInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
   season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryCreateNestedOneWithoutProgressEvaluationsInput
 }
 
 export type ProgressEvaluationUncheckedCreateWithoutStudentInput = {
   id?: string
   playerId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1242,10 +1464,76 @@ export type ProgressEvaluationUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.ProgressEvaluationUpdateManyMutationInput, Prisma.ProgressEvaluationUncheckedUpdateManyWithoutStudentInput>
 }
 
+export type ProgressEvaluationCreateWithoutTeamSeasonCategoryInput = {
+  id?: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedProgressEvaluationsInput
+  evaluatorStaff: Prisma.StaffCreateNestedOneWithoutProgressEvaluationsInput
+  player?: Prisma.PlayerCreateNestedOneWithoutProgressEvaluationsInput
+  season: Prisma.SeasonCreateNestedOneWithoutProgressEvaluationsInput
+  student?: Prisma.StudentCreateNestedOneWithoutProgressEvaluationsInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedProgressEvaluationsInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftCreateNestedOneWithoutProgressEvaluationsInput
+}
+
+export type ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput = {
+  id?: string
+  playerId?: string | null
+  studentId?: string | null
+  courseSeasonShiftId?: string | null
+  evaluatorStaffId: string
+  seasonId: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type ProgressEvaluationCreateOrConnectWithoutTeamSeasonCategoryInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput>
+}
+
+export type ProgressEvaluationCreateManyTeamSeasonCategoryInputEnvelope = {
+  data: Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInput | Prisma.ProgressEvaluationCreateManyTeamSeasonCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProgressEvaluationUpsertWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProgressEvaluationUpdateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedUpdateWithoutTeamSeasonCategoryInput>
+  create: Prisma.XOR<Prisma.ProgressEvaluationCreateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedCreateWithoutTeamSeasonCategoryInput>
+}
+
+export type ProgressEvaluationUpdateWithWhereUniqueWithoutTeamSeasonCategoryInput = {
+  where: Prisma.ProgressEvaluationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProgressEvaluationUpdateWithoutTeamSeasonCategoryInput, Prisma.ProgressEvaluationUncheckedUpdateWithoutTeamSeasonCategoryInput>
+}
+
+export type ProgressEvaluationUpdateManyWithWhereWithoutTeamSeasonCategoryInput = {
+  where: Prisma.ProgressEvaluationScalarWhereInput
+  data: Prisma.XOR<Prisma.ProgressEvaluationUpdateManyMutationInput, Prisma.ProgressEvaluationUncheckedUpdateManyWithoutTeamSeasonCategoryInput>
+}
+
 export type ProgressEvaluationCreateManySeasonInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   evaluationDate: Date | string
   technicalScore?: number | null
@@ -1274,12 +1562,16 @@ export type ProgressEvaluationUpdateWithoutSeasonInput = {
   player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1297,6 +1589,8 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1313,6 +1607,8 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutSeasonInput = {
 export type ProgressEvaluationCreateManyPlayerInput = {
   id?: string
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1342,11 +1638,15 @@ export type ProgressEvaluationUpdateWithoutPlayerInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1364,6 +1664,8 @@ export type ProgressEvaluationUncheckedUpdateWithoutPlayerInput = {
 export type ProgressEvaluationUncheckedUpdateManyWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1382,6 +1684,8 @@ export type ProgressEvaluationCreateManyEvaluatorStaffInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   seasonId: string
   evaluationDate: Date | string
   technicalScore?: number | null
@@ -1410,12 +1714,16 @@ export type ProgressEvaluationUpdateWithoutEvaluatorStaffInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutEvaluatorStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1433,6 +1741,8 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutEvaluatorStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1450,6 +1760,8 @@ export type ProgressEvaluationCreateManyCreatedByInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1467,6 +1779,8 @@ export type ProgressEvaluationCreateManyUpdatedByInput = {
   id?: string
   playerId?: string | null
   studentId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1495,12 +1809,16 @@ export type ProgressEvaluationUpdateWithoutCreatedByInput = {
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1518,6 +1836,8 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1546,12 +1866,16 @@ export type ProgressEvaluationUpdateWithoutUpdatedByInput = {
   player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1569,6 +1893,8 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1582,9 +1908,87 @@ export type ProgressEvaluationUncheckedUpdateManyWithoutUpdatedByInput = {
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
+export type ProgressEvaluationCreateManyCourseSeasonShiftInput = {
+  id?: string
+  playerId?: string | null
+  studentId?: string | null
+  teamSeasonCategoryId?: string | null
+  evaluatorStaffId: string
+  seasonId: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type ProgressEvaluationUpdateWithoutCourseSeasonShiftInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
+}
+
+export type ProgressEvaluationUncheckedUpdateWithoutCourseSeasonShiftInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProgressEvaluationUncheckedUpdateManyWithoutCourseSeasonShiftInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type ProgressEvaluationCreateManyStudentInput = {
   id?: string
   playerId?: string | null
+  courseSeasonShiftId?: string | null
+  teamSeasonCategoryId?: string | null
   evaluatorStaffId: string
   seasonId: string
   evaluationDate: Date | string
@@ -1614,11 +2018,15 @@ export type ProgressEvaluationUpdateWithoutStudentInput = {
   player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
   season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+  teamSeasonCategory?: Prisma.TeamSeasonCategoryUpdateOneWithoutProgressEvaluationsNestedInput
 }
 
 export type ProgressEvaluationUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1636,6 +2044,84 @@ export type ProgressEvaluationUncheckedUpdateWithoutStudentInput = {
 export type ProgressEvaluationUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teamSeasonCategoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProgressEvaluationCreateManyTeamSeasonCategoryInput = {
+  id?: string
+  playerId?: string | null
+  studentId?: string | null
+  courseSeasonShiftId?: string | null
+  evaluatorStaffId: string
+  seasonId: string
+  evaluationDate: Date | string
+  technicalScore?: number | null
+  tacticalScore?: number | null
+  physicalScore?: number | null
+  behaviorScore?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdById?: string | null
+  updatedById?: string | null
+}
+
+export type ProgressEvaluationUpdateWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedProgressEvaluationsNestedInput
+  evaluatorStaff?: Prisma.StaffUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutProgressEvaluationsNestedInput
+  season?: Prisma.SeasonUpdateOneRequiredWithoutProgressEvaluationsNestedInput
+  student?: Prisma.StudentUpdateOneWithoutProgressEvaluationsNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedProgressEvaluationsNestedInput
+  courseSeasonShift?: Prisma.CourseSeasonShiftUpdateOneWithoutProgressEvaluationsNestedInput
+}
+
+export type ProgressEvaluationUncheckedUpdateWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tacticalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  physicalScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  behaviorScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProgressEvaluationUncheckedUpdateManyWithoutTeamSeasonCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseSeasonShiftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   evaluatorStaffId?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   evaluationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1656,6 +2142,8 @@ export type ProgressEvaluationSelect<ExtArgs extends runtime.Types.Extensions.In
   id?: boolean
   playerId?: boolean
   studentId?: boolean
+  courseSeasonShiftId?: boolean
+  teamSeasonCategoryId?: boolean
   evaluatorStaffId?: boolean
   seasonId?: boolean
   evaluationDate?: boolean
@@ -1674,12 +2162,16 @@ export type ProgressEvaluationSelect<ExtArgs extends runtime.Types.Extensions.In
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
 export type ProgressEvaluationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
   studentId?: boolean
+  courseSeasonShiftId?: boolean
+  teamSeasonCategoryId?: boolean
   evaluatorStaffId?: boolean
   seasonId?: boolean
   evaluationDate?: boolean
@@ -1698,12 +2190,16 @@ export type ProgressEvaluationSelectCreateManyAndReturn<ExtArgs extends runtime.
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
 export type ProgressEvaluationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playerId?: boolean
   studentId?: boolean
+  courseSeasonShiftId?: boolean
+  teamSeasonCategoryId?: boolean
   evaluatorStaffId?: boolean
   seasonId?: boolean
   evaluationDate?: boolean
@@ -1722,12 +2218,16 @@ export type ProgressEvaluationSelectUpdateManyAndReturn<ExtArgs extends runtime.
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }, ExtArgs["result"]["progressEvaluation"]>
 
 export type ProgressEvaluationSelectScalar = {
   id?: boolean
   playerId?: boolean
   studentId?: boolean
+  courseSeasonShiftId?: boolean
+  teamSeasonCategoryId?: boolean
   evaluatorStaffId?: boolean
   seasonId?: boolean
   evaluationDate?: boolean
@@ -1742,7 +2242,7 @@ export type ProgressEvaluationSelectScalar = {
   updatedById?: boolean
 }
 
-export type ProgressEvaluationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "studentId" | "evaluatorStaffId" | "seasonId" | "evaluationDate" | "technicalScore" | "tacticalScore" | "physicalScore" | "behaviorScore" | "notes" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["progressEvaluation"]>
+export type ProgressEvaluationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "studentId" | "courseSeasonShiftId" | "teamSeasonCategoryId" | "evaluatorStaffId" | "seasonId" | "evaluationDate" | "technicalScore" | "tacticalScore" | "physicalScore" | "behaviorScore" | "notes" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["progressEvaluation"]>
 export type ProgressEvaluationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
   evaluatorStaff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
@@ -1750,6 +2250,8 @@ export type ProgressEvaluationInclude<ExtArgs extends runtime.Types.Extensions.I
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }
 export type ProgressEvaluationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
@@ -1758,6 +2260,8 @@ export type ProgressEvaluationIncludeCreateManyAndReturn<ExtArgs extends runtime
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }
 export type ProgressEvaluationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.ProgressEvaluation$createdByArgs<ExtArgs>
@@ -1766,6 +2270,8 @@ export type ProgressEvaluationIncludeUpdateManyAndReturn<ExtArgs extends runtime
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   student?: boolean | Prisma.ProgressEvaluation$studentArgs<ExtArgs>
   updatedBy?: boolean | Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>
+  courseSeasonShift?: boolean | Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>
+  teamSeasonCategory?: boolean | Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>
 }
 
 export type $ProgressEvaluationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1777,11 +2283,15 @@ export type $ProgressEvaluationPayload<ExtArgs extends runtime.Types.Extensions.
     season: Prisma.$SeasonPayload<ExtArgs>
     student: Prisma.$StudentPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
+    courseSeasonShift: Prisma.$CourseSeasonShiftPayload<ExtArgs> | null
+    teamSeasonCategory: Prisma.$TeamSeasonCategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     playerId: string | null
     studentId: string | null
+    courseSeasonShiftId: string | null
+    teamSeasonCategoryId: string | null
     evaluatorStaffId: string
     seasonId: string
     evaluationDate: Date
@@ -2194,6 +2704,8 @@ export interface Prisma__ProgressEvaluationClient<T, Null = never, ExtArgs exten
   season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.ProgressEvaluation$studentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$studentArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.ProgressEvaluation$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  courseSeasonShift<T extends Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$courseSeasonShiftArgs<ExtArgs>>): Prisma.Prisma__CourseSeasonShiftClient<runtime.Types.Result.GetResult<Prisma.$CourseSeasonShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teamSeasonCategory<T extends Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs>>): Prisma.Prisma__TeamSeasonCategoryClient<runtime.Types.Result.GetResult<Prisma.$TeamSeasonCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2226,6 +2738,8 @@ export interface ProgressEvaluationFieldRefs {
   readonly id: Prisma.FieldRef<"ProgressEvaluation", 'String'>
   readonly playerId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
   readonly studentId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
+  readonly courseSeasonShiftId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
+  readonly teamSeasonCategoryId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
   readonly evaluatorStaffId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
   readonly seasonId: Prisma.FieldRef<"ProgressEvaluation", 'String'>
   readonly evaluationDate: Prisma.FieldRef<"ProgressEvaluation", 'DateTime'>
@@ -2707,6 +3221,44 @@ export type ProgressEvaluation$updatedByArgs<ExtArgs extends runtime.Types.Exten
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * ProgressEvaluation.courseSeasonShift
+ */
+export type ProgressEvaluation$courseSeasonShiftArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CourseSeasonShift
+   */
+  select?: Prisma.CourseSeasonShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CourseSeasonShift
+   */
+  omit?: Prisma.CourseSeasonShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseSeasonShiftInclude<ExtArgs> | null
+  where?: Prisma.CourseSeasonShiftWhereInput
+}
+
+/**
+ * ProgressEvaluation.teamSeasonCategory
+ */
+export type ProgressEvaluation$teamSeasonCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeamSeasonCategory
+   */
+  select?: Prisma.TeamSeasonCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeamSeasonCategory
+   */
+  omit?: Prisma.TeamSeasonCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamSeasonCategoryInclude<ExtArgs> | null
+  where?: Prisma.TeamSeasonCategoryWhereInput
 }
 
 /**

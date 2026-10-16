@@ -7242,6 +7242,8 @@ export const ProgressEvaluationScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
   studentId: 'studentId',
+  courseSeasonShiftId: 'courseSeasonShiftId',
+  teamSeasonCategoryId: 'teamSeasonCategoryId',
   evaluatorStaffId: 'evaluatorStaffId',
   seasonId: 'seasonId',
   evaluationDate: 'evaluationDate',

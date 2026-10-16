@@ -50,6 +50,42 @@ export class CreateProgressEvaluationDto {
   })
   studentId?: string | null;
 
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID del turno escolar evaluado (CourseSeasonShift)',
+    nullable: true,
+  })
+  @IsOptional()
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'courseSeasonShiftId',
+    }),
+  })
+  @Exists('courseSeasonShift', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'courseSeasonShiftId',
+    }),
+  })
+  courseSeasonShiftId?: string | null;
+
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'ID de la categoría de equipo evaluada (TeamSeasonCategory)',
+    nullable: true,
+  })
+  @IsOptional()
+  @IsUUID('4', {
+    message: i18nValidationMessage('validation.IS_UUID', {
+      constraint1: 'teamSeasonCategoryId',
+    }),
+  })
+  @Exists('teamSeasonCategory', 'id', {
+    message: i18nValidationMessage('validation.NOT_EXISTS', {
+      constraint1: 'teamSeasonCategoryId',
+    }),
+  })
+  teamSeasonCategoryId?: string | null;
+
   @ApiProperty({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'ID del evaluador (Staff/Profesor)',
@@ -71,10 +107,11 @@ export class CreateProgressEvaluationDto {
   })
   evaluatorStaffId: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'ID de la temporada evaluada (Season)',
+    description: 'ID de la temporada evaluada (Season). Si se omite, se deriva del grupo.',
   })
+  @IsOptional()
   @IsUUID('4', {
     message: i18nValidationMessage('validation.IS_UUID', {
       constraint1: 'seasonId',
@@ -85,12 +122,7 @@ export class CreateProgressEvaluationDto {
       constraint1: 'seasonId',
     }),
   })
-  @IsNotEmpty({
-    message: i18nValidationMessage('validation.IS_NOT_EMPTY', {
-      constraint1: 'seasonId',
-    }),
-  })
-  seasonId: string;
+  seasonId?: string;
 
   @ApiProperty({
     example: '2026-06-30T00:00:00.000Z',

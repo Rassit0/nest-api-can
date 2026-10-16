@@ -8,5 +8,6 @@ import { EventsModule } from 'src/events/events.module';
   imports: [EventsModule],
   controllers: [SessionsController],
   providers: [SessionsService, PrismaService],
+  exports: [SessionsService],
 })
 export class SessionsModule {}
