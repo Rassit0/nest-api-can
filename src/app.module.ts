@@ -44,6 +44,7 @@ import { PublicModule } from './public/public.module';
 import { AccountingDashboardModule } from './accounting-dashboard/accounting-dashboard.module';
 import { AccountingAnalyticsModule } from './accounting-analytics/accounting-analytics.module';
 import { ReportsModule } from './reports/reports.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 // Nuevos módulos Escolares
 import { SchoolsModule } from './schools/schools.module';
@@ -167,6 +168,7 @@ import { CompaniesModule } from './companies/companies.module';
     HomeDisciplinesModule,
     InstitutionHistoryModule,
     CompaniesModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaExceptionFilter],

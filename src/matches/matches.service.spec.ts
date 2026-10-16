@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { EventsService } from 'src/events/events.service';
 import { BadRequestException } from '@nestjs/common';
 import { MatchResult, EventStatus } from 'src/generated/prisma/client';
+import { OrderBy } from 'src/common/dto/pagination';
 
 describe('MatchesService', () => {
   let service: MatchesService;
@@ -453,6 +454,49 @@ describe('MatchesService', () => {
       });
       (prismaService.$queryRaw as jest.Mock).mockResolvedValueOnce([{ status: EventStatus.CANCELLED }]);
       await expect(service.restoreMatch(matchId)).resolves.toEqual({ message: 'Partido restaurado exitosamente' });
+    });
+  });
+
+  describe('findAll Pagination and Sorting (Regression Suite)', () => {
+    beforeEach(() => {
+      (prismaService.match.findMany as jest.Mock).mockResolvedValue([]);
+      (prismaService.match.count as jest.Mock).mockResolvedValue(0);
+    });
+
+    it('should map sortField matchDate to event.startDate in Prisma query', async () => {
+      await service.findAll({ per_page: 3, page: 1, sortField: 'matchDate', orderBy: OrderBy.DESC });
+
+      expect(prismaService.match.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          take: 3,
+          skip: 0,
+          orderBy: { event: { startDate: 'desc' } },
+        }),
+      );
+    });
+
+    it('should map sortField startDate to event.startDate in Prisma query', async () => {
+      await service.findAll({ per_page: 5, page: 2, sortField: 'startDate', orderBy: OrderBy.ASC });
+
+      expect(prismaService.match.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          take: 5,
+          skip: 5,
+          orderBy: { event: { startDate: 'asc' } },
+        }),
+      );
+    });
+
+    it('should order by other allowed fields directly', async () => {
+      await service.findAll({ per_page: 10, page: 1, sortField: 'createdAt', orderBy: OrderBy.DESC });
+
+      expect(prismaService.match.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          take: 10,
+          skip: 0,
+          orderBy: { createdAt: 'desc' },
+        }),
+      );
     });
   });
 });

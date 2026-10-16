@@ -31,19 +31,20 @@ export class UserRoleGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
-    // Si no requiere ni permisos ni módulos específicos, dejamos pasar
-    if (!requiredPermissions && !requiredModules) {
-      return true;
-    }
-
     const { user } = context.switchToHttp().getRequest();
 
     if (!user) {
+      if (!requiredPermissions && !requiredModules) {
+        return true;
+      }
       throw new ForbiddenException('Usuario no autenticado.');
     }
 
     // Si el usuario no tiene rol asignado, no puede pasar
     if (!user.roleId) {
+      if (!requiredPermissions && !requiredModules) {
+        return true;
+      }
       throw new ForbiddenException('No tienes un rol asignado.');
     }
 
@@ -87,6 +88,14 @@ export class UserRoleGuard implements CanActivate {
       await this.cacheManager.set(cacheKey, roleAccess, 3600000);
     }
 
+    // Adjuntar los permisos al objeto user de la Request para comprobaciones granulares
+    user.permissions = roleAccess.permissions;
+
+    // Si no requiere ni permisos ni módulos específicos, dejamos pasar con los permisos ya adjuntados
+    if (!requiredPermissions && !requiredModules) {
+      return true;
+    }
+
     // Verificación de Módulos (Nivel Alto)
     if (requiredModules && requiredModules.length > 0) {
       const hasModule = requiredModules.some((mod) =>
@@ -110,9 +119,6 @@ export class UserRoleGuard implements CanActivate {
         );
       }
     }
-
-    // Adjuntar los permisos al objeto user de la Request para comprobaciones granulares
-    user.permissions = roleAccess.permissions;
 
     return true;
   }

@@ -3,9 +3,9 @@ import { PaginationDto } from 'src/common/dto/pagination';
 
 export class MatchesPaginationDto extends PaginationDto {
   @IsOptional()
-  @IsIn(['matchDate', 'opponentName', 'result', 'createdAt', 'id'], {
+  @IsIn(['matchDate', 'startDate', 'opponentName', 'result', 'createdAt', 'id'], {
     message:
-      'Columnas permitidas: matchDate, opponentName, result, createdAt, id',
+      'Columnas permitidas: matchDate, startDate, opponentName, result, createdAt, id',
   })
   sortField?: string = 'matchDate';
 }

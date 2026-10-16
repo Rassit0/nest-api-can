@@ -328,7 +328,10 @@ export class MatchesService {
         where,
         take: per_page,
         skip,
-        orderBy: sortField === 'startDate' ? { event: { startDate: orderBy } } : { [sortField]: orderBy },
+        orderBy:
+          sortField === 'startDate' || sortField === 'matchDate'
+            ? { event: { startDate: orderBy } }
+            : { [sortField]: orderBy },
         select: matchSelect,
       }),
       this.prisma.match.count({ where }),
