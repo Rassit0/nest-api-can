@@ -184,11 +184,23 @@ export class InternalTransfersService {
       sourceAccountId,
       destinationAccountId,
       createdById,
-      startDate,
-      endDate,
+      startDate: rawStartDate,
+      endDate: rawEndDate,
+      start,
+      end,
       orderBy = 'desc',
     } = paginationDto;
     const skip = (page - 1) * per_page;
+
+    const startDate = rawStartDate || start;
+    const endDate = rawEndDate || end;
+
+    const effectiveStartDate = startDate
+      ? (/^\d{4}-\d{2}-\d{2}$/.test(startDate) ? new Date(`${startDate}T00:00:00.000Z`) : new Date(startDate))
+      : undefined;
+    const effectiveEndDate = endDate
+      ? (/^\d{4}-\d{2}-\d{2}$/.test(endDate) ? new Date(`${endDate}T23:59:59.999Z`) : new Date(endDate))
+      : undefined;
 
     const where: Prisma.InternalTransferWhereInput = {
       ...(createdById && { createdById }),
@@ -198,10 +210,10 @@ export class InternalTransfersService {
       ...(destinationAccountId && {
         destinationTransaction: { financialAccountId: destinationAccountId },
       }),
-      ...((startDate || endDate) && {
+      ...((effectiveStartDate || effectiveEndDate) && {
         date: {
-          ...(startDate && { gte: new Date(startDate) }),
-          ...(endDate && { lte: new Date(endDate) }),
+          ...(effectiveStartDate && { gte: effectiveStartDate }),
+          ...(effectiveEndDate && { lte: effectiveEndDate }),
         },
       }),
     };

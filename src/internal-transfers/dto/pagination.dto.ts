@@ -18,13 +18,23 @@ export class InternalTransfersPaginationDto extends PaginationDto {
   @IsUUID()
   createdById?: string;
 
-  @ApiPropertyOptional({ description: 'Fecha de inicio para el filtro de fechas (YYYY-MM-DD)' })
+  @ApiPropertyOptional({ description: 'Fecha de inicio para el filtro de fechas (YYYY-MM-DD o ISO 8601)' })
   @IsOptional()
   @IsDateString()
   startDate?: string;
 
-  @ApiPropertyOptional({ description: 'Fecha de fin para el filtro de fechas (YYYY-MM-DD)' })
+  @ApiPropertyOptional({ description: 'Fecha de fin para el filtro de fechas (YYYY-MM-DD o ISO 8601)' })
   @IsOptional()
   @IsDateString()
   endDate?: string;
+
+  @ApiPropertyOptional({ description: 'Alias para startDate' })
+  @IsOptional()
+  @IsDateString()
+  start?: string;
+
+  @ApiPropertyOptional({ description: 'Alias para endDate' })
+  @IsOptional()
+  @IsDateString()
+  end?: string;
 }

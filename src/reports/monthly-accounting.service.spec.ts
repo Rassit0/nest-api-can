@@ -496,55 +496,54 @@ describe('MonthlyAccountingExcelService — matriz diaria', () => {
     expect(Number(rSumInc.getCell(4).value)).toBe(matrixIncVal);
     expect(Number(rSumExp.getCell(4).value)).toBe(matrixExpVal);
 
-    // 3. Income grouping by category + FinancialAccount
-    let basquetCaja: number | undefined;
-    let basquetQR: number | undefined;
-    let voleibolQR: number | undefined;
-    let currentCat = '';
-    let inIncomeSection = false;
-    ws1.eachRow((r) => {
-      const v1 = String(r.getCell(1).value || '');
-      const v2 = String(r.getCell(2).value || '');
-      if (v1 === '(1) INGRESOS EXTERNOS') { inIncomeSection = true; return; }
-      if (v1 === 'TOTAL INGRESOS EXTERNOS') { inIncomeSection = false; return; }
-      if (!inIncomeSection) return;
-      if (v1.startsWith('Escuelas -')) currentCat = v1;
-      if (currentCat.includes('Básquet') && v2 === 'Caja') basquetCaja = Number(r.getCell(4).value);
-      if (currentCat.includes('Básquet') && v2 === 'QR SOL') basquetQR = Number(r.getCell(4).value);
-      if (currentCat.includes('Voleibol') && v2 === 'QR SOL') voleibolQR = Number(r.getCell(4).value);
-    });
-    expect(basquetCaja).toBe(150);
-    expect(basquetQR).toBe(30);
-    expect(voleibolQR).toBe(200);
+    // 3. Income grouping in PIVOT: category rows with amounts per account column
+    const rBasquet = findRow(ws1, 'Escuelas - Básquet')!;
+    expect(rBasquet).toBeDefined();
+    expect(rBasquet.getCell(2).value).toBe(150); // Caja
+    expect(rBasquet.getCell(3).value).toBe(30);  // QR SOL
+    expect(rBasquet.getCell(4).value).toBe(180); // Row Total
 
-    // 4. Expense grouping by category + FinancialAccount
-    let seguroCaja: number | undefined;
-    let arbitrajeQR: number | undefined;
-    currentCat = '';
-    let inExpenseSection = false;
-    ws1.eachRow((r) => {
-      const v1 = String(r.getCell(1).value || '');
-      const v2 = String(r.getCell(2).value || '');
-      if (v1 === '(2) EGRESOS EXTERNOS') { inExpenseSection = true; return; }
-      if (v1 === 'TOTAL EGRESOS EXTERNOS') { inExpenseSection = false; return; }
-      if (!inExpenseSection) return;
-      if (v1 === 'SEGURO' || v1 === 'ARBITRAJE') currentCat = v1;
-      if (currentCat === 'SEGURO' && v2 === 'Caja') seguroCaja = Number(r.getCell(4).value);
-      if (currentCat === 'ARBITRAJE' && v2 === 'QR SOL') arbitrajeQR = Number(r.getCell(4).value);
-    });
-    expect(seguroCaja).toBe(50);
-    expect(arbitrajeQR).toBe(25);
+    const rVoleibol = findRow(ws1, 'Escuelas - Voleibol')!;
+    expect(rVoleibol).toBeDefined();
+    expect(rVoleibol.getCell(2).value).toBe(0);   // Caja (sin movimiento -> 0 / visual —)
+    expect(rVoleibol.getCell(3).value).toBe(200); // QR SOL
+    expect(rVoleibol.getCell(4).value).toBe(200); // Row Total
 
-    // 5 & 6. Account number displayed where available, NULL -> '-'
-    let cajaAccNum: string | undefined;
-    let qrAccNum: string | undefined;
+    // Column totals in Section Total row
+    expect(Number(rSumInc.getCell(2).value)).toBe(150);
+    expect(Number(rSumInc.getCell(3).value)).toBe(230);
+    expect(Number(rSumInc.getCell(4).value)).toBe(380);
+
+    // 4. Expense grouping in PIVOT: category rows with amounts per account column
+    const rArbitraje = findRow(ws1, 'ARBITRAJE')!;
+    expect(rArbitraje).toBeDefined();
+    expect(rArbitraje.getCell(2).value).toBe(0);  // Caja
+    expect(rArbitraje.getCell(3).value).toBe(25); // QR SOL
+    expect(rArbitraje.getCell(4).value).toBe(25); // Row Total
+
+    const rSeguro = findRow(ws1, 'SEGURO')!;
+    expect(rSeguro).toBeDefined();
+    expect(rSeguro.getCell(2).value).toBe(50); // Caja
+    expect(rSeguro.getCell(3).value).toBe(0);  // QR SOL
+    expect(rSeguro.getCell(4).value).toBe(50); // Row Total
+
+    // Column totals in Section Total row
+    expect(Number(rSumExp.getCell(2).value)).toBe(50);
+    expect(Number(rSumExp.getCell(3).value)).toBe(25);
+    expect(Number(rSumExp.getCell(4).value)).toBe(75);
+
+    // 5 & 6. Account headers in PIVOT: name + number in multiline, or just name
+    let foundCajaHeader = false;
+    let foundQrHeader = false;
     ws1.eachRow((r) => {
-      const v2 = String(r.getCell(2).value || '');
-      if (v2 === 'Caja') cajaAccNum = String(r.getCell(3).value);
-      if (v2 === 'QR SOL') qrAccNum = String(r.getCell(3).value);
+      for (let c = 1; c <= r.cellCount; c++) {
+        const val = String(r.getCell(c).value || '');
+        if (val === 'Caja') foundCajaHeader = true;
+        if (val === 'QR SOL\nNº 123-456') foundQrHeader = true;
+      }
     });
-    expect(cajaAccNum).toBe('-');
-    expect(qrAccNum).toBe('123-456');
+    expect(foundCajaHeader).toBe(true);
+    expect(foundQrHeader).toBe(true);
 
     // 7 & 8. Transfer incoming totals by dest, outgoing by source
     const rTrfIn = findRow(ws1, 'TOTAL ENTRADAS INTERNAS')!;

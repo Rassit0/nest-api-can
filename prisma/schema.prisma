@@ -1426,16 +1426,16 @@ model MatchCallUp {
 }
 
 model MatchPartial {
-  id        String  @id @default(uuid())
-  matchId   String  @map("match_id")
+  id      String @id @default(uuid())
+  matchId String @map("match_id")
 
-  sequence  Int
-  label     String?
+  sequence Int
+  label    String?
 
-  homeScore Int?    @map("home_score")
-  awayScore Int?    @map("away_score")
+  homeScore Int? @map("home_score")
+  awayScore Int? @map("away_score")
 
-  match     Match   @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
 
   @@unique([matchId, sequence])
   @@index([matchId])
@@ -1564,25 +1564,25 @@ model CashClosure {
 }
 
 model Company {
-  id             String      @id @default(uuid())
-  name           String
-  legalName      String?     @map("legal_name")
-  taxId          String?     @map("tax_id")
-  phone          String?
-  email          String?
-  address        String?
-  notes          String?
-  isActive       Boolean     @default(true) @map("is_active")
-  type           CompanyType @default(PROVIDER)
-  documentType   String?     @map("document_type") // Legacy
+  id           String      @id @default(uuid())
+  name         String
+  legalName    String?     @map("legal_name")
+  taxId        String?     @map("tax_id")
+  phone        String?
+  email        String?
+  address      String?
+  notes        String?
+  isActive     Boolean     @default(true) @map("is_active")
+  type         CompanyType @default(PROVIDER)
+  documentType String?     @map("document_type") // Legacy
 
-  createdAt      DateTime    @default(now()) @map("created_at")
-  updatedAt      DateTime    @updatedAt @map("updated_at")
-  createdById    String?     @map("created_by_id")
-  updatedById    String?     @map("updated_by_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdById String?  @map("created_by_id")
+  updatedById String?  @map("updated_by_id")
 
-  createdBy      User?       @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedBy      User?       @relation("UpdatedBy", fields: [updatedById], references: [id])
+  createdBy User? @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
 
   transactions   Transaction[]
   accountCharges AccountCharge[]

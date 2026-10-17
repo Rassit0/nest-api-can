@@ -6,6 +6,10 @@ import { MonthlyAccountingService } from './monthly-accounting.service';
 import { MonthlyAccountingQueryDto } from './dto/monthly-accounting.dto';
 import { TransactionStatus } from '../generated/prisma/client';
 import { DateUtils } from '../utils/date.utils';
+import {
+  buildFinancialAccountPivot,
+  renderFinancialAccountPivotTable,
+} from './monthly-accounting-pivot.helper';
 
 type MatrixKind = 'INCOME' | 'EXPENSE';
 
@@ -474,7 +478,7 @@ export class MonthlyAccountingExcelService {
       cell.fill = fillTotal;
     });
 
-    ws1.getColumn(1).width = 28;
+    ws1.getColumn(1).width = 34;
     ws1.getColumn(2).width = 18;
     ws1.getColumn(3).width = 18;
     ws1.getColumn(4).width = 18;
@@ -490,7 +494,7 @@ export class MonthlyAccountingExcelService {
     ws1.addRow([]);
 
     const summaryMainTitle = ws1.addRow(['RESUMEN MENSUAL DE MOVIMIENTOS']);
-    ws1.mergeCells(summaryMainTitle.number, 1, summaryMainTitle.number, 4);
+    ws1.mergeCells(summaryMainTitle.number, 1, summaryMainTitle.number, 8);
     summaryMainTitle.height = 26;
     summaryMainTitle.getCell(1).fill = fillTitle;
     summaryMainTitle.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 12 };
@@ -517,166 +521,52 @@ export class MonthlyAccountingExcelService {
 
     ws1.addRow([]);
 
-    // --- SECCIÓN B: INGRESOS EXTERNOS ---
-    const incSecHeader = ws1.addRow(['(1) INGRESOS EXTERNOS']);
-    ws1.mergeCells(incSecHeader.number, 1, incSecHeader.number, 4);
-    incSecHeader.height = 24;
-    incSecHeader.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2E7D32' } };
-    incSecHeader.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
-    incSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
-
-    const incColHeader = ws1.addRow(['Categoría / Disciplina', 'Cuenta Financiera', 'Nº Cuenta', 'Monto']);
-    incColHeader.height = 20;
-    incColHeader.eachCell({ includeEmpty: true }, (c, col) => {
-      if (col <= 4) {
-        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F5E9' } };
-        c.font = { name: 'Calibri', color: { argb: 'FF1B5E20' }, bold: true, size: 10 };
-        c.border = borderSutil;
-        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
-      }
-    });
-
-    let incDetailZebra = 0;
-    for (const cat of incomeMatrix.categories) {
-      const catRow = ws1.addRow([cat, '', '', '']);
-      ws1.mergeCells(catRow.number, 1, catRow.number, 4);
-      catRow.height = 20;
-      catRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FF1B5E20' } };
-      catRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F8E9' } };
-      catRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
-      catRow.getCell(1).border = borderSutil;
-
-      const accs = incomeMatrix.activeAccounts[cat] || [];
-      let catSubtotal = 0;
-      for (const acc of accs) {
-        const amt = incomeMatrix.totals[cat]?.[acc.id] || 0;
-        catSubtotal += amt;
-        const dRow = ws1.addRow(['', acc.name, acc.accountNumber?.trim() || '-', amt]);
-        dRow.height = 19;
-        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
-        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
-        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-        dRow.getCell(4).numFmt = numFmt;
-        dRow.eachCell({ includeEmpty: true }, (c, col) => {
-          if (col <= 4) {
-            c.border = borderSutil;
-            c.fill = zebraFill(++incDetailZebra);
-            c.font = { name: 'Calibri', size: 10 };
-          }
-        });
-      }
-
-      const subRow = ws1.addRow([`TOTAL ${cat}`, '', '', catSubtotal]);
-      ws1.mergeCells(subRow.number, 1, subRow.number, 3);
-      subRow.height = 20;
-      subRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
-      subRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF1B5E20' } };
-      subRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-      subRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF1B5E20' } };
-      subRow.getCell(4).numFmt = numFmt;
-      subRow.eachCell({ includeEmpty: true }, (c, col) => {
-        if (col <= 4) {
-          c.border = { top: { style: 'thin', color: { argb: 'FFA5D6A7' } }, bottom: { style: 'thin', color: { argb: 'FFA5D6A7' } } };
-          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FBE7' } };
-        }
-      });
-    }
-
-    const incTotalRow = ws1.addRow(['TOTAL INGRESOS EXTERNOS', '', '', incomeMatrix.grandTotal]);
-    ws1.mergeCells(incTotalRow.number, 1, incTotalRow.number, 3);
-    incTotalRow.height = 22;
-    incTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
-    incTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF2E7D32' } };
-    incTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-    incTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FF2E7D32' } };
-    incTotalRow.getCell(4).numFmt = numFmt;
-    incTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
-      if (col <= 4) {
-        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F5E9' } };
-        c.border = borderTotal;
-      }
+    // --- SECCIÓN B: INGRESOS EXTERNOS (PIVOT MATRICIAL) ---
+    const incPivotData = buildFinancialAccountPivot(
+      incomeMatrix.categories,
+      incomeMatrix.activeAccounts,
+      incomeMatrix.totals,
+      data.accounts,
+    );
+    renderFinancialAccountPivotTable({
+      ws: ws1,
+      sectionTitle: '(1) INGRESOS EXTERNOS',
+      sectionHeaderColor: 'FF2E7D32',
+      colHeaderBg: 'FFE8F5E9',
+      colHeaderFg: 'FF1B5E20',
+      firstColHeader: 'Categoría / Disciplina',
+      totalLabel: 'TOTAL INGRESOS EXTERNOS',
+      totalRowColor: 'FF2E7D32',
+      data: incPivotData,
+      zebraFill,
+      borderSutil,
+      borderTotal,
+      fillTotal: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE8F5E9' } },
     });
 
     ws1.addRow([]);
 
-    // --- SECCIÓN C: EGRESOS EXTERNOS ---
-    const expSecHeader = ws1.addRow(['(2) EGRESOS EXTERNOS']);
-    ws1.mergeCells(expSecHeader.number, 1, expSecHeader.number, 4);
-    expSecHeader.height = 24;
-    expSecHeader.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC62828' } };
-    expSecHeader.getCell(1).font = { name: 'Calibri', color: { argb: 'FFFFFFFF' }, bold: true, size: 11 };
-    expSecHeader.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
-
-    const expColHeader = ws1.addRow(['Categoría / Concepto', 'Cuenta Financiera', 'Nº Cuenta', 'Monto']);
-    expColHeader.height = 20;
-    expColHeader.eachCell({ includeEmpty: true }, (c, col) => {
-      if (col <= 4) {
-        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
-        c.font = { name: 'Calibri', color: { argb: 'FFB71C1C' }, bold: true, size: 10 };
-        c.border = borderSutil;
-        c.alignment = { vertical: 'middle', horizontal: col === 4 ? 'right' : 'center' };
-      }
-    });
-
-    let expDetailZebra = 0;
-    for (const cat of expenseMatrix.categories) {
-      const catRow = ws1.addRow([cat, '', '', '']);
-      ws1.mergeCells(catRow.number, 1, catRow.number, 4);
-      catRow.height = 20;
-      catRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10.5, color: { argb: 'FFB71C1C' } };
-      catRow.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
-      catRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'left' };
-      catRow.getCell(1).border = borderSutil;
-
-      const accs = expenseMatrix.activeAccounts[cat] || [];
-      let catSubtotal = 0;
-      for (const acc of accs) {
-        const amt = expenseMatrix.totals[cat]?.[acc.id] || 0;
-        catSubtotal += amt;
-        const dRow = ws1.addRow(['', acc.name, acc.accountNumber?.trim() || '-', amt]);
-        dRow.height = 19;
-        dRow.getCell(2).alignment = { vertical: 'middle', horizontal: 'left' };
-        dRow.getCell(3).alignment = { vertical: 'middle', horizontal: 'center' };
-        dRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-        dRow.getCell(4).numFmt = numFmt;
-        dRow.eachCell({ includeEmpty: true }, (c, col) => {
-          if (col <= 4) {
-            c.border = borderSutil;
-            c.fill = zebraFill(++expDetailZebra);
-            c.font = { name: 'Calibri', size: 10 };
-          }
-        });
-      }
-
-      const subRow = ws1.addRow([`TOTAL ${cat}`, '', '', catSubtotal]);
-      ws1.mergeCells(subRow.number, 1, subRow.number, 3);
-      subRow.height = 20;
-      subRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
-      subRow.getCell(1).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFB71C1C' } };
-      subRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-      subRow.getCell(4).font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FFB71C1C' } };
-      subRow.getCell(4).numFmt = numFmt;
-      subRow.eachCell({ includeEmpty: true }, (c, col) => {
-        if (col <= 4) {
-          c.border = { top: { style: 'thin', color: { argb: 'FFEF9A9A' } }, bottom: { style: 'thin', color: { argb: 'FFEF9A9A' } } };
-          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF3E0' } };
-        }
-      });
-    }
-
-    const expTotalRow = ws1.addRow(['TOTAL EGRESOS EXTERNOS', '', '', expenseMatrix.grandTotal]);
-    ws1.mergeCells(expTotalRow.number, 1, expTotalRow.number, 3);
-    expTotalRow.height = 22;
-    expTotalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'right' };
-    expTotalRow.getCell(1).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFC62828' } };
-    expTotalRow.getCell(4).alignment = { vertical: 'middle', horizontal: 'right' };
-    expTotalRow.getCell(4).font = { name: 'Calibri', bold: true, size: 11, color: { argb: 'FFC62828' } };
-    expTotalRow.getCell(4).numFmt = numFmt;
-    expTotalRow.eachCell({ includeEmpty: true }, (c, col) => {
-      if (col <= 4) {
-        c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } };
-        c.border = borderTotal;
-      }
+    // --- SECCIÓN C: EGRESOS EXTERNOS (PIVOT MATRICIAL) ---
+    const expPivotData = buildFinancialAccountPivot(
+      expenseMatrix.categories,
+      expenseMatrix.activeAccounts,
+      expenseMatrix.totals,
+      data.accounts,
+    );
+    renderFinancialAccountPivotTable({
+      ws: ws1,
+      sectionTitle: '(2) EGRESOS EXTERNOS',
+      sectionHeaderColor: 'FFC62828',
+      colHeaderBg: 'FFFFEBEE',
+      colHeaderFg: 'FFB71C1C',
+      firstColHeader: 'Categoría / Concepto',
+      totalLabel: 'TOTAL EGRESOS EXTERNOS',
+      totalRowColor: 'FFC62828',
+      data: expPivotData,
+      zebraFill,
+      borderSutil,
+      borderTotal,
+      fillTotal: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFEBEE' } },
     });
 
     ws1.addRow([]);
