@@ -178,6 +178,8 @@ export async function seedStructuralData(prisma: PrismaClient) {
           description = `Permiso para eliminar en el módulo de ${module.toLowerCase().replace(/_/g, ' ')}`;
         if (permName === 'MANAGE_ALL')
           description = 'Acceso irrestricto a todo el sistema';
+        if (permName === 'ACCESS_ALL_TEACHER_GROUPS')
+          description = 'Supervisión global sobre todos los grupos del portal docente sin requerir asignación individual';
 
         permissionsData.push({
           name: permName,

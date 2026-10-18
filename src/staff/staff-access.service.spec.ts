@@ -17,8 +17,8 @@ describe('StaffAccessService (Phase A Targeted Unit Tests)', () => {
     staff: { findUnique: jest.fn() },
     courseSeasonStaff: { findMany: jest.fn(), findFirst: jest.fn(), count: jest.fn() },
     teamSeasonStaff: { findMany: jest.fn(), findFirst: jest.fn(), count: jest.fn() },
-    courseSeasonShift: { findUnique: jest.fn() },
-    teamSeasonCategory: { findUnique: jest.fn() },
+    courseSeasonShift: { findUnique: jest.fn(), findMany: jest.fn(), count: jest.fn() },
+    teamSeasonCategory: { findUnique: jest.fn(), findMany: jest.fn(), count: jest.fn() },
     studentMembership: { groupBy: jest.fn(), count: jest.fn(), findFirst: jest.fn() },
     cycleEnrollment: { groupBy: jest.fn(), findFirst: jest.fn(), findMany: jest.fn(), count: jest.fn() },
     playerMembership: { groupBy: jest.fn(), findFirst: jest.fn(), findMany: jest.fn(), count: jest.fn() },
@@ -557,6 +557,7 @@ describe('StaffAccessService (Phase A Targeted Unit Tests)', () => {
         staffId: 'staff-1',
         hasAssignments: false,
         activeGroupsCount: 0,
+        isSupervisor: false,
       });
     });
 
@@ -577,6 +578,7 @@ describe('StaffAccessService (Phase A Targeted Unit Tests)', () => {
         staffId: 'staff-1',
         hasAssignments: true,
         activeGroupsCount: 3,
+        isSupervisor: false,
       });
     });
   });
@@ -2334,6 +2336,199 @@ describe('StaffAccessService (Phase A Targeted Unit Tests)', () => {
           }),
         ).rejects.toThrow(ForbiddenException);
       });
+    });
+  });
+
+  describe('Phase G: Global Supervisor Access (Capability-Based Override via ACCESS_ALL_TEACHER_GROUPS)', () => {
+    const supervisorUser = {
+      id: 'user-supervisor-1',
+      personId: 'person-supervisor-1',
+      permissions: [
+        'ACCESS_ALL_TEACHER_GROUPS',
+        'READ_SESSIONS',
+        'CREATE_SESSIONS',
+        'UPDATE_SESSIONS',
+        'READ_SESSION_BOOKINGS',
+        'CREATE_SESSION_BOOKINGS',
+        'UPDATE_SESSION_BOOKINGS',
+        'READ_PROGRESS_EVALUATIONS',
+        'CREATE_PROGRESS_EVALUATIONS',
+        'UPDATE_PROGRESS_EVALUATIONS',
+        'READ_SESSION_INCIDENTS',
+        'CREATE_SESSION_INCIDENTS',
+        'UPDATE_SESSION_INCIDENTS',
+        'READ_STUDENTS',
+        'READ_PLAYERS',
+      ],
+    };
+
+    const supervisorStaff = {
+      id: 'staff-supervisor-1',
+      isActive: true,
+      person: {
+        id: 'person-supervisor-1',
+        name: 'Director',
+        lastName: 'Deportivo',
+      },
+    };
+
+    beforeEach(() => {
+      mockPrisma.staff.findUnique.mockResolvedValue(supervisorStaff);
+      mockPrisma.courseSeasonStaff.findFirst.mockResolvedValue(null);
+      mockPrisma.teamSeasonStaff.findFirst.mockResolvedValue(null);
+    });
+
+    it('1. Professor assigned group -> PASS (regression check)', async () => {
+      const normalProfUser = { id: 'user-prof', personId: 'p-prof', permissions: [] };
+      const normalProfStaff = { id: 'staff-prof', isActive: true, person: { id: 'p-prof', name: 'Profe' } };
+      mockPrisma.staff.findUnique.mockResolvedValueOnce(normalProfStaff);
+      mockPrisma.courseSeasonStaff.findFirst.mockResolvedValueOnce({
+        id: 'css-1',
+        staffId: 'staff-prof',
+        courseSeasonShiftId: 'shift-1',
+        role: 'HEAD_COACH',
+      });
+
+      const res = await service.assertCourseSeasonShiftAccess(normalProfUser, 'shift-1');
+      expect(res.assignment).toBeDefined();
+      expect(res.isSupervisor).toBe(false);
+    });
+
+    it('2. Professor foreign group -> 403 ForbiddenException', async () => {
+      const normalProfUser = { id: 'user-prof', personId: 'p-prof', permissions: [] };
+      const normalProfStaff = { id: 'staff-prof', isActive: true, person: { id: 'p-prof', name: 'Profe' } };
+      mockPrisma.staff.findUnique.mockResolvedValueOnce(normalProfStaff);
+      mockPrisma.courseSeasonStaff.findFirst.mockResolvedValueOnce(null);
+
+      await expect(
+        service.assertCourseSeasonShiftAccess(normalProfUser, 'foreign-shift'),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('3. Supervisor with ACCESS_ALL_TEACHER_GROUPS + Staff -> foreign group PASS', async () => {
+      mockPrisma.courseSeasonShift.findUnique.mockResolvedValueOnce({ id: 'foreign-shift' });
+
+      const res = await service.assertCourseSeasonShiftAccess(supervisorUser, 'foreign-shift');
+      expect(res.isSupervisor).toBe(true);
+      expect(res.staff.id).toBe(supervisorStaff.id);
+      expect(res.assignment).toBeNull();
+    });
+
+    it('4. Supervisor without Staff (SUPER_ADMIN without Staff) -> Teacher DENIED (403)', async () => {
+      mockPrisma.staff.findUnique.mockResolvedValueOnce(null);
+      const adminWithoutStaff = {
+        id: 'admin-1',
+        personId: 'person-admin',
+        permissions: ['ACCESS_ALL_TEACHER_GROUPS', 'MANAGE_ALL'],
+      };
+
+      await expect(
+        service.assertCourseSeasonShiftAccess(adminWithoutStaff, 'any-shift'),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('5. Inactive supervisor Staff -> Teacher DENIED (403)', async () => {
+      mockPrisma.staff.findUnique.mockResolvedValueOnce({ ...supervisorStaff, isActive: false });
+
+      await expect(
+        service.assertCourseSeasonShiftAccess(supervisorUser, 'shift-1'),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('6. Supervisor session access -> allows session of any group without assignment', async () => {
+      mockPrisma.session.findUnique.mockResolvedValueOnce({
+        id: 'session-foreign',
+        sessionCourses: [{ courseSeasonShiftId: 'shift-foreign' }],
+        sessionTeams: [],
+      });
+
+      const res = await service.assertSessionAccess(supervisorUser, 'session-foreign');
+      expect(res.isSupervisor).toBe(true);
+      expect(res.groupId).toBe('shift-foreign');
+    });
+
+    it('7. Supervisor create session with CREATE_SESSIONS -> PASS', async () => {
+      mockPrisma.courseSeasonShift.findUnique.mockResolvedValue({ id: 'shift-1' });
+      mockSessionsService.create.mockResolvedValueOnce({ data: { id: 'new-session' } });
+      mockPrisma.session.findUnique.mockResolvedValueOnce({
+        id: 'new-session',
+        event: {
+          id: 'event-1',
+          title: 'Sesión Supervisada',
+          startDate: new Date('2026-10-25T10:00:00.000Z'),
+          endDate: new Date('2026-10-25T11:30:00.000Z'),
+          status: 'SCHEDULED',
+        },
+      });
+
+      const res = await service.createGroupSession(supervisorUser, 'COURSE', 'shift-1', {
+        title: 'Sesión Supervisada',
+        startDate: '2026-10-25T10:00:00.000Z',
+        endDate: '2026-10-25T11:30:00.000Z',
+      });
+      expect(res).toBeDefined();
+    });
+
+    it('8. Supervisor evaluation -> evaluatorStaffId is strictly derived from current Staff', async () => {
+      mockPrisma.courseSeasonShift.findUnique.mockResolvedValue({
+        id: 'shift-1',
+        courseSeason: { seasonId: 'season-1' },
+      });
+      mockPrisma.cycleEnrollment.findFirst.mockResolvedValueOnce({ id: 'enroll-1' });
+      mockPrisma.progressEvaluation.create.mockResolvedValueOnce({
+        id: 'eval-1',
+        evaluatorStaffId: supervisorStaff.id,
+        courseSeasonShiftId: 'shift-1',
+        seasonId: 'season-1',
+        student: { person: { name: 'Alumno', lastName: 'Prueba' } },
+        evaluatorStaff: { person: { name: 'Super', lastName: 'Visor' } },
+      });
+
+      await service.createGroupEvaluation(supervisorUser, 'COURSE', 'shift-1', {
+        participantId: 'student-1',
+        evaluationDate: new Date('2026-10-25T10:00:00.000Z'),
+        technicalScore: 9,
+      });
+
+      expect(mockPrisma.progressEvaluation.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            evaluatorStaffId: supervisorStaff.id,
+            courseSeasonShiftId: 'shift-1',
+            seasonId: 'season-1',
+          }),
+        }),
+      );
+    });
+
+    it('9. Supervisor cannot edit evaluation of other Staff -> DENIED (403)', async () => {
+      mockPrisma.courseSeasonShift.findUnique.mockResolvedValueOnce({ id: 'shift-1' });
+      mockPrisma.progressEvaluation.findUnique.mockResolvedValueOnce({
+        id: 'eval-other',
+        evaluatorStaffId: 'staff-other-teacher',
+        courseSeasonShiftId: 'shift-1',
+      });
+
+      await expect(
+        service.updateGroupEvaluation(supervisorUser, 'COURSE', 'shift-1', 'eval-other', {
+          technicalScore: 10,
+        }),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('10. Exact-group cross-resource check: rejects if evaluation does not belong to target group', async () => {
+      mockPrisma.courseSeasonShift.findUnique.mockResolvedValueOnce({ id: 'shift-A' });
+      mockPrisma.progressEvaluation.findUnique.mockResolvedValueOnce({
+        id: 'eval-group-B',
+        evaluatorStaffId: supervisorStaff.id,
+        courseSeasonShiftId: 'shift-B',
+      });
+
+      await expect(
+        service.updateGroupEvaluation(supervisorUser, 'COURSE', 'shift-A', 'eval-group-B', {
+          technicalScore: 10,
+        }),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

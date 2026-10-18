@@ -70,6 +70,15 @@ export class StaffAccessService {
   ) {}
 
   /**
+   * Determina si el usuario autenticado posee alcance de supervisión global
+   * para operar sobre cualquier grupo sin necesidad de asignación individual explícita.
+   */
+  hasGlobalTeacherScope(user: AuthenticatedUserContext): boolean {
+    const permissions = user?.permissions || [];
+    return permissions.includes('ACCESS_ALL_TEACHER_GROUPS');
+  }
+
+  /**
    * Resuelve el perfil de Staff activo para el usuario autenticado.
    * Valida la cadena User -> Person -> Staff.
    */
@@ -171,30 +180,44 @@ export class StaffAccessService {
       };
     }
 
+    const isSupervisor = this.hasGlobalTeacherScope(user);
     const now = new Date();
-    const courseAssignmentsCount = await this.prisma.courseSeasonStaff.count({
-      where: {
-        staffId: staff.id,
-        startedAt: { lte: now },
-        OR: [{ endedAt: null }, { endedAt: { gt: now } }],
-      },
-    });
 
-    const teamAssignmentsCount = await this.prisma.teamSeasonStaff.count({
-      where: {
-        staffId: staff.id,
-        startedAt: { lte: now },
-        OR: [{ endedAt: null }, { endedAt: { gt: now } }],
-      },
-    });
+    let activeGroupsCount = 0;
+    if (isSupervisor) {
+      const totalCourseShifts = await this.prisma.courseSeasonShift.count({
+        where: { isActive: true },
+      });
+      const totalTeamCategories = await this.prisma.teamSeasonCategory.count({
+        where: { isActive: true, status: 'ACTIVE' },
+      });
+      activeGroupsCount = totalCourseShifts + totalTeamCategories;
+    } else {
+      const courseAssignmentsCount = await this.prisma.courseSeasonStaff.count({
+        where: {
+          staffId: staff.id,
+          startedAt: { lte: now },
+          OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+        },
+      });
 
-    const activeGroupsCount = courseAssignmentsCount + teamAssignmentsCount;
+      const teamAssignmentsCount = await this.prisma.teamSeasonStaff.count({
+        where: {
+          staffId: staff.id,
+          startedAt: { lte: now },
+          OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+        },
+      });
+
+      activeGroupsCount = courseAssignmentsCount + teamAssignmentsCount;
+    }
 
     return {
       isStaff: true,
       staffId: staff.id,
-      hasAssignments: activeGroupsCount > 0,
+      hasAssignments: activeGroupsCount > 0 || isSupervisor,
       activeGroupsCount,
+      isSupervisor,
     };
   }
 
@@ -208,27 +231,232 @@ export class StaffAccessService {
     const staff = await this.resolveCurrentStaff(user);
     const now = new Date();
 
-    // 1. Asignaciones activas de Cursos Escolares (CourseSeasonShift)
-    const courseStaffAssignments =
-      await this.prisma.courseSeasonStaff.findMany({
+    const isSupervisor = this.hasGlobalTeacherScope(user);
+
+    let courseGroups: TeacherGroupDto[] = [];
+    let teamGroups: TeacherGroupDto[] = [];
+
+    if (isSupervisor) {
+      // 1b. Supervisión global: Obtener todas las asignaciones personales para conservar roles si existen
+      const personalCourseAssignments =
+        await this.prisma.courseSeasonStaff.findMany({
+          where: {
+            staffId: staff.id,
+            startedAt: { lte: now },
+            OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+          },
+        });
+      const personalCourseMap = new Map(
+        personalCourseAssignments.map((a) => [a.courseSeasonShiftId, a]),
+      );
+
+      const personalTeamAssignments =
+        await this.prisma.teamSeasonStaff.findMany({
+          where: {
+            staffId: staff.id,
+            startedAt: { lte: now },
+            OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+          },
+        });
+      const personalTeamMap = new Map(
+        personalTeamAssignments.map((a) => [a.teamSeasonCategoryId, a]),
+      );
+
+      // Cargar todos los turnos de cursos activos
+      const allCourseShifts = await this.prisma.courseSeasonShift.findMany({
+        where: { isActive: true },
+        include: {
+          shift: { select: { id: true, name: true } },
+          category: { select: { id: true, name: true } },
+          courseSeason: {
+            include: {
+              course: {
+                select: { id: true, name: true, imageUrl: true },
+              },
+              season: { select: { id: true, name: true } },
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      // Cargar todas las categorías de equipos activas
+      const allTeamCategories = await this.prisma.teamSeasonCategory.findMany({
+        where: { isActive: true, status: 'ACTIVE' },
+        include: {
+          category: {
+            select: { id: true, name: true, minAge: true, maxAge: true },
+          },
+          teamSeason: {
+            include: {
+              team: {
+                select: { id: true, name: true, imageUrl: true },
+              },
+              season: { select: { id: true, name: true } },
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      const courseShiftIds = allCourseShifts.map((s) => s.id);
+      const teamCategoryIds = allTeamCategories.map((t) => t.id);
+
+      const adminCourseCountMap = new Map<string, number>();
+      const activeCycleCountMap = new Map<string, number>();
+      const activeTeamPlayerCountMap = new Map<string, number>();
+
+      if (courseShiftIds.length > 0) {
+        const adminCounts = await this.prisma.studentMembership.groupBy({
+          by: ['courseSeasonShiftId'],
+          where: {
+            courseSeasonShiftId: { in: courseShiftIds },
+            status: 'ACTIVE',
+          },
+          _count: { id: true },
+        });
+        for (const item of adminCounts) {
+          adminCourseCountMap.set(item.courseSeasonShiftId, item._count.id);
+        }
+
+        const cycleCounts = await this.prisma.cycleEnrollment.groupBy({
+          by: ['courseSeasonShiftId'],
+          where: {
+            courseSeasonShiftId: { in: courseShiftIds },
+            status: { in: ['PENDING', 'CONFIRMED'] },
+            effectiveStartDate: { lte: now },
+            cycleEndDate: { gt: now },
+            studentMembership: { status: 'ACTIVE' },
+          },
+          _count: { id: true },
+        });
+        for (const item of cycleCounts) {
+          activeCycleCountMap.set(item.courseSeasonShiftId, item._count.id);
+        }
+      }
+
+      if (teamCategoryIds.length > 0) {
+        const teamCounts = await this.prisma.playerMembership.groupBy({
+          by: ['teamSeasonCategoryId'],
+          where: {
+            teamSeasonCategoryId: { in: teamCategoryIds },
+            status: 'ACTIVE',
+            startedAt: { lte: now },
+            OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+          },
+          _count: { id: true },
+        });
+        for (const item of teamCounts) {
+          activeTeamPlayerCountMap.set(
+            item.teamSeasonCategoryId,
+            item._count.id,
+          );
+        }
+      }
+
+      courseGroups = allCourseShifts.map((shift) => {
+        const personalAssignment = personalCourseMap.get(shift.id);
+        const course = shift.courseSeason.course;
+        const shiftName = shift.shift?.name || 'Turno';
+        const categoryName = shift.category?.name || 'General';
+
+        return {
+          type: 'COURSE' as TeacherGroupType,
+          groupId: shift.id,
+          parentId: shift.courseSeasonId,
+          name: course.name,
+          detail: `${shiftName} (${categoryName})`,
+          category: categoryName,
+          shift: shiftName,
+          gender: shift.gender,
+          role: personalAssignment?.role || 'SUPERVISOR',
+          customRole: personalAssignment?.customRole || 'Supervisión Global',
+          isPrimary: personalAssignment?.isPrimary || false,
+          participantCount: activeCycleCountMap.get(shift.id) || 0,
+          administrativeCount: adminCourseCountMap.get(shift.id) || 0,
+          startedAt: personalAssignment?.startedAt || shift.createdAt,
+          endedAt: personalAssignment?.endedAt || null,
+        };
+      });
+
+      teamGroups = allTeamCategories.map((teamCat) => {
+        const personalAssignment = personalTeamMap.get(teamCat.id);
+        const team = teamCat.teamSeason.team;
+        const categoryName = teamCat.category?.name || 'General';
+        const genderSuffix = teamCat.gender ? ` (${teamCat.gender})` : '';
+
+        return {
+          type: 'TEAM' as TeacherGroupType,
+          groupId: teamCat.id,
+          parentId: teamCat.teamSeasonId,
+          name: team.name,
+          detail: `Categoría ${categoryName}${genderSuffix}`,
+          category: categoryName,
+          shift: null,
+          gender: teamCat.gender,
+          role: personalAssignment?.role || 'SUPERVISOR',
+          customRole: personalAssignment?.customRole || 'Supervisión Global',
+          isPrimary: personalAssignment?.isPrimary || false,
+          participantCount: activeTeamPlayerCountMap.get(teamCat.id) || 0,
+          administrativeCount: activeTeamPlayerCountMap.get(teamCat.id) || 0,
+          startedAt: personalAssignment?.startedAt || teamCat.createdAt,
+          endedAt: personalAssignment?.endedAt || null,
+        };
+      });
+    } else {
+      // 1. Asignaciones activas de Cursos Escolares (CourseSeasonShift)
+      const courseStaffAssignments =
+        await this.prisma.courseSeasonStaff.findMany({
+          where: {
+            staffId: staff.id,
+            startedAt: { lte: now },
+            OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+          },
+          include: {
+            courseSeasonShift: {
+              include: {
+                shift: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+                category: { select: { id: true, name: true } },
+                courseSeason: {
+                  include: {
+                    course: {
+                      select: { id: true, name: true, imageUrl: true },
+                    },
+                    season: { select: { id: true, name: true } },
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { startedAt: 'desc' },
+        });
+
+      // 2. Asignaciones activas de Equipos Deportivos (TeamSeasonCategory)
+      const teamStaffAssignments = await this.prisma.teamSeasonStaff.findMany({
         where: {
           staffId: staff.id,
           startedAt: { lte: now },
           OR: [{ endedAt: null }, { endedAt: { gt: now } }],
         },
         include: {
-          courseSeasonShift: {
+          teamSeasonCategory: {
             include: {
-              shift: {
+              category: {
                 select: {
                   id: true,
                   name: true,
+                  minAge: true,
+                  maxAge: true,
                 },
               },
-              category: { select: { id: true, name: true } },
-              courseSeason: {
+              teamSeason: {
                 include: {
-                  course: {
+                  team: {
                     select: { id: true, name: true, imageUrl: true },
                   },
                   season: { select: { id: true, name: true } },
@@ -240,101 +468,71 @@ export class StaffAccessService {
         orderBy: { startedAt: 'desc' },
       });
 
-    // 2. Asignaciones activas de Equipos Deportivos (TeamSeasonCategory)
-    const teamStaffAssignments = await this.prisma.teamSeasonStaff.findMany({
-      where: {
-        staffId: staff.id,
-        startedAt: { lte: now },
-        OR: [{ endedAt: null }, { endedAt: { gt: now } }],
-      },
-      include: {
-        teamSeasonCategory: {
-          include: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                minAge: true,
-                maxAge: true,
-              },
-            },
-            teamSeason: {
-              include: {
-                team: {
-                  select: { id: true, name: true, imageUrl: true },
-                },
-                season: { select: { id: true, name: true } },
-              },
-            },
+      // 3. Contadores eficientes agrupados (evitando N+1 queries)
+      const courseShiftIds = courseStaffAssignments.map(
+        (a) => a.courseSeasonShiftId,
+      );
+      const teamCategoryIds = teamStaffAssignments.map(
+        (a) => a.teamSeasonCategoryId,
+      );
+
+      const adminCourseCountMap = new Map<string, number>();
+      const activeCycleCountMap = new Map<string, number>();
+      const activeTeamPlayerCountMap = new Map<string, number>();
+
+      if (courseShiftIds.length > 0) {
+        // Total de membresías administrativas activas
+        const adminCounts = await this.prisma.studentMembership.groupBy({
+          by: ['courseSeasonShiftId'],
+          where: {
+            courseSeasonShiftId: { in: courseShiftIds },
+            status: 'ACTIVE',
           },
-        },
-      },
-      orderBy: { startedAt: 'desc' },
-    });
+          _count: { id: true },
+        });
+        for (const item of adminCounts) {
+          adminCourseCountMap.set(item.courseSeasonShiftId, item._count.id);
+        }
 
-    // 3. Contadores eficientes agrupados (evitando N+1 queries)
-    const courseShiftIds = courseStaffAssignments.map(
-      (a) => a.courseSeasonShiftId,
-    );
-    const teamCategoryIds = teamStaffAssignments.map(
-      (a) => a.teamSeasonCategoryId,
-    );
-
-    const adminCourseCountMap = new Map<string, number>();
-    const activeCycleCountMap = new Map<string, number>();
-    const activeTeamPlayerCountMap = new Map<string, number>();
-
-    if (courseShiftIds.length > 0) {
-      // Total de membresías administrativas activas
-      const adminCounts = await this.prisma.studentMembership.groupBy({
-        by: ['courseSeasonShiftId'],
-        where: {
-          courseSeasonShiftId: { in: courseShiftIds },
-          status: 'ACTIVE',
-        },
-        _count: { id: true },
-      });
-      for (const item of adminCounts) {
-        adminCourseCountMap.set(item.courseSeasonShiftId, item._count.id);
+        // Participantes con ciclo mensual vigente y confirmado
+        const cycleCounts = await this.prisma.cycleEnrollment.groupBy({
+          by: ['courseSeasonShiftId'],
+          where: {
+            courseSeasonShiftId: { in: courseShiftIds },
+            status: { in: ['PENDING', 'CONFIRMED'] },
+            effectiveStartDate: { lte: now },
+            cycleEndDate: { gt: now },
+            studentMembership: { status: 'ACTIVE' },
+          },
+          _count: { id: true },
+        });
+        for (const item of cycleCounts) {
+          activeCycleCountMap.set(item.courseSeasonShiftId, item._count.id);
+        }
       }
 
-      // Participantes con ciclo mensual vigente y confirmado
-      const cycleCounts = await this.prisma.cycleEnrollment.groupBy({
-        by: ['courseSeasonShiftId'],
-        where: {
-          courseSeasonShiftId: { in: courseShiftIds },
-          status: { in: ['PENDING', 'CONFIRMED'] },
-          effectiveStartDate: { lte: now },
-          cycleEndDate: { gt: now },
-          studentMembership: { status: 'ACTIVE' },
-        },
-        _count: { id: true },
-      });
-      for (const item of cycleCounts) {
-        activeCycleCountMap.set(item.courseSeasonShiftId, item._count.id);
+      if (teamCategoryIds.length > 0) {
+        // Total de jugadores con membresía deportiva activa
+        const teamCounts = await this.prisma.playerMembership.groupBy({
+          by: ['teamSeasonCategoryId'],
+          where: {
+            teamSeasonCategoryId: { in: teamCategoryIds },
+            status: 'ACTIVE',
+            startedAt: { lte: now },
+            OR: [{ endedAt: null }, { endedAt: { gt: now } }],
+          },
+          _count: { id: true },
+        });
+        for (const item of teamCounts) {
+          activeTeamPlayerCountMap.set(
+            item.teamSeasonCategoryId,
+            item._count.id,
+          );
+        }
       }
-    }
 
-    if (teamCategoryIds.length > 0) {
-      // Total de jugadores con membresía deportiva activa
-      const teamCounts = await this.prisma.playerMembership.groupBy({
-        by: ['teamSeasonCategoryId'],
-        where: {
-          teamSeasonCategoryId: { in: teamCategoryIds },
-          status: 'ACTIVE',
-          startedAt: { lte: now },
-          OR: [{ endedAt: null }, { endedAt: { gt: now } }],
-        },
-        _count: { id: true },
-      });
-      for (const item of teamCounts) {
-        activeTeamPlayerCountMap.set(item.teamSeasonCategoryId, item._count.id);
-      }
-    }
-
-    // 4. Mapeo a la estructura unificada TeacherGroupDto
-    const courseGroups: TeacherGroupDto[] = courseStaffAssignments.map(
-      (assignment) => {
+      // 4. Mapeo a la estructura unificada TeacherGroupDto
+      courseGroups = courseStaffAssignments.map((assignment) => {
         const shift = assignment.courseSeasonShift;
         const course = shift.courseSeason.course;
         const shiftName = shift.shift?.name || 'Turno';
@@ -357,11 +555,9 @@ export class StaffAccessService {
           startedAt: assignment.startedAt,
           endedAt: assignment.endedAt,
         };
-      },
-    );
+      });
 
-    const teamGroups: TeacherGroupDto[] = teamStaffAssignments.map(
-      (assignment) => {
+      teamGroups = teamStaffAssignments.map((assignment) => {
         const teamCat = assignment.teamSeasonCategory;
         const team = teamCat.teamSeason.team;
         const categoryName = teamCat.category?.name || 'General';
@@ -384,13 +580,14 @@ export class StaffAccessService {
           startedAt: assignment.startedAt,
           endedAt: assignment.endedAt,
         };
-      },
-    );
+      });
+    }
 
     return {
       staffId: staff.id,
       person: staff.person,
       groups: [...courseGroups, ...teamGroups],
+      isSupervisor,
     };
   }
 
@@ -583,6 +780,7 @@ export class StaffAccessService {
       stats,
       groups,
       upcomingSessions,
+      isSupervisor: myGroupsData.isSupervisor,
     };
   }
 
@@ -824,9 +1022,9 @@ export class StaffAccessService {
         category: categoryName,
         shift: shiftName,
         gender: shift.gender,
-        role: assignment.role,
-        customRole: assignment.customRole,
-        isPrimary: assignment.isPrimary,
+        role: assignment?.role || 'SUPERVISOR',
+        customRole: assignment?.customRole || 'Supervisión Global',
+        isPrimary: assignment?.isPrimary || false,
         participantCount,
         administrativeCount,
         course: {
@@ -1042,9 +1240,9 @@ export class StaffAccessService {
         category: categoryName,
         shift: null,
         gender: teamCat.gender,
-        role: assignment.role,
-        customRole: assignment.customRole,
-        isPrimary: assignment.isPrimary,
+        role: assignment?.role || 'SUPERVISOR',
+        customRole: assignment?.customRole || 'Supervisión Global',
+        isPrimary: assignment?.isPrimary || false,
         participantCount,
         administrativeCount: participantCount,
         course: null,
@@ -1061,15 +1259,28 @@ export class StaffAccessService {
 
   /**
    * Aserción de seguridad: Verifica que el usuario tenga asignación activa
-   * en el turno de curso escolar (CourseSeasonShift).
+   * en el turno de curso escolar (CourseSeasonShift) o permiso de supervisión global.
    */
   async assertCourseSeasonShiftAccess(
     user: AuthenticatedUserContext,
     courseSeasonShiftId: string,
   ) {
     const staff = await this.resolveCurrentStaff(user);
-    const now = new Date();
 
+    if (this.hasGlobalTeacherScope(user)) {
+      const shift = await this.prisma.courseSeasonShift.findUnique({
+        where: { id: courseSeasonShiftId },
+        select: { id: true },
+      });
+
+      if (!shift) {
+        throw new NotFoundException('Turno de curso escolar no encontrado.');
+      }
+
+      return { staff, assignment: null, isSupervisor: true };
+    }
+
+    const now = new Date();
     const assignment = await this.prisma.courseSeasonStaff.findFirst({
       where: {
         staffId: staff.id,
@@ -1085,20 +1296,33 @@ export class StaffAccessService {
       );
     }
 
-    return { staff, assignment };
+    return { staff, assignment, isSupervisor: false };
   }
 
   /**
    * Aserción de seguridad: Verifica que el usuario tenga asignación activa
-   * en la categoría de equipo (TeamSeasonCategory).
+   * en la categoría de equipo (TeamSeasonCategory) o permiso de supervisión global.
    */
   async assertTeamSeasonCategoryAccess(
     user: AuthenticatedUserContext,
     teamSeasonCategoryId: string,
   ) {
     const staff = await this.resolveCurrentStaff(user);
-    const now = new Date();
 
+    if (this.hasGlobalTeacherScope(user)) {
+      const teamCat = await this.prisma.teamSeasonCategory.findUnique({
+        where: { id: teamSeasonCategoryId },
+        select: { id: true },
+      });
+
+      if (!teamCat) {
+        throw new NotFoundException('Categoría de equipo no encontrada.');
+      }
+
+      return { staff, assignment: null, isSupervisor: true };
+    }
+
+    const now = new Date();
     const assignment = await this.prisma.teamSeasonStaff.findFirst({
       where: {
         staffId: staff.id,
@@ -1114,12 +1338,12 @@ export class StaffAccessService {
       );
     }
 
-    return { staff, assignment };
+    return { staff, assignment, isSupervisor: false };
   }
 
   /**
    * Aserción de seguridad: Verifica que la sesión pertenezca a un curso o equipo
-   * donde el usuario autenticado tiene asignación de Staff activa.
+   * donde el usuario autenticado tiene asignación de Staff activa o supervisión global.
    */
   async assertSessionAccess(
     user: AuthenticatedUserContext,
@@ -1138,6 +1362,28 @@ export class StaffAccessService {
       throw new NotFoundException(
         'La sesión de entrenamiento especificada no fue encontrada.',
       );
+    }
+
+    if (this.hasGlobalTeacherScope(user)) {
+      let groupType: TeacherGroupType = 'COURSE';
+      let groupId = '';
+
+      if (session.sessionCourses && session.sessionCourses.length > 0) {
+        groupType = 'COURSE';
+        groupId = session.sessionCourses[0].courseSeasonShiftId;
+      } else if (session.sessionTeams && session.sessionTeams.length > 0) {
+        groupType = 'TEAM';
+        groupId = session.sessionTeams[0].teamSeasonCategoryId;
+      }
+
+      return {
+        staff,
+        session,
+        groupType,
+        groupId,
+        assignment: null,
+        isSupervisor: true,
+      };
     }
 
     const now = new Date();
@@ -1167,6 +1413,7 @@ export class StaffAccessService {
           groupType: 'COURSE' as TeacherGroupType,
           groupId: activeCourseAssignment.courseSeasonShiftId,
           assignment: activeCourseAssignment,
+          isSupervisor: false,
         };
       }
     }
@@ -1189,6 +1436,7 @@ export class StaffAccessService {
           groupType: 'TEAM' as TeacherGroupType,
           groupId: activeTeamAssignment.teamSeasonCategoryId,
           assignment: activeTeamAssignment,
+          isSupervisor: false,
         };
       }
     }
@@ -2895,11 +3143,7 @@ export class StaffAccessService {
       const person = isStudent ? booking.student?.person : booking.player?.person;
       const participantId = isStudent ? booking.studentId! : booking.playerId!;
 
-      const canEdit =
-        inc.createdById === user.id ||
-        user.role?.name === 'SUPER_ADMIN' ||
-        user.permissions?.includes('ADMIN') ||
-        false;
+      const canEdit = inc.createdById === user.id;
 
       return {
         id: inc.id,
@@ -3151,12 +3395,8 @@ export class StaffAccessService {
     }
 
     const isAuthor = incident.createdById === user.id;
-    const isAdmin =
-      user.role?.name === 'SUPER_ADMIN' ||
-      user.permissions?.includes('ADMIN') ||
-      false;
 
-    if (!isAuthor && !isAdmin && incident.createdById) {
+    if (!isAuthor && incident.createdById) {
       throw new ForbiddenException('Solo el creador del reporte de incidente tiene autorización para editarlo.');
     }
 

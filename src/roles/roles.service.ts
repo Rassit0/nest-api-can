@@ -351,7 +351,10 @@ export class RolesService {
 
     for (const [moduleName, perms] of Object.entries(permissionsByModule)) {
       const hasModifyAction = perms.some(
-        (p) => !p.name.startsWith('READ_') && p.name !== 'MANAGE_ALL',
+        (p) =>
+          !p.name.startsWith('READ_') &&
+          p.name !== 'MANAGE_ALL' &&
+          p.name !== 'ACCESS_ALL_TEACHER_GROUPS',
       );
 
       const hasReadAction = perms.some((p) => p.name.startsWith('READ_'));

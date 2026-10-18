@@ -82,7 +82,7 @@ export const ModulePermissions: Record<SystemModuleName, string[]> = {
     'PAUSE_TEAM_SEASONS',
     'BILLING_TEAM_SEASONS',
   ],
-  STAFF: crud('STAFF'),
+  STAFF: [...crud('STAFF'), 'ACCESS_ALL_TEACHER_GROUPS'],
   TEAM_SEASON_STAFF: crud('TEAM_SEASON_STAFF'),
   SEASONS: crud('SEASONS'),
   SCHOOLS: crud('SCHOOLS'),

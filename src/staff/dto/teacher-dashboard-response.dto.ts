@@ -142,4 +142,11 @@ export class TeacherDashboardResponseDto {
     nullable: true,
   })
   upcomingSessions?: UpcomingSessionDto[];
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si el usuario tiene alcance de supervisión global sobre todos los grupos',
+    nullable: true,
+  })
+  isSupervisor?: boolean;
 }

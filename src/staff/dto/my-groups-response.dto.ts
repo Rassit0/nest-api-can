@@ -138,4 +138,11 @@ export class MyGroupsResponseDto {
     description: 'Lista unificada de grupos activos asignados',
   })
   groups: TeacherGroupDto[];
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Indica si el usuario tiene alcance de supervisión global sobre todos los grupos',
+    nullable: true,
+  })
+  isSupervisor?: boolean;
 }
