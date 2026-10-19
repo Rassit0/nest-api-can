@@ -25,6 +25,8 @@ import { MembershipAdvanceChargeService } from './services/membership-advance-ch
 export class MembershipChargesService {
   private readonly logger = new Logger(MembershipChargesService.name);
 
+  private isProcessing = false;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly previewService: MembershipPreviewService,
@@ -129,45 +131,63 @@ export class MembershipChargesService {
    * en transacciones iterativas para asegurar atomicidad sin bloquear toda la DB.
    */
   async applyDailyMembershipCharges() {
-    this.logger.log('Iniciando proceso diario de cálculo de cargos...');
-    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
-
-    const memberships =
-      await this.membershipRepo.getMembershipsForDailyGeneration(
-        evaluationDate,
+    if (this.isProcessing) {
+      this.logger.warn(
+        'El proceso diario de cálculo de cargos ya se encuentra en ejecución. Omitiendo llamada concurrente.',
       );
-    this.logger.log(
-      `Se encontraron ${memberships.length} membresías activas o pendientes.`,
-    );
+      return;
+    }
 
-    const chunkSize = 50;
-    for (let i = 0; i < memberships.length; i += chunkSize) {
-      const chunk = memberships.slice(i, i + chunkSize);
-      for (const membership of chunk) {
-        try {
-          await this.prisma.$transaction(async (tx) => {
-            await this.generationService.ensureMembershipCharges(
-              tx,
-              membership,
-              evaluationDate,
+    this.isProcessing = true;
+    try {
+      this.logger.log('Iniciando proceso diario de cálculo de cargos...');
+      const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+
+      const memberships =
+        await this.membershipRepo.getMembershipsForDailyGeneration(
+          evaluationDate,
+        );
+      this.logger.log(
+        `Se encontraron ${memberships.length} membresías activas o pendientes.`,
+      );
+
+      const chunkSize = 50;
+      for (let i = 0; i < memberships.length; i += chunkSize) {
+        const chunk = memberships.slice(i, i + chunkSize);
+        for (const membership of chunk) {
+          try {
+            await this.prisma.$transaction(
+              async (tx) => {
+                await this.generationService.ensureMembershipCharges(
+                  tx,
+                  membership,
+                  evaluationDate,
+                );
+              },
+              {
+                maxWait: 5000,
+                timeout: 15000,
+              },
             );
-          });
-        } catch (error) {
-          if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
-            this.logger.warn(
-              `Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`,
-            );
-          } else {
-            this.logger.error(
-              `Error procesando cargos para la membresía ID ${membership.id}:`,
-              error,
-            );
+          } catch (error) {
+            if (PrismaErrorUtils.isUniqueConstraintViolation(error)) {
+              this.logger.warn(
+                `Colisión de cargos prevenida (idempotencia) para membresía ID ${membership.id}`,
+              );
+            } else {
+              this.logger.error(
+                `Error procesando cargos para la membresía ID ${membership.id}:`,
+                error,
+              );
+            }
           }
         }
       }
-    }
 
-    this.logger.log('Proceso de cargos finalizado.');
+      this.logger.log('Proceso de cargos finalizado.');
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
   /**

@@ -1,10 +1,14 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from 'src/generated/prisma/client';
 import { StaffPaginationDto } from './dto/pagination.dto';
-import { PaginationDto } from 'src/common/dto/pagination';
 
 export const PersonSelect: Prisma.PersonSelect = {
   id: true,
@@ -35,12 +39,29 @@ export const StaffSelect: Prisma.StaffSelect = {
 
 @Injectable()
 export class StaffService {
-  private readonly logger = new Logger('CategoriesService');
+  private readonly logger = new Logger(StaffService.name);
 
   constructor(private readonly prisma: PrismaService) {}
-  async create(createStaffDto: CreateStaffDto) {
+
+  async create(createStaffDto: CreateStaffDto, actor?: any) {
+    const existingStaff = await this.prisma.staff.findUnique({
+      where: {
+        personId: createStaffDto.personId,
+      },
+    });
+
+    if (existingStaff) {
+      throw new ConflictException(
+        'Esta persona ya se encuentra registrada como miembro del personal.',
+      );
+    }
+
     const newStaff = await this.prisma.staff.create({
-      data: createStaffDto,
+      data: {
+        personId: createStaffDto.personId,
+        isActive: createStaffDto.isActive ?? true,
+        createdById: actor?.id ?? null,
+      },
       select: StaffSelect,
     });
 
@@ -57,31 +78,56 @@ export class StaffService {
       search,
       orderBy = 'asc',
       sortField = 'name',
+      status,
     } = paginationDto;
+
     // Calcular el offset para la paginación
     const skip = (page - 1) * per_page;
 
-    const where: Prisma.StaffWhereInput = search
-      ? {
-          OR: [
-            { id: { equals: search } },
-            { person: { name: { contains: search, mode: 'insensitive' } } },
-            { person: { lastName: { contains: search, mode: 'insensitive' } } },
-            {
-              person: {
-                secondLastName: { contains: search, mode: 'insensitive' },
+    let isActiveFilter: boolean | undefined = undefined;
+    if (status) {
+      const normalizedStatus = status.toUpperCase();
+      if (normalizedStatus === 'ACTIVE') {
+        isActiveFilter = true;
+      } else if (normalizedStatus === 'INACTIVE') {
+        isActiveFilter = false;
+      }
+    }
+
+    const where: Prisma.StaffWhereInput = {
+      ...(isActiveFilter !== undefined ? { isActive: isActiveFilter } : {}),
+      ...(search
+        ? {
+            OR: [
+              { id: { equals: search } },
+              { person: { name: { contains: search, mode: 'insensitive' } } },
+              { person: { lastName: { contains: search, mode: 'insensitive' } } },
+              {
+                person: {
+                  secondLastName: { contains: search, mode: 'insensitive' },
+                },
               },
-            },
-            {
-              person: {
-                documentNumber: { contains: search, mode: 'insensitive' },
+              {
+                person: {
+                  documentNumber: { contains: search, mode: 'insensitive' },
+                },
               },
+              { person: { phone: { contains: search, mode: 'insensitive' } } },
+              { person: { email: { contains: search, mode: 'insensitive' } } },
+            ],
+          }
+        : {}),
+    };
+
+    const directStaffSortFields = ['isActive', 'createdAt', 'id'];
+    const orderByClause: Prisma.StaffOrderByWithRelationInput =
+      directStaffSortFields.includes(sortField)
+        ? { [sortField]: orderBy }
+        : {
+            person: {
+              [sortField]: orderBy,
             },
-            { person: { phone: { contains: search, mode: 'insensitive' } } },
-            { person: { email: { contains: search, mode: 'insensitive' } } },
-          ],
-        }
-      : {};
+          };
 
     // Ejecutamos ambas consultas en paralelo para máxima velocidad
     const [staff, totalItems] = await Promise.all([
@@ -89,11 +135,7 @@ export class StaffService {
         where,
         take: per_page,
         skip,
-        orderBy: {
-          person: {
-            [sortField]: orderBy,
-          },
-        },
+        orderBy: orderByClause,
         select: StaffSelect,
       }),
       this.prisma.staff.count({ where }),
@@ -102,18 +144,16 @@ export class StaffService {
     // Lógica de metadatos
     const totalPages = Math.ceil(totalItems / per_page);
 
-    // Si el usuario pide un page que no existe, Prisma ya puso [] en 'disciplines'.
-    // Calculamos la página actual basándonos en el page solicitado.
     const currentPage = totalItems === 0 ? 0 : Math.floor(page / per_page) + 1;
 
     return {
       message: 'Personal obtenido exitosamente',
-      data: staff, // Será [] si la página no existe o no hay registros
+      data: staff,
       meta: {
-        totalItems, // Ej: 25
-        itemsPerPage: per_page, // Ej: 10
-        totalPages, // Ej: 3
-        currentPage, // Ej: 10 (si el usuario pidió el page 90)
+        totalItems,
+        itemsPerPage: per_page,
+        totalPages,
+        currentPage,
         hasNextPage: page < totalPages,
         hasPrevPage: page > 1,
         nextPage: page < totalPages ? page + 1 : null,
@@ -138,7 +178,7 @@ export class StaffService {
     };
   }
 
-  async update(id: string, updateStaffDto: UpdateStaffDto) {
+  async update(id: string, updateStaffDto: UpdateStaffDto, actor?: any) {
     const staff = await this.prisma.staff.findUnique({
       where: {
         id,
@@ -152,7 +192,10 @@ export class StaffService {
       where: {
         id,
       },
-      data: updateStaffDto,
+      data: {
+        ...updateStaffDto,
+        updatedById: actor?.id ?? undefined,
+      },
       select: StaffSelect,
     });
 
@@ -162,21 +205,54 @@ export class StaffService {
     };
   }
 
-  async remove(id: string) {
+  async deactivate(id: string, actor?: any) {
     const staff = await this.prisma.staff.findUnique({
       where: { id },
     });
     if (!staff) {
-      throw new NotFoundException('El personal no fue encontrado');
+      throw new NotFoundException('Personal no encontrado');
     }
-    const deletedStaff = await this.prisma.staff.delete({
+
+    const updatedStaff = await this.prisma.staff.update({
       where: { id },
+      data: {
+        isActive: false,
+        updatedById: actor?.id ?? undefined,
+      },
       select: StaffSelect,
     });
+
     return {
-      message: 'Personal eliminado exitosamente',
-      data: deletedStaff,
+      message: 'Personal desactivado exitosamente',
+      data: updatedStaff,
     };
   }
 
+  async reactivate(id: string, actor?: any) {
+    const staff = await this.prisma.staff.findUnique({
+      where: { id },
+    });
+    if (!staff) {
+      throw new NotFoundException('Personal no encontrado');
+    }
+
+    const updatedStaff = await this.prisma.staff.update({
+      where: { id },
+      data: {
+        isActive: true,
+        updatedById: actor?.id ?? undefined,
+      },
+      select: StaffSelect,
+    });
+
+    return {
+      message: 'Personal reactivado exitosamente',
+      data: updatedStaff,
+    };
+  }
+
+  async remove(id: string, actor?: any) {
+    // Desactivación lógica obligatoria para preservar trazabilidad histórica
+    return this.deactivate(id, actor);
+  }
 }

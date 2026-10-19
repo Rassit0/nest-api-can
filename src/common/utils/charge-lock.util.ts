@@ -20,6 +20,11 @@ export async function lockChargeForUpdate(
   tx: Prisma.TransactionClient,
   chargeId: string,
 ): Promise<Charge> {
+  // Previene que la consulta espere indefinidamente en PostgreSQL si otra transacción retiene el lock
+  if (typeof (tx as any).$executeRawUnsafe === 'function') {
+    await (tx as any).$executeRawUnsafe(`SET LOCAL lock_timeout = '4s'`);
+  }
+
   const result = await tx.$queryRaw<Charge[]>`
     SELECT *
     FROM "charges" 

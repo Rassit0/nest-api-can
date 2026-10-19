@@ -19,6 +19,7 @@ import {
 @Injectable()
 export class MembershipLateFeeService {
   private readonly logger = new Logger(MembershipLateFeeService.name);
+  private isProcessing = false;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -27,39 +28,57 @@ export class MembershipLateFeeService {
 
   /**
    * Proceso principal para aplicar recargos a todos los cargos vencidos en el sistema.
-   * Este mÃ©todo puede ser llamado por un Cron Job todas las noches.
+   * Este método puede ser llamado por un Cron Job todas las noches.
    */
   async applyDailyLateFees() {
-    this.logger.log('Iniciando proceso diario de cálculo de recargos...');
-
-    const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
-
-    const overdueCharges =
-      await this.lateFeeRepo.findOverdueCharges(evaluationDate);
-
-    this.logger.log(
-      `Se encontraron ${overdueCharges.length} cargos vencidos base.`,
-    );
-
-    const chunkSize = 50;
-    for (let i = 0; i < overdueCharges.length; i += chunkSize) {
-      const chunk = overdueCharges.slice(i, i + chunkSize);
-
-      for (const baseCharge of chunk) {
-        try {
-          await this.prisma.$transaction(async (tx) => {
-            await this.processChargeLateFee(tx, baseCharge, evaluationDate);
-          });
-        } catch (error) {
-          this.logger.error(
-            `Error procesando recargos para el cargo ID ${baseCharge.id}:`,
-            error,
-          );
-        }
-      }
+    if (this.isProcessing) {
+      this.logger.warn(
+        'El proceso diario de cálculo de recargos ya se encuentra en ejecución. Omitiendo llamada concurrente.',
+      );
+      return;
     }
 
-    this.logger.log('Proceso de recargos finalizado.');
+    this.isProcessing = true;
+    try {
+      this.logger.log('Iniciando proceso diario de cálculo de recargos...');
+
+      const evaluationDate = DateUtils.getEndOfLocalDayInUTC(new Date());
+
+      const overdueCharges =
+        await this.lateFeeRepo.findOverdueCharges(evaluationDate);
+
+      this.logger.log(
+        `Se encontraron ${overdueCharges.length} cargos vencidos base.`,
+      );
+
+      const chunkSize = 50;
+      for (let i = 0; i < overdueCharges.length; i += chunkSize) {
+        const chunk = overdueCharges.slice(i, i + chunkSize);
+
+        for (const baseCharge of chunk) {
+          try {
+            await this.prisma.$transaction(
+              async (tx) => {
+                await this.processChargeLateFee(tx, baseCharge, evaluationDate);
+              },
+              {
+                maxWait: 5000,
+                timeout: 15000,
+              },
+            );
+          } catch (error) {
+            this.logger.error(
+              `Error procesando recargos para el cargo ID ${baseCharge.id}:`,
+              error,
+            );
+          }
+        }
+      }
+
+      this.logger.log('Proceso de recargos finalizado.');
+    } finally {
+      this.isProcessing = false;
+    }
   }
 
   /**

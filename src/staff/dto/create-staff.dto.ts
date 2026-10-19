@@ -22,7 +22,7 @@ export class CreateStaffDto {
 
   @ApiProperty({
     example: true,
-    description: 'Está activo el jugador',
+    description: 'Está activo el miembro del personal',
   })
   @IsBoolean({
     message: i18nValidationMessage('validation.IS_BOOLEAN', {

@@ -87,8 +87,8 @@ export class StaffController {
     'Miembro del personal registrado exitosamente.',
   )
   @RequirePermissions('CREATE_STAFF')
-  async create(@Body() createStaffDto: CreateStaffDto) {
-    return await this.staffService.create(createStaffDto);
+  async create(@Body() createStaffDto: CreateStaffDto, @Req() req: any) {
+    return await this.staffService.create(createStaffDto, req.user);
   }
 
   @Get()
@@ -808,26 +808,76 @@ export class StaffController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateStaffDto: UpdateStaffDto,
+    @Req() req: any,
   ) {
-    return await this.staffService.update(id, updateStaffDto);
+    return await this.staffService.update(id, updateStaffDto, req.user);
   }
 
-  @Delete(':id')
+  @Patch(':id/deactivate')
   @ApiOperation({
-    summary: 'Eliminar personal por ID',
-    description: 'Remueve de forma definitiva el registro de personal.',
+    summary: 'Desactivar personal por ID',
+    description:
+      'Desactiva lógicamente el registro de personal sin eliminar registros históricos.',
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del personal a eliminar (UUID)',
+    description: 'ID del personal a desactivar (UUID)',
     format: 'uuid',
   })
   @ApiStandardResponse(
     StaffResponseDto,
-    'Miembro del personal eliminado exitosamente.',
+    'Miembro del personal desactivado exitosamente.',
   )
   @RequirePermissions('DELETE_STAFF')
-  async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.staffService.remove(id);
+  async deactivate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Req() req: any,
+  ) {
+    return await this.staffService.deactivate(id, req.user);
+  }
+
+  @Patch(':id/reactivate')
+  @ApiOperation({
+    summary: 'Reactivar personal por ID',
+    description: 'Reactiva la ficha del miembro del personal.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del personal a reactivar (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(
+    StaffResponseDto,
+    'Miembro del personal reactivado exitosamente.',
+  )
+  @RequirePermissions('UPDATE_STAFF')
+  async reactivate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Req() req: any,
+  ) {
+    return await this.staffService.reactivate(id, req.user);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Eliminar personal por ID (Desactivación lógica)',
+    description:
+      'Desactiva lógicamente el registro de personal preservando trazabilidad e integridad histórica.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del personal a desactivar (UUID)',
+    format: 'uuid',
+  })
+  @ApiStandardResponse(
+    StaffResponseDto,
+    'Miembro del personal desactivado exitosamente.',
+  )
+  @RequirePermissions('DELETE_STAFF')
+  async remove(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Req() req: any,
+  ) {
+    return this.staffService.remove(id, req.user);
   }
 }
