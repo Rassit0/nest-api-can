@@ -1072,6 +1072,7 @@ model StudentMembership {
   paymentPlanId                     String                             @map("payment_plan_id")
   startedAt                         DateTime                           @map("started_at")
   endedAt                           DateTime?                          @map("ended_at")
+  reenteredAt                       DateTime?                          @map("reentered_at")
   status                            StudentMembershipStatus            @default(PENDING_ACTIVE)
   notes                             String?
   isMigrated                        Boolean                            @default(false) @map("is_migrated")
@@ -1103,6 +1104,7 @@ model StudentMembershipHistory {
   studentMembershipId String                   @map("student_membership_id")
   previousStatus      StudentMembershipStatus? @map("previous_status")
   newStatus           StudentMembershipStatus  @map("new_status")
+  effectiveDate       DateTime?                @map("effective_date")
   reason              String?
   createdAt           DateTime                 @default(now()) @map("created_at")
   createdById         String?                  @map("created_by_id")
@@ -1139,6 +1141,9 @@ model CycleEnrollment {
   cycleEndDate        DateTime              @map("cycle_end_date")
   effectiveStartDate  DateTime              @map("effective_start_date")
   status              CycleEnrollmentStatus @default(PENDING)
+  attempt             Int                   @default(1)
+  cancellationReason  String?               @map("cancellation_reason")
+  cancelledAt         DateTime?             @map("cancelled_at")
   createdAt           DateTime              @default(now()) @map("created_at")
   updatedAt           DateTime              @updatedAt @map("updated_at")
   createdById         String?               @map("created_by_id")
@@ -1152,7 +1157,7 @@ model CycleEnrollment {
   studentMembership   StudentMembership     @relation(fields: [studentMembershipId], references: [id])
   updatedBy           User?                 @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([studentMembershipId, cycleStartDate, cycleEndDate], name: "unique_cycle_enrollment")
+  @@unique([studentMembershipId, cycleStartDate, cycleEndDate, attempt], name: "unique_cycle_enrollment_attempt")
   @@map("cycle_enrollments")
 }
 
@@ -1186,6 +1191,7 @@ model StudentCharge {
   billingYear         Int?
   billingMonth        Int?
   billingCycle        Int?                 @map("billing_cycle")
+  attempt             Int                  @default(1)
   createdAt           DateTime             @default(now()) @map("created_at")
   updatedAt           DateTime             @updatedAt @map("updated_at")
   createdById         String?              @map("created_by_id")
@@ -1195,7 +1201,7 @@ model StudentCharge {
   studentMembership   StudentMembership    @relation(fields: [studentMembershipId], references: [id])
   updatedBy           User?                @relation("UpdatedBy", fields: [updatedById], references: [id])
 
-  @@unique([studentMembershipId, type, billingMonth, billingYear, billingCycle])
+  @@unique([studentMembershipId, type, billingMonth, billingYear, billingCycle, attempt], name: "unique_student_charge_attempt")
   @@map("student_charges")
 }
 

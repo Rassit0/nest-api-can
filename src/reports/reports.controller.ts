@@ -73,10 +73,17 @@ export class ReportsController {
   async getTeamSeasonPaymentsMatrix(
     @Param('teamSeasonId') teamSeasonId: string,
     @Query('teamSeasonCategoryId') teamSeasonCategoryId: string,
+    @Query('includeWithdrawn') includeWithdrawn: string,
     @Req() req: Request & { user: any },
   ) {
     const institutionId = req.user.institutionId;
-    return await this.paymentsMatrixService.getTeamSeasonMatrix(institutionId, teamSeasonId, teamSeasonCategoryId);
+    const shouldIncludeWithdrawn = includeWithdrawn === 'true';
+    return await this.paymentsMatrixService.getTeamSeasonMatrix(
+      institutionId,
+      teamSeasonId,
+      teamSeasonCategoryId,
+      shouldIncludeWithdrawn,
+    );
   }
 
   @Get('payments-matrix/course-season-shifts/:shiftId/pdf')
@@ -123,6 +130,7 @@ export class ReportsController {
       userName,
       query?.teamSeasonCategoryId,
       issuedAt,
+      query?.includeWithdrawn,
     );
 
     res.setHeader('Content-Type', 'application/pdf');

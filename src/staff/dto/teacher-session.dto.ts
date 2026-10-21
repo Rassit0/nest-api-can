@@ -101,6 +101,30 @@ export class TeacherCreateSessionDto {
   })
   @Type(() => Number)
   durationMin?: number = 90;
+
+  @ApiPropertyOptional({
+    example: 'FREQ=WEEKLY;BYDAY=MO,WE;INTERVAL=1',
+    description: 'Regla de recurrencia en formato RRULE',
+  })
+  @IsOptional()
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'recurrenceRule',
+    }),
+  })
+  recurrenceRule?: string;
+
+  @ApiPropertyOptional({
+    example: 'America/La_Paz',
+    description: 'Zona horaria de la serie de eventos',
+  })
+  @IsOptional()
+  @IsString({
+    message: i18nValidationMessage('validation.IS_STRING', {
+      constraint1: 'timezone',
+    }),
+  })
+  timezone?: string;
 }
 
 export class TeacherUpdateSessionDto {

@@ -94,32 +94,80 @@ export class EventMaterializationJob {
             throw new Error('Serie no encontrada o sin materializedUntil');
           }
 
-          // Determinar las próximas fechas desde materializedUntil + 1ms hasta thresholdDate
+          // 1. Obtener duración original y fecha de referencia de la recurrencia
+          const template = (series.templateData as any) || {};
+          let durationMs: number | null = null;
+          let referenceStartDate: Date | null = null;
+
+          if (typeof template.durationMin === 'number' && template.durationMin > 0) {
+            durationMs = template.durationMin * 60 * 1000;
+          } else if (template.startDate && template.endDate) {
+            const s = new Date(template.startDate).getTime();
+            const e = new Date(template.endDate).getTime();
+            if (e > s) durationMs = e - s;
+          }
+
+          if (template.startDate) {
+            const d = new Date(template.startDate);
+            if (!isNaN(d.getTime())) referenceStartDate = d;
+          }
+
+          // Fallback a eventos preexistentes de la serie
+          if (!durationMs || !referenceStartDate) {
+            const firstEvent = await tx.event.findFirst({
+              where: { eventSeriesId: series.id },
+              select: { startDate: true, endDate: true },
+              orderBy: { startDate: 'asc' },
+            });
+            if (firstEvent) {
+              if (!referenceStartDate) referenceStartDate = firstEvent.startDate;
+              if (!durationMs && firstEvent.endDate) {
+                durationMs = firstEvent.endDate.getTime() - firstEvent.startDate.getTime();
+              }
+            }
+          }
+
+          if (!durationMs || durationMs <= 0) {
+            durationMs = 90 * 60 * 1000; // 90 min institucional por defecto
+          }
+          if (!referenceStartDate) {
+            referenceStartDate = series.createdAt;
+          }
+
+          // 2. Determinar las próximas fechas desde materializedUntil + 1ms hasta thresholdDate
           const startExpansion = new Date(
             series.materializedUntil.getTime() + 1,
           );
-          const occurrences = this.recurrenceService.expandRRule(
+          const occurrences = this.recurrenceService.expandRRuleWindow({
+            rruleStr: series.recurrenceRule,
+            referenceStartDate,
+            durationMs,
+            windowStartDate: startExpansion,
+            windowEndDate: thresholdDate,
+          });
+
+          // 3. Evaluar conclusión real de la serie mediante semántica formal RRULE
+          const isCompleted = this.recurrenceService.isSeriesCompleted(
             series.recurrenceRule,
-            startExpansion,
-            thresholdDate,
+            referenceStartDate,
+            series.materializedUntil,
           );
 
           if (occurrences.length === 0) {
-            // No hay más ocurrencias (puede que RRULE tenga un UNTIL en el pasado)
-            // Actualizamos materializedUntil al thresholdDate para que no vuelva a ser recogida, o la marcamos COMPLETED
-            const hasUntil =
-              series.recurrenceRule.includes('UNTIL=') ||
-              series.recurrenceRule.includes('COUNT=');
-            if (hasUntil) {
+            if (isCompleted) {
               await tx.eventSeries.update({
                 where: { id: series.id },
                 data: { status: EventSeriesStatus.FINISHED },
               });
+              this.logger.log(`Serie ${series.id} completó todas sus ocurrencias programadas.`);
             } else {
+              // La ventana actual no tiene ocurrencias (ej. intervalo sin clases), pero la serie continúa vigente.
+              // Avanzamos materializedUntil a thresholdDate para evitar re-escaneo redundante y mantenemos ACTIVE.
               await tx.eventSeries.update({
                 where: { id: series.id },
                 data: { materializedUntil: thresholdDate },
               });
+              this.logger.debug(`Serie ${series.id} sin ocurrencias hasta ${thresholdDate.toISOString()}, permanece ACTIVE.`);
             }
             return;
           }
@@ -132,10 +180,10 @@ export class EventMaterializationJob {
             eventType: series.eventType,
             recurrenceRule: series.recurrenceRule,
             timezone: series.timezone,
-            title: (series.templateData as any).title, // The template might have base data, or we could just skip if it's not present. EventMaterializationService needs eventType at least.
-            description: (series.templateData as any).description,
-            color: (series.templateData as any).color,
-            locationId: (series.templateData as any).locationId,
+            title: template.title,
+            description: template.description,
+            color: template.color,
+            locationId: template.locationId,
           };
 
           const { results, conflicts } =
@@ -152,9 +200,20 @@ export class EventMaterializationJob {
           const newMaterializedUntil =
             occurrences[occurrences.length - 1].endDate;
 
+          // Verificar si tras materializar este lote la serie ya no tiene más ocurrencias futuras
+          const hasMoreOccurrences = !this.recurrenceService.isSeriesCompleted(
+            series.recurrenceRule,
+            referenceStartDate,
+            newMaterializedUntil,
+          );
+
           await tx.eventSeries.update({
             where: { id: series.id },
-            data: { materializedUntil: newMaterializedUntil },
+            data: {
+              materializedUntil: newMaterializedUntil,
+              lastMaterializedAt: new Date(),
+              status: hasMoreOccurrences ? EventSeriesStatus.ACTIVE : EventSeriesStatus.FINISHED,
+            },
           });
 
           // Guardar logs de conflictos si los hubo (Auditoría)

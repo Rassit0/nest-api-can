@@ -478,7 +478,9 @@ export class StaffController {
       dto,
     );
     return {
-      message: 'Sesión creada exitosamente',
+      message: dto.recurrenceRule
+        ? 'Serie de sesiones programada exitosamente'
+        : 'Sesión creada exitosamente',
       data,
     };
   }

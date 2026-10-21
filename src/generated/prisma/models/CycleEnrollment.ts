@@ -20,8 +20,18 @@ export type CycleEnrollmentModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateCycleEnrollment = {
   _count: CycleEnrollmentCountAggregateOutputType | null
+  _avg: CycleEnrollmentAvgAggregateOutputType | null
+  _sum: CycleEnrollmentSumAggregateOutputType | null
   _min: CycleEnrollmentMinAggregateOutputType | null
   _max: CycleEnrollmentMaxAggregateOutputType | null
+}
+
+export type CycleEnrollmentAvgAggregateOutputType = {
+  attempt: number | null
+}
+
+export type CycleEnrollmentSumAggregateOutputType = {
+  attempt: number | null
 }
 
 export type CycleEnrollmentMinAggregateOutputType = {
@@ -32,6 +42,9 @@ export type CycleEnrollmentMinAggregateOutputType = {
   cycleEndDate: Date | null
   effectiveStartDate: Date | null
   status: $Enums.CycleEnrollmentStatus | null
+  attempt: number | null
+  cancellationReason: string | null
+  cancelledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -48,6 +61,9 @@ export type CycleEnrollmentMaxAggregateOutputType = {
   cycleEndDate: Date | null
   effectiveStartDate: Date | null
   status: $Enums.CycleEnrollmentStatus | null
+  attempt: number | null
+  cancellationReason: string | null
+  cancelledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -64,6 +80,9 @@ export type CycleEnrollmentCountAggregateOutputType = {
   cycleEndDate: number
   effectiveStartDate: number
   status: number
+  attempt: number
+  cancellationReason: number
+  cancelledAt: number
   createdAt: number
   updatedAt: number
   createdById: number
@@ -74,6 +93,14 @@ export type CycleEnrollmentCountAggregateOutputType = {
 }
 
 
+export type CycleEnrollmentAvgAggregateInputType = {
+  attempt?: true
+}
+
+export type CycleEnrollmentSumAggregateInputType = {
+  attempt?: true
+}
+
 export type CycleEnrollmentMinAggregateInputType = {
   id?: true
   studentMembershipId?: true
@@ -82,6 +109,9 @@ export type CycleEnrollmentMinAggregateInputType = {
   cycleEndDate?: true
   effectiveStartDate?: true
   status?: true
+  attempt?: true
+  cancellationReason?: true
+  cancelledAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -98,6 +128,9 @@ export type CycleEnrollmentMaxAggregateInputType = {
   cycleEndDate?: true
   effectiveStartDate?: true
   status?: true
+  attempt?: true
+  cancellationReason?: true
+  cancelledAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -114,6 +147,9 @@ export type CycleEnrollmentCountAggregateInputType = {
   cycleEndDate?: true
   effectiveStartDate?: true
   status?: true
+  attempt?: true
+  cancellationReason?: true
+  cancelledAt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -161,6 +197,18 @@ export type CycleEnrollmentAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CycleEnrollmentAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CycleEnrollmentSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CycleEnrollmentMinAggregateInputType
@@ -191,6 +239,8 @@ export type CycleEnrollmentGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: CycleEnrollmentCountAggregateInputType | true
+  _avg?: CycleEnrollmentAvgAggregateInputType
+  _sum?: CycleEnrollmentSumAggregateInputType
   _min?: CycleEnrollmentMinAggregateInputType
   _max?: CycleEnrollmentMaxAggregateInputType
 }
@@ -203,6 +253,9 @@ export type CycleEnrollmentGroupByOutputType = {
   cycleEndDate: Date
   effectiveStartDate: Date
   status: $Enums.CycleEnrollmentStatus
+  attempt: number
+  cancellationReason: string | null
+  cancelledAt: Date | null
   createdAt: Date
   updatedAt: Date
   createdById: string | null
@@ -210,6 +263,8 @@ export type CycleEnrollmentGroupByOutputType = {
   courseSeasonId: string
   courseSeasonShiftId: string
   _count: CycleEnrollmentCountAggregateOutputType | null
+  _avg: CycleEnrollmentAvgAggregateOutputType | null
+  _sum: CycleEnrollmentSumAggregateOutputType | null
   _min: CycleEnrollmentMinAggregateOutputType | null
   _max: CycleEnrollmentMaxAggregateOutputType | null
 }
@@ -240,6 +295,9 @@ export type CycleEnrollmentWhereInput = {
   cycleEndDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   effectiveStartDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFilter<"CycleEnrollment"> | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFilter<"CycleEnrollment"> | number
+  cancellationReason?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"CycleEnrollment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
@@ -262,6 +320,9 @@ export type CycleEnrollmentOrderByWithRelationInput = {
   cycleEndDate?: Prisma.SortOrder
   effectiveStartDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,7 +340,7 @@ export type CycleEnrollmentOrderByWithRelationInput = {
 export type CycleEnrollmentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   chargeId?: string
-  unique_cycle_enrollment?: Prisma.CycleEnrollmentUnique_cycle_enrollmentCompoundUniqueInput
+  unique_cycle_enrollment_attempt?: Prisma.CycleEnrollmentUnique_cycle_enrollment_attemptCompoundUniqueInput
   AND?: Prisma.CycleEnrollmentWhereInput | Prisma.CycleEnrollmentWhereInput[]
   OR?: Prisma.CycleEnrollmentWhereInput[]
   NOT?: Prisma.CycleEnrollmentWhereInput | Prisma.CycleEnrollmentWhereInput[]
@@ -288,6 +349,9 @@ export type CycleEnrollmentWhereUniqueInput = Prisma.AtLeast<{
   cycleEndDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   effectiveStartDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFilter<"CycleEnrollment"> | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFilter<"CycleEnrollment"> | number
+  cancellationReason?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"CycleEnrollment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
@@ -300,7 +364,7 @@ export type CycleEnrollmentWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "chargeId" | "unique_cycle_enrollment">
+}, "id" | "chargeId" | "unique_cycle_enrollment_attempt">
 
 export type CycleEnrollmentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -310,6 +374,9 @@ export type CycleEnrollmentOrderByWithAggregationInput = {
   cycleEndDate?: Prisma.SortOrder
   effectiveStartDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -317,8 +384,10 @@ export type CycleEnrollmentOrderByWithAggregationInput = {
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
   _count?: Prisma.CycleEnrollmentCountOrderByAggregateInput
+  _avg?: Prisma.CycleEnrollmentAvgOrderByAggregateInput
   _max?: Prisma.CycleEnrollmentMaxOrderByAggregateInput
   _min?: Prisma.CycleEnrollmentMinOrderByAggregateInput
+  _sum?: Prisma.CycleEnrollmentSumOrderByAggregateInput
 }
 
 export type CycleEnrollmentScalarWhereWithAggregatesInput = {
@@ -332,6 +401,9 @@ export type CycleEnrollmentScalarWhereWithAggregatesInput = {
   cycleEndDate?: Prisma.DateTimeWithAggregatesFilter<"CycleEnrollment"> | Date | string
   effectiveStartDate?: Prisma.DateTimeWithAggregatesFilter<"CycleEnrollment"> | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusWithAggregatesFilter<"CycleEnrollment"> | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntWithAggregatesFilter<"CycleEnrollment"> | number
+  cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"CycleEnrollment"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CycleEnrollment"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CycleEnrollment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CycleEnrollment"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"CycleEnrollment"> | string | null
@@ -346,6 +418,9 @@ export type CycleEnrollmentCreateInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -364,6 +439,9 @@ export type CycleEnrollmentUncheckedCreateInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -378,6 +456,9 @@ export type CycleEnrollmentUpdateInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -396,6 +477,9 @@ export type CycleEnrollmentUncheckedUpdateInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -412,6 +496,9 @@ export type CycleEnrollmentCreateManyInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -426,6 +513,9 @@ export type CycleEnrollmentUpdateManyMutationInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -438,6 +528,9 @@ export type CycleEnrollmentUncheckedUpdateManyInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -461,10 +554,11 @@ export type CycleEnrollmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CycleEnrollmentUnique_cycle_enrollmentCompoundUniqueInput = {
+export type CycleEnrollmentUnique_cycle_enrollment_attemptCompoundUniqueInput = {
   studentMembershipId: string
   cycleStartDate: Date | string
   cycleEndDate: Date | string
+  attempt: number
 }
 
 export type CycleEnrollmentCountOrderByAggregateInput = {
@@ -475,12 +569,19 @@ export type CycleEnrollmentCountOrderByAggregateInput = {
   cycleEndDate?: Prisma.SortOrder
   effectiveStartDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
+}
+
+export type CycleEnrollmentAvgOrderByAggregateInput = {
+  attempt?: Prisma.SortOrder
 }
 
 export type CycleEnrollmentMaxOrderByAggregateInput = {
@@ -491,6 +592,9 @@ export type CycleEnrollmentMaxOrderByAggregateInput = {
   cycleEndDate?: Prisma.SortOrder
   effectiveStartDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -507,12 +611,19 @@ export type CycleEnrollmentMinOrderByAggregateInput = {
   cycleEndDate?: Prisma.SortOrder
   effectiveStartDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   courseSeasonId?: Prisma.SortOrder
   courseSeasonShiftId?: Prisma.SortOrder
+}
+
+export type CycleEnrollmentSumOrderByAggregateInput = {
+  attempt?: Prisma.SortOrder
 }
 
 export type CycleEnrollmentCreateNestedOneWithoutChargeInput = {
@@ -767,6 +878,9 @@ export type CycleEnrollmentCreateWithoutChargeInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courseSeason: Prisma.CourseSeasonCreateNestedOneWithoutCycleEnrollmentsInput
@@ -783,6 +897,9 @@ export type CycleEnrollmentUncheckedCreateWithoutChargeInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -813,6 +930,9 @@ export type CycleEnrollmentUpdateWithoutChargeInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseSeason?: Prisma.CourseSeasonUpdateOneRequiredWithoutCycleEnrollmentsNestedInput
@@ -829,6 +949,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutChargeInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -843,6 +966,9 @@ export type CycleEnrollmentCreateWithoutCreatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -860,6 +986,9 @@ export type CycleEnrollmentUncheckedCreateWithoutCreatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
@@ -883,6 +1012,9 @@ export type CycleEnrollmentCreateWithoutUpdatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -900,6 +1032,9 @@ export type CycleEnrollmentUncheckedCreateWithoutUpdatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -944,6 +1079,9 @@ export type CycleEnrollmentScalarWhereInput = {
   cycleEndDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   effectiveStartDate?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFilter<"CycleEnrollment"> | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFilter<"CycleEnrollment"> | number
+  cancellationReason?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"CycleEnrollment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CycleEnrollment"> | Date | string
   createdById?: Prisma.StringNullableFilter<"CycleEnrollment"> | string | null
@@ -974,6 +1112,9 @@ export type CycleEnrollmentCreateWithoutCourseSeasonInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -991,6 +1132,9 @@ export type CycleEnrollmentUncheckedCreateWithoutCourseSeasonInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1030,6 +1174,9 @@ export type CycleEnrollmentCreateWithoutCourseSeasonShiftInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -1047,6 +1194,9 @@ export type CycleEnrollmentUncheckedCreateWithoutCourseSeasonShiftInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1085,6 +1235,9 @@ export type CycleEnrollmentCreateWithoutStudentMembershipInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   charge?: Prisma.ChargeCreateNestedOneWithoutCycleEnrollmentInput
@@ -1101,6 +1254,9 @@ export type CycleEnrollmentUncheckedCreateWithoutStudentMembershipInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1143,6 +1299,9 @@ export type CycleEnrollmentCreateManyCreatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
@@ -1158,6 +1317,9 @@ export type CycleEnrollmentCreateManyUpdatedByInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1171,6 +1333,9 @@ export type CycleEnrollmentUpdateWithoutCreatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -1188,6 +1353,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutCreatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1203,6 +1371,9 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutCreatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1216,6 +1387,9 @@ export type CycleEnrollmentUpdateWithoutUpdatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -1233,6 +1407,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutUpdatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1248,6 +1425,9 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutUpdatedByInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1263,6 +1443,9 @@ export type CycleEnrollmentCreateManyCourseSeasonInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1276,6 +1459,9 @@ export type CycleEnrollmentUpdateWithoutCourseSeasonInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -1293,6 +1479,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutCourseSeasonInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1308,6 +1497,9 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1323,6 +1515,9 @@ export type CycleEnrollmentCreateManyCourseSeasonShiftInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1335,6 +1530,9 @@ export type CycleEnrollmentUpdateWithoutCourseSeasonShiftInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -1352,6 +1550,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutCourseSeasonShiftInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1366,6 +1567,9 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutCourseSeasonShiftInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1379,6 +1583,9 @@ export type CycleEnrollmentCreateManyStudentMembershipInput = {
   cycleEndDate: Date | string
   effectiveStartDate: Date | string
   status?: $Enums.CycleEnrollmentStatus
+  attempt?: number
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1393,6 +1600,9 @@ export type CycleEnrollmentUpdateWithoutStudentMembershipInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneWithoutCycleEnrollmentNestedInput
@@ -1409,6 +1619,9 @@ export type CycleEnrollmentUncheckedUpdateWithoutStudentMembershipInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1424,6 +1637,9 @@ export type CycleEnrollmentUncheckedUpdateManyWithoutStudentMembershipInput = {
   cycleEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   effectiveStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCycleEnrollmentStatusFieldUpdateOperationsInput | $Enums.CycleEnrollmentStatus
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1442,6 +1658,9 @@ export type CycleEnrollmentSelect<ExtArgs extends runtime.Types.Extensions.Inter
   cycleEndDate?: boolean
   effectiveStartDate?: boolean
   status?: boolean
+  attempt?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1464,6 +1683,9 @@ export type CycleEnrollmentSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   cycleEndDate?: boolean
   effectiveStartDate?: boolean
   status?: boolean
+  attempt?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1486,6 +1708,9 @@ export type CycleEnrollmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   cycleEndDate?: boolean
   effectiveStartDate?: boolean
   status?: boolean
+  attempt?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1508,6 +1733,9 @@ export type CycleEnrollmentSelectScalar = {
   cycleEndDate?: boolean
   effectiveStartDate?: boolean
   status?: boolean
+  attempt?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1516,7 +1744,7 @@ export type CycleEnrollmentSelectScalar = {
   courseSeasonShiftId?: boolean
 }
 
-export type CycleEnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "chargeId" | "cycleStartDate" | "cycleEndDate" | "effectiveStartDate" | "status" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "courseSeasonId" | "courseSeasonShiftId", ExtArgs["result"]["cycleEnrollment"]>
+export type CycleEnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "chargeId" | "cycleStartDate" | "cycleEndDate" | "effectiveStartDate" | "status" | "attempt" | "cancellationReason" | "cancelledAt" | "createdAt" | "updatedAt" | "createdById" | "updatedById" | "courseSeasonId" | "courseSeasonShiftId", ExtArgs["result"]["cycleEnrollment"]>
 export type CycleEnrollmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   charge?: boolean | Prisma.CycleEnrollment$chargeArgs<ExtArgs>
   courseSeason?: boolean | Prisma.CourseSeasonDefaultArgs<ExtArgs>
@@ -1560,6 +1788,9 @@ export type $CycleEnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Int
     cycleEndDate: Date
     effectiveStartDate: Date
     status: $Enums.CycleEnrollmentStatus
+    attempt: number
+    cancellationReason: string | null
+    cancelledAt: Date | null
     createdAt: Date
     updatedAt: Date
     createdById: string | null
@@ -2002,6 +2233,9 @@ export interface CycleEnrollmentFieldRefs {
   readonly cycleEndDate: Prisma.FieldRef<"CycleEnrollment", 'DateTime'>
   readonly effectiveStartDate: Prisma.FieldRef<"CycleEnrollment", 'DateTime'>
   readonly status: Prisma.FieldRef<"CycleEnrollment", 'CycleEnrollmentStatus'>
+  readonly attempt: Prisma.FieldRef<"CycleEnrollment", 'Int'>
+  readonly cancellationReason: Prisma.FieldRef<"CycleEnrollment", 'String'>
+  readonly cancelledAt: Prisma.FieldRef<"CycleEnrollment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"CycleEnrollment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CycleEnrollment", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"CycleEnrollment", 'String'>

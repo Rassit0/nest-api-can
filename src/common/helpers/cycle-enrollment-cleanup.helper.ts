@@ -1,6 +1,11 @@
-import { PrismaClient, Prisma, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
+import { Prisma, StatusCharge, CycleEnrollmentStatus } from 'src/generated/prisma/client';
 import { isCycleEnrollmentExpired } from './cycle-enrollment.helper';
 
+/**
+ * Limpieza/Cancelación lógica segura de inscripciones de ciclos expiradas.
+ * NUNCA elimina físicamente registros (evita hard delete).
+ * Preserva integridad contable e histórica.
+ */
 export async function cleanupExpiredEnrollmentIfNeeded(
   prisma: Prisma.TransactionClient,
   cycleEnrollmentId?: string,
@@ -29,66 +34,38 @@ export async function cleanupExpiredEnrollmentIfNeeded(
   if (cycle.status !== CycleEnrollmentStatus.PENDING) return false;
   if (!isCycleEnrollmentExpired(cycle.createdAt)) return false;
 
-  // Verificamos si podemos hacer un hard delete
-  let canHardDelete = false;
-
+  // Validar seguridad financiera: no cancelar si tiene pagos efectivos o en proceso
   if (cycle.charge) {
     const charge = cycle.charge;
-    // Solo permitimos eliminar físicamente si:
-    // 1. Está completamente impago (PENDING)
-    // 2. pendingAmount === amount
-    // 3. No tiene pagos asociados
-    const expectedPendingAmount = Number(charge.amount) + Number(charge.adjustmentAmount || 0);
-    const isUnpaid =
-      charge.status === StatusCharge.PENDING &&
-      Number(charge.pendingAmount) === expectedPendingAmount &&
-      (!charge.payments || charge.payments.length === 0);
+    const hasActivePayments = (charge.payments || []).some(
+      (p: any) => p.status === 'COMPLETED' || p.status === 'PENDING',
+    );
 
-    if (isUnpaid) {
-      canHardDelete = true;
+    if (hasActivePayments) {
+      // No se puede cancelar automáticamente un cargo con pagos
+      return false;
     }
-  } else {
-    // Si no tiene cargo, podemos eliminarlo físicamente
-    canHardDelete = true;
-  }
 
-  if (canHardDelete) {
-    // Eliminar StudentCharge si existe
-    if (cycle.chargeId) {
-      await prisma.studentCharge.deleteMany({
-        where: { chargeId: cycle.chargeId },
-      });
-      // Eliminar el CycleEnrollment
-      await prisma.cycleEnrollment.delete({
-        where: { id: cycle.id },
-      });
-      // Eliminar el Charge
-      await prisma.charge.delete({
-        where: { id: cycle.chargeId },
-      });
-    } else {
-      await prisma.cycleEnrollment.delete({
-        where: { id: cycle.id },
-      });
+    if (charge.status === StatusCharge.PAID || charge.status === StatusCharge.PARTIAL) {
+      return false;
     }
-  } else {
-    // Soft delete (Fallback si hay transacciones parciales)
-    if (cycle.chargeId && cycle.charge) {
-      if (
-        cycle.charge.status === StatusCharge.PENDING ||
-        cycle.charge.status === StatusCharge.PARTIAL
-      ) {
-        await prisma.charge.update({
-          where: { id: cycle.chargeId },
-          data: { status: StatusCharge.CANCELLED },
-        });
-      }
-    }
-    await prisma.cycleEnrollment.update({
-      where: { id: cycle.id },
-      data: { status: CycleEnrollmentStatus.CANCELLED },
+
+    // Cancelación lógica del cargo
+    await prisma.charge.update({
+      where: { id: charge.id },
+      data: {
+        status: StatusCharge.CANCELLED,
+        pendingAmount: new Prisma.Decimal(0),
+        adjustmentReason: 'Cancelado automáticamente por vencimiento de reserva (72h)',
+      },
     });
   }
+
+  // Cancelación lógica del CycleEnrollment (el cálculo de cupos ya excluye CANCELLED automáticamente)
+  await prisma.cycleEnrollment.update({
+    where: { id: cycle.id },
+    data: { status: CycleEnrollmentStatus.CANCELLED },
+  });
 
   return true;
 }

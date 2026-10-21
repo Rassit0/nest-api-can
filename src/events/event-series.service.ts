@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { EventMaterializationService } from './event-materialization.service';
 import { EventRecurrenceService } from './event-recurrence.service';
@@ -136,6 +136,44 @@ export class EventSeriesService {
         timezone: series.timezone,
       };
 
+      // Calcular fecha límite para preservar sesiones pasadas
+      const cutoffDate = scope === 'all' ? now : (event.originalStartDate > now ? event.originalStartDate : now);
+
+      // Guard: Proteger ocurrencias que tengan datos operativos (asistencias, incidentes, cobros)
+      const protectedEvents = await tx.event.findMany({
+        where: {
+          eventSeriesId: series.id,
+          startDate: { gte: cutoffDate },
+          OR: [
+            {
+              session: {
+                bookings: {
+                  some: {
+                    OR: [
+                      { attended: true },
+                      { chargeId: { not: null } },
+                      { incidents: { some: {} } },
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              match: {
+                result: { not: 'PENDING' },
+              },
+            },
+          ],
+        },
+        select: { id: true, title: true, startDate: true },
+      });
+
+      if (protectedEvents.length > 0) {
+        throw new BadRequestException(
+          `No se puede modificar la serie porque existen ${protectedEvents.length} sesión(es) con asistencia tomada, incidentes o cobros registrados. Edite las sesiones individualmente.`,
+        );
+      }
+
       if (scope === 'all') {
         // Eliminar ocurrencias futuras
         await tx.event.deleteMany({
@@ -155,13 +193,21 @@ export class EventSeriesService {
           }
         });
 
-        // Regenerar desde 'now' hasta un límite (por ejemplo, expandiendo RRULE desde now)
-        // Obtenemos las nuevas fechas
-        const occurrences = this.recurrenceService.expandRRule(
-          newBaseData.recurrenceRule,
-          now, // start from now
-          new Date(now.getTime() + 1000 * 60 * 60 * 24 * 365 * 2) // expand up to 2 years, or whatever the limit is
-        );
+        const durationMs = event.endDate && event.startDate 
+          ? (event.endDate.getTime() - event.startDate.getTime()) 
+          : (90 * 60 * 1000);
+
+        const horizonDate = new Date(now);
+        horizonDate.setMonth(horizonDate.getMonth() + 6);
+
+        // Regenerar desde 'now' hasta un límite de 6 meses preservando la duración original
+        const occurrences = this.recurrenceService.expandRRuleWindow({
+          rruleStr: newBaseData.recurrenceRule,
+          referenceStartDate: event.startDate,
+          durationMs,
+          windowStartDate: now,
+          windowEndDate: horizonDate,
+        });
 
         if (occurrences.length > 0) {
            await tx.eventSeries.update({
@@ -184,25 +230,34 @@ export class EventSeriesService {
       }
 
       if (scope === 'following') {
-        // 1. Eliminar eventos de esta serie de originalStartDate en adelante
+        // 1. Eliminar eventos de esta serie de cutoffDate en adelante
         await tx.event.deleteMany({
           where: {
             eventSeriesId: series.id,
-            startDate: { gte: originalStartDate }
+            startDate: { gte: cutoffDate }
           }
         });
 
         // 2. Truncar serie antigua
-        await this.truncateSeries(tx, series, originalStartDate, userId);
+        await this.truncateSeries(tx, series, cutoffDate, userId);
+
+        const durationMs = event.endDate && event.startDate 
+          ? (event.endDate.getTime() - event.startDate.getTime()) 
+          : (90 * 60 * 1000);
+
+        const horizonDate = new Date(cutoffDate);
+        horizonDate.setMonth(horizonDate.getMonth() + 6);
 
         // 3. Crear nueva serie (EventSeries B)
-        const occurrences = this.recurrenceService.expandRRule(
-          newBaseData.recurrenceRule,
-          originalStartDate, // from originalStartDate
-          new Date(originalStartDate.getTime() + 1000 * 60 * 60 * 24 * 365 * 2) // up to 2 years limit
-        );
+        const occurrences = this.recurrenceService.expandRRuleWindow({
+          rruleStr: newBaseData.recurrenceRule,
+          referenceStartDate: event.startDate,
+          durationMs,
+          windowStartDate: cutoffDate,
+          windowEndDate: horizonDate,
+        });
 
-        const lastOccurrence = occurrences.length > 0 ? occurrences[occurrences.length - 1].endDate : originalStartDate;
+        const lastOccurrence = occurrences.length > 0 ? occurrences[occurrences.length - 1].endDate : cutoffDate;
 
         const newSeries = await tx.eventSeries.create({
           data: {
@@ -252,9 +307,39 @@ export class EventSeriesService {
       }
 
       const series = event.eventSeries;
+      const now = new Date();
+      const cutoffDate = scope === 'all' ? now : (event.originalStartDate > now ? event.originalStartDate : now);
+
+      // Guard: Proteger ocurrencias que tengan datos operativos (reservas, asistencias, incidentes, cobros)
+      const protectedEvents = await tx.event.findMany({
+        where: {
+          eventSeriesId: series.id,
+          startDate: { gte: cutoffDate },
+          OR: [
+            {
+              session: {
+                bookings: {
+                  some: {}, // Protege cualquier booking existente (reservas, asistencias o ausencias registradas)
+                },
+              },
+            },
+            {
+              match: {
+                result: { not: 'PENDING' },
+              },
+            },
+          ],
+        },
+        select: { id: true, title: true, startDate: true },
+      });
+
+      if (protectedEvents.length > 0) {
+        throw new BadRequestException(
+          `No se puede eliminar la serie porque existen ${protectedEvents.length} sesión(es) con reservas de participantes, asistencia tomada, incidentes o cobros registrados. Cancele las ocurrencias individualmente.`,
+        );
+      }
 
       if (scope === 'all') {
-        const now = new Date();
         // Borrar eventos futuros
         await tx.event.deleteMany({
           where: {
@@ -272,15 +357,15 @@ export class EventSeriesService {
         });
 
       } else if (scope === 'following') {
-        // Borrar eventos a partir de event.originalStartDate
+        // Borrar eventos a partir de cutoffDate
         await tx.event.deleteMany({
           where: {
             eventSeriesId: series.id,
-            startDate: { gte: event.originalStartDate }
+            startDate: { gte: cutoffDate }
           }
         });
-        // Truncar serie en originalStartDate
-        await this.truncateSeries(tx, series, event.originalStartDate);
+        // Truncar serie en cutoffDate
+        await this.truncateSeries(tx, series, cutoffDate);
       }
       
       return { deleted: true };

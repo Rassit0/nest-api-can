@@ -27,6 +27,7 @@ describe('StudentEnrollmentService (FASE 2.6 - On-Demand Enrollment)', () => {
       },
       cycleEnrollment: {
         findUnique: jest.fn(),
+        findFirst: jest.fn().mockResolvedValue(null),
         create: jest.fn().mockImplementation((data) => ({ id: 'mock-ce-id', ...data.data })),
       },
     };

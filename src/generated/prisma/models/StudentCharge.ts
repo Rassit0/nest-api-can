@@ -30,12 +30,14 @@ export type StudentChargeAvgAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
   billingCycle: number | null
+  attempt: number | null
 }
 
 export type StudentChargeSumAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
   billingCycle: number | null
+  attempt: number | null
 }
 
 export type StudentChargeMinAggregateOutputType = {
@@ -47,6 +49,7 @@ export type StudentChargeMinAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
   billingCycle: number | null
+  attempt: number | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -62,6 +65,7 @@ export type StudentChargeMaxAggregateOutputType = {
   billingYear: number | null
   billingMonth: number | null
   billingCycle: number | null
+  attempt: number | null
   createdAt: Date | null
   updatedAt: Date | null
   createdById: string | null
@@ -77,6 +81,7 @@ export type StudentChargeCountAggregateOutputType = {
   billingYear: number
   billingMonth: number
   billingCycle: number
+  attempt: number
   createdAt: number
   updatedAt: number
   createdById: number
@@ -89,12 +94,14 @@ export type StudentChargeAvgAggregateInputType = {
   billingYear?: true
   billingMonth?: true
   billingCycle?: true
+  attempt?: true
 }
 
 export type StudentChargeSumAggregateInputType = {
   billingYear?: true
   billingMonth?: true
   billingCycle?: true
+  attempt?: true
 }
 
 export type StudentChargeMinAggregateInputType = {
@@ -106,6 +113,7 @@ export type StudentChargeMinAggregateInputType = {
   billingYear?: true
   billingMonth?: true
   billingCycle?: true
+  attempt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -121,6 +129,7 @@ export type StudentChargeMaxAggregateInputType = {
   billingYear?: true
   billingMonth?: true
   billingCycle?: true
+  attempt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -136,6 +145,7 @@ export type StudentChargeCountAggregateInputType = {
   billingYear?: true
   billingMonth?: true
   billingCycle?: true
+  attempt?: true
   createdAt?: true
   updatedAt?: true
   createdById?: true
@@ -238,6 +248,7 @@ export type StudentChargeGroupByOutputType = {
   billingYear: number | null
   billingMonth: number | null
   billingCycle: number | null
+  attempt: number
   createdAt: Date
   updatedAt: Date
   createdById: string | null
@@ -276,6 +287,7 @@ export type StudentChargeWhereInput = {
   billingYear?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingCycle?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
+  attempt?: Prisma.IntFilter<"StudentCharge"> | number
   createdAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   createdById?: Prisma.StringNullableFilter<"StudentCharge"> | string | null
@@ -295,6 +307,7 @@ export type StudentChargeOrderByWithRelationInput = {
   billingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
+  attempt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -307,7 +320,7 @@ export type StudentChargeOrderByWithRelationInput = {
 
 export type StudentChargeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  studentMembershipId_type_billingMonth_billingYear_billingCycle?: Prisma.StudentChargeStudentMembershipIdTypeBillingMonthBillingYearBillingCycleCompoundUniqueInput
+  unique_student_charge_attempt?: Prisma.StudentChargeUnique_student_charge_attemptCompoundUniqueInput
   AND?: Prisma.StudentChargeWhereInput | Prisma.StudentChargeWhereInput[]
   OR?: Prisma.StudentChargeWhereInput[]
   NOT?: Prisma.StudentChargeWhereInput | Prisma.StudentChargeWhereInput[]
@@ -318,6 +331,7 @@ export type StudentChargeWhereUniqueInput = Prisma.AtLeast<{
   billingYear?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingCycle?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
+  attempt?: Prisma.IntFilter<"StudentCharge"> | number
   createdAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   createdById?: Prisma.StringNullableFilter<"StudentCharge"> | string | null
@@ -326,7 +340,7 @@ export type StudentChargeWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   studentMembership?: Prisma.XOR<Prisma.StudentMembershipScalarRelationFilter, Prisma.StudentMembershipWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "studentMembershipId_type_billingMonth_billingYear_billingCycle">
+}, "id" | "unique_student_charge_attempt">
 
 export type StudentChargeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -337,6 +351,7 @@ export type StudentChargeOrderByWithAggregationInput = {
   billingYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
   billingCycle?: Prisma.SortOrderInput | Prisma.SortOrder
+  attempt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -360,6 +375,7 @@ export type StudentChargeScalarWhereWithAggregatesInput = {
   billingYear?: Prisma.IntNullableWithAggregatesFilter<"StudentCharge"> | number | null
   billingMonth?: Prisma.IntNullableWithAggregatesFilter<"StudentCharge"> | number | null
   billingCycle?: Prisma.IntNullableWithAggregatesFilter<"StudentCharge"> | number | null
+  attempt?: Prisma.IntWithAggregatesFilter<"StudentCharge"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentCharge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StudentCharge"> | Date | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"StudentCharge"> | string | null
@@ -373,6 +389,7 @@ export type StudentChargeCreateInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutStudentChargesInput
@@ -390,6 +407,7 @@ export type StudentChargeUncheckedCreateInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -403,6 +421,7 @@ export type StudentChargeUpdateInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutStudentChargesNestedInput
@@ -420,6 +439,7 @@ export type StudentChargeUncheckedUpdateInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -435,6 +455,7 @@ export type StudentChargeCreateManyInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -448,6 +469,7 @@ export type StudentChargeUpdateManyMutationInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -461,6 +483,7 @@ export type StudentChargeUncheckedUpdateManyInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -477,12 +500,13 @@ export type StudentChargeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StudentChargeStudentMembershipIdTypeBillingMonthBillingYearBillingCycleCompoundUniqueInput = {
+export type StudentChargeUnique_student_charge_attemptCompoundUniqueInput = {
   studentMembershipId: string
   type: $Enums.TypeMembershipCharge
   billingMonth: number
   billingYear: number
   billingCycle: number
+  attempt: number
 }
 
 export type StudentChargeCountOrderByAggregateInput = {
@@ -494,6 +518,7 @@ export type StudentChargeCountOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -504,6 +529,7 @@ export type StudentChargeAvgOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
 }
 
 export type StudentChargeMaxOrderByAggregateInput = {
@@ -515,6 +541,7 @@ export type StudentChargeMaxOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -530,6 +557,7 @@ export type StudentChargeMinOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -540,6 +568,7 @@ export type StudentChargeSumOrderByAggregateInput = {
   billingYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  attempt?: Prisma.SortOrder
 }
 
 export type StudentChargeCreateNestedManyWithoutChargeInput = {
@@ -717,6 +746,7 @@ export type StudentChargeCreateWithoutChargeInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedStudentChargesInput
@@ -732,6 +762,7 @@ export type StudentChargeUncheckedCreateWithoutChargeInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -776,6 +807,7 @@ export type StudentChargeScalarWhereInput = {
   billingYear?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingMonth?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
   billingCycle?: Prisma.IntNullableFilter<"StudentCharge"> | number | null
+  attempt?: Prisma.IntFilter<"StudentCharge"> | number
   createdAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentCharge"> | Date | string
   createdById?: Prisma.StringNullableFilter<"StudentCharge"> | string | null
@@ -789,6 +821,7 @@ export type StudentChargeCreateWithoutCreatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutStudentChargesInput
@@ -805,6 +838,7 @@ export type StudentChargeUncheckedCreateWithoutCreatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
@@ -827,6 +861,7 @@ export type StudentChargeCreateWithoutUpdatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutStudentChargesInput
@@ -843,6 +878,7 @@ export type StudentChargeUncheckedCreateWithoutUpdatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -897,6 +933,7 @@ export type StudentChargeCreateWithoutStudentMembershipInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   charge: Prisma.ChargeCreateNestedOneWithoutStudentChargesInput
@@ -912,6 +949,7 @@ export type StudentChargeUncheckedCreateWithoutStudentMembershipInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -952,6 +990,7 @@ export type StudentChargeCreateManyChargeInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -965,6 +1004,7 @@ export type StudentChargeUpdateWithoutChargeInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneWithoutCreatedStudentChargesNestedInput
@@ -980,6 +1020,7 @@ export type StudentChargeUncheckedUpdateWithoutChargeInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -994,6 +1035,7 @@ export type StudentChargeUncheckedUpdateManyWithoutChargeInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1009,6 +1051,7 @@ export type StudentChargeCreateManyCreatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedById?: string | null
@@ -1023,6 +1066,7 @@ export type StudentChargeCreateManyUpdatedByInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1035,6 +1079,7 @@ export type StudentChargeUpdateWithoutCreatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutStudentChargesNestedInput
@@ -1051,6 +1096,7 @@ export type StudentChargeUncheckedUpdateWithoutCreatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1065,6 +1111,7 @@ export type StudentChargeUncheckedUpdateManyWithoutCreatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1077,6 +1124,7 @@ export type StudentChargeUpdateWithoutUpdatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutStudentChargesNestedInput
@@ -1093,6 +1141,7 @@ export type StudentChargeUncheckedUpdateWithoutUpdatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1107,6 +1156,7 @@ export type StudentChargeUncheckedUpdateManyWithoutUpdatedByInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1120,6 +1170,7 @@ export type StudentChargeCreateManyStudentMembershipInput = {
   billingYear?: number | null
   billingMonth?: number | null
   billingCycle?: number | null
+  attempt?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   createdById?: string | null
@@ -1133,6 +1184,7 @@ export type StudentChargeUpdateWithoutStudentMembershipInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   charge?: Prisma.ChargeUpdateOneRequiredWithoutStudentChargesNestedInput
@@ -1148,6 +1200,7 @@ export type StudentChargeUncheckedUpdateWithoutStudentMembershipInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1162,6 +1215,7 @@ export type StudentChargeUncheckedUpdateManyWithoutStudentMembershipInput = {
   billingYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billingCycle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1179,6 +1233,7 @@ export type StudentChargeSelect<ExtArgs extends runtime.Types.Extensions.Interna
   billingYear?: boolean
   billingMonth?: boolean
   billingCycle?: boolean
+  attempt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1198,6 +1253,7 @@ export type StudentChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   billingYear?: boolean
   billingMonth?: boolean
   billingCycle?: boolean
+  attempt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1217,6 +1273,7 @@ export type StudentChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   billingYear?: boolean
   billingMonth?: boolean
   billingCycle?: boolean
+  attempt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
@@ -1236,13 +1293,14 @@ export type StudentChargeSelectScalar = {
   billingYear?: boolean
   billingMonth?: boolean
   billingCycle?: boolean
+  attempt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
   updatedById?: boolean
 }
 
-export type StudentChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "billingCycle" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["studentCharge"]>
+export type StudentChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentMembershipId" | "chargeId" | "type" | "createdByCron" | "billingYear" | "billingMonth" | "billingCycle" | "attempt" | "createdAt" | "updatedAt" | "createdById" | "updatedById", ExtArgs["result"]["studentCharge"]>
 export type StudentChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   charge?: boolean | Prisma.ChargeDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentCharge$createdByArgs<ExtArgs>
@@ -1279,6 +1337,7 @@ export type $StudentChargePayload<ExtArgs extends runtime.Types.Extensions.Inter
     billingYear: number | null
     billingMonth: number | null
     billingCycle: number | null
+    attempt: number
     createdAt: Date
     updatedAt: Date
     createdById: string | null
@@ -1718,6 +1777,7 @@ export interface StudentChargeFieldRefs {
   readonly billingYear: Prisma.FieldRef<"StudentCharge", 'Int'>
   readonly billingMonth: Prisma.FieldRef<"StudentCharge", 'Int'>
   readonly billingCycle: Prisma.FieldRef<"StudentCharge", 'Int'>
+  readonly attempt: Prisma.FieldRef<"StudentCharge", 'Int'>
   readonly createdAt: Prisma.FieldRef<"StudentCharge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StudentCharge", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"StudentCharge", 'String'>

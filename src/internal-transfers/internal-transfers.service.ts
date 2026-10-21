@@ -241,13 +241,29 @@ export class InternalTransfersService {
   }
 
   async cancel(id: string) {
-    const transfer = await this.prisma.internalTransfer.findUnique({
+    let transfer = await this.prisma.internalTransfer.findUnique({
       where: { id },
       include: {
         sourceTransaction: true,
         destinationTransaction: true,
       },
     });
+
+    if (!transfer) {
+      // Fallback: check if id is a transaction ID (source or destination)
+      transfer = await this.prisma.internalTransfer.findFirst({
+        where: {
+          OR: [
+            { sourceTransactionId: id },
+            { destinationTransactionId: id },
+          ],
+        },
+        include: {
+          sourceTransaction: true,
+          destinationTransaction: true,
+        },
+      });
+    }
 
     if (!transfer) {
       throw new NotFoundException(`Transferencia con ID ${id} no encontrada`);
@@ -257,17 +273,19 @@ export class InternalTransfersService {
       throw new BadRequestException('Esta transferencia ya fue anulada');
     }
 
+    const transferId = transfer.id;
+
     return await this.prisma.$transaction(async (tx) => {
       // 0. Bloquear la transferencia para evitar cancelación concurrente
       const lockedTransfer = (await tx.$queryRaw`
         SELECT id, status
         FROM internal_transfers
-        WHERE id = ${id}
+        WHERE id = ${transferId}
         FOR UPDATE
       `) as { id: string; status: string }[];
 
       if (!lockedTransfer || lockedTransfer.length === 0) {
-        throw new NotFoundException(`Transferencia con ID ${id} no encontrada`);
+        throw new NotFoundException(`Transferencia con ID ${transferId} no encontrada`);
       }
 
       if (lockedTransfer[0].status === 'CANCELLED') {
@@ -322,20 +340,36 @@ export class InternalTransfersService {
 
       // 3. Marcar transferencia como CANCELLED
       return await tx.internalTransfer.update({
-        where: { id },
+        where: { id: transferId },
         data: { status: TransferStatus.CANCELLED },
       });
     });
   }
 
   async getReceiptPdf(id: string) {
-    const transfer = await this.prisma.internalTransfer.findUnique({
+    let transfer = await this.prisma.internalTransfer.findUnique({
       where: { id },
       include: {
         sourceTransaction: { include: { financialAccount: true } },
         destinationTransaction: { include: { financialAccount: true } },
       },
     });
+
+    if (!transfer) {
+      // Fallback: check if id is a transaction ID (source or destination)
+      transfer = await this.prisma.internalTransfer.findFirst({
+        where: {
+          OR: [
+            { sourceTransactionId: id },
+            { destinationTransactionId: id },
+          ],
+        },
+        include: {
+          sourceTransaction: { include: { financialAccount: true } },
+          destinationTransaction: { include: { financialAccount: true } },
+        },
+      });
+    }
 
     if (!transfer) {
       throw new NotFoundException('Transferencia no encontrada');

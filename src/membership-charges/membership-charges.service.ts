@@ -243,6 +243,8 @@ export class MembershipChargesService {
     options?: {
       chargeRegistrationOnMigration?: boolean;
       chargeCurrentMonthOnMigration?: boolean;
+      chargeRegistration?: boolean;
+      skipCurrentMonthRecurringFee?: boolean;
     },
     tx?: Prisma.TransactionClient,
   ) {
@@ -269,6 +271,10 @@ export class MembershipChargesService {
           t,
           generationMembership,
           evaluationDate,
+          {
+            chargeRegistration: options?.chargeRegistration,
+            skipCurrentMonthRecurringFee: options?.skipCurrentMonthRecurringFee,
+          },
         );
       };
 

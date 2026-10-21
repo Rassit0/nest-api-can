@@ -9,7 +9,9 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
+import { CancelCycleEnrollmentDto } from './dto/cancel-cycle-enrollment.dto';
 import {
   ApiTags,
   ApiOperation,
@@ -37,8 +39,8 @@ import { ChangeActivateStatusDto } from './dto/change-activate-status.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleGuard } from '../auth/guards/user-role/user-role.guard';
 import { RequirePermissions } from '../auth/decorators/permissions.decorator';
-
 import { TransferShiftDto } from './dto/transfer-shift.dto';
+import { ReenterStudentMembershipDto } from './dto/reenter-student-membership.dto';
 
 @ApiTags('Inscripciones Escolares (Student Memberships)')
 @Controller('student-memberships')
@@ -319,6 +321,79 @@ export class StudentMembershipsController {
     );
   }
 
+  @Post('reenter/:id')
+  @ApiOperation({
+    summary: 'Registrar reingreso de estudiante a una membresía retirada (WITHDRAWN)',
+    description:
+      'Reutiliza el ID de la membresía retirada, restaura el estado a ACTIVE, actualiza la fecha efectiva de reingreso y preserva los antecedentes históricos.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la membresía escolar retirada (UUID)',
+    format: 'uuid',
+  })
+  @ApiBody({ type: ReenterStudentMembershipDto })
+  @ApiOkResponse({
+    description: 'Reingreso procesado exitosamente y membresía reactivada.',
+  })
+  @ApiBadRequestResponse({
+    description: 'La membresía no está WITHDRAWN o existe conflicto de unicidad.',
+  })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS', 'UPDATE_STUDENT_MEMBERSHIPS')
+  async reenter(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() reenterDto: ReenterStudentMembershipDto,
+    @Req() req: any,
+  ) {
+    return await this.studentMembershipsService.reenter(
+      id,
+      reenterDto,
+      req?.user,
+    );
+  }
+
+  @Post(':id/reenter')
+  @ApiOperation({
+    summary: 'Registrar reingreso de estudiante (Ruta alternativa :id/reenter)',
+  })
+  @RequirePermissions('CREATE_STUDENT_MEMBERSHIPS', 'UPDATE_STUDENT_MEMBERSHIPS')
+  async reenterAlt(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() reenterDto: ReenterStudentMembershipDto,
+    @Req() req: any,
+  ) {
+    return await this.studentMembershipsService.reenter(
+      id,
+      reenterDto,
+      req?.user,
+    );
+  }
+
+  @Get('reenter-context/:id')
+  @ApiOperation({
+    summary: 'Obtener contexto para el reingreso de un estudiante',
+    description:
+      'Retorna información del alumno, curso, turno actual, turnos disponibles y resumen de ciclos anteriores.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la membresía escolar retirada (UUID)',
+    format: 'uuid',
+  })
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
+  async getReenterContext(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.studentMembershipsService.getReenterContext(id);
+  }
+
+  @Get(':id/reenter-context')
+  @ApiOperation({
+    summary: 'Obtener contexto para el reingreso (Ruta alternativa :id/reenter-context)',
+  })
+  @RequirePermissions('READ_STUDENT_MEMBERSHIPS')
+  async getReenterContextAlt(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.studentMembershipsService.getReenterContext(id);
+  }
+
   @Post('activate/:id')
   @ApiOperation({
     summary: 'Activar inscripción escolar pendiente',
@@ -371,5 +446,29 @@ export class StudentMembershipsController {
     @Param('pauseId', ParseUUIDPipe) pauseId: string,
   ) {
     return await this.studentMembershipsService.removePause(id, pauseId);
+  }
+
+  @Post('cycles/:cycleEnrollmentId/cancel')
+  @ApiOperation({
+    summary: 'Cancelar un ciclo inscrito pendiente de pago',
+    description:
+      'Cancela una inscripción de ciclo en estado PENDING, neutraliza su cargo asociado a cero y libera el cupo reservado.',
+  })
+  @ApiParam({
+    name: 'cycleEnrollmentId',
+    description: 'ID de la inscripción de ciclo (UUID)',
+    format: 'uuid',
+  })
+  @RequirePermissions('DELETE_STUDENT_MEMBERSHIPS', 'UPDATE_STUDENT_MEMBERSHIPS')
+  async cancelCycle(
+    @Param('cycleEnrollmentId', ParseUUIDPipe) cycleEnrollmentId: string,
+    @Body() cancelDto: CancelCycleEnrollmentDto,
+    @Req() req: any,
+  ) {
+    return await this.studentMembershipsService.cancelCycleEnrollment(
+      cycleEnrollmentId,
+      cancelDto.reason,
+      req.user,
+    );
   }
 }

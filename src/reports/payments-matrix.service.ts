@@ -10,7 +10,7 @@ import {
   getAbsoluteSeasonCycles, 
   buildCycleDescription 
 } from 'src/student-charges/student-billing.utils';
-import { TypeMembershipCharge } from 'src/generated/prisma/client';
+import { TypeMembershipCharge, PlayerMembershipStatus } from 'src/generated/prisma/client';
 
 @Injectable()
 export class PaymentsMatrixService {
@@ -221,7 +221,8 @@ export class PaymentsMatrixService {
   async getTeamSeasonMatrix(
     institutionId: string,
     teamSeasonId: string,
-    teamSeasonCategoryId?: string
+    teamSeasonCategoryId?: string,
+    includeWithdrawn: boolean = false
   ): Promise<PaymentsMatrixResponseDto> {
     const teamSeason = await this.prisma.teamSeason.findFirst({
       where: {
@@ -238,12 +239,24 @@ export class PaymentsMatrixService {
         team: true,
         categories: { include: { category: true } },
         playerMemberships: {
-          where: teamSeasonCategoryId ? { teamSeasonCategoryId } : undefined,
+          where: {
+            ...(teamSeasonCategoryId ? { teamSeasonCategoryId } : {}),
+            ...(includeWithdrawn ? {} : { status: { not: PlayerMembershipStatus.WITHDRAWN } }),
+          },
+          orderBy: [
+            { startedAt: 'desc' },
+            { createdAt: 'desc' },
+          ],
           include: {
             player: {
               include: {
                 person: true
               }
+            },
+            histories: {
+              where: { newStatus: PlayerMembershipStatus.SUSPENDED },
+              orderBy: { createdAt: 'desc' },
+              take: 1,
             },
             membershipCharges: {
               where: {
@@ -298,20 +311,66 @@ export class PaymentsMatrixService {
 
     // 3. Agrupar la información por jugador
     const studentMap = new Map<string, PaymentMatrixStudentDto>();
+    const studentMetaMap = new Map<string, { startedAt: Date; createdAt: Date }>();
 
     for (const membership of teamSeason.playerMemberships) {
       const studentId = membership.player.id;
       const studentName = `${membership.player.person.lastName} ${membership.player.person.name}`.trim();
 
-      if (!studentMap.has(studentId)) {
-        studentMap.set(studentId, {
+      let studentDto = studentMap.get(studentId);
+      const studentMeta = studentMetaMap.get(studentId);
+
+      const resolveSuspensionReason = (): string => {
+        const latestSuspensionHistory = membership.histories?.[0];
+        const historyReason = latestSuspensionHistory?.reason?.trim();
+        const notesReason = membership.notes?.trim();
+
+        if (historyReason && notesReason && historyReason !== notesReason) {
+          return `${historyReason} (${notesReason})`;
+        } else if (historyReason) {
+          return historyReason;
+        } else if (notesReason) {
+          return notesReason;
+        } else {
+          return 'Motivo no registrado';
+        }
+      };
+
+      const isNewerMembership =
+        !studentMeta ||
+        membership.startedAt.getTime() > studentMeta.startedAt.getTime() ||
+        (membership.startedAt.getTime() === studentMeta.startedAt.getTime() &&
+          membership.createdAt.getTime() > studentMeta.createdAt.getTime());
+
+      if (!studentDto) {
+        let suspensionReason: string | undefined = undefined;
+        if (membership.status === PlayerMembershipStatus.SUSPENDED) {
+          suspensionReason = resolveSuspensionReason();
+        }
+
+        studentDto = {
           id: studentId,
           name: studentName,
+          status: membership.status,
+          suspensionReason,
           paymentsByPeriod: {},
+        };
+        studentMap.set(studentId, studentDto);
+        studentMetaMap.set(studentId, {
+          startedAt: membership.startedAt,
+          createdAt: membership.createdAt,
+        });
+      } else if (isNewerMembership) {
+        studentDto.status = membership.status;
+        studentDto.suspensionReason =
+          membership.status === PlayerMembershipStatus.SUSPENDED
+            ? resolveSuspensionReason()
+            : undefined;
+        studentMetaMap.set(studentId, {
+          startedAt: membership.startedAt,
+          createdAt: membership.createdAt,
         });
       }
-
-      const studentDto = studentMap.get(studentId)!;
 
       for (const mCharge of membership.membershipCharges) {
         if (!mCharge.charge) continue;

@@ -13,8 +13,13 @@ import {
   StatusTeamSeason,
   StatusCharge,
   TeamSeasonCategoryStatus,
+  TypeMembershipCharge,
 } from 'src/generated/prisma/client';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
+import {
+  ReenterPlayerMembershipDto,
+  PlayerMembershipReentryInfoDto,
+} from './dto/reenter-player-membership.dto';
 
 export const playerMembershipSelect = {
   id: true,
@@ -1527,5 +1532,457 @@ export class PlayerMembershipsService {
       data: teamSeason,
       message: 'Temporada obtenida exitosamente',
     };
+  }
+
+  async getReentryInfo(
+    membershipId: string,
+  ): Promise<{ data: PlayerMembershipReentryInfoDto; message: string }> {
+    const previousMembership = await this.prisma.playerMembership.findUnique({
+      where: { id: membershipId },
+      include: {
+        player: {
+          include: {
+            person: true,
+          },
+        },
+        teamSeason: {
+          include: {
+            team: {
+              include: {
+                club: {
+                  include: {
+                    discipline: true,
+                  },
+                },
+              },
+            },
+            season: true,
+            billingConfig: true,
+          },
+        },
+        teamSeasonCategories: {
+          include: {
+            category: true,
+          },
+        },
+        histories: {
+          where: { newStatus: PlayerMembershipStatus.WITHDRAWN },
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+      },
+    });
+
+    if (!previousMembership) {
+      throw new NotFoundException('La membresía no fue encontrada');
+    }
+
+    if (previousMembership.status !== PlayerMembershipStatus.WITHDRAWN) {
+      throw new BadRequestException(
+        'Solo se puede consultar la información de reingreso para membresías en estado RETIRADA (WITHDRAWN)',
+      );
+    }
+
+    const { player, teamSeason } = previousMembership;
+    const withdrawalReason =
+      previousMembership.histories[0]?.reason || previousMembership.notes || null;
+
+    // 1. Verificar si pagó matrícula anteriormente en la misma temporada
+    const registrationCharges = await this.prisma.membershipCharge.findMany({
+      where: {
+        playerMembership: {
+          playerId: player.id,
+          teamSeasonId: teamSeason.id,
+        },
+        type: TypeMembershipCharge.REGISTRATION,
+      },
+      include: {
+        charge: {
+          include: {
+            payments: {
+              where: {
+                status: 'COMPLETED',
+              },
+              orderBy: { createdAt: 'desc' },
+              take: 1,
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const paidRegCharge = registrationCharges.find(
+      (rc) =>
+        rc.charge.status === StatusCharge.PAID ||
+        Number(rc.charge.amount) - Number(rc.charge.pendingAmount) > 0,
+    );
+
+    const hasPaidRegInSeason = Boolean(paidRegCharge);
+    const paidRegPayment = paidRegCharge?.charge.payments[0];
+    const paidAmount = paidRegCharge
+      ? Number(paidRegCharge.charge.amount) - Number(paidRegCharge.charge.pendingAmount)
+      : undefined;
+
+    const seasonFeeAmount = Number(
+      teamSeason.billingConfig?.registrationFee ?? 0,
+    );
+
+    // 2. Verificar estado de cuota del mes en curso (caso de baja y reingreso dentro del mismo mes)
+    const now = new Date();
+    const currentYear = now.getUTCFullYear();
+    const currentMonth = now.getUTCMonth() + 1;
+
+    const currentMonthCharges = await this.prisma.membershipCharge.findMany({
+      where: {
+        playerMembership: {
+          playerId: player.id,
+          teamSeasonId: teamSeason.id,
+        },
+        type: TypeMembershipCharge.RECURRING_FEE,
+        billingYear: currentYear,
+        billingMonth: currentMonth,
+      },
+      include: {
+        charge: {
+          include: {
+            payments: {
+              where: { status: 'COMPLETED' },
+              orderBy: { createdAt: 'desc' },
+              take: 1,
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const paidCurrentMonthCharge = currentMonthCharges.find(
+      (c) =>
+        c.charge.status === StatusCharge.PAID ||
+        Number(c.charge.amount) - Number(c.charge.pendingAmount) > 0,
+    );
+
+    const hasPaidCurrentMonth = Boolean(paidCurrentMonthCharge);
+    const currentMonthPayment = paidCurrentMonthCharge?.charge.payments[0];
+
+    // 3. Deudas históricas pendientes (que continúen exigibles)
+    const pendingDebtsCharges = await this.prisma.membershipCharge.findMany({
+      where: {
+        playerMembership: {
+          playerId: player.id,
+        },
+        charge: {
+          status: StatusCharge.PENDING,
+          pendingAmount: { gt: 0 },
+        },
+      },
+      include: {
+        charge: true,
+      },
+      orderBy: { charge: { dueDate: 'asc' } },
+    });
+
+    const totalPendingAmount = Number(
+      pendingDebtsCharges
+        .reduce((sum, mc) => sum + Number(mc.charge.pendingAmount), 0)
+        .toFixed(2),
+    );
+
+    // 4. Cargos cancelados por el retiro
+    const cancelledCharges = await this.prisma.membershipCharge.findMany({
+      where: {
+        playerMembershipId: membershipId,
+        charge: {
+          status: StatusCharge.CANCELLED,
+        },
+      },
+      include: {
+        charge: true,
+      },
+      orderBy: { charge: { dueDate: 'asc' } },
+    });
+
+    // 5. Categorías disponibles de la temporada
+    const teamCategories = await this.prisma.teamSeasonCategory.findMany({
+      where: {
+        teamSeasonId: teamSeason.id,
+        status: { not: TeamSeasonCategoryStatus.FINISHED },
+      },
+      include: {
+        category: true,
+        player_membership: {
+          where: {
+            status: {
+              in: [PlayerMembershipStatus.ACTIVE, PlayerMembershipStatus.SUSPENDED],
+            },
+          },
+          select: { id: true },
+        },
+      },
+      orderBy: { category: { name: 'asc' } },
+    });
+
+    const availableCategories = teamCategories.map((cat) => {
+      const activeMembers = cat.player_membership.length;
+      const availableSpots =
+        cat.maxMembers !== null ? Math.max(0, cat.maxMembers - activeMembers) : null;
+      return {
+        id: cat.id,
+        name: cat.category.name,
+        maxMembers: cat.maxMembers,
+        activeMembers,
+        availableSpots,
+        isCurrentCategory: cat.id === previousMembership.teamSeasonCategoryId,
+      };
+    });
+
+    // 6. Planes de pago disponibles
+    const paymentPlans = await this.prisma.paymentPlan.findMany({
+      where: {
+        teamSeasonId: teamSeason.id,
+      },
+      orderBy: { name: 'asc' },
+    });
+
+    const availablePaymentPlans = paymentPlans.map((pp) => ({
+      id: pp.id,
+      name: pp.name,
+      registrationDiscountPercent: Number(pp.registrationDiscountPercent),
+      recurringDiscountPercent: Number(pp.recurringDiscountPercent),
+      isSinglePayment: Boolean(pp.isSinglePayment),
+      advanceCycles: pp.advanceCycles,
+    }));
+
+    return {
+      data: {
+        player: {
+          id: player.id,
+          personId: player.personId,
+          fullName: `${player.person.lastName || ''} ${player.person.secondLastName || ''} ${player.person.name}`
+            .replace(/\s+/g, ' ')
+            .trim(),
+          documentNumber: player.person.documentNumber,
+          birthDate: player.person.birthDate
+            ? player.person.birthDate.toISOString()
+            : null,
+        },
+        previousMembership: {
+          id: previousMembership.id,
+          teamSeasonId: teamSeason.id,
+          teamSeasonName: `${teamSeason.team?.name || 'Equipo'} - ${teamSeason.season.name}`,
+          categoryName:
+            previousMembership.teamSeasonCategories?.category?.name || 'Categoría',
+          startedAt: previousMembership.startedAt.toISOString(),
+          endedAt: previousMembership.endedAt
+            ? previousMembership.endedAt.toISOString()
+            : null,
+          withdrawalReason,
+        },
+        registrationFeeStatus: {
+          hasPaidInSeason: hasPaidRegInSeason,
+          paidAmount: paidAmount ? Number(paidAmount.toFixed(2)) : undefined,
+          paymentDate: paidRegPayment?.paymentDate
+            ? paidRegPayment.paymentDate.toISOString()
+            : undefined,
+          receiptNumber:
+            paidRegPayment && paidRegPayment.receiptSeries && paidRegPayment.receiptNumber
+              ? `${paidRegPayment.receiptSeries}-${paidRegPayment.receiptNumber.toString().padStart(5, '0')}`
+              : undefined,
+          seasonFeeAmount,
+        },
+        currentMonthStatus: {
+          currentYear,
+          currentMonth,
+          hasPaidCurrentMonth,
+          paidAmount: paidCurrentMonthCharge
+            ? Number(
+                (
+                  Number(paidCurrentMonthCharge.charge.amount) -
+                  Number(paidCurrentMonthCharge.charge.pendingAmount)
+                ).toFixed(2),
+              )
+            : undefined,
+          receiptNumber:
+            currentMonthPayment && currentMonthPayment.receiptSeries && currentMonthPayment.receiptNumber
+              ? `${currentMonthPayment.receiptSeries}-${currentMonthPayment.receiptNumber.toString().padStart(5, '0')}`
+              : undefined,
+        },
+        historicalDebts: {
+          hasPendingDebts: totalPendingAmount > 0,
+          totalPendingAmount,
+          pendingCharges: pendingDebtsCharges.map((pd) => ({
+            id: pd.charge.id,
+            description: pd.charge.description,
+            amount: Number(pd.charge.amount),
+            pendingAmount: Number(pd.charge.pendingAmount),
+            dueDate: pd.charge.dueDate.toISOString(),
+            type: pd.type,
+          })),
+        },
+        cancelledChargesOnWithdrawal: cancelledCharges.map((cc) => ({
+          id: cc.charge.id,
+          description: cc.charge.description,
+          amount: Number(cc.charge.amount),
+          dueDate: cc.charge.dueDate.toISOString(),
+        })),
+        availableCategories,
+        availablePaymentPlans,
+      },
+      message: 'Información de reingreso obtenida exitosamente',
+    };
+  }
+
+  async reenter(reenterDto: ReenterPlayerMembershipDto) {
+    const previousMembership = await this.prisma.playerMembership.findUnique({
+      where: { id: reenterDto.previousMembershipId },
+      include: {
+        player: { include: { person: true } },
+        teamSeason: { include: { season: true } },
+      },
+    });
+
+    if (!previousMembership) {
+      throw new NotFoundException('La membresía anterior no fue encontrada');
+    }
+
+    if (previousMembership.status !== PlayerMembershipStatus.WITHDRAWN) {
+      throw new BadRequestException(
+        'Solo se puede registrar el reingreso para una membresía en estado RETIRADA (WITHDRAWN)',
+      );
+    }
+
+    const offering = await this.getTeamMembershipOffering(
+      reenterDto.teamSeasonCategoryId,
+    );
+
+    await this.validatePaymentPlan(
+      reenterDto.paymentPlanId,
+      offering.teamSeasonId,
+    );
+
+    const reenterDate = new Date(reenterDto.startedAt);
+    this.validateMembershipStartDate(
+      reenterDate,
+      offering.teamSeason.season.startDate,
+      offering.teamSeason.season.endDate,
+    );
+
+    // Validar elegibilidad deportiva y edad
+    this.validatePlayerEligibility(previousMembership.player as any, offering);
+
+    return await this.prisma.$transaction(
+      async (tx) => {
+        // 1. Lock pesimista sobre la categoría para serializar la concurrencia y cupos
+        await tx.$queryRaw`
+          SELECT 1 
+          FROM team_season_categories 
+          WHERE id = ${reenterDto.teamSeasonCategoryId} 
+          FOR UPDATE
+        `;
+
+        // 2. Validar cupo disponible bajo el lock pesimista
+        if (offering.maxMembers !== null) {
+          const activeMembers = await tx.playerMembership.count({
+            where: {
+              teamSeasonCategoryId: offering.id,
+              status: {
+                in: [PlayerMembershipStatus.ACTIVE, PlayerMembershipStatus.SUSPENDED],
+              },
+            },
+          });
+          if (activeMembers >= offering.maxMembers) {
+            throw new BadRequestException(
+              'La categoría seleccionada ya alcanzó el número máximo de miembros permitidos',
+            );
+          }
+        }
+
+        // 3. Validar duplicidad estricta en la temporada
+        const existingMemberships = await tx.playerMembership.findMany({
+          where: {
+            playerId: previousMembership.playerId,
+            teamSeasonId: offering.teamSeasonId,
+            status: {
+              in: [
+                PlayerMembershipStatus.ACTIVE,
+                PlayerMembershipStatus.PENDING_ACTIVE,
+                PlayerMembershipStatus.SUSPENDED,
+              ],
+            },
+          },
+        });
+
+        if (existingMemberships.length > 0) {
+          const suspended = existingMemberships.find(
+            (m) => m.status === PlayerMembershipStatus.SUSPENDED,
+          );
+          if (suspended) {
+            throw new BadRequestException(
+              'El jugador ya cuenta con una membresía SUSPENDIDA en esta temporada. Debe orientar a Secretaría al flujo de levantamiento de suspensión en lugar de un nuevo reingreso.',
+            );
+          }
+
+          const activeOrPending = existingMemberships.find(
+            (m) =>
+              m.status === PlayerMembershipStatus.ACTIVE ||
+              m.status === PlayerMembershipStatus.PENDING_ACTIVE,
+          );
+          if (activeOrPending) {
+            throw new BadRequestException(
+              `El jugador ya cuenta con una membresía vigente (${activeOrPending.status}) en esta temporada. No se puede duplicar la membresía.`,
+            );
+          }
+        }
+
+        // 4. Crear la NUEVA PlayerMembership con su propio ID, startedAt e historial
+        const newMembership = await tx.playerMembership.create({
+          data: {
+            playerId: previousMembership.playerId,
+            teamSeasonId: offering.teamSeasonId,
+            teamSeasonCategoryId: reenterDto.teamSeasonCategoryId,
+            paymentPlanId: reenterDto.paymentPlanId,
+            startedAt: reenterDate,
+            status: PlayerMembershipStatus.ACTIVE,
+            notes:
+              reenterDto.notes ??
+              `Reingreso registrado tras baja del ${previousMembership.endedAt ? previousMembership.endedAt.toISOString().split('T')[0] : 'histórico'}`,
+            histories: {
+              create: {
+                previousStatus: null,
+                newStatus: PlayerMembershipStatus.ACTIVE,
+                reason:
+                  reenterDto.notes ??
+                  `Reingreso registrado tras retiro (Membresía anterior: ${previousMembership.id})`,
+              },
+            },
+          },
+          select: playerMembershipSelect,
+        });
+
+        // 5. Generar cargos de la nueva membresía respetando opciones de matrícula y cuota del mes en curso
+        const generatedChargeIds =
+          await this.membershipChargesService.generateChargesForNewMembership(
+            newMembership.id,
+            {
+              chargeRegistration: reenterDto.chargeRegistration ?? true,
+              skipCurrentMonthRecurringFee:
+                reenterDto.skipCurrentMonthRecurringFee ?? false,
+            },
+            tx,
+          );
+
+        this.logger.log(
+          `Reingreso exitoso registrado: Player ${previousMembership.playerId}, Nueva Membresía ${newMembership.id}, Anterior ${previousMembership.id}`,
+        );
+
+        return {
+          message: 'Reingreso registrado exitosamente',
+          data: mapMembershipWithTotal(newMembership),
+          generatedChargeIds,
+        };
+      },
+      { timeout: 15000 },
+    );
   }
 }

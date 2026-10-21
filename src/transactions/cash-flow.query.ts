@@ -3,9 +3,25 @@ import { TransactionsPaginationDto } from './dto/pagination.dto';
 
 export type CashFlowOperationKind = 'TRANSACTION' | 'PAYMENT' | 'INTERNAL_TRANSFER';
 
+export interface PaymentBreakdownItem {
+  transactionId: string;
+  method: string;
+  accountId: string;
+  accountName: string;
+  amount: number;
+  balanceBefore?: number | null;
+  balanceAfter?: number | null;
+  status: string;
+}
+
 export interface CashFlowOperation {
   id: string;
+  rawId?: string;
+  transactionId: string;
+  paymentId?: string | null;
+  internalTransferId?: string | null;
   kind: CashFlowOperationKind;
+  status: string;
   transactionDate: Date;
   createdAt: Date;
   receiptSeries: string | null;
@@ -15,11 +31,14 @@ export interface CashFlowOperation {
   type?: 'INCOME' | 'EXPENSE' | 'TRANSFER';
   
   accountId?: string | null;
+  accountName?: string | null;
   paymentMethod?: string | null;
   reference?: string | null;
 
   sourceAccountId?: string | null;
+  sourceAccountName?: string | null;
   destAccountId?: string | null;
+  destAccountName?: string | null;
 
   balanceBefore?: number | null;
   balanceAfter?: number | null;
@@ -28,6 +47,12 @@ export interface CashFlowOperation {
   destBalanceBefore?: number | null;
   destBalanceAfter?: number | null;
 
+  category?: string | null;
+  origin?: string;
+  beneficiaryName?: string | null;
+  payerName?: string | null;
+
+  paymentBreakdown?: PaymentBreakdownItem[];
   groupedDetails?: {
     method: string;
     account: string;
@@ -35,6 +60,8 @@ export interface CashFlowOperation {
     amount: number;
     balanceBefore: number | null;
     balanceAfter: number | null;
+    status?: string;
+    transactionId?: string;
   }[];
 }
 
@@ -42,6 +69,7 @@ export const buildCashFlowQuery = (dto: TransactionsPaginationDto) => {
   const {
     type,
     financialAccountIds,
+    paymentMethods,
     startDate,
     endDate,
     search,
@@ -62,7 +90,16 @@ export const buildCashFlowQuery = (dto: TransactionsPaginationDto) => {
     conditions.push(Prisma.sql`(
       op.account_id IN (${accountIdsJoined}) OR 
       op.source_account_id IN (${accountIdsJoined}) OR 
-      op.dest_account_id IN (${accountIdsJoined})
+      op.dest_account_id IN (${accountIdsJoined}) OR
+      COALESCE(op.payment_account_ids, ARRAY[]::uuid[]) && ARRAY[${accountIdsJoined}]::uuid[]
+    )`);
+  }
+
+  if (paymentMethods && paymentMethods.length > 0) {
+    const methodsJoined = Prisma.join(paymentMethods);
+    conditions.push(Prisma.sql`(
+      op.payment_method::text IN (${methodsJoined}) OR
+      COALESCE(op.payment_methods, ARRAY[]::text[]) && ARRAY[${methodsJoined}]::text[]
     )`);
   }
 
@@ -78,6 +115,8 @@ export const buildCashFlowQuery = (dto: TransactionsPaginationDto) => {
     conditions.push(Prisma.sql`(
       op.receipt_series ILIKE ${searchWord} OR 
       CAST(op.receipt_number AS TEXT) ILIKE ${searchWord} OR
+      CONCAT(COALESCE(op.receipt_series, ''), '-', CAST(op.receipt_number AS TEXT)) ILIKE ${searchWord} OR
+      CONCAT(COALESCE(op.receipt_series, ''), CAST(op.receipt_number AS TEXT)) ILIKE ${searchWord} OR
       op.reference ILIKE ${searchWord}
     )`);
   }
@@ -121,6 +160,9 @@ export const buildCashFlowQuery = (dto: TransactionsPaginationDto) => {
           ELSE 'TRANSACTION'
         END AS kind,
         COALESCE(it.id, p.id, rt.id) AS id,
+        rt.payment_id,
+        COALESCE(rt.it_source_id, rt.it_dest_id) AS internal_transfer_id,
+        COALESCE(it.status::text, p.status, 'COMPLETED') AS status,
         COALESCE(it.created_at, p.created_at, rt.created_at) AS created_at,
         COALESCE(it.date, p.payment_date, rt.transaction_date) AS transaction_date,
         COALESCE(it.receipt_series, p.receipt_series, rt.receipt_series) AS receipt_series,
@@ -137,6 +179,9 @@ export const buildCashFlowQuery = (dto: TransactionsPaginationDto) => {
         
         rt.reference,
         rt.payment_method,
+        
+        (SELECT array_agg(t_sub.financial_account_id) FROM transactions t_sub WHERE t_sub.payment_id = p.id) AS payment_account_ids,
+        (SELECT array_agg(t_sub.payment_method::text) FROM transactions t_sub WHERE t_sub.payment_id = p.id) AS payment_methods,
         
         rt."balanceBefore",
         rt."balanceAfter",

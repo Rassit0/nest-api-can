@@ -27,6 +27,7 @@ import { CreatePlayerMembershipDto } from './dto/create-player-membership.dto';
 import { UpdatePlayerMembershipDto } from './dto/update-player-membership.dto';
 import { PlayerMembershipsPaginationDto } from './dto/pagination.dto';
 import { ChangeStatusDto } from './dto/change-status.dto';
+import { ReenterPlayerMembershipDto } from './dto/reenter-player-membership.dto';
 import {
   ApiStandardResponse,
   ApiStandardCreatedResponse,
@@ -101,6 +102,37 @@ export class PlayerMembershipsController {
   @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
   async getTeamSeasonCategories(@Param('id', ParseUUIDPipe) id: string) {
     return await this.playerMembershipsService.getTeamSeasonCategories(id);
+  }
+
+  @Get('re-entry-info/:id')
+  @ApiOperation({
+    summary: 'Obtener información de contexto para el reingreso de una membresía',
+    description:
+      'Retorna el historial de baja, deudas pendientes, estado de matrícula y opciones disponibles para registrar el reingreso.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID de la membresía retirada (UUID)',
+    format: 'uuid',
+  })
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
+  async getReentryInfo(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.playerMembershipsService.getReentryInfo(id);
+  }
+
+  @Post('re-entry')
+  @ApiOperation({
+    summary: 'Registrar reingreso de un jugador dado de baja',
+    description:
+      'Crea una nueva membresía activa vinculada al mismo jugador, conservando el historial cerrado de la anterior.',
+  })
+  @ApiStandardCreatedResponse(
+    PlayerMembershipResponseDto,
+    'Reingreso registrado exitosamente.',
+  )
+  @RequirePermissions('CREATE_PLAYER_MEMBERSHIPS')
+  async reenter(@Body() reenterDto: ReenterPlayerMembershipDto) {
+    return await this.playerMembershipsService.reenter(reenterDto);
   }
 
   @Get(':id')

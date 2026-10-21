@@ -13,6 +13,7 @@ import { Prisma, StatusCharge } from 'src/generated/prisma/client';
 import { ChargesPaginationDto } from './dto/pagination.dto';
 import { createPaginationResult } from 'src/common/helpers/pagination.helper';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
+import { isCycleEnrollmentExpired } from 'src/common/helpers/cycle-enrollment.helper';
 import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 
 export const chargeSelect: Prisma.ChargeSelect = {
@@ -100,6 +101,37 @@ export const chargeSelect: Prisma.ChargeSelect = {
                   imageUrl: true,
                 },
               },
+            },
+          },
+        },
+      },
+    },
+  },
+  cycleEnrollment: {
+    select: {
+      id: true,
+      status: true,
+      cycleStartDate: true,
+      cycleEndDate: true,
+      attempt: true,
+      cancellationReason: true,
+      cancelledAt: true,
+      courseSeason: {
+        select: {
+          id: true,
+          course: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      courseSeasonShift: {
+        select: {
+          id: true,
+          shift: {
+            select: {
+              name: true,
             },
           },
         },
@@ -489,10 +521,21 @@ export class ChargesService {
   async addAdjustment(id: string, addAdjustmentDto: AddAdjustmentDto) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
-      include: { payments: true },
+      include: {
+        payments: true,
+        cycleEnrollment: {
+          include: {
+            studentMembership: true,
+          },
+        },
+      },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
+    }
+
+    if (charge.status === 'CANCELLED') {
+      throw new BadRequestException('No se puede modificar un cargo cancelado.');
     }
 
     const amount = Number(charge.amount);
@@ -508,6 +551,15 @@ export class ChargesService {
 
     const oldAdjustment = Number(charge.adjustmentAmount || 0);
 
+    const hasProcessingPayments = charge.payments?.some(
+      (p) => (p.status === 'PROCESSING' || p.status === 'PENDING') && Number(p.amount) > 0,
+    );
+    if (hasProcessingPayments) {
+      throw new BadRequestException(
+        'No se puede aplicar un ajuste a un cargo que tiene pagos en procesamiento o pendientes de confirmación.',
+      );
+    }
+
     const paidAmount = charge.payments
       ? charge.payments
           .filter((p) => p.status === 'COMPLETED')
@@ -516,10 +568,6 @@ export class ChargesService {
 
     const oldExpectedTotal = amount + oldAdjustment;
     const isFullyPaidWithMoney = paidAmount > 0 && paidAmount >= oldExpectedTotal;
-
-    if (charge.status === 'CANCELLED') {
-      throw new BadRequestException('No se puede modificar un cargo cancelado.');
-    }
 
     if (isFullyPaidWithMoney) {
       throw new BadRequestException(
@@ -532,6 +580,50 @@ export class ChargesService {
       newPending = 0;
     }
 
+    // Reglas de negocio para cargos asociados a CycleEnrollment
+    const isCycleCharge = !!charge.cycleEnrollment;
+    const cycleStatus = charge.cycleEnrollment?.status;
+
+    if (isCycleCharge && cycleStatus === 'CANCELLED') {
+      throw new BadRequestException(
+        'No se puede aplicar un ajuste a un cargo cuyo ciclo ya fue cancelado. Debe generar una reinscripción.',
+      );
+    }
+
+    let finalAdjustmentReason = addAdjustmentDto.adjustmentReason;
+
+    if (isCycleCharge && cycleStatus === 'PENDING' && newPending <= 0) {
+      if (!addAdjustmentDto.isScholarship) {
+        throw new BadRequestException(
+          'Para anular una inscripción de ciclo por error o desistimiento, utilice la opción "Cancelar cargo e inscripción". Si se trata de un descuento total autorizado o beca que confirma la participación del estudiante, seleccione expresamente la opción "Mantener inscripción — Descuento total autorizado".',
+        );
+      }
+
+      if (paidAmount > 0) {
+        throw new BadRequestException(
+          'No se puede aplicar un descuento total o beca a un ciclo que ya cuenta con pagos registrados.',
+        );
+      }
+
+      if (!addAdjustmentDto.adjustmentReason || !addAdjustmentDto.adjustmentReason.trim()) {
+        throw new BadRequestException(
+          'El motivo o justificación de la autorización es obligatorio al aplicar un descuento total.',
+        );
+      }
+
+      const reasonText = addAdjustmentDto.adjustmentReason.trim();
+      if (
+        reasonText.includes('[DESCUENTO TOTAL AUTORIZADO]') ||
+        reasonText.includes('[BECA 100%]')
+      ) {
+        finalAdjustmentReason = reasonText;
+      } else if (/beca/i.test(reasonText)) {
+        finalAdjustmentReason = `[BECA 100%] ${reasonText}`;
+      } else {
+        finalAdjustmentReason = `[DESCUENTO TOTAL AUTORIZADO] ${reasonText}`;
+      }
+    }
+
     let newStatus: StatusCharge;
     if (newPending <= 0) {
       newStatus = StatusCharge.PAID;
@@ -542,16 +634,19 @@ export class ChargesService {
     }
 
     const updatedCharge = await this.prisma.$transaction(async (tx) => {
+      await lockChargeForUpdate(tx, id);
+
       const updated = await tx.charge.update({
         where: { id },
         data: {
           adjustmentAmount: newAdjustment,
-          adjustmentReason: addAdjustmentDto.adjustmentReason,
+          adjustmentReason: finalAdjustmentReason,
           pendingAmount: newPending,
           status: newStatus,
         },
         select: chargeSelect,
       });
+
       await syncCycleEnrollmentStatus(tx, id, newStatus);
       return updated;
     });
@@ -565,15 +660,35 @@ export class ChargesService {
   async removeAdjustment(id: string) {
     const charge = await this.prisma.charge.findUnique({
       where: { id },
-      include: { payments: true },
+      include: {
+        payments: true,
+        cycleEnrollment: {
+          include: {
+            studentMembership: true,
+          },
+        },
+      },
     });
     if (!charge) {
       throw new NotFoundException('El cargo solicitado no fue encontrado');
     }
 
+    if (charge.status === 'CANCELLED') {
+      throw new BadRequestException('No se puede modificar un cargo cancelado.');
+    }
+
     const oldAdjustment = Number(charge.adjustmentAmount || 0);
     if (oldAdjustment === 0) {
       throw new BadRequestException('El cargo no tiene un ajuste aplicado');
+    }
+
+    const hasProcessingPayments = charge.payments?.some(
+      (p) => (p.status === 'PROCESSING' || p.status === 'PENDING') && Number(p.amount) > 0,
+    );
+    if (hasProcessingPayments) {
+      throw new BadRequestException(
+        'No se puede remover el ajuste de un cargo que tiene pagos en procesamiento o pendientes de confirmación.',
+      );
     }
 
     const amount = Number(charge.amount);
@@ -586,14 +701,59 @@ export class ChargesService {
     const oldExpectedTotal = amount + oldAdjustment;
     const isFullyPaidWithMoney = paidAmount > 0 && paidAmount >= oldExpectedTotal;
 
-    if (charge.status === 'CANCELLED') {
-      throw new BadRequestException('No se puede modificar un cargo cancelado.');
-    }
-
     if (isFullyPaidWithMoney) {
       throw new BadRequestException(
         'No se puede remover el ajuste de un cargo que ya fue pagado completamente con dinero real.',
       );
+    }
+
+    // Reglas de seguridad para remover ajustes en cargos asociados a CycleEnrollment
+    if (charge.cycleEnrollment) {
+      const cycle = charge.cycleEnrollment;
+      if (cycle.status === 'CANCELLED') {
+        throw new BadRequestException(
+          'No se puede modificar un cargo de un ciclo cancelado.',
+        );
+      }
+
+      if (cycle.status === 'CONFIRMED') {
+        // Verificar si tiene asistencias registradas
+        const attendedBookings = await this.prisma.sessionBooking.count({
+          where: {
+            studentId: cycle.studentMembership.studentId,
+            attended: true,
+            session: {
+              event: {
+                startDate: {
+                  gte: cycle.cycleStartDate,
+                  lte: cycle.cycleEndDate,
+                },
+              },
+            },
+          },
+        });
+
+        if (attendedBookings > 0) {
+          throw new BadRequestException(
+            'No se puede remover el ajuste de un ciclo confirmado que ya cuenta con asistencias registradas. Requiere regularización administrativa.',
+          );
+        }
+
+        // Verificar si el período ya inició o finalizó
+        const now = new Date();
+        if (cycle.cycleStartDate < now) {
+          throw new BadRequestException(
+            'No se puede remover el ajuste de un ciclo cuyo período ya inició o ha finalizado. Requiere regularización administrativa.',
+          );
+        }
+
+        // Verificar si el plazo original de reserva (72h) ya expiró
+        if (isCycleEnrollmentExpired(cycle.createdAt)) {
+          throw new BadRequestException(
+            'No se puede remover el ajuste porque el plazo original de reserva (72h) del ciclo ya ha expirado. Revertir el ciclo a pendiente provocaría su cancelación inmediata por cron. Requiere regularización administrativa.',
+          );
+        }
+      }
     }
 
     const newExpectedTotal = amount; // Sin ajuste
@@ -613,6 +773,8 @@ export class ChargesService {
     }
 
     const updatedCharge = await this.prisma.$transaction(async (tx) => {
+      await lockChargeForUpdate(tx, id);
+
       const updated = await tx.charge.update({
         where: { id },
         data: {
@@ -632,4 +794,5 @@ export class ChargesService {
       data: mapChargeForFrontend(updatedCharge),
     };
   }
+
 }

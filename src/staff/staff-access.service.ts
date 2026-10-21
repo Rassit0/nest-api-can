@@ -2781,7 +2781,7 @@ export class StaffAccessService {
     type: string,
     groupId: string,
     dto: TeacherCreateSessionDto,
-  ): Promise<TeacherGroupSessionDto> {
+  ): Promise<TeacherGroupSessionDto | TeacherGroupSessionDto[]> {
     const normalizedType = type?.toUpperCase() as TeacherGroupType;
     if (normalizedType !== 'COURSE' && normalizedType !== 'TEAM') {
       throw new BadRequestException('Tipo de grupo inválido. Debe ser COURSE o TEAM.');
@@ -2818,9 +2818,44 @@ export class StaffAccessService {
         normalizedType === 'COURSE' ? [groupId] : undefined,
       teamSeasonCategoryIds:
         normalizedType === 'TEAM' ? [groupId] : undefined,
+      recurrenceRule: dto.recurrenceRule,
+      timezone: dto.timezone,
     };
 
     const result = await this.sessionsService.create(createDto, user.id);
+
+    if (Array.isArray(result.data)) {
+      const sessionIds = result.data.map((item: any) => item.id).filter(Boolean);
+      const sessions = await this.prisma.session.findMany({
+        where: { id: { in: sessionIds } },
+        include: {
+          event: {
+            select: {
+              id: true,
+              title: true,
+              startDate: true,
+              endDate: true,
+              status: true,
+              location: {
+                select: { id: true, name: true, address: true },
+              },
+            },
+          },
+        },
+        orderBy: { event: { startDate: 'asc' } },
+      });
+
+      return sessions.map((s) => ({
+        id: s.id,
+        eventId: s.event.id,
+        title: s.event.title || 'Sesión',
+        startDate: s.event.startDate,
+        endDate: s.event.endDate || s.event.startDate,
+        durationMin: s.durationMin,
+        status: s.event.status,
+        location: s.event.location,
+      }));
+    }
 
     const session = await this.prisma.session.findUnique({
       where: { id: result.data.id },

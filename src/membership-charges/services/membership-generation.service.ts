@@ -34,13 +34,27 @@ export class MembershipGenerationService {
     tx: Prisma.TransactionClient,
     membership: PlayerMembershipWithRelations,
     evaluationDate: Date,
+    options?: {
+      chargeRegistration?: boolean;
+      skipCurrentMonthRecurringFee?: boolean;
+    },
   ): Promise<string[]> {
     const chargeIds: string[] = [];
-    if (!membership.isMigrated || membership.chargeRegistrationOnMigration) {
+    const shouldChargeRegistration =
+      options?.chargeRegistration !== undefined
+        ? options.chargeRegistration
+        : !membership.isMigrated || membership.chargeRegistrationOnMigration;
+
+    if (shouldChargeRegistration) {
       const regId = await this.ensureRegistrationCharge(tx, membership);
       if (regId) chargeIds.push(regId);
     }
-    const recIds = await this.ensureRecurringCharges(tx, membership, evaluationDate);
+    const recIds = await this.ensureRecurringCharges(
+      tx,
+      membership,
+      evaluationDate,
+      options,
+    );
     chargeIds.push(...recIds);
     return chargeIds;
   }
@@ -119,12 +133,16 @@ export class MembershipGenerationService {
     tx: Prisma.TransactionClient,
     membership: PlayerMembershipWithRelations,
     evaluationDate: Date,
+    options?: {
+      skipCurrentMonthRecurringFee?: boolean;
+    },
   ): Promise<string[]> {
     const allCycles = simulateAllCycles(membership);
     const generationDate = this.resolveGenerationPointer(
       membership,
       allCycles,
       evaluationDate,
+      options,
     );
     let nextPointer: Date | null = generationDate;
 
@@ -179,6 +197,7 @@ export class MembershipGenerationService {
           generationDate,
           evalDateToUse,
           existingChargesSet,
+          options,
         );
         generatedIds.push(...chargeIds);
         nextPointer = calcPointer;
@@ -325,12 +344,16 @@ export class MembershipGenerationService {
     generationDate: Date,
     evaluationDate: Date,
     existingChargesSet: Set<string>,
+    options?: {
+      skipCurrentMonthRecurringFee?: boolean;
+    },
   ): Promise<{ nextPointer: Date | null; chargeIds: string[] }> {
     let nextPointer: Date | null = generationDate;
     const chargeIds: string[] = [];
 
     const ungeneratedCycles = allCycles.filter(
-      (cycle) => !this.isCycleGenerated(cycle, existingChargesSet, membership),
+      (cycle) =>
+        !this.isCycleGenerated(cycle, existingChargesSet, membership, options),
     );
 
     const validStartingCycles = ungeneratedCycles.filter((c) => {
@@ -343,7 +366,11 @@ export class MembershipGenerationService {
     });
 
     if (validStartingCycles.length === 0) {
-      if (membership.isMigrated || generationDate > membership.startedAt) {
+      if (
+        membership.isMigrated ||
+        generationDate > membership.startedAt ||
+        options?.skipCurrentMonthRecurringFee
+      ) {
         let tempPointer = new Date(membership.startedAt);
         for (const cycle of allCycles) {
           if (tempPointer >= generationDate) break;
@@ -471,6 +498,9 @@ export class MembershipGenerationService {
     cycle: SimulatedCycle,
     existingChargesSet: Set<string>,
     membership: PlayerMembershipWithRelations,
+    options?: {
+      skipCurrentMonthRecurringFee?: boolean;
+    },
   ): boolean {
     const freq =
       membership.teamSeason.billingConfig?.billingFrequency || 'MONTHLY';
@@ -478,7 +508,11 @@ export class MembershipGenerationService {
 
     if (existingChargesSet.has(chargeKey)) return true;
 
-    if (membership.isMigrated && !membership.chargeCurrentMonthOnMigration) {
+    const shouldSkipCurrentMonth =
+      (membership.isMigrated && !membership.chargeCurrentMonthOnMigration) ||
+      options?.skipCurrentMonthRecurringFee;
+
+    if (shouldSkipCurrentMonth) {
       const startYear = membership.startedAt.getUTCFullYear();
       const startMonth = membership.startedAt.getUTCMonth() + 1;
       if (
@@ -513,10 +547,16 @@ export class MembershipGenerationService {
     membership: PlayerMembershipWithRelations,
     allCycles: SimulatedCycle[],
     evaluationDate: Date,
+    options?: {
+      skipCurrentMonthRecurringFee?: boolean;
+    },
   ): Date | null {
     if (membership.nextRecurringChargeGenerationDate)
       return membership.nextRecurringChargeGenerationDate;
-    if (!membership.isMigrated || membership.chargeCurrentMonthOnMigration)
+    if (
+      (!membership.isMigrated || membership.chargeCurrentMonthOnMigration) &&
+      !options?.skipCurrentMonthRecurringFee
+    )
       return new Date(membership.startedAt);
 
     let tempPointer = new Date(membership.startedAt);
@@ -524,8 +564,8 @@ export class MembershipGenerationService {
     const startMonth = membership.startedAt.getUTCMonth() + 1;
 
     for (const cycle of allCycles) {
-      // Para membresías migradas, asumimos que todo el mes actual (el mes de startedAt) y anteriores
-      // ya fueron pagados en el sistema anterior. Saltamos estos ciclos.
+      // Para membresías migradas o reingresos en el mismo mes donde se omite cuota actual,
+      // asumimos que el mes actual (el mes de startedAt) y anteriores ya fueron pagados.
       const isCycleFromPastOrCurrentMonth =
         cycle.billingYear < startYear ||
         (cycle.billingYear === startYear && cycle.billingMonth <= startMonth);

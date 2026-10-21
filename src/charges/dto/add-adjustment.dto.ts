@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class AddAdjustmentDto {
   @ApiProperty({
@@ -16,4 +16,13 @@ export class AddAdjustmentDto {
   @IsOptional()
   @IsString()
   adjustmentReason?: string;
+
+  @ApiPropertyOptional({
+    description: 'Indica si el ajuste es un descuento total autorizado (o beca) que mantiene y confirma la inscripción del ciclo',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isScholarship?: boolean;
 }
+

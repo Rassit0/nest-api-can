@@ -50,8 +50,8 @@ export const transactionSelect = {
   financialAccount: {
     select: { name: true },
   },
-  internalTransferSource: { select: { receiptSeries: true, receiptNumber: true } },
-  internalTransferDest: { select: { receiptSeries: true, receiptNumber: true } },
+  internalTransferSource: { select: { id: true, receiptSeries: true, receiptNumber: true, status: true } },
+  internalTransferDest: { select: { id: true, receiptSeries: true, receiptNumber: true, status: true } },
   payerPerson: {
     select: {
       id: true,
@@ -67,6 +67,7 @@ export const transactionSelect = {
       amount: true,
       receiptSeries: true,
       receiptNumber: true,
+      status: true,
       transactions: {
         select: {
           id: true,
@@ -75,7 +76,8 @@ export const transactionSelect = {
           balanceBefore: true,
           balanceAfter: true,
           financialAccountId: true,
-          financialAccount: { select: { name: true } }
+          financialAccount: { select: { name: true } },
+          status: true,
         }
       },
       charge: {
@@ -1173,6 +1175,7 @@ export class TransactionsService {
       let beneficiaryName = null;
       let payerName = null;
       
+      let paymentBreakdown: any[] = [];
       let groupedDetails = undefined;
 
       if (pt) {
@@ -1189,21 +1192,83 @@ export class TransactionsService {
         beneficiaryName = domainPt.beneficiaryName;
         payerName = domainPt.payerName;
 
-        if (item.kind === 'PAYMENT' && pt.payment?.transactions?.length > 1) {
-          groupedDetails = pt.payment.transactions.map((t: any) => ({
+        if (item.kind === 'PAYMENT' && pt.payment?.transactions) {
+          paymentBreakdown = pt.payment.transactions.map((t: any) => ({
+            transactionId: t.id,
             method: t.paymentMethod,
-            account: t.financialAccount?.name || 'Desconocida',
             accountId: t.financialAccountId,
-            amount: Number(t.amount),
-            balanceBefore: t.balanceBefore ? Number(t.balanceBefore) : null,
-            balanceAfter: t.balanceAfter ? Number(t.balanceAfter) : null,
+            accountName: t.financialAccount?.name || 'Desconocida',
+            amount: Number(Number(t.amount).toFixed(2)),
+            balanceBefore: t.balanceBefore ? Number(Number(t.balanceBefore).toFixed(2)) : null,
+            balanceAfter: t.balanceAfter ? Number(Number(t.balanceAfter).toFixed(2)) : null,
+            status: t.status || 'COMPLETED',
           }));
+        } else if (item.kind === 'TRANSACTION') {
+          paymentBreakdown = [{
+            transactionId: pt.id,
+            method: pt.paymentMethod || item.payment_method,
+            accountId: pt.financialAccountId || item.account_id,
+            accountName: pt.financialAccount?.name || item.account_name || 'Desconocida',
+            amount: Number(Number(pt.amount || item.amount).toFixed(2)),
+            balanceBefore: pt.balanceBefore ? Number(Number(pt.balanceBefore).toFixed(2)) : (item.balanceBefore ? Number(Number(item.balanceBefore).toFixed(2)) : null),
+            balanceAfter: pt.balanceAfter ? Number(Number(pt.balanceAfter).toFixed(2)) : (item.balanceAfter ? Number(Number(item.balanceAfter).toFixed(2)) : null),
+            status: pt.status || 'COMPLETED',
+          }];
         }
+
+        groupedDetails = paymentBreakdown.map((b) => ({
+          method: b.method,
+          account: b.accountName,
+          accountId: b.accountId,
+          amount: b.amount,
+          balanceBefore: b.balanceBefore ?? null,
+          balanceAfter: b.balanceAfter ?? null,
+          status: b.status,
+          transactionId: b.transactionId,
+        }));
+      } else if (item.kind === 'TRANSACTION') {
+        paymentBreakdown = [{
+          transactionId: item.raw_id,
+          method: item.payment_method,
+          accountId: item.account_id,
+          accountName: item.account_name || 'Desconocida',
+          amount: Number(Number(item.amount).toFixed(2)),
+          balanceBefore: item.balanceBefore ? Number(Number(item.balanceBefore).toFixed(2)) : null,
+          balanceAfter: item.balanceAfter ? Number(Number(item.balanceAfter).toFixed(2)) : null,
+          status: item.status || 'COMPLETED',
+        }];
+        groupedDetails = paymentBreakdown.map((b) => ({
+          method: b.method,
+          account: b.accountName,
+          accountId: b.accountId,
+          amount: b.amount,
+          balanceBefore: b.balanceBefore ?? null,
+          balanceAfter: b.balanceAfter ?? null,
+          status: b.status,
+          transactionId: b.transactionId,
+        }));
       }
 
+      const resolvedId = item.id || (item.kind === 'INTERNAL_TRANSFER' 
+        ? (item.internal_transfer_id || item.it_source_id || item.it_dest_id || item.raw_id) 
+        : item.kind === 'PAYMENT' 
+          ? (item.payment_id || pt?.paymentId || item.raw_id) 
+          : item.raw_id);
+
+      const resolvedStatus = item.kind === 'PAYMENT'
+        ? (pt?.payment?.status || item.status || 'COMPLETED')
+        : item.kind === 'INTERNAL_TRANSFER'
+          ? (item.status || pt?.internalTransferSource?.status || pt?.internalTransferDest?.status || 'COMPLETED')
+          : (pt?.status || item.status || 'COMPLETED');
+
       return {
-        id: item.kind === 'INTERNAL_TRANSFER' ? (item.it_source_id || item.it_dest_id || item.raw_id) : item.kind === 'PAYMENT' ? (item.payment_id || item.raw_id) : item.raw_id,
+        id: resolvedId,
+        rawId: item.raw_id,
+        transactionId: item.raw_id,
+        paymentId: item.payment_id || pt?.paymentId || (item.kind === 'PAYMENT' ? resolvedId : null),
+        internalTransferId: item.internal_transfer_id || (item.kind === 'INTERNAL_TRANSFER' ? resolvedId : null),
         kind: item.kind,
+        status: resolvedStatus,
         transactionDate: item.transaction_date,
         createdAt: item.created_at,
         receiptSeries: item.receipt_series,
@@ -1229,6 +1294,7 @@ export class TransactionsService {
         origin,
         beneficiaryName,
         payerName,
+        paymentBreakdown: paymentBreakdown.length > 0 ? paymentBreakdown : undefined,
         groupedDetails
       };
     });

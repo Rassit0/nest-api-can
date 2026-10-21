@@ -94,6 +94,7 @@ describe('PaymentsMatrixPdfService', () => {
       'inst-1',
       'ts-123',
       'cat-456',
+      undefined,
     );
 
     expect(printerService.createPdf).toHaveBeenCalledTimes(1);
@@ -130,6 +131,80 @@ describe('PaymentsMatrixPdfService', () => {
     const styles: any = docDef.styles;
     expect(styles?.tableHeader?.color).toBe('#1F4E79');
     expect(styles?.tableHeader?.fillColor).toBe('#F5F8FA');
+  });
+
+  it('should render SUSPENDED students with badge and suspension reason', async () => {
+    const suspendedDto: PaymentsMatrixResponseDto = {
+      ...mockDto,
+      students: [
+        {
+          id: 'std-susp-1',
+          name: 'PEREZ JUAN',
+          status: 'SUSPENDED',
+          suspensionReason: 'Suspensión disciplinaria',
+          paymentsByPeriod: {},
+        },
+        {
+          id: 'std-susp-2',
+          name: 'LOPEZ CARLOS',
+          status: 'SUSPENDED',
+          suspensionReason: undefined,
+          paymentsByPeriod: {},
+        },
+        {
+          id: 'std-withdrawn',
+          name: 'GOMEZ MARIO',
+          status: 'WITHDRAWN',
+          paymentsByPeriod: {},
+        },
+        {
+          id: 'std-susp-long',
+          name: 'FERNANDEZ ROBERTO',
+          status: 'SUSPENDED',
+          suspensionReason: 'Suspensión disciplinaria prolongada por conducta antideportiva reiterada durante los entrenamientos y partidos oficiales de la temporada 2026',
+          paymentsByPeriod: {},
+        },
+      ],
+    };
+
+    matrixService.getTeamSeasonMatrix.mockResolvedValueOnce(suspendedDto);
+
+    await service.generateTeamSeasonPdf(
+      'inst-1',
+      'ts-123',
+      'Test User',
+      'cat-456',
+      undefined,
+      true,
+    );
+
+    expect(matrixService.getTeamSeasonMatrix).toHaveBeenCalledWith(
+      'inst-1',
+      'ts-123',
+      'cat-456',
+      true,
+    );
+
+    const docDef = printerService.createPdf.mock.calls[0][0];
+    const tableContent = JSON.stringify(docDef.content[2]);
+
+    // Student 1: Suspended with reason
+    expect(tableContent).toContain('PEREZ JUAN');
+    expect(tableContent).toContain('[SUSPENDIDO]');
+    expect(tableContent).toContain('Motivo: Suspensión disciplinaria');
+
+    // Student 2: Suspended with no reason
+    expect(tableContent).toContain('LOPEZ CARLOS');
+    expect(tableContent).toContain('Motivo: Motivo no registrado');
+
+    // Student 3: Withdrawn
+    expect(tableContent).toContain('GOMEZ MARIO');
+    expect(tableContent).toContain('[BAJA]');
+
+    // Student 4: Suspended with long reason
+    expect(tableContent).toContain('FERNANDEZ ROBERTO');
+    expect(tableContent).toContain('[SUSPENDIDO]');
+    expect(tableContent).toContain('conducta antideportiva reiterada');
   });
 
   it('should verify that PdfReportBuilder preserves its default black/#f2f2f2 tableHeader style', () => {

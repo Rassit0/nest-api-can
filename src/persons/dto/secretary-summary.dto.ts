@@ -30,6 +30,18 @@ export class ChargeSummaryDto {
 
   @ApiProperty()
   originName: string; // Ej: "Fútbol Sub-15" o "Curso Natación" o "Cobro manual"
+
+  @ApiPropertyOptional()
+  cycleEnrollment?: any;
+
+  @ApiPropertyOptional()
+  studentCharges?: any[];
+
+  @ApiPropertyOptional()
+  membershipCharges?: any[];
+
+  @ApiPropertyOptional()
+  payments?: any[];
 }
 
 export class PlayerMembershipSummaryDto {

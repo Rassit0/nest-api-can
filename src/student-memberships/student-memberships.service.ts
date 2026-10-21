@@ -21,6 +21,8 @@ import { validateCourseSeasonCapacity } from 'src/common/helpers/capacity.helper
 import { TransferShiftDto } from './dto/transfer-shift.dto';
 import { isCycleEnrollmentExpired } from 'src/common/helpers/cycle-enrollment.helper';
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
+import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
+import { ReenterStudentMembershipDto } from './dto/reenter-student-membership.dto';
 
 export const studentMembershipSelect = {
   id: true,
@@ -74,6 +76,7 @@ export const studentMembershipSelect = {
   paymentPlan: true,
   startedAt: true,
   endedAt: true,
+  reenteredAt: true,
   status: true,
   createdAt: true,
   updatedAt: true,
@@ -840,6 +843,360 @@ export class StudentMembershipsService {
     };
   }
 
+  async reenter(
+    id: string,
+    reenterDto: ReenterStudentMembershipDto,
+    currentUser?: { id: string },
+  ) {
+    const effectiveDate = new Date(reenterDto.effectiveDate);
+    if (isNaN(effectiveDate.getTime())) {
+      throw new BadRequestException('Fecha efectiva de reingreso inválida.');
+    }
+
+    return await this.prisma.$transaction(
+      async (tx) => {
+        // 1. Obtener la membresía con todas sus relaciones necesarias
+        const membership = await tx.studentMembership.findUnique({
+          where: { id },
+          include: {
+            student: { include: { person: true } },
+            courseSeason: {
+              include: {
+                season: true,
+                course: true,
+              },
+            },
+            courseSeasonShift: {
+              include: { shift: true },
+            },
+            histories: {
+              orderBy: { createdAt: 'desc' },
+            },
+            cycleEnrollments: {
+              orderBy: { cycleStartDate: 'desc' },
+              include: { charge: true },
+            },
+          },
+        });
+
+        if (!membership) {
+          throw new NotFoundException('Inscripción de estudiante no encontrada');
+        }
+
+        // 2. Validar que el estado sea estrictamente WITHDRAWN
+        if (membership.status !== StudentMembershipStatus.WITHDRAWN) {
+          throw new BadRequestException(
+            `Solo una membresía con estado WITHDRAWN puede ser reingresada. El estado actual es ${membership.status}.`,
+          );
+        }
+
+        // 3. Validar estado y fechas de CourseSeason
+        if (membership.courseSeason.status !== StatusCourseSeason.ACTIVE) {
+          throw new BadRequestException('El curso no se encuentra activo');
+        }
+
+        // 3.1. Validar que la fecha efectiva no sea futura respecto al momento de la operación
+        const now = new Date();
+        if (effectiveDate.getTime() > now.getTime()) {
+          throw new BadRequestException(
+            `La fecha efectiva de reingreso no puede ser una fecha futura (${effectiveDate.toISOString()}) respecto al momento de la operación.`,
+          );
+        }
+
+        // 3.2. Validar que la fecha esté dentro del rango de la temporada
+        const seasonStart = new Date(membership.courseSeason.season.startDate);
+        const seasonEnd = new Date(membership.courseSeason.season.endDate);
+        if (effectiveDate < seasonStart || effectiveDate > seasonEnd) {
+          throw new BadRequestException(
+            `La fecha de reingreso (${effectiveDate.toISOString().split('T')[0]}) debe estar dentro del rango de la temporada (${seasonStart.toISOString().split('T')[0]} a ${seasonEnd.toISOString().split('T')[0]}).`,
+          );
+        }
+
+        // 3.3. Obtener la fecha de la última baja a partir de los registros históricos reales y endedAt
+        const lastWithdrawalHistory = membership.histories?.find(
+          (h) => h.newStatus === StudentMembershipStatus.WITHDRAWN,
+        );
+        const historyWithdrawalDate = lastWithdrawalHistory
+          ? new Date(lastWithdrawalHistory.createdAt)
+          : null;
+        const endedAtDate = membership.endedAt
+          ? new Date(membership.endedAt)
+          : null;
+
+        let lastWithdrawalDate: Date | null = null;
+        if (endedAtDate && historyWithdrawalDate) {
+          lastWithdrawalDate =
+            endedAtDate.getTime() >= historyWithdrawalDate.getTime()
+              ? endedAtDate
+              : historyWithdrawalDate;
+        } else {
+          lastWithdrawalDate = endedAtDate || historyWithdrawalDate;
+        }
+
+        // 3.4. Validar que la fecha efectiva sea estrictamente posterior a la última baja registrada
+        if (lastWithdrawalDate) {
+          if (effectiveDate.getTime() <= lastWithdrawalDate.getTime()) {
+            throw new BadRequestException(
+              `La fecha efectiva de reingreso (${effectiveDate.toISOString()}) debe ser posterior a la última baja registrada (${lastWithdrawalDate.toISOString()}).`,
+            );
+          }
+        }
+
+        // 4. Bloquear y serializar concurrencia mediante SELECT ... FOR UPDATE sobre CourseSeason
+        await tx.$queryRaw`
+          SELECT 1 
+          FROM course_seasons 
+          WHERE id = ${membership.courseSeasonId} 
+          FOR UPDATE
+        `;
+
+        // 5. REGLA DE UNICIDAD Y DUPLICADOS HISTÓRICOS:
+        // Bloquear si ya existe OTRA membresía para este alumno en este curso que esté ACTIVE, PENDING_ACTIVE o SUSPENDED
+        const activeDuplicate = await tx.studentMembership.findFirst({
+          where: {
+            studentId: membership.studentId,
+            courseSeasonId: membership.courseSeasonId,
+            id: { not: id },
+            status: {
+              in: [
+                StudentMembershipStatus.ACTIVE,
+                StudentMembershipStatus.PENDING_ACTIVE,
+                StudentMembershipStatus.SUSPENDED,
+              ],
+            },
+          },
+          include: {
+            courseSeasonShift: { include: { shift: true } },
+          },
+        });
+
+        if (activeDuplicate) {
+          throw new BadRequestException(
+            `No es posible reactivar esta membresía porque el estudiante ya cuenta con una membresía vigente (Estado: ${activeDuplicate.status}, ID: ${activeDuplicate.id}, Turno: "${activeDuplicate.courseSeasonShift?.shift?.name || 'N/A'}") en este curso. Debe gestionar su participación en su expediente activo.`,
+          );
+        }
+
+        // Verificar si existen múltiples WITHDRAWN históricas:
+        // Si existen múltiples WITHDRAWN sin ninguna activa, exigir que la reactivación se realice sobre la más reciente
+        const allWithdrawn = await tx.studentMembership.findMany({
+          where: {
+            studentId: membership.studentId,
+            courseSeasonId: membership.courseSeasonId,
+            status: StudentMembershipStatus.WITHDRAWN,
+          },
+          orderBy: [
+            { endedAt: 'desc' },
+            { createdAt: 'desc' },
+          ],
+        });
+
+        if (allWithdrawn.length > 1 && allWithdrawn[0].id !== id) {
+          throw new BadRequestException(
+            `El estudiante posee múltiples expedientes retirados en este curso. Por seguridad administrativa, el reingreso debe realizarse sobre el expediente más reciente (ID: ${allWithdrawn[0].id}).`,
+          );
+        }
+
+        // 6. Turno destino y validaciones de elegibilidad y cupos
+        const targetShiftId =
+          reenterDto.courseSeasonShiftId || membership.courseSeasonShiftId;
+
+        const targetShift = await tx.courseSeasonShift.findUnique({
+          where: { id: targetShiftId },
+          include: {
+            shift: true,
+            category: true,
+            courseSeason: { include: { season: true } },
+          },
+        });
+
+        if (!targetShift) {
+          throw new NotFoundException('El turno seleccionado no fue encontrado');
+        }
+
+        if (targetShift.courseSeasonId !== membership.courseSeasonId) {
+          throw new BadRequestException(
+            'El turno seleccionado no pertenece al mismo curso',
+          );
+        }
+
+        if (!targetShift.isActive) {
+          throw new BadRequestException('El turno seleccionado no está activo');
+        }
+
+        // Validar elegibilidad de edad y género para el turno
+        this.validateStudentEligibility(membership.student as any, targetShift as any);
+
+        // Bloquear el turno para validar cupo concurrentemente
+        await tx.$queryRaw`
+          SELECT 1 
+          FROM course_season_shifts 
+          WHERE id = ${targetShiftId} 
+          FOR UPDATE
+        `;
+
+        // Validar cupos en el turno
+        await this.validateOfferingCapacity(targetShiftId, targetShift.maxMembers);
+
+        // 7. Actualizar la membresía preservando su ID y antecedentes históricos
+        // startedAt permanece inmutable como la fecha original de ingreso.
+        // endedAt se limpia a null porque el estudiante vuelve a estar activo.
+        // reenteredAt se actualiza a la nueva fecha efectiva.
+        const notesToAppend = reenterDto.notes
+          ? `${membership.notes ? membership.notes + ' | ' : ''}Reingreso: ${reenterDto.reason} (${reenterDto.notes})`
+          : `${membership.notes ? membership.notes + ' | ' : ''}Reingreso: ${reenterDto.reason}`;
+
+        const updatedMembership = await tx.studentMembership.update({
+          where: { id },
+          data: {
+            status: StudentMembershipStatus.ACTIVE,
+            courseSeasonShiftId: targetShiftId,
+            endedAt: null,
+            reenteredAt: effectiveDate,
+            notes: notesToAppend,
+            ...(currentUser?.id && { updatedById: currentUser.id }),
+            histories: {
+              create: {
+                previousStatus: StudentMembershipStatus.WITHDRAWN,
+                newStatus: StudentMembershipStatus.ACTIVE,
+                reason: reenterDto.reason,
+                effectiveDate: effectiveDate,
+                ...(currentUser?.id && { createdById: currentUser.id }),
+              },
+            },
+          },
+          select: studentMembershipSelect,
+        });
+
+        return {
+          message:
+            'Reingreso de estudiante a curso escolar procesado exitosamente',
+          data: mapMembershipWithTotal(updatedMembership),
+        };
+      },
+      { timeout: 15000 },
+    );
+  }
+
+  async getReenterContext(id: string) {
+    const membership = await this.prisma.studentMembership.findUnique({
+      where: { id },
+      include: {
+        student: { include: { person: true } },
+        courseSeason: {
+          include: {
+            season: true,
+            course: true,
+            shifts: {
+              where: { isActive: true },
+              include: { shift: true, category: true },
+            },
+          },
+        },
+        courseSeasonShift: {
+          include: { shift: true, category: true },
+        },
+        histories: {
+          where: { newStatus: StudentMembershipStatus.WITHDRAWN },
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
+        cycleEnrollments: {
+          orderBy: { cycleStartDate: 'desc' },
+          include: {
+            charge: {
+              select: {
+                id: true,
+                status: true,
+                amount: true,
+                pendingAmount: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!membership) {
+      throw new NotFoundException('Inscripción de estudiante no encontrada');
+    }
+
+    const lastWithdrawalHistory = membership.histories?.[0];
+    const withdrawalDate = membership.endedAt || lastWithdrawalHistory?.createdAt || null;
+    const withdrawalReason = lastWithdrawalHistory?.reason || membership.notes || 'Baja administrativa';
+
+    // Obtener ocupación de los turnos disponibles
+    const shiftsWithCapacity = await Promise.all(
+      membership.courseSeason.shifts.map(async (s) => {
+        const activeMembers = await this.prisma.studentMembership.count({
+          where: {
+            courseSeasonShiftId: s.id,
+            status: { in: [StudentMembershipStatus.ACTIVE, StudentMembershipStatus.SUSPENDED] },
+          },
+        });
+        const max = s.maxMembers ?? 0;
+        return {
+          id: s.id,
+          name: s.shift?.name || 'Turno',
+          categoryName: s.category?.name || 'General',
+          gender: s.gender,
+          maxMembers: max,
+          currentMembers: activeMembers,
+          availableSpots: Math.max(0, max - activeMembers),
+          isCurrentShift: s.id === membership.courseSeasonShiftId,
+        };
+      }),
+    );
+
+    const confirmedCycles = membership.cycleEnrollments.filter(c => c.status === 'CONFIRMED');
+    const cancelledCycles = membership.cycleEnrollments.filter(c => c.status === 'CANCELLED');
+    const pendingCycles = membership.cycleEnrollments.filter(c => c.status === 'PENDING');
+
+    return {
+      membershipId: membership.id,
+      status: membership.status,
+      startedAt: membership.startedAt,
+      endedAt: membership.endedAt,
+      reenteredAt: membership.reenteredAt,
+      withdrawalDate,
+      withdrawalReason,
+      student: {
+        id: membership.student.id,
+        firstName: membership.student.person.name,
+        lastName: `${membership.student.person.lastName} ${membership.student.person.secondLastName || ''}`.trim(),
+        documentNumber: membership.student.person.documentNumber,
+        birthDate: membership.student.person.birthDate,
+      },
+      courseSeason: {
+        id: membership.courseSeason.id,
+        courseName: membership.courseSeason.course.name,
+        seasonName: membership.courseSeason.season.name,
+        startDate: membership.courseSeason.season.startDate,
+        endDate: membership.courseSeason.season.endDate,
+        status: membership.courseSeason.status,
+      },
+      currentShift: {
+        id: membership.courseSeasonShift.id,
+        name: membership.courseSeasonShift.shift.name,
+      },
+      availableShifts: shiftsWithCapacity,
+      cyclesSummary: {
+        total: membership.cycleEnrollments.length,
+        confirmed: confirmedCycles.length,
+        cancelled: cancelledCycles.length,
+        pending: pendingCycles.length,
+        recentCycles: membership.cycleEnrollments.slice(0, 5).map(c => ({
+          id: c.id,
+          cycleStartDate: c.cycleStartDate,
+          cycleEndDate: c.cycleEndDate,
+          status: c.status,
+          attempt: c.attempt,
+          chargeStatus: c.charge?.status || null,
+          chargeAmount: c.charge?.amount || null,
+        })),
+      },
+    };
+  }
+
   async activate(id: string, reason?: string) {
     const membership = await this.getMembership(id);
 
@@ -1180,55 +1537,169 @@ export class StudentMembershipsService {
     return student;
   }
 
-  async cancelExpiredPendingCycle(cycleEnrollmentId: string) {
+  /**
+   * Cancelación canónica de un ciclo (manual o automática por cron).
+   * Neutraliza el cargo a CANCELLED (pendingAmount: 0), libera el cupo y preserva auditoría.
+   */
+  async cancelCycleEnrollment(
+    cycleEnrollmentId: string,
+    reason: string,
+    user?: any,
+    options?: { isCron?: boolean },
+  ) {
+    if (!reason || reason.trim().length < 5) {
+      throw new BadRequestException('El motivo de cancelación es obligatorio y debe tener al menos 5 caracteres.');
+    }
+
     return await this.prisma.$transaction(
       async (tx) => {
         const cycle = await tx.cycleEnrollment.findUnique({
           where: { id: cycleEnrollmentId },
-          include: { charge: true },
+          include: {
+            charge: {
+              include: {
+                payments: true,
+              },
+            },
+            studentMembership: {
+              include: {
+                student: {
+                  include: {
+                    person: true,
+                  },
+                },
+              },
+            },
+          },
         });
 
-        if (!cycle) return;
-
-        // Idempotencia: si ya no es PENDING, no hacemos nada
-        if (cycle.status !== CycleEnrollmentStatus.PENDING) return;
-
-        // Validar JIT si realmente expiro
-        if (!isCycleEnrollmentExpired(cycle.createdAt)) {
-          return;
+        if (!cycle) {
+          throw new NotFoundException(`Ciclo con ID ${cycleEnrollmentId} no encontrado`);
         }
 
+        // Idempotencia: si ya está cancelado, retornar sin error
+        if (cycle.status === CycleEnrollmentStatus.CANCELLED) {
+          return {
+            id: cycle.id,
+            status: cycle.status,
+            message: 'El ciclo ya se encontraba cancelado previamente.',
+          };
+        }
+
+        // Solo permitir cancelar PENDING en esta fase
+        if (cycle.status !== CycleEnrollmentStatus.PENDING) {
+          throw new BadRequestException('Solo se pueden cancelar ciclos que se encuentren en estado pendiente.');
+        }
+
+        // Validar JIT de expiración si es llamado por cron
+        if (options?.isCron && !isCycleEnrollmentExpired(cycle.createdAt)) {
+          return {
+            id: cycle.id,
+            status: cycle.status,
+            message: 'El ciclo aún no ha superado el plazo de reserva (72h).',
+          };
+        }
+
+        // Verificar si tiene asistencias registradas
+        const attendedBookings = await tx.sessionBooking.count({
+          where: {
+            studentId: cycle.studentMembership.studentId,
+            attended: true,
+            session: {
+              event: {
+                startDate: {
+                  gte: cycle.cycleStartDate,
+                  lte: cycle.cycleEndDate,
+                },
+              },
+            },
+          },
+        });
+
+        if (attendedBookings > 0) {
+          throw new BadRequestException(
+            'No se puede cancelar el ciclo porque el estudiante ya cuenta con asistencias registradas en dicho período.',
+          );
+        }
+
+        // Validar e interactuar con el Charge
         if (cycle.chargeId) {
-          // Si el charge ya estaba pagado o cancelado, solo sincronizamos (por seguridad idempotente)
-          if (
-            cycle.charge.status === StatusCharge.PENDING ||
-            cycle.charge.status === StatusCharge.PARTIAL
-          ) {
-            // Cancelar el cargo de forma automática
-            await tx.charge.update({
-              where: { id: cycle.chargeId },
-              data: { status: StatusCharge.CANCELLED },
-            });
+          // Bloqueo pesimista a nivel de fila (FOR UPDATE)
+          await lockChargeForUpdate(tx, cycle.chargeId);
+
+          // Re-obtener el cargo con payments bloqueados
+          const charge = await tx.charge.findUnique({
+            where: { id: cycle.chargeId },
+            include: { payments: true },
+          });
+
+          if (!charge) {
+            throw new NotFoundException(`Cargo con ID ${cycle.chargeId} no encontrado`);
           }
 
-          // Propagar el estado CANCELLED al CycleEnrollment
-          // Usamos esto para respetar la misma ruta arquitectónica de sincronización
-          await syncCycleEnrollmentStatus(
-            tx,
-            cycle.chargeId,
-            StatusCharge.CANCELLED,
+          // Bloquear si tiene pagos completados o en proceso
+          const activePayments = (charge.payments || []).filter(
+            (p) => p.status === 'COMPLETED' || p.status === 'PENDING',
           );
-        } else {
-          // Fallback por si no existiese un charge (datos corruptos)
-          await tx.cycleEnrollment.update({
-            where: { id: cycle.id },
-            data: { status: CycleEnrollmentStatus.CANCELLED },
+
+          if (activePayments.length > 0) {
+            throw new BadRequestException(
+              'No se puede cancelar el ciclo porque el cargo asociado cuenta con pagos completados o en proceso.',
+            );
+          }
+
+          if (charge.status === StatusCharge.PAID || charge.status === StatusCharge.PARTIAL) {
+            throw new BadRequestException(
+              'No se puede cancelar el ciclo porque el cargo asociado ya ha recibido pagos.',
+            );
+          }
+
+          // Neutralizar el cargo
+          await tx.charge.update({
+            where: { id: charge.id },
+            data: {
+              status: StatusCharge.CANCELLED,
+              pendingAmount: new Prisma.Decimal(0),
+              adjustmentReason: `Cancelado: ${reason}`,
+              updatedById: user?.id || null,
+            },
           });
         }
+
+        // Cancelar el CycleEnrollment (el motor de cupos dinámico libera la plaza inmediatamente)
+        const updatedEnrollment = await tx.cycleEnrollment.update({
+          where: { id: cycle.id },
+          data: {
+            status: CycleEnrollmentStatus.CANCELLED,
+            cancellationReason: reason,
+            cancelledAt: new Date(),
+            updatedById: user?.id || null,
+          },
+        });
+
+        this.logger.log(
+          `Ciclo ${cycle.id} cancelado exitosamente por ${user?.id ? `usuario ${user.id}` : 'SYSTEM/CRON'}. Motivo: ${reason}`,
+        );
+
+        return {
+          id: updatedEnrollment.id,
+          status: updatedEnrollment.status,
+          chargeId: cycle.chargeId,
+          message: 'Ciclo cancelado exitosamente. Cupo liberado y deuda neutralizada.',
+        };
       },
       {
         isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
       },
+    );
+  }
+
+  async cancelExpiredPendingCycle(cycleEnrollmentId: string) {
+    return await this.cancelCycleEnrollment(
+      cycleEnrollmentId,
+      'Cancelado automáticamente por vencimiento de plazo (72h)',
+      null,
+      { isCron: true },
     );
   }
 
@@ -1297,17 +1768,11 @@ export class StudentMembershipsService {
       where: {
         studentId,
         courseSeasonId,
-        status: {
-          in: [
-            StudentMembershipStatus.ACTIVE,
-            StudentMembershipStatus.PENDING_ACTIVE,
-            StudentMembershipStatus.SUSPENDED,
-          ],
-        },
         ...(currentMembershipId && {
           NOT: { id: currentMembershipId },
         }),
       },
+      orderBy: { createdAt: 'desc' },
       include: {
         courseSeasonShift: {
           include: {
@@ -1316,10 +1781,29 @@ export class StudentMembershipsService {
         },
       },
     });
+
     if (existingMembership) {
-      throw new BadRequestException(
-        `El estudiante ya se encuentra registrado en la temporada actual, asignado al turno "${existingMembership.courseSeasonShift.shift.name}". Si deseas cambiarlo de horario, utiliza la opción de Transferencia en su membresía actual.`,
-      );
+      if (existingMembership.status === StudentMembershipStatus.ACTIVE) {
+        throw new BadRequestException(
+          `El estudiante ya cuenta con una inscripción activa en este curso, asignado al turno "${existingMembership.courseSeasonShift?.shift?.name || 'N/A'}". Si deseas cambiarlo de horario, utiliza la opción de Transferencia en su membresía actual.`,
+        );
+      } else if (existingMembership.status === StudentMembershipStatus.PENDING_ACTIVE) {
+        throw new BadRequestException(
+          `El estudiante ya cuenta con una inscripción pendiente de activación en este curso, asignado al turno "${existingMembership.courseSeasonShift?.shift?.name || 'N/A'}".`,
+        );
+      } else if (existingMembership.status === StudentMembershipStatus.SUSPENDED) {
+        throw new BadRequestException(
+          `El estudiante se encuentra actualmente suspendido en este curso (Turno: "${existingMembership.courseSeasonShift?.shift?.name || 'N/A'}"). Debe reactivar la membresía suspendida en lugar de crear una nueva.`,
+        );
+      } else if (existingMembership.status === StudentMembershipStatus.WITHDRAWN) {
+        throw new BadRequestException(
+          `El estudiante cuenta con un expediente previo dado de baja en este curso (ID: ${existingMembership.id}). Para volver a inscribirlo, utilice la acción «Registrar reingreso» sobre su membresía retirada en lugar de crear una nueva inscripción.`,
+        );
+      } else if (existingMembership.status === StudentMembershipStatus.FINISHED) {
+        throw new BadRequestException(
+          `El estudiante ya cuenta con una inscripción finalizada en este curso durante la temporada actual.`,
+        );
+      }
     }
   }
 

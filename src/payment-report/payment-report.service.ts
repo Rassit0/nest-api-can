@@ -68,6 +68,13 @@ export class PaymentReportService {
     });
 
     if (!payment) {
+      const tx = await this.prisma.transaction.findUnique({
+        where: { id: paymentId },
+        select: { paymentId: true },
+      });
+      if (tx?.paymentId) {
+        return this.buildPaymentReceiptData(tx.paymentId);
+      }
       throw new NotFoundException(`Payment with id ${paymentId} not found`);
     }
 
@@ -425,6 +432,33 @@ export class PaymentReportService {
       where: { id: transactionId },
       select: { paymentId: true, isInternalTransfer: true },
     });
+
+    if (!transaction) {
+      // Fallback 1: Check if the ID belongs to a Payment
+      const payment = this.prisma.payment?.findUnique 
+        ? await this.prisma.payment.findUnique({
+            where: { id: transactionId },
+            select: { id: true },
+          })
+        : null;
+      if (payment) {
+        return this.getPaymentByIdReport(payment.id, isSingle);
+      }
+
+      // Fallback 2: Check if the ID belongs to an InternalTransfer
+      const transfer = this.prisma.internalTransfer?.findUnique
+        ? await this.prisma.internalTransfer.findUnique({
+            where: { id: transactionId },
+            select: { id: true, receiptSeries: true, receiptNumber: true },
+          })
+        : null;
+      if (transfer) {
+        if (!transfer.receiptSeries || !transfer.receiptNumber) {
+          throw new BadRequestException('No receipt available for this historical transfer.');
+        }
+        return this.internalTransfersService.getReceiptPdf(transfer.id);
+      }
+    }
 
     if (transaction?.isInternalTransfer) {
       const transfer = await this.prisma.internalTransfer.findFirst({

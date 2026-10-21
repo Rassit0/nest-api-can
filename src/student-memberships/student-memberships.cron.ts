@@ -141,8 +141,8 @@ export class StudentMembershipsCron {
 
     for (const enrollment of expiredEnrollments) {
       try {
-        await cleanupExpiredEnrollmentIfNeeded(this.prisma, enrollment.id);
-        this.logger.log(`Reserva ${enrollment.id} expirada tras 72h verificada y cancelada automáticamente (si aplicaba).`);
+        await this.studentMembershipsService.cancelExpiredPendingCycle(enrollment.id);
+        this.logger.log(`Reserva ${enrollment.id} expirada tras 72h procesada y cancelada lógicamente.`);
       } catch (error) {
         if (error.code === 'P2034') {
           // Serialization failure, another process handled it

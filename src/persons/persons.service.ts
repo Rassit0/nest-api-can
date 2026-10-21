@@ -412,6 +412,34 @@ export class PersonsService {
                   courseSeason: {
                     include: { course: true },
                   },
+                  student: {
+                    include: {
+                      person: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          cycleEnrollment: {
+            include: {
+              courseSeason: {
+                include: {
+                  course: true,
+                },
+              },
+              courseSeasonShift: {
+                include: {
+                  shift: true,
+                },
+              },
+              studentMembership: {
+                include: {
+                  student: {
+                    include: {
+                      person: true,
+                    },
+                  },
                 },
               },
             },
@@ -525,8 +553,73 @@ export class PersonsService {
             status: charge.status,
             type,
             originName,
-            membershipCharges: charge.membershipCharges.map(mc => ({ type: mc.type })),
-            studentCharges: charge.studentCharges.map(sc => ({ type: sc.type })),
+            cycleEnrollment: charge.cycleEnrollment
+              ? {
+                  id: charge.cycleEnrollment.id,
+                  status: charge.cycleEnrollment.status,
+                  cycleStartDate: charge.cycleEnrollment.cycleStartDate,
+                  cycleEndDate: charge.cycleEnrollment.cycleEndDate,
+                  attempt: charge.cycleEnrollment.attempt,
+                  cancellationReason: charge.cycleEnrollment.cancellationReason,
+                  cancelledAt: charge.cycleEnrollment.cancelledAt,
+                  courseSeason: charge.cycleEnrollment.courseSeason
+                    ? {
+                        id: charge.cycleEnrollment.courseSeason.id,
+                        course: {
+                          name: charge.cycleEnrollment.courseSeason.course?.name,
+                        },
+                      }
+                    : null,
+                  courseSeasonShift: charge.cycleEnrollment.courseSeasonShift
+                    ? {
+                        id: charge.cycleEnrollment.courseSeasonShift.id,
+                        shift: {
+                          name: charge.cycleEnrollment.courseSeasonShift.shift?.name,
+                        },
+                      }
+                    : null,
+                  studentMembership: charge.cycleEnrollment.studentMembership
+                    ? {
+                        id: charge.cycleEnrollment.studentMembership.id,
+                        student: charge.cycleEnrollment.studentMembership.student
+                          ? {
+                              id: charge.cycleEnrollment.studentMembership.student.id,
+                              person: charge.cycleEnrollment.studentMembership.student.person
+                                ? {
+                                    id: charge.cycleEnrollment.studentMembership.student.person.id,
+                                    name: charge.cycleEnrollment.studentMembership.student.person.name,
+                                    lastName: charge.cycleEnrollment.studentMembership.student.person.lastName,
+                                    secondLastName: charge.cycleEnrollment.studentMembership.student.person.secondLastName,
+                                  }
+                                : undefined,
+                            }
+                          : undefined,
+                      }
+                    : undefined,
+                }
+              : null,
+            membershipCharges: charge.membershipCharges.map((mc) => ({ type: mc.type })),
+            studentCharges: charge.studentCharges.map((sc) => ({
+              type: sc.type,
+              studentMembership: sc.studentMembership
+                ? {
+                    id: sc.studentMembership.id,
+                    student: sc.studentMembership.student
+                      ? {
+                          id: sc.studentMembership.student.id,
+                          person: sc.studentMembership.student.person
+                            ? {
+                                id: sc.studentMembership.student.person.id,
+                                name: sc.studentMembership.student.person.name,
+                                lastName: sc.studentMembership.student.person.lastName,
+                                secondLastName: sc.studentMembership.student.person.secondLastName,
+                              }
+                            : undefined,
+                        }
+                      : undefined,
+                  }
+                : undefined,
+            })),
             payments: charge.payments,
           };
         }),

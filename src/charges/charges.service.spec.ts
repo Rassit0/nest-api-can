@@ -24,12 +24,22 @@ describe('ChargesService - Discount Logic', () => {
         findUnique: jest.fn(),
         update: updateDataSpy,
       },
+      sessionBooking: {
+        count: jest.fn().mockResolvedValue(0),
+      },
+      $queryRaw: jest.fn().mockResolvedValue([{ id: 'test-id' }]),
+      $executeRawUnsafe: jest.fn().mockResolvedValue(1),
       $transaction: jest.fn(async (callback) => {
         // execute the callback passing the mocked prisma client as the transaction object
         return callback({
           charge: {
             update: updateDataSpy,
           },
+          sessionBooking: {
+            count: jest.fn().mockResolvedValue(0),
+          },
+          $queryRaw: jest.fn().mockResolvedValue([{ id: 'test-id' }]),
+          $executeRawUnsafe: jest.fn().mockResolvedValue(1),
         });
       }),
     };
@@ -185,5 +195,172 @@ describe('ChargesService - Discount Logic', () => {
         service.addAdjustment('test-id', { adjustmentAmount: 0 }),
       ).rejects.toThrow(BadRequestException);
     });
+
+    it('Caso I — Ciclo PENDING: Descuento total sin isScholarship es rechazado con error explícito', async () => {
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: 0,
+        pendingAmount: 300,
+        status: StatusCharge.PENDING,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'PENDING',
+          createdAt: new Date(),
+          cycleStartDate: new Date(Date.now() + 86400000),
+          cycleEndDate: new Date(Date.now() + 86400000 * 30),
+          studentMembership: { studentId: 'student-1' },
+        },
+      });
+
+      await expect(
+        service.addAdjustment('test-id', { adjustmentAmount: -300, adjustmentReason: 'Intento de anulación' }),
+      ).rejects.toThrow(
+        /Para anular una inscripción de ciclo por error o desistimiento, utilice la opción "Cancelar cargo e inscripción"/,
+      );
+    });
+
+    it('Caso J — Ciclo PENDING: Descuento total CON isScholarship: true liquida cargo y aplica prefijo de beca', async () => {
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: 0,
+        pendingAmount: 300,
+        status: StatusCharge.PENDING,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'PENDING',
+          createdAt: new Date(),
+          cycleStartDate: new Date(Date.now() + 86400000),
+          cycleEndDate: new Date(Date.now() + 86400000 * 30),
+          studentMembership: { studentId: 'student-1' },
+        },
+      });
+
+      await service.addAdjustment('test-id', {
+        adjustmentAmount: -300,
+        adjustmentReason: 'Beca deportiva otorgada por directorio',
+        isScholarship: true,
+      });
+
+      expect(updateDataSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            adjustmentAmount: -300,
+            adjustmentReason: '[BECA 100%] Beca deportiva otorgada por directorio',
+            pendingAmount: 0,
+            status: StatusCharge.PAID,
+          }),
+        }),
+      );
+    });
+
+    it('Caso K — Ciclo PENDING: Ajuste parcial conserva estado PENDING', async () => {
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: 0,
+        pendingAmount: 300,
+        status: StatusCharge.PENDING,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'PENDING',
+          createdAt: new Date(),
+          cycleStartDate: new Date(Date.now() + 86400000),
+          cycleEndDate: new Date(Date.now() + 86400000 * 30),
+          studentMembership: { studentId: 'student-1' },
+        },
+      });
+
+      await service.addAdjustment('test-id', {
+        adjustmentAmount: -50,
+        adjustmentReason: 'Descuento por hermano',
+      });
+
+      expect(updateDataSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            adjustmentAmount: -50,
+            adjustmentReason: 'Descuento por hermano',
+            pendingAmount: 250,
+            status: StatusCharge.PENDING,
+          }),
+        }),
+      );
+    });
+
+    it('Caso L — Ciclo cancelado: cualquier ajuste posterior es rechazado', async () => {
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: 0,
+        pendingAmount: 0,
+        status: StatusCharge.CANCELLED,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'CANCELLED',
+        },
+      });
+
+      await expect(
+        service.addAdjustment('test-id', { adjustmentAmount: -50 }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('Caso M — Ciclo CONFIRMED: retiro de ajuste con asistencias registradas es bloqueado', async () => {
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: -300,
+        pendingAmount: 0,
+        status: StatusCharge.PAID,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'CONFIRMED',
+          createdAt: new Date(),
+          cycleStartDate: new Date(Date.now() + 86400000),
+          cycleEndDate: new Date(Date.now() + 86400000 * 30),
+          studentMembership: { studentId: 'student-1' },
+        },
+      });
+
+      prisma.sessionBooking.count.mockResolvedValue(2); // 2 asistencias registradas
+
+      await expect(
+        service.removeAdjustment('test-id'),
+      ).rejects.toThrow(/asistencias registradas/);
+    });
+
+    it('Caso N — Ciclo CONFIRMED: retiro de ajuste con plazo 72h expirado es bloqueado', async () => {
+      const expiredCreatedAt = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000); // 4 días atrás (> 72h)
+      prisma.charge.findUnique.mockResolvedValue({
+        id: 'test-id',
+        amount: 300,
+        adjustmentAmount: -300,
+        pendingAmount: 0,
+        status: StatusCharge.PAID,
+        payments: [],
+        cycleEnrollment: {
+          id: 'cycle-1',
+          status: 'CONFIRMED',
+          createdAt: expiredCreatedAt,
+          cycleStartDate: new Date(Date.now() + 86400000),
+          cycleEndDate: new Date(Date.now() + 86400000 * 30),
+          studentMembership: { studentId: 'student-1' },
+        },
+      });
+
+      prisma.sessionBooking.count.mockResolvedValue(0);
+
+      await expect(
+        service.removeAdjustment('test-id'),
+      ).rejects.toThrow(/plazo original de reserva \(72h\)/);
+    });
+
   });
 });

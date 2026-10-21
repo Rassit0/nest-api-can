@@ -1,4 +1,5 @@
-import { IsUUID, IsOptional, IsISO8601 } from 'class-validator';
+import { IsUUID, IsOptional, IsISO8601, IsBoolean } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export interface PaymentMatrixPeriodDto {
   key: string;
@@ -23,6 +24,8 @@ export interface PaymentMatrixPeriodDataDto {
 export interface PaymentMatrixStudentDto {
   id: string;
   name: string;
+  status?: 'ACTIVE' | 'SUSPENDED' | 'WITHDRAWN' | 'PENDING_ACTIVE' | 'FINISHED';
+  suspensionReason?: string;
   registration?: PaymentMatrixPeriodDataDto;
   // Key represents the period 'key'
   paymentsByPeriod: Record<string, PaymentMatrixPeriodDataDto>;
@@ -54,6 +57,11 @@ export class TeamSeasonPaymentsMatrixPdfQueryDto {
   @IsOptional()
   @IsISO8601()
   emissionDate?: string;
+
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  includeWithdrawn?: boolean;
 }
 
 export class CourseSeasonShiftPaymentsMatrixPdfQueryDto {

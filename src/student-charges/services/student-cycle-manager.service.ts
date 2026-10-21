@@ -54,11 +54,20 @@ export class StudentCycleManagerService {
       ...(membership.courseSeason.pauses || []),
     ];
 
+    // 0. Bloquear la fila de la membresía para serializar asignaciones de intentos y prevenir concurrencia
+    if (typeof (tx as any).$queryRaw === 'function') {
+      await tx.$queryRaw`
+        SELECT id FROM "student_memberships" 
+        WHERE id = ${membership.id} 
+        FOR UPDATE
+      `;
+    }
+
     for (let i = 0; i < cycles.length; i++) {
       const currentCycle = cycles[i];
 
-      // 1. Validar si ya existe el CycleEnrollment (omitir CANCELLED en fase 2)
-      const existingEnrollment = await tx.cycleEnrollment.findFirst({
+      // 1. Validar si ya existe un CycleEnrollment vigente (omitir CANCELLED en re-inscripciones)
+      const existingActiveEnrollment = await tx.cycleEnrollment.findFirst({
         where: {
           studentMembershipId: membership.id,
           cycleStartDate: currentCycle.cycleStartDate,
@@ -67,14 +76,24 @@ export class StudentCycleManagerService {
         },
       });
 
-      if (existingEnrollment) {
+      if (existingActiveEnrollment) {
         continue;
       }
 
-      const fs = require('fs');
-      fs.appendFileSync('enrollment-debug.log', `[DEBUG] validateCourseSeasonCapacity start for cycle ${i}\n`);
+      // 2. Determinar el siguiente número de intento para este período histórico
+      const lastAttemptRecord = await tx.cycleEnrollment.findFirst({
+        where: {
+          studentMembershipId: membership.id,
+          cycleStartDate: currentCycle.cycleStartDate,
+          cycleEndDate: currentCycle.cycleEndDate,
+        },
+        orderBy: { attempt: 'desc' },
+        select: { attempt: true },
+      });
 
-      // 2. Validar capacidad
+      const nextAttempt = (lastAttemptRecord?.attempt ?? 0) + 1;
+
+      // 3. Validar capacidad
       await validateCourseSeasonCapacity(
         tx,
         membership.courseSeasonShiftId,
@@ -82,11 +101,9 @@ export class StudentCycleManagerService {
         currentCycle.cycleEndDate,
       );
 
-      fs.appendFileSync('enrollment-debug.log', `[DEBUG] validateCourseSeasonCapacity end for cycle ${i}\n`);
-
       const cycleEnrollmentDate = currentCycle.requestedEnrollmentDate || enrollmentDate;
 
-      // 3. Determinar periodo efectivo utilizando cycleEnrollmentDate
+      // 4. Determinar periodo efectivo utilizando cycleEnrollmentDate
       const { effectiveStart, effectiveEnd } = calculateEffectiveBillablePeriod(
         currentCycle,
         cycleEnrollmentDate,
@@ -97,7 +114,7 @@ export class StudentCycleManagerService {
         continue; // Fuera de temporada o ciclo inválido
       }
 
-      // 4. Determinar factor de cobro usando la nueva regla de mitad de ciclo
+      // 5. Determinar factor de cobro usando la nueva regla de mitad de ciclo
       const feeFactor = calculateCycleFeeFactor(
         currentCycle.cycleStartDate,
         currentCycle.cycleEndDate,
@@ -105,7 +122,7 @@ export class StudentCycleManagerService {
         options.forceFullCycleFee
       );
 
-      // 5. Calcular monto y descuentos
+      // 6. Calcular monto y descuentos
       let netAmount = 0,
         baseAmount = 0,
         adjustmentAmount = 0,
@@ -175,7 +192,7 @@ export class StudentCycleManagerService {
       const shouldChargeCycle = !(i === 0 && !options.chargeInitialCycle);
       let cycleCharge = null;
 
-      // 6. Crear Charge
+      // 7. Crear Charge independiente para este intento
       if (shouldChargeCycle) {
         cycleCharge = await tx.charge.create({
           data: {
@@ -196,7 +213,7 @@ export class StudentCycleManagerService {
           ? CycleEnrollmentStatus.CONFIRMED
           : CycleEnrollmentStatus.PENDING;
 
-      // 7. Crear CycleEnrollment
+      // 8. Crear CycleEnrollment con su intento correspondiente
       await tx.cycleEnrollment.create({
         data: {
           studentMembershipId: membership.id,
@@ -207,10 +224,11 @@ export class StudentCycleManagerService {
           cycleEndDate: currentCycle.cycleEndDate,
           effectiveStartDate: effectiveStart,
           status: cycleStatus,
+          attempt: nextAttempt,
         },
       });
 
-      // 8. Crear StudentCharge (compatibilidad legacy)
+      // 9. Crear StudentCharge con su intento correspondiente
       if (shouldChargeCycle && cycleCharge) {
         await tx.studentCharge.create({
           data: {
@@ -222,7 +240,8 @@ export class StudentCycleManagerService {
             billingYear: currentCycle.billingYear,
             billingMonth: currentCycle.billingMonth,
             billingCycle: options.billingFrequency === 'MONTHLY' ? null : currentCycle.billingCycle,
-            createdByCron: false, // Por seguridad y compatibilidad manual en regularizaciones
+            createdByCron: false,
+            attempt: nextAttempt,
           },
         });
       }

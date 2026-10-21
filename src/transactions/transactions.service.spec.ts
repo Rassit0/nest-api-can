@@ -7,6 +7,7 @@ import { PaymentMethod, TransactionType, StatusCharge, CycleEnrollmentStatus } f
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 
 import { ReceiptResolverService } from '../payments/receipt-resolver.service';
+import { PaymentsService } from '../payments/payments.service';
 
 describe('TransactionsService', () => {
   let service: TransactionsService;
@@ -40,6 +41,13 @@ describe('TransactionsService', () => {
             resolveReceiptNumber: jest.fn(),
             resolveReceiptForCharge: jest.fn().mockResolvedValue({ receiptSeries: 'GEN', receiptNumber: 1 }),
             nextReceiptNumber: jest.fn().mockResolvedValue(1),
+          },
+        },
+        {
+          provide: PaymentsService,
+          useValue: {
+            reversePayment: jest.fn(),
+            removePayment: jest.fn().mockResolvedValue({ id: 'payment-1' }),
           },
         },
       ],
@@ -206,6 +214,7 @@ describe('TransactionsService', () => {
         },
         cycleEnrollment: {
           findMany: jest.fn().mockResolvedValue([{ id: 'env-1', createdAt: new Date(), studentMembership: { courseSeasonShiftId: 'shift-1' } }]),
+          findFirst: jest.fn().mockResolvedValue(null),
           updateMany: jest.fn(),
           update: jest.fn(),
           count: jest.fn().mockResolvedValue(0),

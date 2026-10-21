@@ -34,11 +34,13 @@ export class PaymentsMatrixPdfService {
     userName: string = 'Sistema',
     teamSeasonCategoryId?: string,
     issuedAt?: string,
+    includeWithdrawn?: boolean,
   ): Promise<PDFKit.PDFDocument> {
     const dto = await this.paymentsMatrixService.getTeamSeasonMatrix(
       institutionId,
       teamSeasonId,
       teamSeasonCategoryId,
+      includeWithdrawn,
     );
     return this.buildPdf(dto, userName, issuedAt);
   }
@@ -101,7 +103,43 @@ export class PaymentsMatrixPdfService {
 
       dto.students.forEach((student) => {
         const row: any[] = [];
-        row.push({ text: student.name, fontSize: 6.5, bold: true, margin: [0, 1, 0, 1] });
+        if (student.status === 'SUSPENDED') {
+          row.push({
+            stack: [
+              { text: student.name, fontSize: 6.5, bold: true },
+              {
+                text: '[SUSPENDIDO]',
+                fontSize: 5.5,
+                bold: true,
+                color: '#C00000',
+                margin: [0, 0.5, 0, 0.5],
+              },
+              {
+                text: `Motivo: ${student.suspensionReason || 'Motivo no registrado'}`,
+                fontSize: 5,
+                color: '#555555',
+                italics: true,
+              },
+            ],
+            margin: [0, 1, 0, 1],
+          });
+        } else if (student.status === 'WITHDRAWN') {
+          row.push({
+            stack: [
+              { text: student.name, fontSize: 6.5, bold: true },
+              {
+                text: '[BAJA]',
+                fontSize: 5.5,
+                bold: true,
+                color: '#777777',
+                margin: [0, 0.5, 0, 0.5],
+              },
+            ],
+            margin: [0, 1, 0, 1],
+          });
+        } else {
+          row.push({ text: student.name, fontSize: 6.5, bold: true, margin: [0, 1, 0, 1] });
+        }
 
         if (isFirstChunk) {
           if (!student.registration || student.registration.totalPaid === 0) {

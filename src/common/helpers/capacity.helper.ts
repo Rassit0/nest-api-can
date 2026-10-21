@@ -9,7 +9,7 @@ import { PAYMENT_DEADLINE_HOURS } from './cycle-enrollment.helper';
  *
  * Un asiento está ocupado si:
  * 1. El estado es CONFIRMED.
- * 2. El estado es PENDING y su fecha de creación está dentro de las últimas 24 horas.
+ * 2. El estado es PENDING y su fecha de creación está dentro de las últimas 72 horas (PAYMENT_DEADLINE_HOURS).
  */
 export function buildValidOccupancyCondition(): Prisma.CycleEnrollmentWhereInput {
   const graceWindow = new Date(Date.now() - (PAYMENT_DEADLINE_HOURS * 60 * 60 * 1000));

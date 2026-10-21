@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { getAbsoluteSeasonCycles, buildCycleDescription, MILLISECONDS_IN_DAY, getStudentContext } from '../student-billing.utils';
-import { TypeMembershipCharge, Prisma } from 'src/generated/prisma/client';
+import { TypeMembershipCharge, StatusCharge, Prisma } from 'src/generated/prisma/client';
 import { StudentChargeFactory } from '../student-charge.factory';
 import { RegularizeStudentChargeDto } from '../dto/regularize-student-charge.dto';
 
@@ -48,11 +48,14 @@ export class StudentRegularizationService {
 
     const allCycles = getAbsoluteSeasonCycles(seasonStartDate, seasonEndDate, frequency);
     
-    // Fetch existing charges to filter out
+    // Fetch existing charges to filter out (ignoring cancelled historical attempts)
     const existingCharges = await this.prisma.studentCharge.findMany({
       where: {
         studentMembershipId: membershipId,
         type: TypeMembershipCharge.RECURRING_FEE,
+        charge: {
+          status: { not: StatusCharge.CANCELLED },
+        },
       },
       select: {
         billingYear: true,
@@ -126,11 +129,14 @@ export class StudentRegularizationService {
 
     const allCycles = getAbsoluteSeasonCycles(seasonStartDate, seasonEndDate, frequency);
     
-    // Fetch existing
+    // Fetch existing charges (ignoring cancelled historical attempts)
     const existingCharges = await this.prisma.studentCharge.findMany({
       where: {
         studentMembershipId: membershipId,
         type: TypeMembershipCharge.RECURRING_FEE,
+        charge: {
+          status: { not: StatusCharge.CANCELLED },
+        },
       },
       select: {
         billingYear: true,

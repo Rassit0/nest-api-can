@@ -2138,8 +2138,67 @@ describe('StaffAccessService (Phase A Targeted Unit Tests)', () => {
           }),
           teacherUser.id,
         );
-        expect(result.id).toBe('session-new-1');
-        expect(result.status).toBe('SCHEDULED');
+        expect((result as any).id).toBe('session-new-1');
+        expect((result as any).status).toBe('SCHEDULED');
+      });
+
+      it('should successfully create recurring session series and return array of sessions', async () => {
+        mockPrisma.user.findUnique.mockResolvedValue({ personId: 'person-1' });
+        mockPrisma.staff.findUnique.mockResolvedValue(mockStaff);
+        mockPrisma.courseSeasonStaff.findFirst.mockResolvedValue({ id: 'ass-1' });
+
+        mockSessionsService.create.mockResolvedValue({
+          data: [{ id: 'session-rec-1' }, { id: 'session-rec-2' }],
+        });
+
+        mockPrisma.session.findMany.mockResolvedValue([
+          {
+            id: 'session-rec-1',
+            durationMin: 90,
+            event: {
+              id: 'event-rec-1',
+              title: 'Clase Recurrente',
+              startDate: new Date('2026-10-20T17:00:00.000Z'),
+              endDate: new Date('2026-10-20T18:30:00.000Z'),
+              status: 'SCHEDULED',
+              location: { id: 'loc-1', name: 'Cancha Central', address: 'Costanera' },
+            },
+          },
+          {
+            id: 'session-rec-2',
+            durationMin: 90,
+            event: {
+              id: 'event-rec-2',
+              title: 'Clase Recurrente',
+              startDate: new Date('2026-10-27T17:00:00.000Z'),
+              endDate: new Date('2026-10-27T18:30:00.000Z'),
+              status: 'SCHEDULED',
+              location: { id: 'loc-1', name: 'Cancha Central', address: 'Costanera' },
+            },
+          },
+        ]);
+
+        const result = await service.createGroupSession(teacherUser, 'COURSE', 'shift-1', {
+          title: 'Clase Recurrente',
+          startDate: '2026-10-20T17:00:00.000Z',
+          endDate: '2026-10-20T18:30:00.000Z',
+          durationMin: 90,
+          recurrenceRule: 'FREQ=WEEKLY;BYDAY=TU;UNTIL=20261130T235959Z',
+          timezone: 'America/La_Paz',
+        });
+
+        expect(mockSessionsService.create).toHaveBeenCalledWith(
+          expect.objectContaining({
+            courseSeasonShiftIds: ['shift-1'],
+            recurrenceRule: 'FREQ=WEEKLY;BYDAY=TU;UNTIL=20261130T235959Z',
+            timezone: 'America/La_Paz',
+          }),
+          teacherUser.id,
+        );
+        expect(Array.isArray(result)).toBe(true);
+        expect((result as any[]).length).toBe(2);
+        expect((result as any[])[0].id).toBe('session-rec-1');
+        expect((result as any[])[1].id).toBe('session-rec-2');
       });
     });
 

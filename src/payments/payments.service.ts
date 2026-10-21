@@ -83,10 +83,24 @@ export class PaymentsService {
   }
 
   async findOne(id: string) {
-    const payment = await this.prisma.payment.findUnique({
+    let payment = await this.prisma.payment.findUnique({
       where: { id },
       select: paymentSelect,
     });
+
+    if (!payment && this.prisma.transaction?.findUnique) {
+      // Fallback: check if id is a transaction ID linked to a payment
+      const tx = await this.prisma.transaction.findUnique({
+        where: { id },
+        select: { paymentId: true },
+      });
+      if (tx?.paymentId) {
+        payment = await this.prisma.payment.findUnique({
+          where: { id: tx.paymentId },
+          select: paymentSelect,
+        });
+      }
+    }
 
     if (!payment) {
       throw new NotFoundException(`Pago con ID ${id} no encontrado`);
@@ -104,13 +118,30 @@ export class PaymentsService {
   }
 
   async removePayment(id: string) {
-    const payment = await this.prisma.payment.findUnique({
+    let payment = await this.prisma.payment.findUnique({
       where: { id },
       include: {
         transactions: true,
         charge: true,
       },
     });
+
+    if (!payment && this.prisma.transaction?.findUnique) {
+      // Fallback: check if id is a transaction ID linked to a payment
+      const tx = await this.prisma.transaction.findUnique({
+        where: { id },
+        select: { paymentId: true },
+      });
+      if (tx?.paymentId) {
+        payment = await this.prisma.payment.findUnique({
+          where: { id: tx.paymentId },
+          include: {
+            transactions: true,
+            charge: true,
+          },
+        });
+      }
+    }
 
     if (!payment) {
       throw new NotFoundException(`Pago con ID ${id} no encontrado`);
@@ -120,6 +151,7 @@ export class PaymentsService {
       throw new BadRequestException('El pago ya se encuentra anulado');
     }
 
+    const paymentId = payment.id;
     
     return await this.prisma.$transaction(async (prisma) => {
       // 0. Bloquear el Charge primero para serializar peticiones concurrentes
@@ -130,7 +162,7 @@ export class PaymentsService {
 
       // 0.5. Re-leer el Payment y sus transacciones dentro de la transacción segura
       const currentPayment = await prisma.payment.findUnique({
-        where: { id },
+        where: { id: paymentId },
         include: {
           transactions: true,
           charge: true,
@@ -138,7 +170,7 @@ export class PaymentsService {
       });
 
       if (!currentPayment) {
-        throw new NotFoundException(`Pago con ID ${id} no encontrado durante la anulación`);
+        throw new NotFoundException(`Pago con ID ${paymentId} no encontrado durante la anulación`);
       }
 
       // Re-verificar el estado para prevenir doble devolución (Idempotencia concurrente)
@@ -154,7 +186,7 @@ export class PaymentsService {
       );
 
       if (paymentAmount !== Number(transactionsSum.toFixed(2))) {
-        this.logger.error(`Fail-Safe disparado en removePayment para ID ${id}. Monto del pago: ${paymentAmount}, Suma transacciones: ${transactionsSum}`);
+        this.logger.error(`Fail-Safe disparado en removePayment para ID ${paymentId}. Monto del pago: ${paymentAmount}, Suma transacciones: ${transactionsSum}`);
         throw new InternalServerErrorException(
           'Inconsistencia financiera detectada. El monto del pago no coincide con la suma de sus transacciones. Operación abortada.',
         );
@@ -231,7 +263,7 @@ export class PaymentsService {
 
       // 4. Anular Payment
       const deletedPayment = await prisma.payment.update({
-        where: { id },
+        where: { id: paymentId },
         data: { status: 'CANCELLED' },
       });
 

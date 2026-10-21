@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { UpdateSessionDto } from './dto/update-session.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -356,7 +356,7 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
         });
       };
 
-      return await this.eventSeriesService.updateSeries(id, baseDataUpdate, userId, scope, mergeTemplate, occurrenceHandler);
+      return await this.eventSeriesService.updateSeries(session.eventId, baseDataUpdate, userId, scope, mergeTemplate, occurrenceHandler);
     }
 
     const baseData: BaseEventUpdateDto = {
@@ -403,15 +403,33 @@ export class SessionsService implements OnModuleInit, IEventOccurrenceHandler {
   async remove(id: string, scope: 'single' | 'following' | 'all' = 'single') {
     const session = await this.prisma.session.findUnique({
       where: { id },
-      select: { eventId: true, event: { select: { eventSeriesId: true } } }
+      select: {
+        id: true,
+        eventId: true,
+        event: { select: { eventSeriesId: true } },
+        bookings: {
+          select: {
+            attended: true,
+            chargeId: true,
+            incidents: { select: { id: true } },
+          },
+        },
+      },
     });
 
     if (!session) {
       throw new NotFoundException('La sesión solicitada no fue encontrada');
     }
 
+    const hasOperationalData = session.bookings.length > 0;
+    if (hasOperationalData) {
+      throw new BadRequestException(
+        'No se puede eliminar una sesión con reservas de participantes, asistencia registrada, incidentes disciplinarios o cobros vinculados.',
+      );
+    }
+
     if (session.event.eventSeriesId && scope !== 'single') {
-      return await this.eventSeriesService.deleteSeries(id, scope);
+      return await this.eventSeriesService.deleteSeries(session.eventId, scope);
     }
 
     const result = await this.eventsService.executeEventDeletion(session.eventId);

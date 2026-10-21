@@ -33,7 +33,7 @@ export async function syncCycleEnrollmentStatus(
   for (const enrollment of enrollmentsToUpdate) {
     if (targetStatus === CycleEnrollmentStatus.CONFIRMED) {
       if (isCycleEnrollmentExpired(enrollment.createdAt)) {
-        throw new BadRequestException('El pago fue rechazado porque la reserva del ciclo ya expiró.');
+        throw new BadRequestException('La confirmación fue rechazada porque la reserva del ciclo ya expiró (plazo máximo de 72 horas vencido).');
       }
 
       // Validar JIT antes de consolidar
@@ -45,13 +45,13 @@ export async function syncCycleEnrollmentStatus(
         enrollment.id // Excluirse a sí mismo para no causar un falso positivo
       );
 
-      // Activar membresía pendiente automáticamente tras confirmarse el pago del ciclo
+      // Activar membresía pendiente automáticamente tras confirmarse el pago o descuento total del ciclo
       if (enrollment.studentMembership.status === StudentMembershipStatus.PENDING_ACTIVE) {
         await tx.studentMembership.update({
           where: { id: enrollment.studentMembership.id },
           data: { 
             status: StudentMembershipStatus.ACTIVE,
-            notes: 'Activada automáticamente tras pago de ciclo' 
+            notes: 'Activada automáticamente tras confirmación de ciclo' 
           }
         });
       }
