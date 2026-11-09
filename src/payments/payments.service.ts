@@ -244,6 +244,7 @@ export class PaymentsService {
             -Number(t.amount),
             t.type,
             prisma,
+            true,
           );
         }
 

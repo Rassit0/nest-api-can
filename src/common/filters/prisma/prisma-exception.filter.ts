@@ -4,13 +4,14 @@ import {
   Catch,
   ConflictException,
   ExceptionFilter,
-  InternalServerErrorException,
+  HttpStatus,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { I18nService } from 'nestjs-i18n';
 import { Prisma } from 'src/generated/prisma/client';
+import { isDatabaseConnectionError } from '../database-error.util';
 
 function snakeToCamel(value: string): string {
   return value.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
@@ -20,21 +21,57 @@ function normalizeField(field: string): string {
   return snakeToCamel(field);
 }
 
-@Catch(Prisma.PrismaClientKnownRequestError)
+@Catch(Prisma.PrismaClientKnownRequestError, Prisma.PrismaClientInitializationError)
 export class PrismaExceptionFilter implements ExceptionFilter {
   constructor(private readonly i18n: I18nService) {}
   private readonly logger = new Logger(PrismaExceptionFilter.name);
 
-  catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+  catch(
+    exception:
+      | Prisma.PrismaClientKnownRequestError
+      | Prisma.PrismaClientInitializationError
+      | any,
+    host: ArgumentsHost,
+  ) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
-    console.log(
-      this.i18n.translate('validation.ALREADY_EXISTS', {
-        lang: 'es',
-      }),
-    );
+    const response = ctx.getResponse<Response>();
+
+    // 1. Manejo explícito de fallos de inicialización o conexión de Prisma
+    if (
+      exception instanceof Prisma.PrismaClientInitializationError ||
+      exception?.name === 'PrismaClientInitializationError'
+    ) {
+      this.logger.error(
+        'No se pudo establecer conexión con PostgreSQL.',
+        exception.stack || exception.message,
+      );
+
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
+      });
+    }
+
     let errorResponse;
     switch (exception.code) {
+      // Códigos conocidos de falla de conectividad en Prisma
+      case 'P1000':
+      case 'P1001':
+      case 'P1002':
+      case 'P1003':
+      case 'P1017': {
+        this.logger.error('No se pudo establecer conexión con PostgreSQL.', {
+          code: exception.code,
+          message: exception.message,
+          stack: exception.stack,
+        });
+
+        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
+
       case 'P2025':
         errorResponse = new NotFoundException(
           this.i18n.t('validation.NOT_FOUND'),
@@ -116,17 +153,28 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         break;
       }
 
-      default:
-        this.logger.error('Unhandled Prisma error', {
-          code: exception.code,
-          message: exception.message,
-          meta: exception.meta,
-          stack: exception.stack,
-        });
+      default: {
+        if (isDatabaseConnectionError(exception)) {
+          this.logger.error('No se pudo establecer conexión con PostgreSQL.', {
+            code: exception.code,
+            message: exception.message,
+            meta: exception.meta,
+            stack: exception.stack,
+          });
+        } else {
+          this.logger.error('Unhandled Prisma error', {
+            code: exception.code,
+            message: exception.message,
+            meta: exception.meta,
+            stack: exception.stack,
+          });
+        }
 
-        errorResponse = new InternalServerErrorException(
-          this.i18n.t('validation.SERVER_ERROR'),
-        );
+        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        });
+      }
     }
 
     response
@@ -134,3 +182,4 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       .json(errorResponse.getResponse());
   }
 }
+

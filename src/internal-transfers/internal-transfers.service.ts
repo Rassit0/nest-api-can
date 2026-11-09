@@ -306,12 +306,14 @@ export class InternalTransfersService {
           transfer.amount,
           TransactionType.INCOME,
           tx,
+          true,
         );
         destReversalMov = await this.financialAccountsService.applyMovement(
           transfer.destinationTransaction.financialAccountId,
           transfer.amount,
           TransactionType.EXPENSE,
           tx,
+          true,
         );
       } else {
         destReversalMov = await this.financialAccountsService.applyMovement(
@@ -319,12 +321,14 @@ export class InternalTransfersService {
           transfer.amount,
           TransactionType.EXPENSE,
           tx,
+          true,
         );
         sourceReversalMov = await this.financialAccountsService.applyMovement(
           transfer.sourceTransaction.financialAccountId,
           transfer.amount,
           TransactionType.INCOME,
           tx,
+          true,
         );
       }
 

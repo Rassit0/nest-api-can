@@ -43,6 +43,10 @@ export class CashClosuresService {
       );
     }
 
+    if (!account.isActive) {
+      throw new BadRequestException('La cuenta financiera se encuentra inactiva.');
+    }
+
     // 2. Obtener el saldo esperado desde el Ledger inmutable
     const expectedBalance = account.cachedBalance;
 

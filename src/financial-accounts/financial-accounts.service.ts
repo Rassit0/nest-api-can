@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { FinancialAccount, Prisma, TransactionType } from 'src/generated/prisma/client';
 import { CreateFinancialAccountDto } from './dto/create-financial-account.dto';
@@ -18,14 +18,15 @@ export class FinancialAccountsService {
     amount: number | Prisma.Decimal,
     type: TransactionType,
     tx: Prisma.TransactionClient,
+    allowInactive: boolean = false,
   ): Promise<{ account: FinancialAccount; balanceBefore: number; balanceAfter: number }> {
     // 1. SELECT FOR UPDATE para bloquear la fila de la cuenta
     const lockedAccounts = (await tx.$queryRaw`
-      SELECT id, cached_balance AS "cachedBalance", is_active AS "isActive"
+      SELECT id, name, cached_balance AS "cachedBalance", is_active AS "isActive"
       FROM financial_accounts
       WHERE id = ${financialAccountId}
       FOR UPDATE
-    `) as { id: string; cachedBalance: Prisma.Decimal; isActive: boolean }[];
+    `) as { id: string; name: string; cachedBalance: Prisma.Decimal; isActive: boolean }[];
 
     if (!lockedAccounts || lockedAccounts.length === 0) {
       throw new NotFoundException(`Cuenta financiera con ID ${financialAccountId} no encontrada`);
@@ -33,8 +34,10 @@ export class FinancialAccountsService {
 
     const account = lockedAccounts[0];
 
-    if (!account.isActive) {
-      throw new Error(`La cuenta financiera se encuentra inactiva.`);
+    if (!allowInactive && !account.isActive) {
+      throw new BadRequestException(
+        `La cuenta financiera '${account.name || financialAccountId}' se encuentra inactiva.`,
+      );
     }
 
     const numericAmount = typeof amount === 'number' ? amount : amount.toNumber();

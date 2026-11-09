@@ -395,13 +395,18 @@ export class TransactionsService {
     const prismaClient = tx || this.prisma;
     const accounts = await prismaClient.financialAccount.findMany({
       where: { id: { in: uniqueAccountIds } },
-      select: { id: true, name: true, allowedPaymentMethods: true },
+      select: { id: true, name: true, allowedPaymentMethods: true, isActive: true },
     });
 
     for (const t of transactionsToProcess) {
       const account = accounts.find((a) => a.id === t.financialAccountId);
       if (!account) {
         throw new BadRequestException(`La cuenta financiera no existe.`);
+      }
+      if (!account.isActive) {
+        throw new BadRequestException(
+          `La cuenta financiera '${account.name}' se encuentra inactiva y no puede recibir operaciones.`,
+        );
       }
       if (
         !account.allowedPaymentMethods ||
@@ -1493,6 +1498,7 @@ export class TransactionsService {
           transaction.amount,
           reverseType,
           prisma,
+          true,
         );
         balanceBefore = movement.balanceBefore;
         balanceAfter = movement.balanceAfter;
