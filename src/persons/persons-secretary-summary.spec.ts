@@ -196,4 +196,55 @@ describe('PersonsService - getSecretarySummary (Cycle Enrollment & Charges Fix)'
     expect(charge.originName).toBe('Indumentaria');
     expect(charge.cycleEnrollment).toBeNull();
   });
+
+  it('should include seasonName in playerMemberships and studentMemberships', async () => {
+    const personId = 'person-456';
+
+    mockPrisma.person.findUnique.mockResolvedValue({
+      id: personId,
+      name: 'Ana',
+      lastName: 'López',
+      players: { id: 'player-1' },
+      students: { id: 'student-1' },
+    });
+
+    mockPrisma.playerMembership.findMany.mockResolvedValue([
+      {
+        id: 'pm-1',
+        status: 'ACTIVE',
+        startedAt: new Date('2026-03-01T00:00:00Z'),
+        teamSeasonCategories: {
+          category: { name: 'Sub-15', discipline: { name: 'Fútbol' } },
+          teamSeason: {
+            team: { name: 'Equipo A' },
+            season: { name: 'Temporada 2026' },
+          },
+        },
+        membershipCharges: [],
+      },
+    ]);
+
+    mockPrisma.studentMembership.findMany.mockResolvedValue([
+      {
+        id: 'sm-1',
+        status: 'ACTIVE',
+        startedAt: new Date('2026-03-01T00:00:00Z'),
+        courseSeason: {
+          course: { name: 'Natación Inicial' },
+          season: { name: 'Verano 2026', institution: { name: 'Sede Norte' } },
+        },
+        courseSeasonShift: { shift: { name: 'Mañana' } },
+        cycleEnrollments: [],
+      },
+    ]);
+
+    mockPrisma.charge.findMany.mockResolvedValue([]);
+
+    const result = await service.getSecretarySummary(personId);
+
+    expect(result.data.playerMemberships).toHaveLength(1);
+    expect(result.data.playerMemberships[0].seasonName).toBe('Temporada 2026');
+    expect(result.data.studentMemberships).toHaveLength(1);
+    expect(result.data.studentMemberships[0].seasonName).toBe('Verano 2026');
+  });
 });

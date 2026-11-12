@@ -84,6 +84,17 @@ export class PreviewStudentChargesDto {
 
   @ApiPropertyOptional({
     description:
+      '[LEGACY ALIAS] Alias para studentDiscounts por retrocompatibilidad.',
+    type: () => [PreviewMembershipDiscountDto],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PreviewMembershipDiscountDto)
+  membershipDiscounts?: PreviewMembershipDiscountDto[];
+
+  @ApiPropertyOptional({
+    description:
       'Indica si esta membresía proviene de una migración de datos previos, omitiendo cobros iniciales.',
     example: true,
   })

@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { DateUtils } from 'src/utils/date.utils';
 
 export const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
@@ -432,4 +433,24 @@ export function resolveFinancialEnrollmentOptions(
     true;
 
   return { chargeRegistration, chargeInitialCycle };
+}
+
+/**
+ * Resuelve la propiedad canónica `studentDiscounts`, aceptando `membershipDiscounts`
+ * únicamente como alias legado y rechazando solicitudes ambiguas con ambos arreglos.
+ */
+export function resolveStudentDiscountsInput<T>(
+  studentDiscounts?: T[],
+  membershipDiscounts?: T[],
+): T[] {
+  const hasCanonical = Boolean(studentDiscounts && studentDiscounts.length > 0);
+  const hasLegacy = Boolean(membershipDiscounts && membershipDiscounts.length > 0);
+
+  if (hasCanonical && hasLegacy) {
+    throw new BadRequestException(
+      'No se deben enviar studentDiscounts y membershipDiscounts en la misma solicitud. Utilice únicamente studentDiscounts.',
+    );
+  }
+
+  return hasCanonical ? studentDiscounts! : membershipDiscounts || [];
 }

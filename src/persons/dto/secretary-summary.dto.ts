@@ -57,6 +57,9 @@ export class PlayerMembershipSummaryDto {
   @ApiProperty()
   teamName: string;
 
+  @ApiPropertyOptional()
+  seasonName?: string;
+
   @ApiProperty()
   status: string;
 
@@ -73,6 +76,9 @@ export class StudentMembershipSummaryDto {
 
   @ApiProperty()
   institutionName: string;
+
+  @ApiPropertyOptional()
+  seasonName?: string;
 
   @ApiProperty()
   status: string;

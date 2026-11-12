@@ -154,6 +154,99 @@ describe('StudentMembershipsService', () => {
       expect(prismaMock.student.create).not.toHaveBeenCalled();
       expect(prismaMock.studentMembership.create).toHaveBeenCalled();
     });
+
+    it('debe persistir StudentDiscount cuando se envía studentDiscounts canónico', async () => {
+      prismaMock.courseSeason.findUnique.mockResolvedValue({
+        id: 'season-id',
+        course: { billingConfig: {} },
+        season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') },
+        maxMembers: 10,
+      });
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({
+        id: 'shift-id',
+        courseSeasonId: 'season-id',
+        gender: 'MIXED',
+        shift: { gender: 'MIXED' },
+        courseSeason: {
+          id: 'season-id',
+          course: { billingConfig: {} },
+          season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') },
+          status: 'ACTIVE',
+        },
+      });
+      prismaMock.student.findUnique.mockResolvedValue({
+        id: 'existing-student-id',
+        isActive: true,
+        person: { gender: 'MIXED' },
+      });
+      prismaMock.$queryRaw = jest.fn();
+      prismaMock.studentMembership.findMany.mockResolvedValue([]);
+      prismaMock.studentMembership.create = jest.fn().mockResolvedValue({ id: 'mem-disc-1' });
+      studentChargesServiceMock.generateChargesForNewMembership = jest.fn().mockResolvedValue([]);
+
+      await service.create({
+        ...defaultCreateDto,
+        studentId: 'existing-student-id',
+        studentDiscounts: [
+          {
+            seasonFeeDiscountPercent: 25,
+            startDate: '2026-08-01T04:00:00.000Z',
+            reason: 'Beca excepcional',
+          },
+        ],
+      } as any);
+
+      expect(prismaMock.studentMembership.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            studentDiscounts: {
+              create: [
+                expect.objectContaining({
+                  seasonFeeDiscountPercent: 25,
+                  reason: 'Beca excepcional',
+                }),
+              ],
+            },
+          }),
+        }),
+      );
+    });
+
+    it('debe rechazar si llegan studentDiscounts y membershipDiscounts en el mismo create', async () => {
+      prismaMock.courseSeason.findUnique.mockResolvedValue({
+        id: 'season-id',
+        course: { billingConfig: {} },
+        season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') },
+        maxMembers: 10,
+      });
+      prismaMock.courseSeasonShift.findUnique.mockResolvedValue({
+        id: 'shift-id',
+        courseSeasonId: 'season-id',
+        gender: 'MIXED',
+        shift: { gender: 'MIXED' },
+        courseSeason: {
+          id: 'season-id',
+          course: { billingConfig: {} },
+          season: { startDate: new Date('2026-01-01'), endDate: new Date('2026-12-31') },
+          status: 'ACTIVE',
+        },
+      });
+      prismaMock.student.findUnique.mockResolvedValue({
+        id: 'existing-student-id',
+        isActive: true,
+        person: { gender: 'MIXED' },
+      });
+      prismaMock.studentMembership.findMany.mockResolvedValue([]);
+
+      await expect(
+        service.create({
+          ...defaultCreateDto,
+          studentId: 'existing-student-id',
+          studentDiscounts: [{ seasonFeeDiscountPercent: 10, startDate: '2026-08-01' }],
+          membershipDiscounts: [{ seasonFeeDiscountPercent: 20, startDate: '2026-08-01' }],
+        } as any),
+      ).rejects.toThrow(BadRequestException);
+    });
   });
 
   describe('transferShift', () => {

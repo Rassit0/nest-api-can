@@ -15,7 +15,10 @@ import { StudentEnrollmentService } from './services/student-enrollment.service'
 import { StudentManualChargeService } from './services/student-manual-charge.service';
 import { StudentAdvanceChargeService } from './services/student-advance-charge.service';
 import { buildValidOccupancyCondition } from 'src/common/helpers/capacity.helper';
-import { getAbsoluteSeasonCycles } from './student-billing.utils';
+import {
+  getAbsoluteSeasonCycles,
+  resolveStudentDiscountsInput,
+} from './student-billing.utils';
 import { CycleCapacityDto } from './dto/cycle-capacity.dto';
 
 /**
@@ -51,9 +54,13 @@ export class StudentChargesService {
       courseSeasonId,
       paymentPlanId,
       startDate,
-      studentDiscounts = [],
       isMigrated,
     } = data;
+
+    const studentDiscounts = resolveStudentDiscountsInput(
+      data.studentDiscounts,
+      data.membershipDiscounts,
+    );
 
     const courseSeason =
       await this.membershipRepo.getCourseSeasonOrThrow(courseSeasonId);

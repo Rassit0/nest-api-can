@@ -294,4 +294,15 @@ export class CreateStudentMembershipDto {
   @ValidateNested({ each: true })
   @Type(() => StudentDiscountDto)
   studentDiscounts?: StudentDiscountDto[];
+
+  @ApiPropertyOptional({
+    description:
+      '[LEGACY ALIAS] Alias para studentDiscounts por retrocompatibilidad.',
+    type: () => [StudentDiscountDto],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => StudentDiscountDto)
+  membershipDiscounts?: StudentDiscountDto[];
 }

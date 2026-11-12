@@ -23,6 +23,7 @@ import { isCycleEnrollmentExpired } from 'src/common/helpers/cycle-enrollment.he
 import { syncCycleEnrollmentStatus } from 'src/common/helpers/sync-cycle-enrollment.helper';
 import { lockChargeForUpdate } from 'src/common/utils/charge-lock.util';
 import { ReenterStudentMembershipDto } from './dto/reenter-student-membership.dto';
+import { resolveStudentDiscountsInput } from 'src/student-charges/student-billing.utils';
 
 export const studentMembershipSelect = {
   id: true,
@@ -214,8 +215,14 @@ export class StudentMembershipsService {
 
     await this.validateOfferingCapacity(shift.id, shift.maxMembers);
 
+    const studentDiscounts = resolveStudentDiscountsInput(
+      createDto.studentDiscounts,
+      createDto.membershipDiscounts,
+    );
+
     const {
-      studentDiscounts,
+      studentDiscounts: _sd,
+      membershipDiscounts: _md,
       chargeRegistrationOnMigration,
       chargeCurrentMonthOnMigration,
       chargeRegistration,
@@ -630,7 +637,7 @@ export class StudentMembershipsService {
       await this.validateDuplicateMembership(studentId, offeringId, id);
     }
 
-    const { studentDiscounts, ...updateData } = updateDto;
+    const { studentDiscounts, membershipDiscounts, ...updateData } = updateDto;
 
     const updatedMembership = await this.prisma.studentMembership.update({
       where: { id },

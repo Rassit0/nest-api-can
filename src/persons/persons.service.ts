@@ -310,7 +310,10 @@ export class PersonsService {
               teamSeasonCategories: {
                 include: {
                   teamSeason: {
-                    include: { team: true },
+                    include: {
+                      team: true,
+                      season: true,
+                    },
                   },
                   category: {
                     include: { discipline: true },
@@ -491,6 +494,7 @@ export class PersonsService {
           disciplineName: pm.teamSeasonCategories.category.discipline.name,
           categoryName: pm.teamSeasonCategories.category.name,
           teamName: pm.teamSeasonCategories.teamSeason.team.name,
+          seasonName: pm.teamSeasonCategories.teamSeason.season?.name,
           status: pm.status,
           startedAt: pm.startedAt,
           totalPendingAmount: Number(
@@ -515,6 +519,7 @@ export class PersonsService {
             id: sm.id,
             courseName: sm.courseSeason.course.name,
             institutionName: sm.courseSeason.season.institution.name,
+            seasonName: sm.courseSeason.season?.name,
             status: sm.status,
             startedAt: sm.startedAt,
             shiftName: sm.courseSeasonShift?.shift?.name ?? null,
