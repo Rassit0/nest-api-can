@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { I18nValidationPipe, I18nService } from 'nestjs-i18n';
@@ -11,6 +12,17 @@ import { I18nHttpExceptionFilter } from './common/filters/i18n-http-exception/i1
 import { GlobalFileFilter } from './common/filters/global-file.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { envs } from './config';
+
+function getPackageVersion(): string {
+  try {
+    const pkgPath = join(process.cwd(), 'package.json');
+    const rawData = readFileSync(pkgPath, 'utf-8');
+    const pkg = JSON.parse(rawData) as unknown as { version?: string };
+    return pkg?.version ?? '1.0.0';
+  } catch {
+    return '1.0.0';
+  }
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -24,7 +36,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('API Gestión 360')
     .setDescription('Documentación de la API')
-    .setVersion('1.0')
+    .setVersion(getPackageVersion())
     .addTag('Authentication')
     .addBearerAuth()
     .build();

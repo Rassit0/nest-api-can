@@ -1,8 +1,8 @@
 {
   "name": "nest-gestion360",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "Backend API y motor de operaciones administrativas, deportivas, académicas y financieras de Gestión360.",
+  "author": "Mauricio Ariel Aramayo Vidaurre",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
